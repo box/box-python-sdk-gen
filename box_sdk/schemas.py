@@ -4514,6 +4514,8 @@ class RetentionPolicyAssignment(BaseObject):
             created.
         :type assigned_at: Union[None, str], optional
         :param start_date_field: The date the retention policy assignment begins.
+            If the `assigned_to` type is `metadata_template`,
+            this field can be a date field's metadata attribute key id.
         :type start_date_field: Union[None, str], optional
         """
         super().__init__(**kwargs)

@@ -21,7 +21,7 @@ from box_sdk.schemas import ClientError
 from box_sdk.schemas import TrashFileRestored
 
 class GetFilesIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, ifNoneMatch: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Union[None, str] = None, ifNoneMatch: Union[None, str] = None, boxapi: Union[None, str] = None, xRepHints: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -50,11 +50,27 @@ class GetFilesIdOptionsArg(BaseObject):
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Union[None, str], optional
+        :param xRepHints: A header required to request specific `representations`
+            of a file. Use this in combination with the `fields` query
+            parameter to request a specific file representation.
+            The general format for these representations is
+            `X-Rep-Hints: [...]` where `[...]` is one or many
+            hints in the format `[fileType?query]`.
+            For example, to request a `png` representation in `32x32`
+            as well as `64x64` pixel dimensions provide the following
+            hints.
+            `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]`
+            Additionally, a `text` representation is available for all
+            document file types in Box using the `[extracted_text]`
+            representation.
+            `x-rep-hints: [extracted_text]`
+        :type xRepHints: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
         self.ifNoneMatch = ifNoneMatch
         self.boxapi = boxapi
+        self.xRepHints = xRepHints
 
 class PostFilesIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
@@ -336,7 +352,7 @@ class FilesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesId(self, fileId: str, xRepHints: str, options: GetFilesIdOptionsArg = None) -> File:
+    def getFilesId(self, fileId: str, options: GetFilesIdOptionsArg = None) -> File:
         """
         Retrieves the details about a file.
         :param fileId: The unique identifier that represents a file.
@@ -347,26 +363,10 @@ class FilesManager(BaseObject):
             the `file_id` is `123`.
             Example: "12345"
         :type fileId: str
-        :param xRepHints: A header required to request specific `representations`
-            of a file. Use this in combination with the `fields` query
-            parameter to request a specific file representation.
-            The general format for these representations is
-            `X-Rep-Hints: [...]` where `[...]` is one or many
-            hints in the format `[fileType?query]`.
-            For example, to request a `png` representation in `32x32`
-            as well as `64x64` pixel dimensions provide the following
-            hints.
-            `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]`
-            Additionally, a `text` representation is available for all
-            document file types in Box using the `[extracted_text]`
-            representation.
-            `x-rep-hints: [extracted_text]`
-            Example: "[pdf]"
-        :type xRepHints: str
         """
         if options is None:
             options = GetFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi, 'x-rep-hints': xRepHints}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi, 'x-rep-hints': options.xRepHints}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
     def postFilesId(self, fileId: str, requestBody: PostFilesIdRequestBodyArg, options: PostFilesIdOptionsArg = None) -> TrashFileRestored:
         """
