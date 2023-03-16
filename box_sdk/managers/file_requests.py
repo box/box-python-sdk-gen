@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import FileRequest
@@ -18,85 +12,95 @@ from box_sdk.schemas import FileRequestUpdateRequest
 
 from box_sdk.schemas import FileRequestCopyRequest
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class PutFileRequestsIdOptionsArg(BaseObject):
-    def __init__(self, ifMatch: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifMatch = ifMatch
+        self.if_match = if_match
 
 class FileRequestsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFileRequestsId(self, fileRequestId: str) -> FileRequest:
+    def get_file_requests_id(self, file_request_id: str) -> FileRequest:
         """
         Retrieves the information about a file request.
-        :param fileRequestId: The unique identifier that represent a file request.
+        :param file_request_id: The unique identifier that represent a file request.
             The ID for any file request can be determined
             by visiting a file request builder in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/filerequest/123`
             the `file_request_id` is `123`.
             Example: "123"
-        :type fileRequestId: str
+        :type file_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', fileRequestId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='GET', auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
-    def putFileRequestsId(self, fileRequestId: str, requestBody: FileRequestUpdateRequest, options: PutFileRequestsIdOptionsArg = None) -> FileRequest:
+    def put_file_requests_id(self, file_request_id: str, request_body: FileRequestUpdateRequest, options: PutFileRequestsIdOptionsArg = None) -> FileRequest:
         """
         Updates a file request. This can be used to activate or
         
         deactivate a file request.
 
-        :param fileRequestId: The unique identifier that represent a file request.
+        :param file_request_id: The unique identifier that represent a file request.
             The ID for any file request can be determined
             by visiting a file request builder in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/filerequest/123`
             the `file_request_id` is `123`.
             Example: "123"
-        :type fileRequestId: str
+        :type file_request_id: str
         """
         if options is None:
             options = PutFileRequestsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', fileRequestId]), FetchOptions(method='PUT', headers={'if-match': options.ifMatch}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
-    def deleteFileRequestsId(self, fileRequestId: str):
+    def delete_file_requests_id(self, file_request_id: str):
         """
         Deletes a file request permanently.
-        :param fileRequestId: The unique identifier that represent a file request.
+        :param file_request_id: The unique identifier that represent a file request.
             The ID for any file request can be determined
             by visiting a file request builder in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/filerequest/123`
             the `file_request_id` is `123`.
             Example: "123"
-        :type fileRequestId: str
+        :type file_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', fileRequestId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def postFileRequestsIdCopy(self, fileRequestId: str, requestBody: FileRequestCopyRequest) -> FileRequest:
+    def post_file_requests_id_copy(self, file_request_id: str, request_body: FileRequestCopyRequest) -> FileRequest:
         """
         Copies an existing file request that is already present on one folder,
         
         and applies it to another folder.
 
-        :param fileRequestId: The unique identifier that represent a file request.
+        :param file_request_id: The unique identifier that represent a file request.
             The ID for any file request can be determined
             by visiting a file request builder in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/filerequest/123`
             the `file_request_id` is `123`.
             Example: "123"
-        :type fileRequestId: str
+        :type file_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', fileRequestId, '/copy']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))

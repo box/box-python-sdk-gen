@@ -4,12 +4,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import LegalHoldPolicyAssignments
@@ -20,6 +14,16 @@ from box_sdk.schemas import LegalHoldPolicyAssignment
 
 from box_sdk.schemas import FileVersionLegalHolds
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField(str, Enum):
     FILE = 'file'
     FILE_VERSION = 'file_version'
@@ -27,14 +31,14 @@ class GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField(str, Enum):
     USER = 'user'
 
 class GetLegalHoldPolicyAssignmentsOptionsArg(BaseObject):
-    def __init__(self, assignToType: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField] = None, assignToId: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, assign_to_type: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField] = None, assign_to_id: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
         """
-        :param assignToType: Filters the results by the type of item the
+        :param assign_to_type: Filters the results by the type of item the
             policy was applied to.
-        :type assignToType: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField], optional
-        :param assignToId: Filters the results by the ID of item the
+        :type assign_to_type: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField], optional
+        :param assign_to_id: Filters the results by the ID of item the
             policy was applied to.
-        :type assignToId: Union[None, str], optional
+        :type assign_to_id: Union[None, str], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
@@ -52,8 +56,8 @@ class GetLegalHoldPolicyAssignmentsOptionsArg(BaseObject):
         :type fields: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.assignToType = assignToType
-        self.assignToId = assignToId
+        self.assign_to_type = assign_to_type
+        self.assign_to_id = assign_to_id
         self.marker = marker
         self.limit = limit
         self.fields = fields
@@ -140,33 +144,33 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getLegalHoldPolicyAssignments(self, policyId: str, options: GetLegalHoldPolicyAssignmentsOptionsArg = None) -> LegalHoldPolicyAssignments:
+    def get_legal_hold_policy_assignments(self, policy_id: str, options: GetLegalHoldPolicyAssignmentsOptionsArg = None) -> LegalHoldPolicyAssignments:
         """
         Retrieves a list of items a legal hold policy has been assigned to.
-        :param policyId: The ID of the legal hold policy
+        :param policy_id: The ID of the legal hold policy
             Example: "324432"
-        :type policyId: str
+        :type policy_id: str
         """
         if options is None:
             options = GetLegalHoldPolicyAssignmentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params={'policy_id': policyId, 'assign_to_type': options.assignToType, 'assign_to_id': options.assignToId, 'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params={'policy_id': policy_id, 'assign_to_type': options.assignToType, 'assign_to_id': options.assignToId, 'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return LegalHoldPolicyAssignments.from_dict(json.loads(response.text))
-    def postLegalHoldPolicyAssignments(self, requestBody: PostLegalHoldPolicyAssignmentsRequestBodyArg) -> LegalHoldPolicyAssignment:
+    def post_legal_hold_policy_assignments(self, request_body: PostLegalHoldPolicyAssignmentsRequestBodyArg) -> LegalHoldPolicyAssignment:
         """
         Assign a legal hold to a file, file version, folder, or user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def getLegalHoldPolicyAssignmentsId(self, legalHoldPolicyAssignmentId: str) -> LegalHoldPolicyAssignment:
+    def get_legal_hold_policy_assignments_id(self, legal_hold_policy_assignment_id: str) -> LegalHoldPolicyAssignment:
         """
         Retrieve a legal hold policy assignment.
-        :param legalHoldPolicyAssignmentId: The ID of the legal hold policy assignment
+        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
-        :type legalHoldPolicyAssignmentId: str
+        :type legal_hold_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legalHoldPolicyAssignmentId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def deleteLegalHoldPolicyAssignmentsId(self, legalHoldPolicyAssignmentId: str):
+    def delete_legal_hold_policy_assignments_id(self, legal_hold_policy_assignment_id: str):
         """
         Remove a legal hold from an item.
         
@@ -175,13 +179,13 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         
         fully removed yet when the response returns.
 
-        :param legalHoldPolicyAssignmentId: The ID of the legal hold policy assignment
+        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
-        :type legalHoldPolicyAssignmentId: str
+        :type legal_hold_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legalHoldPolicyAssignmentId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def getLegalHoldPolicyAssignmentsIdFilesOnHold(self, legalHoldPolicyAssignmentId: str, options: GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg = None) -> FileVersionLegalHolds:
+    def get_legal_hold_policy_assignments_id_files_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg = None) -> FileVersionLegalHolds:
         """
         Get a list of current file versions for a legal hold
         
@@ -220,15 +224,15 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         
         find a list of policy assignments for a given policy ID.
 
-        :param legalHoldPolicyAssignmentId: The ID of the legal hold policy assignment
+        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
-        :type legalHoldPolicyAssignmentId: str
+        :type legal_hold_policy_assignment_id: str
         """
         if options is None:
             options = GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legalHoldPolicyAssignmentId, '/files_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/files_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))
-    def getLegalHoldPolicyAssignmentsIdFileVersionsOnHold(self, legalHoldPolicyAssignmentId: str, options: GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg = None) -> FileVersionLegalHolds:
+    def get_legal_hold_policy_assignments_id_file_versions_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg = None) -> FileVersionLegalHolds:
         """
         Get a list of previous file versions for a legal hold
         
@@ -267,11 +271,11 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         
         find a list of policy assignments for a given policy ID.
 
-        :param legalHoldPolicyAssignmentId: The ID of the legal hold policy assignment
+        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
-        :type legalHoldPolicyAssignmentId: str
+        :type legal_hold_policy_assignment_id: str
         """
         if options is None:
             options = GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legalHoldPolicyAssignmentId, '/file_versions_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/file_versions_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

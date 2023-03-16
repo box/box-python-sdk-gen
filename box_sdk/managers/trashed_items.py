@@ -4,17 +4,21 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Items
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFoldersTrashItemsOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
@@ -80,7 +84,7 @@ class TrashedItemsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFoldersTrashItems(self, options: GetFoldersTrashItemsOptionsArg = None) -> Items:
+    def get_folders_trash_items(self, options: GetFoldersTrashItemsOptionsArg = None) -> Items:
         """
         Retrieves the files and folders that have been moved
         

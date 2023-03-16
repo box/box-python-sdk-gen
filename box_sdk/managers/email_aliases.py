@@ -2,12 +2,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import EmailAliases
@@ -15,6 +9,16 @@ from box_sdk.schemas import EmailAliases
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import EmailAlias
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostUsersIdEmailAliasesRequestBodyArg(BaseObject):
     def __init__(self, email: str, **kwargs):
@@ -34,36 +38,36 @@ class EmailAliasesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getUsersIdEmailAliases(self, userId: str) -> EmailAliases:
+    def get_users_id_email_aliases(self, user_id: str) -> EmailAliases:
         """
         Retrieves all email aliases for a user. The collection
         
         does not include the primary login for the user.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/email_aliases']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='GET', auth=self.auth))
         return EmailAliases.from_dict(json.loads(response.text))
-    def postUsersIdEmailAliases(self, userId: str, requestBody: PostUsersIdEmailAliasesRequestBodyArg) -> EmailAlias:
+    def post_users_id_email_aliases(self, user_id: str, request_body: PostUsersIdEmailAliasesRequestBodyArg) -> EmailAlias:
         """
         Adds a new email alias to a user account..
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return EmailAlias.from_dict(json.loads(response.text))
-    def deleteUsersIdEmailAliasesId(self, userId: str, emailAliasId: str):
+    def delete_users_id_email_aliases_id(self, user_id: str, email_alias_id: str):
         """
         Removes an email alias from a user.
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
-        :param emailAliasId: The ID of the email alias.
+        :type user_id: str
+        :param email_alias_id: The ID of the email alias.
             Example: "23432"
-        :type emailAliasId: str
+        :type email_alias_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/email_aliases/', emailAliasId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases/', email_alias_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

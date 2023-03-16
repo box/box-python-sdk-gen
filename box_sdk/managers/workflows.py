@@ -4,23 +4,27 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Workflows
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetWorkflowsOptionsArg(BaseObject):
-    def __init__(self, triggerType: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, trigger_type: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
         """
-        :param triggerType: Type of trigger to search for.
-        :type triggerType: Union[None, str], optional
+        :param trigger_type: Type of trigger to search for.
+        :type trigger_type: Union[None, str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Union[None, int], optional
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -29,7 +33,7 @@ class GetWorkflowsOptionsArg(BaseObject):
         :type marker: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.triggerType = triggerType
+        self.trigger_type = trigger_type
         self.limit = limit
         self.marker = marker
 
@@ -124,7 +128,7 @@ class WorkflowsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getWorkflows(self, folderId: str, options: GetWorkflowsOptionsArg = None) -> Workflows:
+    def get_workflows(self, folder_id: str, options: GetWorkflowsOptionsArg = None) -> Workflows:
         """
         Returns list of workflows that act on a given `folder ID`, and
         
@@ -136,7 +140,7 @@ class WorkflowsManager(BaseObject):
         
         scope within the developer console in to use this endpoint.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -145,13 +149,13 @@ class WorkflowsManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = GetWorkflowsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folderId, 'trigger_type': options.triggerType, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folder_id, 'trigger_type': options.triggerType, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return Workflows.from_dict(json.loads(response.text))
-    def postWorkflowsIdStart(self, workflowId: str, requestBody: PostWorkflowsIdStartRequestBodyArg):
+    def post_workflows_id_start(self, workflow_id: str, request_body: PostWorkflowsIdStartRequestBodyArg):
         """
         Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
         
@@ -160,9 +164,9 @@ class WorkflowsManager(BaseObject):
         
         scope within the developer console.
 
-        :param workflowId: The ID of the workflow.
+        :param workflow_id: The ID of the workflow.
             Example: "12345"
-        :type workflowId: str
+        :type workflow_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflowId, '/start']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return response.content

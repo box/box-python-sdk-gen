@@ -4,12 +4,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import StoragePolicyAssignments
@@ -17,6 +11,16 @@ from box_sdk.schemas import StoragePolicyAssignments
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import StoragePolicyAssignment
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetStoragePolicyAssignmentsResolvedForTypeArg(str, Enum):
     USER = 'user'
@@ -107,45 +111,45 @@ class StoragePolicyAssignmentsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getStoragePolicyAssignments(self, resolvedForType: GetStoragePolicyAssignmentsResolvedForTypeArg, resolvedForId: str, options: GetStoragePolicyAssignmentsOptionsArg = None) -> StoragePolicyAssignments:
+    def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, options: GetStoragePolicyAssignmentsOptionsArg = None) -> StoragePolicyAssignments:
         """
         Fetches all the storage policy assignment for an enterprise or user.
-        :param resolvedForType: The target type to return assignments for
+        :param resolved_for_type: The target type to return assignments for
             Example: "user"
-        :type resolvedForType: GetStoragePolicyAssignmentsResolvedForTypeArg
-        :param resolvedForId: The ID of the user or enterprise to return assignments for
+        :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg
+        :param resolved_for_id: The ID of the user or enterprise to return assignments for
             Example: "984322"
-        :type resolvedForId: str
+        :type resolved_for_id: str
         """
         if options is None:
             options = GetStoragePolicyAssignmentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params={'marker': options.marker, 'resolved_for_type': resolvedForType, 'resolved_for_id': resolvedForId}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params={'marker': options.marker, 'resolved_for_type': resolved_for_type, 'resolved_for_id': resolved_for_id}, auth=self.auth))
         return StoragePolicyAssignments.from_dict(json.loads(response.text))
-    def postStoragePolicyAssignments(self, requestBody: PostStoragePolicyAssignmentsRequestBodyArg) -> StoragePolicyAssignment:
+    def post_storage_policy_assignments(self, request_body: PostStoragePolicyAssignmentsRequestBodyArg) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def getStoragePolicyAssignmentsId(self, storagePolicyAssignmentId: str) -> StoragePolicyAssignment:
+    def get_storage_policy_assignments_id(self, storage_policy_assignment_id: str) -> StoragePolicyAssignment:
         """
         Fetches a specific storage policy assignment.
-        :param storagePolicyAssignmentId: The ID of the storage policy assignment.
+        :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
-        :type storagePolicyAssignmentId: str
+        :type storage_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storagePolicyAssignmentId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def putStoragePolicyAssignmentsId(self, storagePolicyAssignmentId: str, requestBody: PutStoragePolicyAssignmentsIdRequestBodyArg) -> StoragePolicyAssignment:
+    def put_storage_policy_assignments_id(self, storage_policy_assignment_id: str, request_body: PutStoragePolicyAssignmentsIdRequestBodyArg) -> StoragePolicyAssignment:
         """
         Updates a specific storage policy assignment.
-        :param storagePolicyAssignmentId: The ID of the storage policy assignment.
+        :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
-        :type storagePolicyAssignmentId: str
+        :type storage_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storagePolicyAssignmentId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def deleteStoragePolicyAssignmentsId(self, storagePolicyAssignmentId: str):
+    def delete_storage_policy_assignments_id(self, storage_policy_assignment_id: str):
         """
         Delete a storage policy assignment.
         
@@ -163,9 +167,9 @@ class StoragePolicyAssignmentsManager(BaseObject):
         
         twice per user in a 24 hour time frame.
 
-        :param storagePolicyAssignmentId: The ID of the storage policy assignment.
+        :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
-        :type storagePolicyAssignmentId: str
+        :type storage_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storagePolicyAssignmentId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

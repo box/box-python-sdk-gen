@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import ShieldInformationBarrierSegmentRestriction
@@ -15,6 +9,16 @@ from box_sdk.schemas import ShieldInformationBarrierSegmentRestriction
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import ShieldInformationBarrierBase
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetShieldInformationBarrierSegmentRestrictionsOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -89,50 +93,50 @@ class ShieldInformationBarrierSegmentRestrictionsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getShieldInformationBarrierSegmentRestrictionsId(self, shieldInformationBarrierSegmentRestrictionId: str) -> ShieldInformationBarrierSegmentRestriction:
+    def get_shield_information_barrier_segment_restrictions_id(self, shield_information_barrier_segment_restriction_id: str) -> ShieldInformationBarrierSegmentRestriction:
         """
         Retrieves a shield information barrier segment
         
         restriction based on provided ID.
 
-        :param shieldInformationBarrierSegmentRestrictionId: The ID of the shield information barrier segment Restriction.
+        :param shield_information_barrier_segment_restriction_id: The ID of the shield information barrier segment Restriction.
             Example: "4563"
-        :type shieldInformationBarrierSegmentRestrictionId: str
+        :type shield_information_barrier_segment_restriction_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shieldInformationBarrierSegmentRestrictionId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shield_information_barrier_segment_restriction_id]), FetchOptions(method='GET', auth=self.auth))
         return ShieldInformationBarrierSegmentRestriction.from_dict(json.loads(response.text))
-    def deleteShieldInformationBarrierSegmentRestrictionsId(self, shieldInformationBarrierSegmentRestrictionId: str):
+    def delete_shield_information_barrier_segment_restrictions_id(self, shield_information_barrier_segment_restriction_id: str):
         """
         Delete shield information barrier segment restriction
         
         based on provided ID.
 
-        :param shieldInformationBarrierSegmentRestrictionId: The ID of the shield information barrier segment Restriction.
+        :param shield_information_barrier_segment_restriction_id: The ID of the shield information barrier segment Restriction.
             Example: "4563"
-        :type shieldInformationBarrierSegmentRestrictionId: str
+        :type shield_information_barrier_segment_restriction_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shieldInformationBarrierSegmentRestrictionId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shield_information_barrier_segment_restriction_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def getShieldInformationBarrierSegmentRestrictions(self, shieldInformationBarrierSegmentId: str, options: GetShieldInformationBarrierSegmentRestrictionsOptionsArg = None) -> None:
+    def get_shield_information_barrier_segment_restrictions(self, shield_information_barrier_segment_id: str, options: GetShieldInformationBarrierSegmentRestrictionsOptionsArg = None) -> None:
         """
         Lists shield information barrier segment restrictions
         
         based on provided segment ID.
 
-        :param shieldInformationBarrierSegmentId: The ID of the shield information barrier segment.
+        :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
             Example: "3423"
-        :type shieldInformationBarrierSegmentId: str
+        :type shield_information_barrier_segment_id: str
         """
         if options is None:
             options = GetShieldInformationBarrierSegmentRestrictionsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='GET', params={'shield_information_barrier_segment_id': shieldInformationBarrierSegmentId, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='GET', params={'shield_information_barrier_segment_id': shield_information_barrier_segment_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def postShieldInformationBarrierSegmentRestrictions(self, requestBody: PostShieldInformationBarrierSegmentRestrictionsRequestBodyArg) -> ShieldInformationBarrierSegmentRestriction:
+    def post_shield_information_barrier_segment_restrictions(self, request_body: PostShieldInformationBarrierSegmentRestrictionsRequestBodyArg) -> ShieldInformationBarrierSegmentRestriction:
         """
         Creates a shield information barrier
         
         segment restriction object.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ShieldInformationBarrierSegmentRestriction.from_dict(json.loads(response.text))

@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import LegalHoldPolicies
@@ -16,12 +10,22 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import LegalHoldPolicy
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetLegalHoldPoliciesOptionsArg(BaseObject):
-    def __init__(self, policyName: Union[None, str] = None, fields: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, policy_name: Union[None, str] = None, fields: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
         """
-        :param policyName: Limits results to policies for which the names start with
+        :param policy_name: Limits results to policies for which the names start with
             this search term. This is a case-insensitive prefix.
-        :type policyName: Union[None, str], optional
+        :type policy_name: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -39,7 +43,7 @@ class GetLegalHoldPoliciesOptionsArg(BaseObject):
         :type limit: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.policyName = policyName
+        self.policy_name = policy_name
         self.fields = fields
         self.marker = marker
         self.limit = limit
@@ -104,7 +108,7 @@ class LegalHoldPoliciesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getLegalHoldPolicies(self, options: GetLegalHoldPoliciesOptionsArg = None) -> LegalHoldPolicies:
+    def get_legal_hold_policies(self, options: GetLegalHoldPoliciesOptionsArg = None) -> LegalHoldPolicies:
         """
         Retrieves a list of legal hold policies that belong to
         
@@ -115,31 +119,31 @@ class LegalHoldPoliciesManager(BaseObject):
             options = GetLegalHoldPoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params={'policy_name': options.policyName, 'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return LegalHoldPolicies.from_dict(json.loads(response.text))
-    def postLegalHoldPolicies(self, requestBody: PostLegalHoldPoliciesRequestBodyArg) -> LegalHoldPolicy:
+    def post_legal_hold_policies(self, request_body: PostLegalHoldPoliciesRequestBodyArg) -> LegalHoldPolicy:
         """
         Create a new legal hold policy.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def getLegalHoldPoliciesId(self, legalHoldPolicyId: str) -> LegalHoldPolicy:
+    def get_legal_hold_policies_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
         """
         Retrieve a legal hold policy.
-        :param legalHoldPolicyId: The ID of the legal hold policy
+        :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
-        :type legalHoldPolicyId: str
+        :type legal_hold_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legalHoldPolicyId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def putLegalHoldPoliciesId(self, legalHoldPolicyId: str, requestBody: PutLegalHoldPoliciesIdRequestBodyArg) -> LegalHoldPolicy:
+    def put_legal_hold_policies_id(self, legal_hold_policy_id: str, request_body: PutLegalHoldPoliciesIdRequestBodyArg) -> LegalHoldPolicy:
         """
         Update legal hold policy.
-        :param legalHoldPolicyId: The ID of the legal hold policy
+        :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
-        :type legalHoldPolicyId: str
+        :type legal_hold_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legalHoldPolicyId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def deleteLegalHoldPoliciesId(self, legalHoldPolicyId: str):
+    def delete_legal_hold_policies_id(self, legal_hold_policy_id: str):
         """
         Delete an existing legal hold policy.
         
@@ -148,9 +152,9 @@ class LegalHoldPoliciesManager(BaseObject):
         
         fully deleted yet when the response returns.
 
-        :param legalHoldPolicyId: The ID of the legal hold policy
+        :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
-        :type legalHoldPolicyId: str
+        :type legal_hold_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legalHoldPolicyId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

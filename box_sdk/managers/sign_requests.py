@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import SignRequest
@@ -17,6 +11,16 @@ from box_sdk.schemas import ClientError
 from box_sdk.schemas import SignRequests
 
 from box_sdk.schemas import SignRequestCreateRequest
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetSignRequestsOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -36,34 +40,34 @@ class SignRequestsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def postSignRequestsIdCancel(self, signRequestId: str) -> SignRequest:
+    def post_sign_requests_id_cancel(self, sign_request_id: str) -> SignRequest:
         """
         Cancels a sign request.
-        :param signRequestId: The ID of the sign request
+        :param sign_request_id: The ID of the sign request
             Example: "33243242"
-        :type signRequestId: str
+        :type sign_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', signRequestId, '/cancel']), FetchOptions(method='POST', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', auth=self.auth))
         return SignRequest.from_dict(json.loads(response.text))
-    def postSignRequestsIdResend(self, signRequestId: str):
+    def post_sign_requests_id_resend(self, sign_request_id: str):
         """
         Resends a sign request email to all outstanding signers.
-        :param signRequestId: The ID of the sign request
+        :param sign_request_id: The ID of the sign request
             Example: "33243242"
-        :type signRequestId: str
+        :type sign_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', signRequestId, '/resend']), FetchOptions(method='POST', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']), FetchOptions(method='POST', auth=self.auth))
         return response.content
-    def getSignRequestsId(self, signRequestId: str) -> SignRequest:
+    def get_sign_requests_id(self, sign_request_id: str) -> SignRequest:
         """
         Gets a sign request by ID.
-        :param signRequestId: The ID of the sign request
+        :param sign_request_id: The ID of the sign request
             Example: "33243242"
-        :type signRequestId: str
+        :type sign_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', signRequestId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', auth=self.auth))
         return SignRequest.from_dict(json.loads(response.text))
-    def getSignRequests(self, options: GetSignRequestsOptionsArg = None) -> SignRequests:
+    def get_sign_requests(self, options: GetSignRequestsOptionsArg = None) -> SignRequests:
         """
         Gets sign requests created by a user. If the `sign_files` and/or
         
@@ -74,12 +78,12 @@ class SignRequestsManager(BaseObject):
             options = GetSignRequestsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return SignRequests.from_dict(json.loads(response.text))
-    def postSignRequests(self, requestBody: SignRequestCreateRequest) -> SignRequest:
+    def post_sign_requests(self, request_body: SignRequestCreateRequest) -> SignRequest:
         """
         Creates a sign request. This involves preparing a document for signing and
         
         sending the sign request to signers.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return SignRequest.from_dict(json.loads(response.text))

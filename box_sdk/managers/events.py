@@ -4,12 +4,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Events
@@ -17,6 +11,16 @@ from box_sdk.schemas import Events
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import RealtimeServers
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetEventsOptionsArgStreamTypeField(str, Enum):
     ALL = 'all'
@@ -26,9 +30,9 @@ class GetEventsOptionsArgStreamTypeField(str, Enum):
     ADMIN_LOGS_STREAMING = 'admin_logs_streaming'
 
 class GetEventsOptionsArg(BaseObject):
-    def __init__(self, streamType: Union[None, GetEventsOptionsArgStreamTypeField] = None, streamPosition: Union[None, str] = None, limit: Union[None, int] = None, eventType: Union[None, str] = None, createdAfter: Union[None, str] = None, createdBefore: Union[None, str] = None, **kwargs):
+    def __init__(self, stream_type: Union[None, GetEventsOptionsArgStreamTypeField] = None, stream_position: Union[None, str] = None, limit: Union[None, int] = None, event_type: Union[None, str] = None, created_after: Union[None, str] = None, created_before: Union[None, str] = None, **kwargs):
         """
-        :param streamType: Defines the type of events that are returned
+        :param stream_type: Defines the type of events that are returned
             * `all` returns everything for a user and is the default
             * `changes` returns events that may cause file tree changes
               such as file updates or collaborations.
@@ -46,12 +50,12 @@ class GetEventsOptionsArg(BaseObject):
               the enterprise. Latency will be much lower than `admin_logs`, but
               events will not be returned in chronological order and may
               contain duplicates.
-        :type streamType: Union[None, GetEventsOptionsArgStreamTypeField], optional
-        :param streamPosition: The location in the event stream to start receiving events from.
+        :type stream_type: Union[None, GetEventsOptionsArgStreamTypeField], optional
+        :param stream_position: The location in the event stream to start receiving events from.
             * `now` will return an empty list events and
             the latest stream position for initialization.
             * `0` or `null` will return all events.
-        :type streamPosition: Union[None, str], optional
+        :type stream_position: Union[None, str], optional
         :param limit: Limits the number of events returned
             Note: Sometimes, the events less than the limit requested can be returned
             even when there may be more events remaining. This is primarily done in
@@ -59,33 +63,33 @@ class GetEventsOptionsArg(BaseObject):
             retrieved events are returned rather than delaying for an unknown amount
             of time to see if there are any more results.
         :type limit: Union[None, int], optional
-        :param eventType: A comma-separated list of events to filter by. This can only be used when
+        :param event_type: A comma-separated list of events to filter by. This can only be used when
             requesting the events with a `stream_type` of `admin_logs` or
             `adming_logs_streaming`. For any other `stream_type` this value will be
             ignored.
-        :type eventType: Union[None, str], optional
-        :param createdAfter: The lower bound date and time to return events for. This can only be used
+        :type event_type: Union[None, str], optional
+        :param created_after: The lower bound date and time to return events for. This can only be used
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
-        :type createdAfter: Union[None, str], optional
-        :param createdBefore: The upper bound date and time to return events for. This can only be used
+        :type created_after: Union[None, str], optional
+        :param created_before: The upper bound date and time to return events for. This can only be used
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
-        :type createdBefore: Union[None, str], optional
+        :type created_before: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.streamType = streamType
-        self.streamPosition = streamPosition
+        self.stream_type = stream_type
+        self.stream_position = stream_position
         self.limit = limit
-        self.eventType = eventType
-        self.createdAfter = createdAfter
-        self.createdBefore = createdBefore
+        self.event_type = event_type
+        self.created_after = created_after
+        self.created_before = created_before
 
 class EventsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getEvents(self, options: GetEventsOptionsArg = None) -> Events:
+    def get_events(self, options: GetEventsOptionsArg = None) -> Events:
         """
         Returns up to a year of past events for a given user
         
@@ -114,7 +118,7 @@ class EventsManager(BaseObject):
             options = GetEventsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.streamType, 'stream_position': options.streamPosition, 'limit': options.limit, 'event_type': options.eventType, 'created_after': options.createdAfter, 'created_before': options.createdBefore}, auth=self.auth))
         return Events.from_dict(json.loads(response.text))
-    def optionsEvents(self) -> RealtimeServers:
+    def options_events(self) -> RealtimeServers:
         """
         Returns a list of real-time servers that can be used for long-polling updates
         

@@ -4,19 +4,23 @@ from enum import Enum
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.schemas import WebLink
 
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TrashWebLinkRestored
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostWebLinksRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -214,24 +218,24 @@ class WebLinksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def postWebLinks(self, requestBody: PostWebLinksRequestBodyArg) -> WebLink:
+    def post_web_links(self, request_body: PostWebLinksRequestBodyArg) -> WebLink:
         """
         Creates a web link object within a folder.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def getWebLinksId(self, webLinkId: str, options: GetWebLinksIdOptionsArg = None) -> WebLink:
+    def get_web_links_id(self, web_link_id: str, options: GetWebLinksIdOptionsArg = None) -> WebLink:
         """
         Retrieve information about a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
         if options is None:
             options = GetWebLinksIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def postWebLinksId(self, webLinkId: str, requestBody: PostWebLinksIdRequestBodyArg, options: PostWebLinksIdOptionsArg = None) -> TrashWebLinkRestored:
+    def post_web_links_id(self, web_link_id: str, request_body: PostWebLinksIdRequestBodyArg, options: PostWebLinksIdOptionsArg = None) -> TrashWebLinkRestored:
         """
         Restores a web link that has been moved to the trash.
         
@@ -240,29 +244,29 @@ class WebLinksManager(BaseObject):
         
         the original folder has been deleted.
 
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
         if options is None:
             options = PostWebLinksIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashWebLinkRestored.from_dict(json.loads(response.text))
-    def putWebLinksId(self, webLinkId: str, requestBody: PutWebLinksIdRequestBodyArg) -> WebLink:
+    def put_web_links_id(self, web_link_id: str, request_body: PutWebLinksIdRequestBodyArg) -> WebLink:
         """
         Updates a web link object.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def deleteWebLinksId(self, webLinkId: str):
+    def delete_web_links_id(self, web_link_id: str):
         """
         Deletes a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

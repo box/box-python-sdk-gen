@@ -6,6 +6,8 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
+from typing import Dict
+
 class PostOAuth2TokenGrantTypeField(str, Enum):
     AUTHORIZATION_CODE = 'authorization_code'
     REFRESH_TOKEN = 'refresh_token'
@@ -177,8 +179,6 @@ class MetadataQueryQueryParamsField(BaseObject):
         super().__init__(**kwargs)
 
 class MetadataQueryOrderByFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
     ASC = 'asc'
     DESC = 'desc'
 
@@ -199,13 +199,15 @@ class MetadataQueryOrderByField(BaseObject):
         self.direction = direction
 
 class MetadataQuery(BaseObject):
-    def __init__(self, from: str, ancestor_folder_id: str, query: Union[None, str] = None, query_params: Union[None, MetadataQueryQueryParamsField] = None, order_by: Union[None, List[MetadataQueryOrderByField]] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, fields: Union[None, List[str]] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'from_': 'from', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'from': 'from_', **BaseObject._json_to_fields_mapping}
+    def __init__(self, from_: str, ancestor_folder_id: str, query: Union[None, str] = None, query_params: Union[None, MetadataQueryQueryParamsField] = None, order_by: Union[None, List[MetadataQueryOrderByField]] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, fields: Union[None, List[str]] = None, **kwargs):
         """
-        :param from: Specifies the template used in the query. Must be in the form
+        :param from_: Specifies the template used in the query. Must be in the form
             `scope.templateKey`. Not all templates can be used in this field,
             most notably the built-in, Box-provided classification templates
             can not be used in a query.
-        :type from: str
+        :type from_: str
         :param ancestor_folder_id: The ID of the folder that you are restricting the query to. A
             value of zero will return results from all folders you have access
             to. A non-zero value will only return results found in the folder
@@ -250,7 +252,7 @@ class MetadataQuery(BaseObject):
         :type fields: Union[None, List[str]], optional
         """
         super().__init__(**kwargs)
-        self.from = from
+        self.from_ = from_
         self.ancestor_folder_id = ancestor_folder_id
         self.query = query
         self.query_params = query_params
@@ -631,42 +633,44 @@ class ClassificationTemplateField:
     pass
 
 class Classification(BaseObject):
-    def __init__(self, Box__Security__Classification__Key: Union[None, str] = None, $parent: Union[None, str] = None, $template: Union[None, ClassificationTemplateField] = None, $scope: Union[None, str] = None, $version: Union[None, int] = None, $type: Union[None, str] = None, $typeVersion: Union[None, int] = None, $canEdit: Union[None, bool] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'box_security_classification_key': 'Box__Security__Classification__Key', 'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', 'type': '$type', 'type_version': '$typeVersion', 'can_edit': '$canEdit', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'Box__Security__Classification__Key': 'box_security_classification_key', '$parent': 'parent', '$template': 'template', '$scope': 'scope', '$version': 'version', '$type': 'type', '$typeVersion': 'type_version', '$canEdit': 'can_edit', **BaseObject._json_to_fields_mapping}
+    def __init__(self, box_security_classification_key: Union[None, str] = None, parent: Union[None, str] = None, template: Union[None, ClassificationTemplateField] = None, scope: Union[None, str] = None, version: Union[None, int] = None, type: Union[None, str] = None, type_version: Union[None, int] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
-        :param Box__Security__Classification__Key: The name of the classification applied to the item.
-        :type Box__Security__Classification__Key: Union[None, str], optional
-        :param $parent: The identifier of the item that this metadata instance
+        :param box_security_classification_key: The name of the classification applied to the item.
+        :type box_security_classification_key: Union[None, str], optional
+        :param parent: The identifier of the item that this metadata instance
             has been attached to. This combines the `type` and the `id`
             of the parent in the form `{type}_{id}`.
-        :type $parent: Union[None, str], optional
-        :param $template: `securityClassification-6VMVochwUWo`
-        :type $template: Union[None, ClassificationTemplateField], optional
-        :param $scope: The scope of the enterprise that this classification has been
+        :type parent: Union[None, str], optional
+        :param template: `securityClassification-6VMVochwUWo`
+        :type template: Union[None, ClassificationTemplateField], optional
+        :param scope: The scope of the enterprise that this classification has been
             applied for.
             This will be in the format `enterprise_{enterprise_id}`.
-        :type $scope: Union[None, str], optional
-        :param $version: The version of the metadata instance. This version starts at 0 and
+        :type scope: Union[None, str], optional
+        :param version: The version of the metadata instance. This version starts at 0 and
             increases every time a classification is updated.
-        :type $version: Union[None, int], optional
-        :param $type: The unique ID of this classification instance. This will be include
+        :type version: Union[None, int], optional
+        :param type: The unique ID of this classification instance. This will be include
             the name of the classification template and a unique ID.
-        :type $type: Union[None, str], optional
-        :param $typeVersion: The version of the metadata template. This version starts at 0 and
+        :type type: Union[None, str], optional
+        :param type_version: The version of the metadata template. This version starts at 0 and
             increases every time the template is updated. This is mostly for internal
             use.
-        :type $typeVersion: Union[None, int], optional
-        :param $canEdit: Whether an end user can change the classification.
-        :type $canEdit: Union[None, bool], optional
+        :type type_version: Union[None, int], optional
+        :param can_edit: Whether an end user can change the classification.
+        :type can_edit: Union[None, bool], optional
         """
         super().__init__(**kwargs)
-        self.Box__Security__Classification__Key = Box__Security__Classification__Key
-        self.$parent = $parent
-        self.$template = $template
-        self.$scope = $scope
-        self.$version = $version
-        self.$type = $type
-        self.$typeVersion = $typeVersion
-        self.$canEdit = $canEdit
+        self.box_security_classification_key = box_security_classification_key
+        self.parent = parent
+        self.template = template
+        self.scope = scope
+        self.version = version
+        self.type = type
+        self.type_version = type_version
+        self.can_edit = can_edit
 
 class ClassificationTemplateTypeField:
     pass
@@ -687,11 +691,13 @@ class ClassificationTemplateFieldsFieldDisplayNameField:
     pass
 
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
-    def __init__(self, classificationDefinition: Union[None, str] = None, colorID: Union[None, int] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'classification_definition': 'classificationDefinition', 'color_id': 'colorID', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'classificationDefinition': 'classification_definition', 'colorID': 'color_id', **BaseObject._json_to_fields_mapping}
+    def __init__(self, classification_definition: Union[None, str] = None, color_id: Union[None, int] = None, **kwargs):
         """
-        :param classificationDefinition: A longer description of the classification.
-        :type classificationDefinition: Union[None, str], optional
-        :param colorID: An internal Box identifier used to assign a color to
+        :param classification_definition: A longer description of the classification.
+        :type classification_definition: Union[None, str], optional
+        :param color_id: An internal Box identifier used to assign a color to
             a classification label.
             Mapping between a `colorID` and a color may change
             without notice. Currently, the color mappings are as
@@ -704,11 +710,11 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type colorID: Union[None, int], optional
+        :type color_id: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.classificationDefinition = classificationDefinition
-        self.colorID = colorID
+        self.classification_definition = classification_definition
+        self.color_id = color_id
 
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject):
     def __init__(self, classification: Union[None, ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField] = None, **kwargs):
@@ -725,22 +731,26 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject)
         self.classification = classification
 
 class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, key: Union[None, str] = None, staticConfig: Union[None, ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'static_config': 'staticConfig', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'staticConfig': 'static_config', **BaseObject._json_to_fields_mapping}
+    def __init__(self, id: Union[None, str] = None, key: Union[None, str] = None, static_config: Union[None, ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
         """
         :param id: The unique ID of this classification.
         :type id: Union[None, str], optional
         :param key: The display name and key for this classification.
         :type key: Union[None, str], optional
-        :param staticConfig: Additional information about the classification.
-        :type staticConfig: Union[None, ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField], optional
+        :param static_config: Additional information about the classification.
+        :type static_config: Union[None, ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.key = key
-        self.staticConfig = staticConfig
+        self.static_config = static_config
 
 class ClassificationTemplateFieldsField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, ClassificationTemplateFieldsFieldTypeField] = None, key: Union[None, ClassificationTemplateFieldsFieldKeyField] = None, displayName: Union[None, ClassificationTemplateFieldsFieldDisplayNameField] = None, hidden: Union[None, bool] = None, options: Union[None, List[ClassificationTemplateFieldsFieldOptionsField]] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'display_name': 'displayName', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'displayName': 'display_name', **BaseObject._json_to_fields_mapping}
+    def __init__(self, id: Union[None, str] = None, type: Union[None, ClassificationTemplateFieldsFieldTypeField] = None, key: Union[None, ClassificationTemplateFieldsFieldKeyField] = None, display_name: Union[None, ClassificationTemplateFieldsFieldDisplayNameField] = None, hidden: Union[None, bool] = None, options: Union[None, List[ClassificationTemplateFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param id: The unique ID of the field.
         :type id: Union[None, str], optional
@@ -748,8 +758,8 @@ class ClassificationTemplateFieldsField(BaseObject):
         :type type: Union[None, ClassificationTemplateFieldsFieldTypeField], optional
         :param key: `Box__Security__Classification__Key`
         :type key: Union[None, ClassificationTemplateFieldsFieldKeyField], optional
-        :param displayName: `Classification`
-        :type displayName: Union[None, ClassificationTemplateFieldsFieldDisplayNameField], optional
+        :param display_name: `Classification`
+        :type display_name: Union[None, ClassificationTemplateFieldsFieldDisplayNameField], optional
         :param hidden: Classifications are always visible to web and mobile users.
         :type hidden: Union[None, bool], optional
         :param options: A list of classifications available in this enterprise.
@@ -759,12 +769,14 @@ class ClassificationTemplateFieldsField(BaseObject):
         self.id = id
         self.type = type
         self.key = key
-        self.displayName = displayName
+        self.display_name = display_name
         self.hidden = hidden
         self.options = options
 
 class ClassificationTemplate(BaseObject):
-    def __init__(self, type: ClassificationTemplateTypeField, id: Union[None, str] = None, scope: Union[None, str] = None, templateKey: Union[None, ClassificationTemplateTemplateKeyField] = None, displayName: Union[None, ClassificationTemplateDisplayNameField] = None, hidden: Union[None, bool] = None, copyInstanceOnItemCopy: Union[None, bool] = None, fields: Union[None, List[ClassificationTemplateFieldsField]] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', 'display_name': 'displayName', 'copy_instance_on_item_copy': 'copyInstanceOnItemCopy', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', 'displayName': 'display_name', 'copyInstanceOnItemCopy': 'copy_instance_on_item_copy', **BaseObject._json_to_fields_mapping}
+    def __init__(self, type: ClassificationTemplateTypeField, id: Union[None, str] = None, scope: Union[None, str] = None, template_key: Union[None, ClassificationTemplateTemplateKeyField] = None, display_name: Union[None, ClassificationTemplateDisplayNameField] = None, hidden: Union[None, bool] = None, copy_instance_on_item_copy: Union[None, bool] = None, fields: Union[None, List[ClassificationTemplateFieldsField]] = None, **kwargs):
         """
         :param type: `metadata_template`
         :type type: ClassificationTemplateTypeField
@@ -773,15 +785,15 @@ class ClassificationTemplate(BaseObject):
         :param scope: The scope of the classification template. This is in the format
             `enterprise_{id}` where the `id` is the enterprise ID.
         :type scope: Union[None, str], optional
-        :param templateKey: `securityClassification-6VMVochwUWo`
-        :type templateKey: Union[None, ClassificationTemplateTemplateKeyField], optional
-        :param displayName: The name of this template as shown in web and mobile interfaces.
-        :type displayName: Union[None, ClassificationTemplateDisplayNameField], optional
+        :param template_key: `securityClassification-6VMVochwUWo`
+        :type template_key: Union[None, ClassificationTemplateTemplateKeyField], optional
+        :param display_name: The name of this template as shown in web and mobile interfaces.
+        :type display_name: Union[None, ClassificationTemplateDisplayNameField], optional
         :param hidden: This template is always available in web and mobile interfaces.
         :type hidden: Union[None, bool], optional
-        :param copyInstanceOnItemCopy: Classifications are always copied along when the file or folder is
+        :param copy_instance_on_item_copy: Classifications are always copied along when the file or folder is
             copied.
-        :type copyInstanceOnItemCopy: Union[None, bool], optional
+        :type copy_instance_on_item_copy: Union[None, bool], optional
         :param fields: A list of fields for this classification template. This includes
             only one field, the `Box__Security__Classification__Key`, which defines
             the different classifications available in this enterprise.
@@ -791,10 +803,10 @@ class ClassificationTemplate(BaseObject):
         self.type = type
         self.id = id
         self.scope = scope
-        self.templateKey = templateKey
-        self.displayName = displayName
+        self.template_key = template_key
+        self.display_name = display_name
         self.hidden = hidden
-        self.copyInstanceOnItemCopy = copyInstanceOnItemCopy
+        self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
 
 class CollaborationTypeField:
@@ -1696,24 +1708,28 @@ class FileVersionBase(BaseObject):
         self.type = type
 
 class FileVersionMini(FileVersionBase):
-    def __init__(self, id: str, type: FileVersionBaseTypeField, sha1: Union[None, str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileVersionBase._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileVersionBase._json_to_fields_mapping}
+    def __init__(self, id: str, type: FileVersionBaseTypeField, sha_1: Union[None, str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
         :param type: `file_version`
         :type type: FileVersionBaseTypeField
-        :param sha1: The SHA1 hash of this version of the file.
-        :type sha1: Union[None, str], optional
+        :param sha_1: The SHA1 hash of this version of the file.
+        :type sha_1: Union[None, str], optional
         """
         super().__init__(id=id, type=type, **kwargs)
-        self.sha1 = sha1
+        self.sha_1 = sha_1
 
 class FileMini(FileBase):
-    def __init__(self, sequence_id: str, sha1: str, id: str, type: FileBaseTypeField, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileBase._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileBase._json_to_fields_mapping}
+    def __init__(self, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
         """
-        :param sha1: The SHA1 hash of the file. This can be used to compare the contents
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sha1: str
+        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -1732,7 +1748,7 @@ class FileMini(FileBase):
         """
         super().__init__(id=id, type=type, etag=etag, **kwargs)
         self.sequence_id = sequence_id
-        self.sha1 = sha1
+        self.sha_1 = sha_1
         self.name = name
         self.file_version = file_version
 
@@ -1769,7 +1785,9 @@ class FilesUnderRetention(BaseObject):
         self.entries = entries
 
 class FileConflict(FileMini):
-    def __init__(self, sequence_id: str, id: str, sha1: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, type: FileBaseTypeField = None, name: Union[None, str] = None, etag: Union[None, str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileMini._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileMini._json_to_fields_mapping}
+    def __init__(self, sequence_id: str, id: str, sha_1: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, type: FileBaseTypeField = None, name: Union[None, str] = None, etag: Union[None, str] = None, **kwargs):
         """
         :param sequence_id: The unique identifier that represent a file.
             The ID for any file can be determined
@@ -1780,8 +1798,8 @@ class FileConflict(FileMini):
         :type sequence_id: str
         :param id: `file`
         :type id: str
-        :param sha1: The SHA1 hash of the file.
-        :type sha1: Union[None, str], optional
+        :param sha_1: The SHA1 hash of the file.
+        :type sha_1: Union[None, str], optional
         :param type: The name of the file
         :type type: FileBaseTypeField, optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
@@ -1789,8 +1807,8 @@ class FileConflict(FileMini):
             perform changes on the file if (no) changes have happened.
         :type etag: Union[None, str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha1=None, id=id, type=type, name=name, file_version=None, etag=etag, **kwargs)
-        self.sha1 = sha1
+        super().__init__(sequence_id=sequence_id, sha_1=None, id=id, type=type, name=name, file_version=None, etag=etag, **kwargs)
+        self.sha_1 = sha_1
         self.file_version = file_version
 
 class ConflictErrorContextInfoField(BaseObject):
@@ -2518,50 +2536,54 @@ class Metadatas(BaseObject):
         self.limit = limit
 
 class MetadataFull(Metadata):
-    def __init__(self, $canEdit: Union[None, bool] = None, $id: Union[None, str] = None, $type: Union[None, str] = None, $typeVersion: Union[None, int] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'type': '$type', 'type_version': '$typeVersion', **Metadata._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$type': 'type', '$typeVersion': 'type_version', **Metadata._json_to_fields_mapping}
+    def __init__(self, can_edit: Union[None, bool] = None, id: Union[None, str] = None, type: Union[None, str] = None, type_version: Union[None, int] = None, **kwargs):
         """
-        :param $canEdit: Whether the user can edit this metadata instance.
-        :type $canEdit: Union[None, bool], optional
-        :param $id: A UUID to identify the metadata instance.
-        :type $id: Union[None, str], optional
-        :param $type: A unique identifier for the "type" of this instance. This is an
+        :param can_edit: Whether the user can edit this metadata instance.
+        :type can_edit: Union[None, bool], optional
+        :param id: A UUID to identify the metadata instance.
+        :type id: Union[None, str], optional
+        :param type: A unique identifier for the "type" of this instance. This is an
             internal system property and should not be used by a client
             application.
-        :type $type: Union[None, str], optional
-        :param $typeVersion: The last-known version of the template of the object. This is an
+        :type type: Union[None, str], optional
+        :param type_version: The last-known version of the template of the object. This is an
             internal system property and should not be used by a client
             application.
-        :type $typeVersion: Union[None, int], optional
+        :type type_version: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.$canEdit = $canEdit
-        self.$id = $id
-        self.$type = $type
-        self.$typeVersion = $typeVersion
+        self.can_edit = can_edit
+        self.id = id
+        self.type = type
+        self.type_version = type_version
 
 class MetadataBase(BaseObject):
-    def __init__(self, $parent: Union[None, str] = None, $template: Union[None, str] = None, $scope: Union[None, str] = None, $version: Union[None, int] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'$parent': 'parent', '$template': 'template', '$scope': 'scope', '$version': 'version', **BaseObject._json_to_fields_mapping}
+    def __init__(self, parent: Union[None, str] = None, template: Union[None, str] = None, scope: Union[None, str] = None, version: Union[None, int] = None, **kwargs):
         """
-        :param $parent: The identifier of the item that this metadata instance
+        :param parent: The identifier of the item that this metadata instance
             has been attached to. This combines the `type` and the `id`
             of the parent in the form `{type}_{id}`.
-        :type $parent: Union[None, str], optional
-        :param $template: The name of the template
-        :type $template: Union[None, str], optional
-        :param $scope: An ID for the scope in which this template
+        :type parent: Union[None, str], optional
+        :param template: The name of the template
+        :type template: Union[None, str], optional
+        :param scope: An ID for the scope in which this template
             has been applied. This will be `enterprise_{enterprise_id}` for templates
             defined for use in this enterprise, and `global` for general templates
             that are available to all enterprises using Box.
-        :type $scope: Union[None, str], optional
-        :param $version: The version of the metadata instance. This version starts at 0 and
+        :type scope: Union[None, str], optional
+        :param version: The version of the metadata instance. This version starts at 0 and
             increases every time a user-defined property is modified.
-        :type $version: Union[None, int], optional
+        :type version: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.$parent = $parent
-        self.$template = $template
-        self.$scope = $scope
-        self.$version = $version
+        self.parent = parent
+        self.template = template
+        self.scope = scope
+        self.version = version
 
 class MetadataCascadePolicyTypeField:
     pass
@@ -2601,7 +2623,9 @@ class MetadataCascadePolicyScopeField(str, Enum):
     ENTERPRISE__ = 'enterprise_*'
 
 class MetadataCascadePolicy(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, MetadataCascadePolicyTypeField] = None, owner_enterprise: Union[None, MetadataCascadePolicyOwnerEnterpriseField] = None, parent: Union[None, MetadataCascadePolicyParentField] = None, scope: Union[None, MetadataCascadePolicyScopeField] = None, templateKey: Union[None, str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', **BaseObject._json_to_fields_mapping}
+    def __init__(self, id: Union[None, str] = None, type: Union[None, MetadataCascadePolicyTypeField] = None, owner_enterprise: Union[None, MetadataCascadePolicyOwnerEnterpriseField] = None, parent: Union[None, MetadataCascadePolicyParentField] = None, scope: Union[None, MetadataCascadePolicyScopeField] = None, template_key: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of the metadata cascade policy object
         :type id: Union[None, str], optional
@@ -2614,7 +2638,7 @@ class MetadataCascadePolicy(BaseObject):
         :param scope: The scope of the of the template that is cascaded down to the folder's
             children.
         :type scope: Union[None, MetadataCascadePolicyScopeField], optional
-        :param templateKey: The key of the template that is cascaded down to the folder's
+        :param template_key: The key of the template that is cascaded down to the folder's
             children.
             In many cases the template key is automatically derived
             of its display name, for example `Contract Template` would
@@ -2626,7 +2650,7 @@ class MetadataCascadePolicy(BaseObject):
             [list]: e://get-metadata-templates-enterprise
             [file]: e://get-files-id-metadata
             [folder]: e://get-folders-id-metadata
-        :type templateKey: Union[None, str], optional
+        :type template_key: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -2634,7 +2658,7 @@ class MetadataCascadePolicy(BaseObject):
         self.owner_enterprise = owner_enterprise
         self.parent = parent
         self.scope = scope
-        self.templateKey = templateKey
+        self.template_key = template_key
 
 class MetadataCascadePolicies(BaseObject):
     def __init__(self, limit: Union[None, int] = None, next_marker: Union[None, int] = None, prev_marker: Union[None, int] = None, entries: Union[None, List[MetadataCascadePolicy]] = None, **kwargs):
@@ -2732,7 +2756,9 @@ class MetadataTemplateFieldsFieldOptionsField(BaseObject):
         self.id = id
 
 class MetadataTemplateFieldsField(BaseObject):
-    def __init__(self, type: MetadataTemplateFieldsFieldTypeField, key: str, displayName: str, description: Union[None, str] = None, hidden: Union[None, bool] = None, options: Union[None, List[MetadataTemplateFieldsFieldOptionsField]] = None, id: Union[None, str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'display_name': 'displayName', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'displayName': 'display_name', **BaseObject._json_to_fields_mapping}
+    def __init__(self, type: MetadataTemplateFieldsFieldTypeField, key: str, display_name: str, description: Union[None, str] = None, hidden: Union[None, bool] = None, options: Union[None, List[MetadataTemplateFieldsFieldOptionsField]] = None, id: Union[None, str] = None, **kwargs):
         """
         :param type: The type of field. The basic fields are a `string` field for text, a
             `float` field for numbers, and a `date` fields to present the user with a
@@ -2744,9 +2770,9 @@ class MetadataTemplateFieldsField(BaseObject):
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
         :type key: str
-        :param displayName: The display name of the field as it is shown to the user in the web and
+        :param display_name: The display name of the field as it is shown to the user in the web and
             mobile apps.
-        :type displayName: str
+        :type display_name: str
         :param description: A description of the field. This is not shown to the user.
         :type description: Union[None, str], optional
         :param hidden: Whether this field is hidden in the UI for the user and can only be set
@@ -2761,14 +2787,16 @@ class MetadataTemplateFieldsField(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.key = key
-        self.displayName = displayName
+        self.display_name = display_name
         self.description = description
         self.hidden = hidden
         self.options = options
         self.id = id
 
 class MetadataTemplate(BaseObject):
-    def __init__(self, type: MetadataTemplateTypeField, id: Union[None, str] = None, scope: Union[None, str] = None, templateKey: Union[None, str] = None, displayName: Union[None, str] = None, hidden: Union[None, bool] = None, fields: Union[None, List[MetadataTemplateFieldsField]] = None, copyInstanceOnItemCopy: Union[None, bool] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', 'display_name': 'displayName', 'copy_instance_on_item_copy': 'copyInstanceOnItemCopy', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', 'displayName': 'display_name', 'copyInstanceOnItemCopy': 'copy_instance_on_item_copy', **BaseObject._json_to_fields_mapping}
+    def __init__(self, type: MetadataTemplateTypeField, id: Union[None, str] = None, scope: Union[None, str] = None, template_key: Union[None, str] = None, display_name: Union[None, str] = None, hidden: Union[None, bool] = None, fields: Union[None, List[MetadataTemplateFieldsField]] = None, copy_instance_on_item_copy: Union[None, bool] = None, **kwargs):
         """
         :param type: `metadata_template`
         :type type: MetadataTemplateTypeField
@@ -2780,13 +2808,13 @@ class MetadataTemplate(BaseObject):
             templates that have been created within a specific enterprise, where `*`
             will be the ID of that enterprise.
         :type scope: Union[None, str], optional
-        :param templateKey: A unique identifier for the template. This identifier is unique across
+        :param template_key: A unique identifier for the template. This identifier is unique across
             the `scope` of the enterprise to which the metadata template is being
             applied, yet is not necessarily unique across different enterprises.
-        :type templateKey: Union[None, str], optional
-        :param displayName: The display name of the template. This can be seen in the Box web app
+        :type template_key: Union[None, str], optional
+        :param display_name: The display name of the template. This can be seen in the Box web app
             and mobile apps.
-        :type displayName: Union[None, str], optional
+        :type display_name: Union[None, str], optional
         :param hidden: Defines if this template is visible in the Box web app UI, or if
             it is purely intended for usage through the API.
         :type hidden: Union[None, bool], optional
@@ -2794,18 +2822,18 @@ class MetadataTemplate(BaseObject):
             field can be a regular text field, date field, number field, as well as a
             single or multi-select list.
         :type fields: Union[None, List[MetadataTemplateFieldsField]], optional
-        :param copyInstanceOnItemCopy: Whether or not to include the metadata when a file or folder is copied.
-        :type copyInstanceOnItemCopy: Union[None, bool], optional
+        :param copy_instance_on_item_copy: Whether or not to include the metadata when a file or folder is copied.
+        :type copy_instance_on_item_copy: Union[None, bool], optional
         """
         super().__init__(**kwargs)
         self.type = type
         self.id = id
         self.scope = scope
-        self.templateKey = templateKey
-        self.displayName = displayName
+        self.template_key = template_key
+        self.display_name = display_name
         self.hidden = hidden
         self.fields = fields
-        self.copyInstanceOnItemCopy = copyInstanceOnItemCopy
+        self.copy_instance_on_item_copy = copy_instance_on_item_copy
 
 class MetadataTemplates(BaseObject):
     def __init__(self, limit: Union[None, int] = None, next_marker: Union[None, int] = None, prev_marker: Union[None, int] = None, entries: Union[None, List[MetadataTemplate]] = None, **kwargs):
@@ -3612,10 +3640,12 @@ class UploadPartMini(BaseObject):
         self.size = size
 
 class UploadPart(UploadPartMini):
-    def __init__(self, sha1: Union[None, str] = None, part_id: Union[None, str] = None, offset: Union[None, int] = None, size: Union[None, int] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **UploadPartMini._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **UploadPartMini._json_to_fields_mapping}
+    def __init__(self, sha_1: Union[None, str] = None, part_id: Union[None, str] = None, offset: Union[None, int] = None, size: Union[None, int] = None, **kwargs):
         """
-        :param sha1: The SHA1 hash of the chunk.
-        :type sha1: Union[None, str], optional
+        :param sha_1: The SHA1 hash of the chunk.
+        :type sha_1: Union[None, str], optional
         :param part_id: The unique ID of the chunk.
         :type part_id: Union[None, str], optional
         :param offset: The offset of the chunk within the file
@@ -3626,7 +3656,7 @@ class UploadPart(UploadPartMini):
         :type size: Union[None, int], optional
         """
         super().__init__(part_id=part_id, offset=offset, size=size, **kwargs)
-        self.sha1 = sha1
+        self.sha_1 = sha_1
 
 class UploadedPart(BaseObject):
     def __init__(self, part: Union[None, UploadPart] = None, **kwargs):
@@ -4085,7 +4115,9 @@ class TrashFolderRestored(BaseObject):
         self.item_status = item_status
 
 class TrashFileRestored(BaseObject):
-    def __init__(self, id: str, type: TrashFileRestoredTypeField, sequence_id: str, sha1: str, description: str, size: int, path_collection: TrashFileRestoredPathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileRestoredItemStatusField, etag: Union[None, str] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, str] = None, parent: Union[None, FolderMini] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
+    def __init__(self, id: str, type: TrashFileRestoredTypeField, sequence_id: str, sha_1: str, description: str, size: int, path_collection: TrashFileRestoredPathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileRestoredItemStatusField, etag: Union[None, str] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, str] = None, parent: Union[None, FolderMini] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
@@ -4096,9 +4128,9 @@ class TrashFileRestored(BaseObject):
         :type id: str
         :param type: `file`
         :type type: TrashFileRestoredTypeField
-        :param sha1: The SHA1 hash of the file. This can be used to compare the contents
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sha1: str
+        :type sha_1: str
         :param description: The optional description of this file
         :type description: str
         :param size: The file size in bytes. Be careful parsing this integer as it can
@@ -4140,7 +4172,7 @@ class TrashFileRestored(BaseObject):
         self.id = id
         self.type = type
         self.sequence_id = sequence_id
-        self.sha1 = sha1
+        self.sha_1 = sha_1
         self.description = description
         self.size = size
         self.path_collection = path_collection
@@ -4293,7 +4325,9 @@ class TrashFolder(BaseObject):
         self.parent = parent
 
 class TrashFile(BaseObject):
-    def __init__(self, id: str, type: TrashFileTypeField, sequence_id: str, sha1: str, description: str, size: int, path_collection: TrashFilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileItemStatusField, etag: Union[None, str] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, str] = None, parent: Union[None, FolderMini] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
+    def __init__(self, id: str, type: TrashFileTypeField, sequence_id: str, sha_1: str, description: str, size: int, path_collection: TrashFilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileItemStatusField, etag: Union[None, str] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, str] = None, parent: Union[None, FolderMini] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
@@ -4304,9 +4338,9 @@ class TrashFile(BaseObject):
         :type id: str
         :param type: `file`
         :type type: TrashFileTypeField
-        :param sha1: The SHA1 hash of the file. This can be used to compare the contents
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sha1: str
+        :type sha_1: str
         :param description: The optional description of this file
         :type description: str
         :param size: The file size in bytes. Be careful parsing this integer as it can
@@ -4347,7 +4381,7 @@ class TrashFile(BaseObject):
         self.id = id
         self.type = type
         self.sequence_id = sequence_id
-        self.sha1 = sha1
+        self.sha_1 = sha_1
         self.description = description
         self.size = size
         self.path_collection = path_collection
@@ -4761,7 +4795,7 @@ class GroupMemberships(BaseObject):
         self.entries = entries
 
 class FileVersion(FileVersionMini):
-    def __init__(self, id: str, type: FileVersionBaseTypeField, name: Union[None, str] = None, size: Union[None, int] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, modified_by: Union[None, UserMini] = None, trashed_at: Union[None, str] = None, trashed_by: Union[None, UserMini] = None, restored_at: Union[None, str] = None, restored_by: Union[None, UserMini] = None, purged_at: Union[None, str] = None, uploader_display_name: Union[None, str] = None, sha1: Union[None, str] = None, **kwargs):
+    def __init__(self, id: str, type: FileVersionBaseTypeField, name: Union[None, str] = None, size: Union[None, int] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, modified_by: Union[None, UserMini] = None, trashed_at: Union[None, str] = None, trashed_by: Union[None, UserMini] = None, restored_at: Union[None, str] = None, restored_by: Union[None, UserMini] = None, purged_at: Union[None, str] = None, uploader_display_name: Union[None, str] = None, sha_1: Union[None, str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
@@ -4781,10 +4815,10 @@ class FileVersion(FileVersionMini):
         :type restored_at: Union[None, str], optional
         :param purged_at: When the file version object will be permanently deleted.
         :type purged_at: Union[None, str], optional
-        :param sha1: The SHA1 hash of this version of the file.
-        :type sha1: Union[None, str], optional
+        :param sha_1: The SHA1 hash of this version of the file.
+        :type sha_1: Union[None, str], optional
         """
-        super().__init__(id=id, type=type, sha1=sha1, **kwargs)
+        super().__init__(id=id, type=type, sha_1=sha_1, **kwargs)
         self.name = name
         self.size = size
         self.created_at = created_at
@@ -4828,7 +4862,7 @@ class FileVersions(BaseObject):
         self.entries = entries
 
 class FileVersionFull(FileVersion):
-    def __init__(self, id: str, type: FileVersionBaseTypeField, version_number: Union[None, str] = None, name: Union[None, str] = None, size: Union[None, int] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, modified_by: Union[None, UserMini] = None, trashed_at: Union[None, str] = None, trashed_by: Union[None, UserMini] = None, restored_at: Union[None, str] = None, restored_by: Union[None, UserMini] = None, purged_at: Union[None, str] = None, uploader_display_name: Union[None, str] = None, sha1: Union[None, str] = None, **kwargs):
+    def __init__(self, id: str, type: FileVersionBaseTypeField, version_number: Union[None, str] = None, name: Union[None, str] = None, size: Union[None, int] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, modified_by: Union[None, UserMini] = None, trashed_at: Union[None, str] = None, trashed_by: Union[None, UserMini] = None, restored_at: Union[None, str] = None, restored_by: Union[None, UserMini] = None, purged_at: Union[None, str] = None, uploader_display_name: Union[None, str] = None, sha_1: Union[None, str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
@@ -4850,10 +4884,10 @@ class FileVersionFull(FileVersion):
         :type restored_at: Union[None, str], optional
         :param purged_at: When the file version object will be permanently deleted.
         :type purged_at: Union[None, str], optional
-        :param sha1: The SHA1 hash of this version of the file.
-        :type sha1: Union[None, str], optional
+        :param sha_1: The SHA1 hash of this version of the file.
+        :type sha_1: Union[None, str], optional
         """
-        super().__init__(id=id, type=type, name=name, size=size, created_at=created_at, modified_at=modified_at, modified_by=modified_by, trashed_at=trashed_at, trashed_by=trashed_by, restored_at=restored_at, restored_by=restored_by, purged_at=purged_at, uploader_display_name=uploader_display_name, sha1=sha1, **kwargs)
+        super().__init__(id=id, type=type, name=name, size=size, created_at=created_at, modified_at=modified_at, modified_by=modified_by, trashed_at=trashed_at, trashed_by=trashed_by, restored_at=restored_at, restored_by=restored_by, purged_at=purged_at, uploader_display_name=uploader_display_name, sha_1=sha_1, **kwargs)
         self.version_number = version_number
 
 class FileRequest(BaseObject):
@@ -4961,7 +4995,7 @@ class FileFullLockField(BaseObject):
         self.app_type = app_type
 
 class File(FileMini):
-    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha1: str, id: str, type: FileBaseTypeField, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
+    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
         """
         :param description: The optional description of this file
         :type description: str
@@ -4977,9 +5011,9 @@ class File(FileMini):
             * `trashed` when the item has been moved to the trash but not deleted
             * `deleted` when the item has been permanently deleted.
         :type item_status: FileItemStatusField
-        :param sha1: The SHA1 hash of the file. This can be used to compare the contents
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sha1: str
+        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -5007,7 +5041,7 @@ class File(FileMini):
             perform changes on the file if (no) changes have happened.
         :type etag: Union[None, str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha1=sha1, id=id, type=type, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, name=name, file_version=file_version, etag=etag, **kwargs)
         self.description = description
         self.size = size
         self.path_collection = path_collection
@@ -6522,7 +6556,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self.url = url
 
 class FileFull(File):
-    def __init__(self, permissions: FileFullPermissionsField, tags: List[str], allowed_invitee_roles: List[FileFullAllowedInviteeRolesField], is_externally_owned: bool, has_collaborations: bool, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha1: str, id: str, type: FileBaseTypeField, version_number: Union[None, str] = None, comment_count: Union[None, int] = None, lock: Union[None, FileFullLockField] = None, extension: Union[None, str] = None, is_package: Union[None, bool] = None, expiring_embed_link: Union[None, FileFullExpiringEmbedLinkField] = None, watermark_info: Union[None, FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Union[None, bool] = None, metadata: Union[None, FileFullMetadataField] = None, expires_at: Union[None, str] = None, representations: Union[None, FileFullRepresentationsField] = None, classification: Union[None, FileFullClassificationField] = None, uploader_display_name: Union[None, str] = None, disposition_at: Union[None, str] = None, shared_link_permission_options: Union[None, List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
+    def __init__(self, permissions: FileFullPermissionsField, tags: List[str], allowed_invitee_roles: List[FileFullAllowedInviteeRolesField], is_externally_owned: bool, has_collaborations: bool, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, version_number: Union[None, str] = None, comment_count: Union[None, int] = None, lock: Union[None, FileFullLockField] = None, extension: Union[None, str] = None, is_package: Union[None, bool] = None, expiring_embed_link: Union[None, FileFullExpiringEmbedLinkField] = None, watermark_info: Union[None, FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Union[None, bool] = None, metadata: Union[None, FileFullMetadataField] = None, expires_at: Union[None, str] = None, representations: Union[None, FileFullRepresentationsField] = None, classification: Union[None, FileFullClassificationField] = None, uploader_display_name: Union[None, str] = None, disposition_at: Union[None, str] = None, shared_link_permission_options: Union[None, List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
         """
         :param allowed_invitee_roles: A list of the types of roles that user can be invited at
             when sharing this file.
@@ -6546,9 +6580,9 @@ class FileFull(File):
             * `trashed` when the item has been moved to the trash but not deleted
             * `deleted` when the item has been permanently deleted.
         :type item_status: FileItemStatusField
-        :param sha1: The SHA1 hash of the file. This can be used to compare the contents
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sha1: str
+        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -6597,7 +6631,7 @@ class FileFull(File):
             perform changes on the file if (no) changes have happened.
         :type etag: Union[None, str], optional
         """
-        super().__init__(description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, modified_by=modified_by, owned_by=owned_by, item_status=item_status, sequence_id=sequence_id, sha1=sha1, id=id, type=type, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, shared_link=shared_link, parent=parent, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, modified_by=modified_by, owned_by=owned_by, item_status=item_status, sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, shared_link=shared_link, parent=parent, name=name, file_version=file_version, etag=etag, **kwargs)
         self.permissions = permissions
         self.tags = tags
         self.allowed_invitee_roles = allowed_invitee_roles
@@ -7347,40 +7381,42 @@ class StatusSkillCard(BaseObject):
         self.skill_card_title = skill_card_title
 
 class SkillCardsMetadata(BaseObject):
-    def __init__(self, $canEdit: Union[None, bool] = None, $id: Union[None, str] = None, $parent: Union[None, str] = None, $scope: Union[None, str] = None, $template: Union[None, str] = None, $type: Union[None, str] = None, $typeVersion: Union[None, int] = None, $version: Union[None, int] = None, cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'parent': '$parent', 'scope': '$scope', 'template': '$template', 'type': '$type', 'type_version': '$typeVersion', 'version': '$version', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$parent': 'parent', '$scope': 'scope', '$template': 'template', '$type': 'type', '$typeVersion': 'type_version', '$version': 'version', **BaseObject._json_to_fields_mapping}
+    def __init__(self, can_edit: Union[None, bool] = None, id: Union[None, str] = None, parent: Union[None, str] = None, scope: Union[None, str] = None, template: Union[None, str] = None, type: Union[None, str] = None, type_version: Union[None, int] = None, version: Union[None, int] = None, cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
-        :param $canEdit: Whether the user can edit this metadata
-        :type $canEdit: Union[None, bool], optional
-        :param $id: A UUID to identify the metadata object
-        :type $id: Union[None, str], optional
-        :param $parent: An ID for the parent folder
-        :type $parent: Union[None, str], optional
-        :param $scope: An ID for the scope in which this template
+        :param can_edit: Whether the user can edit this metadata
+        :type can_edit: Union[None, bool], optional
+        :param id: A UUID to identify the metadata object
+        :type id: Union[None, str], optional
+        :param parent: An ID for the parent folder
+        :type parent: Union[None, str], optional
+        :param scope: An ID for the scope in which this template
             has been applied
-        :type $scope: Union[None, str], optional
-        :param $template: The name of the template
-        :type $template: Union[None, str], optional
-        :param $type: A unique identifier for the "type" of this instance. This is an internal
+        :type scope: Union[None, str], optional
+        :param template: The name of the template
+        :type template: Union[None, str], optional
+        :param type: A unique identifier for the "type" of this instance. This is an internal
             system property and should not be used by a client application.
-        :type $type: Union[None, str], optional
-        :param $typeVersion: The last-known version of the template of the object. This is an internal
+        :type type: Union[None, str], optional
+        :param type_version: The last-known version of the template of the object. This is an internal
             system property and should not be used by a client application.
-        :type $typeVersion: Union[None, int], optional
-        :param $version: The version of the metadata object. Starts at 0 and increases every time
+        :type type_version: Union[None, int], optional
+        :param version: The version of the metadata object. Starts at 0 and increases every time
             a user-defined property is modified.
-        :type $version: Union[None, int], optional
+        :type version: Union[None, int], optional
         :param cards: A list of Box Skill cards that have been applied to this file.
         :type cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
         """
         super().__init__(**kwargs)
-        self.$canEdit = $canEdit
-        self.$id = $id
-        self.$parent = $parent
-        self.$scope = $scope
-        self.$template = $template
-        self.$type = $type
-        self.$typeVersion = $typeVersion
-        self.$version = $version
+        self.can_edit = can_edit
+        self.id = id
+        self.parent = parent
+        self.scope = scope
+        self.template = template
+        self.type = type
+        self.type_version = type_version
+        self.version = version
         self.cards = cards
 
 class SignRequestCreateSignerRoleField(str, Enum):
@@ -7869,14 +7905,16 @@ class MetadataFilterFiltersField(BaseObject):
         super().__init__(**kwargs)
 
 class MetadataFilter(BaseObject):
-    def __init__(self, scope: Union[None, MetadataFilterScopeField] = None, templateKey: Union[None, str] = None, filters: Union[None, MetadataFilterFiltersField] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', **BaseObject._json_to_fields_mapping}
+    def __init__(self, scope: Union[None, MetadataFilterScopeField] = None, template_key: Union[None, str] = None, filters: Union[None, MetadataFilterFiltersField] = None, **kwargs):
         """
         :param scope: Specifies the scope of the template to filter search results by.
             This will be `enterprise_{enterprise_id}` for templates defined
             for use in this enterprise, and `global` for general templates
             that are available to all enterprises using Box.
         :type scope: Union[None, MetadataFilterScopeField], optional
-        :param templateKey: The key of the template to filter search results by.
+        :param template_key: The key of the template to filter search results by.
             In many cases the template key is automatically derived
             of its display name, for example `Contract Template` would
             become `contractTemplate`. In some cases the creator of the
@@ -7887,11 +7925,11 @@ class MetadataFilter(BaseObject):
             [list]: e://get-metadata-templates-enterprise
             [file]: e://get-files-id-metadata
             [folder]: e://get-folders-id-metadata
-        :type templateKey: Union[None, str], optional
+        :type template_key: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.scope = scope
-        self.templateKey = templateKey
+        self.template_key = template_key
         self.filters = filters
 
 class MetadataFieldFilterString(BaseObject):

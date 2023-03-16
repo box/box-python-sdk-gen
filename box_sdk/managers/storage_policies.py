@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import StoragePolicies
@@ -15,6 +9,16 @@ from box_sdk.schemas import StoragePolicies
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import StoragePolicy
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetStoragePoliciesOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -44,7 +48,7 @@ class StoragePoliciesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getStoragePolicies(self, options: GetStoragePoliciesOptionsArg = None) -> StoragePolicies:
+    def get_storage_policies(self, options: GetStoragePoliciesOptionsArg = None) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
         """
@@ -52,12 +56,12 @@ class StoragePoliciesManager(BaseObject):
             options = GetStoragePoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params={'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return StoragePolicies.from_dict(json.loads(response.text))
-    def getStoragePoliciesId(self, storagePolicyId: str) -> StoragePolicy:
+    def get_storage_policies_id(self, storage_policy_id: str) -> StoragePolicy:
         """
         Fetches a specific storage policy.
-        :param storagePolicyId: The ID of the storage policy.
+        :param storage_policy_id: The ID of the storage policy.
             Example: "34342"
-        :type storagePolicyId: str
+        :type storage_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies/', storagePolicyId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]), FetchOptions(method='GET', auth=self.auth))
         return StoragePolicy.from_dict(json.loads(response.text))

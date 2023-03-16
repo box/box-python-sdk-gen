@@ -4,27 +4,31 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import WebLink
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetSharedItemsWebLinksOptionsArg(BaseObject):
-    def __init__(self, ifNoneMatch: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
         """
-        :param ifNoneMatch: Ensures an item is only returned if it has changed.
+        :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type ifNoneMatch: Union[None, str], optional
+        :type if_none_match: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -36,7 +40,7 @@ class GetSharedItemsWebLinksOptionsArg(BaseObject):
         :type fields: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifNoneMatch = ifNoneMatch
+        self.if_none_match = if_none_match
         self.fields = fields
 
 class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
@@ -199,7 +203,7 @@ class SharedLinksWebLinksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getSharedItemsWebLinks(self, boxapi: str, options: GetSharedItemsWebLinksOptionsArg = None) -> WebLink:
+    def get_shared_items_web_links(self, boxapi: str, options: GetSharedItemsWebLinksOptionsArg = None) -> WebLink:
         """
         Returns the web link represented by a shared link.
         
@@ -225,55 +229,55 @@ class SharedLinksWebLinksManager(BaseObject):
             options = GetSharedItemsWebLinksOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def getWebLinksIdGetSharedLink(self, webLinkId: str, fields: str) -> WebLink:
+    def get_web_links_id_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
         """
         Gets the information for a shared link on a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def putWebLinksIdAddSharedLink(self, webLinkId: str, fields: str, requestBody: PutWebLinksIdAddSharedLinkRequestBodyArg) -> WebLink:
+    def put_web_links_id_add_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdAddSharedLinkRequestBodyArg) -> WebLink:
         """
         Adds a shared link to a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def putWebLinksIdUpdateSharedLink(self, webLinkId: str, fields: str, requestBody: PutWebLinksIdUpdateSharedLinkRequestBodyArg) -> WebLink:
+    def put_web_links_id_update_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdUpdateSharedLinkRequestBodyArg) -> WebLink:
         """
         Updates a shared link on a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def putWebLinksIdRemoveSharedLink(self, webLinkId: str, fields: str, requestBody: PutWebLinksIdRemoveSharedLinkRequestBodyArg) -> WebLink:
+    def put_web_links_id_remove_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdRemoveSharedLinkRequestBodyArg) -> WebLink:
         """
         Removes a shared link from a web link.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))

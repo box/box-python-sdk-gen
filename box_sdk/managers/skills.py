@@ -6,12 +6,6 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import SkillCardsMetadata
@@ -27,6 +21,16 @@ from box_sdk.schemas import TimelineSkillCard
 from box_sdk.schemas import TranscriptSkillCard
 
 from box_sdk.schemas import StatusSkillCard
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg(BaseObject):
     def __init__(self, cards: List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]], **kwargs):
@@ -124,57 +128,57 @@ class SkillsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesIdMetadataGlobalBoxSkillsCards(self, fileId: str) -> SkillCardsMetadata:
+    def get_files_id_metadata_global_box_skills_cards(self, file_id: str) -> SkillCardsMetadata:
         """
         List the Box Skills metadata cards that are attached to a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', auth=self.auth))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def postFilesIdMetadataGlobalBoxSkillsCards(self, fileId: str, requestBody: PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg) -> SkillCardsMetadata:
+    def post_files_id_metadata_global_box_skills_cards(self, file_id: str, request_body: PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg) -> SkillCardsMetadata:
         """
         Applies one or more Box Skills metadata cards to a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def deleteFilesIdMetadataGlobalBoxSkillsCards(self, fileId: str):
+    def delete_files_id_metadata_global_box_skills_cards(self, file_id: str):
         """
         Removes any Box Skills cards metadata from a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def putSkillInvocationsId(self, skillId: str, requestBody: PutSkillInvocationsIdRequestBodyArg):
+    def put_skill_invocations_id(self, skill_id: str, request_body: PutSkillInvocationsIdRequestBodyArg):
         """
         An alternative method that can be used to overwrite and update all Box Skill
         
         metadata cards on a file.
 
-        :param skillId: The ID of the skill to apply this metadata for.
+        :param skill_id: The ID of the skill to apply this metadata for.
             Example: "33243242"
-        :type skillId: str
+        :type skill_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skillId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return response.content

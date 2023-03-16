@@ -4,12 +4,6 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Comments
@@ -17,6 +11,16 @@ from box_sdk.schemas import Comments
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Comment
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFilesIdCommentsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
@@ -145,57 +149,57 @@ class CommentsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesIdComments(self, fileId: str, options: GetFilesIdCommentsOptionsArg = None) -> Comments:
+    def get_files_id_comments(self, file_id: str, options: GetFilesIdCommentsOptionsArg = None) -> Comments:
         """
         Retrieves a list of comments for a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = GetFilesIdCommentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/comments']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Comments.from_dict(json.loads(response.text))
-    def getCommentsId(self, commentId: str, options: GetCommentsIdOptionsArg = None) -> Comment:
+    def get_comments_id(self, comment_id: str, options: GetCommentsIdOptionsArg = None) -> Comment:
         """
         Retrieves the message and metadata for a specific comment, as well
         
         as information on the user who created the comment.
 
-        :param commentId: The ID of the comment.
+        :param comment_id: The ID of the comment.
             Example: "12345"
-        :type commentId: str
+        :type comment_id: str
         """
         if options is None:
             options = GetCommentsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', commentId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Comment.from_dict(json.loads(response.text))
-    def putCommentsId(self, commentId: str, requestBody: PutCommentsIdRequestBodyArg, options: PutCommentsIdOptionsArg = None) -> Comment:
+    def put_comments_id(self, comment_id: str, request_body: PutCommentsIdRequestBodyArg, options: PutCommentsIdOptionsArg = None) -> Comment:
         """
         Update the message of a comment.
-        :param commentId: The ID of the comment.
+        :param comment_id: The ID of the comment.
             Example: "12345"
-        :type commentId: str
+        :type comment_id: str
         """
         if options is None:
             options = PutCommentsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', commentId]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Comment.from_dict(json.loads(response.text))
-    def deleteCommentsId(self, commentId: str):
+    def delete_comments_id(self, comment_id: str):
         """
         Permanently deletes a comment.
-        :param commentId: The ID of the comment.
+        :param comment_id: The ID of the comment.
             Example: "12345"
-        :type commentId: str
+        :type comment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', commentId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def postComments(self, requestBody: PostCommentsRequestBodyArg, options: PostCommentsOptionsArg = None) -> Comment:
+    def post_comments(self, request_body: PostCommentsRequestBodyArg, options: PostCommentsOptionsArg = None) -> Comment:
         """
         Adds a comment by the user to a specific file, or
         
@@ -204,5 +208,5 @@ class CommentsManager(BaseObject):
         """
         if options is None:
             options = PostCommentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Comment.from_dict(json.loads(response.text))

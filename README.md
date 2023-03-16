@@ -39,8 +39,8 @@ from box_sdk.client import Client
 def main(token: str):
     auth: DeveloperTokenAuth = DeveloperTokenAuth(token=token)
     client: Client = Client(auth=auth)
-    for item in client.folders.getFoldersIdItems('0').entries:
-        print(item['name'])
+    for item in client.folders.get_folders_id_items('0').entries:
+        print(item.name)
 
 
 if __name__ == '__main__':

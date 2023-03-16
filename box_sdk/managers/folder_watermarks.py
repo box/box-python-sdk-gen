@@ -2,17 +2,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Watermark
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField:
     pass
@@ -40,10 +44,10 @@ class FolderWatermarksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFoldersIdWatermark(self, folderId: str) -> Watermark:
+    def get_folders_id_watermark(self, folder_id: str) -> Watermark:
         """
         Retrieve the watermark for a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -52,14 +56,14 @@ class FolderWatermarksManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/watermark']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='GET', auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
-    def putFoldersIdWatermark(self, folderId: str, requestBody: PutFoldersIdWatermarkRequestBodyArg) -> Watermark:
+    def put_folders_id_watermark(self, folder_id: str, request_body: PutFoldersIdWatermarkRequestBodyArg) -> Watermark:
         """
         Applies or update a watermark on a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -68,14 +72,14 @@ class FolderWatermarksManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/watermark']), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
-    def deleteFoldersIdWatermark(self, folderId: str):
+    def delete_folders_id_watermark(self, folder_id: str):
         """
         Removes the watermark from a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -84,7 +88,7 @@ class FolderWatermarksManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/watermark']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

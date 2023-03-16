@@ -6,12 +6,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import RetentionPolicyAssignments
@@ -21,6 +15,16 @@ from box_sdk.schemas import ClientError
 from box_sdk.schemas import RetentionPolicyAssignment
 
 from box_sdk.schemas import FilesUnderRetention
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetRetentionPoliciesIdAssignmentsOptionsArgTypeField(str, Enum):
     FOLDER = 'folder'
@@ -156,71 +160,71 @@ class RetentionPolicyAssignmentsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getRetentionPoliciesIdAssignments(self, retentionPolicyId: str, options: GetRetentionPoliciesIdAssignmentsOptionsArg = None) -> RetentionPolicyAssignments:
+    def get_retention_policies_id_assignments(self, retention_policy_id: str, options: GetRetentionPoliciesIdAssignmentsOptionsArg = None) -> RetentionPolicyAssignments:
         """
         Returns a list of all retention policy assignments associated with a specified
         
         retention policy.
 
-        :param retentionPolicyId: The ID of the retention policy.
+        :param retention_policy_id: The ID of the retention policy.
             Example: "982312"
-        :type retentionPolicyId: str
+        :type retention_policy_id: str
         """
         if options is None:
             options = GetRetentionPoliciesIdAssignmentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retentionPolicyId, '/assignments']), FetchOptions(method='GET', params={'type': options.type, 'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params={'type': options.type, 'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return RetentionPolicyAssignments.from_dict(json.loads(response.text))
-    def postRetentionPolicyAssignments(self, requestBody: PostRetentionPolicyAssignmentsRequestBodyArg) -> RetentionPolicyAssignment:
+    def post_retention_policy_assignments(self, request_body: PostRetentionPolicyAssignmentsRequestBodyArg) -> RetentionPolicyAssignment:
         """
         Assigns a retention policy to an item.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
-    def getRetentionPolicyAssignmentsId(self, retentionPolicyAssignmentId: str, options: GetRetentionPolicyAssignmentsIdOptionsArg = None) -> RetentionPolicyAssignment:
+    def get_retention_policy_assignments_id(self, retention_policy_assignment_id: str, options: GetRetentionPolicyAssignmentsIdOptionsArg = None) -> RetentionPolicyAssignment:
         """
         Retrieves a retention policy assignment
-        :param retentionPolicyAssignmentId: The ID of the retention policy assignment.
+        :param retention_policy_assignment_id: The ID of the retention policy assignment.
             Example: "1233123"
-        :type retentionPolicyAssignmentId: str
+        :type retention_policy_assignment_id: str
         """
         if options is None:
             options = GetRetentionPolicyAssignmentsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retentionPolicyAssignmentId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
-    def deleteRetentionPolicyAssignmentsId(self, retentionPolicyAssignmentId: str):
+    def delete_retention_policy_assignments_id(self, retention_policy_assignment_id: str):
         """
         Removes a retention policy assignment
         
         applied to content.
 
-        :param retentionPolicyAssignmentId: The ID of the retention policy assignment.
+        :param retention_policy_assignment_id: The ID of the retention policy assignment.
             Example: "1233123"
-        :type retentionPolicyAssignmentId: str
+        :type retention_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retentionPolicyAssignmentId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def getRetentionPolicyAssignmentsIdFilesUnderRetention(self, retentionPolicyAssignmentId: str, options: GetRetentionPolicyAssignmentsIdFilesUnderRetentionOptionsArg = None) -> FilesUnderRetention:
+    def get_retention_policy_assignments_id_files_under_retention(self, retention_policy_assignment_id: str, options: GetRetentionPolicyAssignmentsIdFilesUnderRetentionOptionsArg = None) -> FilesUnderRetention:
         """
         Returns a list of files under retention for a retention policy assignment.
-        :param retentionPolicyAssignmentId: The ID of the retention policy assignment.
+        :param retention_policy_assignment_id: The ID of the retention policy assignment.
             Example: "1233123"
-        :type retentionPolicyAssignmentId: str
+        :type retention_policy_assignment_id: str
         """
         if options is None:
             options = GetRetentionPolicyAssignmentsIdFilesUnderRetentionOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retentionPolicyAssignmentId, '/files_under_retention']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return FilesUnderRetention.from_dict(json.loads(response.text))
-    def getRetentionPolicyAssignmentsIdFileVersionsUnderRetention(self, retentionPolicyAssignmentId: str, options: GetRetentionPolicyAssignmentsIdFileVersionsUnderRetentionOptionsArg = None) -> FilesUnderRetention:
+    def get_retention_policy_assignments_id_file_versions_under_retention(self, retention_policy_assignment_id: str, options: GetRetentionPolicyAssignmentsIdFileVersionsUnderRetentionOptionsArg = None) -> FilesUnderRetention:
         """
         Returns a list of file versions under retention for a retention policy
         
         assignment.
 
-        :param retentionPolicyAssignmentId: The ID of the retention policy assignment.
+        :param retention_policy_assignment_id: The ID of the retention policy assignment.
             Example: "1233123"
-        :type retentionPolicyAssignmentId: str
+        :type retention_policy_assignment_id: str
         """
         if options is None:
             options = GetRetentionPolicyAssignmentsIdFileVersionsUnderRetentionOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retentionPolicyAssignmentId, '/file_versions_under_retention']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return FilesUnderRetention.from_dict(json.loads(response.text))

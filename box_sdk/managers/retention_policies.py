@@ -6,12 +6,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import RetentionPolicies
@@ -22,20 +16,30 @@ from box_sdk.schemas import RetentionPolicy
 
 from box_sdk.schemas import UserMini
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetRetentionPoliciesOptionsArgPolicyTypeField(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
 
 class GetRetentionPoliciesOptionsArg(BaseObject):
-    def __init__(self, policyName: Union[None, str] = None, policyType: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField] = None, createdByUserId: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, policy_name: Union[None, str] = None, policy_type: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField] = None, created_by_user_id: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
         """
-        :param policyName: Filters results by a case sensitive prefix of the name of
+        :param policy_name: Filters results by a case sensitive prefix of the name of
             retention policies.
-        :type policyName: Union[None, str], optional
-        :param policyType: Filters results by the type of retention policy.
-        :type policyType: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField], optional
-        :param createdByUserId: Filters results by the ID of the user who created policy.
-        :type createdByUserId: Union[None, str], optional
+        :type policy_name: Union[None, str], optional
+        :param policy_type: Filters results by the type of retention policy.
+        :type policy_type: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField], optional
+        :param created_by_user_id: Filters results by the ID of the user who created policy.
+        :type created_by_user_id: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -52,9 +56,9 @@ class GetRetentionPoliciesOptionsArg(BaseObject):
         :type marker: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.policyName = policyName
-        self.policyType = policyType
-        self.createdByUserId = createdByUserId
+        self.policy_name = policy_name
+        self.policy_type = policy_type
+        self.created_by_user_id = created_by_user_id
         self.fields = fields
         self.limit = limit
         self.marker = marker
@@ -222,7 +226,7 @@ class RetentionPoliciesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getRetentionPolicies(self, options: GetRetentionPoliciesOptionsArg = None) -> RetentionPolicies:
+    def get_retention_policies(self, options: GetRetentionPoliciesOptionsArg = None) -> RetentionPolicies:
         """
         Retrieves all of the retention policies for an enterprise.
         """
@@ -230,38 +234,38 @@ class RetentionPoliciesManager(BaseObject):
             options = GetRetentionPoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params={'policy_name': options.policyName, 'policy_type': options.policyType, 'created_by_user_id': options.createdByUserId, 'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return RetentionPolicies.from_dict(json.loads(response.text))
-    def postRetentionPolicies(self, requestBody: PostRetentionPoliciesRequestBodyArg) -> RetentionPolicy:
+    def post_retention_policies(self, request_body: PostRetentionPoliciesRequestBodyArg) -> RetentionPolicy:
         """
         Creates a retention policy.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def getRetentionPoliciesId(self, retentionPolicyId: str, options: GetRetentionPoliciesIdOptionsArg = None) -> RetentionPolicy:
+    def get_retention_policies_id(self, retention_policy_id: str, options: GetRetentionPoliciesIdOptionsArg = None) -> RetentionPolicy:
         """
         Retrieves a retention policy.
-        :param retentionPolicyId: The ID of the retention policy.
+        :param retention_policy_id: The ID of the retention policy.
             Example: "982312"
-        :type retentionPolicyId: str
+        :type retention_policy_id: str
         """
         if options is None:
             options = GetRetentionPoliciesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retentionPolicyId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def putRetentionPoliciesId(self, retentionPolicyId: str, requestBody: PutRetentionPoliciesIdRequestBodyArg) -> RetentionPolicy:
+    def put_retention_policies_id(self, retention_policy_id: str, request_body: PutRetentionPoliciesIdRequestBodyArg) -> RetentionPolicy:
         """
         Updates a retention policy.
-        :param retentionPolicyId: The ID of the retention policy.
+        :param retention_policy_id: The ID of the retention policy.
             Example: "982312"
-        :type retentionPolicyId: str
+        :type retention_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retentionPolicyId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def deleteRetentionPoliciesId(self, retentionPolicyId: str):
+    def delete_retention_policies_id(self, retention_policy_id: str):
         """
         Permanently deletes a retention policy.
-        :param retentionPolicyId: The ID of the retention policy.
+        :param retention_policy_id: The ID of the retention policy.
             Example: "982312"
-        :type retentionPolicyId: str
+        :type retention_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retentionPolicyId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

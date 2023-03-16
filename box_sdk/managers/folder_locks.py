@@ -2,12 +2,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import FolderLocks
@@ -15,6 +9,16 @@ from box_sdk.schemas import FolderLocks
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import FolderLock
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostFolderLocksRequestBodyArgLockedOperationsField(BaseObject):
     def __init__(self, move: bool, delete: bool, **kwargs):
@@ -59,7 +63,7 @@ class FolderLocksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFolderLocks(self, folderId: str) -> FolderLocks:
+    def get_folder_locks(self, folder_id: str) -> FolderLocks:
         """
         Retrieves folder lock details for a given folder.
         
@@ -68,7 +72,7 @@ class FolderLocksManager(BaseObject):
         
         use this endpoint.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -77,11 +81,11 @@ class FolderLocksManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params={'folder_id': folderId}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params={'folder_id': folder_id}, auth=self.auth))
         return FolderLocks.from_dict(json.loads(response.text))
-    def postFolderLocks(self, requestBody: PostFolderLocksRequestBodyArg) -> FolderLock:
+    def post_folder_locks(self, request_body: PostFolderLocksRequestBodyArg) -> FolderLock:
         """
         Creates a folder lock on a folder, preventing it from being moved and/or
         
@@ -94,9 +98,9 @@ class FolderLocksManager(BaseObject):
         use this endpoint.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FolderLock.from_dict(json.loads(response.text))
-    def deleteFolderLocksId(self, folderLockId: str):
+    def delete_folder_locks_id(self, folder_lock_id: str):
         """
         Deletes a folder lock on a given folder.
         
@@ -105,9 +109,9 @@ class FolderLocksManager(BaseObject):
         
         use this endpoint.
 
-        :param folderLockId: The ID of the folder lock.
+        :param folder_lock_id: The ID of the folder lock.
             Example: "12345"
-        :type folderLockId: str
+        :type folder_lock_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks/', folderLockId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks/', folder_lock_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

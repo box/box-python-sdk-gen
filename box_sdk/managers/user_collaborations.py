@@ -4,17 +4,21 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Collaboration
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetCollaborationsIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
@@ -90,18 +94,18 @@ class UserCollaborationsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getCollaborationsId(self, collaborationId: str, options: GetCollaborationsIdOptionsArg = None) -> Collaboration:
+    def get_collaborations_id(self, collaboration_id: str, options: GetCollaborationsIdOptionsArg = None) -> Collaboration:
         """
         Retrieves a single collaboration.
-        :param collaborationId: The ID of the collaboration
+        :param collaboration_id: The ID of the collaboration
             Example: "1234"
-        :type collaborationId: str
+        :type collaboration_id: str
         """
         if options is None:
             options = GetCollaborationsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaborationId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Collaboration.from_dict(json.loads(response.text))
-    def putCollaborationsId(self, collaborationId: str, requestBody: PutCollaborationsIdRequestBodyArg) -> Collaboration:
+    def put_collaborations_id(self, collaboration_id: str, request_body: PutCollaborationsIdRequestBodyArg) -> Collaboration:
         """
         Updates a collaboration.
         
@@ -110,18 +114,18 @@ class UserCollaborationsManager(BaseObject):
         
         accept collaboration invites.
 
-        :param collaborationId: The ID of the collaboration
+        :param collaboration_id: The ID of the collaboration
             Example: "1234"
-        :type collaborationId: str
+        :type collaboration_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaborationId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Collaboration.from_dict(json.loads(response.text))
-    def deleteCollaborationsId(self, collaborationId: str):
+    def delete_collaborations_id(self, collaboration_id: str):
         """
         Deletes a single collaboration.
-        :param collaborationId: The ID of the collaboration
+        :param collaboration_id: The ID of the collaboration
             Example: "1234"
-        :type collaborationId: str
+        :type collaboration_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaborationId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

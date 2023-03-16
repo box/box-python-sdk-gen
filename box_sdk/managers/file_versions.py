@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import FileVersions
@@ -15,6 +9,16 @@ from box_sdk.schemas import FileVersions
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import FileVersion
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFilesIdVersionsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
@@ -68,18 +72,18 @@ class PutFilesIdVersionsIdRequestBodyArg(BaseObject):
         self.trashed_at = trashed_at
 
 class DeleteFilesIdVersionsIdOptionsArg(BaseObject):
-    def __init__(self, ifMatch: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifMatch = ifMatch
+        self.if_match = if_match
 
 class PostFilesIdVersionsCurrentRequestBodyArgTypeField:
     pass
@@ -116,7 +120,7 @@ class FileVersionsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesIdVersions(self, fileId: str, options: GetFilesIdVersionsOptionsArg = None) -> FileVersions:
+    def get_files_id_versions(self, file_id: str, options: GetFilesIdVersionsOptionsArg = None) -> FileVersions:
         """
         Retrieve a list of the past versions for a file.
         
@@ -125,42 +129,42 @@ class FileVersionsManager(BaseObject):
         
         of the current version of a file, use the `GET /file/:id` API.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = GetFilesIdVersionsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return FileVersions.from_dict(json.loads(response.text))
-    def getFilesIdVersionsId(self, fileId: str, fileVersionId: str, options: GetFilesIdVersionsIdOptionsArg = None) -> FileVersion:
+    def get_files_id_versions_id(self, file_id: str, file_version_id: str, options: GetFilesIdVersionsIdOptionsArg = None) -> FileVersion:
         """
         Retrieve a specific version of a file.
         
         Versions are only tracked for Box users with premium accounts.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
-        :param fileVersionId: The ID of the file version
+        :type file_id: str
+        :param file_version_id: The ID of the file version
             Example: "1234"
-        :type fileVersionId: str
+        :type file_version_id: str
         """
         if options is None:
             options = GetFilesIdVersionsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/versions/', fileVersionId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))
-    def putFilesIdVersionsId(self, fileId: str, fileVersionId: str, requestBody: PutFilesIdVersionsIdRequestBodyArg) -> FileVersion:
+    def put_files_id_versions_id(self, file_id: str, file_version_id: str, request_body: PutFilesIdVersionsIdRequestBodyArg) -> FileVersion:
         """
         Restores a specific version of a file after it was deleted.
         
@@ -172,43 +176,43 @@ class FileVersionsManager(BaseObject):
         
         PPTX or similar.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
-        :param fileVersionId: The ID of the file version
+        :type file_id: str
+        :param file_version_id: The ID of the file version
             Example: "1234"
-        :type fileVersionId: str
+        :type file_version_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/versions/', fileVersionId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))
-    def deleteFilesIdVersionsId(self, fileId: str, fileVersionId: str, options: DeleteFilesIdVersionsIdOptionsArg = None):
+    def delete_files_id_versions_id(self, file_id: str, file_version_id: str, options: DeleteFilesIdVersionsIdOptionsArg = None):
         """
         Move a file version to the trash.
         
         Versions are only tracked for Box users with premium accounts.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
-        :param fileVersionId: The ID of the file version
+        :type file_id: str
+        :param file_version_id: The ID of the file version
             Example: "1234"
-        :type fileVersionId: str
+        :type file_version_id: str
         """
         if options is None:
             options = DeleteFilesIdVersionsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/versions/', fileVersionId]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
         return response.content
-    def postFilesIdVersionsCurrent(self, fileId: str, requestBody: PostFilesIdVersionsCurrentRequestBodyArg, options: PostFilesIdVersionsCurrentOptionsArg = None) -> FileVersion:
+    def post_files_id_versions_current(self, file_id: str, request_body: PostFilesIdVersionsCurrentRequestBodyArg, options: PostFilesIdVersionsCurrentOptionsArg = None) -> FileVersion:
         """
         Promote a specific version of a file.
         
@@ -244,16 +248,16 @@ class FileVersionsManager(BaseObject):
         
         PPTX or similar.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = PostFilesIdVersionsCurrentOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))
