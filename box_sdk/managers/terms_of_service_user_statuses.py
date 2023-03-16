@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import TermsOfServiceUserStatuses
@@ -16,14 +10,24 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TermsOfServiceUserStatus
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetTermsOfServiceUserStatusesOptionsArg(BaseObject):
-    def __init__(self, userId: Union[None, str] = None, **kwargs):
+    def __init__(self, user_id: Union[None, str] = None, **kwargs):
         """
-        :param userId: Limits results to the given user ID.
-        :type userId: Union[None, str], optional
+        :param user_id: Limits results to the given user ID.
+        :type user_id: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.userId = userId
+        self.user_id = user_id
 
 class PostTermsOfServiceUserStatusesRequestBodyArgTosFieldTypeField:
     pass
@@ -83,7 +87,7 @@ class TermsOfServiceUserStatusesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getTermsOfServiceUserStatuses(self, tosId: str, options: GetTermsOfServiceUserStatusesOptionsArg = None) -> TermsOfServiceUserStatuses:
+    def get_terms_of_service_user_statuses(self, tos_id: str, options: GetTermsOfServiceUserStatusesOptionsArg = None) -> TermsOfServiceUserStatuses:
         """
         Retrieves an overview of users and their status for a
         
@@ -92,26 +96,26 @@ class TermsOfServiceUserStatusesManager(BaseObject):
         
         the terms and when.
 
-        :param tosId: The ID of the terms of service.
+        :param tos_id: The ID of the terms of service.
             Example: "324234"
-        :type tosId: str
+        :type tos_id: str
         """
         if options is None:
             options = GetTermsOfServiceUserStatusesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tosId, 'user_id': options.userId}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.userId}, auth=self.auth))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
-    def postTermsOfServiceUserStatuses(self, requestBody: PostTermsOfServiceUserStatusesRequestBodyArg) -> TermsOfServiceUserStatus:
+    def post_terms_of_service_user_statuses(self, request_body: PostTermsOfServiceUserStatusesRequestBodyArg) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
-    def putTermsOfServiceUserStatusesId(self, termsOfServiceUserStatusId: str, requestBody: PutTermsOfServiceUserStatusesIdRequestBodyArg) -> TermsOfServiceUserStatus:
+    def put_terms_of_service_user_statuses_id(self, terms_of_service_user_status_id: str, request_body: PutTermsOfServiceUserStatusesIdRequestBodyArg) -> TermsOfServiceUserStatus:
         """
         Updates the status for a terms of service for a user.
-        :param termsOfServiceUserStatusId: The ID of the terms of service status.
+        :param terms_of_service_user_status_id: The ID of the terms of service status.
             Example: "324234"
-        :type termsOfServiceUserStatusId: str
+        :type terms_of_service_user_status_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', termsOfServiceUserStatusId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))

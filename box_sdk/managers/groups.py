@@ -4,12 +4,6 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Groups
@@ -18,12 +12,22 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Group
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetGroupsOptionsArg(BaseObject):
-    def __init__(self, filterTerm: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, filter_term: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
         """
-        :param filterTerm: Limits the results to only groups whose `name` starts
+        :param filter_term: Limits the results to only groups whose `name` starts
             with the search term.
-        :type filterTerm: Union[None, str], optional
+        :type filter_term: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -42,7 +46,7 @@ class GetGroupsOptionsArg(BaseObject):
         :type offset: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.filterTerm = filterTerm
+        self.filter_term = filter_term
         self.fields = fields
         self.limit = limit
         self.offset = offset
@@ -219,7 +223,7 @@ class GroupsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getGroups(self, options: GetGroupsOptionsArg = None) -> Groups:
+    def get_groups(self, options: GetGroupsOptionsArg = None) -> Groups:
         """
         Retrieves all of the groups for a given enterprise. The user
         
@@ -230,7 +234,7 @@ class GroupsManager(BaseObject):
             options = GetGroupsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Groups.from_dict(json.loads(response.text))
-    def postGroups(self, requestBody: PostGroupsRequestBodyArg, options: PostGroupsOptionsArg = None) -> Group:
+    def post_groups(self, request_body: PostGroupsRequestBodyArg, options: PostGroupsOptionsArg = None) -> Group:
         """
         Creates a new group of users in an enterprise. Only users with admin
         
@@ -239,9 +243,9 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = PostGroupsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def getGroupsId(self, groupId: str, options: GetGroupsIdOptionsArg = None) -> Group:
+    def get_groups_id(self, group_id: str, options: GetGroupsIdOptionsArg = None) -> Group:
         """
         Retrieves information about a group. Only members of this
         
@@ -250,15 +254,15 @@ class GroupsManager(BaseObject):
         
         use this API.
 
-        :param groupId: The ID of the group.
+        :param group_id: The ID of the group.
             Example: "57645"
-        :type groupId: str
+        :type group_id: str
         """
         if options is None:
             options = GetGroupsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', groupId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def putGroupsId(self, groupId: str, requestBody: PutGroupsIdRequestBodyArg, options: PutGroupsIdOptionsArg = None) -> Group:
+    def put_groups_id(self, group_id: str, request_body: PutGroupsIdRequestBodyArg, options: PutGroupsIdOptionsArg = None) -> Group:
         """
         Updates a specific group. Only admins of this
         
@@ -267,23 +271,23 @@ class GroupsManager(BaseObject):
         
         use this API.
 
-        :param groupId: The ID of the group.
+        :param group_id: The ID of the group.
             Example: "57645"
-        :type groupId: str
+        :type group_id: str
         """
         if options is None:
             options = PutGroupsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', groupId]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def deleteGroupsId(self, groupId: str):
+    def delete_groups_id(self, group_id: str):
         """
         Permanently deletes a group. Only users with
         
         admin-level permissions will be able to use this API.
 
-        :param groupId: The ID of the group.
+        :param group_id: The ID of the group.
             Example: "57645"
-        :type groupId: str
+        :type group_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', groupId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

@@ -6,12 +6,6 @@ from enum import Enum
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Folder
@@ -22,8 +16,18 @@ from box_sdk.schemas import TrashFolderRestored
 
 from box_sdk.schemas import Items
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetFoldersIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, ifNoneMatch: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Union[None, str] = None, if_none_match: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -38,12 +42,12 @@ class GetFoldersIdOptionsArg(BaseObject):
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
         :type fields: Union[None, str], optional
-        :param ifNoneMatch: Ensures an item is only returned if it has changed.
+        :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type ifNoneMatch: Union[None, str], optional
+        :type if_none_match: Union[None, str], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -55,7 +59,7 @@ class GetFoldersIdOptionsArg(BaseObject):
         """
         super().__init__(**kwargs)
         self.fields = fields
-        self.ifNoneMatch = ifNoneMatch
+        self.if_none_match = if_none_match
         self.boxapi = boxapi
 
 class PostFoldersIdRequestBodyArgParentField(BaseObject):
@@ -253,7 +257,7 @@ class PutFoldersIdRequestBodyArg(BaseObject):
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
 
 class PutFoldersIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, ifMatch: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Union[None, str] = None, if_match: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -264,34 +268,34 @@ class PutFoldersIdOptionsArg(BaseObject):
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Union[None, str], optional
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
-        self.ifMatch = ifMatch
+        self.if_match = if_match
 
 class DeleteFoldersIdOptionsArg(BaseObject):
-    def __init__(self, ifMatch: Union[None, str] = None, recursive: Union[None, bool] = None, **kwargs):
+    def __init__(self, if_match: Union[None, str] = None, recursive: Union[None, bool] = None, **kwargs):
         """
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         :param recursive: Delete a folder that is not empty by recursively deleting the
             folder and all of its content.
         :type recursive: Union[None, bool], optional
         """
         super().__init__(**kwargs)
-        self.ifMatch = ifMatch
+        self.if_match = if_match
         self.recursive = recursive
 
 class GetFoldersIdItemsOptionsArgSortField(str, Enum):
@@ -491,7 +495,7 @@ class FoldersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFoldersId(self, folderId: str, options: GetFoldersIdOptionsArg = None) -> Folder:
+    def get_folders_id(self, folder_id: str, options: GetFoldersIdOptionsArg = None) -> Folder:
         """
         Retrieves details for a folder, including the first 100 entries
         
@@ -503,7 +507,7 @@ class FoldersManager(BaseObject):
         
         [Get items in a folder](#get-folders-id-items) endpoint.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -512,13 +516,13 @@ class FoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = GetFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def postFoldersId(self, folderId: str, requestBody: PostFoldersIdRequestBodyArg, options: PostFoldersIdOptionsArg = None) -> TrashFolderRestored:
+    def post_folders_id(self, folder_id: str, request_body: PostFoldersIdRequestBodyArg, options: PostFoldersIdOptionsArg = None) -> TrashFolderRestored:
         """
         Restores a folder that has been moved to the trash.
         
@@ -545,7 +549,7 @@ class FoldersManager(BaseObject):
         
         operation can performed on any of the locked folders.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -554,19 +558,19 @@ class FoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = PostFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFolderRestored.from_dict(json.loads(response.text))
-    def putFoldersId(self, folderId: str, requestBody: PutFoldersIdRequestBodyArg, options: PutFoldersIdOptionsArg = None) -> Folder:
+    def put_folders_id(self, folder_id: str, request_body: PutFoldersIdRequestBodyArg, options: PutFoldersIdOptionsArg = None) -> Folder:
         """
         Updates a folder. This can be also be used to move the folder,
         
         create shared links, update collaborations, and more.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -575,19 +579,19 @@ class FoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = PutFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def deleteFoldersId(self, folderId: str, options: DeleteFoldersIdOptionsArg = None):
+    def delete_folders_id(self, folder_id: str, options: DeleteFoldersIdOptionsArg = None):
         """
         Deletes a folder, either permanently or by moving it to
         
         the trash.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -596,13 +600,13 @@ class FoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = DeleteFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId]), FetchOptions(method='DELETE', params={'recursive': options.recursive}, headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params={'recursive': options.recursive}, headers={'if-match': options.ifMatch}, auth=self.auth))
         return response.content
-    def getFoldersIdItems(self, folderId: str, options: GetFoldersIdItemsOptionsArg = None) -> Items:
+    def get_folders_id_items(self, folder_id: str, options: GetFoldersIdItemsOptionsArg = None) -> Items:
         """
         Retrieves a page of items in a folder. These items can be files,
         
@@ -614,7 +618,7 @@ class FoldersManager(BaseObject):
         
         please use the [Get a folder](#get-folders-id) endpoint instead.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -623,27 +627,27 @@ class FoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = GetFoldersIdItemsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/items']), FetchOptions(method='GET', params={'fields': options.fields, 'usemarker': options.usemarker, 'marker': options.marker, 'offset': options.offset, 'limit': options.limit, 'sort': options.sort, 'direction': options.direction}, headers={'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params={'fields': options.fields, 'usemarker': options.usemarker, 'marker': options.marker, 'offset': options.offset, 'limit': options.limit, 'sort': options.sort, 'direction': options.direction}, headers={'boxapi': options.boxapi}, auth=self.auth))
         return Items.from_dict(json.loads(response.text))
-    def postFolders(self, requestBody: PostFoldersRequestBodyArg, options: PostFoldersOptionsArg = None) -> Folder:
+    def post_folders(self, request_body: PostFoldersRequestBodyArg, options: PostFoldersOptionsArg = None) -> Folder:
         """
         Creates a new empty folder within the specified parent folder.
         """
         if options is None:
             options = PostFoldersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def postFoldersIdCopy(self, folderId: str, requestBody: PostFoldersIdCopyRequestBodyArg, options: PostFoldersIdCopyOptionsArg = None) -> Folder:
+    def post_folders_id_copy(self, folder_id: str, request_body: PostFoldersIdCopyRequestBodyArg, options: PostFoldersIdCopyOptionsArg = None) -> Folder:
         """
         Creates a copy of a folder within a destination folder.
         
         The original folder will not be changed.
 
-        :param folderId: The unique identifier of the folder to copy.
+        :param folder_id: The unique identifier of the folder to copy.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -651,9 +655,9 @@ class FoldersManager(BaseObject):
             the `folder_id` is `123`.
             The root folder with the ID `0` can not be copied.
             Example: "0"
-        :type folderId: str
+        :type folder_id: str
         """
         if options is None:
             options = PostFoldersIdCopyOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))

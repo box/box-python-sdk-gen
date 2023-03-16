@@ -2,17 +2,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.schemas import Folder
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PutUsersIdFolders0RequestBodyArgOwnedByField(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -57,7 +61,7 @@ class TransferManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def putUsersIdFolders0(self, userId: str, requestBody: PutUsersIdFolders0RequestBodyArg, options: PutUsersIdFolders0OptionsArg = None) -> Folder:
+    def put_users_id_folders_0(self, user_id: str, request_body: PutUsersIdFolders0RequestBodyArg, options: PutUsersIdFolders0OptionsArg = None) -> Folder:
         """
         Move all of the items (files, folders and workflows) owned by a user into
         
@@ -126,11 +130,11 @@ class TransferManager(BaseObject):
         
         Admins will receive an email when the operation is completed.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
         if options is None:
             options = PutUsersIdFolders0OptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))

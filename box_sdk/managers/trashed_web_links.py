@@ -2,17 +2,21 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import TrashWebLink
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetWebLinksIdTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
@@ -34,26 +38,26 @@ class TrashedWebLinksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getWebLinksIdTrash(self, webLinkId: str, options: GetWebLinksIdTrashOptionsArg = None) -> TrashWebLink:
+    def get_web_links_id_trash(self, web_link_id: str, options: GetWebLinksIdTrashOptionsArg = None) -> TrashWebLink:
         """
         Retrieves a web link that has been moved to the trash.
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
         if options is None:
             options = GetWebLinksIdTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return TrashWebLink.from_dict(json.loads(response.text))
-    def deleteWebLinksIdTrash(self, webLinkId: str):
+    def delete_web_links_id_trash(self, web_link_id: str):
         """
         Permanently deletes a web link that is in the trash.
         
         This action cannot be undone.
 
-        :param webLinkId: The ID of the web link.
+        :param web_link_id: The ID of the web link.
             Example: "12345"
-        :type webLinkId: str
+        :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', webLinkId, '/trash']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

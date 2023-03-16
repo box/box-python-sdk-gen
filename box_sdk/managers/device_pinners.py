@@ -4,12 +4,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import DevicePinner
@@ -17,6 +11,16 @@ from box_sdk.schemas import DevicePinner
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import DevicePinners
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetEnterprisesIdDevicePinnersOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
@@ -44,25 +48,25 @@ class DevicePinnersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getDevicePinnersId(self, devicePinnerId: str) -> DevicePinner:
+    def get_device_pinners_id(self, device_pinner_id: str) -> DevicePinner:
         """
         Retrieves information about an individual device pin.
-        :param devicePinnerId: The ID of the device pin
+        :param device_pinner_id: The ID of the device pin
             Example: "2324234"
-        :type devicePinnerId: str
+        :type device_pinner_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', devicePinnerId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='GET', auth=self.auth))
         return DevicePinner.from_dict(json.loads(response.text))
-    def deleteDevicePinnersId(self, devicePinnerId: str):
+    def delete_device_pinners_id(self, device_pinner_id: str):
         """
         Deletes an individual device pin.
-        :param devicePinnerId: The ID of the device pin
+        :param device_pinner_id: The ID of the device pin
             Example: "2324234"
-        :type devicePinnerId: str
+        :type device_pinner_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', devicePinnerId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def getEnterprisesIdDevicePinners(self, enterpriseId: str, options: GetEnterprisesIdDevicePinnersOptionsArg = None) -> DevicePinners:
+    def get_enterprises_id_device_pinners(self, enterprise_id: str, options: GetEnterprisesIdDevicePinnersOptionsArg = None) -> DevicePinners:
         """
         Retrieves all the device pins within an enterprise.
         
@@ -71,11 +75,11 @@ class DevicePinnersManager(BaseObject):
         
         needs the "manage enterprise" scope to make this call.
 
-        :param enterpriseId: The ID of the enterprise
+        :param enterprise_id: The ID of the enterprise
             Example: "3442311"
-        :type enterpriseId: str
+        :type enterprise_id: str
         """
         if options is None:
             options = GetEnterprisesIdDevicePinnersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterpriseId, '/device_pinners']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'direction': options.direction}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'direction': options.direction}, auth=self.auth))
         return DevicePinners.from_dict(json.loads(response.text))

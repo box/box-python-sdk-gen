@@ -4,12 +4,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Metadatas
@@ -17,6 +11,16 @@ from box_sdk.schemas import Metadatas
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Metadata
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFoldersIdMetadataIdIdScopeArg(str, Enum):
     GLOBAL = 'global'
@@ -38,13 +42,13 @@ class FolderMetadataManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFoldersIdMetadata(self, folderId: str) -> Metadatas:
+    def get_folders_id_metadata(self, folder_id: str) -> Metadatas:
         """
         Retrieves all metadata for a given folder. This can not be used on the root
         
         folder with ID `0`.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -53,17 +57,17 @@ class FolderMetadataManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/metadata']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']), FetchOptions(method='GET', auth=self.auth))
         return Metadatas.from_dict(json.loads(response.text))
-    def getFoldersIdMetadataIdId(self, folderId: str, scope: GetFoldersIdMetadataIdIdScopeArg, templateKey: str) -> Metadata:
+    def get_folders_id_metadata_id_id(self, folder_id: str, scope: GetFoldersIdMetadataIdIdScopeArg, template_key: str) -> Metadata:
         """
         Retrieves the instance of a metadata template that has been applied to a
         
         folder. This can not be used on the root folder with ID `0`.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -72,17 +76,17 @@ class FolderMetadataManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
         :type scope: GetFoldersIdMetadataIdIdScopeArg
-        :param templateKey: The name of the metadata template
+        :param template_key: The name of the metadata template
             Example: "properties"
-        :type templateKey: str
+        :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/metadata/', scope, '/', templateKey]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth))
         return Metadata.from_dict(json.loads(response.text))
-    def postFoldersIdMetadataIdId(self, folderId: str, scope: PostFoldersIdMetadataIdIdScopeArg, templateKey: str, requestBody: PostFoldersIdMetadataIdIdRequestBodyArg) -> Metadata:
+    def post_folders_id_metadata_id_id(self, folder_id: str, scope: PostFoldersIdMetadataIdIdScopeArg, template_key: str, request_body: PostFoldersIdMetadataIdIdRequestBodyArg) -> Metadata:
         """
         Applies an instance of a metadata template to a folder.
         
@@ -103,7 +107,7 @@ class FolderMetadataManager(BaseObject):
         
         admin console.
 
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -112,20 +116,20 @@ class FolderMetadataManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
         :type scope: PostFoldersIdMetadataIdIdScopeArg
-        :param templateKey: The name of the metadata template
+        :param template_key: The name of the metadata template
             Example: "properties"
-        :type templateKey: str
+        :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/metadata/', scope, '/', templateKey]), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Metadata.from_dict(json.loads(response.text))
-    def deleteFoldersIdMetadataIdId(self, folderId: str, scope: DeleteFoldersIdMetadataIdIdScopeArg, templateKey: str):
+    def delete_folders_id_metadata_id_id(self, folder_id: str, scope: DeleteFoldersIdMetadataIdIdScopeArg, template_key: str):
         """
         Deletes a piece of folder metadata.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -134,13 +138,13 @@ class FolderMetadataManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
         :type scope: DeleteFoldersIdMetadataIdIdScopeArg
-        :param templateKey: The name of the metadata template
+        :param template_key: The name of the metadata template
             Example: "properties"
-        :type templateKey: str
+        :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '/metadata/', scope, '/', templateKey]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

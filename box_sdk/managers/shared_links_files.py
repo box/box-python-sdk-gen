@@ -4,27 +4,31 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import File
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetSharedItemsOptionsArg(BaseObject):
-    def __init__(self, ifNoneMatch: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
         """
-        :param ifNoneMatch: Ensures an item is only returned if it has changed.
+        :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type ifNoneMatch: Union[None, str], optional
+        :type if_none_match: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -36,7 +40,7 @@ class GetSharedItemsOptionsArg(BaseObject):
         :type fields: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifNoneMatch = ifNoneMatch
+        self.if_none_match = if_none_match
         self.fields = fields
 
 class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
@@ -207,7 +211,7 @@ class SharedLinksFilesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getSharedItems(self, boxapi: str, options: GetSharedItemsOptionsArg = None) -> File:
+    def get_shared_items(self, boxapi: str, options: GetSharedItemsOptionsArg = None) -> File:
         """
         Returns the file represented by a shared link.
         
@@ -239,75 +243,75 @@ class SharedLinksFilesManager(BaseObject):
             options = GetSharedItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def getFilesIdGetSharedLink(self, fileId: str, fields: str) -> File:
+    def get_files_id_get_shared_link(self, file_id: str, fields: str) -> File:
         """
         Gets the information for a shared link on a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def putFilesIdAddSharedLink(self, fileId: str, fields: str, requestBody: PutFilesIdAddSharedLinkRequestBodyArg) -> File:
+    def put_files_id_add_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdAddSharedLinkRequestBodyArg) -> File:
         """
         Adds a shared link to a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def putFilesIdUpdateSharedLink(self, fileId: str, fields: str, requestBody: PutFilesIdUpdateSharedLinkRequestBodyArg) -> File:
+    def put_files_id_update_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdUpdateSharedLinkRequestBodyArg) -> File:
         """
         Updates a shared link on a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def putFilesIdRemoveSharedLink(self, fileId: str, fields: str, requestBody: PutFilesIdRemoveSharedLinkRequestBodyArg) -> File:
+    def put_files_id_remove_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdRemoveSharedLinkRequestBodyArg) -> File:
         """
         Removes a shared link from a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))

@@ -4,17 +4,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import ShieldInformationBarrier
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostShieldInformationBarriersChangeStatusRequestBodyArgStatusField(str, Enum):
     PENDING = 'pending'
@@ -50,22 +54,22 @@ class ShieldInformationBarriersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getShieldInformationBarriersId(self, shieldInformationBarrierId: str) -> ShieldInformationBarrier:
+    def get_shield_information_barriers_id(self, shield_information_barrier_id: str) -> ShieldInformationBarrier:
         """
         Get shield information barrier based on provided ID..
-        :param shieldInformationBarrierId: The ID of the shield information barrier.
+        :param shield_information_barrier_id: The ID of the shield information barrier.
             Example: "1910967"
-        :type shieldInformationBarrierId: str
+        :type shield_information_barrier_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shieldInformationBarrierId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shield_information_barrier_id]), FetchOptions(method='GET', auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
-    def postShieldInformationBarriersChangeStatus(self, requestBody: PostShieldInformationBarriersChangeStatusRequestBodyArg) -> ShieldInformationBarrier:
+    def post_shield_information_barriers_change_status(self, request_body: PostShieldInformationBarriersChangeStatusRequestBodyArg) -> ShieldInformationBarrier:
         """
         Change status of shield information barrier with the specified ID.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
-    def getShieldInformationBarriers(self, options: GetShieldInformationBarriersOptionsArg = None) -> None:
+    def get_shield_information_barriers(self, options: GetShieldInformationBarriersOptionsArg = None) -> None:
         """
         Retrieves a list of shield information barrier objects
         
@@ -76,7 +80,7 @@ class ShieldInformationBarriersManager(BaseObject):
             options = GetShieldInformationBarriersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def postShieldInformationBarriers(self, requestBody: ShieldInformationBarrier) -> ShieldInformationBarrier:
+    def post_shield_information_barriers(self, request_body: ShieldInformationBarrier) -> ShieldInformationBarrier:
         """
         Creates a shield information barrier to
         
@@ -86,5 +90,5 @@ class ShieldInformationBarriersManager(BaseObject):
         firm and prevents confidential information passing between them.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))

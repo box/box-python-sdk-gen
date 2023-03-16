@@ -4,17 +4,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import ClassificationTemplate
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField:
     pass
@@ -35,11 +39,11 @@ class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplay
     pass
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
-    def __init__(self, classificationDefinition: Union[None, str] = None, colorID: Union[None, int] = None, **kwargs):
+    def __init__(self, classification_definition: Union[None, str] = None, color_id: Union[None, int] = None, **kwargs):
         """
-        :param classificationDefinition: A longer description of the classification.
-        :type classificationDefinition: Union[None, str], optional
-        :param colorID: An identifier used to assign a color to
+        :param classification_definition: A longer description of the classification.
+        :type classification_definition: Union[None, str], optional
+        :param color_id: An identifier used to assign a color to
             a classification label.
             Mapping between a `colorID` and a color may
             change without notice. Currently, the color
@@ -52,11 +56,11 @@ class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptions
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type colorID: Union[None, int], optional
+        :type color_id: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.classificationDefinition = classificationDefinition
-        self.colorID = colorID
+        self.classification_definition = classification_definition
+        self.color_id = color_id
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigField(BaseObject):
     def __init__(self, classification: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField] = None, **kwargs):
@@ -68,27 +72,27 @@ class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptions
         self.classification = classification
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsField(BaseObject):
-    def __init__(self, key: Union[None, str] = None, staticConfig: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
+    def __init__(self, key: Union[None, str] = None, static_config: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
         """
         :param key: The display name and key this classification. This
             will be show in the Box UI.
         :type key: Union[None, str], optional
-        :param staticConfig: Additional information about the classification.
-        :type staticConfig: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigField], optional
+        :param static_config: Additional information about the classification.
+        :type static_config: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
-        self.staticConfig = staticConfig
+        self.static_config = static_config
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsField(BaseObject):
-    def __init__(self, type: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldTypeField] = None, key: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldKeyField] = None, displayName: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField] = None, hidden: Union[None, bool] = None, options: Union[None, List[PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
+    def __init__(self, type: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldTypeField] = None, key: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldKeyField] = None, display_name: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField] = None, hidden: Union[None, bool] = None, options: Union[None, List[PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param type: `enum`
         :type type: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldTypeField], optional
         :param key: `Box__Security__Classification__Key`
         :type key: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldKeyField], optional
-        :param displayName: `Classification`
-        :type displayName: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField], optional
+        :param display_name: `Classification`
+        :type display_name: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField], optional
         :param hidden: `false`
         :type hidden: Union[None, bool], optional
         :param options: The actual list of classifications that are present on
@@ -98,42 +102,42 @@ class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsField(BaseOb
         super().__init__(**kwargs)
         self.type = type
         self.key = key
-        self.displayName = displayName
+        self.display_name = display_name
         self.hidden = hidden
         self.options = options
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArg(BaseObject):
-    def __init__(self, scope: PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField, displayName: PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField, templateKey: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField] = None, hidden: Union[None, bool] = None, copyInstanceOnItemCopy: Union[None, bool] = None, fields: Union[None, List[PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsField]] = None, **kwargs):
+    def __init__(self, scope: PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField, display_name: PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField, template_key: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField] = None, hidden: Union[None, bool] = None, copy_instance_on_item_copy: Union[None, bool] = None, fields: Union[None, List[PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsField]] = None, **kwargs):
         """
         :param scope: The scope in which to create the classifications. This should
             be `enterprise` or `enterprise_{id}` where `id` is the unique
             ID of the enterprise.
         :type scope: PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField
-        :param displayName: `Classification`
-        :type displayName: PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField
-        :param templateKey: `securityClassification-6VMVochwUWo`
-        :type templateKey: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField], optional
+        :param display_name: `Classification`
+        :type display_name: PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField
+        :param template_key: `securityClassification-6VMVochwUWo`
+        :type template_key: Union[None, PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField], optional
         :param hidden: `false`
         :type hidden: Union[None, bool], optional
-        :param copyInstanceOnItemCopy: `false`
-        :type copyInstanceOnItemCopy: Union[None, bool], optional
+        :param copy_instance_on_item_copy: `false`
+        :type copy_instance_on_item_copy: Union[None, bool], optional
         :param fields: The classification template holds one field, which holds
             all the valid classification values.
         :type fields: Union[None, List[PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsField]], optional
         """
         super().__init__(**kwargs)
         self.scope = scope
-        self.displayName = displayName
-        self.templateKey = templateKey
+        self.display_name = display_name
+        self.template_key = template_key
         self.hidden = hidden
-        self.copyInstanceOnItemCopy = copyInstanceOnItemCopy
+        self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
 
 class ClassificationsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getMetadataTemplatesEnterpriseSecurityClassification6VmVochwUWoSchema(self) -> ClassificationTemplate:
+    def get_metadata_templates_enterprise_security_classification_6_vm_vochw_u_wo_schema(self) -> ClassificationTemplate:
         """
         Retrieves the classification metadata template and lists all the
         
@@ -151,7 +155,7 @@ class ClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', auth=self.auth))
         return ClassificationTemplate.from_dict(json.loads(response.text))
-    def deleteMetadataTemplatesEnterpriseSecurityClassification6VmVochwUWoSchema(self):
+    def delete_metadata_templates_enterprise_security_classification_6_vm_vochw_u_wo_schema(self):
         """
         Delete all classifications by deleting the classification
         
@@ -160,7 +164,7 @@ class ClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def postMetadataTemplatesSchemaClassifications(self, requestBody: PostMetadataTemplatesSchemaClassificationsRequestBodyArg) -> ClassificationTemplate:
+    def post_metadata_templates_schema_classifications(self, request_body: PostMetadataTemplatesSchemaClassificationsRequestBodyArg) -> ClassificationTemplate:
         """
         When an enterprise does not yet have any classifications, this API call
         
@@ -179,5 +183,5 @@ class ClassificationsManager(BaseObject):
         classifications.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema#classifications']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema#classifications']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ClassificationTemplate.from_dict(json.loads(response.text))

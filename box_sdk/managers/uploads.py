@@ -2,13 +2,7 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.schemas import Files
 
@@ -17,6 +11,16 @@ from box_sdk.schemas import ClientError
 from box_sdk.schemas import UploadUrl
 
 from box_sdk.schemas import ConflictError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class OptionsFilesContentRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
@@ -44,12 +48,12 @@ class UploadsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def optionsFilesContent(self, requestBody: OptionsFilesContentRequestBodyArg) -> UploadUrl:
+    def options_files_content(self, request_body: OptionsFilesContentRequestBodyArg) -> UploadUrl:
         """
         Performs a check to verify that a file will be accepted by Box
         
         before you upload the entire file.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/content']), FetchOptions(method='OPTIONS', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/content']), FetchOptions(method='OPTIONS', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return UploadUrl.from_dict(json.loads(response.text))

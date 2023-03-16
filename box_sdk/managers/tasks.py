@@ -4,12 +4,6 @@ from enum import Enum
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Tasks
@@ -17,6 +11,16 @@ from box_sdk.schemas import Tasks
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Task
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostTasksRequestBodyArgItemFieldTypeField:
     pass
@@ -109,59 +113,59 @@ class TasksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesIdTasks(self, fileId: str) -> Tasks:
+    def get_files_id_tasks(self, file_id: str) -> Tasks:
         """
         Retrieves a list of all the tasks for a file. This
         
         endpoint does not support pagination.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/tasks']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', auth=self.auth))
         return Tasks.from_dict(json.loads(response.text))
-    def postTasks(self, requestBody: PostTasksRequestBodyArg) -> Task:
+    def post_tasks(self, request_body: PostTasksRequestBodyArg) -> Task:
         """
         Creates a single task on a file. This task is not assigned to any user and
         
         will need to be assigned separately.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def getTasksId(self, taskId: str) -> Task:
+    def get_tasks_id(self, task_id: str) -> Task:
         """
         Retrieves information about a specific task.
-        :param taskId: The ID of the task.
+        :param task_id: The ID of the task.
             Example: "12345"
-        :type taskId: str
+        :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', taskId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def putTasksId(self, taskId: str, requestBody: PutTasksIdRequestBodyArg) -> Task:
+    def put_tasks_id(self, task_id: str, request_body: PutTasksIdRequestBodyArg) -> Task:
         """
         Updates a task. This can be used to update a task's configuration, or to
         
         update its completion state.
 
-        :param taskId: The ID of the task.
+        :param task_id: The ID of the task.
             Example: "12345"
-        :type taskId: str
+        :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', taskId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def deleteTasksId(self, taskId: str):
+    def delete_tasks_id(self, task_id: str):
         """
         Removes a task from a file.
-        :param taskId: The ID of the task.
+        :param task_id: The ID of the task.
             Example: "12345"
-        :type taskId: str
+        :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', taskId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

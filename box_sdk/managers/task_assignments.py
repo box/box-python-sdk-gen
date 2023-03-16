@@ -4,12 +4,6 @@ from typing import Union
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import TaskAssignments
@@ -17,6 +11,16 @@ from box_sdk.schemas import TaskAssignments
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TaskAssignment
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostTaskAssignmentsRequestBodyArgTaskFieldTypeField:
     pass
@@ -87,16 +91,16 @@ class TaskAssignmentsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getTasksIdAssignments(self, taskId: str) -> TaskAssignments:
+    def get_tasks_id_assignments(self, task_id: str) -> TaskAssignments:
         """
         Lists all of the assignments for a given task.
-        :param taskId: The ID of the task.
+        :param task_id: The ID of the task.
             Example: "12345"
-        :type taskId: str
+        :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', taskId, '/assignments']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', auth=self.auth))
         return TaskAssignments.from_dict(json.loads(response.text))
-    def postTaskAssignments(self, requestBody: PostTaskAssignmentsRequestBodyArg) -> TaskAssignment:
+    def post_task_assignments(self, request_body: PostTaskAssignmentsRequestBodyArg) -> TaskAssignment:
         """
         Assigns a task to a user.
         
@@ -106,35 +110,35 @@ class TaskAssignmentsManager(BaseObject):
         assignments.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def getTaskAssignmentsId(self, taskAssignmentId: str) -> TaskAssignment:
+    def get_task_assignments_id(self, task_assignment_id: str) -> TaskAssignment:
         """
         Retrieves information about a task assignment.
-        :param taskAssignmentId: The ID of the task assignment.
+        :param task_assignment_id: The ID of the task assignment.
             Example: "12345"
-        :type taskAssignmentId: str
+        :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', taskAssignmentId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def putTaskAssignmentsId(self, taskAssignmentId: str, requestBody: PutTaskAssignmentsIdRequestBodyArg) -> TaskAssignment:
+    def put_task_assignments_id(self, task_assignment_id: str, request_body: PutTaskAssignmentsIdRequestBodyArg) -> TaskAssignment:
         """
         Updates a task assignment. This endpoint can be
         
         used to update the state of a task assigned to a user.
 
-        :param taskAssignmentId: The ID of the task assignment.
+        :param task_assignment_id: The ID of the task assignment.
             Example: "12345"
-        :type taskAssignmentId: str
+        :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', taskAssignmentId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def deleteTaskAssignmentsId(self, taskAssignmentId: str):
+    def delete_task_assignments_id(self, task_assignment_id: str):
         """
         Deletes a specific task assignment.
-        :param taskAssignmentId: The ID of the task assignment.
+        :param task_assignment_id: The ID of the task assignment.
             Example: "12345"
-        :type taskAssignmentId: str
+        :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', taskAssignmentId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

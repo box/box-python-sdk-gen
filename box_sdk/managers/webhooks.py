@@ -6,12 +6,6 @@ from enum import Enum
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Webhooks
@@ -19,6 +13,16 @@ from box_sdk.schemas import Webhooks
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Webhook
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetWebhooksOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -184,7 +188,7 @@ class WebhooksManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getWebhooks(self, options: GetWebhooksOptionsArg = None) -> Webhooks:
+    def get_webhooks(self, options: GetWebhooksOptionsArg = None) -> Webhooks:
         """
         Returns all defined webhooks for the requesting application.
         
@@ -204,36 +208,36 @@ class WebhooksManager(BaseObject):
             options = GetWebhooksOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return Webhooks.from_dict(json.loads(response.text))
-    def postWebhooks(self, requestBody: PostWebhooksRequestBodyArg) -> Webhook:
+    def post_webhooks(self, request_body: PostWebhooksRequestBodyArg) -> Webhook:
         """
         Creates a webhook.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def getWebhooksId(self, webhookId: str) -> Webhook:
+    def get_webhooks_id(self, webhook_id: str) -> Webhook:
         """
         Retrieves a specific webhook
-        :param webhookId: The ID of the webhook.
+        :param webhook_id: The ID of the webhook.
             Example: "3321123"
-        :type webhookId: str
+        :type webhook_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhookId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='GET', auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def putWebhooksId(self, webhookId: str, requestBody: PutWebhooksIdRequestBodyArg) -> Webhook:
+    def put_webhooks_id(self, webhook_id: str, request_body: PutWebhooksIdRequestBodyArg) -> Webhook:
         """
         Updates a webhook.
-        :param webhookId: The ID of the webhook.
+        :param webhook_id: The ID of the webhook.
             Example: "3321123"
-        :type webhookId: str
+        :type webhook_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhookId]), FetchOptions(method='PUT', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def deleteWebhooksId(self, webhookId: str):
+    def delete_webhooks_id(self, webhook_id: str):
         """
         Deletes a webhook.
-        :param webhookId: The ID of the webhook.
+        :param webhook_id: The ID of the webhook.
             Example: "3321123"
-        :type webhookId: str
+        :type webhook_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhookId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

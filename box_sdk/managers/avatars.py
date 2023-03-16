@@ -1,39 +1,43 @@
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import UserAvatar
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class AvatarsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getUsersIdAvatar(self, userId: str):
+    def get_users_id_avatar(self, user_id: str):
         """
         Retrieves an image of a the user's avatar.
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/avatar']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='GET', auth=self.auth))
         return response.content
-    def deleteUsersIdAvatar(self, userId: str):
+    def delete_users_id_avatar(self, user_id: str):
         """
         Removes an existing user avatar.
         
         You cannot reverse this operation.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/avatar']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

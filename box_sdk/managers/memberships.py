@@ -4,12 +4,6 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import GroupMemberships
@@ -17,6 +11,16 @@ from box_sdk.schemas import GroupMemberships
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import GroupMembership
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetUsersIdMembershipsOptionsArg(BaseObject):
     def __init__(self, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
@@ -178,7 +182,7 @@ class MembershipsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getUsersIdMemberships(self, userId: str, options: GetUsersIdMembershipsOptionsArg = None) -> GroupMemberships:
+    def get_users_id_memberships(self, user_id: str, options: GetUsersIdMembershipsOptionsArg = None) -> GroupMemberships:
         """
         Retrieves all the groups for a user. Only members of this
         
@@ -187,15 +191,15 @@ class MembershipsManager(BaseObject):
         
         use this API.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
         if options is None:
             options = GetUsersIdMembershipsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId, '/memberships']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return GroupMemberships.from_dict(json.loads(response.text))
-    def getGroupsIdMemberships(self, groupId: str, options: GetGroupsIdMembershipsOptionsArg = None) -> GroupMemberships:
+    def get_groups_id_memberships(self, group_id: str, options: GetGroupsIdMembershipsOptionsArg = None) -> GroupMemberships:
         """
         Retrieves all the members for a group. Only members of this
         
@@ -204,15 +208,15 @@ class MembershipsManager(BaseObject):
         
         use this API.
 
-        :param groupId: The ID of the group.
+        :param group_id: The ID of the group.
             Example: "57645"
-        :type groupId: str
+        :type group_id: str
         """
         if options is None:
             options = GetGroupsIdMembershipsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', groupId, '/memberships']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return GroupMemberships.from_dict(json.loads(response.text))
-    def postGroupMemberships(self, requestBody: PostGroupMembershipsRequestBodyArg, options: PostGroupMembershipsOptionsArg = None) -> GroupMembership:
+    def post_group_memberships(self, request_body: PostGroupMembershipsRequestBodyArg, options: PostGroupMembershipsOptionsArg = None) -> GroupMembership:
         """
         Creates a group membership. Only users with
         
@@ -221,9 +225,9 @@ class MembershipsManager(BaseObject):
         """
         if options is None:
             options = PostGroupMembershipsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return GroupMembership.from_dict(json.loads(response.text))
-    def getGroupMembershipsId(self, groupMembershipId: str, options: GetGroupMembershipsIdOptionsArg = None) -> GroupMembership:
+    def get_group_memberships_id(self, group_membership_id: str, options: GetGroupMembershipsIdOptionsArg = None) -> GroupMembership:
         """
         Retrieves a specific group membership. Only admins of this
         
@@ -232,15 +236,15 @@ class MembershipsManager(BaseObject):
         
         use this API.
 
-        :param groupMembershipId: The ID of the group membership.
+        :param group_membership_id: The ID of the group membership.
             Example: "434534"
-        :type groupMembershipId: str
+        :type group_membership_id: str
         """
         if options is None:
             options = GetGroupMembershipsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', groupMembershipId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return GroupMembership.from_dict(json.loads(response.text))
-    def putGroupMembershipsId(self, groupMembershipId: str, requestBody: PutGroupMembershipsIdRequestBodyArg, options: PutGroupMembershipsIdOptionsArg = None) -> GroupMembership:
+    def put_group_memberships_id(self, group_membership_id: str, request_body: PutGroupMembershipsIdRequestBodyArg, options: PutGroupMembershipsIdOptionsArg = None) -> GroupMembership:
         """
         Updates a user's group membership. Only admins of this
         
@@ -249,15 +253,15 @@ class MembershipsManager(BaseObject):
         
         use this API.
 
-        :param groupMembershipId: The ID of the group membership.
+        :param group_membership_id: The ID of the group membership.
             Example: "434534"
-        :type groupMembershipId: str
+        :type group_membership_id: str
         """
         if options is None:
             options = PutGroupMembershipsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', groupMembershipId]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return GroupMembership.from_dict(json.loads(response.text))
-    def deleteGroupMembershipsId(self, groupMembershipId: str):
+    def delete_group_memberships_id(self, group_membership_id: str):
         """
         Deletes a specific group membership. Only admins of this
         
@@ -266,9 +270,9 @@ class MembershipsManager(BaseObject):
         
         use this API.
 
-        :param groupMembershipId: The ID of the group membership.
+        :param group_membership_id: The ID of the group membership.
             Example: "434534"
-        :type groupMembershipId: str
+        :type group_membership_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', groupMembershipId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

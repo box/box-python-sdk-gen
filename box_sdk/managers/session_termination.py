@@ -4,17 +4,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.schemas import SessionTerminationMessage
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostUsersTerminateSessionsRequestBodyArg(BaseObject):
     def __init__(self, user_ids: List[str], user_logins: List[str], **kwargs):
@@ -41,7 +45,7 @@ class SessionTerminationManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def postUsersTerminateSessions(self, requestBody: PostUsersTerminateSessionsRequestBodyArg) -> SessionTerminationMessage:
+    def post_users_terminate_sessions(self, request_body: PostUsersTerminateSessionsRequestBodyArg) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the user,
         
@@ -54,9 +58,9 @@ class SessionTerminationManager(BaseObject):
         Returns the status for the POST request.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return SessionTerminationMessage.from_dict(json.loads(response.text))
-    def postGroupsTerminateSessions(self, requestBody: PostGroupsTerminateSessionsRequestBodyArg) -> SessionTerminationMessage:
+    def post_groups_terminate_sessions(self, request_body: PostGroupsTerminateSessionsRequestBodyArg) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the group,
         
@@ -69,5 +73,5 @@ class SessionTerminationManager(BaseObject):
         Returns the status for the POST request.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return SessionTerminationMessage.from_dict(json.loads(response.text))

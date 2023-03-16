@@ -6,12 +6,6 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Users
@@ -22,21 +16,31 @@ from box_sdk.schemas import User
 
 from box_sdk.schemas import TrackingCode
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetUsersOptionsArgUserTypeField(str, Enum):
     ALL = 'all'
     MANAGED = 'managed'
     EXTERNAL = 'external'
 
 class GetUsersOptionsArg(BaseObject):
-    def __init__(self, filterTerm: Union[None, str] = None, userType: Union[None, GetUsersOptionsArgUserTypeField] = None, externalAppUserId: Union[None, str] = None, fields: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, filter_term: Union[None, str] = None, user_type: Union[None, GetUsersOptionsArgUserTypeField] = None, external_app_user_id: Union[None, str] = None, fields: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, **kwargs):
         """
-        :param filterTerm: Limits the results to only users who's `name` or
+        :param filter_term: Limits the results to only users who's `name` or
             `login` start with the search term.
             For externally managed users, the search term needs
             to completely match the in order to find the user, and
             it will only return one user at a time.
-        :type filterTerm: Union[None, str], optional
-        :param userType: Limits the results to the kind of user specified.
+        :type filter_term: Union[None, str], optional
+        :param user_type: Limits the results to the kind of user specified.
             * `all` returns every kind of user for whom the
               `login` or `name` partially matches the
               `filter_term`. It will only return an external user
@@ -47,14 +51,14 @@ class GetUsersOptionsArg(BaseObject):
               `filter_term`.
             * `external` returns all external users for whom the
               `login` matches the `filter_term` exactly.
-        :type userType: Union[None, GetUsersOptionsArgUserTypeField], optional
-        :param externalAppUserId: Limits the results to app users with the given
+        :type user_type: Union[None, GetUsersOptionsArgUserTypeField], optional
+        :param external_app_user_id: Limits the results to app users with the given
             `external_app_user_id` value.
             When creating an app user, an
             `external_app_user_id` value can be set. This value can
             then be used in this endpoint to find any users that
             match that `external_app_user_id` value.
-        :type externalAppUserId: Union[None, str], optional
+        :type external_app_user_id: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -84,9 +88,9 @@ class GetUsersOptionsArg(BaseObject):
         :type marker: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.filterTerm = filterTerm
-        self.userType = userType
-        self.externalAppUserId = externalAppUserId
+        self.filter_term = filter_term
+        self.user_type = user_type
+        self.external_app_user_id = external_app_user_id
         self.fields = fields
         self.offset = offset
         self.limit = limit
@@ -363,7 +367,7 @@ class UsersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getUsers(self, options: GetUsersOptionsArg = None) -> Users:
+    def get_users(self, options: GetUsersOptionsArg = None) -> Users:
         """
         Returns a list of all users for the Enterprise along with their `user_id`,
         
@@ -383,7 +387,7 @@ class UsersManager(BaseObject):
             options = GetUsersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'user_type': options.userType, 'external_app_user_id': options.externalAppUserId, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit, 'usemarker': options.usemarker, 'marker': options.marker}, auth=self.auth))
         return Users.from_dict(json.loads(response.text))
-    def postUsers(self, requestBody: PostUsersRequestBodyArg, options: PostUsersOptionsArg = None) -> User:
+    def post_users(self, request_body: PostUsersRequestBodyArg, options: PostUsersOptionsArg = None) -> User:
         """
         Creates a new managed user in an enterprise. This endpoint
         
@@ -395,9 +399,9 @@ class UsersManager(BaseObject):
         """
         if options is None:
             options = PostUsersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def getUsersMe(self, options: GetUsersMeOptionsArg = None) -> User:
+    def get_users_me(self, options: GetUsersMeOptionsArg = None) -> User:
         """
         Retrieves information about the user who is currently authenticated.
         
@@ -423,7 +427,7 @@ class UsersManager(BaseObject):
             options = GetUsersMeOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def getUsersId(self, userId: str, options: GetUsersIdOptionsArg = None) -> User:
+    def get_users_id(self, user_id: str, options: GetUsersIdOptionsArg = None) -> User:
         """
         Retrieves information about a user in the enterprise.
         
@@ -450,15 +454,15 @@ class UsersManager(BaseObject):
         
         null instead.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
         if options is None:
             options = GetUsersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def putUsersId(self, userId: str, requestBody: PutUsersIdRequestBodyArg, options: PutUsersIdOptionsArg = None) -> User:
+    def put_users_id(self, user_id: str, request_body: PutUsersIdRequestBodyArg, options: PutUsersIdOptionsArg = None) -> User:
         """
         Updates a managed or app user in an enterprise. This endpoint
         
@@ -467,15 +471,15 @@ class UsersManager(BaseObject):
         
         admin permissions.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
         if options is None:
             options = PutUsersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def deleteUsersId(self, userId: str, options: DeleteUsersIdOptionsArg = None):
+    def delete_users_id(self, user_id: str, options: DeleteUsersIdOptionsArg = None):
         """
         Deletes a user. By default this will fail if the user
         
@@ -487,11 +491,11 @@ class UsersManager(BaseObject):
         
         the user and their files.
 
-        :param userId: The ID of the user.
+        :param user_id: The ID of the user.
             Example: "12345"
-        :type userId: str
+        :type user_id: str
         """
         if options is None:
             options = DeleteUsersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', userId]), FetchOptions(method='DELETE', params={'notify': options.notify, 'force': options.force}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='DELETE', params={'notify': options.notify, 'force': options.force}, auth=self.auth))
         return response.content

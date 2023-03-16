@@ -1,9 +1,5 @@
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 from box_sdk.base_object import BaseObject
 
 from box_sdk.managers.authorization import AuthorizationManager
@@ -137,6 +133,10 @@ from box_sdk.managers.zip_downloads import ZipDownloadsManager
 from box_sdk.managers.sign_requests import SignRequestsManager
 
 from box_sdk.managers.workflows import WorkflowsManager
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
 
 class Client(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):

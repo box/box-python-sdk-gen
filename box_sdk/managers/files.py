@@ -6,12 +6,6 @@ from enum import Enum
 
 from typing import List
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import File
@@ -20,8 +14,18 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TrashFileRestored
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetFilesIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, ifNoneMatch: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Union[None, str] = None, if_none_match: Union[None, str] = None, boxapi: Union[None, str] = None, x_rep_hints: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -36,12 +40,12 @@ class GetFilesIdOptionsArg(BaseObject):
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
         :type fields: Union[None, str], optional
-        :param ifNoneMatch: Ensures an item is only returned if it has changed.
+        :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type ifNoneMatch: Union[None, str], optional
+        :type if_none_match: Union[None, str], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -50,11 +54,27 @@ class GetFilesIdOptionsArg(BaseObject):
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Union[None, str], optional
+        :param x_rep_hints: A header required to request specific `representations`
+            of a file. Use this in combination with the `fields` query
+            parameter to request a specific file representation.
+            The general format for these representations is
+            `X-Rep-Hints: [...]` where `[...]` is one or many
+            hints in the format `[fileType?query]`.
+            For example, to request a `png` representation in `32x32`
+            as well as `64x64` pixel dimensions provide the following
+            hints.
+            `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]`
+            Additionally, a `text` representation is available for all
+            document file types in Box using the `[extracted_text]`
+            representation.
+            `x-rep-hints: [extracted_text]`
+        :type x_rep_hints: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
-        self.ifNoneMatch = ifNoneMatch
+        self.if_none_match = if_none_match
         self.boxapi = boxapi
+        self.x_rep_hints = x_rep_hints
 
 class PostFilesIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
@@ -228,7 +248,7 @@ class PutFilesIdRequestBodyArg(BaseObject):
         self.tags = tags
 
 class PutFilesIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, ifMatch: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Union[None, str] = None, if_match: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -239,31 +259,31 @@ class PutFilesIdOptionsArg(BaseObject):
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Union[None, str], optional
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
-        self.ifMatch = ifMatch
+        self.if_match = if_match
 
 class DeleteFilesIdOptionsArg(BaseObject):
-    def __init__(self, ifMatch: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
-        :param ifMatch: Ensures this item hasn't recently changed before
+        :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type ifMatch: Union[None, str], optional
+        :type if_match: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifMatch = ifMatch
+        self.if_match = if_match
 
 class PostFilesIdCopyRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -315,60 +335,44 @@ class GetFilesIdThumbnailIdExtensionArg(str, Enum):
     JPG = 'jpg'
 
 class GetFilesIdThumbnailIdOptionsArg(BaseObject):
-    def __init__(self, minHeight: Union[None, int] = None, minWidth: Union[None, int] = None, maxHeight: Union[None, int] = None, maxWidth: Union[None, int] = None, **kwargs):
+    def __init__(self, min_height: Union[None, int] = None, min_width: Union[None, int] = None, max_height: Union[None, int] = None, max_width: Union[None, int] = None, **kwargs):
         """
-        :param minHeight: The minimum height of the thumbnail
-        :type minHeight: Union[None, int], optional
-        :param minWidth: The minimum width of the thumbnail
-        :type minWidth: Union[None, int], optional
-        :param maxHeight: The maximum height of the thumbnail
-        :type maxHeight: Union[None, int], optional
-        :param maxWidth: The maximum width of the thumbnail
-        :type maxWidth: Union[None, int], optional
+        :param min_height: The minimum height of the thumbnail
+        :type min_height: Union[None, int], optional
+        :param min_width: The minimum width of the thumbnail
+        :type min_width: Union[None, int], optional
+        :param max_height: The maximum height of the thumbnail
+        :type max_height: Union[None, int], optional
+        :param max_width: The maximum width of the thumbnail
+        :type max_width: Union[None, int], optional
         """
         super().__init__(**kwargs)
-        self.minHeight = minHeight
-        self.minWidth = minWidth
-        self.maxHeight = maxHeight
-        self.maxWidth = maxWidth
+        self.min_height = min_height
+        self.min_width = min_width
+        self.max_height = max_height
+        self.max_width = max_width
 
 class FilesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesId(self, fileId: str, xRepHints: str, options: GetFilesIdOptionsArg = None) -> File:
+    def get_files_id(self, file_id: str, options: GetFilesIdOptionsArg = None) -> File:
         """
         Retrieves the details about a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
-        :param xRepHints: A header required to request specific `representations`
-            of a file. Use this in combination with the `fields` query
-            parameter to request a specific file representation.
-            The general format for these representations is
-            `X-Rep-Hints: [...]` where `[...]` is one or many
-            hints in the format `[fileType?query]`.
-            For example, to request a `png` representation in `32x32`
-            as well as `64x64` pixel dimensions provide the following
-            hints.
-            `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]`
-            Additionally, a `text` representation is available for all
-            document file types in Box using the `[extracted_text]`
-            representation.
-            `x-rep-hints: [extracted_text]`
-            Example: "[pdf]"
-        :type xRepHints: str
+        :type file_id: str
         """
         if options is None:
             options = GetFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi, 'x-rep-hints': xRepHints}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi, 'x-rep-hints': options.xRepHints}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def postFilesId(self, fileId: str, requestBody: PostFilesIdRequestBodyArg, options: PostFilesIdOptionsArg = None) -> TrashFileRestored:
+    def post_files_id(self, file_id: str, request_body: PostFilesIdRequestBodyArg, options: PostFilesIdOptionsArg = None) -> TrashFileRestored:
         """
         Restores a file that has been moved to the trash.
         
@@ -377,39 +381,39 @@ class FilesManager(BaseObject):
         
         original folder has been deleted.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = PostFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFileRestored.from_dict(json.loads(response.text))
-    def putFilesId(self, fileId: str, requestBody: PutFilesIdRequestBodyArg, options: PutFilesIdOptionsArg = None) -> File:
+    def put_files_id(self, file_id: str, request_body: PutFilesIdRequestBodyArg, options: PutFilesIdOptionsArg = None) -> File:
         """
         Updates a file. This can be used to rename or move a file,
         
         create a shared link, or lock a file.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = PutFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def deleteFilesId(self, fileId: str, options: DeleteFilesIdOptionsArg = None):
+    def delete_files_id(self, file_id: str, options: DeleteFilesIdOptionsArg = None):
         """
         Deletes a file, either permanently or by moving it to
         
@@ -421,36 +425,36 @@ class FilesManager(BaseObject):
         
         be permanently deleted from Box or moved to the trash.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = DeleteFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
         return response.content
-    def postFilesIdCopy(self, fileId: str, requestBody: PostFilesIdCopyRequestBodyArg, options: PostFilesIdCopyOptionsArg = None) -> File:
+    def post_files_id_copy(self, file_id: str, request_body: PostFilesIdCopyRequestBodyArg, options: PostFilesIdCopyOptionsArg = None) -> File:
         """
         Creates a copy of a file.
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = PostFilesIdCopyOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def getFilesIdThumbnailId(self, fileId: str, extension: GetFilesIdThumbnailIdExtensionArg, options: GetFilesIdThumbnailIdOptionsArg = None):
+    def get_files_id_thumbnail_id(self, file_id: str, extension: GetFilesIdThumbnailIdExtensionArg, options: GetFilesIdThumbnailIdOptionsArg = None):
         """
         Retrieves a thumbnail, or smaller image representation, of a file.
         
@@ -471,19 +475,19 @@ class FilesManager(BaseObject):
         
         [1]: https://community.box.com/t5/Migrating-and-Previewing-Content/File-Types-and-Fonts-Supported-in-Box-Content-Preview/ta-p/327
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         :param extension: The file format for the thumbnail
             Example: "png"
         :type extension: GetFilesIdThumbnailIdExtensionArg
         """
         if options is None:
             options = GetFilesIdThumbnailIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/thumbnail.', extension]), FetchOptions(method='GET', params={'min_height': options.minHeight, 'min_width': options.minWidth, 'max_height': options.maxHeight, 'max_width': options.maxWidth}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params={'min_height': options.minHeight, 'min_width': options.minWidth, 'max_height': options.maxHeight, 'max_width': options.maxWidth}, auth=self.auth))
         return response.content

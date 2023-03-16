@@ -1,12 +1,6 @@
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.base_object import BaseObject
 
@@ -18,11 +12,21 @@ from box_sdk.schemas import ZipDownloadRequest
 
 from box_sdk.schemas import ZipDownloadStatus
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class ZipDownloadsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def postZipDownloads(self, requestBody: ZipDownloadRequest) -> ZipDownload:
+    def post_zip_downloads(self, request_body: ZipDownloadRequest) -> ZipDownload:
         """
         Creates a request to download multiple files and folders as a single `zip`
         
@@ -44,9 +48,9 @@ class ZipDownloadsManager(BaseObject):
         10,000 files, whichever is met first
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ZipDownload.from_dict(json.loads(response.text))
-    def getZipDownloadsIdContent(self, zipDownloadId: str):
+    def get_zip_downloads_id_content(self, zip_download_id: str):
         """
         Returns the contents of a `zip` archive in binary format. This URL does not
         
@@ -79,13 +83,13 @@ class ZipDownloadsManager(BaseObject):
         
         this endpoint.
 
-        :param zipDownloadId: The unique identifier that represent this `zip` archive.
+        :param zip_download_id: The unique identifier that represent this `zip` archive.
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
-        :type zipDownloadId: str
+        :type zip_download_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zipDownloadId, '/content']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth))
         return response.content
-    def getZipDownloadsIdStatus(self, zipDownloadId: str) -> ZipDownloadStatus:
+    def get_zip_downloads_id_status(self, zip_download_id: str) -> ZipDownloadStatus:
         """
         Returns the download status of a `zip` archive, allowing an application to
         
@@ -115,9 +119,9 @@ class ZipDownloadsManager(BaseObject):
         
         this endpoint.
 
-        :param zipDownloadId: The unique identifier that represent this `zip` archive.
+        :param zip_download_id: The unique identifier that represent this `zip` archive.
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
-        :type zipDownloadId: str
+        :type zip_download_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zipDownloadId, '/status']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']), FetchOptions(method='GET', auth=self.auth))
         return ZipDownloadStatus.from_dict(json.loads(response.text))

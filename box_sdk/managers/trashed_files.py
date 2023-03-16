@@ -2,17 +2,21 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import TrashFile
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFilesIdTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
@@ -34,7 +38,7 @@ class TrashedFilesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFilesIdTrash(self, fileId: str, options: GetFilesIdTrashOptionsArg = None) -> TrashFile:
+    def get_files_id_trash(self, file_id: str, options: GetFilesIdTrashOptionsArg = None) -> TrashFile:
         """
         Retrieves a file that has been moved to the trash.
         
@@ -61,33 +65,33 @@ class TrashedFilesManager(BaseObject):
         
         API.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
         if options is None:
             options = GetFilesIdTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return TrashFile.from_dict(json.loads(response.text))
-    def deleteFilesIdTrash(self, fileId: str):
+    def delete_files_id_trash(self, file_id: str):
         """
         Permanently deletes a file that is in the trash.
         
         This action cannot be undone.
 
-        :param fileId: The unique identifier that represents a file.
+        :param file_id: The unique identifier that represents a file.
             The ID for any file can be determined
             by visiting a file in the web application
             and copying the ID from the URL. For example,
             for the URL `https://*.app.box.com/files/123`
             the `file_id` is `123`.
             Example: "12345"
-        :type fileId: str
+        :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', fileId, '/trash']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

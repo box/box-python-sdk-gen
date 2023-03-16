@@ -4,27 +4,31 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import Folder
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
+
 class GetSharedItemsFoldersOptionsArg(BaseObject):
-    def __init__(self, ifNoneMatch: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
         """
-        :param ifNoneMatch: Ensures an item is only returned if it has changed.
+        :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type ifNoneMatch: Union[None, str], optional
+        :type if_none_match: Union[None, str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -36,7 +40,7 @@ class GetSharedItemsFoldersOptionsArg(BaseObject):
         :type fields: Union[None, str], optional
         """
         super().__init__(**kwargs)
-        self.ifNoneMatch = ifNoneMatch
+        self.if_none_match = if_none_match
         self.fields = fields
 
 class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
@@ -201,7 +205,7 @@ class SharedLinksFoldersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getSharedItemsFolders(self, boxapi: str, options: GetSharedItemsFoldersOptionsArg = None) -> Folder:
+    def get_shared_items_folders(self, boxapi: str, options: GetSharedItemsFoldersOptionsArg = None) -> Folder:
         """
         Return the folder represented by a shared link.
         
@@ -227,10 +231,10 @@ class SharedLinksFoldersManager(BaseObject):
             options = GetSharedItemsFoldersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def getFoldersIdGetSharedLink(self, folderId: str, fields: str) -> Folder:
+    def get_folders_id_get_shared_link(self, folder_id: str, fields: str) -> Folder:
         """
         Gets the information for a shared link on a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -239,18 +243,18 @@ class SharedLinksFoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def putFoldersIdAddSharedLink(self, folderId: str, fields: str, requestBody: PutFoldersIdAddSharedLinkRequestBodyArg) -> Folder:
+    def put_folders_id_add_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdAddSharedLinkRequestBodyArg) -> Folder:
         """
         Adds a shared link to a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -259,18 +263,18 @@ class SharedLinksFoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def putFoldersIdUpdateSharedLink(self, folderId: str, fields: str, requestBody: PutFoldersIdUpdateSharedLinkRequestBodyArg) -> Folder:
+    def put_folders_id_update_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdUpdateSharedLinkRequestBodyArg) -> Folder:
         """
         Updates a shared link on a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -279,18 +283,18 @@ class SharedLinksFoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def putFoldersIdRemoveSharedLink(self, folderId: str, fields: str, requestBody: PutFoldersIdRemoveSharedLinkRequestBodyArg) -> Folder:
+    def put_folders_id_remove_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdRemoveSharedLinkRequestBodyArg) -> Folder:
         """
         Removes a shared link from a folder.
-        :param folderId: The unique identifier that represent a folder.
+        :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting this folder in the web application
             and copying the ID from the URL. For example,
@@ -299,11 +303,11 @@ class SharedLinksFoldersManager(BaseObject):
             The root folder of a Box account is
             always represented by the ID `0`.
             Example: "12345"
-        :type folderId: str
+        :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folderId, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))

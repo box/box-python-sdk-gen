@@ -2,12 +2,6 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import FileVersionLegalHold
@@ -15,6 +9,16 @@ from box_sdk.schemas import FileVersionLegalHold
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import FileVersionLegalHolds
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetFileVersionLegalHoldsOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -34,19 +38,19 @@ class FileVersionLegalHoldsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getFileVersionLegalHoldsId(self, fileVersionLegalHoldId: str) -> FileVersionLegalHold:
+    def get_file_version_legal_holds_id(self, file_version_legal_hold_id: str) -> FileVersionLegalHold:
         """
         Retrieves information about the legal hold policies
         
         assigned to a file version.
 
-        :param fileVersionLegalHoldId: The ID of the file version legal hold
+        :param file_version_legal_hold_id: The ID of the file version legal hold
             Example: "2348213"
-        :type fileVersionLegalHoldId: str
+        :type file_version_legal_hold_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds/', fileVersionLegalHoldId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds/', file_version_legal_hold_id]), FetchOptions(method='GET', auth=self.auth))
         return FileVersionLegalHold.from_dict(json.loads(response.text))
-    def getFileVersionLegalHolds(self, policyId: str, options: GetFileVersionLegalHoldsOptionsArg = None) -> FileVersionLegalHolds:
+    def get_file_version_legal_holds(self, policy_id: str, options: GetFileVersionLegalHoldsOptionsArg = None) -> FileVersionLegalHolds:
         """
         Get a list of file versions on legal hold for a legal hold
         
@@ -91,12 +95,12 @@ class FileVersionLegalHoldsManager(BaseObject):
         
         Once the re-architecture is completed this API will be deprecated.
 
-        :param policyId: The ID of the legal hold policy to get the file version legal
+        :param policy_id: The ID of the legal hold policy to get the file version legal
             holds for.
             Example: "133870"
-        :type policyId: str
+        :type policy_id: str
         """
         if options is None:
             options = GetFileVersionLegalHoldsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds']), FetchOptions(method='GET', params={'policy_id': policyId, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds']), FetchOptions(method='GET', params={'policy_id': policy_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

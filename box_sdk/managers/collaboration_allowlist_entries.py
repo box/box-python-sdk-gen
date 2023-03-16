@@ -4,12 +4,6 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
-
 import json
 
 from box_sdk.schemas import CollaborationAllowlistEntries
@@ -17,6 +11,16 @@ from box_sdk.schemas import CollaborationAllowlistEntries
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import CollaborationAllowlistEntry
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class GetCollaborationWhitelistEntriesOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
@@ -53,7 +57,7 @@ class CollaborationAllowlistEntriesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def getCollaborationWhitelistEntries(self, options: GetCollaborationWhitelistEntriesOptionsArg = None) -> CollaborationAllowlistEntries:
+    def get_collaboration_whitelist_entries(self, options: GetCollaborationWhitelistEntriesOptionsArg = None) -> CollaborationAllowlistEntries:
         """
         Returns the list domains that have been deemed safe to create collaborations
         
@@ -64,36 +68,36 @@ class CollaborationAllowlistEntriesManager(BaseObject):
             options = GetCollaborationWhitelistEntriesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return CollaborationAllowlistEntries.from_dict(json.loads(response.text))
-    def postCollaborationWhitelistEntries(self, requestBody: PostCollaborationWhitelistEntriesRequestBodyArg) -> CollaborationAllowlistEntry:
+    def post_collaboration_whitelist_entries(self, request_body: PostCollaborationWhitelistEntriesRequestBodyArg) -> CollaborationAllowlistEntry:
         """
         Creates a new entry in the list of allowed domains to allow
         
         collaboration for.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
-    def getCollaborationWhitelistEntriesId(self, collaborationWhitelistEntryId: str) -> CollaborationAllowlistEntry:
+    def get_collaboration_whitelist_entries_id(self, collaboration_whitelist_entry_id: str) -> CollaborationAllowlistEntry:
         """
         Returns a domain that has been deemed safe to create collaborations
         
         for within the current enterprise.
 
-        :param collaborationWhitelistEntryId: The ID of the entry in the list.
+        :param collaboration_whitelist_entry_id: The ID of the entry in the list.
             Example: "213123"
-        :type collaborationWhitelistEntryId: str
+        :type collaboration_whitelist_entry_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaborationWhitelistEntryId]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='GET', auth=self.auth))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
-    def deleteCollaborationWhitelistEntriesId(self, collaborationWhitelistEntryId: str):
+    def delete_collaboration_whitelist_entries_id(self, collaboration_whitelist_entry_id: str):
         """
         Removes a domain from the list of domains that have been deemed safe to create
         
         collaborations for within the current enterprise.
 
-        :param collaborationWhitelistEntryId: The ID of the entry in the list.
+        :param collaboration_whitelist_entry_id: The ID of the entry in the list.
             Example: "213123"
-        :type collaborationWhitelistEntryId: str
+        :type collaboration_whitelist_entry_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaborationWhitelistEntryId]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content

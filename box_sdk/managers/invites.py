@@ -2,17 +2,21 @@ from box_sdk.base_object import BaseObject
 
 from typing import Union
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-
-from box_sdk.ccg_auth import CCGAuth
-
 import json
-
-from box_sdk.fetch import fetch, FetchOptions, FetchResponse
 
 from box_sdk.schemas import Invite
 
 from box_sdk.schemas import ClientError
+
+from box_sdk.developer_token_auth import DeveloperTokenAuth
+
+from box_sdk.ccg_auth import CCGAuth
+
+from box_sdk.fetch import fetch
+
+from box_sdk.fetch import FetchOptions
+
+from box_sdk.fetch import FetchResponse
 
 class PostInvitesRequestBodyArgEnterpriseField(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -80,7 +84,7 @@ class InvitesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def postInvites(self, requestBody: PostInvitesRequestBodyArg, options: PostInvitesOptionsArg = None) -> Invite:
+    def post_invites(self, request_body: PostInvitesRequestBodyArg, options: PostInvitesOptionsArg = None) -> Invite:
         """
         Invites an existing external user to join an enterprise.
         
@@ -104,16 +108,16 @@ class InvitesManager(BaseObject):
         """
         if options is None:
             options = PostInvitesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(requestBody.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Invite.from_dict(json.loads(response.text))
-    def getInvitesId(self, inviteId: str, options: GetInvitesIdOptionsArg = None) -> Invite:
+    def get_invites_id(self, invite_id: str, options: GetInvitesIdOptionsArg = None) -> Invite:
         """
         Returns the status of a user invite.
-        :param inviteId: The ID of an invite.
+        :param invite_id: The ID of an invite.
             Example: "213723"
-        :type inviteId: str
+        :type invite_id: str
         """
         if options is None:
             options = GetInvitesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', inviteId]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Invite.from_dict(json.loads(response.text))
