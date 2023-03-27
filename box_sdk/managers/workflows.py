@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 from typing import List
 
 import json
@@ -37,8 +39,8 @@ class GetWorkflowsOptionsArg(BaseObject):
         self.limit = limit
         self.marker = marker
 
-class PostWorkflowsIdStartRequestBodyArgTypeField:
-    pass
+class PostWorkflowsIdStartRequestBodyArgTypeField(str, Enum):
+    WORKFLOW_PARAMETERS = 'workflow_parameters'
 
 class PostWorkflowsIdStartRequestBodyArgFlowField(BaseObject):
     def __init__(self, type: Union[None, str] = None, id: Union[None, str] = None, **kwargs):
@@ -52,8 +54,8 @@ class PostWorkflowsIdStartRequestBodyArgFlowField(BaseObject):
         self.type = type
         self.id = id
 
-class PostWorkflowsIdStartRequestBodyArgFilesFieldTypeField:
-    pass
+class PostWorkflowsIdStartRequestBodyArgFilesFieldTypeField(str, Enum):
+    FILE = 'file'
 
 class PostWorkflowsIdStartRequestBodyArgFilesField(BaseObject):
     def __init__(self, type: Union[None, PostWorkflowsIdStartRequestBodyArgFilesFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -67,8 +69,8 @@ class PostWorkflowsIdStartRequestBodyArgFilesField(BaseObject):
         self.type = type
         self.id = id
 
-class PostWorkflowsIdStartRequestBodyArgFolderFieldTypeField:
-    pass
+class PostWorkflowsIdStartRequestBodyArgFolderFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class PostWorkflowsIdStartRequestBodyArgFolderField(BaseObject):
     def __init__(self, type: Union[None, PostWorkflowsIdStartRequestBodyArgFolderFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -82,8 +84,8 @@ class PostWorkflowsIdStartRequestBodyArgFolderField(BaseObject):
         self.type = type
         self.id = id
 
-class PostWorkflowsIdStartRequestBodyArgOutcomesFieldTypeField:
-    pass
+class PostWorkflowsIdStartRequestBodyArgOutcomesFieldTypeField(str, Enum):
+    OUTCOME = 'outcome'
 
 class PostWorkflowsIdStartRequestBodyArgOutcomesField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostWorkflowsIdStartRequestBodyArgOutcomesFieldTypeField] = None, parameter: Union[None, str] = None, **kwargs):

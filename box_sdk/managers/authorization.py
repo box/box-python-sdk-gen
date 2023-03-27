@@ -1,3 +1,5 @@
+from enum import Enum
+
 from typing import Union
 
 from box_sdk.base_object import BaseObject
@@ -16,8 +18,8 @@ from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetAuthorizeResponseTypeArg:
-    pass
+class GetAuthorizeResponseTypeArg(str, Enum):
+    CODE = 'code'
 
 class GetAuthorizeOptionsArg(BaseObject):
     def __init__(self, redirect_uri: Union[None, str] = None, state: Union[None, str] = None, scope: Union[None, str] = None, **kwargs):

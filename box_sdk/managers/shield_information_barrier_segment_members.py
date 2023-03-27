@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 import json
 
 from box_sdk.schemas import ShieldInformationBarrierSegmentMember
@@ -36,11 +38,11 @@ class GetShieldInformationBarrierSegmentMembersOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArgTypeField:
-    pass
+class PostShieldInformationBarrierSegmentMembersRequestBodyArgTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField:
-    pass
+class PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):

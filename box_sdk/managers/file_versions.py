@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 import json
 
 from box_sdk.schemas import FileVersions
@@ -85,8 +87,8 @@ class DeleteFilesIdVersionsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.if_match = if_match
 
-class PostFilesIdVersionsCurrentRequestBodyArgTypeField:
-    pass
+class PostFilesIdVersionsCurrentRequestBodyArgTypeField(str, Enum):
+    FILE_VERSION = 'file_version'
 
 class PostFilesIdVersionsCurrentRequestBodyArg(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostFilesIdVersionsCurrentRequestBodyArgTypeField] = None, **kwargs):

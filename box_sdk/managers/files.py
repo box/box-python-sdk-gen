@@ -171,8 +171,8 @@ class PutFilesIdRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFilesIdRequestBodyArgLockFieldAccessField:
-    pass
+class PutFilesIdRequestBodyArgLockFieldAccessField(str, Enum):
+    LOCK = 'lock'
 
 class PutFilesIdRequestBodyArgLockField(BaseObject):
     def __init__(self, access: Union[None, PutFilesIdRequestBodyArgLockFieldAccessField] = None, expires_at: Union[None, str] = None, is_download_prevented: Union[None, bool] = None, **kwargs):

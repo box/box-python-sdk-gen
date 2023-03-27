@@ -1,6 +1,6 @@
-from box_sdk.base_object import BaseObject
-
 from enum import Enum
+
+from box_sdk.base_object import BaseObject
 
 from typing import Union
 
@@ -22,8 +22,8 @@ from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostTasksRequestBodyArgItemFieldTypeField:
-    pass
+class PostTasksRequestBodyArgItemFieldTypeField(str, Enum):
+    FILE = 'file'
 
 class PostTasksRequestBodyArgItemField(BaseObject):
     def __init__(self, id: str, type: PostTasksRequestBodyArgItemFieldTypeField, **kwargs):

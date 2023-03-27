@@ -37,8 +37,8 @@ class GetStoragePolicyAssignmentsOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.marker = marker
 
-class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField:
-    pass
+class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
+    STORAGE_POLICY = 'storage_policy'
 
 class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyField(BaseObject):
     def __init__(self, type: PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):
@@ -82,8 +82,8 @@ class PostStoragePolicyAssignmentsRequestBodyArg(BaseObject):
         self.storage_policy = storage_policy
         self.assigned_to = assigned_to
 
-class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField:
-    pass
+class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
+    STORAGE_POLICY = 'storage_policy'
 
 class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyField(BaseObject):
     def __init__(self, type: PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):

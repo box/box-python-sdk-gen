@@ -1,3 +1,5 @@
+from enum import Enum
+
 from typing import Union
 
 from box_sdk.base_object import BaseObject
@@ -20,23 +22,23 @@ from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgScopeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgTemplateKeyField(str, Enum):
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgDisplayNameField(str, Enum):
+    CLASSIFICATION = 'Classification'
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldTypeField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldTypeField(str, Enum):
+    ENUM = 'enum'
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldKeyField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldKeyField(str, Enum):
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
-class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField:
-    pass
+class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldDisplayNameField(str, Enum):
+    CLASSIFICATION = 'Classification'
 
 class PostMetadataTemplatesSchemaClassificationsRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
     def __init__(self, classification_definition: Union[None, str] = None, color_id: Union[None, int] = None, **kwargs):
