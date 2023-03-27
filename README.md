@@ -46,3 +46,11 @@ def main(token: str):
 if __name__ == '__main__':
     main('INSERT YOUR DEVELOPER TOKEN HERE')
 ```
+
+# Running integration tests locally
+
+To run integration tests locally:
+
+1. `pip install -r requirements-test.txt`
+2. Set `DEVELOPER_TOKEN` environment variable : `export DEVELOPER_TOKEN=<YOUR DEVELOPER TOKEN>`
+3. `pytest`

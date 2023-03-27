@@ -370,7 +370,7 @@ class FilesManager(BaseObject):
         """
         if options is None:
             options = GetFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi, 'x-rep-hints': options.xRepHints}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi, 'x-rep-hints': options.x_rep_hints}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
     def post_files_id(self, file_id: str, request_body: PostFilesIdRequestBodyArg, options: PostFilesIdOptionsArg = None) -> TrashFileRestored:
         """
@@ -411,7 +411,7 @@ class FilesManager(BaseObject):
         """
         if options is None:
             options = PutFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
     def delete_files_id(self, file_id: str, options: DeleteFilesIdOptionsArg = None):
         """
@@ -436,7 +436,7 @@ class FilesManager(BaseObject):
         """
         if options is None:
             options = DeleteFilesIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
     def post_files_id_copy(self, file_id: str, request_body: PostFilesIdCopyRequestBodyArg, options: PostFilesIdCopyOptionsArg = None) -> File:
         """

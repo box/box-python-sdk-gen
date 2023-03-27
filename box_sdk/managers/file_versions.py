@@ -212,7 +212,7 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = DeleteFilesIdVersionsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
     def post_files_id_versions_current(self, file_id: str, request_body: PostFilesIdVersionsCurrentRequestBodyArg, options: PostFilesIdVersionsCurrentOptionsArg = None) -> FileVersion:
         """

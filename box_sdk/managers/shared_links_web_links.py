@@ -227,7 +227,7 @@ class SharedLinksWebLinksManager(BaseObject):
         """
         if options is None:
             options = GetSharedItemsWebLinksOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_links_id_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
         """

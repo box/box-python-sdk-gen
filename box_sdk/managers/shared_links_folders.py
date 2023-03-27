@@ -229,7 +229,7 @@ class SharedLinksFoldersManager(BaseObject):
         """
         if options is None:
             options = GetSharedItemsFoldersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
     def get_folders_id_get_shared_link(self, folder_id: str, fields: str) -> Folder:
         """

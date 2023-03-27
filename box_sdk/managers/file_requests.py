@@ -71,7 +71,7 @@ class FileRequestsManager(BaseObject):
         """
         if options is None:
             options = PutFileRequestsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
     def delete_file_requests_id(self, file_request_id: str):
         """

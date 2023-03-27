@@ -520,7 +520,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = GetFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
     def post_folders_id(self, folder_id: str, request_body: PostFoldersIdRequestBodyArg, options: PostFoldersIdOptionsArg = None) -> TrashFolderRestored:
         """
@@ -583,7 +583,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = PutFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.ifMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
     def delete_folders_id(self, folder_id: str, options: DeleteFoldersIdOptionsArg = None):
         """
@@ -604,7 +604,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = DeleteFoldersIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params={'recursive': options.recursive}, headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params={'recursive': options.recursive}, headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
     def get_folders_id_items(self, folder_id: str, options: GetFoldersIdItemsOptionsArg = None) -> Items:
         """
