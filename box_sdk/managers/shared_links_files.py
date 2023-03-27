@@ -241,7 +241,7 @@ class SharedLinksFilesManager(BaseObject):
         """
         if options is None:
             options = GetSharedItemsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.ifNoneMatch, 'boxapi': boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
     def get_files_id_get_shared_link(self, file_id: str, fields: str) -> File:
         """

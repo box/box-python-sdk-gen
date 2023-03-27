@@ -1,3 +1,5 @@
+from enum import Enum
+
 from box_sdk.base_object import BaseObject
 
 from typing import Union
@@ -18,8 +20,8 @@ from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField:
-    pass
+class PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField(str, Enum):
+    DEFAULT = 'default'
 
 class PutFoldersIdWatermarkRequestBodyArgWatermarkField(BaseObject):
     def __init__(self, imprint: PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField, **kwargs):

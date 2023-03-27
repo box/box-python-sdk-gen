@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 import json
 
 from box_sdk.schemas import TermsOfServiceUserStatuses
@@ -29,8 +31,8 @@ class GetTermsOfServiceUserStatusesOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.user_id = user_id
 
-class PostTermsOfServiceUserStatusesRequestBodyArgTosFieldTypeField:
-    pass
+class PostTermsOfServiceUserStatusesRequestBodyArgTosFieldTypeField(str, Enum):
+    TERMS_OF_SERVICE = 'terms_of_service'
 
 class PostTermsOfServiceUserStatusesRequestBodyArgTosField(BaseObject):
     def __init__(self, type: PostTermsOfServiceUserStatusesRequestBodyArgTosFieldTypeField, id: str, **kwargs):
@@ -44,8 +46,8 @@ class PostTermsOfServiceUserStatusesRequestBodyArgTosField(BaseObject):
         self.type = type
         self.id = id
 
-class PostTermsOfServiceUserStatusesRequestBodyArgUserFieldTypeField:
-    pass
+class PostTermsOfServiceUserStatusesRequestBodyArgUserFieldTypeField(str, Enum):
+    USER = 'user'
 
 class PostTermsOfServiceUserStatusesRequestBodyArgUserField(BaseObject):
     def __init__(self, type: PostTermsOfServiceUserStatusesRequestBodyArgUserFieldTypeField, id: str, **kwargs):

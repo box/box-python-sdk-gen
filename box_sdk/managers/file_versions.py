@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 import json
 
 from box_sdk.schemas import FileVersions
@@ -85,8 +87,8 @@ class DeleteFilesIdVersionsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.if_match = if_match
 
-class PostFilesIdVersionsCurrentRequestBodyArgTypeField:
-    pass
+class PostFilesIdVersionsCurrentRequestBodyArgTypeField(str, Enum):
+    FILE_VERSION = 'file_version'
 
 class PostFilesIdVersionsCurrentRequestBodyArg(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostFilesIdVersionsCurrentRequestBodyArgTypeField] = None, **kwargs):
@@ -210,7 +212,7 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = DeleteFilesIdVersionsIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.ifMatch}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
     def post_files_id_versions_current(self, file_id: str, request_body: PostFilesIdVersionsCurrentRequestBodyArg, options: PostFilesIdVersionsCurrentOptionsArg = None) -> FileVersion:
         """

@@ -178,5 +178,5 @@ class ChunkedUploadsManager(BaseObject):
         """
         if options is None:
             options = PostFilesUploadSessionsIdCommitOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers={'digest': digest, 'if-match': options.ifMatch, 'if-none-match': options.ifNoneMatch}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers={'digest': digest, 'if-match': options.if_match, 'if-none-match': options.if_none_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Files.from_dict(json.loads(response.text))

@@ -57,8 +57,8 @@ class PutSkillInvocationsIdRequestBodyArgMetadataField(BaseObject):
         super().__init__(**kwargs)
         self.cards = cards
 
-class PutSkillInvocationsIdRequestBodyArgFileFieldTypeField:
-    pass
+class PutSkillInvocationsIdRequestBodyArgFileFieldTypeField(str, Enum):
+    FILE = 'file'
 
 class PutSkillInvocationsIdRequestBodyArgFileField(BaseObject):
     def __init__(self, type: Union[None, PutSkillInvocationsIdRequestBodyArgFileFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -72,8 +72,8 @@ class PutSkillInvocationsIdRequestBodyArgFileField(BaseObject):
         self.type = type
         self.id = id
 
-class PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField:
-    pass
+class PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField(str, Enum):
+    FILE_VERSION = 'file_version'
 
 class PutSkillInvocationsIdRequestBodyArgFileVersionField(BaseObject):
     def __init__(self, type: Union[None, PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField] = None, id: Union[None, str] = None, **kwargs):

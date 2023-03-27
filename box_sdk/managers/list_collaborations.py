@@ -62,8 +62,8 @@ class GetFoldersIdCollaborationsOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetCollaborationsStatusArg:
-    pass
+class GetCollaborationsStatusArg(str, Enum):
+    PENDING = 'pending'
 
 class GetCollaborationsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, **kwargs):

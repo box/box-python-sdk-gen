@@ -15,11 +15,11 @@ class PostOAuth2TokenGrantTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE = 'urn:ietf:params:oauth:grant-type:token-exchange'
 
-class PostOAuth2TokenSubjectTokenTypeField:
-    pass
+class PostOAuth2TokenSubjectTokenTypeField(str, Enum):
+    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
 
-class PostOAuth2TokenActorTokenTypeField:
-    pass
+class PostOAuth2TokenActorTokenTypeField(str, Enum):
+    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ID_TOKEN = 'urn:ietf:params:oauth:token-type:id_token'
 
 class PostOAuth2TokenBoxSubjectTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
@@ -105,8 +105,8 @@ class PostOAuth2Token(BaseObject):
         self.box_subject_id = box_subject_id
         self.box_shared_link = box_shared_link
 
-class PostOAuth2TokenRefreshAccessTokenGrantTypeField:
-    pass
+class PostOAuth2TokenRefreshAccessTokenGrantTypeField(str, Enum):
+    REFRESH_TOKEN = 'refresh_token'
 
 class PostOAuth2TokenRefreshAccessToken(BaseObject):
     def __init__(self, grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField, client_id: str, client_secret: str, refresh_token: str, **kwargs):
@@ -310,8 +310,8 @@ class FileRequestUpdateRequest(BaseObject):
         self.is_description_required = is_description_required
         self.expires_at = expires_at
 
-class FileRequestCopyRequestFolderFieldTypeField:
-    pass
+class FileRequestCopyRequestFolderFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class FileRequestCopyRequestFolderField(BaseObject):
     def __init__(self, id: str, type: Union[None, FileRequestCopyRequestFolderFieldTypeField] = None, **kwargs):
@@ -373,8 +373,8 @@ class SignRequestCreateRequestSignatureColorField(str, Enum):
     BLACK = 'black'
     RED = 'red'
 
-class ClientErrorTypeField:
-    pass
+class ClientErrorTypeField(str, Enum):
+    ERROR = 'error'
 
 class ClientErrorCodeField(str, Enum):
     CREATED = 'created'
@@ -446,11 +446,11 @@ class OAuth2Error(BaseObject):
         self.error = error
         self.error_description = error_description
 
-class SkillInvocationTypeField:
-    pass
+class SkillInvocationTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
-class SkillInvocationSkillFieldTypeField:
-    pass
+class SkillInvocationSkillFieldTypeField(str, Enum):
+    SKILL = 'skill'
 
 class SkillInvocationSkillField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, SkillInvocationSkillFieldTypeField] = None, name: Union[None, str] = None, api_key: Union[None, str] = None, **kwargs):
@@ -470,8 +470,8 @@ class SkillInvocationSkillField(BaseObject):
         self.name = name
         self.api_key = api_key
 
-class SkillInvocationTokenFieldReadFieldTokenTypeField:
-    pass
+class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
 
 class SkillInvocationTokenFieldReadField(BaseObject):
     def __init__(self, access_token: Union[None, str] = None, expires_in: Union[None, int] = None, token_type: Union[None, SkillInvocationTokenFieldReadFieldTokenTypeField] = None, restricted_to: Union[None, str] = None, **kwargs):
@@ -493,8 +493,8 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         self.token_type = token_type
         self.restricted_to = restricted_to
 
-class SkillInvocationTokenFieldWriteFieldTokenTypeField:
-    pass
+class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
 
 class SkillInvocationTokenFieldWriteField(BaseObject):
     def __init__(self, access_token: Union[None, str] = None, expires_in: Union[None, int] = None, token_type: Union[None, SkillInvocationTokenFieldWriteFieldTokenTypeField] = None, restricted_to: Union[None, str] = None, **kwargs):
@@ -561,8 +561,8 @@ class SkillInvocationStatusField(BaseObject):
         self.error_code = error_code
         self.additional_info = additional_info
 
-class SkillInvocationEnterpriseFieldTypeField:
-    pass
+class SkillInvocationEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class SkillInvocationEnterpriseField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, SkillInvocationEnterpriseFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -579,8 +579,8 @@ class SkillInvocationEnterpriseField(BaseObject):
         self.type = type
         self.name = name
 
-class WebhookInvocationTypeField:
-    pass
+class WebhookInvocationTypeField(str, Enum):
+    WEBHOOK_EVENT = 'webhook_event'
 
 class WebhookInvocationTriggerField(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
@@ -623,14 +623,14 @@ class WebhookInvocationTriggerField(str, Enum):
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
 
-class AccessTokenTokenTypeField:
-    pass
+class AccessTokenTokenTypeField(str, Enum):
+    BEARER = 'bearer'
 
-class AccessTokenIssuedTokenTypeField:
-    pass
+class AccessTokenIssuedTokenTypeField(str, Enum):
+    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
 
-class ClassificationTemplateField:
-    pass
+class ClassificationTemplateField(str, Enum):
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
 class Classification(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'box_security_classification_key': 'Box__Security__Classification__Key', 'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', 'type': '$type', 'type_version': '$typeVersion', 'can_edit': '$canEdit', **BaseObject._fields_to_json_mapping}
@@ -672,23 +672,23 @@ class Classification(BaseObject):
         self.type_version = type_version
         self.can_edit = can_edit
 
-class ClassificationTemplateTypeField:
-    pass
+class ClassificationTemplateTypeField(str, Enum):
+    METADATA_TEMPLATE = 'metadata_template'
 
-class ClassificationTemplateTemplateKeyField:
-    pass
+class ClassificationTemplateTemplateKeyField(str, Enum):
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
-class ClassificationTemplateDisplayNameField:
-    pass
+class ClassificationTemplateDisplayNameField(str, Enum):
+    CLASSIFICATION = 'Classification'
 
-class ClassificationTemplateFieldsFieldTypeField:
-    pass
+class ClassificationTemplateFieldsFieldTypeField(str, Enum):
+    ENUM = 'enum'
 
-class ClassificationTemplateFieldsFieldKeyField:
-    pass
+class ClassificationTemplateFieldsFieldKeyField(str, Enum):
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
-class ClassificationTemplateFieldsFieldDisplayNameField:
-    pass
+class ClassificationTemplateFieldsFieldDisplayNameField(str, Enum):
+    CLASSIFICATION = 'Classification'
 
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'classification_definition': 'classificationDefinition', 'color_id': 'colorID', **BaseObject._fields_to_json_mapping}
@@ -809,8 +809,8 @@ class ClassificationTemplate(BaseObject):
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
 
-class CollaborationTypeField:
-    pass
+class CollaborationTypeField(str, Enum):
+    COLLABORATION = 'collaboration'
 
 class CollaborationRoleField(str, Enum):
     EDITOR = 'editor'
@@ -874,16 +874,16 @@ class CollaborationsOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class CollaborationAllowlistEntryTypeField:
-    pass
+class CollaborationAllowlistEntryTypeField(str, Enum):
+    COLLABORATION_WHITELIST_ENTRY = 'collaboration_whitelist_entry'
 
 class CollaborationAllowlistEntryDirectionField(str, Enum):
     INBOUND = 'inbound'
     OUTBOUND = 'outbound'
     BOTH = 'both'
 
-class CollaborationAllowlistEntryEnterpriseFieldTypeField:
-    pass
+class CollaborationAllowlistEntryEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class CollaborationAllowlistEntryEnterpriseField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, CollaborationAllowlistEntryEnterpriseFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -940,11 +940,11 @@ class CollaborationAllowlistEntries(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class CollaborationAllowlistExemptTargetTypeField:
-    pass
+class CollaborationAllowlistExemptTargetTypeField(str, Enum):
+    COLLABORATION_WHITELIST = 'collaboration_whitelist'
 
-class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField:
-    pass
+class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, CollaborationAllowlistExemptTargetEnterpriseFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -961,8 +961,8 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
         self.type = type
         self.name = name
 
-class CollaborationAllowlistExemptTargetUserFieldTypeField:
-    pass
+class CollaborationAllowlistExemptTargetUserFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class CollaborationAllowlistExemptTargetUserField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, CollaborationAllowlistExemptTargetUserFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -1017,14 +1017,14 @@ class CollaborationAllowlistExemptTargets(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class CollectionTypeField:
-    pass
+class CollectionTypeField(str, Enum):
+    COLLECTION = 'collection'
 
-class CollectionNameField:
-    pass
+class CollectionNameField(str, Enum):
+    FAVORITES = 'Favorites'
 
-class CollectionCollectionTypeField:
-    pass
+class CollectionCollectionTypeField(str, Enum):
+    FAVORITES = 'favorites'
 
 class Collection(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, CollectionTypeField] = None, name: Union[None, CollectionNameField] = None, collection_type: Union[None, CollectionCollectionTypeField] = None, **kwargs):
@@ -1120,8 +1120,8 @@ class CommentsOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class CommentBaseTypeField:
-    pass
+class CommentBaseTypeField(str, Enum):
+    COMMENT = 'comment'
 
 class CommentBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, CommentBaseTypeField] = None, **kwargs):
@@ -1135,11 +1135,11 @@ class CommentBase(BaseObject):
         self.id = id
         self.type = type
 
-class DevicePinnerTypeField:
-    pass
+class DevicePinnerTypeField(str, Enum):
+    DEVICE_PINNER = 'device_pinner'
 
-class DevicePinnersOrderFieldByField:
-    pass
+class DevicePinnersOrderFieldByField(str, Enum):
+    ID = 'id'
 
 class DevicePinnersOrderFieldDirectionField(str, Enum):
     ASC = 'asc'
@@ -1157,8 +1157,8 @@ class DevicePinnersOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class EmailAliasTypeField:
-    pass
+class EmailAliasTypeField(str, Enum):
+    EMAIL_ALIAS = 'email_alias'
 
 class EmailAlias(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, EmailAliasTypeField] = None, email: Union[None, str] = None, is_confirmed: Union[None, bool] = None, **kwargs):
@@ -1188,8 +1188,8 @@ class EmailAliases(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
-class EnterpriseBaseTypeField:
-    pass
+class EnterpriseBaseTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class EnterpriseBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, EnterpriseBaseTypeField] = None, **kwargs):
@@ -1494,8 +1494,8 @@ class FileFullPermissionsField(BaseObject):
         self.can_view_annotations_all = can_view_annotations_all
         self.can_view_annotations_self = can_view_annotations_self
 
-class FileFullLockFieldTypeField:
-    pass
+class FileFullLockFieldTypeField(str, Enum):
+    LOCK = 'lock'
 
 class FileFullLockFieldAppTypeField(str, Enum):
     GSUITE = 'gsuite'
@@ -1503,8 +1503,8 @@ class FileFullLockFieldAppTypeField(str, Enum):
     OFFICE_WOPIPLUS = 'office_wopiplus'
     OTHER = 'other'
 
-class FileFullExpiringEmbedLinkFieldTokenTypeField:
-    pass
+class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
 
 class FileFullWatermarkInfoField(BaseObject):
     def __init__(self, is_watermarked: Union[None, bool] = None, **kwargs):
@@ -1660,8 +1660,8 @@ class FileFullSharedLinkPermissionOptionsField(str, Enum):
     CAN_DOWNLOAD = 'can_download'
     CAN_EDIT = 'can_edit'
 
-class FileBaseTypeField:
-    pass
+class FileBaseTypeField(str, Enum):
+    FILE = 'file'
 
 class FileBase(BaseObject):
     def __init__(self, id: str, type: FileBaseTypeField, etag: Union[None, str] = None, **kwargs):
@@ -1685,15 +1685,15 @@ class FileBase(BaseObject):
         self.type = type
         self.etag = etag
 
-class FileRequestTypeField:
-    pass
+class FileRequestTypeField(str, Enum):
+    FILE_REQUEST = 'file_request'
 
 class FileRequestStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
 
-class FileVersionBaseTypeField:
-    pass
+class FileVersionBaseTypeField(str, Enum):
+    FILE_VERSION = 'file_version'
 
 class FileVersionBase(BaseObject):
     def __init__(self, id: str, type: FileVersionBaseTypeField, **kwargs):
@@ -1858,11 +1858,11 @@ class FileVersionsOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class FileVersionLegalHoldTypeField:
-    pass
+class FileVersionLegalHoldTypeField(str, Enum):
+    FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
 
-class FileVersionRetentionTypeField:
-    pass
+class FileVersionRetentionTypeField(str, Enum):
+    FILE_VERSION_RETENTION = 'file_version_retention'
 
 class FolderSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
@@ -2077,8 +2077,8 @@ class FolderFullClassificationField(BaseObject):
         self.definition = definition
         self.color = color
 
-class FolderBaseTypeField:
-    pass
+class FolderBaseTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class FolderBase(BaseObject):
     def __init__(self, id: str, type: FolderBaseTypeField, etag: Union[None, str] = None, **kwargs):
@@ -2225,8 +2225,8 @@ class GroupsOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class GroupBaseTypeField:
-    pass
+class GroupBaseTypeField(str, Enum):
+    GROUP = 'group'
 
 class GroupBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, GroupBaseTypeField] = None, **kwargs):
@@ -2387,8 +2387,8 @@ class GroupFull(Group):
         self.member_viewability_level = member_viewability_level
         self.permissions = permissions
 
-class GroupMembershipTypeField:
-    pass
+class GroupMembershipTypeField(str, Enum):
+    GROUP_MEMBERSHIP = 'group_membership'
 
 class GroupMembershipRoleField(str, Enum):
     MEMBER = 'member'
@@ -2410,11 +2410,11 @@ class GroupMembershipsOrderField(BaseObject):
         self.by = by
         self.direction = direction
 
-class InviteTypeField:
-    pass
+class InviteTypeField(str, Enum):
+    INVITE = 'invite'
 
-class InviteInvitedToFieldTypeField:
-    pass
+class InviteInvitedToFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class InviteInvitedToField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, InviteInvitedToFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -2471,8 +2471,8 @@ class LegalHoldPolicyAssignmentCountsField(BaseObject):
         self.file = file
         self.file_version = file_version
 
-class LegalHoldPolicyMiniTypeField:
-    pass
+class LegalHoldPolicyMiniTypeField(str, Enum):
+    LEGAL_HOLD_POLICY = 'legal_hold_policy'
 
 class LegalHoldPolicyMini(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, LegalHoldPolicyMiniTypeField] = None, **kwargs):
@@ -2486,8 +2486,8 @@ class LegalHoldPolicyMini(BaseObject):
         self.id = id
         self.type = type
 
-class LegalHoldPolicyAssignmentBaseTypeField:
-    pass
+class LegalHoldPolicyAssignmentBaseTypeField(str, Enum):
+    LEGAL_HOLD_POLICY_ASSIGNMENT = 'legal_hold_policy_assignment'
 
 class LegalHoldPolicyAssignmentBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, LegalHoldPolicyAssignmentBaseTypeField] = None, **kwargs):
@@ -2585,11 +2585,11 @@ class MetadataBase(BaseObject):
         self.scope = scope
         self.version = version
 
-class MetadataCascadePolicyTypeField:
-    pass
+class MetadataCascadePolicyTypeField(str, Enum):
+    METADATA_CASCADE_POLICY = 'metadata_cascade_policy'
 
-class MetadataCascadePolicyOwnerEnterpriseFieldTypeField:
-    pass
+class MetadataCascadePolicyOwnerEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
     def __init__(self, type: Union[None, MetadataCascadePolicyOwnerEnterpriseFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -2603,8 +2603,8 @@ class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
         self.type = type
         self.id = id
 
-class MetadataCascadePolicyParentFieldTypeField:
-    pass
+class MetadataCascadePolicyParentFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class MetadataCascadePolicyParentField(BaseObject):
     def __init__(self, type: Union[None, MetadataCascadePolicyParentFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -2732,8 +2732,8 @@ class MetadataQueryIndices(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
-class MetadataTemplateTypeField:
-    pass
+class MetadataTemplateTypeField(str, Enum):
+    METADATA_TEMPLATE = 'metadata_template'
 
 class MetadataTemplateFieldsFieldTypeField(str, Enum):
     STRING = 'string'
@@ -2928,8 +2928,8 @@ class RetentionPolicyMiniDispositionActionField(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
 
-class RetentionPolicyBaseTypeField:
-    pass
+class RetentionPolicyBaseTypeField(str, Enum):
+    RETENTION_POLICY = 'retention_policy'
 
 class RetentionPolicyBase(BaseObject):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, **kwargs):
@@ -3031,8 +3031,8 @@ class FileVersionRetentions(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class RetentionPolicyAssignmentBaseTypeField:
-    pass
+class RetentionPolicyAssignmentBaseTypeField(str, Enum):
+    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
 
 class RetentionPolicyAssignmentBase(BaseObject):
     def __init__(self, id: str, type: RetentionPolicyAssignmentBaseTypeField, **kwargs):
@@ -3061,8 +3061,8 @@ class RetentionPolicyAssignments(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
-class RetentionPolicyAssignmentTypeField:
-    pass
+class RetentionPolicyAssignmentTypeField(str, Enum):
+    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
 
 class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
     FOLDER = 'folder'
@@ -3095,8 +3095,8 @@ class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
         self.field = field
         self.value = value
 
-class ShieldInformationBarrierTypeField:
-    pass
+class ShieldInformationBarrierTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
 class ShieldInformationBarrierStatusField(str, Enum):
     DRAFT = 'draft'
@@ -3105,8 +3105,8 @@ class ShieldInformationBarrierStatusField(str, Enum):
     ENABLED = 'enabled'
     INVALID = 'invalid'
 
-class ShieldInformationBarrierBaseTypeField:
-    pass
+class ShieldInformationBarrierBaseTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
 class ShieldInformationBarrierBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierBaseTypeField] = None, **kwargs):
@@ -3139,8 +3139,8 @@ class ShieldInformationBarrierReportDetailsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class ShieldInformationBarrierReportBaseTypeField:
-    pass
+class ShieldInformationBarrierReportBaseTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_REPORT = 'shield_information_barrier_report'
 
 class ShieldInformationBarrierReportBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
@@ -3154,11 +3154,11 @@ class ShieldInformationBarrierReportBase(BaseObject):
         self.id = id
         self.type = type
 
-class ShieldInformationBarrierSegmentTypeField:
-    pass
+class ShieldInformationBarrierSegmentTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
-class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField:
-    pass
+class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
@@ -3173,8 +3173,8 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
         self.id = id
         self.type = type
 
-class ShieldInformationBarrierSegmentMemberBaseTypeField:
-    pass
+class ShieldInformationBarrierSegmentMemberBaseTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
 
 class ShieldInformationBarrierSegmentMemberBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
@@ -3189,8 +3189,8 @@ class ShieldInformationBarrierSegmentMemberBase(BaseObject):
         self.id = id
         self.type = type
 
-class ShieldInformationBarrierSegmentRestrictionBaseTypeField:
-    pass
+class ShieldInformationBarrierSegmentRestrictionBaseTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = 'shield_information_barrier_segment_restriction'
 
 class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
     def __init__(self, type: Union[None, ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -3205,8 +3205,8 @@ class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
         self.type = type
         self.id = id
 
-class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField:
-    pass
+class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
@@ -3221,8 +3221,8 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
         self.id = id
         self.type = type
 
-class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField:
-    pass
+class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField] = None, **kwargs):
@@ -3265,8 +3265,8 @@ class SessionTerminationMessage(BaseObject):
         super().__init__(**kwargs)
         self.message = message
 
-class StoragePolicyMiniTypeField:
-    pass
+class StoragePolicyMiniTypeField(str, Enum):
+    STORAGE_POLICY = 'storage_policy'
 
 class StoragePolicyMini(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, StoragePolicyMiniTypeField] = None, **kwargs):
@@ -3347,8 +3347,8 @@ class StoragePolicyAssignments(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class TaskTypeField:
-    pass
+class TaskTypeField(str, Enum):
+    TASK = 'task'
 
 class TaskActionField(str, Enum):
     REVIEW = 'review'
@@ -3358,8 +3358,8 @@ class TaskCompletionRuleField(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
-class TaskAssignmentTypeField:
-    pass
+class TaskAssignmentTypeField(str, Enum):
+    TASK_ASSIGNMENT = 'task_assignment'
 
 class TaskAssignmentResolutionStateField(str, Enum):
     COMPLETED = 'completed'
@@ -3371,8 +3371,8 @@ class TermsOfServiceStatusField(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
-class TermsOfServiceEnterpriseFieldTypeField:
-    pass
+class TermsOfServiceEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class TermsOfServiceEnterpriseField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, TermsOfServiceEnterpriseFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -3393,8 +3393,8 @@ class TermsOfServiceTosTypeField(str, Enum):
     MANAGED = 'managed'
     EXTERNAL = 'external'
 
-class TermsOfServiceBaseTypeField:
-    pass
+class TermsOfServiceBaseTypeField(str, Enum):
+    TERMS_OF_SERVICE = 'terms_of_service'
 
 class TermsOfServiceBase(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, TermsOfServiceBaseTypeField] = None, **kwargs):
@@ -3463,14 +3463,14 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
         self.strong_password_requirement = strong_password_requirement
         self.two_factor_authentication_requirement = two_factor_authentication_requirement
 
-class TermsOfServiceUserStatusTypeField:
-    pass
+class TermsOfServiceUserStatusTypeField(str, Enum):
+    TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
 
-class TrashFileTypeField:
-    pass
+class TrashFileTypeField(str, Enum):
+    FILE = 'file'
 
-class TrashFilePathCollectionFieldEntriesFieldTypeField:
-    pass
+class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class TrashFilePathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Union[None, TrashFilePathCollectionFieldEntriesFieldTypeField] = None, id: Union[None, str] = None, sequence_id: Union[None, str] = None, etag: Union[None, str] = None, name: Union[None, str] = None, **kwargs):
@@ -3510,11 +3510,11 @@ class TrashFileItemStatusField(str, Enum):
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class TrashFolderTypeField:
-    pass
+class TrashFolderTypeField(str, Enum):
+    FOLDER = 'folder'
 
-class TrashFolderPathCollectionFieldEntriesFieldTypeField:
-    pass
+class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class TrashFolderPathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Union[None, TrashFolderPathCollectionFieldEntriesFieldTypeField] = None, id: Union[None, str] = None, sequence_id: Union[None, str] = None, etag: Union[None, str] = None, name: Union[None, str] = None, **kwargs):
@@ -3554,11 +3554,11 @@ class TrashFolderItemStatusField(str, Enum):
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class TrashWebLinkTypeField:
-    pass
+class TrashWebLinkTypeField(str, Enum):
+    WEB_LINK = 'web_link'
 
-class TrashWebLinkPathCollectionFieldEntriesFieldTypeField:
-    pass
+class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Union[None, TrashWebLinkPathCollectionFieldEntriesFieldTypeField] = None, id: Union[None, str] = None, sequence_id: Union[None, str] = None, etag: Union[None, str] = None, name: Union[None, str] = None, **kwargs):
@@ -3598,24 +3598,24 @@ class TrashWebLinkItemStatusField(str, Enum):
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class TrashFileRestoredTypeField:
-    pass
+class TrashFileRestoredTypeField(str, Enum):
+    FILE = 'file'
 
 class TrashFileRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class TrashFolderRestoredTypeField:
-    pass
+class TrashFolderRestoredTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class TrashFolderRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class TrashWebLinkRestoredTypeField:
-    pass
+class TrashWebLinkRestoredTypeField(str, Enum):
+    WEB_LINK = 'web_link'
 
 class TrashWebLinkRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
@@ -3709,8 +3709,8 @@ class UploadParts(BaseObject):
         self.order = order
         self.entries = entries
 
-class UploadSessionTypeField:
-    pass
+class UploadSessionTypeField(str, Enum):
+    UPLOAD_SESSION = 'upload_session'
 
 class UploadSessionSessionEndpointsField(BaseObject):
     def __init__(self, upload_part: Union[None, str] = None, commit: Union[None, str] = None, abort: Union[None, str] = None, list_parts: Union[None, str] = None, status: Union[None, str] = None, log_event: Union[None, str] = None, **kwargs):
@@ -3843,8 +3843,8 @@ class UserFullRoleField(str, Enum):
     COADMIN = 'coadmin'
     USER = 'user'
 
-class UserFullEnterpriseFieldTypeField:
-    pass
+class UserFullEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
 
 class UserFullEnterpriseField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, UserFullEnterpriseFieldTypeField] = None, name: Union[None, str] = None, **kwargs):
@@ -3861,8 +3861,8 @@ class UserFullEnterpriseField(BaseObject):
         self.type = type
         self.name = name
 
-class UserBaseTypeField:
-    pass
+class UserBaseTypeField(str, Enum):
+    USER = 'user'
 
 class UserBase(BaseObject):
     def __init__(self, type: UserBaseTypeField, id: Union[None, str] = None, **kwargs):
@@ -5436,8 +5436,8 @@ class WebhookTriggersField(str, Enum):
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
 
-class WebhookMiniTypeField:
-    pass
+class WebhookMiniTypeField(str, Enum):
+    WEBHOOK = 'webhook'
 
 class WebhookMiniTargetFieldTypeField(str, Enum):
     FILE = 'file'
@@ -5620,8 +5620,8 @@ class WebLinkItemStatusField(str, Enum):
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class WebLinkBaseTypeField:
-    pass
+class WebLinkBaseTypeField(str, Enum):
+    WEB_LINK = 'web_link'
 
 class WebLinkBase(BaseObject):
     def __init__(self, id: str, type: WebLinkBaseTypeField, etag: Union[None, str] = None, **kwargs):
@@ -6163,20 +6163,20 @@ class WebhookInvocation(BaseObject):
         self.trigger = trigger
         self.source = source
 
-class WorkflowFlowsFieldTypeField:
-    pass
+class WorkflowFlowsFieldTypeField(str, Enum):
+    FLOW = 'flow'
 
-class WorkflowFlowsFieldTriggerFieldTypeField:
-    pass
+class WorkflowFlowsFieldTriggerFieldTypeField(str, Enum):
+    TRIGGER = 'trigger'
 
-class WorkflowFlowsFieldTriggerFieldTriggerTypeField:
-    pass
+class WorkflowFlowsFieldTriggerFieldTriggerTypeField(str, Enum):
+    WORKFLOW_MANUAL_START = 'WORKFLOW_MANUAL_START'
 
-class WorkflowFlowsFieldTriggerFieldScopeFieldTypeField:
-    pass
+class WorkflowFlowsFieldTriggerFieldScopeFieldTypeField(str, Enum):
+    TRIGGER_SCOPE = 'trigger_scope'
 
-class WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField:
-    pass
+class WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField(str, Enum):
+    FOLDER = 'folder'
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
     def __init__(self, type: Union[None, WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
@@ -6220,8 +6220,8 @@ class WorkflowFlowsFieldTriggerField(BaseObject):
         self.trigger_type = trigger_type
         self.scope = scope
 
-class WorkflowFlowsFieldOutcomesFieldTypeField:
-    pass
+class WorkflowFlowsFieldOutcomesFieldTypeField(str, Enum):
+    OUTCOME = 'outcome'
 
 class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
@@ -6248,8 +6248,8 @@ class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
     APPLY_FOLDER_CLASSIFICATION = 'apply_folder_classification'
     SEND_NOTIFICATION = 'send_notification'
 
-class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField:
-    pass
+class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField(str, Enum):
+    OUTCOME = 'outcome'
 
 class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
@@ -6330,8 +6330,8 @@ class WorkflowFlowsField(BaseObject):
         self.created_at = created_at
         self.created_by = created_by
 
-class WorkflowMiniTypeField:
-    pass
+class WorkflowMiniTypeField(str, Enum):
+    WORKFLOW = 'workflow'
 
 class WorkflowMini(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, WorkflowMiniTypeField] = None, name: Union[None, str] = None, description: Union[None, str] = None, is_enabled: Union[None, bool] = None, **kwargs):
@@ -6492,8 +6492,8 @@ class ZipDownloadStatus(BaseObject):
         self.skipped_folder_count = skipped_folder_count
         self.state = state
 
-class SignRequestTypeField:
-    pass
+class SignRequestTypeField(str, Enum):
+    SIGN_REQUEST = 'sign-request'
 
 class SignRequestStatusField(str, Enum):
     CONVERTING = 'converting'
@@ -6792,8 +6792,8 @@ class SkillInvocation(BaseObject):
         self.source = source
         self.event = event
 
-class SkillCardTypeField:
-    pass
+class SkillCardTypeField(str, Enum):
+    SKILL_CARD = 'skill_card'
 
 class SkillCardSkillCardTypeField(str, Enum):
     TRANSCRIPT = 'transcript'
@@ -6836,8 +6836,8 @@ class SkillCardStatusField(BaseObject):
         self.code = code
         self.message = message
 
-class SkillCardSkillFieldTypeField:
-    pass
+class SkillCardSkillFieldTypeField(str, Enum):
+    SERVICE = 'service'
 
 class SkillCardSkillField(BaseObject):
     def __init__(self, type: SkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -6852,8 +6852,8 @@ class SkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
-class SkillCardInvocationFieldTypeField:
-    pass
+class SkillCardInvocationFieldTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
 class SkillCardInvocationField(BaseObject):
     def __init__(self, type: SkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -6954,11 +6954,11 @@ class SkillCard(BaseObject):
         self.duration = duration
         self.entries = entries
 
-class KeywordSkillCardTypeField:
-    pass
+class KeywordSkillCardTypeField(str, Enum):
+    SKILL_CARD = 'skill_card'
 
-class KeywordSkillCardSkillCardTypeField:
-    pass
+class KeywordSkillCardSkillCardTypeField(str, Enum):
+    KEYWORD = 'keyword'
 
 class KeywordSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Union[None, str] = None, **kwargs):
@@ -6972,8 +6972,8 @@ class KeywordSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
-class KeywordSkillCardSkillFieldTypeField:
-    pass
+class KeywordSkillCardSkillFieldTypeField(str, Enum):
+    SERVICE = 'service'
 
 class KeywordSkillCardSkillField(BaseObject):
     def __init__(self, type: KeywordSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -6988,8 +6988,8 @@ class KeywordSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
-class KeywordSkillCardInvocationFieldTypeField:
-    pass
+class KeywordSkillCardInvocationFieldTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
 class KeywordSkillCardInvocationField(BaseObject):
     def __init__(self, type: KeywordSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7044,11 +7044,11 @@ class KeywordSkillCard(BaseObject):
         self.created_at = created_at
         self.skill_card_title = skill_card_title
 
-class TimelineSkillCardTypeField:
-    pass
+class TimelineSkillCardTypeField(str, Enum):
+    SKILL_CARD = 'skill_card'
 
-class TimelineSkillCardSkillCardTypeField:
-    pass
+class TimelineSkillCardSkillCardTypeField(str, Enum):
+    TIMELINE = 'timeline'
 
 class TimelineSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Union[None, str] = None, **kwargs):
@@ -7062,8 +7062,8 @@ class TimelineSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
-class TimelineSkillCardSkillFieldTypeField:
-    pass
+class TimelineSkillCardSkillFieldTypeField(str, Enum):
+    SERVICE = 'service'
 
 class TimelineSkillCardSkillField(BaseObject):
     def __init__(self, type: TimelineSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7078,8 +7078,8 @@ class TimelineSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
-class TimelineSkillCardInvocationFieldTypeField:
-    pass
+class TimelineSkillCardInvocationFieldTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
 class TimelineSkillCardInvocationField(BaseObject):
     def __init__(self, type: TimelineSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7165,11 +7165,11 @@ class TimelineSkillCard(BaseObject):
         self.skill_card_title = skill_card_title
         self.duration = duration
 
-class TranscriptSkillCardTypeField:
-    pass
+class TranscriptSkillCardTypeField(str, Enum):
+    SKILL_CARD = 'skill_card'
 
-class TranscriptSkillCardSkillCardTypeField:
-    pass
+class TranscriptSkillCardSkillCardTypeField(str, Enum):
+    TRANSCRIPT = 'transcript'
 
 class TranscriptSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Union[None, str] = None, **kwargs):
@@ -7183,8 +7183,8 @@ class TranscriptSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
-class TranscriptSkillCardSkillFieldTypeField:
-    pass
+class TranscriptSkillCardSkillFieldTypeField(str, Enum):
+    SERVICE = 'service'
 
 class TranscriptSkillCardSkillField(BaseObject):
     def __init__(self, type: TranscriptSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7199,8 +7199,8 @@ class TranscriptSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
-class TranscriptSkillCardInvocationFieldTypeField:
-    pass
+class TranscriptSkillCardInvocationFieldTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
 class TranscriptSkillCardInvocationField(BaseObject):
     def __init__(self, type: TranscriptSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7276,11 +7276,11 @@ class TranscriptSkillCard(BaseObject):
         self.skill_card_title = skill_card_title
         self.duration = duration
 
-class StatusSkillCardTypeField:
-    pass
+class StatusSkillCardTypeField(str, Enum):
+    SKILL_CARD = 'skill_card'
 
-class StatusSkillCardSkillCardTypeField:
-    pass
+class StatusSkillCardSkillCardTypeField(str, Enum):
+    STATUS = 'status'
 
 class StatusSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Union[None, str] = None, **kwargs):
@@ -7317,8 +7317,8 @@ class StatusSkillCardStatusField(BaseObject):
         self.code = code
         self.message = message
 
-class StatusSkillCardSkillFieldTypeField:
-    pass
+class StatusSkillCardSkillFieldTypeField(str, Enum):
+    SERVICE = 'service'
 
 class StatusSkillCardSkillField(BaseObject):
     def __init__(self, type: StatusSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7333,8 +7333,8 @@ class StatusSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
-class StatusSkillCardInvocationFieldTypeField:
-    pass
+class StatusSkillCardInvocationFieldTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
 
 class StatusSkillCardInvocationField(BaseObject):
     def __init__(self, type: StatusSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7790,8 +7790,8 @@ class ShieldInformationBarrierReportDetails(BaseObject):
         super().__init__(**kwargs)
         self.details = details
 
-class TrackingCodeTypeField:
-    pass
+class TrackingCodeTypeField(str, Enum):
+    TRACKING_CODE = 'tracking_code'
 
 class TrackingCode(BaseObject):
     def __init__(self, type: Union[None, TrackingCodeTypeField] = None, name: Union[None, str] = None, value: Union[None, str] = None, **kwargs):

@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from enum import Enum
+
 import json
 
 from box_sdk.schemas import ShieldInformationBarrierSegmentRestriction
@@ -34,11 +36,11 @@ class GetShieldInformationBarrierSegmentRestrictionsOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgTypeField:
-    pass
+class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = 'shield_information_barrier_segment_restriction'
 
-class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgShieldInformationBarrierSegmentFieldTypeField:
-    pass
+class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
@@ -53,8 +55,8 @@ class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgShieldInforma
         self.id = id
         self.type = type
 
-class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgRestrictedSegmentFieldTypeField:
-    pass
+class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgRestrictedSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgRestrictedSegmentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, PostShieldInformationBarrierSegmentRestrictionsRequestBodyArgRestrictedSegmentFieldTypeField] = None, **kwargs):
