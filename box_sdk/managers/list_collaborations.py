@@ -287,6 +287,21 @@ class ListCollaborationsManager(BaseObject):
         
         this endpoint is dependent on the group's ability to be invited.
 
+        
+        If collaboration is in `pending` status, the following fields
+
+        
+        are redacted:
+
+        
+        - `login` and `name` are hidden if a collaboration was created
+
+        
+        using `user_id`,
+
+        
+        -  `name` is hidden if a collaboration was created using `login`.
+
         """
         if options is None:
             options = PostCollaborationsOptionsArg()
