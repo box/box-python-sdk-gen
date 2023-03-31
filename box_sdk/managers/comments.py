@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdCommentsOptionsArg(BaseObject):
+class GetFileCommentsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -47,7 +49,7 @@ class GetFilesIdCommentsOptionsArg(BaseObject):
         self.limit = limit
         self.offset = offset
 
-class GetCommentsIdOptionsArg(BaseObject):
+class GetCommentByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -63,7 +65,7 @@ class GetCommentsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutCommentsIdRequestBodyArg(BaseObject):
+class UpdateCommentByIdRequestBodyArg(BaseObject):
     def __init__(self, message: Union[None, str] = None, **kwargs):
         """
         :param message: The text of the comment to update
@@ -72,7 +74,7 @@ class PutCommentsIdRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.message = message
 
-class PutCommentsIdOptionsArg(BaseObject):
+class UpdateCommentByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -88,24 +90,24 @@ class PutCommentsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PostCommentsRequestBodyArgItemFieldTypeField(str, Enum):
+class CreateCommentRequestBodyArgItemFieldTypeField(str, Enum):
     FILE = 'file'
     COMMENT = 'comment'
 
-class PostCommentsRequestBodyArgItemField(BaseObject):
-    def __init__(self, id: str, type: PostCommentsRequestBodyArgItemFieldTypeField, **kwargs):
+class CreateCommentRequestBodyArgItemField(BaseObject):
+    def __init__(self, id: str, type: CreateCommentRequestBodyArgItemFieldTypeField, **kwargs):
         """
         :param id: The ID of the item
         :type id: str
         :param type: The type of the item that this comment will be placed on.
-        :type type: PostCommentsRequestBodyArgItemFieldTypeField
+        :type type: CreateCommentRequestBodyArgItemFieldTypeField
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostCommentsRequestBodyArg(BaseObject):
-    def __init__(self, message: str, tagged_message: Union[None, str] = None, item: Union[None, PostCommentsRequestBodyArgItemField] = None, **kwargs):
+class CreateCommentRequestBodyArg(BaseObject):
+    def __init__(self, message: str, tagged_message: Union[None, str] = None, item: Union[None, CreateCommentRequestBodyArgItemField] = None, **kwargs):
         """
         :param message: The text of the comment.
             To mention a user, use the `tagged_message`
@@ -122,14 +124,14 @@ class PostCommentsRequestBodyArg(BaseObject):
             instead.
         :type tagged_message: Union[None, str], optional
         :param item: The item to attach the comment to.
-        :type item: Union[None, PostCommentsRequestBodyArgItemField], optional
+        :type item: Union[None, CreateCommentRequestBodyArgItemField], optional
         """
         super().__init__(**kwargs)
         self.message = message
         self.tagged_message = tagged_message
         self.item = item
 
-class PostCommentsOptionsArg(BaseObject):
+class CreateCommentOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -146,10 +148,10 @@ class PostCommentsOptionsArg(BaseObject):
         self.fields = fields
 
 class CommentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_comments(self, file_id: str, options: GetFilesIdCommentsOptionsArg = None) -> Comments:
+    def get_file_comments(self, file_id: str, options: GetFileCommentsOptionsArg = None) -> Comments:
         """
         Retrieves a list of comments for a file.
         :param file_id: The unique identifier that represents a file.
@@ -162,10 +164,10 @@ class CommentsManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdCommentsOptionsArg()
+            options = GetFileCommentsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Comments.from_dict(json.loads(response.text))
-    def get_comments_id(self, comment_id: str, options: GetCommentsIdOptionsArg = None) -> Comment:
+    def get_comment_by_id(self, comment_id: str, options: GetCommentByIdOptionsArg = None) -> Comment:
         """
         Retrieves the message and metadata for a specific comment, as well
         
@@ -176,10 +178,10 @@ class CommentsManager(BaseObject):
         :type comment_id: str
         """
         if options is None:
-            options = GetCommentsIdOptionsArg()
+            options = GetCommentByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Comment.from_dict(json.loads(response.text))
-    def put_comments_id(self, comment_id: str, request_body: PutCommentsIdRequestBodyArg, options: PutCommentsIdOptionsArg = None) -> Comment:
+    def update_comment_by_id(self, comment_id: str, request_body: UpdateCommentByIdRequestBodyArg, options: UpdateCommentByIdOptionsArg = None) -> Comment:
         """
         Update the message of a comment.
         :param comment_id: The ID of the comment.
@@ -187,10 +189,10 @@ class CommentsManager(BaseObject):
         :type comment_id: str
         """
         if options is None:
-            options = PutCommentsIdOptionsArg()
+            options = UpdateCommentByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Comment.from_dict(json.loads(response.text))
-    def delete_comments_id(self, comment_id: str):
+    def delete_comment_by_id(self, comment_id: str):
         """
         Permanently deletes a comment.
         :param comment_id: The ID of the comment.
@@ -199,7 +201,7 @@ class CommentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def post_comments(self, request_body: PostCommentsRequestBodyArg, options: PostCommentsOptionsArg = None) -> Comment:
+    def create_comment(self, request_body: CreateCommentRequestBodyArg, options: CreateCommentOptionsArg = None) -> Comment:
         """
         Adds a comment by the user to a specific file, or
         
@@ -207,6 +209,6 @@ class CommentsManager(BaseObject):
 
         """
         if options is None:
-            options = PostCommentsOptionsArg()
+            options = CreateCommentOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Comment.from_dict(json.loads(response.text))

@@ -16,6 +16,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -86,7 +88,7 @@ class GetEventsOptionsArg(BaseObject):
         self.created_before = created_before
 
 class EventsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_events(self, options: GetEventsOptionsArg = None) -> Events:
@@ -118,7 +120,7 @@ class EventsManager(BaseObject):
             options = GetEventsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.streamType, 'stream_position': options.streamPosition, 'limit': options.limit, 'event_type': options.eventType, 'created_after': options.createdAfter, 'created_before': options.createdBefore}, auth=self.auth))
         return Events.from_dict(json.loads(response.text))
-    def options_events(self) -> RealtimeServers:
+    def get_events_with_long_polling(self) -> RealtimeServers:
         """
         Returns a list of real-time servers that can be used for long-polling updates
         

@@ -14,24 +14,26 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFoldersTrashItemsOptionsArgDirectionField(str, Enum):
+class GetFolderTrashItemsOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
-class GetFoldersTrashItemsOptionsArgSortField(str, Enum):
+class GetFolderTrashItemsOptionsArgSortField(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
-class GetFoldersTrashItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, direction: Union[None, GetFoldersTrashItemsOptionsArgDirectionField] = None, sort: Union[None, GetFoldersTrashItemsOptionsArgSortField] = None, **kwargs):
+class GetFolderTrashItemsOptionsArg(BaseObject):
+    def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, direction: Union[None, GetFolderTrashItemsOptionsArgDirectionField] = None, sort: Union[None, GetFolderTrashItemsOptionsArgSortField] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -62,14 +64,14 @@ class GetFoldersTrashItemsOptionsArg(BaseObject):
         :type marker: Union[None, str], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetFoldersTrashItemsOptionsArgDirectionField], optional
+        :type direction: Union[None, GetFolderTrashItemsOptionsArgDirectionField], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
             folders listed before files, and files listed
             before web links.
             This parameter is not supported when using marker-based pagination.
-        :type sort: Union[None, GetFoldersTrashItemsOptionsArgSortField], optional
+        :type sort: Union[None, GetFolderTrashItemsOptionsArgSortField], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -81,10 +83,10 @@ class GetFoldersTrashItemsOptionsArg(BaseObject):
         self.sort = sort
 
 class TrashedItemsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folders_trash_items(self, options: GetFoldersTrashItemsOptionsArg = None) -> Items:
+    def get_folder_trash_items(self, options: GetFolderTrashItemsOptionsArg = None) -> Items:
         """
         Retrieves the files and folders that have been moved
         
@@ -107,6 +109,6 @@ class TrashedItemsManager(BaseObject):
 
         """
         if options is None:
-            options = GetFoldersTrashItemsOptionsArg()
+            options = GetFolderTrashItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset, 'usemarker': options.usemarker, 'marker': options.marker, 'direction': options.direction, 'sort': options.sort}, auth=self.auth))
         return Items.from_dict(json.loads(response.text))

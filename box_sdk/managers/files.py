@@ -18,13 +18,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdOptionsArg(BaseObject):
+class GetFileByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, if_none_match: Union[None, str] = None, boxapi: Union[None, str] = None, x_rep_hints: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -76,7 +78,7 @@ class GetFilesIdOptionsArg(BaseObject):
         self.boxapi = boxapi
         self.x_rep_hints = x_rep_hints
 
-class PostFilesIdRequestBodyArgParentField(BaseObject):
+class RestoreFileFromTrashRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -85,8 +87,8 @@ class PostFilesIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostFilesIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, PostFilesIdRequestBodyArgParentField] = None, **kwargs):
+class RestoreFileFromTrashRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, parent: Union[None, RestoreFileFromTrashRequestBodyArgParentField] = None, **kwargs):
         """
         :param name: An optional new name for the file.
         :type name: Union[None, str], optional
@@ -95,7 +97,7 @@ class PostFilesIdRequestBodyArg(BaseObject):
         self.name = name
         self.parent = parent
 
-class PostFilesIdOptionsArg(BaseObject):
+class RestoreFileFromTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -111,7 +113,7 @@ class PostFilesIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutFilesIdRequestBodyArgParentField(BaseObject):
+class UpdateFileByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -120,12 +122,12 @@ class PutFilesIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PutFilesIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFileByIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFilesIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFileByIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -136,8 +138,8 @@ class PutFilesIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
         super().__init__(**kwargs)
         self.can_download = can_download
 
-class PutFilesIdRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFilesIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFilesIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFileByIdRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFileByIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFileByIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -149,7 +151,7 @@ class PutFilesIdRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFilesIdRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFileByIdRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -171,14 +173,14 @@ class PutFilesIdRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFilesIdRequestBodyArgLockFieldAccessField(str, Enum):
+class UpdateFileByIdRequestBodyArgLockFieldAccessField(str, Enum):
     LOCK = 'lock'
 
-class PutFilesIdRequestBodyArgLockField(BaseObject):
-    def __init__(self, access: Union[None, PutFilesIdRequestBodyArgLockFieldAccessField] = None, expires_at: Union[None, str] = None, is_download_prevented: Union[None, bool] = None, **kwargs):
+class UpdateFileByIdRequestBodyArgLockField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFileByIdRequestBodyArgLockFieldAccessField] = None, expires_at: Union[None, str] = None, is_download_prevented: Union[None, bool] = None, **kwargs):
         """
         :param access: The type of this object.
-        :type access: Union[None, PutFilesIdRequestBodyArgLockFieldAccessField], optional
+        :type access: Union[None, UpdateFileByIdRequestBodyArgLockFieldAccessField], optional
         :param expires_at: Defines the time at which the lock expires.
         :type expires_at: Union[None, str], optional
         :param is_download_prevented: Defines if the file can be downloaded while it is locked.
@@ -189,12 +191,12 @@ class PutFilesIdRequestBodyArgLockField(BaseObject):
         self.expires_at = expires_at
         self.is_download_prevented = is_download_prevented
 
-class PutFilesIdRequestBodyArgPermissionsFieldCanDownloadField(str, Enum):
+class UpdateFileByIdRequestBodyArgPermissionsFieldCanDownloadField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
 
-class PutFilesIdRequestBodyArgPermissionsField(BaseObject):
-    def __init__(self, can_download: Union[None, PutFilesIdRequestBodyArgPermissionsFieldCanDownloadField] = None, **kwargs):
+class UpdateFileByIdRequestBodyArgPermissionsField(BaseObject):
+    def __init__(self, can_download: Union[None, UpdateFileByIdRequestBodyArgPermissionsFieldCanDownloadField] = None, **kwargs):
         """
         :param can_download: Defines who is allowed to download this file. The possible
             values are either `open` for everyone or `company` for
@@ -203,13 +205,13 @@ class PutFilesIdRequestBodyArgPermissionsField(BaseObject):
             normally part of the `role` of a collaboration. When set to
             `company`, this essentially removes the download option for
             external users with `viewer` or `editor` a roles.
-        :type can_download: Union[None, PutFilesIdRequestBodyArgPermissionsFieldCanDownloadField], optional
+        :type can_download: Union[None, UpdateFileByIdRequestBodyArgPermissionsFieldCanDownloadField], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
 
-class PutFilesIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, parent: Union[None, PutFilesIdRequestBodyArgParentField] = None, shared_link: Union[None, PutFilesIdRequestBodyArgSharedLinkField] = None, lock: Union[None, PutFilesIdRequestBodyArgLockField] = None, disposition_at: Union[None, str] = None, permissions: Union[None, PutFilesIdRequestBodyArgPermissionsField] = None, tags: Union[None, List[str]] = None, **kwargs):
+class UpdateFileByIdRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, parent: Union[None, UpdateFileByIdRequestBodyArgParentField] = None, shared_link: Union[None, UpdateFileByIdRequestBodyArgSharedLinkField] = None, lock: Union[None, UpdateFileByIdRequestBodyArgLockField] = None, disposition_at: Union[None, str] = None, permissions: Union[None, UpdateFileByIdRequestBodyArgPermissionsField] = None, tags: Union[None, List[str]] = None, **kwargs):
         """
         :param name: An optional different name for the file. This can be used to
             rename the file.
@@ -223,12 +225,12 @@ class PutFilesIdRequestBodyArg(BaseObject):
             moved, renamed, or otherwise changed by anyone other than the user
             who created the lock.
             Set this to `null` to remove the lock.
-        :type lock: Union[None, PutFilesIdRequestBodyArgLockField], optional
+        :type lock: Union[None, UpdateFileByIdRequestBodyArgLockField], optional
         :param disposition_at: The retention expiration timestamp for the given file. This
             date cannot be shortened once set on a file.
         :type disposition_at: Union[None, str], optional
         :param permissions: Defines who can download a file.
-        :type permissions: Union[None, PutFilesIdRequestBodyArgPermissionsField], optional
+        :type permissions: Union[None, UpdateFileByIdRequestBodyArgPermissionsField], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -247,7 +249,7 @@ class PutFilesIdRequestBodyArg(BaseObject):
         self.permissions = permissions
         self.tags = tags
 
-class PutFilesIdOptionsArg(BaseObject):
+class UpdateFileByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, if_match: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -271,7 +273,7 @@ class PutFilesIdOptionsArg(BaseObject):
         self.fields = fields
         self.if_match = if_match
 
-class DeleteFilesIdOptionsArg(BaseObject):
+class DeleteFileByIdOptionsArg(BaseObject):
     def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
@@ -285,7 +287,7 @@ class DeleteFilesIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.if_match = if_match
 
-class PostFilesIdCopyRequestBodyArgParentField(BaseObject):
+class CopyFileRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of folder to copy the file to.
@@ -294,11 +296,11 @@ class PostFilesIdCopyRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostFilesIdCopyRequestBodyArg(BaseObject):
-    def __init__(self, parent: PostFilesIdCopyRequestBodyArgParentField, name: Union[None, str] = None, version: Union[None, str] = None, **kwargs):
+class CopyFileRequestBodyArg(BaseObject):
+    def __init__(self, parent: CopyFileRequestBodyArgParentField, name: Union[None, str] = None, version: Union[None, str] = None, **kwargs):
         """
         :param parent: The destination folder to copy the file to.
-        :type parent: PostFilesIdCopyRequestBodyArgParentField
+        :type parent: CopyFileRequestBodyArgParentField
         :param name: An optional new name for the copied file.
             There are some restrictions to the file name. Names containing
             non-printable ASCII characters, forward and backward slashes
@@ -314,7 +316,7 @@ class PostFilesIdCopyRequestBodyArg(BaseObject):
         self.name = name
         self.version = version
 
-class PostFilesIdCopyOptionsArg(BaseObject):
+class CopyFileOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -330,11 +332,11 @@ class PostFilesIdCopyOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetFilesIdThumbnailIdExtensionArg(str, Enum):
+class GetFileThumbnailByIdExtensionArg(str, Enum):
     PNG = 'png'
     JPG = 'jpg'
 
-class GetFilesIdThumbnailIdOptionsArg(BaseObject):
+class GetFileThumbnailByIdOptionsArg(BaseObject):
     def __init__(self, min_height: Union[None, int] = None, min_width: Union[None, int] = None, max_height: Union[None, int] = None, max_width: Union[None, int] = None, **kwargs):
         """
         :param min_height: The minimum height of the thumbnail
@@ -353,10 +355,10 @@ class GetFilesIdThumbnailIdOptionsArg(BaseObject):
         self.max_width = max_width
 
 class FilesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id(self, file_id: str, options: GetFilesIdOptionsArg = None) -> File:
+    def get_file_by_id(self, file_id: str, options: GetFileByIdOptionsArg = None) -> File:
         """
         Retrieves the details about a file.
         :param file_id: The unique identifier that represents a file.
@@ -369,10 +371,10 @@ class FilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdOptionsArg()
+            options = GetFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi, 'x-rep-hints': options.x_rep_hints}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def post_files_id(self, file_id: str, request_body: PostFilesIdRequestBodyArg, options: PostFilesIdOptionsArg = None) -> TrashFileRestored:
+    def restore_file_from_trash(self, file_id: str, request_body: RestoreFileFromTrashRequestBodyArg, options: RestoreFileFromTrashOptionsArg = None) -> TrashFileRestored:
         """
         Restores a file that has been moved to the trash.
         
@@ -391,10 +393,10 @@ class FilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = PostFilesIdOptionsArg()
+            options = RestoreFileFromTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFileRestored.from_dict(json.loads(response.text))
-    def put_files_id(self, file_id: str, request_body: PutFilesIdRequestBodyArg, options: PutFilesIdOptionsArg = None) -> File:
+    def update_file_by_id(self, file_id: str, request_body: UpdateFileByIdRequestBodyArg, options: UpdateFileByIdOptionsArg = None) -> File:
         """
         Updates a file. This can be used to rename or move a file,
         
@@ -410,10 +412,10 @@ class FilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = PutFilesIdOptionsArg()
+            options = UpdateFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def delete_files_id(self, file_id: str, options: DeleteFilesIdOptionsArg = None):
+    def delete_file_by_id(self, file_id: str, options: DeleteFileByIdOptionsArg = None):
         """
         Deletes a file, either permanently or by moving it to
         
@@ -435,10 +437,10 @@ class FilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = DeleteFilesIdOptionsArg()
+            options = DeleteFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
-    def post_files_id_copy(self, file_id: str, request_body: PostFilesIdCopyRequestBodyArg, options: PostFilesIdCopyOptionsArg = None) -> File:
+    def copy_file(self, file_id: str, request_body: CopyFileRequestBodyArg, options: CopyFileOptionsArg = None) -> File:
         """
         Creates a copy of a file.
         :param file_id: The unique identifier that represents a file.
@@ -451,10 +453,10 @@ class FilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = PostFilesIdCopyOptionsArg()
+            options = CopyFileOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def get_files_id_thumbnail_id(self, file_id: str, extension: GetFilesIdThumbnailIdExtensionArg, options: GetFilesIdThumbnailIdOptionsArg = None):
+    def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, options: GetFileThumbnailByIdOptionsArg = None):
         """
         Retrieves a thumbnail, or smaller image representation, of a file.
         
@@ -485,9 +487,9 @@ class FilesManager(BaseObject):
         :type file_id: str
         :param extension: The file format for the thumbnail
             Example: "png"
-        :type extension: GetFilesIdThumbnailIdExtensionArg
+        :type extension: GetFileThumbnailByIdExtensionArg
         """
         if options is None:
-            options = GetFilesIdThumbnailIdOptionsArg()
+            options = GetFileThumbnailByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params={'min_height': options.minHeight, 'min_width': options.minWidth, 'max_height': options.maxHeight, 'max_width': options.maxWidth}, auth=self.auth))
         return response.content

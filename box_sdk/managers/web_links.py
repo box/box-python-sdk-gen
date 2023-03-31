@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostWebLinksRequestBodyArgParentField(BaseObject):
+class CreateWebLinkRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -31,13 +33,13 @@ class PostWebLinksRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostWebLinksRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class CreateWebLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PostWebLinksRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PostWebLinksRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, **kwargs):
+class CreateWebLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, CreateWebLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -49,7 +51,7 @@ class PostWebLinksRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PostWebLinksRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, CreateWebLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -72,20 +74,20 @@ class PostWebLinksRequestBodyArgSharedLinkField(BaseObject):
         self.vanity_name = vanity_name
         self.unshared_at = unshared_at
 
-class PostWebLinksRequestBodyArg(BaseObject):
-    def __init__(self, url: str, parent: PostWebLinksRequestBodyArgParentField, name: Union[None, str] = None, description: Union[None, str] = None, shared_link: Union[None, PostWebLinksRequestBodyArgSharedLinkField] = None, **kwargs):
+class CreateWebLinkRequestBodyArg(BaseObject):
+    def __init__(self, url: str, parent: CreateWebLinkRequestBodyArgParentField, name: Union[None, str] = None, description: Union[None, str] = None, shared_link: Union[None, CreateWebLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param url: The URL that this web link links to. Must start with
             `"http://"` or `"https://"`.
         :type url: str
         :param parent: The parent folder to create the web link within.
-        :type parent: PostWebLinksRequestBodyArgParentField
+        :type parent: CreateWebLinkRequestBodyArgParentField
         :param name: Name of the web link. Defaults to the URL if not set.
         :type name: Union[None, str], optional
         :param description: Description of the web link.
         :type description: Union[None, str], optional
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, PostWebLinksRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, CreateWebLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.url = url
@@ -94,7 +96,7 @@ class PostWebLinksRequestBodyArg(BaseObject):
         self.description = description
         self.shared_link = shared_link
 
-class GetWebLinksIdOptionsArg(BaseObject):
+class GetWebLinkByIdOptionsArg(BaseObject):
     def __init__(self, boxapi: Union[None, str] = None, **kwargs):
         """
         :param boxapi: The URL, and optional password, for the shared link of this item.
@@ -109,7 +111,7 @@ class GetWebLinksIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.boxapi = boxapi
 
-class PostWebLinksIdRequestBodyArgParentField(BaseObject):
+class CreateWebLinkByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -118,8 +120,8 @@ class PostWebLinksIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostWebLinksIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, PostWebLinksIdRequestBodyArgParentField] = None, **kwargs):
+class CreateWebLinkByIdRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, parent: Union[None, CreateWebLinkByIdRequestBodyArgParentField] = None, **kwargs):
         """
         :param name: An optional new name for the web link.
         :type name: Union[None, str], optional
@@ -128,7 +130,7 @@ class PostWebLinksIdRequestBodyArg(BaseObject):
         self.name = name
         self.parent = parent
 
-class PostWebLinksIdOptionsArg(BaseObject):
+class CreateWebLinkByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -144,7 +146,7 @@ class PostWebLinksIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutWebLinksIdRequestBodyArgParentField(BaseObject):
+class UpdateWebLinkByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -153,13 +155,13 @@ class PutWebLinksIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PutWebLinksIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateWebLinkByIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutWebLinksIdRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutWebLinksIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, **kwargs):
+class UpdateWebLinkByIdRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateWebLinkByIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -171,7 +173,7 @@ class PutWebLinksIdRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutWebLinksIdRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateWebLinkByIdRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -194,8 +196,8 @@ class PutWebLinksIdRequestBodyArgSharedLinkField(BaseObject):
         self.vanity_name = vanity_name
         self.unshared_at = unshared_at
 
-class PutWebLinksIdRequestBodyArg(BaseObject):
-    def __init__(self, url: Union[None, str] = None, parent: Union[None, PutWebLinksIdRequestBodyArgParentField] = None, name: Union[None, str] = None, description: Union[None, str] = None, shared_link: Union[None, PutWebLinksIdRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateWebLinkByIdRequestBodyArg(BaseObject):
+    def __init__(self, url: Union[None, str] = None, parent: Union[None, UpdateWebLinkByIdRequestBodyArgParentField] = None, name: Union[None, str] = None, description: Union[None, str] = None, shared_link: Union[None, UpdateWebLinkByIdRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param url: The new URL that the web link links to. Must start with
             `"http://"` or `"https://"`.
@@ -205,7 +207,7 @@ class PutWebLinksIdRequestBodyArg(BaseObject):
         :param description: A new description of the web link.
         :type description: Union[None, str], optional
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, PutWebLinksIdRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateWebLinkByIdRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.url = url
@@ -215,16 +217,16 @@ class PutWebLinksIdRequestBodyArg(BaseObject):
         self.shared_link = shared_link
 
 class WebLinksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def post_web_links(self, request_body: PostWebLinksRequestBodyArg) -> WebLink:
+    def create_web_link(self, request_body: CreateWebLinkRequestBodyArg) -> WebLink:
         """
         Creates a web link object within a folder.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def get_web_links_id(self, web_link_id: str, options: GetWebLinksIdOptionsArg = None) -> WebLink:
+    def get_web_link_by_id(self, web_link_id: str, options: GetWebLinkByIdOptionsArg = None) -> WebLink:
         """
         Retrieve information about a web link.
         :param web_link_id: The ID of the web link.
@@ -232,10 +234,10 @@ class WebLinksManager(BaseObject):
         :type web_link_id: str
         """
         if options is None:
-            options = GetWebLinksIdOptionsArg()
+            options = GetWebLinkByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def post_web_links_id(self, web_link_id: str, request_body: PostWebLinksIdRequestBodyArg, options: PostWebLinksIdOptionsArg = None) -> TrashWebLinkRestored:
+    def create_web_link_by_id(self, web_link_id: str, request_body: CreateWebLinkByIdRequestBodyArg, options: CreateWebLinkByIdOptionsArg = None) -> TrashWebLinkRestored:
         """
         Restores a web link that has been moved to the trash.
         
@@ -249,10 +251,10 @@ class WebLinksManager(BaseObject):
         :type web_link_id: str
         """
         if options is None:
-            options = PostWebLinksIdOptionsArg()
+            options = CreateWebLinkByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashWebLinkRestored.from_dict(json.loads(response.text))
-    def put_web_links_id(self, web_link_id: str, request_body: PutWebLinksIdRequestBodyArg) -> WebLink:
+    def update_web_link_by_id(self, web_link_id: str, request_body: UpdateWebLinkByIdRequestBodyArg) -> WebLink:
         """
         Updates a web link object.
         :param web_link_id: The ID of the web link.
@@ -261,7 +263,7 @@ class WebLinksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def delete_web_links_id(self, web_link_id: str):
+    def delete_web_link_by_id(self, web_link_id: str):
         """
         Deletes a web link.
         :param web_link_id: The ID of the web link.

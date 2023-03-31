@@ -20,13 +20,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFoldersIdOptionsArg(BaseObject):
+class GetFolderByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, if_none_match: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -62,7 +64,7 @@ class GetFoldersIdOptionsArg(BaseObject):
         self.if_none_match = if_none_match
         self.boxapi = boxapi
 
-class PostFoldersIdRequestBodyArgParentField(BaseObject):
+class RestoreFolderFromTrashRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -71,8 +73,8 @@ class PostFoldersIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostFoldersIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, PostFoldersIdRequestBodyArgParentField] = None, **kwargs):
+class RestoreFolderFromTrashRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, parent: Union[None, RestoreFolderFromTrashRequestBodyArgParentField] = None, **kwargs):
         """
         :param name: An optional new name for the folder.
         :type name: Union[None, str], optional
@@ -81,7 +83,7 @@ class PostFoldersIdRequestBodyArg(BaseObject):
         self.name = name
         self.parent = parent
 
-class PostFoldersIdOptionsArg(BaseObject):
+class RestoreFolderFromTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -97,12 +99,12 @@ class PostFoldersIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutFoldersIdRequestBodyArgSyncStateField(str, Enum):
+class UpdateFolderByIdRequestBodyArgSyncStateField(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
 
-class PutFoldersIdRequestBodyArgParentField(BaseObject):
+class UpdateFolderByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of the new parent folder
@@ -111,12 +113,12 @@ class PutFoldersIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PutFoldersIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFoldersIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFolderByIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -127,8 +129,8 @@ class PutFoldersIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
         super().__init__(**kwargs)
         self.can_download = can_download
 
-class PutFoldersIdRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFoldersIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFoldersIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFolderByIdRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -140,7 +142,7 @@ class PutFoldersIdRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFoldersIdRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -162,12 +164,12 @@ class PutFoldersIdRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFoldersIdRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum):
+class UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
 
-class PutFoldersIdRequestBodyArgFolderUploadEmailField(BaseObject):
-    def __init__(self, access: Union[None, PutFoldersIdRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
+class UpdateFolderByIdRequestBodyArgFolderUploadEmailField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
         """
         :param access: When this parameter has been set, users can email files
             to the email address that has been automatically
@@ -179,12 +181,12 @@ class PutFoldersIdRequestBodyArgFolderUploadEmailField(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Union[None, PutFoldersIdRequestBodyArgFolderUploadEmailFieldAccessField], optional
+        :type access: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
 
-class PutFoldersIdRequestBodyArgCollectionsField(BaseObject):
+class UpdateFolderByIdRequestBodyArgCollectionsField(BaseObject):
     def __init__(self, id: Union[None, str] = None, type: Union[None, str] = None, **kwargs):
         """
         :param id: The unique identifier for this object
@@ -196,8 +198,8 @@ class PutFoldersIdRequestBodyArgCollectionsField(BaseObject):
         self.id = id
         self.type = type
 
-class PutFoldersIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, sync_state: Union[None, PutFoldersIdRequestBodyArgSyncStateField] = None, can_non_owners_invite: Union[None, bool] = None, parent: Union[None, PutFoldersIdRequestBodyArgParentField] = None, shared_link: Union[None, PutFoldersIdRequestBodyArgSharedLinkField] = None, folder_upload_email: Union[None, PutFoldersIdRequestBodyArgFolderUploadEmailField] = None, tags: Union[None, List[str]] = None, is_collaboration_restricted_to_enterprise: Union[None, bool] = None, collections: Union[None, List[PutFoldersIdRequestBodyArgCollectionsField]] = None, can_non_owners_view_collaborators: Union[None, bool] = None, **kwargs):
+class UpdateFolderByIdRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, sync_state: Union[None, UpdateFolderByIdRequestBodyArgSyncStateField] = None, can_non_owners_invite: Union[None, bool] = None, parent: Union[None, UpdateFolderByIdRequestBodyArgParentField] = None, shared_link: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkField] = None, folder_upload_email: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailField] = None, tags: Union[None, List[str]] = None, is_collaboration_restricted_to_enterprise: Union[None, bool] = None, collections: Union[None, List[UpdateFolderByIdRequestBodyArgCollectionsField]] = None, can_non_owners_view_collaborators: Union[None, bool] = None, **kwargs):
         """
         :param name: The optional new name for this folder.
         :type name: Union[None, str], optional
@@ -206,13 +208,13 @@ class PutFoldersIdRequestBodyArg(BaseObject):
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Union[None, PutFoldersIdRequestBodyArgSyncStateField], optional
+        :type sync_state: Union[None, UpdateFolderByIdRequestBodyArgSyncStateField], optional
         :param can_non_owners_invite: Specifies if users who are not the owner
             of the folder can invite new collaborators to the folder.
         :type can_non_owners_invite: Union[None, bool], optional
         :param parent: The parent folder for this folder. Use this to move
             the folder or to restore it out of the trash.
-        :type parent: Union[None, PutFoldersIdRequestBodyArgParentField], optional
+        :type parent: Union[None, UpdateFolderByIdRequestBodyArgParentField], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -232,7 +234,7 @@ class PutFoldersIdRequestBodyArg(BaseObject):
             Passing an empty array `[]` or `null` will remove
             the folder from all collections.
             [1]: ../advanced-files-and-folders/#get-collections
-        :type collections: Union[None, List[PutFoldersIdRequestBodyArgCollectionsField]], optional
+        :type collections: Union[None, List[UpdateFolderByIdRequestBodyArgCollectionsField]], optional
         :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
             this folder from viewing other collaborations on
             this folder.
@@ -256,7 +258,7 @@ class PutFoldersIdRequestBodyArg(BaseObject):
         self.collections = collections
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
 
-class PutFoldersIdOptionsArg(BaseObject):
+class UpdateFolderByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, if_match: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -280,7 +282,7 @@ class PutFoldersIdOptionsArg(BaseObject):
         self.fields = fields
         self.if_match = if_match
 
-class DeleteFoldersIdOptionsArg(BaseObject):
+class DeleteFolderByIdOptionsArg(BaseObject):
     def __init__(self, if_match: Union[None, str] = None, recursive: Union[None, bool] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
@@ -298,18 +300,18 @@ class DeleteFoldersIdOptionsArg(BaseObject):
         self.if_match = if_match
         self.recursive = recursive
 
-class GetFoldersIdItemsOptionsArgSortField(str, Enum):
+class GetFolderItemsOptionsArgSortField(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
-class GetFoldersIdItemsOptionsArgDirectionField(str, Enum):
+class GetFolderItemsOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
-class GetFoldersIdItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, boxapi: Union[None, str] = None, sort: Union[None, GetFoldersIdItemsOptionsArgSortField] = None, direction: Union[None, GetFoldersIdItemsOptionsArgDirectionField] = None, **kwargs):
+class GetFolderItemsOptionsArg(BaseObject):
+    def __init__(self, fields: Union[None, str] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, boxapi: Union[None, str] = None, sort: Union[None, GetFolderItemsOptionsArgSortField] = None, direction: Union[None, GetFolderItemsOptionsArgDirectionField] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -357,10 +359,10 @@ class GetFoldersIdItemsOptionsArg(BaseObject):
             before web links.
             This parameter is not supported for marker-based pagination
             on the root folder (the folder with an ID of `0`).
-        :type sort: Union[None, GetFoldersIdItemsOptionsArgSortField], optional
+        :type sort: Union[None, GetFolderItemsOptionsArgSortField], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetFoldersIdItemsOptionsArgDirectionField], optional
+        :type direction: Union[None, GetFolderItemsOptionsArgDirectionField], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -372,7 +374,7 @@ class GetFoldersIdItemsOptionsArg(BaseObject):
         self.sort = sort
         self.direction = direction
 
-class PostFoldersRequestBodyArgParentField(BaseObject):
+class CreateFolderRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -381,12 +383,12 @@ class PostFoldersRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostFoldersRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum):
+class CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
 
-class PostFoldersRequestBodyArgFolderUploadEmailField(BaseObject):
-    def __init__(self, access: Union[None, PostFoldersRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
+class CreateFolderRequestBodyArgFolderUploadEmailField(BaseObject):
+    def __init__(self, access: Union[None, CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
         """
         :param access: When this parameter has been set, users can email files
             to the email address that has been automatically
@@ -398,18 +400,18 @@ class PostFoldersRequestBodyArgFolderUploadEmailField(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Union[None, PostFoldersRequestBodyArgFolderUploadEmailFieldAccessField], optional
+        :type access: Union[None, CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
 
-class PostFoldersRequestBodyArgSyncStateField(str, Enum):
+class CreateFolderRequestBodyArgSyncStateField(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
 
-class PostFoldersRequestBodyArg(BaseObject):
-    def __init__(self, name: str, parent: PostFoldersRequestBodyArgParentField, folder_upload_email: Union[None, PostFoldersRequestBodyArgFolderUploadEmailField] = None, sync_state: Union[None, PostFoldersRequestBodyArgSyncStateField] = None, **kwargs):
+class CreateFolderRequestBodyArg(BaseObject):
+    def __init__(self, name: str, parent: CreateFolderRequestBodyArgParentField, folder_upload_email: Union[None, CreateFolderRequestBodyArgFolderUploadEmailField] = None, sync_state: Union[None, CreateFolderRequestBodyArgSyncStateField] = None, **kwargs):
         """
         :param name: The name for the new folder.
             There are some restrictions to the file name. Names containing
@@ -420,11 +422,11 @@ class PostFoldersRequestBodyArg(BaseObject):
             not allowed either.
         :type name: str
         :param parent: The parent folder to create the new folder within.
-        :type parent: PostFoldersRequestBodyArgParentField
+        :type parent: CreateFolderRequestBodyArgParentField
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Union[None, PostFoldersRequestBodyArgSyncStateField], optional
+        :type sync_state: Union[None, CreateFolderRequestBodyArgSyncStateField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -432,7 +434,7 @@ class PostFoldersRequestBodyArg(BaseObject):
         self.folder_upload_email = folder_upload_email
         self.sync_state = sync_state
 
-class PostFoldersOptionsArg(BaseObject):
+class CreateFolderOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -448,7 +450,7 @@ class PostFoldersOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PostFoldersIdCopyRequestBodyArgParentField(BaseObject):
+class CopyFolderRequestBodyArgParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -457,11 +459,11 @@ class PostFoldersIdCopyRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostFoldersIdCopyRequestBodyArg(BaseObject):
-    def __init__(self, parent: PostFoldersIdCopyRequestBodyArgParentField, name: Union[None, str] = None, **kwargs):
+class CopyFolderRequestBodyArg(BaseObject):
+    def __init__(self, parent: CopyFolderRequestBodyArgParentField, name: Union[None, str] = None, **kwargs):
         """
         :param parent: The destination folder to copy the folder to.
-        :type parent: PostFoldersIdCopyRequestBodyArgParentField
+        :type parent: CopyFolderRequestBodyArgParentField
         :param name: An optional new name for the copied folder.
             There are some restrictions to the file name. Names containing
             non-printable ASCII characters, forward and backward slashes
@@ -475,7 +477,7 @@ class PostFoldersIdCopyRequestBodyArg(BaseObject):
         self.parent = parent
         self.name = name
 
-class PostFoldersIdCopyOptionsArg(BaseObject):
+class CopyFolderOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -492,10 +494,10 @@ class PostFoldersIdCopyOptionsArg(BaseObject):
         self.fields = fields
 
 class FoldersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folders_id(self, folder_id: str, options: GetFoldersIdOptionsArg = None) -> Folder:
+    def get_folder_by_id(self, folder_id: str, options: GetFolderByIdOptionsArg = None) -> Folder:
         """
         Retrieves details for a folder, including the first 100 entries
         
@@ -519,10 +521,10 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = GetFoldersIdOptionsArg()
+            options = GetFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def post_folders_id(self, folder_id: str, request_body: PostFoldersIdRequestBodyArg, options: PostFoldersIdOptionsArg = None) -> TrashFolderRestored:
+    def restore_folder_from_trash(self, folder_id: str, request_body: RestoreFolderFromTrashRequestBodyArg, options: RestoreFolderFromTrashOptionsArg = None) -> TrashFolderRestored:
         """
         Restores a folder that has been moved to the trash.
         
@@ -561,10 +563,10 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = PostFoldersIdOptionsArg()
+            options = RestoreFolderFromTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFolderRestored.from_dict(json.loads(response.text))
-    def put_folders_id(self, folder_id: str, request_body: PutFoldersIdRequestBodyArg, options: PutFoldersIdOptionsArg = None) -> Folder:
+    def update_folder_by_id(self, folder_id: str, request_body: UpdateFolderByIdRequestBodyArg, options: UpdateFolderByIdOptionsArg = None) -> Folder:
         """
         Updates a folder. This can be also be used to move the folder,
         
@@ -582,10 +584,10 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = PutFoldersIdOptionsArg()
+            options = UpdateFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def delete_folders_id(self, folder_id: str, options: DeleteFoldersIdOptionsArg = None):
+    def delete_folder_by_id(self, folder_id: str, options: DeleteFolderByIdOptionsArg = None):
         """
         Deletes a folder, either permanently or by moving it to
         
@@ -603,10 +605,10 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = DeleteFoldersIdOptionsArg()
+            options = DeleteFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params={'recursive': options.recursive}, headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
-    def get_folders_id_items(self, folder_id: str, options: GetFoldersIdItemsOptionsArg = None) -> Items:
+    def get_folder_items(self, folder_id: str, options: GetFolderItemsOptionsArg = None) -> Items:
         """
         Retrieves a page of items in a folder. These items can be files,
         
@@ -630,18 +632,18 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = GetFoldersIdItemsOptionsArg()
+            options = GetFolderItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params={'fields': options.fields, 'usemarker': options.usemarker, 'marker': options.marker, 'offset': options.offset, 'limit': options.limit, 'sort': options.sort, 'direction': options.direction}, headers={'boxapi': options.boxapi}, auth=self.auth))
         return Items.from_dict(json.loads(response.text))
-    def post_folders(self, request_body: PostFoldersRequestBodyArg, options: PostFoldersOptionsArg = None) -> Folder:
+    def create_folder(self, request_body: CreateFolderRequestBodyArg, options: CreateFolderOptionsArg = None) -> Folder:
         """
         Creates a new empty folder within the specified parent folder.
         """
         if options is None:
-            options = PostFoldersOptionsArg()
+            options = CreateFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def post_folders_id_copy(self, folder_id: str, request_body: PostFoldersIdCopyRequestBodyArg, options: PostFoldersIdCopyOptionsArg = None) -> Folder:
+    def copy_folder(self, folder_id: str, request_body: CopyFolderRequestBodyArg, options: CopyFolderOptionsArg = None) -> Folder:
         """
         Creates a copy of a folder within a destination folder.
         
@@ -658,6 +660,6 @@ class FoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = PostFoldersIdCopyOptionsArg()
+            options = CopyFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))

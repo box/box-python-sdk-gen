@@ -18,21 +18,23 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetMetadataTemplatesIdIdSchemaScopeArg(str, Enum):
+class GetMetadataTemplateSchemaScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class DeleteMetadataTemplatesIdIdSchemaScopeArg(str, Enum):
+class DeleteMetadataTemplateSchemaScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class GetMetadataTemplatesGlobalOptionsArg(BaseObject):
+class GetMetadataTemplateGlobalOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -46,7 +48,7 @@ class GetMetadataTemplatesGlobalOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class GetMetadataTemplatesEnterpriseOptionsArg(BaseObject):
+class GetMetadataTemplateEnterpriseOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -60,14 +62,14 @@ class GetMetadataTemplatesEnterpriseOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldTypeField(str, Enum):
+class CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldTypeField(str, Enum):
     STRING = 'string'
     FLOAT = 'float'
     DATE = 'date'
     ENUM = 'enum'
     MULTISELECT = 'multiSelect'
 
-class PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldOptionsField(BaseObject):
+class CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField(BaseObject):
     def __init__(self, key: str, **kwargs):
         """
         :param key: The text value of the option. This represents both the display name of the
@@ -77,8 +79,8 @@ class PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldOptionsField(BaseObjec
         super().__init__(**kwargs)
         self.key = key
 
-class PostMetadataTemplatesSchemaRequestBodyArgFieldsField(BaseObject):
-    def __init__(self, type: PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldTypeField, key: str, display_name: str, description: Union[None, str] = None, hidden: Union[None, bool] = None, options: Union[None, List[PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
+class CreateMetadataTemplateSchemaRequestBodyArgFieldsField(BaseObject):
+    def __init__(self, type: CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldTypeField, key: str, display_name: str, description: Union[None, str] = None, hidden: Union[None, bool] = None, options: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param type: The type of field. The basic fields are a `string` field for text, a
             `float` field for numbers, and a `date` fields to present the user with a
@@ -86,7 +88,7 @@ class PostMetadataTemplatesSchemaRequestBodyArgFieldsField(BaseObject):
             Additionally, metadata templates support an `enum` field for a basic list
             of items, and ` multiSelect` field for a similar list of items where the
             user can select more than one value.
-        :type type: PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldTypeField
+        :type type: CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldTypeField
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
         :type key: str
@@ -100,7 +102,7 @@ class PostMetadataTemplatesSchemaRequestBodyArgFieldsField(BaseObject):
         :type hidden: Union[None, bool], optional
         :param options: A list of options for this field. This is used in combination with the
             `enum` and `multiSelect` field types.
-        :type options: Union[None, List[PostMetadataTemplatesSchemaRequestBodyArgFieldsFieldOptionsField]], optional
+        :type options: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -110,8 +112,8 @@ class PostMetadataTemplatesSchemaRequestBodyArgFieldsField(BaseObject):
         self.hidden = hidden
         self.options = options
 
-class PostMetadataTemplatesSchemaRequestBodyArg(BaseObject):
-    def __init__(self, scope: str, display_name: str, template_key: Union[None, str] = None, hidden: Union[None, bool] = None, fields: Union[None, List[PostMetadataTemplatesSchemaRequestBodyArgFieldsField]] = None, copy_instance_on_item_copy: Union[None, bool] = None, **kwargs):
+class CreateMetadataTemplateSchemaRequestBodyArg(BaseObject):
+    def __init__(self, scope: str, display_name: str, template_key: Union[None, str] = None, hidden: Union[None, bool] = None, fields: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]] = None, copy_instance_on_item_copy: Union[None, bool] = None, **kwargs):
         """
         :param scope: The scope of the metadata template to create. Applications can
             only create templates for use within the authenticated user's
@@ -133,7 +135,7 @@ class PostMetadataTemplatesSchemaRequestBodyArg(BaseObject):
         :param fields: An ordered list of template fields which are part of the template.
             Each field can be a regular text field, date field, number field,
             as well as a single or multi-select list.
-        :type fields: Union[None, List[PostMetadataTemplatesSchemaRequestBodyArgFieldsField]], optional
+        :type fields: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]], optional
         :param copy_instance_on_item_copy: Whether or not to copy any metadata attached to a file or folder
             when it is copied. By default, metadata is not copied along with a
             file or folder when it is copied.
@@ -148,7 +150,7 @@ class PostMetadataTemplatesSchemaRequestBodyArg(BaseObject):
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
 
 class MetadataTemplatesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_metadata_templates(self, metadata_instance_id: str) -> MetadataTemplates:
@@ -163,7 +165,7 @@ class MetadataTemplatesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates']), FetchOptions(method='GET', params={'metadata_instance_id': metadata_instance_id}, auth=self.auth))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def get_metadata_templates_id_id_schema(self, scope: GetMetadataTemplatesIdIdSchemaScopeArg, template_key: str) -> MetadataTemplate:
+    def get_metadata_template_schema(self, scope: GetMetadataTemplateSchemaScopeArg, template_key: str) -> MetadataTemplate:
         """
         Retrieves a metadata template by its `scope` and `templateKey` values.
         
@@ -174,14 +176,14 @@ class MetadataTemplatesManager(BaseObject):
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetMetadataTemplatesIdIdSchemaScopeArg
+        :type scope: GetMetadataTemplateSchemaScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='GET', auth=self.auth))
         return MetadataTemplate.from_dict(json.loads(response.text))
-    def delete_metadata_templates_id_id_schema(self, scope: DeleteMetadataTemplatesIdIdSchemaScopeArg, template_key: str):
+    def delete_metadata_template_schema(self, scope: DeleteMetadataTemplateSchemaScopeArg, template_key: str):
         """
         Delete a metadata template and its instances.
         
@@ -189,14 +191,14 @@ class MetadataTemplatesManager(BaseObject):
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteMetadataTemplatesIdIdSchemaScopeArg
+        :type scope: DeleteMetadataTemplateSchemaScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def get_metadata_templates_id(self, template_id: str) -> MetadataTemplate:
+    def get_metadata_template_by_id(self, template_id: str) -> MetadataTemplate:
         """
         Retrieves a metadata template by its ID.
         :param template_id: The ID of the template
@@ -205,7 +207,7 @@ class MetadataTemplatesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', template_id]), FetchOptions(method='GET', auth=self.auth))
         return MetadataTemplate.from_dict(json.loads(response.text))
-    def get_metadata_templates_global(self, options: GetMetadataTemplatesGlobalOptionsArg = None) -> MetadataTemplates:
+    def get_metadata_template_global(self, options: GetMetadataTemplateGlobalOptionsArg = None) -> MetadataTemplates:
         """
         Used to retrieve all generic, global metadata templates available to all
         
@@ -213,10 +215,10 @@ class MetadataTemplatesManager(BaseObject):
 
         """
         if options is None:
-            options = GetMetadataTemplatesGlobalOptionsArg()
+            options = GetMetadataTemplateGlobalOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/global']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def get_metadata_templates_enterprise(self, options: GetMetadataTemplatesEnterpriseOptionsArg = None) -> MetadataTemplates:
+    def get_metadata_template_enterprise(self, options: GetMetadataTemplateEnterpriseOptionsArg = None) -> MetadataTemplates:
         """
         Used to retrieve all metadata templates created to be used specifically within
         
@@ -224,10 +226,10 @@ class MetadataTemplatesManager(BaseObject):
 
         """
         if options is None:
-            options = GetMetadataTemplatesEnterpriseOptionsArg()
+            options = GetMetadataTemplateEnterpriseOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def post_metadata_templates_schema(self, request_body: PostMetadataTemplatesSchemaRequestBodyArg) -> MetadataTemplate:
+    def create_metadata_template_schema(self, request_body: CreateMetadataTemplateSchemaRequestBodyArg) -> MetadataTemplate:
         """
         Creates a new metadata template that can be applied to
         

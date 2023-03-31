@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -43,12 +45,12 @@ class GetSharedItemsOptionsArg(BaseObject):
         self.if_none_match = if_none_match
         self.fields = fields
 
-class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFileAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFileAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -71,8 +73,8 @@ class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseO
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFileAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFileAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFileAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -84,7 +86,7 @@ class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFilesIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFileAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -108,23 +110,23 @@ class PutFilesIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFilesIdAddSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFilesIdAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFileAddSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFileAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to create on the file.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Union[None, PutFilesIdAddSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFileAddSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -147,8 +149,8 @@ class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(Ba
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -160,7 +162,7 @@ class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -184,31 +186,31 @@ class PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFilesIdUpdateSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFileUpdateSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, PutFilesIdUpdateSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFileUpdateSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutFilesIdRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+class UpdateFileRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class PutFilesIdRemoveSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFilesIdRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFileRemoveSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFileRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the file.
-        :type shared_link: Union[None, PutFilesIdRemoveSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFileRemoveSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
 class SharedLinksFilesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_shared_items(self, boxapi: str, options: GetSharedItemsOptionsArg = None) -> File:
@@ -243,7 +245,7 @@ class SharedLinksFilesManager(BaseObject):
             options = GetSharedItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def get_files_id_get_shared_link(self, file_id: str, fields: str) -> File:
+    def get_file_get_shared_link(self, file_id: str, fields: str) -> File:
         """
         Gets the information for a shared link on a file.
         :param file_id: The unique identifier that represents a file.
@@ -261,7 +263,7 @@ class SharedLinksFilesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def put_files_id_add_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdAddSharedLinkRequestBodyArg) -> File:
+    def update_file_add_shared_link(self, file_id: str, fields: str, request_body: UpdateFileAddSharedLinkRequestBodyArg) -> File:
         """
         Adds a shared link to a file.
         :param file_id: The unique identifier that represents a file.
@@ -279,7 +281,7 @@ class SharedLinksFilesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def put_files_id_update_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdUpdateSharedLinkRequestBodyArg) -> File:
+    def update_file_update_shared_link(self, file_id: str, fields: str, request_body: UpdateFileUpdateSharedLinkRequestBodyArg) -> File:
         """
         Updates a shared link on a file.
         :param file_id: The unique identifier that represents a file.
@@ -297,7 +299,7 @@ class SharedLinksFilesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return File.from_dict(json.loads(response.text))
-    def put_files_id_remove_shared_link(self, file_id: str, fields: str, request_body: PutFilesIdRemoveSharedLinkRequestBodyArg) -> File:
+    def update_file_remove_shared_link(self, file_id: str, fields: str, request_body: UpdateFileRemoveSharedLinkRequestBodyArg) -> File:
         """
         Removes a shared link from a file.
         :param file_id: The unique identifier that represents a file.

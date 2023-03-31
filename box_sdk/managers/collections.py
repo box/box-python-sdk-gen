@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -45,7 +47,7 @@ class GetCollectionsOptionsArg(BaseObject):
         self.offset = offset
         self.limit = limit
 
-class GetCollectionsIdItemsOptionsArg(BaseObject):
+class GetCollectionItemsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -71,7 +73,7 @@ class GetCollectionsIdItemsOptionsArg(BaseObject):
         self.limit = limit
 
 class CollectionsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_collections(self, options: GetCollectionsOptionsArg = None) -> Collections:
@@ -88,7 +90,7 @@ class CollectionsManager(BaseObject):
             options = GetCollectionsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params={'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth))
         return Collections.from_dict(json.loads(response.text))
-    def get_collections_id_items(self, collection_id: str, options: GetCollectionsIdItemsOptionsArg = None) -> Items:
+    def get_collection_items(self, collection_id: str, options: GetCollectionItemsOptionsArg = None) -> Items:
         """
         Retrieves the files and/or folders contained within
         
@@ -99,6 +101,6 @@ class CollectionsManager(BaseObject):
         :type collection_id: str
         """
         if options is None:
-            options = GetCollectionsIdItemsOptionsArg()
+            options = GetCollectionItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params={'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth))
         return Items.from_dict(json.loads(response.text))

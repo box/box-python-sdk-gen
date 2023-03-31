@@ -16,28 +16,30 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostTaskAssignmentsRequestBodyArgTaskFieldTypeField(str, Enum):
+class CreateTaskAssignmentRequestBodyArgTaskFieldTypeField(str, Enum):
     TASK = 'task'
 
-class PostTaskAssignmentsRequestBodyArgTaskField(BaseObject):
-    def __init__(self, id: str, type: PostTaskAssignmentsRequestBodyArgTaskFieldTypeField, **kwargs):
+class CreateTaskAssignmentRequestBodyArgTaskField(BaseObject):
+    def __init__(self, id: str, type: CreateTaskAssignmentRequestBodyArgTaskFieldTypeField, **kwargs):
         """
         :param id: The ID of the task
         :type id: str
         :param type: The type of the item to assign.
-        :type type: PostTaskAssignmentsRequestBodyArgTaskFieldTypeField
+        :type type: CreateTaskAssignmentRequestBodyArgTaskFieldTypeField
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostTaskAssignmentsRequestBodyArgAssignToField(BaseObject):
+class CreateTaskAssignmentRequestBodyArgAssignToField(BaseObject):
     def __init__(self, id: Union[None, str] = None, login: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of the user to assign to the
@@ -53,26 +55,26 @@ class PostTaskAssignmentsRequestBodyArgAssignToField(BaseObject):
         self.id = id
         self.login = login
 
-class PostTaskAssignmentsRequestBodyArg(BaseObject):
-    def __init__(self, task: PostTaskAssignmentsRequestBodyArgTaskField, assign_to: PostTaskAssignmentsRequestBodyArgAssignToField, **kwargs):
+class CreateTaskAssignmentRequestBodyArg(BaseObject):
+    def __init__(self, task: CreateTaskAssignmentRequestBodyArgTaskField, assign_to: CreateTaskAssignmentRequestBodyArgAssignToField, **kwargs):
         """
         :param task: The task to assign to a user.
-        :type task: PostTaskAssignmentsRequestBodyArgTaskField
+        :type task: CreateTaskAssignmentRequestBodyArgTaskField
         :param assign_to: The user to assign the task to.
-        :type assign_to: PostTaskAssignmentsRequestBodyArgAssignToField
+        :type assign_to: CreateTaskAssignmentRequestBodyArgAssignToField
         """
         super().__init__(**kwargs)
         self.task = task
         self.assign_to = assign_to
 
-class PutTaskAssignmentsIdRequestBodyArgResolutionStateField(str, Enum):
+class UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField(str, Enum):
     COMPLETED = 'completed'
     INCOMPLETE = 'incomplete'
     APPROVED = 'approved'
     REJECTED = 'rejected'
 
-class PutTaskAssignmentsIdRequestBodyArg(BaseObject):
-    def __init__(self, message: Union[None, str] = None, resolution_state: Union[None, PutTaskAssignmentsIdRequestBodyArgResolutionStateField] = None, **kwargs):
+class UpdateTaskAssignmentByIdRequestBodyArg(BaseObject):
+    def __init__(self, message: Union[None, str] = None, resolution_state: Union[None, UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField] = None, **kwargs):
         """
         :param message: An optional message by the assignee that can be added to the task.
         :type message: Union[None, str], optional
@@ -81,17 +83,17 @@ class PutTaskAssignmentsIdRequestBodyArg(BaseObject):
             `incomplete` or `completed`.
             * For a task with an `action` of `review` this can be
             `incomplete`, `approved`, or `rejected`.
-        :type resolution_state: Union[None, PutTaskAssignmentsIdRequestBodyArgResolutionStateField], optional
+        :type resolution_state: Union[None, UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField], optional
         """
         super().__init__(**kwargs)
         self.message = message
         self.resolution_state = resolution_state
 
 class TaskAssignmentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_tasks_id_assignments(self, task_id: str) -> TaskAssignments:
+    def get_task_assignments(self, task_id: str) -> TaskAssignments:
         """
         Lists all of the assignments for a given task.
         :param task_id: The ID of the task.
@@ -100,7 +102,7 @@ class TaskAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', auth=self.auth))
         return TaskAssignments.from_dict(json.loads(response.text))
-    def post_task_assignments(self, request_body: PostTaskAssignmentsRequestBodyArg) -> TaskAssignment:
+    def create_task_assignment(self, request_body: CreateTaskAssignmentRequestBodyArg) -> TaskAssignment:
         """
         Assigns a task to a user.
         
@@ -112,7 +114,7 @@ class TaskAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def get_task_assignments_id(self, task_assignment_id: str) -> TaskAssignment:
+    def get_task_assignment_by_id(self, task_assignment_id: str) -> TaskAssignment:
         """
         Retrieves information about a task assignment.
         :param task_assignment_id: The ID of the task assignment.
@@ -121,7 +123,7 @@ class TaskAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def put_task_assignments_id(self, task_assignment_id: str, request_body: PutTaskAssignmentsIdRequestBodyArg) -> TaskAssignment:
+    def update_task_assignment_by_id(self, task_assignment_id: str, request_body: UpdateTaskAssignmentByIdRequestBodyArg) -> TaskAssignment:
         """
         Updates a task assignment. This endpoint can be
         
@@ -133,7 +135,7 @@ class TaskAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def delete_task_assignments_id(self, task_assignment_id: str):
+    def delete_task_assignment_by_id(self, task_assignment_id: str):
         """
         Deletes a specific task assignment.
         :param task_assignment_id: The ID of the task assignment.

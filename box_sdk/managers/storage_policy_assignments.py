@@ -16,6 +16,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -37,14 +39,14 @@ class GetStoragePolicyAssignmentsOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.marker = marker
 
-class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
+class CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
     STORAGE_POLICY = 'storage_policy'
 
-class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyField(BaseObject):
-    def __init__(self, type: PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):
+class CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyField(BaseObject):
+    def __init__(self, type: CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):
         """
         :param type: The type to assign.
-        :type type: PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyFieldTypeField
+        :type type: CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyFieldTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
         """
@@ -52,15 +54,15 @@ class PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyField(BaseObject):
         self.type = type
         self.id = id
 
-class PostStoragePolicyAssignmentsRequestBodyArgAssignedToFieldTypeField(str, Enum):
+class CreateStoragePolicyAssignmentRequestBodyArgAssignedToFieldTypeField(str, Enum):
     USER = 'user'
     ENTERPRISE = 'enterprise'
 
-class PostStoragePolicyAssignmentsRequestBodyArgAssignedToField(BaseObject):
-    def __init__(self, type: PostStoragePolicyAssignmentsRequestBodyArgAssignedToFieldTypeField, id: str, **kwargs):
+class CreateStoragePolicyAssignmentRequestBodyArgAssignedToField(BaseObject):
+    def __init__(self, type: CreateStoragePolicyAssignmentRequestBodyArgAssignedToFieldTypeField, id: str, **kwargs):
         """
         :param type: The type to assign the policy to.
-        :type type: PostStoragePolicyAssignmentsRequestBodyArgAssignedToFieldTypeField
+        :type type: CreateStoragePolicyAssignmentRequestBodyArgAssignedToFieldTypeField
         :param id: The ID of the user or enterprise
         :type id: str
         """
@@ -68,28 +70,28 @@ class PostStoragePolicyAssignmentsRequestBodyArgAssignedToField(BaseObject):
         self.type = type
         self.id = id
 
-class PostStoragePolicyAssignmentsRequestBodyArg(BaseObject):
-    def __init__(self, storage_policy: PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyField, assigned_to: PostStoragePolicyAssignmentsRequestBodyArgAssignedToField, **kwargs):
+class CreateStoragePolicyAssignmentRequestBodyArg(BaseObject):
+    def __init__(self, storage_policy: CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyField, assigned_to: CreateStoragePolicyAssignmentRequestBodyArgAssignedToField, **kwargs):
         """
         :param storage_policy: The storage policy to assign to the user or
             enterprise
-        :type storage_policy: PostStoragePolicyAssignmentsRequestBodyArgStoragePolicyField
+        :type storage_policy: CreateStoragePolicyAssignmentRequestBodyArgStoragePolicyField
         :param assigned_to: The user or enterprise to assign the storage
             policy to.
-        :type assigned_to: PostStoragePolicyAssignmentsRequestBodyArgAssignedToField
+        :type assigned_to: CreateStoragePolicyAssignmentRequestBodyArgAssignedToField
         """
         super().__init__(**kwargs)
         self.storage_policy = storage_policy
         self.assigned_to = assigned_to
 
-class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
+class UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyFieldTypeField(str, Enum):
     STORAGE_POLICY = 'storage_policy'
 
-class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyField(BaseObject):
-    def __init__(self, type: PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):
+class UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyField(BaseObject):
+    def __init__(self, type: UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyFieldTypeField, id: str, **kwargs):
         """
         :param type: The type to assign.
-        :type type: PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyFieldTypeField
+        :type type: UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyFieldTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
         """
@@ -97,18 +99,18 @@ class PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyField(BaseObject):
         self.type = type
         self.id = id
 
-class PutStoragePolicyAssignmentsIdRequestBodyArg(BaseObject):
-    def __init__(self, storage_policy: PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyField, **kwargs):
+class UpdateStoragePolicyAssignmentByIdRequestBodyArg(BaseObject):
+    def __init__(self, storage_policy: UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyField, **kwargs):
         """
         :param storage_policy: The storage policy to assign to the user or
             enterprise
-        :type storage_policy: PutStoragePolicyAssignmentsIdRequestBodyArgStoragePolicyField
+        :type storage_policy: UpdateStoragePolicyAssignmentByIdRequestBodyArgStoragePolicyField
         """
         super().__init__(**kwargs)
         self.storage_policy = storage_policy
 
 class StoragePolicyAssignmentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, options: GetStoragePolicyAssignmentsOptionsArg = None) -> StoragePolicyAssignments:
@@ -125,13 +127,13 @@ class StoragePolicyAssignmentsManager(BaseObject):
             options = GetStoragePolicyAssignmentsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params={'marker': options.marker, 'resolved_for_type': resolved_for_type, 'resolved_for_id': resolved_for_id}, auth=self.auth))
         return StoragePolicyAssignments.from_dict(json.loads(response.text))
-    def post_storage_policy_assignments(self, request_body: PostStoragePolicyAssignmentsRequestBodyArg) -> StoragePolicyAssignment:
+    def create_storage_policy_assignment(self, request_body: CreateStoragePolicyAssignmentRequestBodyArg) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def get_storage_policy_assignments_id(self, storage_policy_assignment_id: str) -> StoragePolicyAssignment:
+    def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str) -> StoragePolicyAssignment:
         """
         Fetches a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
@@ -140,7 +142,7 @@ class StoragePolicyAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def put_storage_policy_assignments_id(self, storage_policy_assignment_id: str, request_body: PutStoragePolicyAssignmentsIdRequestBodyArg) -> StoragePolicyAssignment:
+    def update_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, request_body: UpdateStoragePolicyAssignmentByIdRequestBodyArg) -> StoragePolicyAssignment:
         """
         Updates a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
@@ -149,7 +151,7 @@ class StoragePolicyAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def delete_storage_policy_assignments_id(self, storage_policy_assignment_id: str):
+    def delete_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str):
         """
         Delete a storage policy assignment.
         

@@ -20,6 +20,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -97,18 +99,18 @@ class GetUsersOptionsArg(BaseObject):
         self.usemarker = usemarker
         self.marker = marker
 
-class PostUsersRequestBodyArgRoleField(str, Enum):
+class CreateUserRequestBodyArgRoleField(str, Enum):
     COADMIN = 'coadmin'
     USER = 'user'
 
-class PostUsersRequestBodyArgStatusField(str, Enum):
+class CreateUserRequestBodyArgStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     CANNOT_DELETE_EDIT = 'cannot_delete_edit'
     CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
-class PostUsersRequestBodyArg(BaseObject):
-    def __init__(self, name: str, login: Union[None, str] = None, is_platform_access_only: Union[None, bool] = None, role: Union[None, PostUsersRequestBodyArgRoleField] = None, language: Union[None, str] = None, is_sync_enabled: Union[None, bool] = None, job_title: Union[None, str] = None, phone: Union[None, str] = None, address: Union[None, str] = None, space_amount: Union[None, int] = None, tracking_codes: Union[None, List[TrackingCode]] = None, can_see_managed_users: Union[None, bool] = None, timezone: Union[None, str] = None, is_external_collab_restricted: Union[None, bool] = None, is_exempt_from_device_limits: Union[None, bool] = None, is_exempt_from_login_verification: Union[None, bool] = None, status: Union[None, PostUsersRequestBodyArgStatusField] = None, external_app_user_id: Union[None, str] = None, **kwargs):
+class CreateUserRequestBodyArg(BaseObject):
+    def __init__(self, name: str, login: Union[None, str] = None, is_platform_access_only: Union[None, bool] = None, role: Union[None, CreateUserRequestBodyArgRoleField] = None, language: Union[None, str] = None, is_sync_enabled: Union[None, bool] = None, job_title: Union[None, str] = None, phone: Union[None, str] = None, address: Union[None, str] = None, space_amount: Union[None, int] = None, tracking_codes: Union[None, List[TrackingCode]] = None, can_see_managed_users: Union[None, bool] = None, timezone: Union[None, str] = None, is_external_collab_restricted: Union[None, bool] = None, is_exempt_from_device_limits: Union[None, bool] = None, is_exempt_from_login_verification: Union[None, bool] = None, status: Union[None, CreateUserRequestBodyArgStatusField] = None, external_app_user_id: Union[None, str] = None, **kwargs):
         """
         :param name: The name of the user
         :type name: str
@@ -119,7 +121,7 @@ class PostUsersRequestBodyArg(BaseObject):
         :param is_platform_access_only: Specifies that the user is an app user.
         :type is_platform_access_only: Union[None, bool], optional
         :param role: The user’s enterprise role
-        :type role: Union[None, PostUsersRequestBodyArgRoleField], optional
+        :type role: Union[None, CreateUserRequestBodyArgRoleField], optional
         :param language: The language of the user, formatted in modified version of the
             [ISO 639-1](/guides/api-calls/language-codes) format.
         :type language: Union[None, str], optional
@@ -152,7 +154,7 @@ class PostUsersRequestBodyArg(BaseObject):
         :param is_exempt_from_login_verification: Whether the user must use two-factor authentication
         :type is_exempt_from_login_verification: Union[None, bool], optional
         :param status: The user's account status
-        :type status: Union[None, PostUsersRequestBodyArgStatusField], optional
+        :type status: Union[None, CreateUserRequestBodyArgStatusField], optional
         :param external_app_user_id: An external identifier for an app user, which can be used to look
             up the user. This can be used to tie user IDs from external
             identity providers to Box users.
@@ -178,7 +180,7 @@ class PostUsersRequestBodyArg(BaseObject):
         self.status = status
         self.external_app_user_id = external_app_user_id
 
-class PostUsersOptionsArg(BaseObject):
+class CreateUserOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -194,7 +196,7 @@ class PostUsersOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetUsersMeOptionsArg(BaseObject):
+class GetUserMeOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -210,7 +212,7 @@ class GetUsersMeOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetUsersIdOptionsArg(BaseObject):
+class GetUserByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -226,17 +228,17 @@ class GetUsersIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutUsersIdRequestBodyArgRoleField(str, Enum):
+class UpdateUserByIdRequestBodyArgRoleField(str, Enum):
     COADMIN = 'coadmin'
     USER = 'user'
 
-class PutUsersIdRequestBodyArgStatusField(str, Enum):
+class UpdateUserByIdRequestBodyArgStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     CANNOT_DELETE_EDIT = 'cannot_delete_edit'
     CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
-class PutUsersIdRequestBodyArgNotificationEmailField(BaseObject):
+class UpdateUserByIdRequestBodyArgNotificationEmailField(BaseObject):
     def __init__(self, email: Union[None, str] = None, **kwargs):
         """
         :param email: The email address to send the notifications to.
@@ -245,8 +247,8 @@ class PutUsersIdRequestBodyArgNotificationEmailField(BaseObject):
         super().__init__(**kwargs)
         self.email = email
 
-class PutUsersIdRequestBodyArg(BaseObject):
-    def __init__(self, enterprise: Union[None, str] = None, notify: Union[None, bool] = None, name: Union[None, str] = None, login: Union[None, str] = None, role: Union[None, PutUsersIdRequestBodyArgRoleField] = None, language: Union[None, str] = None, is_sync_enabled: Union[None, bool] = None, job_title: Union[None, str] = None, phone: Union[None, str] = None, address: Union[None, str] = None, tracking_codes: Union[None, List[TrackingCode]] = None, can_see_managed_users: Union[None, bool] = None, timezone: Union[None, str] = None, is_external_collab_restricted: Union[None, bool] = None, is_exempt_from_device_limits: Union[None, bool] = None, is_exempt_from_login_verification: Union[None, bool] = None, is_password_reset_required: Union[None, bool] = None, status: Union[None, PutUsersIdRequestBodyArgStatusField] = None, space_amount: Union[None, int] = None, notification_email: Union[None, PutUsersIdRequestBodyArgNotificationEmailField] = None, external_app_user_id: Union[None, str] = None, **kwargs):
+class UpdateUserByIdRequestBodyArg(BaseObject):
+    def __init__(self, enterprise: Union[None, str] = None, notify: Union[None, bool] = None, name: Union[None, str] = None, login: Union[None, str] = None, role: Union[None, UpdateUserByIdRequestBodyArgRoleField] = None, language: Union[None, str] = None, is_sync_enabled: Union[None, bool] = None, job_title: Union[None, str] = None, phone: Union[None, str] = None, address: Union[None, str] = None, tracking_codes: Union[None, List[TrackingCode]] = None, can_see_managed_users: Union[None, bool] = None, timezone: Union[None, str] = None, is_external_collab_restricted: Union[None, bool] = None, is_exempt_from_device_limits: Union[None, bool] = None, is_exempt_from_login_verification: Union[None, bool] = None, is_password_reset_required: Union[None, bool] = None, status: Union[None, UpdateUserByIdRequestBodyArgStatusField] = None, space_amount: Union[None, int] = None, notification_email: Union[None, UpdateUserByIdRequestBodyArgNotificationEmailField] = None, external_app_user_id: Union[None, str] = None, **kwargs):
         """
         :param enterprise: Set this to `null` to roll the user out of the enterprise
             and make them a free user
@@ -261,7 +263,7 @@ class PutUsersIdRequestBodyArg(BaseObject):
             primary login address cannot be changed.
         :type login: Union[None, str], optional
         :param role: The user’s enterprise role
-        :type role: Union[None, PutUsersIdRequestBodyArgRoleField], optional
+        :type role: Union[None, UpdateUserByIdRequestBodyArgRoleField], optional
         :param language: The language of the user, formatted in modified version of the
             [ISO 639-1](/guides/api-calls/language-codes) format.
         :type language: Union[None, str], optional
@@ -293,7 +295,7 @@ class PutUsersIdRequestBodyArg(BaseObject):
         :param is_password_reset_required: Whether the user is required to reset their password
         :type is_password_reset_required: Union[None, bool], optional
         :param status: The user's account status
-        :type status: Union[None, PutUsersIdRequestBodyArgStatusField], optional
+        :type status: Union[None, UpdateUserByIdRequestBodyArgStatusField], optional
         :param space_amount: The user’s total available space in bytes. Set this to `-1` to
             indicate unlimited storage.
         :type space_amount: Union[None, int], optional
@@ -302,7 +304,7 @@ class PutUsersIdRequestBodyArg(BaseObject):
             the email address to which notifications are sent instead of
             to the primary email address.
             Set this value to `null` to remove the notification email.
-        :type notification_email: Union[None, PutUsersIdRequestBodyArgNotificationEmailField], optional
+        :type notification_email: Union[None, UpdateUserByIdRequestBodyArgNotificationEmailField], optional
         :param external_app_user_id: An external identifier for an app user, which can be used to look
             up the user. This can be used to tie user IDs from external
             identity providers to Box users.
@@ -333,7 +335,7 @@ class PutUsersIdRequestBodyArg(BaseObject):
         self.notification_email = notification_email
         self.external_app_user_id = external_app_user_id
 
-class PutUsersIdOptionsArg(BaseObject):
+class UpdateUserByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -349,7 +351,7 @@ class PutUsersIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class DeleteUsersIdOptionsArg(BaseObject):
+class DeleteUserByIdOptionsArg(BaseObject):
     def __init__(self, notify: Union[None, bool] = None, force: Union[None, bool] = None, **kwargs):
         """
         :param notify: Whether the user will receive email notification of
@@ -364,7 +366,7 @@ class DeleteUsersIdOptionsArg(BaseObject):
         self.force = force
 
 class UsersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_users(self, options: GetUsersOptionsArg = None) -> Users:
@@ -387,7 +389,7 @@ class UsersManager(BaseObject):
             options = GetUsersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'user_type': options.userType, 'external_app_user_id': options.externalAppUserId, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit, 'usemarker': options.usemarker, 'marker': options.marker}, auth=self.auth))
         return Users.from_dict(json.loads(response.text))
-    def post_users(self, request_body: PostUsersRequestBodyArg, options: PostUsersOptionsArg = None) -> User:
+    def create_user(self, request_body: CreateUserRequestBodyArg, options: CreateUserOptionsArg = None) -> User:
         """
         Creates a new managed user in an enterprise. This endpoint
         
@@ -398,10 +400,10 @@ class UsersManager(BaseObject):
 
         """
         if options is None:
-            options = PostUsersOptionsArg()
+            options = CreateUserOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def get_users_me(self, options: GetUsersMeOptionsArg = None) -> User:
+    def get_user_me(self, options: GetUserMeOptionsArg = None) -> User:
         """
         Retrieves information about the user who is currently authenticated.
         
@@ -424,10 +426,10 @@ class UsersManager(BaseObject):
 
         """
         if options is None:
-            options = GetUsersMeOptionsArg()
+            options = GetUserMeOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def get_users_id(self, user_id: str, options: GetUsersIdOptionsArg = None) -> User:
+    def get_user_by_id(self, user_id: str, options: GetUserByIdOptionsArg = None) -> User:
         """
         Retrieves information about a user in the enterprise.
         
@@ -459,10 +461,10 @@ class UsersManager(BaseObject):
         :type user_id: str
         """
         if options is None:
-            options = GetUsersIdOptionsArg()
+            options = GetUserByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def put_users_id(self, user_id: str, request_body: PutUsersIdRequestBodyArg, options: PutUsersIdOptionsArg = None) -> User:
+    def update_user_by_id(self, user_id: str, request_body: UpdateUserByIdRequestBodyArg, options: UpdateUserByIdOptionsArg = None) -> User:
         """
         Updates a managed or app user in an enterprise. This endpoint
         
@@ -476,10 +478,10 @@ class UsersManager(BaseObject):
         :type user_id: str
         """
         if options is None:
-            options = PutUsersIdOptionsArg()
+            options = UpdateUserByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def delete_users_id(self, user_id: str, options: DeleteUsersIdOptionsArg = None):
+    def delete_user_by_id(self, user_id: str, options: DeleteUserByIdOptionsArg = None):
         """
         Deletes a user. By default this will fail if the user
         
@@ -496,6 +498,6 @@ class UsersManager(BaseObject):
         :type user_id: str
         """
         if options is None:
-            options = DeleteUsersIdOptionsArg()
+            options = DeleteUserByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='DELETE', params={'notify': options.notify, 'force': options.force}, auth=self.auth))
         return response.content

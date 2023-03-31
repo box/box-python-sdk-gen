@@ -16,45 +16,47 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostTasksRequestBodyArgItemFieldTypeField(str, Enum):
+class CreateTaskRequestBodyArgItemFieldTypeField(str, Enum):
     FILE = 'file'
 
-class PostTasksRequestBodyArgItemField(BaseObject):
-    def __init__(self, id: str, type: PostTasksRequestBodyArgItemFieldTypeField, **kwargs):
+class CreateTaskRequestBodyArgItemField(BaseObject):
+    def __init__(self, id: str, type: CreateTaskRequestBodyArgItemFieldTypeField, **kwargs):
         """
         :param id: The ID of the file
         :type id: str
         :param type: `file`
-        :type type: PostTasksRequestBodyArgItemFieldTypeField
+        :type type: CreateTaskRequestBodyArgItemFieldTypeField
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostTasksRequestBodyArgActionField(str, Enum):
+class CreateTaskRequestBodyArgActionField(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
 
-class PostTasksRequestBodyArgCompletionRuleField(str, Enum):
+class CreateTaskRequestBodyArgCompletionRuleField(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
-class PostTasksRequestBodyArg(BaseObject):
-    def __init__(self, item: PostTasksRequestBodyArgItemField, action: Union[None, PostTasksRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, PostTasksRequestBodyArgCompletionRuleField] = None, **kwargs):
+class CreateTaskRequestBodyArg(BaseObject):
+    def __init__(self, item: CreateTaskRequestBodyArgItemField, action: Union[None, CreateTaskRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, CreateTaskRequestBodyArgCompletionRuleField] = None, **kwargs):
         """
         :param item: The file to attach the task to.
-        :type item: PostTasksRequestBodyArgItemField
+        :type item: CreateTaskRequestBodyArgItemField
         :param action: The action the task assignee will be prompted to do. Must be
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Union[None, PostTasksRequestBodyArgActionField], optional
+        :type action: Union[None, CreateTaskRequestBodyArgActionField], optional
         :param message: An optional message to include with the task.
         :type message: Union[None, str], optional
         :param due_at: Defines when the task is due. Defaults to `null` if not
@@ -66,7 +68,7 @@ class PostTasksRequestBodyArg(BaseObject):
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Union[None, PostTasksRequestBodyArgCompletionRuleField], optional
+        :type completion_rule: Union[None, CreateTaskRequestBodyArgCompletionRuleField], optional
         """
         super().__init__(**kwargs)
         self.item = item
@@ -75,22 +77,22 @@ class PostTasksRequestBodyArg(BaseObject):
         self.due_at = due_at
         self.completion_rule = completion_rule
 
-class PutTasksIdRequestBodyArgActionField(str, Enum):
+class UpdateTaskByIdRequestBodyArgActionField(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
 
-class PutTasksIdRequestBodyArgCompletionRuleField(str, Enum):
+class UpdateTaskByIdRequestBodyArgCompletionRuleField(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
-class PutTasksIdRequestBodyArg(BaseObject):
-    def __init__(self, action: Union[None, PutTasksIdRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, PutTasksIdRequestBodyArgCompletionRuleField] = None, **kwargs):
+class UpdateTaskByIdRequestBodyArg(BaseObject):
+    def __init__(self, action: Union[None, UpdateTaskByIdRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, UpdateTaskByIdRequestBodyArgCompletionRuleField] = None, **kwargs):
         """
         :param action: The action the task assignee will be prompted to do. Must be
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Union[None, PutTasksIdRequestBodyArgActionField], optional
+        :type action: Union[None, UpdateTaskByIdRequestBodyArgActionField], optional
         :param message: The message included with the task.
         :type message: Union[None, str], optional
         :param due_at: When the task is due at.
@@ -101,7 +103,7 @@ class PutTasksIdRequestBodyArg(BaseObject):
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Union[None, PutTasksIdRequestBodyArgCompletionRuleField], optional
+        :type completion_rule: Union[None, UpdateTaskByIdRequestBodyArgCompletionRuleField], optional
         """
         super().__init__(**kwargs)
         self.action = action
@@ -110,10 +112,10 @@ class PutTasksIdRequestBodyArg(BaseObject):
         self.completion_rule = completion_rule
 
 class TasksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_tasks(self, file_id: str) -> Tasks:
+    def get_file_tasks(self, file_id: str) -> Tasks:
         """
         Retrieves a list of all the tasks for a file. This
         
@@ -130,7 +132,7 @@ class TasksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', auth=self.auth))
         return Tasks.from_dict(json.loads(response.text))
-    def post_tasks(self, request_body: PostTasksRequestBodyArg) -> Task:
+    def create_task(self, request_body: CreateTaskRequestBodyArg) -> Task:
         """
         Creates a single task on a file. This task is not assigned to any user and
         
@@ -139,7 +141,7 @@ class TasksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def get_tasks_id(self, task_id: str) -> Task:
+    def get_task_by_id(self, task_id: str) -> Task:
         """
         Retrieves information about a specific task.
         :param task_id: The ID of the task.
@@ -148,7 +150,7 @@ class TasksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def put_tasks_id(self, task_id: str, request_body: PutTasksIdRequestBodyArg) -> Task:
+    def update_task_by_id(self, task_id: str, request_body: UpdateTaskByIdRequestBodyArg) -> Task:
         """
         Updates a task. This can be used to update a task's configuration, or to
         
@@ -160,7 +162,7 @@ class TasksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Task.from_dict(json.loads(response.text))
-    def delete_tasks_id(self, task_id: str):
+    def delete_task_by_id(self, task_id: str):
         """
         Removes a task from a file.
         :param task_id: The ID of the task.

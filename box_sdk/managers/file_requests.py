@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PutFileRequestsIdOptionsArg(BaseObject):
+class UpdateFileRequestByIdOptionsArg(BaseObject):
     def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
@@ -37,10 +39,10 @@ class PutFileRequestsIdOptionsArg(BaseObject):
         self.if_match = if_match
 
 class FileRequestsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_file_requests_id(self, file_request_id: str) -> FileRequest:
+    def get_file_request_by_id(self, file_request_id: str) -> FileRequest:
         """
         Retrieves the information about a file request.
         :param file_request_id: The unique identifier that represent a file request.
@@ -54,7 +56,7 @@ class FileRequestsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='GET', auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
-    def put_file_requests_id(self, file_request_id: str, request_body: FileRequestUpdateRequest, options: PutFileRequestsIdOptionsArg = None) -> FileRequest:
+    def update_file_request_by_id(self, file_request_id: str, request_body: FileRequestUpdateRequest, options: UpdateFileRequestByIdOptionsArg = None) -> FileRequest:
         """
         Updates a file request. This can be used to activate or
         
@@ -70,10 +72,10 @@ class FileRequestsManager(BaseObject):
         :type file_request_id: str
         """
         if options is None:
-            options = PutFileRequestsIdOptionsArg()
+            options = UpdateFileRequestByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
-    def delete_file_requests_id(self, file_request_id: str):
+    def delete_file_request_by_id(self, file_request_id: str):
         """
         Deletes a file request permanently.
         :param file_request_id: The unique identifier that represent a file request.
@@ -87,7 +89,7 @@ class FileRequestsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def post_file_requests_id_copy(self, file_request_id: str, request_body: FileRequestCopyRequest) -> FileRequest:
+    def create_file_request_copy(self, file_request_id: str, request_body: FileRequestCopyRequest) -> FileRequest:
         """
         Copies an existing file request that is already present on one folder,
         

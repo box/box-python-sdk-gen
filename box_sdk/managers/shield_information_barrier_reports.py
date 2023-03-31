@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -35,7 +37,7 @@ class GetShieldInformationBarrierReportsOptionsArg(BaseObject):
         self.limit = limit
 
 class ShieldInformationBarrierReportsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_shield_information_barrier_reports(self, shield_information_barrier_id: str, options: GetShieldInformationBarrierReportsOptionsArg = None) -> None:
@@ -49,13 +51,13 @@ class ShieldInformationBarrierReportsManager(BaseObject):
             options = GetShieldInformationBarrierReportsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='GET', params={'shield_information_barrier_id': shield_information_barrier_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def post_shield_information_barrier_reports(self, request_body: ShieldInformationBarrierReference) -> ShieldInformationBarrierReport:
+    def create_shield_information_barrier_report(self, request_body: ShieldInformationBarrierReference) -> ShieldInformationBarrierReport:
         """
         Creates a shield information barrier report for a given barrier.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
-    def get_shield_information_barrier_reports_id(self, shield_information_barrier_report_id: str) -> ShieldInformationBarrierReport:
+    def get_shield_information_barrier_report_by_id(self, shield_information_barrier_report_id: str) -> ShieldInformationBarrierReport:
         """
         Retrieves a shield information barrier report by its ID.
         :param shield_information_barrier_report_id: The ID of the shield information barrier Report.

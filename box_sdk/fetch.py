@@ -7,13 +7,14 @@ from requests import Response
 if TYPE_CHECKING:
     from .ccg_auth import CCGAuth
     from .developer_token_auth import DeveloperTokenAuth
+    from .jwt_auth import JWTAuth
 
 MAX_ATTEMPTS = 5
 
 
 @dataclass
 class FetchOptions:
-    auth: Union['CCGAuth', 'DeveloperTokenAuth'] = None
+    auth: Union['CCGAuth', 'DeveloperTokenAuth', 'JWTAuth'] = None
     method: str = "GET"
     headers: Dict[str, str] = None
     params: dict = None

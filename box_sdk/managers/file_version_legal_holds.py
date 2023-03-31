@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -35,10 +37,10 @@ class GetFileVersionLegalHoldsOptionsArg(BaseObject):
         self.limit = limit
 
 class FileVersionLegalHoldsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_file_version_legal_holds_id(self, file_version_legal_hold_id: str) -> FileVersionLegalHold:
+    def get_file_version_legal_hold_by_id(self, file_version_legal_hold_id: str) -> FileVersionLegalHold:
         """
         Retrieves information about the legal hold policies
         

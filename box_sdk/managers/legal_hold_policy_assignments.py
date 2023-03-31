@@ -18,6 +18,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -62,17 +64,17 @@ class GetLegalHoldPolicyAssignmentsOptionsArg(BaseObject):
         self.limit = limit
         self.fields = fields
 
-class PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToFieldTypeField(str, Enum):
+class CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToFieldTypeField(str, Enum):
     FILE = 'file'
     FILE_VERSION = 'file_version'
     FOLDER = 'folder'
     USER = 'user'
 
-class PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToField(BaseObject):
-    def __init__(self, type: PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToFieldTypeField, id: str, **kwargs):
+class CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToField(BaseObject):
+    def __init__(self, type: CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToFieldTypeField, id: str, **kwargs):
         """
         :param type: The type of item to assign the policy to
-        :type type: PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToFieldTypeField
+        :type type: CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToFieldTypeField
         :param id: The ID of item to assign the policy to
         :type id: str
         """
@@ -80,19 +82,19 @@ class PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToField(BaseObject):
         self.type = type
         self.id = id
 
-class PostLegalHoldPolicyAssignmentsRequestBodyArg(BaseObject):
-    def __init__(self, policy_id: str, assign_to: PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToField, **kwargs):
+class CreateLegalHoldPolicyAssignmentRequestBodyArg(BaseObject):
+    def __init__(self, policy_id: str, assign_to: CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToField, **kwargs):
         """
         :param policy_id: The ID of the policy to assign.
         :type policy_id: str
         :param assign_to: The item to assign the policy to
-        :type assign_to: PostLegalHoldPolicyAssignmentsRequestBodyArgAssignToField
+        :type assign_to: CreateLegalHoldPolicyAssignmentRequestBodyArgAssignToField
         """
         super().__init__(**kwargs)
         self.policy_id = policy_id
         self.assign_to = assign_to
 
-class GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg(BaseObject):
+class GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -116,7 +118,7 @@ class GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg(BaseObject):
         self.limit = limit
         self.fields = fields
 
-class GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg(BaseObject):
+class GetLegalHoldPolicyAssignmentFileVersionOnHoldOptionsArg(BaseObject):
     def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -141,7 +143,7 @@ class GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg(BaseObject):
         self.fields = fields
 
 class LegalHoldPolicyAssignmentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_legal_hold_policy_assignments(self, policy_id: str, options: GetLegalHoldPolicyAssignmentsOptionsArg = None) -> LegalHoldPolicyAssignments:
@@ -155,13 +157,13 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
             options = GetLegalHoldPolicyAssignmentsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params={'policy_id': policy_id, 'assign_to_type': options.assignToType, 'assign_to_id': options.assignToId, 'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return LegalHoldPolicyAssignments.from_dict(json.loads(response.text))
-    def post_legal_hold_policy_assignments(self, request_body: PostLegalHoldPolicyAssignmentsRequestBodyArg) -> LegalHoldPolicyAssignment:
+    def create_legal_hold_policy_assignment(self, request_body: CreateLegalHoldPolicyAssignmentRequestBodyArg) -> LegalHoldPolicyAssignment:
         """
         Assign a legal hold to a file, file version, folder, or user.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def get_legal_hold_policy_assignments_id(self, legal_hold_policy_assignment_id: str) -> LegalHoldPolicyAssignment:
+    def get_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str) -> LegalHoldPolicyAssignment:
         """
         Retrieve a legal hold policy assignment.
         :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
@@ -170,7 +172,7 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='GET', auth=self.auth))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def delete_legal_hold_policy_assignments_id(self, legal_hold_policy_assignment_id: str):
+    def delete_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str):
         """
         Remove a legal hold from an item.
         
@@ -185,7 +187,7 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def get_legal_hold_policy_assignments_id_files_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg = None) -> FileVersionLegalHolds:
+    def get_legal_hold_policy_assignment_file_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg = None) -> FileVersionLegalHolds:
         """
         Get a list of current file versions for a legal hold
         
@@ -229,10 +231,10 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         :type legal_hold_policy_assignment_id: str
         """
         if options is None:
-            options = GetLegalHoldPolicyAssignmentsIdFilesOnHoldOptionsArg()
+            options = GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/files_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))
-    def get_legal_hold_policy_assignments_id_file_versions_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg = None) -> FileVersionLegalHolds:
+    def get_legal_hold_policy_assignment_file_version_on_hold(self, legal_hold_policy_assignment_id: str, options: GetLegalHoldPolicyAssignmentFileVersionOnHoldOptionsArg = None) -> FileVersionLegalHolds:
         """
         Get a list of previous file versions for a legal hold
         
@@ -276,6 +278,6 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         :type legal_hold_policy_assignment_id: str
         """
         if options is None:
-            options = GetLegalHoldPolicyAssignmentsIdFileVersionsOnHoldOptionsArg()
+            options = GetLegalHoldPolicyAssignmentFileVersionOnHoldOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/file_versions_on_hold']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

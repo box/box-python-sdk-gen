@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFoldersIdTrashOptionsArg(BaseObject):
+class GetFolderTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -35,10 +37,10 @@ class GetFoldersIdTrashOptionsArg(BaseObject):
         self.fields = fields
 
 class TrashedFoldersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folders_id_trash(self, folder_id: str, options: GetFoldersIdTrashOptionsArg = None) -> TrashFolder:
+    def get_folder_trash(self, folder_id: str, options: GetFolderTrashOptionsArg = None) -> TrashFolder:
         """
         Retrieves a folder that has been moved to the trash.
         
@@ -77,10 +79,10 @@ class TrashedFoldersManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = GetFoldersIdTrashOptionsArg()
+            options = GetFolderTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return TrashFolder.from_dict(json.loads(response.text))
-    def delete_folders_id_trash(self, folder_id: str):
+    def delete_folder_trash(self, folder_id: str):
         """
         Permanently deletes a folder that is in the trash.
         

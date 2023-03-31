@@ -14,13 +14,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetSharedItemsWebLinksOptionsArg(BaseObject):
+class GetSharedItemWebLinksOptionsArg(BaseObject):
     def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
         """
         :param if_none_match: Ensures an item is only returned if it has changed.
@@ -43,12 +45,12 @@ class GetSharedItemsWebLinksOptionsArg(BaseObject):
         self.if_none_match = if_none_match
         self.fields = fields
 
-class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -67,8 +69,8 @@ class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(Ba
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -80,7 +82,7 @@ class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -104,23 +106,23 @@ class PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutWebLinksIdAddSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateWebLinkAddSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to create on the web link.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Union[None, PutWebLinksIdAddSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -139,8 +141,8 @@ class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -152,7 +154,7 @@ class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -176,34 +178,34 @@ class PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutWebLinksIdUpdateSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateWebLinkUpdateSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, PutWebLinksIdUpdateSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutWebLinksIdRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+class UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class PutWebLinksIdRemoveSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutWebLinksIdRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateWebLinkRemoveSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the web link.
-        :type shared_link: Union[None, PutWebLinksIdRemoveSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
 class SharedLinksWebLinksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shared_items_web_links(self, boxapi: str, options: GetSharedItemsWebLinksOptionsArg = None) -> WebLink:
+    def get_shared_item_web_links(self, boxapi: str, options: GetSharedItemWebLinksOptionsArg = None) -> WebLink:
         """
         Returns the web link represented by a shared link.
         
@@ -226,10 +228,10 @@ class SharedLinksWebLinksManager(BaseObject):
         :type boxapi: str
         """
         if options is None:
-            options = GetSharedItemsWebLinksOptionsArg()
+            options = GetSharedItemWebLinksOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def get_web_links_id_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
+    def get_web_link_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
         """
         Gets the information for a shared link on a web link.
         :param web_link_id: The ID of the web link.
@@ -242,7 +244,7 @@ class SharedLinksWebLinksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def put_web_links_id_add_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdAddSharedLinkRequestBodyArg) -> WebLink:
+    def update_web_link_add_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkAddSharedLinkRequestBodyArg) -> WebLink:
         """
         Adds a shared link to a web link.
         :param web_link_id: The ID of the web link.
@@ -255,7 +257,7 @@ class SharedLinksWebLinksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def put_web_links_id_update_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdUpdateSharedLinkRequestBodyArg) -> WebLink:
+    def update_web_link_update_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkUpdateSharedLinkRequestBodyArg) -> WebLink:
         """
         Updates a shared link on a web link.
         :param web_link_id: The ID of the web link.
@@ -268,7 +270,7 @@ class SharedLinksWebLinksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def put_web_links_id_remove_shared_link(self, web_link_id: str, fields: str, request_body: PutWebLinksIdRemoveSharedLinkRequestBodyArg) -> WebLink:
+    def update_web_link_remove_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkRemoveSharedLinkRequestBodyArg) -> WebLink:
         """
         Removes a shared link from a web link.
         :param web_link_id: The ID of the web link.

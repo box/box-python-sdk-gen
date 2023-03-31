@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -48,7 +50,7 @@ class GetLegalHoldPoliciesOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostLegalHoldPoliciesRequestBodyArg(BaseObject):
+class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
     def __init__(self, policy_name: str, description: Union[None, str] = None, filter_started_at: Union[None, str] = None, filter_ended_at: Union[None, str] = None, is_ongoing: Union[None, bool] = None, **kwargs):
         """
         :param policy_name: The name of the policy.
@@ -89,7 +91,7 @@ class PostLegalHoldPoliciesRequestBodyArg(BaseObject):
         self.filter_ended_at = filter_ended_at
         self.is_ongoing = is_ongoing
 
-class PutLegalHoldPoliciesIdRequestBodyArg(BaseObject):
+class UpdateLegalHoldPolicyByIdRequestBodyArg(BaseObject):
     def __init__(self, policy_name: Union[None, str] = None, description: Union[None, str] = None, release_notes: Union[None, str] = None, **kwargs):
         """
         :param policy_name: The name of the policy.
@@ -105,7 +107,7 @@ class PutLegalHoldPoliciesIdRequestBodyArg(BaseObject):
         self.release_notes = release_notes
 
 class LegalHoldPoliciesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_legal_hold_policies(self, options: GetLegalHoldPoliciesOptionsArg = None) -> LegalHoldPolicies:
@@ -119,13 +121,13 @@ class LegalHoldPoliciesManager(BaseObject):
             options = GetLegalHoldPoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params={'policy_name': options.policyName, 'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return LegalHoldPolicies.from_dict(json.loads(response.text))
-    def post_legal_hold_policies(self, request_body: PostLegalHoldPoliciesRequestBodyArg) -> LegalHoldPolicy:
+    def create_legal_hold_policy(self, request_body: CreateLegalHoldPolicyRequestBodyArg) -> LegalHoldPolicy:
         """
         Create a new legal hold policy.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def get_legal_hold_policies_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
+    def get_legal_hold_policy_by_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
         """
         Retrieve a legal hold policy.
         :param legal_hold_policy_id: The ID of the legal hold policy
@@ -134,7 +136,7 @@ class LegalHoldPoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def put_legal_hold_policies_id(self, legal_hold_policy_id: str, request_body: PutLegalHoldPoliciesIdRequestBodyArg) -> LegalHoldPolicy:
+    def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, request_body: UpdateLegalHoldPolicyByIdRequestBodyArg) -> LegalHoldPolicy:
         """
         Update legal hold policy.
         :param legal_hold_policy_id: The ID of the legal hold policy
@@ -143,7 +145,7 @@ class LegalHoldPoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def delete_legal_hold_policies_id(self, legal_hold_policy_id: str):
+    def delete_legal_hold_policy_by_id(self, legal_hold_policy_id: str):
         """
         Delete an existing legal hold policy.
         

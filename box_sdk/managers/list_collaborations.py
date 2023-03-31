@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdCollaborationsOptionsArg(BaseObject):
+class GetFileCollaborationsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -46,7 +48,7 @@ class GetFilesIdCollaborationsOptionsArg(BaseObject):
         self.limit = limit
         self.marker = marker
 
-class GetFoldersIdCollaborationsOptionsArg(BaseObject):
+class GetFolderCollaborationsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -90,16 +92,16 @@ class GetCollaborationsOptionsArg(BaseObject):
         self.offset = offset
         self.limit = limit
 
-class PostCollaborationsRequestBodyArgItemFieldTypeField(str, Enum):
+class CreateCollaborationRequestBodyArgItemFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
-class PostCollaborationsRequestBodyArgItemField(BaseObject):
-    def __init__(self, type: PostCollaborationsRequestBodyArgItemFieldTypeField, id: str, **kwargs):
+class CreateCollaborationRequestBodyArgItemField(BaseObject):
+    def __init__(self, type: CreateCollaborationRequestBodyArgItemFieldTypeField, id: str, **kwargs):
         """
         :param type: The type of the item that this collaboration will be
             granted access to
-        :type type: PostCollaborationsRequestBodyArgItemFieldTypeField
+        :type type: CreateCollaborationRequestBodyArgItemFieldTypeField
         :param id: The ID of the item that will be granted access to
         :type id: str
         """
@@ -107,15 +109,15 @@ class PostCollaborationsRequestBodyArgItemField(BaseObject):
         self.type = type
         self.id = id
 
-class PostCollaborationsRequestBodyArgAccessibleByFieldTypeField(str, Enum):
+class CreateCollaborationRequestBodyArgAccessibleByFieldTypeField(str, Enum):
     USER = 'user'
     GROUP = 'group'
 
-class PostCollaborationsRequestBodyArgAccessibleByField(BaseObject):
-    def __init__(self, type: PostCollaborationsRequestBodyArgAccessibleByFieldTypeField, id: Union[None, str] = None, login: Union[None, str] = None, **kwargs):
+class CreateCollaborationRequestBodyArgAccessibleByField(BaseObject):
+    def __init__(self, type: CreateCollaborationRequestBodyArgAccessibleByFieldTypeField, id: Union[None, str] = None, login: Union[None, str] = None, **kwargs):
         """
         :param type: The type of collaborator to invite.
-        :type type: PostCollaborationsRequestBodyArgAccessibleByFieldTypeField
+        :type type: CreateCollaborationRequestBodyArgAccessibleByFieldTypeField
         :param id: The ID of the user or group.
             Alternatively, use `login` to specify a user by email
             address.
@@ -129,7 +131,7 @@ class PostCollaborationsRequestBodyArgAccessibleByField(BaseObject):
         self.id = id
         self.login = login
 
-class PostCollaborationsRequestBodyArgRoleField(str, Enum):
+class CreateCollaborationRequestBodyArgRoleField(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
     PREVIEWER = 'previewer'
@@ -138,15 +140,15 @@ class PostCollaborationsRequestBodyArgRoleField(str, Enum):
     VIEWER_UPLOADER = 'viewer uploader'
     CO_OWNER = 'co-owner'
 
-class PostCollaborationsRequestBodyArg(BaseObject):
-    def __init__(self, item: PostCollaborationsRequestBodyArgItemField, accessible_by: PostCollaborationsRequestBodyArgAccessibleByField, role: PostCollaborationsRequestBodyArgRoleField, can_view_path: Union[None, bool] = None, expires_at: Union[None, str] = None, **kwargs):
+class CreateCollaborationRequestBodyArg(BaseObject):
+    def __init__(self, item: CreateCollaborationRequestBodyArgItemField, accessible_by: CreateCollaborationRequestBodyArgAccessibleByField, role: CreateCollaborationRequestBodyArgRoleField, can_view_path: Union[None, bool] = None, expires_at: Union[None, str] = None, **kwargs):
         """
         :param item: The item to attach the comment to.
-        :type item: PostCollaborationsRequestBodyArgItemField
+        :type item: CreateCollaborationRequestBodyArgItemField
         :param accessible_by: The user or group to give access to the item.
-        :type accessible_by: PostCollaborationsRequestBodyArgAccessibleByField
+        :type accessible_by: CreateCollaborationRequestBodyArgAccessibleByField
         :param role: The level of access granted.
-        :type role: PostCollaborationsRequestBodyArgRoleField
+        :type role: CreateCollaborationRequestBodyArgRoleField
         :param can_view_path: Determines if the invited users can see the entire parent path to
             the associated folder. The user will not gain privileges in any
             parent folder and therefore can not see content the user is not
@@ -175,7 +177,7 @@ class PostCollaborationsRequestBodyArg(BaseObject):
         self.can_view_path = can_view_path
         self.expires_at = expires_at
 
-class PostCollaborationsOptionsArg(BaseObject):
+class CreateCollaborationOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, notify: Union[None, bool] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -195,7 +197,7 @@ class PostCollaborationsOptionsArg(BaseObject):
         self.fields = fields
         self.notify = notify
 
-class GetGroupsIdCollaborationsOptionsArg(BaseObject):
+class GetGroupCollaborationsOptionsArg(BaseObject):
     def __init__(self, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
         """
         :param limit: The maximum number of items to return per page.
@@ -211,10 +213,10 @@ class GetGroupsIdCollaborationsOptionsArg(BaseObject):
         self.offset = offset
 
 class ListCollaborationsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_collaborations(self, file_id: str, options: GetFilesIdCollaborationsOptionsArg = None) -> Collaborations:
+    def get_file_collaborations(self, file_id: str, options: GetFileCollaborationsOptionsArg = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
         
@@ -233,10 +235,10 @@ class ListCollaborationsManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdCollaborationsOptionsArg()
+            options = GetFileCollaborationsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return Collaborations.from_dict(json.loads(response.text))
-    def get_folders_id_collaborations(self, folder_id: str, options: GetFoldersIdCollaborationsOptionsArg = None) -> Collaborations:
+    def get_folder_collaborations(self, folder_id: str, options: GetFolderCollaborationsOptionsArg = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
         
@@ -255,7 +257,7 @@ class ListCollaborationsManager(BaseObject):
         :type folder_id: str
         """
         if options is None:
-            options = GetFoldersIdCollaborationsOptionsArg()
+            options = GetFolderCollaborationsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Collaborations.from_dict(json.loads(response.text))
     def get_collaborations(self, status: GetCollaborationsStatusArg, options: GetCollaborationsOptionsArg = None) -> Collaborations:
@@ -269,7 +271,7 @@ class ListCollaborationsManager(BaseObject):
             options = GetCollaborationsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params={'status': status, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth))
         return Collaborations.from_dict(json.loads(response.text))
-    def post_collaborations(self, request_body: PostCollaborationsRequestBodyArg, options: PostCollaborationsOptionsArg = None) -> Collaboration:
+    def create_collaboration(self, request_body: CreateCollaborationRequestBodyArg, options: CreateCollaborationOptionsArg = None) -> Collaboration:
         """
         Adds a collaboration for a single user or a single group to a file
         
@@ -304,10 +306,10 @@ class ListCollaborationsManager(BaseObject):
 
         """
         if options is None:
-            options = PostCollaborationsOptionsArg()
+            options = CreateCollaborationOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='POST', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Collaboration.from_dict(json.loads(response.text))
-    def get_groups_id_collaborations(self, group_id: str, options: GetGroupsIdCollaborationsOptionsArg = None) -> Collaborations:
+    def get_group_collaborations(self, group_id: str, options: GetGroupCollaborationsOptionsArg = None) -> Collaborations:
         """
         Retrieves all the collaborations for a group. The user
         
@@ -324,6 +326,6 @@ class ListCollaborationsManager(BaseObject):
         :type group_id: str
         """
         if options is None:
-            options = GetGroupsIdCollaborationsOptionsArg()
+            options = GetGroupCollaborationsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Collaborations.from_dict(json.loads(response.text))

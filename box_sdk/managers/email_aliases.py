@@ -14,13 +14,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostUsersIdEmailAliasesRequestBodyArg(BaseObject):
+class CreateUserEmailAliasRequestBodyArg(BaseObject):
     def __init__(self, email: str, **kwargs):
         """
         :param email: The email address to add to the account as an alias.
@@ -35,10 +37,10 @@ class PostUsersIdEmailAliasesRequestBodyArg(BaseObject):
         self.email = email
 
 class EmailAliasesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_users_id_email_aliases(self, user_id: str) -> EmailAliases:
+    def get_user_email_aliases(self, user_id: str) -> EmailAliases:
         """
         Retrieves all email aliases for a user. The collection
         
@@ -50,7 +52,7 @@ class EmailAliasesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='GET', auth=self.auth))
         return EmailAliases.from_dict(json.loads(response.text))
-    def post_users_id_email_aliases(self, user_id: str, request_body: PostUsersIdEmailAliasesRequestBodyArg) -> EmailAlias:
+    def create_user_email_alias(self, user_id: str, request_body: CreateUserEmailAliasRequestBodyArg) -> EmailAlias:
         """
         Adds a new email alias to a user account..
         :param user_id: The ID of the user.
@@ -59,7 +61,7 @@ class EmailAliasesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return EmailAlias.from_dict(json.loads(response.text))
-    def delete_users_id_email_aliases_id(self, user_id: str, email_alias_id: str):
+    def delete_user_email_alias_by_id(self, user_id: str, email_alias_id: str):
         """
         Removes an email alias from a user.
         :param user_id: The ID of the user.

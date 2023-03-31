@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -45,7 +47,7 @@ class GetStoragePoliciesOptionsArg(BaseObject):
         self.limit = limit
 
 class StoragePoliciesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_storage_policies(self, options: GetStoragePoliciesOptionsArg = None) -> StoragePolicies:
@@ -56,7 +58,7 @@ class StoragePoliciesManager(BaseObject):
             options = GetStoragePoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params={'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return StoragePolicies.from_dict(json.loads(response.text))
-    def get_storage_policies_id(self, storage_policy_id: str) -> StoragePolicy:
+    def get_storage_policy_by_id(self, storage_policy_id: str) -> StoragePolicy:
         """
         Fetches a specific storage policy.
         :param storage_policy_id: The ID of the storage policy.

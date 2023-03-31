@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PutUsersIdFolders0RequestBodyArgOwnedByField(BaseObject):
+class TransferOwnedFolderRequestBodyArgOwnedByField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user who the folder will be
@@ -28,16 +30,16 @@ class PutUsersIdFolders0RequestBodyArgOwnedByField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PutUsersIdFolders0RequestBodyArg(BaseObject):
-    def __init__(self, owned_by: PutUsersIdFolders0RequestBodyArgOwnedByField, **kwargs):
+class TransferOwnedFolderRequestBodyArg(BaseObject):
+    def __init__(self, owned_by: TransferOwnedFolderRequestBodyArgOwnedByField, **kwargs):
         """
         :param owned_by: The user who the folder will be transferred to
-        :type owned_by: PutUsersIdFolders0RequestBodyArgOwnedByField
+        :type owned_by: TransferOwnedFolderRequestBodyArgOwnedByField
         """
         super().__init__(**kwargs)
         self.owned_by = owned_by
 
-class PutUsersIdFolders0OptionsArg(BaseObject):
+class TransferOwnedFolderOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, notify: Union[None, bool] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -58,10 +60,10 @@ class PutUsersIdFolders0OptionsArg(BaseObject):
         self.notify = notify
 
 class TransferManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def put_users_id_folders_0(self, user_id: str, request_body: PutUsersIdFolders0RequestBodyArg, options: PutUsersIdFolders0OptionsArg = None) -> Folder:
+    def transfer_owned_folder(self, user_id: str, request_body: TransferOwnedFolderRequestBodyArg, options: TransferOwnedFolderOptionsArg = None) -> Folder:
         """
         Move all of the items (files, folders and workflows) owned by a user into
         
@@ -135,6 +137,6 @@ class TransferManager(BaseObject):
         :type user_id: str
         """
         if options is None:
-            options = PutUsersIdFolders0OptionsArg()
+            options = TransferOwnedFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))

@@ -14,13 +14,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetSharedItemsFoldersOptionsArg(BaseObject):
+class GetSharedItemFoldersOptionsArg(BaseObject):
     def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
         """
         :param if_none_match: Ensures an item is only returned if it has changed.
@@ -43,12 +45,12 @@ class GetSharedItemsFoldersOptionsArg(BaseObject):
         self.if_none_match = if_none_match
         self.fields = fields
 
-class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -68,8 +70,8 @@ class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(Bas
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -81,7 +83,7 @@ class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -105,23 +107,23 @@ class PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFoldersIdAddSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFolderAddSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to create on the folder.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Union[None, PutFoldersIdAddSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -141,8 +143,8 @@ class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+    def __init__(self, access: Union[None, UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -154,7 +156,7 @@ class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Union[None, UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
@@ -178,34 +180,34 @@ class PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class PutFoldersIdUpdateSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFolderUpdateSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, PutFoldersIdUpdateSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
-class PutFoldersIdRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+class UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class PutFoldersIdRemoveSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, PutFoldersIdRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+class UpdateFolderRemoveSharedLinkRequestBodyArg(BaseObject):
+    def __init__(self, shared_link: Union[None, UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the folder.
-        :type shared_link: Union[None, PutFoldersIdRemoveSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Union[None, UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
 
 class SharedLinksFoldersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shared_items_folders(self, boxapi: str, options: GetSharedItemsFoldersOptionsArg = None) -> Folder:
+    def get_shared_item_folders(self, boxapi: str, options: GetSharedItemFoldersOptionsArg = None) -> Folder:
         """
         Return the folder represented by a shared link.
         
@@ -228,10 +230,10 @@ class SharedLinksFoldersManager(BaseObject):
         :type boxapi: str
         """
         if options is None:
-            options = GetSharedItemsFoldersOptionsArg()
+            options = GetSharedItemFoldersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def get_folders_id_get_shared_link(self, folder_id: str, fields: str) -> Folder:
+    def get_folder_get_shared_link(self, folder_id: str, fields: str) -> Folder:
         """
         Gets the information for a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -251,7 +253,7 @@ class SharedLinksFoldersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def put_folders_id_add_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdAddSharedLinkRequestBodyArg) -> Folder:
+    def update_folder_add_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderAddSharedLinkRequestBodyArg) -> Folder:
         """
         Adds a shared link to a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -271,7 +273,7 @@ class SharedLinksFoldersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def put_folders_id_update_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdUpdateSharedLinkRequestBodyArg) -> Folder:
+    def update_folder_update_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderUpdateSharedLinkRequestBodyArg) -> Folder:
         """
         Updates a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -291,7 +293,7 @@ class SharedLinksFoldersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Folder.from_dict(json.loads(response.text))
-    def put_folders_id_remove_shared_link(self, folder_id: str, fields: str, request_body: PutFoldersIdRemoveSharedLinkRequestBodyArg) -> Folder:
+    def update_folder_remove_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderRemoveSharedLinkRequestBodyArg) -> Folder:
         """
         Removes a shared link from a folder.
         :param folder_id: The unique identifier that represent a folder.
