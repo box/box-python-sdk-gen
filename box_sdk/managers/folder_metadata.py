@@ -16,33 +16,35 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFoldersIdMetadataIdIdScopeArg(str, Enum):
+class GetFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class PostFoldersIdMetadataIdIdScopeArg(str, Enum):
+class CreateFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class PostFoldersIdMetadataIdIdRequestBodyArg(BaseObject):
+class CreateFolderMetadataByIdRequestBodyArg(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class DeleteFoldersIdMetadataIdIdScopeArg(str, Enum):
+class DeleteFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 class FolderMetadataManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folders_id_metadata(self, folder_id: str) -> Metadatas:
+    def get_folder_metadata(self, folder_id: str) -> Metadatas:
         """
         Retrieves all metadata for a given folder. This can not be used on the root
         
@@ -61,7 +63,7 @@ class FolderMetadataManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']), FetchOptions(method='GET', auth=self.auth))
         return Metadatas.from_dict(json.loads(response.text))
-    def get_folders_id_metadata_id_id(self, folder_id: str, scope: GetFoldersIdMetadataIdIdScopeArg, template_key: str) -> Metadata:
+    def get_folder_metadata_by_id(self, folder_id: str, scope: GetFolderMetadataByIdScopeArg, template_key: str) -> Metadata:
         """
         Retrieves the instance of a metadata template that has been applied to a
         
@@ -79,14 +81,14 @@ class FolderMetadataManager(BaseObject):
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetFoldersIdMetadataIdIdScopeArg
+        :type scope: GetFolderMetadataByIdScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth))
         return Metadata.from_dict(json.loads(response.text))
-    def post_folders_id_metadata_id_id(self, folder_id: str, scope: PostFoldersIdMetadataIdIdScopeArg, template_key: str, request_body: PostFoldersIdMetadataIdIdRequestBodyArg) -> Metadata:
+    def create_folder_metadata_by_id(self, folder_id: str, scope: CreateFolderMetadataByIdScopeArg, template_key: str, request_body: CreateFolderMetadataByIdRequestBodyArg) -> Metadata:
         """
         Applies an instance of a metadata template to a folder.
         
@@ -119,14 +121,14 @@ class FolderMetadataManager(BaseObject):
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: PostFoldersIdMetadataIdIdScopeArg
+        :type scope: CreateFolderMetadataByIdScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Metadata.from_dict(json.loads(response.text))
-    def delete_folders_id_metadata_id_id(self, folder_id: str, scope: DeleteFoldersIdMetadataIdIdScopeArg, template_key: str):
+    def delete_folder_metadata_by_id(self, folder_id: str, scope: DeleteFolderMetadataByIdScopeArg, template_key: str):
         """
         Deletes a piece of folder metadata.
         :param folder_id: The unique identifier that represent a folder.
@@ -141,7 +143,7 @@ class FolderMetadataManager(BaseObject):
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteFoldersIdMetadataIdIdScopeArg
+        :type scope: DeleteFolderMetadataByIdScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str

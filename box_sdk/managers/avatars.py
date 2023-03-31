@@ -10,6 +10,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -17,10 +19,10 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class AvatarsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_users_id_avatar(self, user_id: str):
+    def get_user_avatar(self, user_id: str):
         """
         Retrieves an image of a the user's avatar.
         :param user_id: The ID of the user.
@@ -29,7 +31,7 @@ class AvatarsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='GET', auth=self.auth))
         return response.content
-    def delete_users_id_avatar(self, user_id: str):
+    def delete_user_avatar(self, user_id: str):
         """
         Removes an existing user avatar.
         

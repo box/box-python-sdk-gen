@@ -12,6 +12,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -50,7 +52,7 @@ class GetAuthorizeOptionsArg(BaseObject):
         self.scope = scope
 
 class AuthorizationManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, options: GetAuthorizeOptionsArg = None) -> None:

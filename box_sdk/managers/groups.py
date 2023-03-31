@@ -16,6 +16,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -51,18 +53,18 @@ class GetGroupsOptionsArg(BaseObject):
         self.limit = limit
         self.offset = offset
 
-class PostGroupsRequestBodyArgInvitabilityLevelField(str, Enum):
+class CreateGroupRequestBodyArgInvitabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
-class PostGroupsRequestBodyArgMemberViewabilityLevelField(str, Enum):
+class CreateGroupRequestBodyArgMemberViewabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
-class PostGroupsRequestBodyArg(BaseObject):
-    def __init__(self, name: str, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, PostGroupsRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, PostGroupsRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+class CreateGroupRequestBodyArg(BaseObject):
+    def __init__(self, name: str, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, CreateGroupRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, CreateGroupRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
         """
         :param name: The name of the new group to be created. This name must be unique
             within the enterprise.
@@ -94,14 +96,14 @@ class PostGroupsRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Union[None, PostGroupsRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Union[None, CreateGroupRequestBodyArgInvitabilityLevelField], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Union[None, PostGroupsRequestBodyArgMemberViewabilityLevelField], optional
+        :type member_viewability_level: Union[None, CreateGroupRequestBodyArgMemberViewabilityLevelField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -111,7 +113,7 @@ class PostGroupsRequestBodyArg(BaseObject):
         self.invitability_level = invitability_level
         self.member_viewability_level = member_viewability_level
 
-class PostGroupsOptionsArg(BaseObject):
+class CreateGroupOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -127,7 +129,7 @@ class PostGroupsOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetGroupsIdOptionsArg(BaseObject):
+class GetGroupByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -143,18 +145,18 @@ class GetGroupsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutGroupsIdRequestBodyArgInvitabilityLevelField(str, Enum):
+class UpdateGroupByIdRequestBodyArgInvitabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
-class PutGroupsIdRequestBodyArgMemberViewabilityLevelField(str, Enum):
+class UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
-class PutGroupsIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, PutGroupsIdRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, PutGroupsIdRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+class UpdateGroupByIdRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, UpdateGroupByIdRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
         """
         :param name: The name of the new group to be created. Must be unique within the
             enterprise.
@@ -186,14 +188,14 @@ class PutGroupsIdRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Union[None, PutGroupsIdRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Union[None, UpdateGroupByIdRequestBodyArgInvitabilityLevelField], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Union[None, PutGroupsIdRequestBodyArgMemberViewabilityLevelField], optional
+        :type member_viewability_level: Union[None, UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -203,7 +205,7 @@ class PutGroupsIdRequestBodyArg(BaseObject):
         self.invitability_level = invitability_level
         self.member_viewability_level = member_viewability_level
 
-class PutGroupsIdOptionsArg(BaseObject):
+class UpdateGroupByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -220,7 +222,7 @@ class PutGroupsIdOptionsArg(BaseObject):
         self.fields = fields
 
 class GroupsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_groups(self, options: GetGroupsOptionsArg = None) -> Groups:
@@ -234,7 +236,7 @@ class GroupsManager(BaseObject):
             options = GetGroupsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Groups.from_dict(json.loads(response.text))
-    def post_groups(self, request_body: PostGroupsRequestBodyArg, options: PostGroupsOptionsArg = None) -> Group:
+    def create_group(self, request_body: CreateGroupRequestBodyArg, options: CreateGroupOptionsArg = None) -> Group:
         """
         Creates a new group of users in an enterprise. Only users with admin
         
@@ -242,10 +244,10 @@ class GroupsManager(BaseObject):
 
         """
         if options is None:
-            options = PostGroupsOptionsArg()
+            options = CreateGroupOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def get_groups_id(self, group_id: str, options: GetGroupsIdOptionsArg = None) -> Group:
+    def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> Group:
         """
         Retrieves information about a group. Only members of this
         
@@ -259,10 +261,10 @@ class GroupsManager(BaseObject):
         :type group_id: str
         """
         if options is None:
-            options = GetGroupsIdOptionsArg()
+            options = GetGroupByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def put_groups_id(self, group_id: str, request_body: PutGroupsIdRequestBodyArg, options: PutGroupsIdOptionsArg = None) -> Group:
+    def update_group_by_id(self, group_id: str, request_body: UpdateGroupByIdRequestBodyArg, options: UpdateGroupByIdOptionsArg = None) -> Group:
         """
         Updates a specific group. Only admins of this
         
@@ -276,10 +278,10 @@ class GroupsManager(BaseObject):
         :type group_id: str
         """
         if options is None:
-            options = PutGroupsIdOptionsArg()
+            options = UpdateGroupByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def delete_groups_id(self, group_id: str):
+    def delete_group_by_id(self, group_id: str):
         """
         Permanently deletes a group. Only users with
         

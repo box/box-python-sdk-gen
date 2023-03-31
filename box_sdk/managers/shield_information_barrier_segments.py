@@ -14,13 +14,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PutShieldInformationBarrierSegmentsIdRequestBodyArg(BaseObject):
+class UpdateShieldInformationBarrierSegmentByIdRequestBodyArg(BaseObject):
     def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, **kwargs):
         """
         :param name: The updated name for the shield information barrier segment.
@@ -47,7 +49,7 @@ class GetShieldInformationBarrierSegmentsOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostShieldInformationBarrierSegmentsRequestBodyArg(BaseObject):
+class CreateShieldInformationBarrierSegmentRequestBodyArg(BaseObject):
     def __init__(self, shield_information_barrier: ShieldInformationBarrierBase, name: str, description: Union[None, str] = None, **kwargs):
         """
         :param name: Name of the shield information barrier segment
@@ -61,10 +63,10 @@ class PostShieldInformationBarrierSegmentsRequestBodyArg(BaseObject):
         self.description = description
 
 class ShieldInformationBarrierSegmentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shield_information_barrier_segments_id(self, shield_information_barrier_segment_id: str) -> ShieldInformationBarrierSegment:
+    def get_shield_information_barrier_segment_by_id(self, shield_information_barrier_segment_id: str) -> ShieldInformationBarrierSegment:
         """
         Retrieves shield information barrier segment based on provided ID..
         :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
@@ -73,7 +75,7 @@ class ShieldInformationBarrierSegmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments/', shield_information_barrier_segment_id]), FetchOptions(method='GET', auth=self.auth))
         return ShieldInformationBarrierSegment.from_dict(json.loads(response.text))
-    def put_shield_information_barrier_segments_id(self, shield_information_barrier_segment_id: str, request_body: PutShieldInformationBarrierSegmentsIdRequestBodyArg) -> ShieldInformationBarrierSegment:
+    def update_shield_information_barrier_segment_by_id(self, shield_information_barrier_segment_id: str, request_body: UpdateShieldInformationBarrierSegmentByIdRequestBodyArg) -> ShieldInformationBarrierSegment:
         """
         Updates the shield information barrier segment based on provided ID..
         :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
@@ -82,7 +84,7 @@ class ShieldInformationBarrierSegmentsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments/', shield_information_barrier_segment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return ShieldInformationBarrierSegment.from_dict(json.loads(response.text))
-    def delete_shield_information_barrier_segments_id(self, shield_information_barrier_segment_id: str):
+    def delete_shield_information_barrier_segment_by_id(self, shield_information_barrier_segment_id: str):
         """
         Deletes the shield information barrier segment
         
@@ -108,7 +110,7 @@ class ShieldInformationBarrierSegmentsManager(BaseObject):
             options = GetShieldInformationBarrierSegmentsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments']), FetchOptions(method='GET', params={'shield_information_barrier_id': shield_information_barrier_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def post_shield_information_barrier_segments(self, request_body: PostShieldInformationBarrierSegmentsRequestBodyArg) -> ShieldInformationBarrierSegment:
+    def create_shield_information_barrier_segment(self, request_body: CreateShieldInformationBarrierSegmentRequestBodyArg) -> ShieldInformationBarrierSegment:
         """
         Creates a shield information barrier segment.
         """

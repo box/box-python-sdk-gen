@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostFilesIdMetadataEnterpriseSecurityClassification6VmVochwUWoRequestBodyArg(BaseObject):
+class CreateFileMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
     def __init__(self, box_security_classification_key: Union[None, str] = None, **kwargs):
         """
         :param box_security_classification_key: The name of the classification to apply to this file.
@@ -32,10 +34,10 @@ class PostFilesIdMetadataEnterpriseSecurityClassification6VmVochwUWoRequestBodyA
         self.box_security_classification_key = box_security_classification_key
 
 class FileClassificationsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, file_id: str) -> Classification:
+    def get_file_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, file_id: str) -> Classification:
         """
         Retrieves the classification metadata instance that
         
@@ -61,7 +63,7 @@ class FileClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='GET', auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
-    def post_files_id_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, file_id: str, request_body: PostFilesIdMetadataEnterpriseSecurityClassification6VmVochwUWoRequestBodyArg) -> Classification:
+    def create_file_metadata_enterprise_security_classification(self, file_id: str, request_body: CreateFileMetadataEnterpriseSecurityClassificationRequestBodyArg) -> Classification:
         """
         Adds a classification to a file by specifying the label of the
         
@@ -87,7 +89,7 @@ class FileClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
-    def delete_files_id_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, file_id: str):
+    def delete_file_metadata_enterprise_security_classification(self, file_id: str):
         """
         Removes any classifications from a file.
         

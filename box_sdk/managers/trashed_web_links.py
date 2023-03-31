@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetWebLinksIdTrashOptionsArg(BaseObject):
+class GetWebLinkTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -35,10 +37,10 @@ class GetWebLinksIdTrashOptionsArg(BaseObject):
         self.fields = fields
 
 class TrashedWebLinksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_web_links_id_trash(self, web_link_id: str, options: GetWebLinksIdTrashOptionsArg = None) -> TrashWebLink:
+    def get_web_link_trash(self, web_link_id: str, options: GetWebLinkTrashOptionsArg = None) -> TrashWebLink:
         """
         Retrieves a web link that has been moved to the trash.
         :param web_link_id: The ID of the web link.
@@ -46,10 +48,10 @@ class TrashedWebLinksManager(BaseObject):
         :type web_link_id: str
         """
         if options is None:
-            options = GetWebLinksIdTrashOptionsArg()
+            options = GetWebLinkTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return TrashWebLink.from_dict(json.loads(response.text))
-    def delete_web_links_id_trash(self, web_link_id: str):
+    def delete_web_link_trash(self, web_link_id: str):
         """
         Permanently deletes a web link that is in the trash.
         

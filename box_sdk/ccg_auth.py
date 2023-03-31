@@ -1,9 +1,8 @@
 import json
-from enum import Enum
 from urllib.parse import urlencode
-from typing import Union, List
+from typing import Union
 
-from .base_object import BaseObject
+from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
 from .fetch import fetch, FetchResponse, FetchOptions
 
 
@@ -15,6 +14,31 @@ class CCGConfig:
             enterprise_id: Union[None, str] = None,
             user_id: Union[None, str] = None
     ):
+        """
+        :param client_id:
+            Box API key used for identifying the application the user is authenticating with.
+        :param client_secret:
+            Box API secret used for making auth requests.
+        :param enterprise_id:
+            The ID of the Box Developer Edition enterprise.
+
+            May be `None`, if the caller knows that it will not be
+            authenticating as an enterprise instance / service account.
+
+            If `user_id` is passed, this value is not used, unless
+            `authenticate_enterprise()` is called to authenticate as the enterprise instance.
+        :param user_id:
+            The user id to authenticate. This value is not required. But if it is provided, then the user
+            will be auto-authenticated at the time of the first API call.
+
+            Should be `None` if the intention is to authenticate as the
+            enterprise instance / service account. If both `enterprise_id` and
+            `user_id` are non-`None`, the `user` takes precedense when `refresh()`
+            is called.
+
+            <https://developer.box.com/en/guides/applications/>
+            <https://developer.box.com/en/guides/authentication/select/>
+        """
         if not enterprise_id and not user_id:
             raise Exception("Enterprise ID or User ID is needed")
 
@@ -25,29 +49,43 @@ class CCGConfig:
 
 
 class CCGAuth:
-    def __init__(self,  ccg_config: CCGConfig):
-        self.ccg_config = ccg_config
+    def __init__(self,  config: CCGConfig):
+        """
+        :param config:
+            Configuration object of Client Credentials Grant auth.
+        """
+        self.config = config
         self.token: Union[None, str] = None
 
+        if config.enterprise_id:
+            self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
+            self.subject_id = self.config.enterprise_id
+        else:
+            self.subject_id = self.config.user_id
+            self.subject_type = TokenRequestBoxSubjectType.USER
+
     def retrieve_token(self) -> str:
+        """
+        Return a current token or get a new one when not available.
+        :return:
+            Access token
+        """
         if self.token is None:
             return self.refresh()
         return self.token
 
     def refresh(self) -> str:
-        if self.ccg_config.user_id is None:
-            subject_id = self.ccg_config.enterprise_id
-            subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-        else:
-            subject_id = self.ccg_config.user_id
-            subject_type = TokenRequestBoxSubjectType.USER
-
+        """
+        Fetch a new access token
+        :return:
+            New access token
+        """
         request_body = TokenRequest(
             grant_type=TokenRequestGrantType.CLIENT_CREDENTIALS,
-            client_id=self.ccg_config.client_id,
-            client_secret=self.ccg_config.client_secret,
-            box_subject_id=subject_id,
-            box_subject_type=subject_type
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret,
+            box_subject_id=self.subject_id,
+            box_subject_type=self.subject_type
         )
 
         response: FetchResponse = fetch(
@@ -62,61 +100,35 @@ class CCGAuth:
         self.token = token_response.access_token
         return self.token
 
+    def authenticate_user(self, user_id: str):
+        """
+        Get an access token for a User.
 
-class TokenRequestGrantType(str, Enum):
-    AUTHORIZATION_CODE = 'authorization_code'
-    REFRESH_TOKEN = 'refresh_token'
-    CLIENT_CREDENTIALS = 'client_credentials'
-    URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
-    URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE = 'urn:ietf:params:oauth:grant-type:token-exchange'
+        May be one of this application's created App User. Depending on the
+        configured User Access Level, may also be any other App User or Managed
+        User in the enterprise.
 
+        <https://developer.box.com/en/guides/applications/>
+        <https://developer.box.com/en/guides/authentication/select/>
 
-class TokenRequestBoxSubjectType(str, Enum):
-    ENTERPRISE = 'enterprise'
-    USER = 'user'
+        :param user_id:
+            The id of the user to authenticate.
+        :return:
+            The access token for the user.
+        """
+        self.subject_id = user_id
+        self.subject_type = TokenRequestBoxSubjectType.USER
+        return self.refresh()
 
+    def authenticate_enterprise(self, enterprise_id: str):
+        """
+        Get an access token for a Box Developer Edition enterprise.
 
-class TokenRequest(BaseObject):
-    def __init__(self, grant_type: TokenRequestGrantType, client_id: Union[None, str] = None, client_secret: Union[None, str] = None, code: Union[None, str] = None, refresh_token: Union[None, str] = None, assertion: Union[None, str] = None, subject_token: Union[None, str] = None, subject_token_type: Union[None, str] = None, actor_token: Union[None, str] = None, actor_token_type: Union[None, str] = None, scope: Union[None, str] = None, resource: Union[None, str] = None, box_subject_type: Union[None, TokenRequestBoxSubjectType] = None, box_subject_id: Union[None, str] = None, box_shared_link: Union[None, str] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.grant_type = grant_type
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.code = code
-        self.refresh_token = refresh_token
-        self.assertion = assertion
-        self.subject_token = subject_token
-        self.subject_token_type = subject_token_type
-        self.actor_token = actor_token
-        self.actor_token_type = actor_token_type
-        self.scope = scope
-        self.resource = resource
-        self.box_subject_type = box_subject_type
-        self.box_subject_id = box_subject_id
-        self.box_shared_link = box_shared_link
-
-
-class FileScope(str, Enum):
-    ANNOTATION_EDIT = 'annotation_edit'
-    ANNOTATION_VIEW_ALL = 'annotation_view_all'
-    ANNOTATION_VIEW_SELF = 'annotation_view_self'
-    BASE_EXPLORER = 'base_explorer'
-    BASE_PICKER = 'base_picker'
-    BASE_PREVIEW = 'base_preview'
-    BASE_UPLOAD = 'base_upload'
-    ITEM_DELETE = 'item_delete'
-    ITEM_DOWNLOAD = 'item_download'
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_RENAME = 'item_rename'
-    ITEM_SHARE = 'item_share'
-
-
-class AccessToken(BaseObject):
-    def __init__(self, access_token: Union[None, str] = None, expires_in: Union[None, int] = None, token_type: Union[None, str] = None, restricted_to: Union[None, List[FileScope]] = None, refresh_token: Union[None, str] = None, issued_token_type: Union[None, str] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-        self.refresh_token = refresh_token
-        self.issued_token_type = issued_token_type
+        :param enterprise_id:
+            The ID of the Box Developer Edition enterprise.
+        :return:
+            The access token for the enterprise which can provision/deprovision app users.
+        """
+        self.subject_id = enterprise_id
+        self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
+        return self.refresh()

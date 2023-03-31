@@ -10,13 +10,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdContentOptionsArg(BaseObject):
+class DownloadFileOptionsArg(BaseObject):
     def __init__(self, range: Union[None, str] = None, boxapi: Union[None, str] = None, version: Union[None, str] = None, access_token: Union[None, str] = None, **kwargs):
         """
         :param range: The byte range of the content to download.
@@ -44,10 +46,10 @@ class GetFilesIdContentOptionsArg(BaseObject):
         self.access_token = access_token
 
 class DownloadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_content(self, file_id: str, options: GetFilesIdContentOptionsArg = None):
+    def download_file(self, file_id: str, options: DownloadFileOptionsArg = None):
         """
         Returns the contents of a file in binary format.
         :param file_id: The unique identifier that represents a file.
@@ -60,6 +62,6 @@ class DownloadsManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdContentOptionsArg()
+            options = DownloadFileOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params={'version': options.version, 'access_token': options.accessToken}, headers={'range': options.range, 'boxapi': options.boxapi}, auth=self.auth))
         return response.content

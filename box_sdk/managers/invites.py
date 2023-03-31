@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostInvitesRequestBodyArgEnterpriseField(BaseObject):
+class CreateInviteRequestBodyArgEnterpriseField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the enterprise
@@ -27,7 +29,7 @@ class PostInvitesRequestBodyArgEnterpriseField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class PostInvitesRequestBodyArgActionableByField(BaseObject):
+class CreateInviteRequestBodyArgActionableByField(BaseObject):
     def __init__(self, login: Union[None, str] = None, **kwargs):
         """
         :param login: The login of the invited user
@@ -36,19 +38,19 @@ class PostInvitesRequestBodyArgActionableByField(BaseObject):
         super().__init__(**kwargs)
         self.login = login
 
-class PostInvitesRequestBodyArg(BaseObject):
-    def __init__(self, enterprise: PostInvitesRequestBodyArgEnterpriseField, actionable_by: PostInvitesRequestBodyArgActionableByField, **kwargs):
+class CreateInviteRequestBodyArg(BaseObject):
+    def __init__(self, enterprise: CreateInviteRequestBodyArgEnterpriseField, actionable_by: CreateInviteRequestBodyArgActionableByField, **kwargs):
         """
         :param enterprise: The enterprise to invite the user to
-        :type enterprise: PostInvitesRequestBodyArgEnterpriseField
+        :type enterprise: CreateInviteRequestBodyArgEnterpriseField
         :param actionable_by: The user to invite
-        :type actionable_by: PostInvitesRequestBodyArgActionableByField
+        :type actionable_by: CreateInviteRequestBodyArgActionableByField
         """
         super().__init__(**kwargs)
         self.enterprise = enterprise
         self.actionable_by = actionable_by
 
-class PostInvitesOptionsArg(BaseObject):
+class CreateInviteOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -64,7 +66,7 @@ class PostInvitesOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class GetInvitesIdOptionsArg(BaseObject):
+class GetInviteByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -81,10 +83,10 @@ class GetInvitesIdOptionsArg(BaseObject):
         self.fields = fields
 
 class InvitesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def post_invites(self, request_body: PostInvitesRequestBodyArg, options: PostInvitesOptionsArg = None) -> Invite:
+    def create_invite(self, request_body: CreateInviteRequestBodyArg, options: CreateInviteOptionsArg = None) -> Invite:
         """
         Invites an existing external user to join an enterprise.
         
@@ -107,10 +109,10 @@ class InvitesManager(BaseObject):
 
         """
         if options is None:
-            options = PostInvitesOptionsArg()
+            options = CreateInviteOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Invite.from_dict(json.loads(response.text))
-    def get_invites_id(self, invite_id: str, options: GetInvitesIdOptionsArg = None) -> Invite:
+    def get_invite_by_id(self, invite_id: str, options: GetInviteByIdOptionsArg = None) -> Invite:
         """
         Returns the status of a user invite.
         :param invite_id: The ID of an invite.
@@ -118,6 +120,6 @@ class InvitesManager(BaseObject):
         :type invite_id: str
         """
         if options is None:
-            options = GetInvitesIdOptionsArg()
+            options = GetInviteByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Invite.from_dict(json.loads(response.text))

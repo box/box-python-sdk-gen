@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdVersionsOptionsArg(BaseObject):
+class GetFileVersionsOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -47,7 +49,7 @@ class GetFilesIdVersionsOptionsArg(BaseObject):
         self.limit = limit
         self.offset = offset
 
-class GetFilesIdVersionsIdOptionsArg(BaseObject):
+class GetFileVersionByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -63,7 +65,7 @@ class GetFilesIdVersionsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutFilesIdVersionsIdRequestBodyArg(BaseObject):
+class UpdateFileVersionByIdRequestBodyArg(BaseObject):
     def __init__(self, trashed_at: Union[None, str] = None, **kwargs):
         """
         :param trashed_at: Set this to `null` to clear
@@ -73,7 +75,7 @@ class PutFilesIdVersionsIdRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.trashed_at = trashed_at
 
-class DeleteFilesIdVersionsIdOptionsArg(BaseObject):
+class DeleteFileVersionByIdOptionsArg(BaseObject):
     def __init__(self, if_match: Union[None, str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
@@ -87,22 +89,22 @@ class DeleteFilesIdVersionsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.if_match = if_match
 
-class PostFilesIdVersionsCurrentRequestBodyArgTypeField(str, Enum):
+class PromoteFileVersionRequestBodyArgTypeField(str, Enum):
     FILE_VERSION = 'file_version'
 
-class PostFilesIdVersionsCurrentRequestBodyArg(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, PostFilesIdVersionsCurrentRequestBodyArgTypeField] = None, **kwargs):
+class PromoteFileVersionRequestBodyArg(BaseObject):
+    def __init__(self, id: Union[None, str] = None, type: Union[None, PromoteFileVersionRequestBodyArgTypeField] = None, **kwargs):
         """
         :param id: The file version ID
         :type id: Union[None, str], optional
         :param type: The type to promote
-        :type type: Union[None, PostFilesIdVersionsCurrentRequestBodyArgTypeField], optional
+        :type type: Union[None, PromoteFileVersionRequestBodyArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostFilesIdVersionsCurrentOptionsArg(BaseObject):
+class PromoteFileVersionOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -119,10 +121,10 @@ class PostFilesIdVersionsCurrentOptionsArg(BaseObject):
         self.fields = fields
 
 class FileVersionsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_versions(self, file_id: str, options: GetFilesIdVersionsOptionsArg = None) -> FileVersions:
+    def get_file_versions(self, file_id: str, options: GetFileVersionsOptionsArg = None) -> FileVersions:
         """
         Retrieve a list of the past versions for a file.
         
@@ -141,10 +143,10 @@ class FileVersionsManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdVersionsOptionsArg()
+            options = GetFileVersionsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return FileVersions.from_dict(json.loads(response.text))
-    def get_files_id_versions_id(self, file_id: str, file_version_id: str, options: GetFilesIdVersionsIdOptionsArg = None) -> FileVersion:
+    def get_file_version_by_id(self, file_id: str, file_version_id: str, options: GetFileVersionByIdOptionsArg = None) -> FileVersion:
         """
         Retrieve a specific version of a file.
         
@@ -163,10 +165,10 @@ class FileVersionsManager(BaseObject):
         :type file_version_id: str
         """
         if options is None:
-            options = GetFilesIdVersionsIdOptionsArg()
+            options = GetFileVersionByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))
-    def put_files_id_versions_id(self, file_id: str, file_version_id: str, request_body: PutFilesIdVersionsIdRequestBodyArg) -> FileVersion:
+    def update_file_version_by_id(self, file_id: str, file_version_id: str, request_body: UpdateFileVersionByIdRequestBodyArg) -> FileVersion:
         """
         Restores a specific version of a file after it was deleted.
         
@@ -192,7 +194,7 @@ class FileVersionsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))
-    def delete_files_id_versions_id(self, file_id: str, file_version_id: str, options: DeleteFilesIdVersionsIdOptionsArg = None):
+    def delete_file_version_by_id(self, file_id: str, file_version_id: str, options: DeleteFileVersionByIdOptionsArg = None):
         """
         Move a file version to the trash.
         
@@ -211,10 +213,10 @@ class FileVersionsManager(BaseObject):
         :type file_version_id: str
         """
         if options is None:
-            options = DeleteFilesIdVersionsIdOptionsArg()
+            options = DeleteFileVersionByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
-    def post_files_id_versions_current(self, file_id: str, request_body: PostFilesIdVersionsCurrentRequestBodyArg, options: PostFilesIdVersionsCurrentOptionsArg = None) -> FileVersion:
+    def promote_file_version(self, file_id: str, request_body: PromoteFileVersionRequestBodyArg, options: PromoteFileVersionOptionsArg = None) -> FileVersion:
         """
         Promote a specific version of a file.
         
@@ -260,6 +262,6 @@ class FileVersionsManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = PostFilesIdVersionsCurrentOptionsArg()
+            options = PromoteFileVersionOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return FileVersion.from_dict(json.loads(response.text))

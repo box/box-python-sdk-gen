@@ -3876,6 +3876,22 @@ class UserBase(BaseObject):
         self.type = type
         self.id = id
 
+class UserCollaborations(UserBase):
+    def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Union[None, str] = None, **kwargs):
+        """
+        :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type name: str
+        :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type login: str
+        :param type: `user`
+        :type type: UserBaseTypeField
+        :param id: The unique identifier for this user
+        :type id: Union[None, str], optional
+        """
+        super().__init__(type=type, id=id, **kwargs)
+        self.name = name
+        self.login = login
+
 class UserMini(UserBase):
     def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Union[None, str] = None, **kwargs):
         """
@@ -6074,7 +6090,7 @@ class FolderFull(Folder):
         self.classification = classification
 
 class Collaboration(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, CollaborationTypeField] = None, item: Union[None, Union[File, Folder, WebLink]] = None, accessible_by: Union[None, UserMini] = None, invite_email: Union[None, str] = None, role: Union[None, CollaborationRoleField] = None, expires_at: Union[None, str] = None, status: Union[None, CollaborationStatusField] = None, acknowledged_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, acceptance_requirements_status: Union[None, CollaborationAcceptanceRequirementsStatusField] = None, **kwargs):
+    def __init__(self, id: Union[None, str] = None, type: Union[None, CollaborationTypeField] = None, item: Union[None, Union[File, Folder, WebLink]] = None, accessible_by: Union[None, UserCollaborations] = None, invite_email: Union[None, str] = None, role: Union[None, CollaborationRoleField] = None, expires_at: Union[None, str] = None, status: Union[None, CollaborationStatusField] = None, acknowledged_at: Union[None, str] = None, created_by: Union[None, UserCollaborations] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, acceptance_requirements_status: Union[None, CollaborationAcceptanceRequirementsStatusField] = None, **kwargs):
         """
         :param id: The unique identifier for this collaboration.
         :type id: Union[None, str], optional
@@ -6088,14 +6104,15 @@ class Collaboration(BaseObject):
         :param expires_at: When the collaboration will expire, or `null` if no expiration
             date is set.
         :type expires_at: Union[None, str], optional
-        :param status: The status of the collaboration invitation.
+        :param status: The status of the collaboration invitation. If the status
+            is `pending`, `login` and `name` return an empty string.
         :type status: Union[None, CollaborationStatusField], optional
         :param acknowledged_at: When the `status` of the collaboration object changed to
-            `accepted` or `rejected`
+            `accepted` or `rejected`.
         :type acknowledged_at: Union[None, str], optional
-        :param created_at: When the collaboration object was created
+        :param created_at: When the collaboration object was created.
         :type created_at: Union[None, str], optional
-        :param modified_at: When the collaboration object was last modified
+        :param modified_at: When the collaboration object was last modified.
         :type modified_at: Union[None, str], optional
         """
         super().__init__(**kwargs)

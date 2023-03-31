@@ -16,13 +16,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class OptionsFilesContentRequestBodyArgParentField(BaseObject):
+class PreflightFileUploadRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -31,8 +33,8 @@ class OptionsFilesContentRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class OptionsFilesContentRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, size: Union[None, int] = None, parent: Union[None, OptionsFilesContentRequestBodyArgParentField] = None, **kwargs):
+class PreflightFileUploadRequestBodyArg(BaseObject):
+    def __init__(self, name: Union[None, str] = None, size: Union[None, int] = None, parent: Union[None, PreflightFileUploadRequestBodyArgParentField] = None, **kwargs):
         """
         :param name: The name for the file
         :type name: Union[None, str], optional
@@ -45,10 +47,10 @@ class OptionsFilesContentRequestBodyArg(BaseObject):
         self.parent = parent
 
 class UploadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def options_files_content(self, request_body: OptionsFilesContentRequestBodyArg) -> UploadUrl:
+    def preflight_file_upload(self, request_body: PreflightFileUploadRequestBodyArg) -> UploadUrl:
         """
         Performs a check to verify that a file will be accepted by Box
         

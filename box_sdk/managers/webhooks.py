@@ -18,6 +18,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -38,23 +40,23 @@ class GetWebhooksOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostWebhooksRequestBodyArgTargetFieldTypeField(str, Enum):
+class CreateWebhookRequestBodyArgTargetFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
-class PostWebhooksRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, PostWebhooksRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+class CreateWebhookRequestBodyArgTargetField(BaseObject):
+    def __init__(self, id: Union[None, str] = None, type: Union[None, CreateWebhookRequestBodyArgTargetFieldTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Union[None, str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Union[None, PostWebhooksRequestBodyArgTargetFieldTypeField], optional
+        :type type: Union[None, CreateWebhookRequestBodyArgTargetFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostWebhooksRequestBodyArgTriggersField(str, Enum):
+class CreateWebhookRequestBodyArgTriggersField(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
     FILE_PREVIEWED = 'FILE.PREVIEWED'
     FILE_DOWNLOADED = 'FILE.DOWNLOADED'
@@ -95,39 +97,39 @@ class PostWebhooksRequestBodyArgTriggersField(str, Enum):
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
 
-class PostWebhooksRequestBodyArg(BaseObject):
-    def __init__(self, target: PostWebhooksRequestBodyArgTargetField, address: str, triggers: List[PostWebhooksRequestBodyArgTriggersField], **kwargs):
+class CreateWebhookRequestBodyArg(BaseObject):
+    def __init__(self, target: CreateWebhookRequestBodyArgTargetField, address: str, triggers: List[CreateWebhookRequestBodyArgTriggersField], **kwargs):
         """
         :param target: The item that will trigger the webhook
-        :type target: PostWebhooksRequestBodyArgTargetField
+        :type target: CreateWebhookRequestBodyArgTargetField
         :param address: The URL that is notified by this webhook
         :type address: str
         :param triggers: An array of event names that this webhook is
             to be triggered for
-        :type triggers: List[PostWebhooksRequestBodyArgTriggersField]
+        :type triggers: List[CreateWebhookRequestBodyArgTriggersField]
         """
         super().__init__(**kwargs)
         self.target = target
         self.address = address
         self.triggers = triggers
 
-class PutWebhooksIdRequestBodyArgTargetFieldTypeField(str, Enum):
+class UpdateWebhookByIdRequestBodyArgTargetFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
-class PutWebhooksIdRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, PutWebhooksIdRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+class UpdateWebhookByIdRequestBodyArgTargetField(BaseObject):
+    def __init__(self, id: Union[None, str] = None, type: Union[None, UpdateWebhookByIdRequestBodyArgTargetFieldTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Union[None, str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Union[None, PutWebhooksIdRequestBodyArgTargetFieldTypeField], optional
+        :type type: Union[None, UpdateWebhookByIdRequestBodyArgTargetFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PutWebhooksIdRequestBodyArgTriggersField(str, Enum):
+class UpdateWebhookByIdRequestBodyArgTriggersField(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
     FILE_PREVIEWED = 'FILE.PREVIEWED'
     FILE_DOWNLOADED = 'FILE.DOWNLOADED'
@@ -168,16 +170,16 @@ class PutWebhooksIdRequestBodyArgTriggersField(str, Enum):
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
 
-class PutWebhooksIdRequestBodyArg(BaseObject):
-    def __init__(self, target: Union[None, PutWebhooksIdRequestBodyArgTargetField] = None, address: Union[None, str] = None, triggers: Union[None, List[PutWebhooksIdRequestBodyArgTriggersField]] = None, **kwargs):
+class UpdateWebhookByIdRequestBodyArg(BaseObject):
+    def __init__(self, target: Union[None, UpdateWebhookByIdRequestBodyArgTargetField] = None, address: Union[None, str] = None, triggers: Union[None, List[UpdateWebhookByIdRequestBodyArgTriggersField]] = None, **kwargs):
         """
         :param target: The item that will trigger the webhook
-        :type target: Union[None, PutWebhooksIdRequestBodyArgTargetField], optional
+        :type target: Union[None, UpdateWebhookByIdRequestBodyArgTargetField], optional
         :param address: The URL that is notified by this webhook
         :type address: Union[None, str], optional
         :param triggers: An array of event names that this webhook is
             to be triggered for
-        :type triggers: Union[None, List[PutWebhooksIdRequestBodyArgTriggersField]], optional
+        :type triggers: Union[None, List[UpdateWebhookByIdRequestBodyArgTriggersField]], optional
         """
         super().__init__(**kwargs)
         self.target = target
@@ -185,7 +187,7 @@ class PutWebhooksIdRequestBodyArg(BaseObject):
         self.triggers = triggers
 
 class WebhooksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_webhooks(self, options: GetWebhooksOptionsArg = None) -> Webhooks:
@@ -208,13 +210,13 @@ class WebhooksManager(BaseObject):
             options = GetWebhooksOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return Webhooks.from_dict(json.loads(response.text))
-    def post_webhooks(self, request_body: PostWebhooksRequestBodyArg) -> Webhook:
+    def create_webhook(self, request_body: CreateWebhookRequestBodyArg) -> Webhook:
         """
         Creates a webhook.
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def get_webhooks_id(self, webhook_id: str) -> Webhook:
+    def get_webhook_by_id(self, webhook_id: str) -> Webhook:
         """
         Retrieves a specific webhook
         :param webhook_id: The ID of the webhook.
@@ -223,7 +225,7 @@ class WebhooksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='GET', auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def put_webhooks_id(self, webhook_id: str, request_body: PutWebhooksIdRequestBodyArg) -> Webhook:
+    def update_webhook_by_id(self, webhook_id: str, request_body: UpdateWebhookByIdRequestBodyArg) -> Webhook:
         """
         Updates a webhook.
         :param webhook_id: The ID of the webhook.
@@ -232,7 +234,7 @@ class WebhooksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
-    def delete_webhooks_id(self, webhook_id: str):
+    def delete_webhook_by_id(self, webhook_id: str):
         """
         Deletes a webhook.
         :param webhook_id: The ID of the webhook.

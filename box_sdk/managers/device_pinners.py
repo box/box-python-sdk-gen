@@ -16,18 +16,20 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetEnterprisesIdDevicePinnersOptionsArgDirectionField(str, Enum):
+class GetEnterpriseDevicePinnersOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
-class GetEnterprisesIdDevicePinnersOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, direction: Union[None, GetEnterprisesIdDevicePinnersOptionsArgDirectionField] = None, **kwargs):
+class GetEnterpriseDevicePinnersOptionsArg(BaseObject):
+    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, direction: Union[None, GetEnterpriseDevicePinnersOptionsArgDirectionField] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
@@ -37,7 +39,7 @@ class GetEnterprisesIdDevicePinnersOptionsArg(BaseObject):
         :type limit: Union[None, int], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetEnterprisesIdDevicePinnersOptionsArgDirectionField], optional
+        :type direction: Union[None, GetEnterpriseDevicePinnersOptionsArgDirectionField], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
@@ -45,10 +47,10 @@ class GetEnterprisesIdDevicePinnersOptionsArg(BaseObject):
         self.direction = direction
 
 class DevicePinnersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_device_pinners_id(self, device_pinner_id: str) -> DevicePinner:
+    def get_device_pinner_by_id(self, device_pinner_id: str) -> DevicePinner:
         """
         Retrieves information about an individual device pin.
         :param device_pinner_id: The ID of the device pin
@@ -57,7 +59,7 @@ class DevicePinnersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='GET', auth=self.auth))
         return DevicePinner.from_dict(json.loads(response.text))
-    def delete_device_pinners_id(self, device_pinner_id: str):
+    def delete_device_pinner_by_id(self, device_pinner_id: str):
         """
         Deletes an individual device pin.
         :param device_pinner_id: The ID of the device pin
@@ -66,7 +68,7 @@ class DevicePinnersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def get_enterprises_id_device_pinners(self, enterprise_id: str, options: GetEnterprisesIdDevicePinnersOptionsArg = None) -> DevicePinners:
+    def get_enterprise_device_pinners(self, enterprise_id: str, options: GetEnterpriseDevicePinnersOptionsArg = None) -> DevicePinners:
         """
         Retrieves all the device pins within an enterprise.
         
@@ -80,6 +82,6 @@ class DevicePinnersManager(BaseObject):
         :type enterprise_id: str
         """
         if options is None:
-            options = GetEnterprisesIdDevicePinnersOptionsArg()
+            options = GetEnterpriseDevicePinnersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit, 'direction': options.direction}, auth=self.auth))
         return DevicePinners.from_dict(json.loads(response.text))

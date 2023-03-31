@@ -14,13 +14,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetCollaborationsIdOptionsArg(BaseObject):
+class GetCollaborationByIdOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -36,7 +38,7 @@ class GetCollaborationsIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class PutCollaborationsIdRequestBodyArgRoleField(str, Enum):
+class UpdateCollaborationByIdRequestBodyArgRoleField(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
     PREVIEWER = 'previewer'
@@ -46,20 +48,20 @@ class PutCollaborationsIdRequestBodyArgRoleField(str, Enum):
     CO_OWNER = 'co-owner'
     OWNER = 'owner'
 
-class PutCollaborationsIdRequestBodyArgStatusField(str, Enum):
+class UpdateCollaborationByIdRequestBodyArgStatusField(str, Enum):
     PENDING = 'pending'
     ACCEPTED = 'accepted'
     REJECTED = 'rejected'
 
-class PutCollaborationsIdRequestBodyArg(BaseObject):
-    def __init__(self, role: PutCollaborationsIdRequestBodyArgRoleField, status: Union[None, PutCollaborationsIdRequestBodyArgStatusField] = None, expires_at: Union[None, str] = None, can_view_path: Union[None, bool] = None, **kwargs):
+class UpdateCollaborationByIdRequestBodyArg(BaseObject):
+    def __init__(self, role: UpdateCollaborationByIdRequestBodyArgRoleField, status: Union[None, UpdateCollaborationByIdRequestBodyArgStatusField] = None, expires_at: Union[None, str] = None, can_view_path: Union[None, bool] = None, **kwargs):
         """
         :param role: The level of access granted.
-        :type role: PutCollaborationsIdRequestBodyArgRoleField
+        :type role: UpdateCollaborationByIdRequestBodyArgRoleField
         :param status: <!--alex ignore reject-->
             Set the status of a `pending` collaboration invitation,
             effectively accepting, or rejecting the invite.
-        :type status: Union[None, PutCollaborationsIdRequestBodyArgStatusField], optional
+        :type status: Union[None, UpdateCollaborationByIdRequestBodyArgStatusField], optional
         :param expires_at: Update the expiration date for the collaboration. At this date,
             the collaboration will be automatically removed from the item.
             This feature will only work if the **Automatically remove invited
@@ -91,10 +93,10 @@ class PutCollaborationsIdRequestBodyArg(BaseObject):
         self.can_view_path = can_view_path
 
 class UserCollaborationsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_collaborations_id(self, collaboration_id: str, options: GetCollaborationsIdOptionsArg = None) -> Collaboration:
+    def get_collaboration_by_id(self, collaboration_id: str, options: GetCollaborationByIdOptionsArg = None) -> Collaboration:
         """
         Retrieves a single collaboration.
         :param collaboration_id: The ID of the collaboration
@@ -102,10 +104,10 @@ class UserCollaborationsManager(BaseObject):
         :type collaboration_id: str
         """
         if options is None:
-            options = GetCollaborationsIdOptionsArg()
+            options = GetCollaborationByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return Collaboration.from_dict(json.loads(response.text))
-    def put_collaborations_id(self, collaboration_id: str, request_body: PutCollaborationsIdRequestBodyArg) -> Collaboration:
+    def update_collaboration_by_id(self, collaboration_id: str, request_body: UpdateCollaborationByIdRequestBodyArg) -> Collaboration:
         """
         Updates a collaboration.
         
@@ -120,7 +122,7 @@ class UserCollaborationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Collaboration.from_dict(json.loads(response.text))
-    def delete_collaborations_id(self, collaboration_id: str):
+    def delete_collaboration_by_id(self, collaboration_id: str):
         """
         Deletes a single collaboration.
         :param collaboration_id: The ID of the collaboration

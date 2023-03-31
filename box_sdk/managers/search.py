@@ -24,6 +24,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -257,10 +259,10 @@ class GetSearchOptionsArg(BaseObject):
         self.offset = offset
 
 class SearchManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def post_metadata_queries_execute_read(self, request_body: MetadataQuery) -> MetadataQueryResults:
+    def create_metadata_query_execute_read(self, request_body: MetadataQuery) -> MetadataQueryResults:
         """
         Create a search using SQL-like syntax to return items that match specific
         

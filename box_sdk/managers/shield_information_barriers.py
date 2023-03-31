@@ -14,23 +14,25 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostShieldInformationBarriersChangeStatusRequestBodyArgStatusField(str, Enum):
+class CreateShieldInformationBarrierChangeStatusRequestBodyArgStatusField(str, Enum):
     PENDING = 'pending'
     DISABLED = 'disabled'
 
-class PostShieldInformationBarriersChangeStatusRequestBodyArg(BaseObject):
-    def __init__(self, id: str, status: PostShieldInformationBarriersChangeStatusRequestBodyArgStatusField, **kwargs):
+class CreateShieldInformationBarrierChangeStatusRequestBodyArg(BaseObject):
+    def __init__(self, id: str, status: CreateShieldInformationBarrierChangeStatusRequestBodyArgStatusField, **kwargs):
         """
         :param id: The ID of the shield information barrier.
         :type id: str
         :param status: The desired status for the shield information barrier.
-        :type status: PostShieldInformationBarriersChangeStatusRequestBodyArgStatusField
+        :type status: CreateShieldInformationBarrierChangeStatusRequestBodyArgStatusField
         """
         super().__init__(**kwargs)
         self.id = id
@@ -51,10 +53,10 @@ class GetShieldInformationBarriersOptionsArg(BaseObject):
         self.limit = limit
 
 class ShieldInformationBarriersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shield_information_barriers_id(self, shield_information_barrier_id: str) -> ShieldInformationBarrier:
+    def get_shield_information_barrier_by_id(self, shield_information_barrier_id: str) -> ShieldInformationBarrier:
         """
         Get shield information barrier based on provided ID..
         :param shield_information_barrier_id: The ID of the shield information barrier.
@@ -63,7 +65,7 @@ class ShieldInformationBarriersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shield_information_barrier_id]), FetchOptions(method='GET', auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
-    def post_shield_information_barriers_change_status(self, request_body: PostShieldInformationBarriersChangeStatusRequestBodyArg) -> ShieldInformationBarrier:
+    def create_shield_information_barrier_change_status(self, request_body: CreateShieldInformationBarrierChangeStatusRequestBodyArg) -> ShieldInformationBarrier:
         """
         Change status of shield information barrier with the specified ID.
         """
@@ -80,7 +82,7 @@ class ShieldInformationBarriersManager(BaseObject):
             options = GetShieldInformationBarriersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def post_shield_information_barriers(self, request_body: ShieldInformationBarrier) -> ShieldInformationBarrier:
+    def create_shield_information_barrier(self, request_body: ShieldInformationBarrier) -> ShieldInformationBarrier:
         """
         Creates a shield information barrier to
         

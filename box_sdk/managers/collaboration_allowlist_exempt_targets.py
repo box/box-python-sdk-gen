@@ -14,6 +14,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -34,7 +36,7 @@ class GetCollaborationWhitelistExemptTargetsOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostCollaborationWhitelistExemptTargetsRequestBodyArgUserField(BaseObject):
+class CreateCollaborationWhitelistExemptTargetRequestBodyArgUserField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user to exempt.
@@ -43,17 +45,17 @@ class PostCollaborationWhitelistExemptTargetsRequestBodyArgUserField(BaseObject)
         super().__init__(**kwargs)
         self.id = id
 
-class PostCollaborationWhitelistExemptTargetsRequestBodyArg(BaseObject):
-    def __init__(self, user: PostCollaborationWhitelistExemptTargetsRequestBodyArgUserField, **kwargs):
+class CreateCollaborationWhitelistExemptTargetRequestBodyArg(BaseObject):
+    def __init__(self, user: CreateCollaborationWhitelistExemptTargetRequestBodyArgUserField, **kwargs):
         """
         :param user: The user to exempt.
-        :type user: PostCollaborationWhitelistExemptTargetsRequestBodyArgUserField
+        :type user: CreateCollaborationWhitelistExemptTargetRequestBodyArgUserField
         """
         super().__init__(**kwargs)
         self.user = user
 
 class CollaborationAllowlistExemptTargetsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_collaboration_whitelist_exempt_targets(self, options: GetCollaborationWhitelistExemptTargetsOptionsArg = None) -> CollaborationAllowlistExemptTargets:
@@ -67,7 +69,7 @@ class CollaborationAllowlistExemptTargetsManager(BaseObject):
             options = GetCollaborationWhitelistExemptTargetsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return CollaborationAllowlistExemptTargets.from_dict(json.loads(response.text))
-    def post_collaboration_whitelist_exempt_targets(self, request_body: PostCollaborationWhitelistExemptTargetsRequestBodyArg) -> CollaborationAllowlistExemptTarget:
+    def create_collaboration_whitelist_exempt_target(self, request_body: CreateCollaborationWhitelistExemptTargetRequestBodyArg) -> CollaborationAllowlistExemptTarget:
         """
         Exempts a user from the restrictions set out by the allowed list of domains
         
@@ -76,7 +78,7 @@ class CollaborationAllowlistExemptTargetsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
-    def get_collaboration_whitelist_exempt_targets_id(self, collaboration_whitelist_exempt_target_id: str) -> CollaborationAllowlistExemptTarget:
+    def get_collaboration_whitelist_exempt_target_by_id(self, collaboration_whitelist_exempt_target_id: str) -> CollaborationAllowlistExemptTarget:
         """
         Returns a users who has been exempt from the collaboration
         
@@ -88,7 +90,7 @@ class CollaborationAllowlistExemptTargetsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets/', collaboration_whitelist_exempt_target_id]), FetchOptions(method='GET', auth=self.auth))
         return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
-    def delete_collaboration_whitelist_exempt_targets_id(self, collaboration_whitelist_exempt_target_id: str):
+    def delete_collaboration_whitelist_exempt_target_by_id(self, collaboration_whitelist_exempt_target_id: str):
         """
         Removes a user's exemption from the restrictions set out by the allowed list
         

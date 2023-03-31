@@ -18,6 +18,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -46,12 +48,12 @@ class GetMetadataCascadePoliciesOptionsArg(BaseObject):
         self.marker = marker
         self.offset = offset
 
-class PostMetadataCascadePoliciesRequestBodyArgScopeField(str, Enum):
+class CreateMetadataCascadePolicyRequestBodyArgScopeField(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class PostMetadataCascadePoliciesRequestBodyArg(BaseObject):
-    def __init__(self, folder_id: str, scope: PostMetadataCascadePoliciesRequestBodyArgScopeField, template_key: str, **kwargs):
+class CreateMetadataCascadePolicyRequestBodyArg(BaseObject):
+    def __init__(self, folder_id: str, scope: CreateMetadataCascadePolicyRequestBodyArgScopeField, template_key: str, **kwargs):
         """
         :param folder_id: The ID of the folder to apply the policy to. This folder will
             need to already have an instance of the targeted metadata
@@ -59,7 +61,7 @@ class PostMetadataCascadePoliciesRequestBodyArg(BaseObject):
         :type folder_id: str
         :param scope: The scope of the targeted metadata template. This template will
             need to already have an instance applied to the targeted folder.
-        :type scope: PostMetadataCascadePoliciesRequestBodyArgScopeField
+        :type scope: CreateMetadataCascadePolicyRequestBodyArgScopeField
         :param template_key: The key of the targeted metadata template. This template will
             need to already have an instance applied to the targeted folder.
             In many cases the template key is automatically derived
@@ -79,12 +81,12 @@ class PostMetadataCascadePoliciesRequestBodyArg(BaseObject):
         self.scope = scope
         self.template_key = template_key
 
-class PostMetadataCascadePoliciesIdApplyRequestBodyArgConflictResolutionField(str, Enum):
+class CreateMetadataCascadePolicyApplyRequestBodyArgConflictResolutionField(str, Enum):
     NONE = 'none'
     OVERWRITE = 'overwrite'
 
-class PostMetadataCascadePoliciesIdApplyRequestBodyArg(BaseObject):
-    def __init__(self, conflict_resolution: PostMetadataCascadePoliciesIdApplyRequestBodyArgConflictResolutionField, **kwargs):
+class CreateMetadataCascadePolicyApplyRequestBodyArg(BaseObject):
+    def __init__(self, conflict_resolution: CreateMetadataCascadePolicyApplyRequestBodyArgConflictResolutionField, **kwargs):
         """
         :param conflict_resolution: Describes the desired behavior when dealing with the conflict
             where a metadata template already has an instance applied
@@ -92,13 +94,13 @@ class PostMetadataCascadePoliciesIdApplyRequestBodyArg(BaseObject):
             * `none` will preserve the existing value on the file
             * `overwrite` will force-apply the templates values over
               any existing values.
-        :type conflict_resolution: PostMetadataCascadePoliciesIdApplyRequestBodyArgConflictResolutionField
+        :type conflict_resolution: CreateMetadataCascadePolicyApplyRequestBodyArgConflictResolutionField
         """
         super().__init__(**kwargs)
         self.conflict_resolution = conflict_resolution
 
 class MetadataCascadePoliciesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_metadata_cascade_policies(self, folder_id: str, options: GetMetadataCascadePoliciesOptionsArg = None) -> MetadataCascadePolicies:
@@ -119,7 +121,7 @@ class MetadataCascadePoliciesManager(BaseObject):
             options = GetMetadataCascadePoliciesOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params={'folder_id': folder_id, 'owner_enterprise_id': options.ownerEnterpriseId, 'marker': options.marker, 'offset': options.offset}, auth=self.auth))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
-    def post_metadata_cascade_policies(self, request_body: PostMetadataCascadePoliciesRequestBodyArg) -> MetadataCascadePolicy:
+    def create_metadata_cascade_policy(self, request_body: CreateMetadataCascadePolicyRequestBodyArg) -> MetadataCascadePolicy:
         """
         Creates a new metadata cascade policy that applies a given
         
@@ -137,7 +139,7 @@ class MetadataCascadePoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def get_metadata_cascade_policies_id(self, metadata_cascade_policy_id: str) -> MetadataCascadePolicy:
+    def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str) -> MetadataCascadePolicy:
         """
         Retrieve a specific metadata cascade policy assigned to a folder.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
@@ -146,7 +148,7 @@ class MetadataCascadePoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='GET', auth=self.auth))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def delete_metadata_cascade_policies_id(self, metadata_cascade_policy_id: str):
+    def delete_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str):
         """
         Deletes a metadata cascade policy.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
@@ -155,7 +157,7 @@ class MetadataCascadePoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def post_metadata_cascade_policies_id_apply(self, metadata_cascade_policy_id: str, request_body: PostMetadataCascadePoliciesIdApplyRequestBodyArg):
+    def create_metadata_cascade_policy_apply(self, metadata_cascade_policy_id: str, request_body: CreateMetadataCascadePolicyApplyRequestBodyArg):
         """
         Force the metadata on a folder with a metadata cascade policy to be applied to
         

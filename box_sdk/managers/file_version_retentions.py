@@ -16,6 +16,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -62,7 +64,7 @@ class GetFileVersionRetentionsOptionsArg(BaseObject):
         self.marker = marker
 
 class FileVersionRetentionsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
     def get_file_version_retentions(self, options: GetFileVersionRetentionsOptionsArg = None) -> FileVersionRetentions:
@@ -73,7 +75,7 @@ class FileVersionRetentionsManager(BaseObject):
             options = GetFileVersionRetentionsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params={'file_id': options.fileId, 'file_version_id': options.fileVersionId, 'policy_id': options.policyId, 'disposition_action': options.dispositionAction, 'disposition_before': options.dispositionBefore, 'disposition_after': options.dispositionAfter, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return FileVersionRetentions.from_dict(json.loads(response.text))
-    def get_file_version_retentions_id(self, file_version_retention_id: str) -> FileVersionRetention:
+    def get_file_version_retention_by_id(self, file_version_retention_id: str) -> FileVersionRetention:
         """
         Returns information about a file version retention.
         :param file_version_retention_id: The ID of the file version retention

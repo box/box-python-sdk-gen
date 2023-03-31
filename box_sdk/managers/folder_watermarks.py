@@ -14,39 +14,41 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField(str, Enum):
+class UpdateFolderWatermarkRequestBodyArgWatermarkFieldImprintField(str, Enum):
     DEFAULT = 'default'
 
-class PutFoldersIdWatermarkRequestBodyArgWatermarkField(BaseObject):
-    def __init__(self, imprint: PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField, **kwargs):
+class UpdateFolderWatermarkRequestBodyArgWatermarkField(BaseObject):
+    def __init__(self, imprint: UpdateFolderWatermarkRequestBodyArgWatermarkFieldImprintField, **kwargs):
         """
         :param imprint: The type of watermark to apply.
             Currently only supports one option.
-        :type imprint: PutFoldersIdWatermarkRequestBodyArgWatermarkFieldImprintField
+        :type imprint: UpdateFolderWatermarkRequestBodyArgWatermarkFieldImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
 
-class PutFoldersIdWatermarkRequestBodyArg(BaseObject):
-    def __init__(self, watermark: PutFoldersIdWatermarkRequestBodyArgWatermarkField, **kwargs):
+class UpdateFolderWatermarkRequestBodyArg(BaseObject):
+    def __init__(self, watermark: UpdateFolderWatermarkRequestBodyArgWatermarkField, **kwargs):
         """
         :param watermark: The watermark to imprint on the folder
-        :type watermark: PutFoldersIdWatermarkRequestBodyArgWatermarkField
+        :type watermark: UpdateFolderWatermarkRequestBodyArgWatermarkField
         """
         super().__init__(**kwargs)
         self.watermark = watermark
 
 class FolderWatermarksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folders_id_watermark(self, folder_id: str) -> Watermark:
+    def get_folder_watermark(self, folder_id: str) -> Watermark:
         """
         Retrieve the watermark for a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -62,7 +64,7 @@ class FolderWatermarksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='GET', auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
-    def put_folders_id_watermark(self, folder_id: str, request_body: PutFoldersIdWatermarkRequestBodyArg) -> Watermark:
+    def update_folder_watermark(self, folder_id: str, request_body: UpdateFolderWatermarkRequestBodyArg) -> Watermark:
         """
         Applies or update a watermark on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -78,7 +80,7 @@ class FolderWatermarksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
-    def delete_folders_id_watermark(self, folder_id: str):
+    def delete_folder_watermark(self, folder_id: str):
         """
         Removes the watermark from a folder.
         :param folder_id: The unique identifier that represent a folder.

@@ -12,13 +12,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFilesIdTrashOptionsArg(BaseObject):
+class GetFileTrashOptionsArg(BaseObject):
     def __init__(self, fields: Union[None, str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
@@ -35,10 +37,10 @@ class GetFilesIdTrashOptionsArg(BaseObject):
         self.fields = fields
 
 class TrashedFilesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_trash(self, file_id: str, options: GetFilesIdTrashOptionsArg = None) -> TrashFile:
+    def get_file_trash(self, file_id: str, options: GetFileTrashOptionsArg = None) -> TrashFile:
         """
         Retrieves a file that has been moved to the trash.
         
@@ -75,10 +77,10 @@ class TrashedFilesManager(BaseObject):
         :type file_id: str
         """
         if options is None:
-            options = GetFilesIdTrashOptionsArg()
+            options = GetFileTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
         return TrashFile.from_dict(json.loads(response.text))
-    def delete_files_id_trash(self, file_id: str):
+    def delete_file_trash(self, file_id: str):
         """
         Permanently deletes a file that is in the trash.
         

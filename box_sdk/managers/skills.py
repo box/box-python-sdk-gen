@@ -26,13 +26,15 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg(BaseObject):
+class CreateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
     def __init__(self, cards: List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]], **kwargs):
         """
         :param cards: A list of Box Skill cards to apply to this file.
@@ -41,14 +43,14 @@ class PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.cards = cards
 
-class PutSkillInvocationsIdRequestBodyArgStatusField(str, Enum):
+class UpdateSkillInvocationByIdRequestBodyArgStatusField(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
     TRANSIENT_FAILURE = 'transient_failure'
     PERMANENT_FAILURE = 'permanent_failure'
 
-class PutSkillInvocationsIdRequestBodyArgMetadataField(BaseObject):
+class UpdateSkillInvocationByIdRequestBodyArgMetadataField(BaseObject):
     def __init__(self, cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
         :param cards: A list of Box Skill cards to apply to this file.
@@ -57,14 +59,14 @@ class PutSkillInvocationsIdRequestBodyArgMetadataField(BaseObject):
         super().__init__(**kwargs)
         self.cards = cards
 
-class PutSkillInvocationsIdRequestBodyArgFileFieldTypeField(str, Enum):
+class UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField(str, Enum):
     FILE = 'file'
 
-class PutSkillInvocationsIdRequestBodyArgFileField(BaseObject):
-    def __init__(self, type: Union[None, PutSkillInvocationsIdRequestBodyArgFileFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+class UpdateSkillInvocationByIdRequestBodyArgFileField(BaseObject):
+    def __init__(self, type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
         """
         :param type: `file`
-        :type type: Union[None, PutSkillInvocationsIdRequestBodyArgFileFieldTypeField], optional
+        :type type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField], optional
         :param id: The ID of the file
         :type id: Union[None, str], optional
         """
@@ -72,14 +74,14 @@ class PutSkillInvocationsIdRequestBodyArgFileField(BaseObject):
         self.type = type
         self.id = id
 
-class PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField(str, Enum):
+class UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField(str, Enum):
     FILE_VERSION = 'file_version'
 
-class PutSkillInvocationsIdRequestBodyArgFileVersionField(BaseObject):
-    def __init__(self, type: Union[None, PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+class UpdateSkillInvocationByIdRequestBodyArgFileVersionField(BaseObject):
+    def __init__(self, type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
         """
         :param type: `file_version`
-        :type type: Union[None, PutSkillInvocationsIdRequestBodyArgFileVersionFieldTypeField], optional
+        :type type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField], optional
         :param id: The ID of the file version
         :type id: Union[None, str], optional
         """
@@ -87,7 +89,7 @@ class PutSkillInvocationsIdRequestBodyArgFileVersionField(BaseObject):
         self.type = type
         self.id = id
 
-class PutSkillInvocationsIdRequestBodyArgUsageField(BaseObject):
+class UpdateSkillInvocationByIdRequestBodyArgUsageField(BaseObject):
     def __init__(self, unit: Union[None, str] = None, value: Union[None, int] = None, **kwargs):
         """
         :param unit: `file`
@@ -99,23 +101,23 @@ class PutSkillInvocationsIdRequestBodyArgUsageField(BaseObject):
         self.unit = unit
         self.value = value
 
-class PutSkillInvocationsIdRequestBodyArg(BaseObject):
-    def __init__(self, status: PutSkillInvocationsIdRequestBodyArgStatusField, metadata: PutSkillInvocationsIdRequestBodyArgMetadataField, file: PutSkillInvocationsIdRequestBodyArgFileField, file_version: Union[None, PutSkillInvocationsIdRequestBodyArgFileVersionField] = None, usage: Union[None, PutSkillInvocationsIdRequestBodyArgUsageField] = None, **kwargs):
+class UpdateSkillInvocationByIdRequestBodyArg(BaseObject):
+    def __init__(self, status: UpdateSkillInvocationByIdRequestBodyArgStatusField, metadata: UpdateSkillInvocationByIdRequestBodyArgMetadataField, file: UpdateSkillInvocationByIdRequestBodyArgFileField, file_version: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionField] = None, usage: Union[None, UpdateSkillInvocationByIdRequestBodyArgUsageField] = None, **kwargs):
         """
         :param status: Defines the status of this invocation. Set this to `success` when setting Skill cards.
-        :type status: PutSkillInvocationsIdRequestBodyArgStatusField
+        :type status: UpdateSkillInvocationByIdRequestBodyArgStatusField
         :param metadata: The metadata to set for this skill. This is a list of
             Box Skills cards. These cards will overwrite any existing Box
             skill cards on the file.
-        :type metadata: PutSkillInvocationsIdRequestBodyArgMetadataField
+        :type metadata: UpdateSkillInvocationByIdRequestBodyArgMetadataField
         :param file: The file to assign the cards to.
-        :type file: PutSkillInvocationsIdRequestBodyArgFileField
+        :type file: UpdateSkillInvocationByIdRequestBodyArgFileField
         :param file_version: The optional file version to assign the cards to.
-        :type file_version: Union[None, PutSkillInvocationsIdRequestBodyArgFileVersionField], optional
+        :type file_version: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionField], optional
         :param usage: A descriptor that defines what items are affected by this call.
             Set this to the default values when setting a card to a `success`
             state, and leave it out in most other situations.
-        :type usage: Union[None, PutSkillInvocationsIdRequestBodyArgUsageField], optional
+        :type usage: Union[None, UpdateSkillInvocationByIdRequestBodyArgUsageField], optional
         """
         super().__init__(**kwargs)
         self.status = status
@@ -125,10 +127,10 @@ class PutSkillInvocationsIdRequestBodyArg(BaseObject):
         self.usage = usage
 
 class SkillsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_files_id_metadata_global_box_skills_cards(self, file_id: str) -> SkillCardsMetadata:
+    def get_file_metadata_global_box_skills_cards(self, file_id: str) -> SkillCardsMetadata:
         """
         List the Box Skills metadata cards that are attached to a file.
         :param file_id: The unique identifier that represents a file.
@@ -142,7 +144,7 @@ class SkillsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', auth=self.auth))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def post_files_id_metadata_global_box_skills_cards(self, file_id: str, request_body: PostFilesIdMetadataGlobalBoxSkillsCardsRequestBodyArg) -> SkillCardsMetadata:
+    def create_file_metadata_global_box_skills_card(self, file_id: str, request_body: CreateFileMetadataGlobalBoxSkillsCardRequestBodyArg) -> SkillCardsMetadata:
         """
         Applies one or more Box Skills metadata cards to a file.
         :param file_id: The unique identifier that represents a file.
@@ -156,7 +158,7 @@ class SkillsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def delete_files_id_metadata_global_box_skills_cards(self, file_id: str):
+    def delete_file_metadata_global_box_skills_card(self, file_id: str):
         """
         Removes any Box Skills cards metadata from a file.
         :param file_id: The unique identifier that represents a file.
@@ -170,7 +172,7 @@ class SkillsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def put_skill_invocations_id(self, skill_id: str, request_body: PutSkillInvocationsIdRequestBodyArg):
+    def update_skill_invocation_by_id(self, skill_id: str, request_body: UpdateSkillInvocationByIdRequestBodyArg):
         """
         An alternative method that can be used to overwrite and update all Box Skill
         

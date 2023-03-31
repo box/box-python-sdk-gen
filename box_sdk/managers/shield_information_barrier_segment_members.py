@@ -18,6 +18,8 @@ from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
 
+from box_sdk.jwt_auth import JWTAuth
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -38,33 +40,33 @@ class GetShieldInformationBarrierSegmentMembersOptionsArg(BaseObject):
         self.marker = marker
         self.limit = limit
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArgTypeField(str, Enum):
+class CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+class CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
+class CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField(BaseObject):
+    def __init__(self, id: Union[None, str] = None, type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
         """
         :param id: The ID reference of the
             requesting shield information barrier segment.
         :type id: Union[None, str], optional
         :param type: The type of the shield barrier segment for this member.
-        :type type: Union[None, PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentFieldTypeField], optional
+        :type type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class PostShieldInformationBarrierSegmentMembersRequestBodyArg(BaseObject):
-    def __init__(self, shield_information_barrier_segment: PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentField, user: UserBase, type: Union[None, PostShieldInformationBarrierSegmentMembersRequestBodyArgTypeField] = None, shield_information_barrier: Union[None, ShieldInformationBarrierBase] = None, **kwargs):
+class CreateShieldInformationBarrierSegmentMemberRequestBodyArg(BaseObject):
+    def __init__(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField, user: UserBase, type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField] = None, shield_information_barrier: Union[None, ShieldInformationBarrierBase] = None, **kwargs):
         """
         :param shield_information_barrier_segment: The `type` and `id` of the
             requested shield information barrier segment.
-        :type shield_information_barrier_segment: PostShieldInformationBarrierSegmentMembersRequestBodyArgShieldInformationBarrierSegmentField
+        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField
         :param type: -| A type of the shield barrier segment member.
-        :type type: Union[None, PostShieldInformationBarrierSegmentMembersRequestBodyArgTypeField], optional
+        :type type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.shield_information_barrier_segment = shield_information_barrier_segment
@@ -73,10 +75,10 @@ class PostShieldInformationBarrierSegmentMembersRequestBodyArg(BaseObject):
         self.shield_information_barrier = shield_information_barrier
 
 class ShieldInformationBarrierSegmentMembersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth], **kwargs):
+    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shield_information_barrier_segment_members_id(self, shield_information_barrier_segment_member_id: str) -> ShieldInformationBarrierSegmentMember:
+    def get_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str) -> ShieldInformationBarrierSegmentMember:
         """
         Retrieves a shield information barrier
         
@@ -88,7 +90,7 @@ class ShieldInformationBarrierSegmentMembersManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members/', shield_information_barrier_segment_member_id]), FetchOptions(method='GET', auth=self.auth))
         return ShieldInformationBarrierSegmentMember.from_dict(json.loads(response.text))
-    def delete_shield_information_barrier_segment_members_id(self, shield_information_barrier_segment_member_id: str):
+    def delete_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str):
         """
         Deletes a shield information barrier
         
@@ -114,7 +116,7 @@ class ShieldInformationBarrierSegmentMembersManager(BaseObject):
             options = GetShieldInformationBarrierSegmentMembersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params={'shield_information_barrier_segment_id': shield_information_barrier_segment_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth))
         return None
-    def post_shield_information_barrier_segment_members(self, request_body: PostShieldInformationBarrierSegmentMembersRequestBodyArg) -> ShieldInformationBarrierSegmentMember:
+    def create_shield_information_barrier_segment_member(self, request_body: CreateShieldInformationBarrierSegmentMemberRequestBodyArg) -> ShieldInformationBarrierSegmentMember:
         """
         Creates a new shield information barrier segment member.
         """
