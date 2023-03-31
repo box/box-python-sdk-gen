@@ -20,7 +20,7 @@ from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class CreateFolderMetadataEnterpriseSecurityClassification6VmVochwUWoRequestBodyArg(BaseObject):
+class CreateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
     def __init__(self, box_security_classification_key: Union[None, str] = None, **kwargs):
         """
         :param box_security_classification_key: The name of the classification to apply to this folder.
@@ -65,7 +65,7 @@ class FolderClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='GET', auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
-    def create_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, folder_id: str, request_body: CreateFolderMetadataEnterpriseSecurityClassification6VmVochwUWoRequestBodyArg) -> Classification:
+    def create_folder_metadata_enterprise_security_classification(self, folder_id: str, request_body: CreateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg) -> Classification:
         """
         Adds a classification to a folder by specifying the label of the
         
@@ -93,7 +93,7 @@ class FolderClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
-    def delete_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, folder_id: str):
+    def delete_folder_metadata_enterprise_security_classification(self, folder_id: str):
         """
         Removes any classifications from a folder.
         

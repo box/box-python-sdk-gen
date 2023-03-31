@@ -141,7 +141,7 @@ class ClassificationsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_metadata_template_enterprise_security_classification_6_vm_vochw_u_wo_schema(self) -> ClassificationTemplate:
+    def get_metadata_template_enterprise_security_classification_schema(self) -> ClassificationTemplate:
         """
         Retrieves the classification metadata template and lists all the
         
@@ -159,7 +159,7 @@ class ClassificationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', auth=self.auth))
         return ClassificationTemplate.from_dict(json.loads(response.text))
-    def delete_metadata_template_enterprise_security_classification_6_vm_vochw_u_wo_schema(self):
+    def delete_metadata_template_enterprise_security_classification_schema(self):
         """
         Delete all classifications by deleting the classification
         
