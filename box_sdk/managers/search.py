@@ -2,6 +2,8 @@ from enum import Enum
 
 from typing import Union
 
+from typing import List
+
 from box_sdk.base_object import BaseObject
 
 import json
@@ -58,7 +60,7 @@ class GetSearchOptionsArgDirectionField(str, Enum):
     ASC = 'ASC'
 
 class GetSearchOptionsArg(BaseObject):
-    def __init__(self, query: Union[None, str] = None, scope: Union[None, GetSearchOptionsArgScopeField] = None, file_extensions: Union[None, str] = None, created_at_range: Union[None, str] = None, updated_at_range: Union[None, str] = None, size_range: Union[None, str] = None, owner_user_ids: Union[None, str] = None, recent_updater_user_ids: Union[None, str] = None, ancestor_folder_ids: Union[None, str] = None, content_types: Union[None, str] = None, type: Union[None, GetSearchOptionsArgTypeField] = None, trash_content: Union[None, GetSearchOptionsArgTrashContentField] = None, mdfilters: Union[None, str] = None, sort: Union[None, GetSearchOptionsArgSortField] = None, direction: Union[None, GetSearchOptionsArgDirectionField] = None, limit: Union[None, int] = None, include_recent_shared_links: Union[None, bool] = None, fields: Union[None, str] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, query: Union[None, str] = None, scope: Union[None, GetSearchOptionsArgScopeField] = None, file_extensions: Union[None, str] = None, created_at_range: Union[None, str] = None, updated_at_range: Union[None, str] = None, size_range: Union[None, str] = None, owner_user_ids: Union[None, str] = None, recent_updater_user_ids: Union[None, str] = None, ancestor_folder_ids: Union[None, str] = None, content_types: Union[None, str] = None, type: Union[None, GetSearchOptionsArgTypeField] = None, trash_content: Union[None, GetSearchOptionsArgTrashContentField] = None, mdfilters: Union[None, str] = None, sort: Union[None, GetSearchOptionsArgSortField] = None, direction: Union[None, GetSearchOptionsArgDirectionField] = None, limit: Union[None, int] = None, include_recent_shared_links: Union[None, bool] = None, fields: Union[None, str] = None, offset: Union[None, int] = None, deleted_user_ids: Union[None, List[str]] = None, deleted_at_range: Union[None, List[str]] = None, **kwargs):
         """
         :param query: The string to search for. This query is matched against item names,
             descriptions, text content of files, and various other fields of
@@ -86,7 +88,7 @@ class GetSearchOptionsArg(BaseObject):
               For example, a search for `marketing AND NOT BoxWorks` returns a result
               that has only `marketing` within its text. Results containing
               `BoxWorks` are omitted.
-            Please note that we do not support lower case (that is,
+            We do not support lower case (that is,
             `and`, `or`, and `not`) or mixed case (that is, `And`, `Or`, and `Not`)
             operators.
             This field is required unless the `mdfilters` parameter is defined.
@@ -132,7 +134,7 @@ class GetSearchOptionsArg(BaseObject):
         :param owner_user_ids: Limits the search results to any items that are owned
             by the given list of owners, defined as a list of comma separated
             user IDs.
-            Please note that the items still need to be owned or shared with
+            The items still need to be owned or shared with
             the currently authenticated user for them to show up in the search
             results. If the user does not have access to any files owned by any of
             the users an empty result set will be returned.
@@ -143,7 +145,7 @@ class GetSearchOptionsArg(BaseObject):
         :param recent_updater_user_ids: Limits the search results to any items that have been updated
             by the given list of users, defined as a list of comma separated
             user IDs.
-            Please note that the items still need to be owned or shared with
+            The items still need to be owned or shared with
             the currently authenticated user for them to show up in the search
             results. If the user does not have access to any files owned by any of
             the users an empty result set will be returned.
@@ -154,7 +156,7 @@ class GetSearchOptionsArg(BaseObject):
             of folder IDs.
             Search results will also include items within any subfolders
             of those ancestor folders.
-            Please note that the folders still need to be owned or shared with
+            The folders still need to be owned or shared with
             the currently authenticated user. If the folder is not accessible by this
             user, or it does not exist, a `HTTP 404` error code will be returned
             instead.
@@ -217,7 +219,7 @@ class GetSearchOptionsArg(BaseObject):
         :type limit: Union[None, int], optional
         :param include_recent_shared_links: Defines whether the search results should include any items
             that the user recently accessed through a shared link.
-            Please note that when this parameter has been set to true,
+            When this parameter has been set to true,
             the format of the response of this API changes to return
             a list of [Search Results with
             Shared Links](r://search_results_with_shared_links)
@@ -236,6 +238,29 @@ class GetSearchOptionsArg(BaseObject):
             exceeding 10000 will be rejected
             with a 400 response.
         :type offset: Union[None, int], optional
+        :param deleted_user_ids: Limits the search results to items that were deleted by the given
+            list of users, defined as a list of comma separated user IDs.
+            The `trash_content` parameter needs to be set to `trashed_only`.
+            If searching in trash is not performed, an empty result set
+            is returned. The items need to be owned or shared with
+            the currently authenticated user for them to show up in the search
+            results.
+            If the user does not have access to any files owned by
+            any of the users, an empty result set is returned.
+            Data available from 2023-02-01 onwards.
+        :type deleted_user_ids: Union[None, List[str]], optional
+        :param deleted_at_range: Limits the search results to any items deleted within a given
+            date range.
+            Date ranges are defined as comma separated RFC3339 timestamps.
+            If the the start date is omitted (`2014-05-17T13:35:01-07:00`),
+            anything deleted before the end date will be returned.
+            If the end date is omitted (`2014-05-15T13:35:01-07:00`),
+            the current date will be used as the end date instead.
+            The `trash_content` parameter needs to be set to `trashed_only`.
+            If searching in trash is not performed, then an empty result
+            is returned.
+            Data available from 2023-02-01 onwards.
+        :type deleted_at_range: Union[None, List[str]], optional
         """
         super().__init__(**kwargs)
         self.query = query
@@ -257,6 +282,8 @@ class GetSearchOptionsArg(BaseObject):
         self.include_recent_shared_links = include_recent_shared_links
         self.fields = fields
         self.offset = offset
+        self.deleted_user_ids = deleted_user_ids
+        self.deleted_at_range = deleted_at_range
 
 class SearchManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
@@ -301,5 +328,5 @@ class SearchManager(BaseObject):
         """
         if options is None:
             options = GetSearchOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params={'query': options.query, 'scope': options.scope, 'file_extensions': options.fileExtensions, 'created_at_range': options.createdAtRange, 'updated_at_range': options.updatedAtRange, 'size_range': options.sizeRange, 'owner_user_ids': options.ownerUserIds, 'recent_updater_user_ids': options.recentUpdaterUserIds, 'ancestor_folder_ids': options.ancestorFolderIds, 'content_types': options.contentTypes, 'type': options.type, 'trash_content': options.trashContent, 'mdfilters': options.mdfilters, 'sort': options.sort, 'direction': options.direction, 'limit': options.limit, 'include_recent_shared_links': options.includeRecentSharedLinks, 'fields': options.fields, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params={'query': options.query, 'scope': options.scope, 'file_extensions': options.fileExtensions, 'created_at_range': options.createdAtRange, 'updated_at_range': options.updatedAtRange, 'size_range': options.sizeRange, 'owner_user_ids': options.ownerUserIds, 'recent_updater_user_ids': options.recentUpdaterUserIds, 'ancestor_folder_ids': options.ancestorFolderIds, 'content_types': options.contentTypes, 'type': options.type, 'trash_content': options.trashContent, 'mdfilters': options.mdfilters, 'sort': options.sort, 'direction': options.direction, 'limit': options.limit, 'include_recent_shared_links': options.includeRecentSharedLinks, 'fields': options.fields, 'offset': options.offset, 'deleted_user_ids': options.deletedUserIds, 'deleted_at_range': options.deletedAtRange}, auth=self.auth))
         return None
