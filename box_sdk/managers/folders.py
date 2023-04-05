@@ -8,7 +8,7 @@ from typing import List
 
 import json
 
-from box_sdk.schemas import Folder
+from box_sdk.schemas import FolderFull
 
 from box_sdk.schemas import ClientError
 
@@ -497,7 +497,7 @@ class FoldersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_folder_by_id(self, folder_id: str, options: GetFolderByIdOptionsArg = None) -> Folder:
+    def get_folder_by_id(self, folder_id: str, options: GetFolderByIdOptionsArg = None) -> FolderFull:
         """
         Retrieves details for a folder, including the first 100 entries
         
@@ -523,7 +523,7 @@ class FoldersManager(BaseObject):
         if options is None:
             options = GetFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi}, auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
+        return FolderFull.from_dict(json.loads(response.text))
     def restore_folder_from_trash(self, folder_id: str, request_body: RestoreFolderFromTrashRequestBodyArg, options: RestoreFolderFromTrashOptionsArg = None) -> TrashFolderRestored:
         """
         Restores a folder that has been moved to the trash.
@@ -566,7 +566,7 @@ class FoldersManager(BaseObject):
             options = RestoreFolderFromTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFolderRestored.from_dict(json.loads(response.text))
-    def update_folder_by_id(self, folder_id: str, request_body: UpdateFolderByIdRequestBodyArg, options: UpdateFolderByIdOptionsArg = None) -> Folder:
+    def update_folder_by_id(self, folder_id: str, request_body: UpdateFolderByIdRequestBodyArg, options: UpdateFolderByIdOptionsArg = None) -> FolderFull:
         """
         Updates a folder. This can be also be used to move the folder,
         
@@ -586,7 +586,7 @@ class FoldersManager(BaseObject):
         if options is None:
             options = UpdateFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
+        return FolderFull.from_dict(json.loads(response.text))
     def delete_folder_by_id(self, folder_id: str, options: DeleteFolderByIdOptionsArg = None):
         """
         Deletes a folder, either permanently or by moving it to
@@ -635,15 +635,15 @@ class FoldersManager(BaseObject):
             options = GetFolderItemsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params={'fields': options.fields, 'usemarker': options.usemarker, 'marker': options.marker, 'offset': options.offset, 'limit': options.limit, 'sort': options.sort, 'direction': options.direction}, headers={'boxapi': options.boxapi}, auth=self.auth))
         return Items.from_dict(json.loads(response.text))
-    def create_folder(self, request_body: CreateFolderRequestBodyArg, options: CreateFolderOptionsArg = None) -> Folder:
+    def create_folder(self, request_body: CreateFolderRequestBodyArg, options: CreateFolderOptionsArg = None) -> FolderFull:
         """
         Creates a new empty folder within the specified parent folder.
         """
         if options is None:
             options = CreateFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
-    def copy_folder(self, folder_id: str, request_body: CopyFolderRequestBodyArg, options: CopyFolderOptionsArg = None) -> Folder:
+        return FolderFull.from_dict(json.loads(response.text))
+    def copy_folder(self, folder_id: str, request_body: CopyFolderRequestBodyArg, options: CopyFolderOptionsArg = None) -> FolderFull:
         """
         Creates a copy of a folder within a destination folder.
         
@@ -662,4 +662,4 @@ class FoldersManager(BaseObject):
         if options is None:
             options = CopyFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
+        return FolderFull.from_dict(json.loads(response.text))

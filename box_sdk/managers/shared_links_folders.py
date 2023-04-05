@@ -6,7 +6,7 @@ from enum import Enum
 
 import json
 
-from box_sdk.schemas import Folder
+from box_sdk.schemas import FolderFull
 
 from box_sdk.schemas import ClientError
 
@@ -207,7 +207,7 @@ class SharedLinksFoldersManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_shared_item_folders(self, boxapi: str, options: GetSharedItemFoldersOptionsArg = None) -> Folder:
+    def get_shared_item_folders(self, boxapi: str, options: GetSharedItemFoldersOptionsArg = None) -> FolderFull:
         """
         Return the folder represented by a shared link.
         
@@ -232,8 +232,8 @@ class SharedLinksFoldersManager(BaseObject):
         if options is None:
             options = GetSharedItemFoldersOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
-    def get_folder_get_shared_link(self, folder_id: str, fields: str) -> Folder:
+        return FolderFull.from_dict(json.loads(response.text))
+    def get_folder_get_shared_link(self, folder_id: str, fields: str) -> FolderFull:
         """
         Gets the information for a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -252,8 +252,8 @@ class SharedLinksFoldersManager(BaseObject):
         :type fields: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
-    def update_folder_add_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderAddSharedLinkRequestBodyArg) -> Folder:
+        return FolderFull.from_dict(json.loads(response.text))
+    def update_folder_add_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderAddSharedLinkRequestBodyArg) -> FolderFull:
         """
         Adds a shared link to a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -272,8 +272,8 @@ class SharedLinksFoldersManager(BaseObject):
         :type fields: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
-    def update_folder_update_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderUpdateSharedLinkRequestBodyArg) -> Folder:
+        return FolderFull.from_dict(json.loads(response.text))
+    def update_folder_update_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderUpdateSharedLinkRequestBodyArg) -> FolderFull:
         """
         Updates a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -292,8 +292,8 @@ class SharedLinksFoldersManager(BaseObject):
         :type fields: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
-    def update_folder_remove_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderRemoveSharedLinkRequestBodyArg) -> Folder:
+        return FolderFull.from_dict(json.loads(response.text))
+    def update_folder_remove_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderRemoveSharedLinkRequestBodyArg) -> FolderFull:
         """
         Removes a shared link from a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -312,4 +312,4 @@ class SharedLinksFoldersManager(BaseObject):
         :type fields: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
+        return FolderFull.from_dict(json.loads(response.text))

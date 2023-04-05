@@ -12,6 +12,8 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Group
 
+from box_sdk.schemas import GroupFull
+
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -247,7 +249,7 @@ class GroupsManager(BaseObject):
             options = CreateGroupOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return Group.from_dict(json.loads(response.text))
-    def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> Group:
+    def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> GroupFull:
         """
         Retrieves information about a group. Only members of this
         
@@ -263,8 +265,8 @@ class GroupsManager(BaseObject):
         if options is None:
             options = GetGroupByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
-        return Group.from_dict(json.loads(response.text))
-    def update_group_by_id(self, group_id: str, request_body: UpdateGroupByIdRequestBodyArg, options: UpdateGroupByIdOptionsArg = None) -> Group:
+        return GroupFull.from_dict(json.loads(response.text))
+    def update_group_by_id(self, group_id: str, request_body: UpdateGroupByIdRequestBodyArg, options: UpdateGroupByIdOptionsArg = None) -> GroupFull:
         """
         Updates a specific group. Only admins of this
         
@@ -280,7 +282,7 @@ class GroupsManager(BaseObject):
         if options is None:
             options = UpdateGroupByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Group.from_dict(json.loads(response.text))
+        return GroupFull.from_dict(json.loads(response.text))
     def delete_group_by_id(self, group_id: str):
         """
         Permanently deletes a group. Only users with

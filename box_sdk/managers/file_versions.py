@@ -10,7 +10,7 @@ from box_sdk.schemas import FileVersions
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import FileVersion
+from box_sdk.schemas import FileVersionFull
 
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
@@ -146,7 +146,7 @@ class FileVersionsManager(BaseObject):
             options = GetFileVersionsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return FileVersions.from_dict(json.loads(response.text))
-    def get_file_version_by_id(self, file_id: str, file_version_id: str, options: GetFileVersionByIdOptionsArg = None) -> FileVersion:
+    def get_file_version_by_id(self, file_id: str, file_version_id: str, options: GetFileVersionByIdOptionsArg = None) -> FileVersionFull:
         """
         Retrieve a specific version of a file.
         
@@ -167,8 +167,8 @@ class FileVersionsManager(BaseObject):
         if options is None:
             options = GetFileVersionByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
-        return FileVersion.from_dict(json.loads(response.text))
-    def update_file_version_by_id(self, file_id: str, file_version_id: str, request_body: UpdateFileVersionByIdRequestBodyArg) -> FileVersion:
+        return FileVersionFull.from_dict(json.loads(response.text))
+    def update_file_version_by_id(self, file_id: str, file_version_id: str, request_body: UpdateFileVersionByIdRequestBodyArg) -> FileVersionFull:
         """
         Restores a specific version of a file after it was deleted.
         
@@ -193,7 +193,7 @@ class FileVersionsManager(BaseObject):
         :type file_version_id: str
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return FileVersion.from_dict(json.loads(response.text))
+        return FileVersionFull.from_dict(json.loads(response.text))
     def delete_file_version_by_id(self, file_id: str, file_version_id: str, options: DeleteFileVersionByIdOptionsArg = None):
         """
         Move a file version to the trash.
@@ -216,7 +216,7 @@ class FileVersionsManager(BaseObject):
             options = DeleteFileVersionByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
-    def promote_file_version(self, file_id: str, request_body: PromoteFileVersionRequestBodyArg, options: PromoteFileVersionOptionsArg = None) -> FileVersion:
+    def promote_file_version(self, file_id: str, request_body: PromoteFileVersionRequestBodyArg, options: PromoteFileVersionOptionsArg = None) -> FileVersionFull:
         """
         Promote a specific version of a file.
         
@@ -264,4 +264,4 @@ class FileVersionsManager(BaseObject):
         if options is None:
             options = PromoteFileVersionOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return FileVersion.from_dict(json.loads(response.text))
+        return FileVersionFull.from_dict(json.loads(response.text))
