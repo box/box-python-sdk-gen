@@ -8,7 +8,7 @@ from typing import List
 
 import json
 
-from box_sdk.schemas import File
+from box_sdk.schemas import FileFull
 
 from box_sdk.schemas import ClientError
 
@@ -358,7 +358,7 @@ class FilesManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def get_file_by_id(self, file_id: str, options: GetFileByIdOptionsArg = None) -> File:
+    def get_file_by_id(self, file_id: str, options: GetFileByIdOptionsArg = None) -> FileFull:
         """
         Retrieves the details about a file.
         :param file_id: The unique identifier that represents a file.
@@ -373,7 +373,7 @@ class FilesManager(BaseObject):
         if options is None:
             options = GetFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi, 'x-rep-hints': options.x_rep_hints}, auth=self.auth))
-        return File.from_dict(json.loads(response.text))
+        return FileFull.from_dict(json.loads(response.text))
     def restore_file_from_trash(self, file_id: str, request_body: RestoreFileFromTrashRequestBodyArg, options: RestoreFileFromTrashOptionsArg = None) -> TrashFileRestored:
         """
         Restores a file that has been moved to the trash.
@@ -396,7 +396,7 @@ class FilesManager(BaseObject):
             options = RestoreFileFromTrashOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return TrashFileRestored.from_dict(json.loads(response.text))
-    def update_file_by_id(self, file_id: str, request_body: UpdateFileByIdRequestBodyArg, options: UpdateFileByIdOptionsArg = None) -> File:
+    def update_file_by_id(self, file_id: str, request_body: UpdateFileByIdRequestBodyArg, options: UpdateFileByIdOptionsArg = None) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,
         
@@ -414,7 +414,7 @@ class FilesManager(BaseObject):
         if options is None:
             options = UpdateFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return File.from_dict(json.loads(response.text))
+        return FileFull.from_dict(json.loads(response.text))
     def delete_file_by_id(self, file_id: str, options: DeleteFileByIdOptionsArg = None):
         """
         Deletes a file, either permanently or by moving it to
@@ -440,7 +440,7 @@ class FilesManager(BaseObject):
             options = DeleteFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
         return response.content
-    def copy_file(self, file_id: str, request_body: CopyFileRequestBodyArg, options: CopyFileOptionsArg = None) -> File:
+    def copy_file(self, file_id: str, request_body: CopyFileRequestBodyArg, options: CopyFileOptionsArg = None) -> FileFull:
         """
         Creates a copy of a file.
         :param file_id: The unique identifier that represents a file.
@@ -455,7 +455,7 @@ class FilesManager(BaseObject):
         if options is None:
             options = CopyFileOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return File.from_dict(json.loads(response.text))
+        return FileFull.from_dict(json.loads(response.text))
     def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, options: GetFileThumbnailByIdOptionsArg = None):
         """
         Retrieves a thumbnail, or smaller image representation, of a file.

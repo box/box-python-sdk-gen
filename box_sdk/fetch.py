@@ -1,8 +1,13 @@
+import math
+import random
+import time
 from dataclasses import dataclass
 from typing import Optional, Dict, TYPE_CHECKING, Union
 
 import requests
-from requests import Response
+from requests import Response, RequestException
+
+from .box_response import APIResponse
 
 if TYPE_CHECKING:
     from .ccg_auth import CCGAuth
@@ -10,6 +15,8 @@ if TYPE_CHECKING:
     from .jwt_auth import JWTAuth
 
 MAX_ATTEMPTS = 5
+_RETRY_RANDOMIZATION_FACTOR = 0.5
+_RETRY_BASE_INTERVAL = 1
 
 
 @dataclass
@@ -29,7 +36,7 @@ class FetchResponse:
 
 
 @dataclass
-class BoxAPIException(Exception):
+class APIException(Exception):
     status: int
     code: Optional[str] = None
     message: Optional[str] = None
@@ -60,34 +67,41 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
     params = __filter_entries_with_none_values(options.params)
 
-    network_response = session.request(
+    attempt_nr = 1
+    response: APIResponse = __make_request(
         method=options.method,
         url=url,
         headers=headers,
-        data=options.body,
-        params=params
+        body=options.body,
+        params=params,
+        attempt_nr=attempt_nr
     )
 
-    attempt_nr = 1
     while attempt_nr < MAX_ATTEMPTS:
-        if network_response.ok:
-            return FetchResponse(status=network_response.status_code, text=network_response.text, content=network_response.content)
+        if response.ok:
+            return FetchResponse(status=response.status_code, text=response.text, content=response.content)
 
-        if network_response.status_code == 401:
+        if response.reauthentication_needed:
             options.auth.refresh()
-        elif network_response.status_code != 429 and network_response.status_code < 500:
-            __raise_on_unsuccessful_request(network_response=network_response, url=url, method=options.method)
+        elif response.status_code != 429 and response.status_code < 500:
+            __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
 
-        network_response = session.request(
+        time.sleep(__get_retry_after_time(
+            attempt_number=attempt_nr,
+            retry_after_header=response.get_header('Retry-After', None)
+        ))
+
+        response: APIResponse = __make_request(
             method=options.method,
             url=url,
             headers=headers,
-            data=options.body,
-            params=params
+            body=options.body,
+            params=params,
+            attempt_nr=attempt_nr
         )
         attempt_nr += 1
 
-    __raise_on_unsuccessful_request(network_response=network_response, url=url, method=options.method)
+    __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
 
 
 def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> Dict[str, str]:
@@ -96,13 +110,46 @@ def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> D
     return {k: v for k, v in dictionary.items() if v is not None}
 
 
+def __make_request(method, url, headers, body, params, attempt_nr) -> APIResponse:
+    raised_exception = None
+    try:
+        network_response = session.request(
+            method=method,
+            url=url,
+            headers=headers,
+            data=body,
+            params=params
+        )
+        reauthentication_needed = network_response.status_code == 401
+    except RequestException as request_exc:
+        if attempt_nr > 1:
+            raise
+        raised_exception = request_exc
+        network_response = None
+
+        if 'EOF occurred in violation of protocol' in str(request_exc):
+            reauthentication_needed = True
+        elif any(text in str(request_exc) for text in [
+            'Connection aborted', 'Connection broken', 'Connection reset'
+        ]):
+            reauthentication_needed = False
+        else:
+            raise
+
+    return APIResponse(
+        network_response=network_response,
+        reauthentication_needed=reauthentication_needed,
+        raised_exception=raised_exception
+    )
+
+
 def __raise_on_unsuccessful_request(network_response, url, method) -> None:
     try:
         response_json = network_response.json()
     except ValueError:
         response_json = {}
 
-    raise BoxAPIException(
+    raise APIException(
         status=network_response.status_code,
         headers=network_response.headers,
         code=response_json.get('code', None) or response_json.get('error', None),
@@ -113,6 +160,19 @@ def __raise_on_unsuccessful_request(network_response, url, method) -> None:
         context_info=response_json.get('context_info', None),
         network_response=network_response
     )
+
+
+def __get_retry_after_time(attempt_number: int, retry_after_header: Optional[str] = None) -> float:
+    if retry_after_header is not None:
+        try:
+            return int(retry_after_header)
+        except (ValueError, TypeError):
+            pass
+    min_randomization = 1 - _RETRY_RANDOMIZATION_FACTOR
+    max_randomization = 1 + _RETRY_RANDOMIZATION_FACTOR
+    randomization = (random.uniform(0, 1) * (max_randomization - min_randomization)) + min_randomization
+    exponential = math.pow(2, attempt_number)
+    return exponential * _RETRY_BASE_INTERVAL * randomization
 
 
 session = requests.Session()

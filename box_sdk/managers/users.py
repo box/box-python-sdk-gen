@@ -16,6 +16,8 @@ from box_sdk.schemas import User
 
 from box_sdk.schemas import TrackingCode
 
+from box_sdk.schemas import UserFull
+
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -403,7 +405,7 @@ class UsersManager(BaseObject):
             options = CreateUserOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
         return User.from_dict(json.loads(response.text))
-    def get_user_me(self, options: GetUserMeOptionsArg = None) -> User:
+    def get_user_me(self, options: GetUserMeOptionsArg = None) -> UserFull:
         """
         Retrieves information about the user who is currently authenticated.
         
@@ -428,8 +430,8 @@ class UsersManager(BaseObject):
         if options is None:
             options = GetUserMeOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
-        return User.from_dict(json.loads(response.text))
-    def get_user_by_id(self, user_id: str, options: GetUserByIdOptionsArg = None) -> User:
+        return UserFull.from_dict(json.loads(response.text))
+    def get_user_by_id(self, user_id: str, options: GetUserByIdOptionsArg = None) -> UserFull:
         """
         Retrieves information about a user in the enterprise.
         
@@ -463,8 +465,8 @@ class UsersManager(BaseObject):
         if options is None:
             options = GetUserByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
-        return User.from_dict(json.loads(response.text))
-    def update_user_by_id(self, user_id: str, request_body: UpdateUserByIdRequestBodyArg, options: UpdateUserByIdOptionsArg = None) -> User:
+        return UserFull.from_dict(json.loads(response.text))
+    def update_user_by_id(self, user_id: str, request_body: UpdateUserByIdRequestBodyArg, options: UpdateUserByIdOptionsArg = None) -> UserFull:
         """
         Updates a managed or app user in an enterprise. This endpoint
         
@@ -480,7 +482,7 @@ class UsersManager(BaseObject):
         if options is None:
             options = UpdateUserByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return User.from_dict(json.loads(response.text))
+        return UserFull.from_dict(json.loads(response.text))
     def delete_user_by_id(self, user_id: str, options: DeleteUserByIdOptionsArg = None):
         """
         Deletes a user. By default this will fail if the user

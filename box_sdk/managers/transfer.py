@@ -4,7 +4,7 @@ from typing import Union
 
 import json
 
-from box_sdk.schemas import Folder
+from box_sdk.schemas import FolderFull
 
 from box_sdk.schemas import ClientError
 
@@ -63,7 +63,7 @@ class TransferManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def transfer_owned_folder(self, user_id: str, request_body: TransferOwnedFolderRequestBodyArg, options: TransferOwnedFolderOptionsArg = None) -> Folder:
+    def transfer_owned_folder(self, user_id: str, request_body: TransferOwnedFolderRequestBodyArg, options: TransferOwnedFolderOptionsArg = None) -> FolderFull:
         """
         Move all of the items (files, folders and workflows) owned by a user into
         
@@ -139,4 +139,4 @@ class TransferManager(BaseObject):
         if options is None:
             options = TransferOwnedFolderOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Folder.from_dict(json.loads(response.text))
+        return FolderFull.from_dict(json.loads(response.text))

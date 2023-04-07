@@ -10,6 +10,8 @@ from box_sdk.schemas import Comments
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.schemas import CommentFull
+
 from box_sdk.schemas import Comment
 
 from box_sdk.developer_token_auth import DeveloperTokenAuth
@@ -167,7 +169,7 @@ class CommentsManager(BaseObject):
             options = GetFileCommentsOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Comments.from_dict(json.loads(response.text))
-    def get_comment_by_id(self, comment_id: str, options: GetCommentByIdOptionsArg = None) -> Comment:
+    def get_comment_by_id(self, comment_id: str, options: GetCommentByIdOptionsArg = None) -> CommentFull:
         """
         Retrieves the message and metadata for a specific comment, as well
         
@@ -180,8 +182,8 @@ class CommentsManager(BaseObject):
         if options is None:
             options = GetCommentByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
-        return Comment.from_dict(json.loads(response.text))
-    def update_comment_by_id(self, comment_id: str, request_body: UpdateCommentByIdRequestBodyArg, options: UpdateCommentByIdOptionsArg = None) -> Comment:
+        return CommentFull.from_dict(json.loads(response.text))
+    def update_comment_by_id(self, comment_id: str, request_body: UpdateCommentByIdRequestBodyArg, options: UpdateCommentByIdOptionsArg = None) -> CommentFull:
         """
         Update the message of a comment.
         :param comment_id: The ID of the comment.
@@ -191,7 +193,7 @@ class CommentsManager(BaseObject):
         if options is None:
             options = UpdateCommentByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
-        return Comment.from_dict(json.loads(response.text))
+        return CommentFull.from_dict(json.loads(response.text))
     def delete_comment_by_id(self, comment_id: str):
         """
         Permanently deletes a comment.
