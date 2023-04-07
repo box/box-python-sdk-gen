@@ -6005,21 +6005,8 @@ class FileVersionLegalHolds(BaseObject):
         self.entries = entries
 
 class FolderFull(Folder):
-    def __init__(self, has_collaborations: bool, permissions: FolderFullPermissionsField, tags: List[str], can_non_owners_invite: bool, is_externally_owned: bool, is_collaboration_restricted_to_enterprise: bool, allowed_shared_link_access_levels: List[FolderFullAllowedSharedLinkAccessLevelsField], allowed_invitee_roles: List[FolderFullAllowedInviteeRolesField], watermark_info: FolderFullWatermarkInfoField, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, sync_state: Union[None, FolderFullSyncStateField] = None, metadata: Union[None, FolderFullMetadataField] = None, is_accessible_via_shared_link: Union[None, bool] = None, can_non_owners_view_collaborators: Union[None, bool] = None, classification: Union[None, FolderFullClassificationField] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, description: Union[None, str] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, shared_link: Union[None, FolderSharedLinkField] = None, folder_upload_email: Union[None, FolderFolderUploadEmailField] = None, parent: Union[None, FolderMini] = None, sequence_id: Union[None, str] = None, name: Union[None, str] = None, etag: Union[None, str] = None, **kwargs):
+    def __init__(self, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, sync_state: Union[None, FolderFullSyncStateField] = None, has_collaborations: Union[None, bool] = None, permissions: Union[None, FolderFullPermissionsField] = None, tags: Union[None, List[str]] = None, can_non_owners_invite: Union[None, bool] = None, is_externally_owned: Union[None, bool] = None, metadata: Union[None, FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Union[None, bool] = None, allowed_shared_link_access_levels: Union[None, List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Union[None, List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Union[None, FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Union[None, bool] = None, can_non_owners_view_collaborators: Union[None, bool] = None, classification: Union[None, FolderFullClassificationField] = None, created_at: Union[None, str] = None, modified_at: Union[None, str] = None, description: Union[None, str] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, shared_link: Union[None, FolderSharedLinkField] = None, folder_upload_email: Union[None, FolderFolderUploadEmailField] = None, parent: Union[None, FolderMini] = None, sequence_id: Union[None, str] = None, name: Union[None, str] = None, etag: Union[None, str] = None, **kwargs):
         """
-        :param has_collaborations: Specifies if this folder has any other collaborators.
-        :type has_collaborations: bool
-        :param is_externally_owned: Specifies if this folder is owned by a user outside of the
-            authenticated enterprise.
-        :type is_externally_owned: bool
-        :param allowed_shared_link_access_levels: A list of access levels that are available
-            for this folder.
-            For some folders, like the root folder, this will always
-            be an empty list as sharing is not allowed at that level.
-        :type allowed_shared_link_access_levels: List[FolderFullAllowedSharedLinkAccessLevelsField]
-        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
-            when sharing this folder.
-        :type allowed_invitee_roles: List[FolderFullAllowedInviteeRolesField]
         :param size: The folder size in bytes.
             Be careful parsing this integer as its
             value can get very large.
@@ -6038,6 +6025,19 @@ class FolderFull(Folder):
         :type id: str
         :param type: `folder`
         :type type: FolderBaseTypeField
+        :param has_collaborations: Specifies if this folder has any other collaborators.
+        :type has_collaborations: Union[None, bool], optional
+        :param is_externally_owned: Specifies if this folder is owned by a user outside of the
+            authenticated enterprise.
+        :type is_externally_owned: Union[None, bool], optional
+        :param allowed_shared_link_access_levels: A list of access levels that are available
+            for this folder.
+            For some folders, like the root folder, this will always
+            be an empty list as sharing is not allowed at that level.
+        :type allowed_shared_link_access_levels: Union[None, List[FolderFullAllowedSharedLinkAccessLevelsField]], optional
+        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
+            when sharing this folder.
+        :type allowed_invitee_roles: Union[None, List[FolderFullAllowedInviteeRolesField]], optional
         :param is_accessible_via_shared_link: Specifies if the folder can be accessed
             with the direct shared link or a shared link
             to a parent folder.
@@ -6074,17 +6074,17 @@ class FolderFull(Folder):
         :type etag: Union[None, str], optional
         """
         super().__init__(size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, owned_by=owned_by, item_status=item_status, item_collection=item_collection, id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        self.sync_state = sync_state
         self.has_collaborations = has_collaborations
         self.permissions = permissions
         self.tags = tags
         self.can_non_owners_invite = can_non_owners_invite
         self.is_externally_owned = is_externally_owned
+        self.metadata = metadata
         self.is_collaboration_restricted_to_enterprise = is_collaboration_restricted_to_enterprise
         self.allowed_shared_link_access_levels = allowed_shared_link_access_levels
         self.allowed_invitee_roles = allowed_invitee_roles
         self.watermark_info = watermark_info
-        self.sync_state = sync_state
-        self.metadata = metadata
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
@@ -6573,16 +6573,8 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self.url = url
 
 class FileFull(File):
-    def __init__(self, permissions: FileFullPermissionsField, tags: List[str], allowed_invitee_roles: List[FileFullAllowedInviteeRolesField], is_externally_owned: bool, has_collaborations: bool, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, version_number: Union[None, str] = None, comment_count: Union[None, int] = None, lock: Union[None, FileFullLockField] = None, extension: Union[None, str] = None, is_package: Union[None, bool] = None, expiring_embed_link: Union[None, FileFullExpiringEmbedLinkField] = None, watermark_info: Union[None, FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Union[None, bool] = None, metadata: Union[None, FileFullMetadataField] = None, expires_at: Union[None, str] = None, representations: Union[None, FileFullRepresentationsField] = None, classification: Union[None, FileFullClassificationField] = None, uploader_display_name: Union[None, str] = None, disposition_at: Union[None, str] = None, shared_link_permission_options: Union[None, List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
+    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, version_number: Union[None, str] = None, comment_count: Union[None, int] = None, permissions: Union[None, FileFullPermissionsField] = None, tags: Union[None, List[str]] = None, lock: Union[None, FileFullLockField] = None, extension: Union[None, str] = None, is_package: Union[None, bool] = None, expiring_embed_link: Union[None, FileFullExpiringEmbedLinkField] = None, watermark_info: Union[None, FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Union[None, bool] = None, allowed_invitee_roles: Union[None, List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Union[None, bool] = None, has_collaborations: Union[None, bool] = None, metadata: Union[None, FileFullMetadataField] = None, expires_at: Union[None, str] = None, representations: Union[None, FileFullRepresentationsField] = None, classification: Union[None, FileFullClassificationField] = None, uploader_display_name: Union[None, str] = None, disposition_at: Union[None, str] = None, shared_link_permission_options: Union[None, List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Union[None, str] = None, purged_at: Union[None, str] = None, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, created_by: Union[None, UserMini] = None, shared_link: Union[None, FileSharedLinkField] = None, parent: Union[None, FolderMini] = None, name: Union[None, str] = None, file_version: Union[None, FileVersionMini] = None, etag: Union[None, str] = None, **kwargs):
         """
-        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
-            when sharing this file.
-        :type allowed_invitee_roles: List[FileFullAllowedInviteeRolesField]
-        :param is_externally_owned: Specifies if this file is owned by a user outside of the
-            authenticated enterprise.
-        :type is_externally_owned: bool
-        :param has_collaborations: Specifies if this file has any other collaborators.
-        :type has_collaborations: bool
         :param description: The optional description of this file
         :type description: str
         :param size: The file size in bytes. Be careful parsing this integer as it can
@@ -6623,6 +6615,14 @@ class FileFull(File):
             via the direct shared link or a shared link
             to a parent folder.
         :type is_accessible_via_shared_link: Union[None, bool], optional
+        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
+            when sharing this file.
+        :type allowed_invitee_roles: Union[None, List[FileFullAllowedInviteeRolesField]], optional
+        :param is_externally_owned: Specifies if this file is owned by a user outside of the
+            authenticated enterprise.
+        :type is_externally_owned: Union[None, bool], optional
+        :param has_collaborations: Specifies if this file has any other collaborators.
+        :type has_collaborations: Union[None, bool], optional
         :param expires_at: When the file will automatically be deleted
         :type expires_at: Union[None, str], optional
         :param disposition_at: The retention expiration timestamp for the given file
@@ -6649,19 +6649,19 @@ class FileFull(File):
         :type etag: Union[None, str], optional
         """
         super().__init__(description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, modified_by=modified_by, owned_by=owned_by, item_status=item_status, sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, shared_link=shared_link, parent=parent, name=name, file_version=file_version, etag=etag, **kwargs)
-        self.permissions = permissions
-        self.tags = tags
-        self.allowed_invitee_roles = allowed_invitee_roles
-        self.is_externally_owned = is_externally_owned
-        self.has_collaborations = has_collaborations
         self.version_number = version_number
         self.comment_count = comment_count
+        self.permissions = permissions
+        self.tags = tags
         self.lock = lock
         self.extension = extension
         self.is_package = is_package
         self.expiring_embed_link = expiring_embed_link
         self.watermark_info = watermark_info
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
+        self.allowed_invitee_roles = allowed_invitee_roles
+        self.is_externally_owned = is_externally_owned
+        self.has_collaborations = has_collaborations
         self.metadata = metadata
         self.expires_at = expires_at
         self.representations = representations
