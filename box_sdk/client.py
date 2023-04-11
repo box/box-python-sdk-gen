@@ -32,8 +32,6 @@ from box_sdk.managers.file_watermarks import FileWatermarksManager
 
 from box_sdk.managers.file_requests import FileRequestsManager
 
-from box_sdk.managers.folders import FoldersManager
-
 from box_sdk.managers.trashed_folders import TrashedFoldersManager
 
 from box_sdk.managers.folder_metadata import FolderMetadataManager
@@ -159,7 +157,6 @@ class Client(BaseObject):
         self.skills = SkillsManager(auth=self.auth)
         self.file_watermarks = FileWatermarksManager(auth=self.auth)
         self.file_requests = FileRequestsManager(auth=self.auth)
-        self.folders = FoldersManager(auth=self.auth)
         self.trashed_folders = TrashedFoldersManager(auth=self.auth)
         self.folder_metadata = FolderMetadataManager(auth=self.auth)
         self.folder_classifications = FolderClassificationsManager(auth=self.auth)
