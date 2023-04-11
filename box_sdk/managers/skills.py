@@ -12,8 +12,6 @@ from box_sdk.schemas import SkillCardsMetadata
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import SkillCard
-
 from box_sdk.schemas import KeywordSkillCard
 
 from box_sdk.schemas import TimelineSkillCard
@@ -35,10 +33,10 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class CreateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
-    def __init__(self, cards: List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]], **kwargs):
+    def __init__(self, cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]], **kwargs):
         """
         :param cards: A list of Box Skill cards to apply to this file.
-        :type cards: List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]
+        :type cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]
         """
         super().__init__(**kwargs)
         self.cards = cards
@@ -51,10 +49,10 @@ class UpdateSkillInvocationByIdRequestBodyArgStatusField(str, Enum):
     PERMANENT_FAILURE = 'permanent_failure'
 
 class UpdateSkillInvocationByIdRequestBodyArgMetadataField(BaseObject):
-    def __init__(self, cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
+    def __init__(self, cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
         :param cards: A list of Box Skill cards to apply to this file.
-        :type cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
+        :type cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
         """
         super().__init__(**kwargs)
         self.cards = cards
