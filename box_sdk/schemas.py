@@ -6809,168 +6809,6 @@ class SkillInvocation(BaseObject):
         self.source = source
         self.event = event
 
-class SkillCardTypeField(str, Enum):
-    SKILL_CARD = 'skill_card'
-
-class SkillCardSkillCardTypeField(str, Enum):
-    TRANSCRIPT = 'transcript'
-    KEYWORD = 'keyword'
-    TIMELINE = 'timeline'
-    STATUS = 'status'
-
-class SkillCardSkillCardTitleField(BaseObject):
-    def __init__(self, message: str, code: Union[None, str] = None, **kwargs):
-        """
-        :param message: The actual title to show in the UI.
-        :type message: str
-        :param code: An optional identifier for the title.
-        :type code: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.message = message
-        self.code = code
-
-class SkillCardStatusFieldCodeField(str, Enum):
-    INVOKED = 'invoked'
-    PROCESSING = 'processing'
-    SUCCESS = 'success'
-    TRANSIENT_FAILURE = 'transient_failure'
-    PERMANENT_FAILURE = 'permanent_failure'
-
-class SkillCardStatusField(BaseObject):
-    def __init__(self, code: SkillCardStatusFieldCodeField, message: Union[None, str] = None, **kwargs):
-        """
-        :param code: A code for the status of this Skill invocation. By
-            default each of these will have their own accompanied
-            messages. These can be adjusted by setting the `message`
-            value on this object.
-        :type code: SkillCardStatusFieldCodeField
-        :param message: A custom message that can be provided with this status.
-            This will be shown in the web app to the end user.
-        :type message: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.code = code
-        self.message = message
-
-class SkillCardSkillFieldTypeField(str, Enum):
-    SERVICE = 'service'
-
-class SkillCardSkillField(BaseObject):
-    def __init__(self, type: SkillCardSkillFieldTypeField, id: str, **kwargs):
-        """
-        :param type: `service`
-        :type type: SkillCardSkillFieldTypeField
-        :param id: A custom identifier that represent the service that
-            applied this metadata.
-        :type id: str
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-
-class SkillCardInvocationFieldTypeField(str, Enum):
-    SKILL_INVOCATION = 'skill_invocation'
-
-class SkillCardInvocationField(BaseObject):
-    def __init__(self, type: SkillCardInvocationFieldTypeField, id: str, **kwargs):
-        """
-        :param type: `skill_invocation`
-        :type type: SkillCardInvocationFieldTypeField
-        :param id: A custom identifier that represent the instance of
-            the service that applied this metadata. For example,
-            if your `image-recognition-service` runs on multiple
-            nodes, this field can be used to identify the ID of
-            the node that was used to apply the metadata.
-        :type id: str
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-
-class SkillCardEntriesFieldAppearsField(BaseObject):
-    def __init__(self, start: Union[None, int] = None, end: Union[None, int] = None, **kwargs):
-        """
-        :param start: The time in seconds when an
-            entry should start appearing on a timeline.
-        :type start: Union[None, int], optional
-        :param end: The time in seconds when an
-            entry should stop appearing on a timeline. For
-            a `skill_card_type` of `transcript` this value
-            is ignored.
-        :type end: Union[None, int], optional
-        """
-        super().__init__(**kwargs)
-        self.start = start
-        self.end = end
-
-class SkillCardEntriesField(BaseObject):
-    def __init__(self, text: Union[None, str] = None, appears: Union[None, List[SkillCardEntriesFieldAppearsField]] = None, image_url: Union[None, str] = None, **kwargs):
-        """
-        :param text: The text of the entry. This would be the actual
-            keyword in a `keyword` card, the line of a
-            transcript in a `transcript` card, or the display
-            name for an item when using the `timeline` entry.
-        :type text: Union[None, str], optional
-        :param appears: Defines a list of timestamps for an entry. This is
-            used with a `skill_card_type` of `transcript` as
-            well as `timeline` to place items on a timeline.
-            For a `skill_card_type` of `transcript` there can
-            only be one entry in this list for each item, and
-            only the `start` time is used to place the
-            transcript on the timeline.
-        :type appears: Union[None, List[SkillCardEntriesFieldAppearsField]], optional
-        :param image_url: The image to show on a for an entry that appears
-            on a timeline. This image URL is required for any
-            `timeline` cards. The image will be shown in a
-            list of items (for example faces), and clicking
-            the image will show the user where that entry
-            appears during the duration of this entry.
-        :type image_url: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.text = text
-        self.appears = appears
-        self.image_url = image_url
-
-class SkillCard(BaseObject):
-    def __init__(self, type: SkillCardTypeField, skill_card_type: SkillCardSkillCardTypeField, skill: SkillCardSkillField, invocation: SkillCardInvocationField, created_at: Union[None, str] = None, skill_card_title: Union[None, SkillCardSkillCardTitleField] = None, status: Union[None, SkillCardStatusField] = None, duration: Union[None, int] = None, entries: Union[None, List[SkillCardEntriesField]] = None, **kwargs):
-        """
-        :param type: `skill_card`
-        :type type: SkillCardTypeField
-        :param skill_card_type: The type of card to add to the file.
-        :type skill_card_type: SkillCardSkillCardTypeField
-        :param skill: The service that applied this metadata.
-        :type skill: SkillCardSkillField
-        :param invocation: The invocation of this service, used to track
-            which instance of a service applied the metadata.
-        :type invocation: SkillCardInvocationField
-        :param created_at: The optional date and time this card was created at.
-        :type created_at: Union[None, str], optional
-        :param skill_card_title: The title of the card.
-        :type skill_card_title: Union[None, SkillCardSkillCardTitleField], optional
-        :param status: Used with a card of type `status` to set the status of the skill. This can be used to show a message to the user while the Skill is processing the data.
-        :type status: Union[None, SkillCardStatusField], optional
-        :param duration: An optional total duration in seconds.
-            Used with a `skill_card_type` of `transcript` or
-            `timeline`.
-        :type duration: Union[None, int], optional
-        :param entries: An optional list of entries in the metadata card.
-            This field is used with a `skill_card_type` of
-            `transcript`, `keyword` or `timeline`.
-        :type entries: Union[None, List[SkillCardEntriesField]], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.skill_card_type = skill_card_type
-        self.skill = skill
-        self.invocation = invocation
-        self.created_at = created_at
-        self.skill_card_title = skill_card_title
-        self.status = status
-        self.duration = duration
-        self.entries = entries
-
 class KeywordSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
@@ -7400,7 +7238,7 @@ class StatusSkillCard(BaseObject):
 class SkillCardsMetadata(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'parent': '$parent', 'scope': '$scope', 'template': '$template', 'type': '$type', 'type_version': '$typeVersion', 'version': '$version', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$parent': 'parent', '$scope': 'scope', '$template': 'template', '$type': 'type', '$typeVersion': 'type_version', '$version': 'version', **BaseObject._json_to_fields_mapping}
-    def __init__(self, can_edit: Union[None, bool] = None, id: Union[None, str] = None, parent: Union[None, str] = None, scope: Union[None, str] = None, template: Union[None, str] = None, type: Union[None, str] = None, type_version: Union[None, int] = None, version: Union[None, int] = None, cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
+    def __init__(self, can_edit: Union[None, bool] = None, id: Union[None, str] = None, parent: Union[None, str] = None, scope: Union[None, str] = None, template: Union[None, str] = None, type: Union[None, str] = None, type_version: Union[None, int] = None, version: Union[None, int] = None, cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
         :param can_edit: Whether the user can edit this metadata
         :type can_edit: Union[None, bool], optional
@@ -7423,7 +7261,7 @@ class SkillCardsMetadata(BaseObject):
             a user-defined property is modified.
         :type version: Union[None, int], optional
         :param cards: A list of Box Skill cards that have been applied to this file.
-        :type cards: Union[None, List[Union[SkillCard, KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
+        :type cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
         """
         super().__init__(**kwargs)
         self.can_edit = can_edit
