@@ -87,7 +87,7 @@ class FileClassificationsManager(BaseObject):
             Example: "12345"
         :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
     def delete_file_metadata_enterprise_security_classification(self, file_id: str):
         """

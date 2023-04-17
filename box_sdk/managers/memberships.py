@@ -227,7 +227,7 @@ class MembershipsManager(BaseObject):
         """
         if options is None:
             options = CreateGroupMembershipOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return GroupMembership.from_dict(json.loads(response.text))
     def get_group_membership_by_id(self, group_membership_id: str, options: GetGroupMembershipByIdOptionsArg = None) -> GroupMembership:
         """
@@ -261,7 +261,7 @@ class MembershipsManager(BaseObject):
         """
         if options is None:
             options = UpdateGroupMembershipByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return GroupMembership.from_dict(json.loads(response.text))
     def delete_group_membership_by_id(self, group_membership_id: str):
         """

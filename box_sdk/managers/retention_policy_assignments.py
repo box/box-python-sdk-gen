@@ -180,7 +180,7 @@ class RetentionPolicyAssignmentsManager(BaseObject):
         """
         Assigns a retention policy to an item.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
     def get_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, options: GetRetentionPolicyAssignmentByIdOptionsArg = None) -> RetentionPolicyAssignment:
         """

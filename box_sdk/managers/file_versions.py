@@ -192,7 +192,7 @@ class FileVersionsManager(BaseObject):
             Example: "1234"
         :type file_version_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileVersionFull.from_dict(json.loads(response.text))
     def delete_file_version_by_id(self, file_id: str, file_version_id: str, options: DeleteFileVersionByIdOptionsArg = None):
         """
@@ -263,5 +263,5 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = PromoteFileVersionOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileVersionFull.from_dict(json.loads(response.text))

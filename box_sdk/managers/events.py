@@ -118,7 +118,7 @@ class EventsManager(BaseObject):
         """
         if options is None:
             options = GetEventsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.streamType, 'stream_position': options.streamPosition, 'limit': options.limit, 'event_type': options.eventType, 'created_after': options.createdAfter, 'created_before': options.createdBefore}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.stream_type, 'stream_position': options.stream_position, 'limit': options.limit, 'event_type': options.event_type, 'created_after': options.created_after, 'created_before': options.created_before}, auth=self.auth))
         return Events.from_dict(json.loads(response.text))
     def get_events_with_long_polling(self) -> RealtimeServers:
         """

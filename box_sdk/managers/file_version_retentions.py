@@ -73,7 +73,7 @@ class FileVersionRetentionsManager(BaseObject):
         """
         if options is None:
             options = GetFileVersionRetentionsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params={'file_id': options.fileId, 'file_version_id': options.fileVersionId, 'policy_id': options.policyId, 'disposition_action': options.dispositionAction, 'disposition_before': options.dispositionBefore, 'disposition_after': options.dispositionAfter, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params={'file_id': options.file_id, 'file_version_id': options.file_version_id, 'policy_id': options.policy_id, 'disposition_action': options.disposition_action, 'disposition_before': options.disposition_before, 'disposition_after': options.disposition_after, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return FileVersionRetentions.from_dict(json.loads(response.text))
     def get_file_version_retention_by_id(self, file_version_retention_id: str) -> FileVersionRetention:
         """

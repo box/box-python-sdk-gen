@@ -50,7 +50,7 @@ class ZipDownloadsManager(BaseObject):
         10,000 files, whichever is met first
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ZipDownload.from_dict(json.loads(response.text))
     def get_zip_download_content(self, zip_download_id: str):
         """
@@ -89,7 +89,7 @@ class ZipDownloadsManager(BaseObject):
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
         :type zip_download_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://dl.boxcloud.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth))
         return response.content
     def get_zip_download_status(self, zip_download_id: str) -> ZipDownloadStatus:
         """

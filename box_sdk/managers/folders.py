@@ -564,7 +564,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = RestoreFolderFromTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TrashFolderRestored.from_dict(json.loads(response.text))
     def update_folder_by_id(self, folder_id: str, request_body: UpdateFolderByIdRequestBodyArg, options: UpdateFolderByIdOptionsArg = None) -> FolderFull:
         """
@@ -585,7 +585,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = UpdateFolderByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params={'fields': options.fields}, headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FolderFull.from_dict(json.loads(response.text))
     def delete_folder_by_id(self, folder_id: str, options: DeleteFolderByIdOptionsArg = None):
         """
@@ -641,7 +641,7 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = CreateFolderOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FolderFull.from_dict(json.loads(response.text))
     def copy_folder(self, folder_id: str, request_body: CopyFolderRequestBodyArg, options: CopyFolderOptionsArg = None) -> FolderFull:
         """
@@ -661,5 +661,5 @@ class FoldersManager(BaseObject):
         """
         if options is None:
             options = CopyFolderOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FolderFull.from_dict(json.loads(response.text))

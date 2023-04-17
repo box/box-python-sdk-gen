@@ -234,13 +234,13 @@ class RetentionPoliciesManager(BaseObject):
         """
         if options is None:
             options = GetRetentionPoliciesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params={'policy_name': options.policyName, 'policy_type': options.policyType, 'created_by_user_id': options.createdByUserId, 'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params={'policy_name': options.policy_name, 'policy_type': options.policy_type, 'created_by_user_id': options.created_by_user_id, 'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return RetentionPolicies.from_dict(json.loads(response.text))
     def create_retention_policy(self, request_body: CreateRetentionPolicyRequestBodyArg) -> RetentionPolicy:
         """
         Creates a retention policy.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return RetentionPolicy.from_dict(json.loads(response.text))
     def get_retention_policy_by_id(self, retention_policy_id: str, options: GetRetentionPolicyByIdOptionsArg = None) -> RetentionPolicy:
         """
@@ -260,7 +260,7 @@ class RetentionPoliciesManager(BaseObject):
             Example: "982312"
         :type retention_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return RetentionPolicy.from_dict(json.loads(response.text))
     def delete_retention_policy_by_id(self, retention_policy_id: str):
         """

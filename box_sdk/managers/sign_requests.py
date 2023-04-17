@@ -87,5 +87,5 @@ class SignRequestsManager(BaseObject):
         sending the sign request to signers.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return SignRequest.from_dict(json.loads(response.text))

@@ -91,7 +91,7 @@ class FolderClassificationsManager(BaseObject):
             Example: "12345"
         :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Classification.from_dict(json.loads(response.text))
     def delete_folder_metadata_enterprise_security_classification(self, folder_id: str):
         """

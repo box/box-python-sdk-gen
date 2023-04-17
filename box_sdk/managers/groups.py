@@ -236,7 +236,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = GetGroupsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filter_term, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
         return Groups.from_dict(json.loads(response.text))
     def create_group(self, request_body: CreateGroupRequestBodyArg, options: CreateGroupOptionsArg = None) -> Group:
         """
@@ -247,7 +247,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = CreateGroupOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Group.from_dict(json.loads(response.text))
     def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> GroupFull:
         """
@@ -281,7 +281,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = UpdateGroupByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return GroupFull.from_dict(json.loads(response.text))
     def delete_group_by_id(self, group_id: str):
         """

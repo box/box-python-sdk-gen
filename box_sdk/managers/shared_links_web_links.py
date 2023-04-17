@@ -255,7 +255,7 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_update_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkUpdateSharedLinkRequestBodyArg) -> WebLink:
         """
@@ -268,7 +268,7 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_remove_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkRemoveSharedLinkRequestBodyArg) -> WebLink:
         """
@@ -281,5 +281,5 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))

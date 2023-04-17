@@ -192,7 +192,7 @@ class CommentsManager(BaseObject):
         """
         if options is None:
             options = UpdateCommentByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return CommentFull.from_dict(json.loads(response.text))
     def delete_comment_by_id(self, comment_id: str):
         """
@@ -212,5 +212,5 @@ class CommentsManager(BaseObject):
         """
         if options is None:
             options = CreateCommentOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Comment.from_dict(json.loads(response.text))

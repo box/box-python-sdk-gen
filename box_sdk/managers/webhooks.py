@@ -214,7 +214,7 @@ class WebhooksManager(BaseObject):
         """
         Creates a webhook.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
     def get_webhook_by_id(self, webhook_id: str) -> Webhook:
         """
@@ -232,7 +232,7 @@ class WebhooksManager(BaseObject):
             Example: "3321123"
         :type webhook_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Webhook.from_dict(json.loads(response.text))
     def delete_webhook_by_id(self, webhook_id: str):
         """

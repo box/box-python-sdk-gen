@@ -74,7 +74,7 @@ class FileWatermarksManager(BaseObject):
             Example: "12345"
         :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
     def delete_file_watermark(self, file_id: str):
         """

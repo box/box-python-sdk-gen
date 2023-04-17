@@ -59,7 +59,7 @@ class EmailAliasesManager(BaseObject):
             Example: "12345"
         :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return EmailAlias.from_dict(json.loads(response.text))
     def delete_user_email_alias_by_id(self, user_id: str, email_alias_id: str):
         """

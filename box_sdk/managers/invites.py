@@ -110,7 +110,7 @@ class InvitesManager(BaseObject):
         """
         if options is None:
             options = CreateInviteOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Invite.from_dict(json.loads(response.text))
     def get_invite_by_id(self, invite_id: str, options: GetInviteByIdOptionsArg = None) -> Invite:
         """

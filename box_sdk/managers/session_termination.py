@@ -60,7 +60,7 @@ class SessionTerminationManager(BaseObject):
         Returns the status for the POST request.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return SessionTerminationMessage.from_dict(json.loads(response.text))
     def create_group_terminate_session(self, request_body: CreateGroupTerminateSessionRequestBodyArg) -> SessionTerminationMessage:
         """
@@ -75,5 +75,5 @@ class SessionTerminationManager(BaseObject):
         Returns the status for the POST request.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return SessionTerminationMessage.from_dict(json.loads(response.text))

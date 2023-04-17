@@ -55,7 +55,7 @@ class ShieldInformationBarrierReportsManager(BaseObject):
         """
         Creates a shield information barrier report for a given barrier.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
     def get_shield_information_barrier_report_by_id(self, shield_information_barrier_report_id: str) -> ShieldInformationBarrierReport:
         """

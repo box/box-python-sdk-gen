@@ -69,7 +69,7 @@ class ShieldInformationBarriersManager(BaseObject):
         """
         Change status of shield information barrier with the specified ID.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
     def get_shield_information_barriers(self, options: GetShieldInformationBarriersOptionsArg = None) -> None:
         """
@@ -92,5 +92,5 @@ class ShieldInformationBarriersManager(BaseObject):
         firm and prevents confidential information passing between them.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
