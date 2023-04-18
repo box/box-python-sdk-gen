@@ -106,13 +106,13 @@ class TermsOfServiceUserStatusesManager(BaseObject):
         """
         if options is None:
             options = GetTermOfServiceUserStatusesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.userId}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.user_id}, auth=self.auth))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
     def create_term_of_service_user_status(self, request_body: CreateTermOfServiceUserStatusRequestBodyArg) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
     def update_term_of_service_user_status_by_id(self, terms_of_service_user_status_id: str, request_body: UpdateTermOfServiceUserStatusByIdRequestBodyArg) -> TermsOfServiceUserStatus:
         """
@@ -121,5 +121,5 @@ class TermsOfServiceUserStatusesManager(BaseObject):
             Example: "324234"
         :type terms_of_service_user_status_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))

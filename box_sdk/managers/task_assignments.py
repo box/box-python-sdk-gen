@@ -112,7 +112,7 @@ class TaskAssignmentsManager(BaseObject):
         assignments.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
     def get_task_assignment_by_id(self, task_assignment_id: str) -> TaskAssignment:
         """
@@ -133,7 +133,7 @@ class TaskAssignmentsManager(BaseObject):
             Example: "12345"
         :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TaskAssignment.from_dict(json.loads(response.text))
     def delete_task_assignment_by_id(self, task_assignment_id: str):
         """

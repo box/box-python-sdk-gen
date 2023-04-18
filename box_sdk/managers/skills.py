@@ -154,7 +154,7 @@ class SkillsManager(BaseObject):
             Example: "12345"
         :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
     def delete_file_metadata_global_box_skills_card(self, file_id: str):
         """
@@ -180,5 +180,5 @@ class SkillsManager(BaseObject):
             Example: "33243242"
         :type skill_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return response.content

@@ -1,11 +1,14 @@
+import io
 import math
 import random
 import time
+from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Optional, Dict, TYPE_CHECKING, Union
+from typing import Optional, Dict, TYPE_CHECKING, Union, List
 
 import requests
 from requests import Response, RequestException
+from requests_toolbelt import MultipartEncoder
 
 from .box_response import APIResponse
 
@@ -20,12 +23,23 @@ _RETRY_BASE_INTERVAL = 1
 
 
 @dataclass
-class FetchOptions:
-    auth: Union['CCGAuth', 'DeveloperTokenAuth', 'JWTAuth'] = None
-    method: str = "GET"
-    headers: Dict[str, str] = None
-    params: dict = None
+class MultipartItem:
+    part_name: str
     body: str = None
+    file_stream: io.BytesIO = None
+    file_name: str = ''
+    content_type: str = None
+
+
+@dataclass
+class FetchOptions:
+    method: str = "GET"
+    params: dict = None
+    headers: Dict[str, str] = None
+    body: str = None
+    multipart_data: List[MultipartItem] = None
+    content_type: str = ""
+    auth: Union['CCGAuth', 'DeveloperTokenAuth', 'JWTAuth'] = None
 
 
 @dataclass
@@ -73,7 +87,9 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         url=url,
         headers=headers,
         body=options.body,
+        content_type=options.content_type,
         params=params,
+        multipart_data=options.multipart_data,
         attempt_nr=attempt_nr
     )
 
@@ -96,7 +112,9 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             url=url,
             headers=headers,
             body=options.body,
+            content_type=options.content_type,
             params=params,
+            multipart_data=options.multipart_data,
             attempt_nr=attempt_nr
         )
         attempt_nr += 1
@@ -110,7 +128,21 @@ def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> D
     return {k: v for k, v in dictionary.items() if v is not None}
 
 
-def __make_request(method, url, headers, body, params, attempt_nr) -> APIResponse:
+def __make_request(method, url, headers, body, content_type, params, multipart_data, attempt_nr) -> APIResponse:
+    if content_type == 'multipart/form-data':
+        fields = OrderedDict()
+        for part in multipart_data:
+            if part.body:
+                fields[part.part_name] = part.body
+            else:
+                file_stream_position = part.file_stream.tell()
+                part.file_stream.seek(file_stream_position)
+                fields[part.part_name] = (part.file_name, part.file_stream, part.content_type)
+
+        multipart_stream = MultipartEncoder(fields)
+        body = multipart_stream
+        headers['Content-Type'] = multipart_stream.content_type
+
     raised_exception = None
     try:
         network_response = session.request(

@@ -6,6 +6,8 @@ from box_sdk.managers.authorization import AuthorizationManager
 
 from box_sdk.managers.files import FilesManager
 
+from box_sdk.managers.trashed_files import TrashedFilesManager
+
 from box_sdk.managers.downloads import DownloadsManager
 
 from box_sdk.managers.uploads import UploadsManager
@@ -17,8 +19,6 @@ from box_sdk.managers.list_collaborations import ListCollaborationsManager
 from box_sdk.managers.comments import CommentsManager
 
 from box_sdk.managers.tasks import TasksManager
-
-from box_sdk.managers.trashed_files import TrashedFilesManager
 
 from box_sdk.managers.file_versions import FileVersionsManager
 
@@ -146,13 +146,13 @@ class Client(BaseObject):
         self.auth = auth
         self.authorization = AuthorizationManager(auth=self.auth)
         self.files = FilesManager(auth=self.auth)
+        self.trashed_files = TrashedFilesManager(auth=self.auth)
         self.downloads = DownloadsManager(auth=self.auth)
         self.uploads = UploadsManager(auth=self.auth)
         self.chunked_uploads = ChunkedUploadsManager(auth=self.auth)
         self.list_collaborations = ListCollaborationsManager(auth=self.auth)
         self.comments = CommentsManager(auth=self.auth)
         self.tasks = TasksManager(auth=self.auth)
-        self.trashed_files = TrashedFilesManager(auth=self.auth)
         self.file_versions = FileVersionsManager(auth=self.auth)
         self.file_metadata = FileMetadataManager(auth=self.auth)
         self.file_classifications = FileClassificationsManager(auth=self.auth)

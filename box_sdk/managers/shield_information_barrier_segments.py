@@ -82,7 +82,7 @@ class ShieldInformationBarrierSegmentsManager(BaseObject):
             Example: "3423"
         :type shield_information_barrier_segment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments/', shield_information_barrier_segment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments/', shield_information_barrier_segment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ShieldInformationBarrierSegment.from_dict(json.loads(response.text))
     def delete_shield_information_barrier_segment_by_id(self, shield_information_barrier_segment_id: str):
         """
@@ -114,5 +114,5 @@ class ShieldInformationBarrierSegmentsManager(BaseObject):
         """
         Creates a shield information barrier segment.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return ShieldInformationBarrierSegment.from_dict(json.loads(response.text))

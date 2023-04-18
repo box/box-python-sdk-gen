@@ -138,5 +138,5 @@ class TransferManager(BaseObject):
         """
         if options is None:
             options = TransferOwnedFolderOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FolderFull.from_dict(json.loads(response.text))

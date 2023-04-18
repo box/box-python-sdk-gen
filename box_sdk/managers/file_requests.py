@@ -73,7 +73,7 @@ class FileRequestsManager(BaseObject):
         """
         if options is None:
             options = UpdateFileRequestByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers={'if-match': options.if_match}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))
     def delete_file_request_by_id(self, file_request_id: str):
         """
@@ -104,5 +104,5 @@ class FileRequestsManager(BaseObject):
             Example: "123"
         :type file_request_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileRequest.from_dict(json.loads(response.text))

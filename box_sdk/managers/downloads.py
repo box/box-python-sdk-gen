@@ -2,6 +2,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+import json
+
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Files
@@ -17,6 +19,8 @@ from box_sdk.fetch import fetch
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
+
+from box_sdk.fetch import MultipartItem
 
 class DownloadFileOptionsArg(BaseObject):
     def __init__(self, range: Union[None, str] = None, boxapi: Union[None, str] = None, version: Union[None, str] = None, access_token: Union[None, str] = None, **kwargs):
@@ -45,6 +49,74 @@ class DownloadFileOptionsArg(BaseObject):
         self.version = version
         self.access_token = access_token
 
+class UploadFileVersionRequestBodyArgAttributesField(BaseObject):
+    def __init__(self, name: str, content_modified_at: Union[None, str] = None, **kwargs):
+        """
+        :param name: An optional new name for the file. If specified, the file
+            will be renamed when the new version is uploaded.
+        :type name: str
+        :param content_modified_at: Defines the time the file was last modified at.
+            If not set, the upload time will be used.
+        :type content_modified_at: Union[None, str], optional
+        """
+        super().__init__(**kwargs)
+        self.name = name
+        self.content_modified_at = content_modified_at
+
+class UploadFileVersionRequestBodyArg(BaseObject):
+    def __init__(self, attributes: UploadFileVersionRequestBodyArgAttributesField, file: str, **kwargs):
+        """
+        :param attributes: The additional attributes of the file being uploaded. Mainly the
+            name and the parent folder. These attributes are part of the multi
+            part request body and are in JSON format.
+            <Message warning>
+              The `attributes` part of the body must come **before** the
+              `file` part. Requests that do not follow this format when
+              uploading the file will receive a HTTP `400` error with a
+              `metadata_after_file_contents` error code.
+            </Message>
+        :type attributes: UploadFileVersionRequestBodyArgAttributesField
+        :param file: The content of the file to upload to Box.
+            <Message warning>
+              The `attributes` part of the body must come **before** the
+              `file` part. Requests that do not follow this format when
+              uploading the file will receive a HTTP `400` error with a
+              `metadata_after_file_contents` error code.
+            </Message>
+        :type file: str
+        """
+        super().__init__(**kwargs)
+        self.attributes = attributes
+        self.file = file
+
+class UploadFileVersionOptionsArg(BaseObject):
+    def __init__(self, if_match: Union[None, str] = None, fields: Union[None, str] = None, content_md_5: Union[None, str] = None, **kwargs):
+        """
+        :param if_match: Ensures this item hasn't recently changed before
+            making changes.
+            Pass in the item's last observed `etag` value
+            into this header and the endpoint will fail
+            with a `412 Precondition Failed` if it
+            has changed since.
+        :type if_match: Union[None, str], optional
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Union[None, str], optional
+        :param content_md_5: An optional header containing the SHA1 hash of the file to
+            ensure that the file was not corrupted in transit.
+        :type content_md_5: Union[None, str], optional
+        """
+        super().__init__(**kwargs)
+        self.if_match = if_match
+        self.fields = fields
+        self.content_md_5 = content_md_5
+
 class DownloadsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
@@ -63,5 +135,39 @@ class DownloadsManager(BaseObject):
         """
         if options is None:
             options = DownloadFileOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params={'version': options.version, 'access_token': options.accessToken}, headers={'range': options.range, 'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params={'version': options.version, 'access_token': options.access_token}, headers={'range': options.range, 'boxapi': options.boxapi}, auth=self.auth))
         return response.content
+    def upload_file_version(self, file_id: str, request_body: UploadFileVersionRequestBodyArg, options: UploadFileVersionOptionsArg = None) -> Files:
+        """
+        Update a file's content. For file sizes over 50MB we recommend
+        
+        using the Chunk Upload APIs.
+
+        
+        # Request body order
+
+        
+        The `attributes` part of the body must come **before** the
+
+        
+        `file` part. Requests that do not follow this format when
+
+        
+        uploading the file will receive a HTTP `400` error with a
+
+        
+        `metadata_after_file_contents` error code.
+
+        :param file_id: The unique identifier that represents a file.
+            The ID for any file can be determined
+            by visiting a file in the web application
+            and copying the ID from the URL. For example,
+            for the URL `https://*.app.box.com/files/123`
+            the `file_id` is `123`.
+            Example: "12345"
+        :type file_id: str
+        """
+        if options is None:
+            options = UploadFileVersionOptionsArg()
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params={'fields': options.fields}, headers={'if-match': options.if_match, 'content-md5': options.content_md_5}, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file)], content_type='multipart/form-data', auth=self.auth))
+        return Files.from_dict(json.loads(response.text))

@@ -76,7 +76,7 @@ class CollaborationAllowlistExemptTargetsManager(BaseObject):
         for collaborations.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
     def get_collaboration_whitelist_exempt_target_by_id(self, collaboration_whitelist_exempt_target_id: str) -> CollaborationAllowlistExemptTarget:
         """

@@ -94,7 +94,7 @@ class TermsOfServicesManager(BaseObject):
         """
         if options is None:
             options = GetTermOfServicesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params={'tos_type': options.tosType}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params={'tos_type': options.tos_type}, auth=self.auth))
         return TermsOfServices.from_dict(json.loads(response.text))
     def create_term_of_service(self, request_body: CreateTermOfServiceRequestBodyArg) -> Task:
         """
@@ -103,7 +103,7 @@ class TermsOfServicesManager(BaseObject):
         and type of user.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Task.from_dict(json.loads(response.text))
     def get_term_of_service_by_id(self, terms_of_service_id: str) -> TermsOfService:
         """
@@ -121,5 +121,5 @@ class TermsOfServicesManager(BaseObject):
             Example: "324234"
         :type terms_of_service_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TermsOfService.from_dict(json.loads(response.text))

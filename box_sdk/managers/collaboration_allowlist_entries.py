@@ -77,7 +77,7 @@ class CollaborationAllowlistEntriesManager(BaseObject):
         collaboration for.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
     def get_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str) -> CollaborationAllowlistEntry:
         """

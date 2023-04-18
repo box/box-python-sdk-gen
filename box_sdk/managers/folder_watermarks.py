@@ -78,7 +78,7 @@ class FolderWatermarksManager(BaseObject):
             Example: "12345"
         :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Watermark.from_dict(json.loads(response.text))
     def delete_folder_watermark(self, folder_id: str):
         """

@@ -87,5 +87,5 @@ class AuthorizationManager(BaseObject):
         """
         if options is None:
             options = GetAuthorizeOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/authorize']), FetchOptions(method='GET', params={'response_type': response_type, 'client_id': client_id, 'redirect_uri': options.redirectUri, 'state': options.state, 'scope': options.scope}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params={'response_type': response_type, 'client_id': client_id, 'redirect_uri': options.redirect_uri, 'state': options.state, 'scope': options.scope}, auth=self.auth))
         return None

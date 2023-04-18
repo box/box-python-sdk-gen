@@ -139,7 +139,7 @@ class TasksManager(BaseObject):
         will need to be assigned separately.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Task.from_dict(json.loads(response.text))
     def get_task_by_id(self, task_id: str) -> Task:
         """
@@ -160,7 +160,7 @@ class TasksManager(BaseObject):
             Example: "12345"
         :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return Task.from_dict(json.loads(response.text))
     def delete_task_by_id(self, task_id: str):
         """

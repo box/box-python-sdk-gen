@@ -155,13 +155,13 @@ class LegalHoldPolicyAssignmentsManager(BaseObject):
         """
         if options is None:
             options = GetLegalHoldPolicyAssignmentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params={'policy_id': policy_id, 'assign_to_type': options.assignToType, 'assign_to_id': options.assignToId, 'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params={'policy_id': policy_id, 'assign_to_type': options.assign_to_type, 'assign_to_id': options.assign_to_id, 'marker': options.marker, 'limit': options.limit, 'fields': options.fields}, auth=self.auth))
         return LegalHoldPolicyAssignments.from_dict(json.loads(response.text))
     def create_legal_hold_policy_assignment(self, request_body: CreateLegalHoldPolicyAssignmentRequestBodyArg) -> LegalHoldPolicyAssignment:
         """
         Assign a legal hold to a file, file version, folder, or user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
     def get_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str) -> LegalHoldPolicyAssignment:
         """

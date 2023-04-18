@@ -157,7 +157,7 @@ class WorkflowsManager(BaseObject):
         """
         if options is None:
             options = GetWorkflowsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folder_id, 'trigger_type': options.triggerType, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folder_id, 'trigger_type': options.trigger_type, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
         return Workflows.from_dict(json.loads(response.text))
     def create_workflow_start(self, workflow_id: str, request_body: CreateWorkflowStartRequestBodyArg):
         """
@@ -172,5 +172,5 @@ class WorkflowsManager(BaseObject):
             Example: "12345"
         :type workflow_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return response.content

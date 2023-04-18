@@ -131,7 +131,7 @@ class StoragePolicyAssignmentsManager(BaseObject):
         """
         Creates a storage policy assignment for an enterprise or user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str) -> StoragePolicyAssignment:
         """
@@ -149,7 +149,7 @@ class StoragePolicyAssignmentsManager(BaseObject):
             Example: "932483"
         :type storage_policy_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def delete_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str):
         """

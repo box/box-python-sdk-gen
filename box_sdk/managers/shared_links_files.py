@@ -279,7 +279,7 @@ class SharedLinksFilesManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileFull.from_dict(json.loads(response.text))
     def update_file_update_shared_link(self, file_id: str, fields: str, request_body: UpdateFileUpdateSharedLinkRequestBodyArg) -> FileFull:
         """
@@ -297,7 +297,7 @@ class SharedLinksFilesManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileFull.from_dict(json.loads(response.text))
     def update_file_remove_shared_link(self, file_id: str, fields: str, request_body: UpdateFileRemoveSharedLinkRequestBodyArg) -> FileFull:
         """
@@ -315,5 +315,5 @@ class SharedLinksFilesManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return FileFull.from_dict(json.loads(response.text))

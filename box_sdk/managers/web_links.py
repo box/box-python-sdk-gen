@@ -224,7 +224,7 @@ class WebLinksManager(BaseObject):
         """
         Creates a web link object within a folder.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_by_id(self, web_link_id: str, options: GetWebLinkByIdOptionsArg = None) -> WebLink:
         """
@@ -252,7 +252,7 @@ class WebLinksManager(BaseObject):
         """
         if options is None:
             options = CreateWebLinkByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return TrashWebLinkRestored.from_dict(json.loads(response.text))
     def update_web_link_by_id(self, web_link_id: str, request_body: UpdateWebLinkByIdRequestBodyArg) -> WebLink:
         """
@@ -261,7 +261,7 @@ class WebLinksManager(BaseObject):
             Example: "12345"
         :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
     def delete_web_link_by_id(self, web_link_id: str):
         """

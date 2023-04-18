@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 def main():
-    install_requires = ['requests']
+    install_requires = ['requests', 'requests_toolbelt']
     tests_require = ['pytest', 'pytest-timeout']
     dev_requires = ['tox']
     jwt_requires = ['pyjwt>=1.7.0', 'cryptography>=3']

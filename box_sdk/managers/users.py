@@ -389,7 +389,7 @@ class UsersManager(BaseObject):
         """
         if options is None:
             options = GetUsersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params={'filter_term': options.filterTerm, 'user_type': options.userType, 'external_app_user_id': options.externalAppUserId, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit, 'usemarker': options.usemarker, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params={'filter_term': options.filter_term, 'user_type': options.user_type, 'external_app_user_id': options.external_app_user_id, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit, 'usemarker': options.usemarker, 'marker': options.marker}, auth=self.auth))
         return Users.from_dict(json.loads(response.text))
     def create_user(self, request_body: CreateUserRequestBodyArg, options: CreateUserOptionsArg = None) -> User:
         """
@@ -403,7 +403,7 @@ class UsersManager(BaseObject):
         """
         if options is None:
             options = CreateUserOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return User.from_dict(json.loads(response.text))
     def get_user_me(self, options: GetUserMeOptionsArg = None) -> UserFull:
         """
@@ -481,7 +481,7 @@ class UsersManager(BaseObject):
         """
         if options is None:
             options = UpdateUserByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return UserFull.from_dict(json.loads(response.text))
     def delete_user_by_id(self, user_id: str, options: DeleteUserByIdOptionsArg = None):
         """

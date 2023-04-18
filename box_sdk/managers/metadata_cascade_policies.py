@@ -119,7 +119,7 @@ class MetadataCascadePoliciesManager(BaseObject):
         """
         if options is None:
             options = GetMetadataCascadePoliciesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params={'folder_id': folder_id, 'owner_enterprise_id': options.ownerEnterpriseId, 'marker': options.marker, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params={'folder_id': folder_id, 'owner_enterprise_id': options.owner_enterprise_id, 'marker': options.marker, 'offset': options.offset}, auth=self.auth))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
     def create_metadata_cascade_policy(self, request_body: CreateMetadataCascadePolicyRequestBodyArg) -> MetadataCascadePolicy:
         """
@@ -137,7 +137,7 @@ class MetadataCascadePoliciesManager(BaseObject):
         be applied to the folder the policy is to be applied to.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
     def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str) -> MetadataCascadePolicy:
         """
@@ -173,5 +173,5 @@ class MetadataCascadePoliciesManager(BaseObject):
             Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
         :type metadata_cascade_policy_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
         return response.content
