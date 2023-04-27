@@ -10,8 +10,6 @@ from box_sdk.schemas import Collaboration
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import Collaborations
-
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -93,34 +91,6 @@ class UpdateCollaborationByIdRequestBodyArg(BaseObject):
         self.status = status
         self.expires_at = expires_at
         self.can_view_path = can_view_path
-
-class GetCollaborationsStatusArg(str, Enum):
-    PENDING = 'pending'
-
-class GetCollaborationsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Union[None, str], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Union[None, int], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.offset = offset
-        self.limit = limit
 
 class CreateCollaborationRequestBodyArgItemFieldTypeField(str, Enum):
     FILE = 'file'
@@ -266,17 +236,6 @@ class UserCollaborationsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='DELETE', auth=self.auth))
         return response.content
-    def get_collaborations(self, status: GetCollaborationsStatusArg, options: GetCollaborationsOptionsArg = None) -> Collaborations:
-        """
-        Retrieves all pending collaboration invites for this user.
-        :param status: The status of the collaborations to retrieve
-            Example: "pending"
-        :type status: GetCollaborationsStatusArg
-        """
-        if options is None:
-            options = GetCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params={'status': status, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth))
-        return Collaborations.from_dict(json.loads(response.text))
     def create_collaboration(self, request_body: CreateCollaborationRequestBodyArg, options: CreateCollaborationOptionsArg = None) -> Collaboration:
         """
         Adds a collaboration for a single user or a single group to a file

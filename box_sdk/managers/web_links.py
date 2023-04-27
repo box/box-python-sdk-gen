@@ -10,8 +10,6 @@ from box_sdk.schemas import WebLink
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import TrashWebLinkRestored
-
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -111,41 +109,6 @@ class GetWebLinkByIdOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.boxapi = boxapi
 
-class CreateWebLinkByIdRequestBodyArgParentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, **kwargs):
-        """
-        :param id: The ID of parent item
-        :type id: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-
-class CreateWebLinkByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, CreateWebLinkByIdRequestBodyArgParentField] = None, **kwargs):
-        """
-        :param name: An optional new name for the web link.
-        :type name: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.parent = parent
-
-class CreateWebLinkByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
 class UpdateWebLinkByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
         """
@@ -237,23 +200,6 @@ class WebLinksManager(BaseObject):
             options = GetWebLinkByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth))
         return WebLink.from_dict(json.loads(response.text))
-    def create_web_link_by_id(self, web_link_id: str, request_body: CreateWebLinkByIdRequestBodyArg, options: CreateWebLinkByIdOptionsArg = None) -> TrashWebLinkRestored:
-        """
-        Restores a web link that has been moved to the trash.
-        
-        An optional new parent ID can be provided to restore the  web link to in case
-
-        
-        the original folder has been deleted.
-
-        :param web_link_id: The ID of the web link.
-            Example: "12345"
-        :type web_link_id: str
-        """
-        if options is None:
-            options = CreateWebLinkByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
-        return TrashWebLinkRestored.from_dict(json.loads(response.text))
     def update_web_link_by_id(self, web_link_id: str, request_body: UpdateWebLinkByIdRequestBodyArg) -> WebLink:
         """
         Updates a web link object.

@@ -12,8 +12,6 @@ from box_sdk.schemas import FolderFull
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import TrashFolderRestored
-
 from box_sdk.schemas import Items
 
 from box_sdk.developer_token_auth import DeveloperTokenAuth
@@ -63,41 +61,6 @@ class GetFolderByIdOptionsArg(BaseObject):
         self.fields = fields
         self.if_none_match = if_none_match
         self.boxapi = boxapi
-
-class RestoreFolderFromTrashRequestBodyArgParentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, **kwargs):
-        """
-        :param id: The ID of parent item
-        :type id: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-
-class RestoreFolderFromTrashRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, RestoreFolderFromTrashRequestBodyArgParentField] = None, **kwargs):
-        """
-        :param name: An optional new name for the folder.
-        :type name: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.parent = parent
-
-class RestoreFolderFromTrashOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
 
 class UpdateFolderByIdRequestBodyArgSyncStateField(str, Enum):
     SYNCED = 'synced'
@@ -524,48 +487,6 @@ class FoldersManager(BaseObject):
             options = GetFolderByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi}, auth=self.auth))
         return FolderFull.from_dict(json.loads(response.text))
-    def restore_folder_from_trash(self, folder_id: str, request_body: RestoreFolderFromTrashRequestBodyArg, options: RestoreFolderFromTrashOptionsArg = None) -> TrashFolderRestored:
-        """
-        Restores a folder that has been moved to the trash.
-        
-        An optional new parent ID can be provided to restore the folder to in case the
-
-        
-        original folder has been deleted.
-
-        
-        # Folder locking
-
-        
-        During this operation, part of the file tree will be locked, mainly
-
-        
-        the source folder and all of its descendants, as well as the destination
-
-        
-        folder.
-
-        
-        For the duration of the operation, no other move, copy, delete, or restore
-
-        
-        operation can performed on any of the locked folders.
-
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        """
-        if options is None:
-            options = RestoreFolderFromTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
-        return TrashFolderRestored.from_dict(json.loads(response.text))
     def update_folder_by_id(self, folder_id: str, request_body: UpdateFolderByIdRequestBodyArg, options: UpdateFolderByIdOptionsArg = None) -> FolderFull:
         """
         Updates a folder. This can be also be used to move the folder,

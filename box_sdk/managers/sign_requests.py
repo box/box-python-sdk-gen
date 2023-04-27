@@ -42,7 +42,7 @@ class SignRequestsManager(BaseObject):
     def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
-    def create_sign_request_cancel(self, sign_request_id: str) -> SignRequest:
+    def cancel_sign_request(self, sign_request_id: str) -> SignRequest:
         """
         Cancels a sign request.
         :param sign_request_id: The ID of the sign request
@@ -51,7 +51,7 @@ class SignRequestsManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', auth=self.auth))
         return SignRequest.from_dict(json.loads(response.text))
-    def create_sign_request_resend(self, sign_request_id: str):
+    def resend_sign_request(self, sign_request_id: str):
         """
         Resends a sign request email to all outstanding signers.
         :param sign_request_id: The ID of the sign request
