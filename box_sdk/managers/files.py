@@ -12,8 +12,6 @@ from box_sdk.schemas import FileFull
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.schemas import TrashFileRestored
-
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -77,41 +75,6 @@ class GetFileByIdOptionsArg(BaseObject):
         self.if_none_match = if_none_match
         self.boxapi = boxapi
         self.x_rep_hints = x_rep_hints
-
-class RestoreFileFromTrashRequestBodyArgParentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, **kwargs):
-        """
-        :param id: The ID of parent item
-        :type id: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-
-class RestoreFileFromTrashRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, parent: Union[None, RestoreFileFromTrashRequestBodyArgParentField] = None, **kwargs):
-        """
-        :param name: An optional new name for the file.
-        :type name: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.parent = parent
-
-class RestoreFileFromTrashOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Union[None, str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
 
 class UpdateFileByIdRequestBodyArgParentField(BaseObject):
     def __init__(self, id: Union[None, str] = None, **kwargs):
@@ -374,28 +337,6 @@ class FilesManager(BaseObject):
             options = GetFileByIdOptionsArg()
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': options.boxapi, 'x-rep-hints': options.x_rep_hints}, auth=self.auth))
         return FileFull.from_dict(json.loads(response.text))
-    def restore_file_from_trash(self, file_id: str, request_body: RestoreFileFromTrashRequestBodyArg, options: RestoreFileFromTrashOptionsArg = None) -> TrashFileRestored:
-        """
-        Restores a file that has been moved to the trash.
-        
-        An optional new parent ID can be provided to restore the file to in case the
-
-        
-        original folder has been deleted.
-
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        """
-        if options is None:
-            options = RestoreFileFromTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
-        return TrashFileRestored.from_dict(json.loads(response.text))
     def update_file_by_id(self, file_id: str, request_body: UpdateFileByIdRequestBodyArg, options: UpdateFileByIdOptionsArg = None) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,

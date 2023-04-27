@@ -12,8 +12,6 @@ from box_sdk.managers.folders import CreateFolderRequestBodyArg
 
 from box_sdk.managers.folders import CopyFolderRequestBodyArgParentField
 
-from box_sdk.managers.folders import RestoreFolderFromTrashRequestBodyArg
-
 from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArgParentField
 
 from box_sdk.managers.folders import CopyFolderRequestBodyArg
@@ -40,16 +38,13 @@ def test_get_folder_info():
     assert root_folder.name == 'All Files'
     assert root_folder.type == FolderBaseTypeField.FOLDER.value
 
-def test_create_delete_folder_and_restore_folder():
+def test_create_and_delete_folder():
     new_folder_name = get_uuid()
     new_folder = client.folders.create_folder(CreateFolderRequestBodyArg(name=new_folder_name, parent=CreateFolderRequestBodyArgParentField(id='0')))
     assert client.folders.get_folder_by_id(new_folder.id).name == new_folder_name
     client.folders.delete_folder_by_id(new_folder.id)
     with pytest.raises(Exception):
         client.folders.get_folder_by_id(new_folder.id)
-    client.folders.restore_folder_from_trash(new_folder.id, RestoreFolderFromTrashRequestBodyArg())
-    assert client.folders.get_folder_by_id(new_folder.id).name == new_folder_name
-    client.folders.delete_folder_by_id(new_folder.id)
 
 def test_update_folder():
     folder_to_update_name = get_uuid()

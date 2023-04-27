@@ -17,7 +17,7 @@ def decode_base_64(value: str) -> str:
 
 
 def generate_byte_stream() -> io.BytesIO:
-    return io.BytesIO(b'a' * 1024 * 1024)
+    return io.BytesIO(os.urandom(1024 * 1024))
 
 
 def read_byte_stream(byte_stream: io.BytesIO) -> bytes:
