@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -27,14 +29,14 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetShieldInformationBarrierSegmentMembersOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
@@ -47,26 +49,26 @@ class CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformation
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
         """
         :param id: The ID reference of the
             requesting shield information barrier segment.
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type of the shield barrier segment for this member.
-        :type type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 class CreateShieldInformationBarrierSegmentMemberRequestBodyArg(BaseObject):
-    def __init__(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField, user: UserBase, type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField] = None, shield_information_barrier: Union[None, ShieldInformationBarrierBase] = None, **kwargs):
+    def __init__(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField, user: UserBase, type: Optional[CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, **kwargs):
         """
         :param shield_information_barrier_segment: The `type` and `id` of the
             requested shield information barrier segment.
         :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberRequestBodyArgShieldInformationBarrierSegmentField
         :param type: -| A type of the shield barrier segment member.
-        :type type: Union[None, CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentMemberRequestBodyArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.shield_information_barrier_segment = shield_information_barrier_segment

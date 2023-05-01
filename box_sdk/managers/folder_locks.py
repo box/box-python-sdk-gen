@@ -1,5 +1,7 @@
 from box_sdk.base_object import BaseObject
 
+from typing import Optional
+
 from typing import Union
 
 import json
@@ -48,14 +50,14 @@ class CreateFolderLockRequestBodyArgFolderField(BaseObject):
         self.id = id
 
 class CreateFolderLockRequestBodyArg(BaseObject):
-    def __init__(self, folder: CreateFolderLockRequestBodyArgFolderField, locked_operations: Union[None, CreateFolderLockRequestBodyArgLockedOperationsField] = None, **kwargs):
+    def __init__(self, folder: CreateFolderLockRequestBodyArgFolderField, locked_operations: Optional[CreateFolderLockRequestBodyArgLockedOperationsField] = None, **kwargs):
         """
         :param folder: The folder to apply the lock to.
         :type folder: CreateFolderLockRequestBodyArgFolderField
         :param locked_operations: The operations to lock for the folder. If `locked_operations` is
             included in the request, both `move` and `delete` must also be
             included and both set to `true`.
-        :type locked_operations: Union[None, CreateFolderLockRequestBodyArgLockedOperationsField], optional
+        :type locked_operations: Optional[CreateFolderLockRequestBodyArgLockedOperationsField], optional
         """
         super().__init__(**kwargs)
         self.folder = folder

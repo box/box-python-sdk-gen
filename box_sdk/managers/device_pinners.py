@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -29,17 +31,17 @@ class GetEnterpriseDevicePinnersOptionsArgDirectionField(str, Enum):
     DESC = 'DESC'
 
 class GetEnterpriseDevicePinnersOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, direction: Union[None, GetEnterpriseDevicePinnersOptionsArgDirectionField] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, direction: Optional[GetEnterpriseDevicePinnersOptionsArgDirectionField] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetEnterpriseDevicePinnersOptionsArgDirectionField], optional
+        :type direction: Optional[GetEnterpriseDevicePinnersOptionsArgDirectionField], optional
         """
         super().__init__(**kwargs)
         self.marker = marker

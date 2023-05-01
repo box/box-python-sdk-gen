@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -27,14 +29,14 @@ from box_sdk.fetch import FetchResponse
 from box_sdk.fetch import MultipartItem
 
 class UploadFileVersionRequestBodyArgAttributesField(BaseObject):
-    def __init__(self, name: str, content_modified_at: Union[None, str] = None, **kwargs):
+    def __init__(self, name: str, content_modified_at: Optional[str] = None, **kwargs):
         """
         :param name: An optional new name for the file. If specified, the file
             will be renamed when the new version is uploaded.
         :type name: str
         :param content_modified_at: Defines the time the file was last modified at.
             If not set, the upload time will be used.
-        :type content_modified_at: Union[None, str], optional
+        :type content_modified_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -67,7 +69,7 @@ class UploadFileVersionRequestBodyArg(BaseObject):
         self.file = file
 
 class UploadFileVersionOptionsArg(BaseObject):
-    def __init__(self, if_match: Union[None, str] = None, fields: Union[None, str] = None, content_md_5: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Optional[str] = None, fields: Optional[str] = None, content_md_5: Optional[str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
@@ -75,7 +77,7 @@ class UploadFileVersionOptionsArg(BaseObject):
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -84,10 +86,10 @@ class UploadFileVersionOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
-        :type content_md_5: Union[None, str], optional
+        :type content_md_5: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.if_match = if_match
@@ -105,7 +107,7 @@ class UploadFileRequestBodyArgAttributesFieldParentField(BaseObject):
         self.id = id
 
 class UploadFileRequestBodyArgAttributesField(BaseObject):
-    def __init__(self, name: str, parent: UploadFileRequestBodyArgAttributesFieldParentField, content_created_at: Union[None, str] = None, content_modified_at: Union[None, str] = None, **kwargs):
+    def __init__(self, name: str, parent: UploadFileRequestBodyArgAttributesFieldParentField, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, **kwargs):
         """
         :param name: The name of the file
         :type name: str
@@ -113,10 +115,10 @@ class UploadFileRequestBodyArgAttributesField(BaseObject):
         :type parent: UploadFileRequestBodyArgAttributesFieldParentField
         :param content_created_at: Defines the time the file was originally created at.
             If not set, the upload time will be used.
-        :type content_created_at: Union[None, str], optional
+        :type content_created_at: Optional[str], optional
         :param content_modified_at: Defines the time the file was last modified at.
             If not set, the upload time will be used.
-        :type content_modified_at: Union[None, str], optional
+        :type content_modified_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -151,7 +153,7 @@ class UploadFileRequestBodyArg(BaseObject):
         self.file = file
 
 class UploadFileOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, content_md_5: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, content_md_5: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -161,31 +163,31 @@ class UploadFileOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
-        :type content_md_5: Union[None, str], optional
+        :type content_md_5: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
         self.content_md_5 = content_md_5
 
 class PreflightFileUploadRequestBodyArgParentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
 
 class PreflightFileUploadRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, size: Union[None, int] = None, parent: Union[None, PreflightFileUploadRequestBodyArgParentField] = None, **kwargs):
+    def __init__(self, name: Optional[str] = None, size: Optional[int] = None, parent: Optional[PreflightFileUploadRequestBodyArgParentField] = None, **kwargs):
         """
         :param name: The name for the file
-        :type name: Union[None, str], optional
+        :type name: Optional[str], optional
         :param size: The size of the file in bytes
-        :type size: Union[None, int], optional
+        :type size: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.name = name

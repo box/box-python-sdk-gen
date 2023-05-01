@@ -2,6 +2,8 @@ from enum import Enum
 
 from box_sdk.base_object import BaseObject
 
+from typing import Optional
+
 from typing import Union
 
 import json
@@ -40,16 +42,16 @@ class CreateTaskAssignmentRequestBodyArgTaskField(BaseObject):
         self.type = type
 
 class CreateTaskAssignmentRequestBodyArgAssignToField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, login: Union[None, str] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, login: Optional[str] = None, **kwargs):
         """
         :param id: The ID of the user to assign to the
             task.
             To specify a user by their email
             address use the `login` parameter.
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param login: The email address of the user to assign to the task.
             To specify a user by their user ID please use the `id` parameter.
-        :type login: Union[None, str], optional
+        :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -74,16 +76,16 @@ class UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField(str, Enum):
     REJECTED = 'rejected'
 
 class UpdateTaskAssignmentByIdRequestBodyArg(BaseObject):
-    def __init__(self, message: Union[None, str] = None, resolution_state: Union[None, UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField] = None, **kwargs):
+    def __init__(self, message: Optional[str] = None, resolution_state: Optional[UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField] = None, **kwargs):
         """
         :param message: An optional message by the assignee that can be added to the task.
-        :type message: Union[None, str], optional
+        :type message: Optional[str], optional
         :param resolution_state: The state of the task assigned to the user.
             * For a task with an `action` value of `complete` this can be
             `incomplete` or `completed`.
             * For a task with an `action` of `review` this can be
             `incomplete`, `approved`, or `rejected`.
-        :type resolution_state: Union[None, UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField], optional
+        :type resolution_state: Optional[UpdateTaskAssignmentByIdRequestBodyArgResolutionStateField], optional
         """
         super().__init__(**kwargs)
         self.message = message

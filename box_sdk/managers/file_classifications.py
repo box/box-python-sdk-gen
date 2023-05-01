@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -21,14 +23,14 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class CreateFileMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
-    def __init__(self, box_security_classification_key: Union[None, str] = None, **kwargs):
+    def __init__(self, box_security_classification_key: Optional[str] = None, **kwargs):
         """
         :param box_security_classification_key: The name of the classification to apply to this file.
             To list the available classifications in an enterprise,
             use the classification API to retrieve the
             [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
             which lists all available classification keys.
-        :type box_security_classification_key: Union[None, str], optional
+        :type box_security_classification_key: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.box_security_classification_key = box_security_classification_key

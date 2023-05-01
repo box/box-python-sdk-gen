@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 from box_sdk.schemas import AccessToken
 
@@ -24,7 +26,7 @@ class GetAuthorizeResponseTypeArg(str, Enum):
     CODE = 'code'
 
 class GetAuthorizeOptionsArg(BaseObject):
-    def __init__(self, redirect_uri: Union[None, str] = None, state: Union[None, str] = None, scope: Union[None, str] = None, **kwargs):
+    def __init__(self, redirect_uri: Optional[str] = None, state: Optional[str] = None, scope: Optional[str] = None, **kwargs):
         """
         :param redirect_uri: The URI to which Box redirects the browser after the user has granted
             or denied the application permission. This URI match one of the redirect
@@ -35,16 +37,16 @@ class GetAuthorizeOptionsArg(BaseObject):
             authorization URL if you configured multiple redirect URIs
             for the application in the developer console. A missing parameter causes
             a `redirect_uri_missing` error after the user grants application access.
-        :type redirect_uri: Union[None, str], optional
+        :type redirect_uri: Optional[str], optional
         :param state: A custom string of your choice. Box will pass the same string to
             the redirect URL when authentication is complete. This parameter
             can be used to identify a user on redirect, as well as protect
             against hijacked sessions and other exploits.
-        :type state: Union[None, str], optional
+        :type state: Optional[str], optional
         :param scope: A comma-separated list of application scopes you'd like to
             authenticate the user for. This defaults to all the scopes configured
             for the application in its configuration page.
-        :type scope: Union[None, str], optional
+        :type scope: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.redirect_uri = redirect_uri

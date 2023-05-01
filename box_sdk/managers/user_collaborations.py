@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -23,7 +25,7 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetCollaborationByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -33,7 +35,7 @@ class GetCollaborationByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -54,14 +56,14 @@ class UpdateCollaborationByIdRequestBodyArgStatusField(str, Enum):
     REJECTED = 'rejected'
 
 class UpdateCollaborationByIdRequestBodyArg(BaseObject):
-    def __init__(self, role: UpdateCollaborationByIdRequestBodyArgRoleField, status: Union[None, UpdateCollaborationByIdRequestBodyArgStatusField] = None, expires_at: Union[None, str] = None, can_view_path: Union[None, bool] = None, **kwargs):
+    def __init__(self, role: UpdateCollaborationByIdRequestBodyArgRoleField, status: Optional[UpdateCollaborationByIdRequestBodyArgStatusField] = None, expires_at: Optional[str] = None, can_view_path: Optional[bool] = None, **kwargs):
         """
         :param role: The level of access granted.
         :type role: UpdateCollaborationByIdRequestBodyArgRoleField
         :param status: <!--alex ignore reject-->
             Set the status of a `pending` collaboration invitation,
             effectively accepting, or rejecting the invite.
-        :type status: Union[None, UpdateCollaborationByIdRequestBodyArgStatusField], optional
+        :type status: Optional[UpdateCollaborationByIdRequestBodyArgStatusField], optional
         :param expires_at: Update the expiration date for the collaboration. At this date,
             the collaboration will be automatically removed from the item.
             This feature will only work if the **Automatically remove invited
@@ -73,7 +75,7 @@ class UpdateCollaborationByIdRequestBodyArg(BaseObject):
             Additionally, a collaboration can only be given an
             expiration if it was created after the **Automatically remove
             invited collaborator** setting was enabled.
-        :type expires_at: Union[None, str], optional
+        :type expires_at: Optional[str], optional
         :param can_view_path: Determines if the invited users can see the entire parent path to
             the associated folder. The user will not gain privileges in any
             parent folder and therefore can not see content the user is not
@@ -84,7 +86,7 @@ class UpdateCollaborationByIdRequestBodyArg(BaseObject):
             Only owner or co-owners can invite collaborators with a `can_view_path` of
             `true`.
             `can_view_path` can only be used for folder collaborations.
-        :type can_view_path: Union[None, bool], optional
+        :type can_view_path: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.role = role
@@ -114,17 +116,17 @@ class CreateCollaborationRequestBodyArgAccessibleByFieldTypeField(str, Enum):
     GROUP = 'group'
 
 class CreateCollaborationRequestBodyArgAccessibleByField(BaseObject):
-    def __init__(self, type: CreateCollaborationRequestBodyArgAccessibleByFieldTypeField, id: Union[None, str] = None, login: Union[None, str] = None, **kwargs):
+    def __init__(self, type: CreateCollaborationRequestBodyArgAccessibleByFieldTypeField, id: Optional[str] = None, login: Optional[str] = None, **kwargs):
         """
         :param type: The type of collaborator to invite.
         :type type: CreateCollaborationRequestBodyArgAccessibleByFieldTypeField
         :param id: The ID of the user or group.
             Alternatively, use `login` to specify a user by email
             address.
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param login: The email address of the user to grant access to the item.
             Alternatively, use `id` to specify a user by user ID.
-        :type login: Union[None, str], optional
+        :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -141,7 +143,7 @@ class CreateCollaborationRequestBodyArgRoleField(str, Enum):
     CO_OWNER = 'co-owner'
 
 class CreateCollaborationRequestBodyArg(BaseObject):
-    def __init__(self, item: CreateCollaborationRequestBodyArgItemField, accessible_by: CreateCollaborationRequestBodyArgAccessibleByField, role: CreateCollaborationRequestBodyArgRoleField, can_view_path: Union[None, bool] = None, expires_at: Union[None, str] = None, **kwargs):
+    def __init__(self, item: CreateCollaborationRequestBodyArgItemField, accessible_by: CreateCollaborationRequestBodyArgAccessibleByField, role: CreateCollaborationRequestBodyArgRoleField, can_view_path: Optional[bool] = None, expires_at: Optional[str] = None, **kwargs):
         """
         :param item: The item to attach the comment to.
         :type item: CreateCollaborationRequestBodyArgItemField
@@ -159,7 +161,7 @@ class CreateCollaborationRequestBodyArg(BaseObject):
             Only owner or co-owners can invite collaborators with a `can_view_path` of
             `true`.
             `can_view_path` can only be used for folder collaborations.
-        :type can_view_path: Union[None, bool], optional
+        :type can_view_path: Optional[bool], optional
         :param expires_at: Set the expiration date for the collaboration. At this date, the
             collaboration will be automatically removed from the item.
             This feature will only work if the **Automatically remove invited
@@ -168,7 +170,7 @@ class CreateCollaborationRequestBodyArg(BaseObject):
             of the **Admin Console**. When the setting is not enabled,
             collaborations can not have an expiry date and a value for this
             field will be result in an error.
-        :type expires_at: Union[None, str], optional
+        :type expires_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.item = item
@@ -178,7 +180,7 @@ class CreateCollaborationRequestBodyArg(BaseObject):
         self.expires_at = expires_at
 
 class CreateCollaborationOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, notify: Union[None, bool] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, notify: Optional[bool] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -188,10 +190,10 @@ class CreateCollaborationOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param notify: Determines if users should receive email notification
             for the action performed.
-        :type notify: Union[None, bool], optional
+        :type notify: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

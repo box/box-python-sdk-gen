@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -27,7 +29,7 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetFileCommentsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -37,14 +39,14 @@ class GetFileCommentsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -52,7 +54,7 @@ class GetFileCommentsOptionsArg(BaseObject):
         self.offset = offset
 
 class GetCommentByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -62,22 +64,22 @@ class GetCommentByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class UpdateCommentByIdRequestBodyArg(BaseObject):
-    def __init__(self, message: Union[None, str] = None, **kwargs):
+    def __init__(self, message: Optional[str] = None, **kwargs):
         """
         :param message: The text of the comment to update
-        :type message: Union[None, str], optional
+        :type message: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.message = message
 
 class UpdateCommentByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -87,7 +89,7 @@ class UpdateCommentByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -109,7 +111,7 @@ class CreateCommentRequestBodyArgItemField(BaseObject):
         self.type = type
 
 class CreateCommentRequestBodyArg(BaseObject):
-    def __init__(self, message: str, tagged_message: Union[None, str] = None, item: Union[None, CreateCommentRequestBodyArgItemField] = None, **kwargs):
+    def __init__(self, message: str, tagged_message: Optional[str] = None, item: Optional[CreateCommentRequestBodyArgItemField] = None, **kwargs):
         """
         :param message: The text of the comment.
             To mention a user, use the `tagged_message`
@@ -124,9 +126,9 @@ class CreateCommentRequestBodyArg(BaseObject):
             link to the user's profile.
             If you are not mentioning another user, use `message`
             instead.
-        :type tagged_message: Union[None, str], optional
+        :type tagged_message: Optional[str], optional
         :param item: The item to attach the comment to.
-        :type item: Union[None, CreateCommentRequestBodyArgItemField], optional
+        :type item: Optional[CreateCommentRequestBodyArgItemField], optional
         """
         super().__init__(**kwargs)
         self.message = message
@@ -134,7 +136,7 @@ class CreateCommentRequestBodyArg(BaseObject):
         self.item = item
 
 class CreateCommentOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -144,7 +146,7 @@ class CreateCommentOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

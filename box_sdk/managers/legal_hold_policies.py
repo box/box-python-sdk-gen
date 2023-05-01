@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -23,11 +25,11 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetLegalHoldPoliciesOptionsArg(BaseObject):
-    def __init__(self, policy_name: Union[None, str] = None, fields: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param policy_name: Limits results to policies for which the names start with
             this search term. This is a case-insensitive prefix.
-        :type policy_name: Union[None, str], optional
+        :type policy_name: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -36,13 +38,13 @@ class GetLegalHoldPoliciesOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name
@@ -51,12 +53,12 @@ class GetLegalHoldPoliciesOptionsArg(BaseObject):
         self.limit = limit
 
 class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: str, description: Union[None, str] = None, filter_started_at: Union[None, str] = None, filter_ended_at: Union[None, str] = None, is_ongoing: Union[None, bool] = None, **kwargs):
+    def __init__(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None, **kwargs):
         """
         :param policy_name: The name of the policy.
         :type policy_name: str
         :param description: A description for the policy.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param filter_started_at: The filter start date.
             When this policy is applied using a `custodian` legal
             hold assignments, it will only apply to file versions
@@ -64,7 +66,7 @@ class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
             date range. Other assignment types, such as folders and
             files, will ignore the date filter.
             Required if `is_ongoing` is set to `false`.
-        :type filter_started_at: Union[None, str], optional
+        :type filter_started_at: Optional[str], optional
         :param filter_ended_at: The filter end date.
             When this policy is applied using a `custodian` legal
             hold assignments, it will only apply to file versions
@@ -72,7 +74,7 @@ class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
             date range. Other assignment types, such as folders and
             files, will ignore the date filter.
             Required if `is_ongoing` is set to `false`.
-        :type filter_ended_at: Union[None, str], optional
+        :type filter_ended_at: Optional[str], optional
         :param is_ongoing: Whether new assignments under this policy should
             continue applying to files even after initialization.
             When this policy is applied using a legal hold assignment,
@@ -82,7 +84,7 @@ class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
             today, and that user uploads a file tomorrow, that file will
             get held. This will continue until the policy is retired.
             Required if no filter dates are set.
-        :type is_ongoing: Union[None, bool], optional
+        :type is_ongoing: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name
@@ -92,14 +94,14 @@ class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
         self.is_ongoing = is_ongoing
 
 class UpdateLegalHoldPolicyByIdRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: Union[None, str] = None, description: Union[None, str] = None, release_notes: Union[None, str] = None, **kwargs):
+    def __init__(self, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None, **kwargs):
         """
         :param policy_name: The name of the policy.
-        :type policy_name: Union[None, str], optional
+        :type policy_name: Optional[str], optional
         :param description: A description for the policy.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param release_notes: Notes around why the policy was released.
-        :type release_notes: Union[None, str], optional
+        :type release_notes: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name

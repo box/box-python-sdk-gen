@@ -1,10 +1,12 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -35,28 +37,28 @@ class DeleteMetadataTemplateSchemaScopeArg(str, Enum):
     ENTERPRISE = 'enterprise'
 
 class GetMetadataTemplateGlobalOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
         self.limit = limit
 
 class GetMetadataTemplateEnterpriseOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
@@ -80,7 +82,7 @@ class CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField(BaseObje
         self.key = key
 
 class CreateMetadataTemplateSchemaRequestBodyArgFieldsField(BaseObject):
-    def __init__(self, type: CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldTypeField, key: str, display_name: str, description: Union[None, str] = None, hidden: Union[None, bool] = None, options: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
+    def __init__(self, type: CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldTypeField, key: str, display_name: str, description: Optional[str] = None, hidden: Optional[bool] = None, options: Optional[List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param type: The type of field. The basic fields are a `string` field for text, a
             `float` field for numbers, and a `date` fields to present the user with a
@@ -96,13 +98,13 @@ class CreateMetadataTemplateSchemaRequestBodyArgFieldsField(BaseObject):
             mobile apps.
         :type display_name: str
         :param description: A description of the field. This is not shown to the user.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param hidden: Whether this field is hidden in the UI for the user and can only be set
             through the API instead.
-        :type hidden: Union[None, bool], optional
+        :type hidden: Optional[bool], optional
         :param options: A list of options for this field. This is used in combination with the
             `enum` and `multiSelect` field types.
-        :type options: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]], optional
+        :type options: Optional[List[CreateMetadataTemplateSchemaRequestBodyArgFieldsFieldOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -113,7 +115,7 @@ class CreateMetadataTemplateSchemaRequestBodyArgFieldsField(BaseObject):
         self.options = options
 
 class CreateMetadataTemplateSchemaRequestBodyArg(BaseObject):
-    def __init__(self, scope: str, display_name: str, template_key: Union[None, str] = None, hidden: Union[None, bool] = None, fields: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]] = None, copy_instance_on_item_copy: Union[None, bool] = None, **kwargs):
+    def __init__(self, scope: str, display_name: str, template_key: Optional[str] = None, hidden: Optional[bool] = None, fields: Optional[List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]] = None, copy_instance_on_item_copy: Optional[bool] = None, **kwargs):
         """
         :param scope: The scope of the metadata template to create. Applications can
             only create templates for use within the authenticated user's
@@ -128,18 +130,18 @@ class CreateMetadataTemplateSchemaRequestBodyArg(BaseObject):
             being created.
             When not provided, the API will create a unique `templateKey`
             based on the value of the `displayName`.
-        :type template_key: Union[None, str], optional
+        :type template_key: Optional[str], optional
         :param hidden: Defines if this template is visible in the Box web app UI, or if
             it is purely intended for usage through the API.
-        :type hidden: Union[None, bool], optional
+        :type hidden: Optional[bool], optional
         :param fields: An ordered list of template fields which are part of the template.
             Each field can be a regular text field, date field, number field,
             as well as a single or multi-select list.
-        :type fields: Union[None, List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]], optional
+        :type fields: Optional[List[CreateMetadataTemplateSchemaRequestBodyArgFieldsField]], optional
         :param copy_instance_on_item_copy: Whether or not to copy any metadata attached to a file or folder
             when it is copied. By default, metadata is not copied along with a
             file or folder when it is copied.
-        :type copy_instance_on_item_copy: Union[None, bool], optional
+        :type copy_instance_on_item_copy: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.scope = scope

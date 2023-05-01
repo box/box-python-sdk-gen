@@ -1,10 +1,12 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -34,10 +36,10 @@ class GetRetentionPolicyAssignmentsOptionsArgTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'
 
 class GetRetentionPolicyAssignmentsOptionsArg(BaseObject):
-    def __init__(self, type: Union[None, GetRetentionPolicyAssignmentsOptionsArgTypeField] = None, fields: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, type: Optional[GetRetentionPolicyAssignmentsOptionsArgTypeField] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param type: The type of the retention policy assignment to retrieve.
-        :type type: Union[None, GetRetentionPolicyAssignmentsOptionsArgTypeField], optional
+        :type type: Optional[GetRetentionPolicyAssignmentsOptionsArgTypeField], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -46,12 +48,12 @@ class GetRetentionPolicyAssignmentsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -79,20 +81,20 @@ class CreateRetentionPolicyAssignmentRequestBodyArgAssignToField(BaseObject):
         self.id = id
 
 class CreateRetentionPolicyAssignmentRequestBodyArgFilterFieldsField(BaseObject):
-    def __init__(self, field: Union[None, str] = None, value: Union[None, str] = None, **kwargs):
+    def __init__(self, field: Optional[str] = None, value: Optional[str] = None, **kwargs):
         """
         :param field: The metadata attribute key id.
-        :type field: Union[None, str], optional
+        :type field: Optional[str], optional
         :param value: The metadata attribute field id. For value, only
             enum and multiselect types are supported.
-        :type value: Union[None, str], optional
+        :type value: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.field = field
         self.value = value
 
 class CreateRetentionPolicyAssignmentRequestBodyArg(BaseObject):
-    def __init__(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentRequestBodyArgAssignToField, filter_fields: Union[None, List[CreateRetentionPolicyAssignmentRequestBodyArgFilterFieldsField]] = None, start_date_field: Union[None, str] = None, **kwargs):
+    def __init__(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentRequestBodyArgAssignToField, filter_fields: Optional[List[CreateRetentionPolicyAssignmentRequestBodyArgFilterFieldsField]] = None, start_date_field: Optional[str] = None, **kwargs):
         """
         :param policy_id: The ID of the retention policy to assign
         :type policy_id: str
@@ -102,11 +104,11 @@ class CreateRetentionPolicyAssignmentRequestBodyArg(BaseObject):
             then optionally add the `filter_fields` parameter which will
             require an array of objects with a field entry and a value entry.
             Currently only one object of `field` and `value` is supported.
-        :type filter_fields: Union[None, List[CreateRetentionPolicyAssignmentRequestBodyArgFilterFieldsField]], optional
+        :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentRequestBodyArgFilterFieldsField]], optional
         :param start_date_field: The date the retention policy assignment begins.
             If the `assigned_to` type is `metadata_template`,
             this field can be a date field's metadata attribute key id.
-        :type start_date_field: Union[None, str], optional
+        :type start_date_field: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.policy_id = policy_id
@@ -115,7 +117,7 @@ class CreateRetentionPolicyAssignmentRequestBodyArg(BaseObject):
         self.start_date_field = start_date_field
 
 class GetRetentionPolicyAssignmentByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -125,34 +127,34 @@ class GetRetentionPolicyAssignmentByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class GetRetentionPolicyAssignmentFileUnderRetentionOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
         self.limit = limit
 
 class GetRetentionPolicyAssignmentFileVersionUnderRetentionOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker

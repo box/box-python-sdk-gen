@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -32,7 +34,7 @@ class GetEventsOptionsArgStreamTypeField(str, Enum):
     ADMIN_LOGS_STREAMING = 'admin_logs_streaming'
 
 class GetEventsOptionsArg(BaseObject):
-    def __init__(self, stream_type: Union[None, GetEventsOptionsArgStreamTypeField] = None, stream_position: Union[None, str] = None, limit: Union[None, int] = None, event_type: Union[None, str] = None, created_after: Union[None, str] = None, created_before: Union[None, str] = None, **kwargs):
+    def __init__(self, stream_type: Optional[GetEventsOptionsArgStreamTypeField] = None, stream_position: Optional[str] = None, limit: Optional[int] = None, event_type: Optional[str] = None, created_after: Optional[str] = None, created_before: Optional[str] = None, **kwargs):
         """
         :param stream_type: Defines the type of events that are returned
             * `all` returns everything for a user and is the default
@@ -52,32 +54,32 @@ class GetEventsOptionsArg(BaseObject):
               the enterprise. Latency will be much lower than `admin_logs`, but
               events will not be returned in chronological order and may
               contain duplicates.
-        :type stream_type: Union[None, GetEventsOptionsArgStreamTypeField], optional
+        :type stream_type: Optional[GetEventsOptionsArgStreamTypeField], optional
         :param stream_position: The location in the event stream to start receiving events from.
             * `now` will return an empty list events and
             the latest stream position for initialization.
             * `0` or `null` will return all events.
-        :type stream_position: Union[None, str], optional
+        :type stream_position: Optional[str], optional
         :param limit: Limits the number of events returned
             Note: Sometimes, the events less than the limit requested can be returned
             even when there may be more events remaining. This is primarily done in
             the case where a number of events have already been retrieved and these
             retrieved events are returned rather than delaying for an unknown amount
             of time to see if there are any more results.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param event_type: A comma-separated list of events to filter by. This can only be used when
             requesting the events with a `stream_type` of `admin_logs` or
             `adming_logs_streaming`. For any other `stream_type` this value will be
             ignored.
-        :type event_type: Union[None, str], optional
+        :type event_type: Optional[str], optional
         :param created_after: The lower bound date and time to return events for. This can only be used
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
-        :type created_after: Union[None, str], optional
+        :type created_after: Optional[str], optional
         :param created_before: The upper bound date and time to return events for. This can only be used
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
-        :type created_before: Union[None, str], optional
+        :type created_before: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.stream_type = stream_type

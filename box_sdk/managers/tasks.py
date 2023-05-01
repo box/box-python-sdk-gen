@@ -2,6 +2,8 @@ from enum import Enum
 
 from box_sdk.base_object import BaseObject
 
+from typing import Optional
+
 from typing import Union
 
 import json
@@ -48,7 +50,7 @@ class CreateTaskRequestBodyArgCompletionRuleField(str, Enum):
     ANY_ASSIGNEE = 'any_assignee'
 
 class CreateTaskRequestBodyArg(BaseObject):
-    def __init__(self, item: CreateTaskRequestBodyArgItemField, action: Union[None, CreateTaskRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, CreateTaskRequestBodyArgCompletionRuleField] = None, **kwargs):
+    def __init__(self, item: CreateTaskRequestBodyArgItemField, action: Optional[CreateTaskRequestBodyArgActionField] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[CreateTaskRequestBodyArgCompletionRuleField] = None, **kwargs):
         """
         :param item: The file to attach the task to.
         :type item: CreateTaskRequestBodyArgItemField
@@ -56,19 +58,19 @@ class CreateTaskRequestBodyArg(BaseObject):
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Union[None, CreateTaskRequestBodyArgActionField], optional
+        :type action: Optional[CreateTaskRequestBodyArgActionField], optional
         :param message: An optional message to include with the task.
-        :type message: Union[None, str], optional
+        :type message: Optional[str], optional
         :param due_at: Defines when the task is due. Defaults to `null` if not
             provided.
-        :type due_at: Union[None, str], optional
+        :type due_at: Optional[str], optional
         :param completion_rule: Defines which assignees need to complete this task before the task
             is considered completed.
             * `all_assignees` (default) requires all assignees to review or
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Union[None, CreateTaskRequestBodyArgCompletionRuleField], optional
+        :type completion_rule: Optional[CreateTaskRequestBodyArgCompletionRuleField], optional
         """
         super().__init__(**kwargs)
         self.item = item
@@ -86,24 +88,24 @@ class UpdateTaskByIdRequestBodyArgCompletionRuleField(str, Enum):
     ANY_ASSIGNEE = 'any_assignee'
 
 class UpdateTaskByIdRequestBodyArg(BaseObject):
-    def __init__(self, action: Union[None, UpdateTaskByIdRequestBodyArgActionField] = None, message: Union[None, str] = None, due_at: Union[None, str] = None, completion_rule: Union[None, UpdateTaskByIdRequestBodyArgCompletionRuleField] = None, **kwargs):
+    def __init__(self, action: Optional[UpdateTaskByIdRequestBodyArgActionField] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[UpdateTaskByIdRequestBodyArgCompletionRuleField] = None, **kwargs):
         """
         :param action: The action the task assignee will be prompted to do. Must be
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Union[None, UpdateTaskByIdRequestBodyArgActionField], optional
+        :type action: Optional[UpdateTaskByIdRequestBodyArgActionField], optional
         :param message: The message included with the task.
-        :type message: Union[None, str], optional
+        :type message: Optional[str], optional
         :param due_at: When the task is due at.
-        :type due_at: Union[None, str], optional
+        :type due_at: Optional[str], optional
         :param completion_rule: Defines which assignees need to complete this task before the task
             is considered completed.
             * `all_assignees` (default) requires all assignees to review or
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Union[None, UpdateTaskByIdRequestBodyArgCompletionRuleField], optional
+        :type completion_rule: Optional[UpdateTaskByIdRequestBodyArgCompletionRuleField], optional
         """
         super().__init__(**kwargs)
         self.action = action

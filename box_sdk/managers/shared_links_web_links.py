@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -23,14 +25,14 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetSharedItemWebLinksOptionsArg(BaseObject):
-    def __init__(self, if_none_match: Union[None, str] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, if_none_match: Optional[str] = None, fields: Optional[str] = None, **kwargs):
         """
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type if_none_match: Union[None, str], optional
+        :type if_none_match: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -39,7 +41,7 @@ class GetSharedItemWebLinksOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.if_none_match = if_none_match
@@ -51,18 +53,18 @@ class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, En
     COLLABORATORS = 'collaborators'
 
 class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
-    def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
+    def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
             This can only be set when `access` is set to
             `open` or `company`.
-        :type can_download: Union[None, bool], optional
+        :type can_download: Optional[bool], optional
         :param can_preview: If the shared link allows for previewing of files.
             This value is always `true`. For shared links on folders
             this also applies to any items in the folder.
-        :type can_preview: Union[None, bool], optional
+        :type can_preview: Optional[bool], optional
         :param can_edit: This value can only be `true` is `type` is `file`.
-        :type can_edit: Union[None, bool], optional
+        :type can_edit: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
@@ -70,7 +72,7 @@ class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(Ba
         self.can_edit = can_edit
 
 class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+    def __init__(self, access: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -82,22 +84,22 @@ class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
-        :type password: Union[None, str], optional
+        :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
             for example `https://app.box.com/v/my-shared-link`.
             Custom URLs should not be used when sharing sensitive content
             as vanity URLs are a lot easier to guess than regular shared
             links.
-        :type vanity_name: Union[None, str], optional
+        :type vanity_name: Optional[str], optional
         :param unshared_at: The timestamp at which this shared link will
             expire. This field can only be set by
             users with paid accounts. The value must be greater than the
             current date and time.
-        :type unshared_at: Union[None, str], optional
+        :type unshared_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -107,12 +109,12 @@ class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.permissions = permissions
 
 class UpdateWebLinkAddSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+    def __init__(self, shared_link: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to create on the web link.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Union[None, UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
@@ -123,18 +125,18 @@ class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str,
     COLLABORATORS = 'collaborators'
 
 class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
-    def __init__(self, can_download: Union[None, bool] = None, can_preview: Union[None, bool] = None, can_edit: Union[None, bool] = None, **kwargs):
+    def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
             This can only be set when `access` is set to
             `open` or `company`.
-        :type can_download: Union[None, bool], optional
+        :type can_download: Optional[bool], optional
         :param can_preview: If the shared link allows for previewing of files.
             This value is always `true`. For shared links on folders
             this also applies to any items in the folder.
-        :type can_preview: Union[None, bool], optional
+        :type can_preview: Optional[bool], optional
         :param can_edit: This value can only be `true` is `type` is `file`.
-        :type can_edit: Union[None, bool], optional
+        :type can_edit: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
@@ -142,7 +144,7 @@ class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField
         self.can_edit = can_edit
 
 class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+    def __init__(self, access: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -154,22 +156,22 @@ class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
-        :type password: Union[None, str], optional
+        :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
             for example `https://app.box.com/v/my-shared-link`.
             Custom URLs should not be used when sharing sensitive content
             as vanity URLs are a lot easier to guess than regular shared
             links.
-        :type vanity_name: Union[None, str], optional
+        :type vanity_name: Optional[str], optional
         :param unshared_at: The timestamp at which this shared link will
             expire. This field can only be set by
             users with paid accounts. The value must be greater than the
             current date and time.
-        :type unshared_at: Union[None, str], optional
+        :type unshared_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -179,10 +181,10 @@ class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.permissions = permissions
 
 class UpdateWebLinkUpdateSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+    def __init__(self, shared_link: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Union[None, UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link
@@ -192,11 +194,11 @@ class UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         super().__init__(**kwargs)
 
 class UpdateWebLinkRemoveSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Union[None, UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
+    def __init__(self, shared_link: Optional[UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
         """
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the web link.
-        :type shared_link: Union[None, UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField], optional
+        :type shared_link: Optional[UpdateWebLinkRemoveSharedLinkRequestBodyArgSharedLinkField], optional
         """
         super().__init__(**kwargs)
         self.shared_link = shared_link

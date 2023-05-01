@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -25,7 +27,7 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetFileVersionsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -35,14 +37,14 @@ class GetFileVersionsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -50,7 +52,7 @@ class GetFileVersionsOptionsArg(BaseObject):
         self.offset = offset
 
 class GetFileVersionByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -60,23 +62,23 @@ class GetFileVersionByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class UpdateFileVersionByIdRequestBodyArg(BaseObject):
-    def __init__(self, trashed_at: Union[None, str] = None, **kwargs):
+    def __init__(self, trashed_at: Optional[str] = None, **kwargs):
         """
         :param trashed_at: Set this to `null` to clear
             the date and restore the file.
-        :type trashed_at: Union[None, str], optional
+        :type trashed_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.trashed_at = trashed_at
 
 class DeleteFileVersionByIdOptionsArg(BaseObject):
-    def __init__(self, if_match: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Optional[str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
@@ -84,7 +86,7 @@ class DeleteFileVersionByIdOptionsArg(BaseObject):
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.if_match = if_match
@@ -93,19 +95,19 @@ class PromoteFileVersionRequestBodyArgTypeField(str, Enum):
     FILE_VERSION = 'file_version'
 
 class PromoteFileVersionRequestBodyArg(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, PromoteFileVersionRequestBodyArgTypeField] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[PromoteFileVersionRequestBodyArgTypeField] = None, **kwargs):
         """
         :param id: The file version ID
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type to promote
-        :type type: Union[None, PromoteFileVersionRequestBodyArgTypeField], optional
+        :type type: Optional[PromoteFileVersionRequestBodyArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 class PromoteFileVersionOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -115,7 +117,7 @@ class PromoteFileVersionOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

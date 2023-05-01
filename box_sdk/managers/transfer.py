@@ -1,5 +1,7 @@
 from box_sdk.base_object import BaseObject
 
+from typing import Optional
+
 from typing import Union
 
 import json
@@ -40,7 +42,7 @@ class TransferOwnedFolderRequestBodyArg(BaseObject):
         self.owned_by = owned_by
 
 class TransferOwnedFolderOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, notify: Union[None, bool] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, notify: Optional[bool] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -50,10 +52,10 @@ class TransferOwnedFolderOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param notify: Determines if users should receive email notification
             for the action performed.
-        :type notify: Union[None, bool], optional
+        :type notify: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

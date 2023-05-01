@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -29,29 +31,29 @@ class GetFileVersionRetentionsOptionsArgDispositionActionField(str, Enum):
     REMOVE_RETENTION = 'remove_retention'
 
 class GetFileVersionRetentionsOptionsArg(BaseObject):
-    def __init__(self, file_id: Union[None, str] = None, file_version_id: Union[None, str] = None, policy_id: Union[None, str] = None, disposition_action: Union[None, GetFileVersionRetentionsOptionsArgDispositionActionField] = None, disposition_before: Union[None, str] = None, disposition_after: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, file_id: Optional[str] = None, file_version_id: Optional[str] = None, policy_id: Optional[str] = None, disposition_action: Optional[GetFileVersionRetentionsOptionsArgDispositionActionField] = None, disposition_before: Optional[str] = None, disposition_after: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, **kwargs):
         """
         :param file_id: Filters results by files with this ID.
-        :type file_id: Union[None, str], optional
+        :type file_id: Optional[str], optional
         :param file_version_id: Filters results by file versions with this ID.
-        :type file_version_id: Union[None, str], optional
+        :type file_version_id: Optional[str], optional
         :param policy_id: Filters results by the retention policy with this ID.
-        :type policy_id: Union[None, str], optional
+        :type policy_id: Optional[str], optional
         :param disposition_action: Filters results by the retention policy with this disposition
             action.
-        :type disposition_action: Union[None, GetFileVersionRetentionsOptionsArgDispositionActionField], optional
+        :type disposition_action: Optional[GetFileVersionRetentionsOptionsArgDispositionActionField], optional
         :param disposition_before: Filters results by files that will have their disposition
             come into effect before this date.
-        :type disposition_before: Union[None, str], optional
+        :type disposition_before: Optional[str], optional
         :param disposition_after: Filters results by files that will have their disposition
             come into effect after this date.
-        :type disposition_after: Union[None, str], optional
+        :type disposition_after: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.file_id = file_id

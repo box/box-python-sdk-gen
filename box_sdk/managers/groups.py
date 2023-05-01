@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -27,11 +29,11 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetGroupsOptionsArg(BaseObject):
-    def __init__(self, filter_term: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, filter_term: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
         """
         :param filter_term: Limits the results to only groups whose `name` starts
             with the search term.
-        :type filter_term: Union[None, str], optional
+        :type filter_term: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -40,14 +42,14 @@ class GetGroupsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.filter_term = filter_term
@@ -66,7 +68,7 @@ class CreateGroupRequestBodyArgMemberViewabilityLevelField(str, Enum):
     ALL_MANAGED_USERS = 'all_managed_users'
 
 class CreateGroupRequestBodyArg(BaseObject):
-    def __init__(self, name: str, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, CreateGroupRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, CreateGroupRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+    def __init__(self, name: str, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[CreateGroupRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Optional[CreateGroupRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
         """
         :param name: The name of the new group to be created. This name must be unique
             within the enterprise.
@@ -77,7 +79,7 @@ class CreateGroupRequestBodyArg(BaseObject):
             the group name and its members directly via the Box
             web application.
             This is desirable for one-way syncing of groups.
-        :type provenance: Union[None, str], optional
+        :type provenance: Optional[str], optional
         :param external_sync_identifier: An arbitrary identifier that can be used by
             external group sync tools to link this Box Group to
             an external group.
@@ -87,9 +89,9 @@ class CreateGroupRequestBodyArg(BaseObject):
             We recommend you use of this field in
             order to avoid issues when group names are updated in
             either Box or external systems.
-        :type external_sync_identifier: Union[None, str], optional
+        :type external_sync_identifier: Optional[str], optional
         :param description: A human readable description of the group.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param invitability_level: Specifies who can invite the group to collaborate
             on folders.
             When set to `admins_only` the enterprise admin, co-admins,
@@ -98,14 +100,14 @@ class CreateGroupRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Union[None, CreateGroupRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Optional[CreateGroupRequestBodyArgInvitabilityLevelField], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Union[None, CreateGroupRequestBodyArgMemberViewabilityLevelField], optional
+        :type member_viewability_level: Optional[CreateGroupRequestBodyArgMemberViewabilityLevelField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -116,7 +118,7 @@ class CreateGroupRequestBodyArg(BaseObject):
         self.member_viewability_level = member_viewability_level
 
 class CreateGroupOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -126,13 +128,13 @@ class CreateGroupOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class GetGroupByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -142,7 +144,7 @@ class GetGroupByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -158,18 +160,18 @@ class UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField(str, Enum):
     ALL_MANAGED_USERS = 'all_managed_users'
 
 class UpdateGroupByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, provenance: Union[None, str] = None, external_sync_identifier: Union[None, str] = None, description: Union[None, str] = None, invitability_level: Union[None, UpdateGroupByIdRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Union[None, UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+    def __init__(self, name: Optional[str] = None, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[UpdateGroupByIdRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Optional[UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
         """
         :param name: The name of the new group to be created. Must be unique within the
             enterprise.
-        :type name: Union[None, str], optional
+        :type name: Optional[str], optional
         :param provenance: Keeps track of which external source this group is
             coming, for example `Active Directory`, or `Okta`.
             Setting this will also prevent Box admins from editing
             the group name and its members directly via the Box
             web application.
             This is desirable for one-way syncing of groups.
-        :type provenance: Union[None, str], optional
+        :type provenance: Optional[str], optional
         :param external_sync_identifier: An arbitrary identifier that can be used by
             external group sync tools to link this Box Group to
             an external group.
@@ -179,9 +181,9 @@ class UpdateGroupByIdRequestBodyArg(BaseObject):
             We recommend you use of this field in
             order to avoid issues when group names are updated in
             either Box or external systems.
-        :type external_sync_identifier: Union[None, str], optional
+        :type external_sync_identifier: Optional[str], optional
         :param description: A human readable description of the group.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param invitability_level: Specifies who can invite the group to collaborate
             on folders.
             When set to `admins_only` the enterprise admin, co-admins,
@@ -190,14 +192,14 @@ class UpdateGroupByIdRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Union[None, UpdateGroupByIdRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Optional[UpdateGroupByIdRequestBodyArgInvitabilityLevelField], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Union[None, UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField], optional
+        :type member_viewability_level: Optional[UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -208,7 +210,7 @@ class UpdateGroupByIdRequestBodyArg(BaseObject):
         self.member_viewability_level = member_viewability_level
 
 class UpdateGroupByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -218,7 +220,7 @@ class UpdateGroupByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

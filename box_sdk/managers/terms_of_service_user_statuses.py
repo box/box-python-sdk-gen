@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -25,10 +27,10 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetTermOfServiceUserStatusesOptionsArg(BaseObject):
-    def __init__(self, user_id: Union[None, str] = None, **kwargs):
+    def __init__(self, user_id: Optional[str] = None, **kwargs):
         """
         :param user_id: Limits results to the given user ID.
-        :type user_id: Union[None, str], optional
+        :type user_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.user_id = user_id

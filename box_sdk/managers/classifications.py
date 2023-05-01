@@ -1,10 +1,12 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -43,10 +45,10 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldDisplay
     CLASSIFICATION = 'Classification'
 
 class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
-    def __init__(self, classification_definition: Union[None, str] = None, color_id: Union[None, int] = None, **kwargs):
+    def __init__(self, classification_definition: Optional[str] = None, color_id: Optional[int] = None, **kwargs):
         """
         :param classification_definition: A longer description of the classification.
-        :type classification_definition: Union[None, str], optional
+        :type classification_definition: Optional[str], optional
         :param color_id: An identifier used to assign a color to
             a classification label.
             Mapping between a `colorID` and a color may
@@ -60,48 +62,48 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptions
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Union[None, int], optional
+        :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
         self.color_id = color_id
 
 class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigField(BaseObject):
-    def __init__(self, classification: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField] = None, **kwargs):
+    def __init__(self, classification: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField] = None, **kwargs):
         """
         :param classification: Additional information about the classification.
-        :type classification: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField], optional
+        :type classification: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigFieldClassificationField], optional
         """
         super().__init__(**kwargs)
         self.classification = classification
 
 class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsField(BaseObject):
-    def __init__(self, key: Union[None, str] = None, static_config: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
+    def __init__(self, key: Optional[str] = None, static_config: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
         """
         :param key: The display name and key this classification. This
             will be show in the Box UI.
-        :type key: Union[None, str], optional
+        :type key: Optional[str], optional
         :param static_config: Additional information about the classification.
-        :type static_config: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigField], optional
+        :type static_config: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsFieldStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
         self.static_config = static_config
 
 class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField(BaseObject):
-    def __init__(self, type: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldTypeField] = None, key: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldKeyField] = None, display_name: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldDisplayNameField] = None, hidden: Union[None, bool] = None, options: Union[None, List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
+    def __init__(self, type: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldTypeField] = None, key: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldKeyField] = None, display_name: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldDisplayNameField] = None, hidden: Optional[bool] = None, options: Optional[List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param type: `enum`
-        :type type: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldTypeField], optional
+        :type type: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldTypeField], optional
         :param key: `Box__Security__Classification__Key`
-        :type key: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldKeyField], optional
+        :type key: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldKeyField], optional
         :param display_name: `Classification`
-        :type display_name: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldDisplayNameField], optional
+        :type display_name: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldDisplayNameField], optional
         :param hidden: `false`
-        :type hidden: Union[None, bool], optional
+        :type hidden: Optional[bool], optional
         :param options: The actual list of classifications that are present on
             this template.
-        :type options: Union[None, List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsField]], optional
+        :type options: Optional[List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsFieldOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -111,7 +113,7 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField(BaseOb
         self.options = options
 
 class CreateMetadataTemplateSchemaClassificationRequestBodyArg(BaseObject):
-    def __init__(self, scope: CreateMetadataTemplateSchemaClassificationRequestBodyArgScopeField, display_name: CreateMetadataTemplateSchemaClassificationRequestBodyArgDisplayNameField, template_key: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgTemplateKeyField] = None, hidden: Union[None, bool] = None, copy_instance_on_item_copy: Union[None, bool] = None, fields: Union[None, List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField]] = None, **kwargs):
+    def __init__(self, scope: CreateMetadataTemplateSchemaClassificationRequestBodyArgScopeField, display_name: CreateMetadataTemplateSchemaClassificationRequestBodyArgDisplayNameField, template_key: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgTemplateKeyField] = None, hidden: Optional[bool] = None, copy_instance_on_item_copy: Optional[bool] = None, fields: Optional[List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField]] = None, **kwargs):
         """
         :param scope: The scope in which to create the classifications. This should
             be `enterprise` or `enterprise_{id}` where `id` is the unique
@@ -120,14 +122,14 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArg(BaseObject):
         :param display_name: `Classification`
         :type display_name: CreateMetadataTemplateSchemaClassificationRequestBodyArgDisplayNameField
         :param template_key: `securityClassification-6VMVochwUWo`
-        :type template_key: Union[None, CreateMetadataTemplateSchemaClassificationRequestBodyArgTemplateKeyField], optional
+        :type template_key: Optional[CreateMetadataTemplateSchemaClassificationRequestBodyArgTemplateKeyField], optional
         :param hidden: `false`
-        :type hidden: Union[None, bool], optional
+        :type hidden: Optional[bool], optional
         :param copy_instance_on_item_copy: `false`
-        :type copy_instance_on_item_copy: Union[None, bool], optional
+        :type copy_instance_on_item_copy: Optional[bool], optional
         :param fields: The classification template holds one field, which holds
             all the valid classification values.
-        :type fields: Union[None, List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField]], optional
+        :type fields: Optional[List[CreateMetadataTemplateSchemaClassificationRequestBodyArgFieldsField]], optional
         """
         super().__init__(**kwargs)
         self.scope = scope

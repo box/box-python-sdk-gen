@@ -1,10 +1,12 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -25,16 +27,16 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetWorkflowsOptionsArg(BaseObject):
-    def __init__(self, trigger_type: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, trigger_type: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, **kwargs):
         """
         :param trigger_type: Type of trigger to search for.
-        :type trigger_type: Union[None, str], optional
+        :type trigger_type: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.trigger_type = trigger_type
@@ -45,12 +47,12 @@ class CreateWorkflowStartRequestBodyArgTypeField(str, Enum):
     WORKFLOW_PARAMETERS = 'workflow_parameters'
 
 class CreateWorkflowStartRequestBodyArgFlowField(BaseObject):
-    def __init__(self, type: Union[None, str] = None, id: Union[None, str] = None, **kwargs):
+    def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the flow object
-        :type type: Union[None, str], optional
+        :type type: Optional[str], optional
         :param id: The id of the flow
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -60,12 +62,12 @@ class CreateWorkflowStartRequestBodyArgFilesFieldTypeField(str, Enum):
     FILE = 'file'
 
 class CreateWorkflowStartRequestBodyArgFilesField(BaseObject):
-    def __init__(self, type: Union[None, CreateWorkflowStartRequestBodyArgFilesFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+    def __init__(self, type: Optional[CreateWorkflowStartRequestBodyArgFilesFieldTypeField] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the file object
-        :type type: Union[None, CreateWorkflowStartRequestBodyArgFilesFieldTypeField], optional
+        :type type: Optional[CreateWorkflowStartRequestBodyArgFilesFieldTypeField], optional
         :param id: The id of the file
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -75,12 +77,12 @@ class CreateWorkflowStartRequestBodyArgFolderFieldTypeField(str, Enum):
     FOLDER = 'folder'
 
 class CreateWorkflowStartRequestBodyArgFolderField(BaseObject):
-    def __init__(self, type: Union[None, CreateWorkflowStartRequestBodyArgFolderFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+    def __init__(self, type: Optional[CreateWorkflowStartRequestBodyArgFolderFieldTypeField] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the folder object
-        :type type: Union[None, CreateWorkflowStartRequestBodyArgFolderFieldTypeField], optional
+        :type type: Optional[CreateWorkflowStartRequestBodyArgFolderFieldTypeField], optional
         :param id: The id of the folder
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -90,16 +92,16 @@ class CreateWorkflowStartRequestBodyArgOutcomesFieldTypeField(str, Enum):
     OUTCOME = 'outcome'
 
 class CreateWorkflowStartRequestBodyArgOutcomesField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, CreateWorkflowStartRequestBodyArgOutcomesFieldTypeField] = None, parameter: Union[None, str] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateWorkflowStartRequestBodyArgOutcomesFieldTypeField] = None, parameter: Optional[str] = None, **kwargs):
         """
         :param id: The id of the outcome
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type of the outcome object
-        :type type: Union[None, CreateWorkflowStartRequestBodyArgOutcomesFieldTypeField], optional
+        :type type: Optional[CreateWorkflowStartRequestBodyArgOutcomesFieldTypeField], optional
         :param parameter: This is a placeholder example for various objects that
             can be passed in - refer to the guides section to find
             out more information.
-        :type parameter: Union[None, str], optional
+        :type parameter: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -107,7 +109,7 @@ class CreateWorkflowStartRequestBodyArgOutcomesField(BaseObject):
         self.parameter = parameter
 
 class CreateWorkflowStartRequestBodyArg(BaseObject):
-    def __init__(self, flow: CreateWorkflowStartRequestBodyArgFlowField, files: List[CreateWorkflowStartRequestBodyArgFilesField], folder: CreateWorkflowStartRequestBodyArgFolderField, type: Union[None, CreateWorkflowStartRequestBodyArgTypeField] = None, outcomes: Union[None, List[CreateWorkflowStartRequestBodyArgOutcomesField]] = None, **kwargs):
+    def __init__(self, flow: CreateWorkflowStartRequestBodyArgFlowField, files: List[CreateWorkflowStartRequestBodyArgFilesField], folder: CreateWorkflowStartRequestBodyArgFolderField, type: Optional[CreateWorkflowStartRequestBodyArgTypeField] = None, outcomes: Optional[List[CreateWorkflowStartRequestBodyArgOutcomesField]] = None, **kwargs):
         """
         :param flow: The flow that will be triggered
         :type flow: CreateWorkflowStartRequestBodyArgFlowField
@@ -117,9 +119,9 @@ class CreateWorkflowStartRequestBodyArg(BaseObject):
         :param folder: The folder object for which the workflow is configured.
         :type folder: CreateWorkflowStartRequestBodyArgFolderField
         :param type: The type of the parameters object
-        :type type: Union[None, CreateWorkflowStartRequestBodyArgTypeField], optional
+        :type type: Optional[CreateWorkflowStartRequestBodyArgTypeField], optional
         :param outcomes: A list of outcomes required to be configured at start time.
-        :type outcomes: Union[None, List[CreateWorkflowStartRequestBodyArgOutcomesField]], optional
+        :type outcomes: Optional[List[CreateWorkflowStartRequestBodyArgOutcomesField]], optional
         """
         super().__init__(**kwargs)
         self.flow = flow
