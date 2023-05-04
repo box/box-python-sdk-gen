@@ -7397,16 +7397,16 @@ class SignRequestBase(BaseObject):
         self.is_phone_verification_required_to_view = is_phone_verification_required_to_view
 
 class SignRequestCreateRequest(SignRequestBase):
-    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileMini]] = None, signature_color: Optional[SignRequestCreateRequestSignatureColorField] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, **kwargs):
+    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, signature_color: Optional[SignRequestCreateRequestSignatureColorField] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, **kwargs):
         """
         :param signers: Array of signers for the sign request. 35 is the
             max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
         :param source_files: List of files to create a signing document from. This is currently
-            limited to 10 files. Only the ID and type fields are required
+            limited to 10 files. Only the `ID` and `type` fields are required
             for each file. The array will be empty if the `source_files`
             are deleted.
-        :type source_files: Optional[List[FileMini]], optional
+        :type source_files: Optional[List[FileBase]], optional
         :param signature_color: Force a specific signature color (blue, black, or red).
         :type signature_color: Optional[SignRequestCreateRequestSignatureColorField], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
