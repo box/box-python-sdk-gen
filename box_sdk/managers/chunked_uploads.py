@@ -1,8 +1,10 @@
 from box_sdk.base_object import BaseObject
 
-from typing import Union
+from typing import Optional
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -46,27 +48,27 @@ class CreateFileUploadSessionRequestBodyArg(BaseObject):
         self.file_name = file_name
 
 class CreateFileUploadSessionForExistingFileRequestBodyArg(BaseObject):
-    def __init__(self, file_size: int, file_name: Union[None, str] = None, **kwargs):
+    def __init__(self, file_size: int, file_name: Optional[str] = None, **kwargs):
         """
         :param file_size: The total number of bytes of the file to be uploaded
         :type file_size: int
         :param file_name: The optional new name of new file
-        :type file_name: Union[None, str], optional
+        :type file_name: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.file_size = file_size
         self.file_name = file_name
 
 class GetFileUploadSessionPartsOptionsArg(BaseObject):
-    def __init__(self, offset: Union[None, int] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, offset: Optional[int] = None, limit: Optional[int] = None, **kwargs):
         """
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.offset = offset
@@ -82,7 +84,7 @@ class CreateFileUploadSessionCommitRequestBodyArg(BaseObject):
         self.parts = parts
 
 class CreateFileUploadSessionCommitOptionsArg(BaseObject):
-    def __init__(self, if_match: Union[None, str] = None, if_none_match: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Optional[str] = None, if_none_match: Optional[str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
@@ -90,13 +92,13 @@ class CreateFileUploadSessionCommitOptionsArg(BaseObject):
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type if_none_match: Union[None, str], optional
+        :type if_none_match: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.if_match = if_match

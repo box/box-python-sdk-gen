@@ -1,10 +1,12 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -27,14 +29,14 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetWebhooksOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
@@ -45,12 +47,12 @@ class CreateWebhookRequestBodyArgTargetFieldTypeField(str, Enum):
     FOLDER = 'folder'
 
 class CreateWebhookRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, CreateWebhookRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateWebhookRequestBodyArgTargetFieldTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Union[None, CreateWebhookRequestBodyArgTargetFieldTypeField], optional
+        :type type: Optional[CreateWebhookRequestBodyArgTargetFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -118,12 +120,12 @@ class UpdateWebhookByIdRequestBodyArgTargetFieldTypeField(str, Enum):
     FOLDER = 'folder'
 
 class UpdateWebhookByIdRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, UpdateWebhookByIdRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[UpdateWebhookByIdRequestBodyArgTargetFieldTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Union[None, UpdateWebhookByIdRequestBodyArgTargetFieldTypeField], optional
+        :type type: Optional[UpdateWebhookByIdRequestBodyArgTargetFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -171,15 +173,15 @@ class UpdateWebhookByIdRequestBodyArgTriggersField(str, Enum):
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
 
 class UpdateWebhookByIdRequestBodyArg(BaseObject):
-    def __init__(self, target: Union[None, UpdateWebhookByIdRequestBodyArgTargetField] = None, address: Union[None, str] = None, triggers: Union[None, List[UpdateWebhookByIdRequestBodyArgTriggersField]] = None, **kwargs):
+    def __init__(self, target: Optional[UpdateWebhookByIdRequestBodyArgTargetField] = None, address: Optional[str] = None, triggers: Optional[List[UpdateWebhookByIdRequestBodyArgTriggersField]] = None, **kwargs):
         """
         :param target: The item that will trigger the webhook
-        :type target: Union[None, UpdateWebhookByIdRequestBodyArgTargetField], optional
+        :type target: Optional[UpdateWebhookByIdRequestBodyArgTargetField], optional
         :param address: The URL that is notified by this webhook
-        :type address: Union[None, str], optional
+        :type address: Optional[str], optional
         :param triggers: An array of event names that this webhook is
             to be triggered for
-        :type triggers: Union[None, List[UpdateWebhookByIdRequestBodyArgTriggersField]], optional
+        :type triggers: Optional[List[UpdateWebhookByIdRequestBodyArgTriggersField]], optional
         """
         super().__init__(**kwargs)
         self.target = target

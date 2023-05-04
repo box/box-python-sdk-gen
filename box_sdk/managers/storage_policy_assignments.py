@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -29,12 +31,12 @@ class GetStoragePolicyAssignmentsResolvedForTypeArg(str, Enum):
     ENTERPRISE = 'enterprise'
 
 class GetStoragePolicyAssignmentsOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.marker = marker

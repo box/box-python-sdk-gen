@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -33,20 +35,20 @@ class GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField(str, Enum):
     USER = 'user'
 
 class GetLegalHoldPolicyAssignmentsOptionsArg(BaseObject):
-    def __init__(self, assign_to_type: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField] = None, assign_to_id: Union[None, str] = None, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, assign_to_type: Optional[GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField] = None, assign_to_id: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, **kwargs):
         """
         :param assign_to_type: Filters the results by the type of item the
             policy was applied to.
-        :type assign_to_type: Union[None, GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField], optional
+        :type assign_to_type: Optional[GetLegalHoldPolicyAssignmentsOptionsArgAssignToTypeField], optional
         :param assign_to_id: Filters the results by the ID of item the
             policy was applied to.
-        :type assign_to_id: Union[None, str], optional
+        :type assign_to_id: Optional[str], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -55,7 +57,7 @@ class GetLegalHoldPolicyAssignmentsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.assign_to_type = assign_to_type
@@ -95,14 +97,14 @@ class CreateLegalHoldPolicyAssignmentRequestBodyArg(BaseObject):
         self.assign_to = assign_to
 
 class GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -111,7 +113,7 @@ class GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
@@ -119,14 +121,14 @@ class GetLegalHoldPolicyAssignmentFileOnHoldOptionsArg(BaseObject):
         self.fields = fields
 
 class GetLegalHoldPolicyAssignmentFileVersionOnHoldOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -135,7 +137,7 @@ class GetLegalHoldPolicyAssignmentFileVersionOnHoldOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.marker = marker

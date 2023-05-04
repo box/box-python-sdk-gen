@@ -1,10 +1,12 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -33,15 +35,15 @@ class GetRetentionPoliciesOptionsArgPolicyTypeField(str, Enum):
     INDEFINITE = 'indefinite'
 
 class GetRetentionPoliciesOptionsArg(BaseObject):
-    def __init__(self, policy_name: Union[None, str] = None, policy_type: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField] = None, created_by_user_id: Union[None, str] = None, fields: Union[None, str] = None, limit: Union[None, int] = None, marker: Union[None, str] = None, **kwargs):
+    def __init__(self, policy_name: Optional[str] = None, policy_type: Optional[GetRetentionPoliciesOptionsArgPolicyTypeField] = None, created_by_user_id: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, **kwargs):
         """
         :param policy_name: Filters results by a case sensitive prefix of the name of
             retention policies.
-        :type policy_name: Union[None, str], optional
+        :type policy_name: Optional[str], optional
         :param policy_type: Filters results by the type of retention policy.
-        :type policy_type: Union[None, GetRetentionPoliciesOptionsArgPolicyTypeField], optional
+        :type policy_type: Optional[GetRetentionPoliciesOptionsArgPolicyTypeField], optional
         :param created_by_user_id: Filters results by the ID of the user who created policy.
-        :type created_by_user_id: Union[None, str], optional
+        :type created_by_user_id: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -50,12 +52,12 @@ class GetRetentionPoliciesOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name
@@ -78,7 +80,7 @@ class CreateRetentionPolicyRequestBodyArgRetentionTypeField(str, Enum):
     NON_MODIFIABLE = 'non-modifiable'
 
 class CreateRetentionPolicyRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: str, policy_type: CreateRetentionPolicyRequestBodyArgPolicyTypeField, disposition_action: CreateRetentionPolicyRequestBodyArgDispositionActionField, description: Union[None, str] = None, retention_length: Union[None, str] = None, retention_type: Union[None, CreateRetentionPolicyRequestBodyArgRetentionTypeField] = None, can_owner_extend_retention: Union[None, bool] = None, are_owners_notified: Union[None, bool] = None, custom_notification_recipients: Union[None, List[UserMini]] = None, **kwargs):
+    def __init__(self, policy_name: str, policy_type: CreateRetentionPolicyRequestBodyArgPolicyTypeField, disposition_action: CreateRetentionPolicyRequestBodyArgDispositionActionField, description: Optional[str] = None, retention_length: Optional[str] = None, retention_type: Optional[CreateRetentionPolicyRequestBodyArgRetentionTypeField] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, **kwargs):
         """
         :param policy_name: The name for the retention policy
         :type policy_name: str
@@ -96,14 +98,14 @@ class CreateRetentionPolicyRequestBodyArg(BaseObject):
             by users once the retention policy has expired.
         :type disposition_action: CreateRetentionPolicyRequestBodyArgDispositionActionField
         :param description: The additional text description of the retention policy.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param retention_length: The length of the retention policy. This value
             specifies the duration in days that the retention
             policy will be active for after being assigned to
             content.  If the policy has a `policy_type` of
             `indefinite`, the `retention_length` will also be
             `indefinite`.
-        :type retention_length: Union[None, str], optional
+        :type retention_length: Optional[str], optional
         :param retention_type: Specifies the retention type:
             * `modifiable`: You can modify the retention policy. For example,
             you can add or remove folders, shorten or lengthen
@@ -117,16 +119,16 @@ class CreateRetentionPolicyRequestBodyArg(BaseObject):
             such as deleting the assignment or shortening the
             policy duration. Use this type to ensure
             compliance with regulatory retention policies.
-        :type retention_type: Union[None, CreateRetentionPolicyRequestBodyArgRetentionTypeField], optional
+        :type retention_type: Optional[CreateRetentionPolicyRequestBodyArgRetentionTypeField], optional
         :param can_owner_extend_retention: Whether the owner of a file will be allowed to
             extend the retention.
-        :type can_owner_extend_retention: Union[None, bool], optional
+        :type can_owner_extend_retention: Optional[bool], optional
         :param are_owners_notified: Whether owner and co-owners of a file are notified
             when the policy nears expiration.
-        :type are_owners_notified: Union[None, bool], optional
+        :type are_owners_notified: Optional[bool], optional
         :param custom_notification_recipients: A list of users notified when
             the retention policy duration is about to end.
-        :type custom_notification_recipients: Union[None, List[UserMini]], optional
+        :type custom_notification_recipients: Optional[List[UserMini]], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name
@@ -140,7 +142,7 @@ class CreateRetentionPolicyRequestBodyArg(BaseObject):
         self.custom_notification_recipients = custom_notification_recipients
 
 class GetRetentionPolicyByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -150,7 +152,7 @@ class GetRetentionPolicyByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -160,19 +162,19 @@ class UpdateRetentionPolicyByIdRequestBodyArgDispositionActionField(str, Enum):
     REMOVE_RETENTION = 'remove_retention'
 
 class UpdateRetentionPolicyByIdRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: Union[None, str] = None, description: Union[None, str] = None, disposition_action: Union[None, UpdateRetentionPolicyByIdRequestBodyArgDispositionActionField] = None, retention_type: Union[None, str] = None, retention_length: Union[None, str] = None, status: Union[None, str] = None, can_owner_extend_retention: Union[None, bool] = None, are_owners_notified: Union[None, bool] = None, custom_notification_recipients: Union[None, List[UserMini]] = None, **kwargs):
+    def __init__(self, policy_name: Optional[str] = None, description: Optional[str] = None, disposition_action: Optional[UpdateRetentionPolicyByIdRequestBodyArgDispositionActionField] = None, retention_type: Optional[str] = None, retention_length: Optional[str] = None, status: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, **kwargs):
         """
         :param policy_name: The name for the retention policy
-        :type policy_name: Union[None, str], optional
+        :type policy_name: Optional[str], optional
         :param description: The additional text description of the retention policy.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param disposition_action: The disposition action of the retention policy.
             `permanently_delete` deletes the content
             retained by the policy permanently.
             `remove_retention` lifts retention policy
             from the content, allowing it to be deleted
             by users once the retention policy has expired.
-        :type disposition_action: Union[None, UpdateRetentionPolicyByIdRequestBodyArgDispositionActionField], optional
+        :type disposition_action: Optional[UpdateRetentionPolicyByIdRequestBodyArgDispositionActionField], optional
         :param retention_type: Specifies the retention type:
             * `modifiable`: You can modify the retention policy. For example,
             you can add or remove folders, shorten or lengthen
@@ -190,28 +192,28 @@ class UpdateRetentionPolicyByIdRequestBodyArg(BaseObject):
             `non-modifiable` type only. You can convert a
             `modifiable` policy to `non-modifiable`, but
             not the other way around.
-        :type retention_type: Union[None, str], optional
+        :type retention_type: Optional[str], optional
         :param retention_length: The length of the retention policy. This value
             specifies the duration in days that the retention
             policy will be active for after being assigned to
             content.  If the policy has a `policy_type` of
             `indefinite`, the `retention_length` will also be
             `indefinite`.
-        :type retention_length: Union[None, str], optional
+        :type retention_length: Optional[str], optional
         :param status: Used to retire a retention policy.
             If not retiring a policy, do not include this parameter
             or set it to `null`.
-        :type status: Union[None, str], optional
+        :type status: Optional[str], optional
         :param can_owner_extend_retention: Determines if the owner of items under the policy
             can extend the retention when the original retention
             duration is about to end.
-        :type can_owner_extend_retention: Union[None, bool], optional
+        :type can_owner_extend_retention: Optional[bool], optional
         :param are_owners_notified: Determines if owners and co-owners of items
             under the policy are notified when
             the retention duration is about to end.
-        :type are_owners_notified: Union[None, bool], optional
+        :type are_owners_notified: Optional[bool], optional
         :param custom_notification_recipients: A list of users notified when the retention duration is about to end.
-        :type custom_notification_recipients: Union[None, List[UserMini]], optional
+        :type custom_notification_recipients: Optional[List[UserMini]], optional
         """
         super().__init__(**kwargs)
         self.policy_name = policy_name

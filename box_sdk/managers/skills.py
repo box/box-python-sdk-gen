@@ -6,6 +6,8 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
+from typing import Optional
+
 import json
 
 from box_sdk.schemas import SkillCardsMetadata
@@ -49,10 +51,10 @@ class UpdateSkillInvocationByIdRequestBodyArgStatusField(str, Enum):
     PERMANENT_FAILURE = 'permanent_failure'
 
 class UpdateSkillInvocationByIdRequestBodyArgMetadataField(BaseObject):
-    def __init__(self, cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
+    def __init__(self, cards: Optional[List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
         :param cards: A list of Box Skill cards to apply to this file.
-        :type cards: Union[None, List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
+        :type cards: Optional[List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
         """
         super().__init__(**kwargs)
         self.cards = cards
@@ -61,12 +63,12 @@ class UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField(str, Enum):
     FILE = 'file'
 
 class UpdateSkillInvocationByIdRequestBodyArgFileField(BaseObject):
-    def __init__(self, type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+    def __init__(self, type: Optional[UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: `file`
-        :type type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField], optional
+        :type type: Optional[UpdateSkillInvocationByIdRequestBodyArgFileFieldTypeField], optional
         :param id: The ID of the file
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -76,31 +78,31 @@ class UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField(str, Enum
     FILE_VERSION = 'file_version'
 
 class UpdateSkillInvocationByIdRequestBodyArgFileVersionField(BaseObject):
-    def __init__(self, type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField] = None, id: Union[None, str] = None, **kwargs):
+    def __init__(self, type: Optional[UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: `file_version`
-        :type type: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField], optional
+        :type type: Optional[UpdateSkillInvocationByIdRequestBodyArgFileVersionFieldTypeField], optional
         :param id: The ID of the file version
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
         self.id = id
 
 class UpdateSkillInvocationByIdRequestBodyArgUsageField(BaseObject):
-    def __init__(self, unit: Union[None, str] = None, value: Union[None, int] = None, **kwargs):
+    def __init__(self, unit: Optional[str] = None, value: Optional[int] = None, **kwargs):
         """
         :param unit: `file`
-        :type unit: Union[None, str], optional
+        :type unit: Optional[str], optional
         :param value: `1`
-        :type value: Union[None, int], optional
+        :type value: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.unit = unit
         self.value = value
 
 class UpdateSkillInvocationByIdRequestBodyArg(BaseObject):
-    def __init__(self, status: UpdateSkillInvocationByIdRequestBodyArgStatusField, metadata: UpdateSkillInvocationByIdRequestBodyArgMetadataField, file: UpdateSkillInvocationByIdRequestBodyArgFileField, file_version: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionField] = None, usage: Union[None, UpdateSkillInvocationByIdRequestBodyArgUsageField] = None, **kwargs):
+    def __init__(self, status: UpdateSkillInvocationByIdRequestBodyArgStatusField, metadata: UpdateSkillInvocationByIdRequestBodyArgMetadataField, file: UpdateSkillInvocationByIdRequestBodyArgFileField, file_version: Optional[UpdateSkillInvocationByIdRequestBodyArgFileVersionField] = None, usage: Optional[UpdateSkillInvocationByIdRequestBodyArgUsageField] = None, **kwargs):
         """
         :param status: Defines the status of this invocation. Set this to `success` when setting Skill cards.
         :type status: UpdateSkillInvocationByIdRequestBodyArgStatusField
@@ -111,11 +113,11 @@ class UpdateSkillInvocationByIdRequestBodyArg(BaseObject):
         :param file: The file to assign the cards to.
         :type file: UpdateSkillInvocationByIdRequestBodyArgFileField
         :param file_version: The optional file version to assign the cards to.
-        :type file_version: Union[None, UpdateSkillInvocationByIdRequestBodyArgFileVersionField], optional
+        :type file_version: Optional[UpdateSkillInvocationByIdRequestBodyArgFileVersionField], optional
         :param usage: A descriptor that defines what items are affected by this call.
             Set this to the default values when setting a card to a `success`
             state, and leave it out in most other situations.
-        :type usage: Union[None, UpdateSkillInvocationByIdRequestBodyArgUsageField], optional
+        :type usage: Optional[UpdateSkillInvocationByIdRequestBodyArgUsageField], optional
         """
         super().__init__(**kwargs)
         self.status = status

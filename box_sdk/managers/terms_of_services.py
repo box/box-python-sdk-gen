@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -31,10 +33,10 @@ class GetTermOfServicesOptionsArgTosTypeField(str, Enum):
     MANAGED = 'managed'
 
 class GetTermOfServicesOptionsArg(BaseObject):
-    def __init__(self, tos_type: Union[None, GetTermOfServicesOptionsArgTosTypeField] = None, **kwargs):
+    def __init__(self, tos_type: Optional[GetTermOfServicesOptionsArgTosTypeField] = None, **kwargs):
         """
         :param tos_type: Limits the results to the terms of service of the given type.
-        :type tos_type: Union[None, GetTermOfServicesOptionsArgTosTypeField], optional
+        :type tos_type: Optional[GetTermOfServicesOptionsArgTosTypeField], optional
         """
         super().__init__(**kwargs)
         self.tos_type = tos_type
@@ -48,7 +50,7 @@ class CreateTermOfServiceRequestBodyArgTosTypeField(str, Enum):
     MANAGED = 'managed'
 
 class CreateTermOfServiceRequestBodyArg(BaseObject):
-    def __init__(self, status: CreateTermOfServiceRequestBodyArgStatusField, text: str, tos_type: Union[None, CreateTermOfServiceRequestBodyArgTosTypeField] = None, **kwargs):
+    def __init__(self, status: CreateTermOfServiceRequestBodyArgStatusField, text: str, tos_type: Optional[CreateTermOfServiceRequestBodyArgTosTypeField] = None, **kwargs):
         """
         :param status: Whether this terms of service is active.
         :type status: CreateTermOfServiceRequestBodyArgStatusField
@@ -57,7 +59,7 @@ class CreateTermOfServiceRequestBodyArg(BaseObject):
         :type text: str
         :param tos_type: The type of user to set the terms of
             service for.
-        :type tos_type: Union[None, CreateTermOfServiceRequestBodyArgTosTypeField], optional
+        :type tos_type: Optional[CreateTermOfServiceRequestBodyArgTosTypeField], optional
         """
         super().__init__(**kwargs)
         self.status = status

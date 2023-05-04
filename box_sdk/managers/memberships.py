@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -25,30 +27,30 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetUserMembershipsOptionsArg(BaseObject):
-    def __init__(self, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
         """
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
         self.offset = offset
 
 class GetGroupMembershipsOptionsArg(BaseObject):
-    def __init__(self, limit: Union[None, int] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
         """
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -81,14 +83,14 @@ class CreateGroupMembershipRequestBodyArgConfigurablePermissionsField(BaseObject
         super().__init__(**kwargs)
 
 class CreateGroupMembershipRequestBodyArg(BaseObject):
-    def __init__(self, user: CreateGroupMembershipRequestBodyArgUserField, group: CreateGroupMembershipRequestBodyArgGroupField, role: Union[None, CreateGroupMembershipRequestBodyArgRoleField] = None, configurable_permissions: Union[None, CreateGroupMembershipRequestBodyArgConfigurablePermissionsField] = None, **kwargs):
+    def __init__(self, user: CreateGroupMembershipRequestBodyArgUserField, group: CreateGroupMembershipRequestBodyArgGroupField, role: Optional[CreateGroupMembershipRequestBodyArgRoleField] = None, configurable_permissions: Optional[CreateGroupMembershipRequestBodyArgConfigurablePermissionsField] = None, **kwargs):
         """
         :param user: The user to add to the group.
         :type user: CreateGroupMembershipRequestBodyArgUserField
         :param group: The group to add the user to.
         :type group: CreateGroupMembershipRequestBodyArgGroupField
         :param role: The role of the user in the group.
-        :type role: Union[None, CreateGroupMembershipRequestBodyArgRoleField], optional
+        :type role: Optional[CreateGroupMembershipRequestBodyArgRoleField], optional
         :param configurable_permissions: Custom configuration for the permissions an admin
             if a group will receive. This option has no effect
             on members with a role of `member`.
@@ -97,7 +99,7 @@ class CreateGroupMembershipRequestBodyArg(BaseObject):
             Specifying a value of "null" for this object will disable
             all configurable permissions. Specifying permissions will set
             them accordingly, omitted permissions will be enabled by default.
-        :type configurable_permissions: Union[None, CreateGroupMembershipRequestBodyArgConfigurablePermissionsField], optional
+        :type configurable_permissions: Optional[CreateGroupMembershipRequestBodyArgConfigurablePermissionsField], optional
         """
         super().__init__(**kwargs)
         self.user = user
@@ -106,7 +108,7 @@ class CreateGroupMembershipRequestBodyArg(BaseObject):
         self.configurable_permissions = configurable_permissions
 
 class CreateGroupMembershipOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -116,13 +118,13 @@ class CreateGroupMembershipOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class GetGroupMembershipByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -132,7 +134,7 @@ class GetGroupMembershipByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -146,10 +148,10 @@ class UpdateGroupMembershipByIdRequestBodyArgConfigurablePermissionsField(BaseOb
         super().__init__(**kwargs)
 
 class UpdateGroupMembershipByIdRequestBodyArg(BaseObject):
-    def __init__(self, role: Union[None, UpdateGroupMembershipByIdRequestBodyArgRoleField] = None, configurable_permissions: Union[None, UpdateGroupMembershipByIdRequestBodyArgConfigurablePermissionsField] = None, **kwargs):
+    def __init__(self, role: Optional[UpdateGroupMembershipByIdRequestBodyArgRoleField] = None, configurable_permissions: Optional[UpdateGroupMembershipByIdRequestBodyArgConfigurablePermissionsField] = None, **kwargs):
         """
         :param role: The role of the user in the group.
-        :type role: Union[None, UpdateGroupMembershipByIdRequestBodyArgRoleField], optional
+        :type role: Optional[UpdateGroupMembershipByIdRequestBodyArgRoleField], optional
         :param configurable_permissions: Custom configuration for the permissions an admin
             if a group will receive. This option has no effect
             on members with a role of `member`.
@@ -158,14 +160,14 @@ class UpdateGroupMembershipByIdRequestBodyArg(BaseObject):
             Specifying a value of "null" for this object will disable
             all configurable permissions. Specifying permissions will set
             them accordingly, omitted permissions will be enabled by default.
-        :type configurable_permissions: Union[None, UpdateGroupMembershipByIdRequestBodyArgConfigurablePermissionsField], optional
+        :type configurable_permissions: Optional[UpdateGroupMembershipByIdRequestBodyArgConfigurablePermissionsField], optional
         """
         super().__init__(**kwargs)
         self.role = role
         self.configurable_permissions = configurable_permissions
 
 class UpdateGroupMembershipByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -175,7 +177,7 @@ class UpdateGroupMembershipByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

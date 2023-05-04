@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 from box_sdk.schemas import ClientError
 
@@ -17,12 +19,12 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class DownloadFileOptionsArg(BaseObject):
-    def __init__(self, range: Union[None, str] = None, boxapi: Union[None, str] = None, version: Union[None, str] = None, access_token: Union[None, str] = None, **kwargs):
+    def __init__(self, range: Optional[str] = None, boxapi: Optional[str] = None, version: Optional[str] = None, access_token: Optional[str] = None, **kwargs):
         """
         :param range: The byte range of the content to download.
             The format `bytes={start_byte}-{end_byte}` can be used to specify
             what section of the file to download.
-        :type range: Union[None, str], optional
+        :type range: Optional[str], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -30,12 +32,12 @@ class DownloadFileOptionsArg(BaseObject):
             use `shared_link=[link]&shared_link_password=[password]`.
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
-        :type boxapi: Union[None, str], optional
+        :type boxapi: Optional[str], optional
         :param version: The file version to download
-        :type version: Union[None, str], optional
+        :type version: Optional[str], optional
         :param access_token: An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication.
             When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders.
-        :type access_token: Union[None, str], optional
+        :type access_token: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.range = range

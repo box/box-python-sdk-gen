@@ -1,8 +1,10 @@
 from enum import Enum
 
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -33,7 +35,7 @@ class GetFolderTrashItemsOptionsArgSortField(str, Enum):
     SIZE = 'size'
 
 class GetFolderTrashItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, limit: Union[None, int] = None, offset: Union[None, int] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, direction: Union[None, GetFolderTrashItemsOptionsArgDirectionField] = None, sort: Union[None, GetFolderTrashItemsOptionsArgSortField] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsOptionsArgDirectionField] = None, sort: Optional[GetFolderTrashItemsOptionsArgSortField] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -43,35 +45,35 @@ class GetFolderTrashItemsOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         :param usemarker: Specifies whether to use marker-based pagination instead of
             offset-based pagination. Only one pagination method can
             be used at a time.
             By setting this value to true, the API will return a `marker` field
             that can be passed as a parameter to this endpoint to get the next
             page of the response.
-        :type usemarker: Union[None, bool], optional
+        :type usemarker: Optional[bool], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetFolderTrashItemsOptionsArgDirectionField], optional
+        :type direction: Optional[GetFolderTrashItemsOptionsArgDirectionField], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
             folders listed before files, and files listed
             before web links.
             This parameter is not supported when using marker-based pagination.
-        :type sort: Union[None, GetFolderTrashItemsOptionsArgSortField], optional
+        :type sort: Optional[GetFolderTrashItemsOptionsArgSortField], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

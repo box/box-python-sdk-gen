@@ -1,5 +1,7 @@
 from box_sdk.base_object import BaseObject
 
+from typing import Optional
+
 from typing import Union
 
 import json
@@ -30,10 +32,10 @@ class CreateInviteRequestBodyArgEnterpriseField(BaseObject):
         self.id = id
 
 class CreateInviteRequestBodyArgActionableByField(BaseObject):
-    def __init__(self, login: Union[None, str] = None, **kwargs):
+    def __init__(self, login: Optional[str] = None, **kwargs):
         """
         :param login: The login of the invited user
-        :type login: Union[None, str], optional
+        :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.login = login
@@ -51,7 +53,7 @@ class CreateInviteRequestBodyArg(BaseObject):
         self.actionable_by = actionable_by
 
 class CreateInviteOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -61,13 +63,13 @@ class CreateInviteOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
 
 class GetInviteByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -77,7 +79,7 @@ class GetInviteByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

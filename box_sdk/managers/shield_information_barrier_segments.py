@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -23,39 +25,39 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class UpdateShieldInformationBarrierSegmentByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, **kwargs):
+    def __init__(self, name: Optional[str] = None, description: Optional[str] = None, **kwargs):
         """
         :param name: The updated name for the shield information barrier segment.
-        :type name: Union[None, str], optional
+        :type name: Optional[str], optional
         :param description: The updated description for
             the shield information barrier segment.
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.name = name
         self.description = description
 
 class GetShieldInformationBarrierSegmentsOptionsArg(BaseObject):
-    def __init__(self, marker: Union[None, str] = None, limit: Union[None, int] = None, **kwargs):
+    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
         """
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.marker = marker
         self.limit = limit
 
 class CreateShieldInformationBarrierSegmentRequestBodyArg(BaseObject):
-    def __init__(self, shield_information_barrier: ShieldInformationBarrierBase, name: str, description: Union[None, str] = None, **kwargs):
+    def __init__(self, shield_information_barrier: ShieldInformationBarrierBase, name: str, description: Optional[str] = None, **kwargs):
         """
         :param name: Name of the shield information barrier segment
         :type name: str
         :param description: Description of the shield information barrier segment
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.shield_information_barrier = shield_information_barrier

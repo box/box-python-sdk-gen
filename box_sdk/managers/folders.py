@@ -1,10 +1,12 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
 from typing import List
+
+from typing import Union
 
 import json
 
@@ -27,7 +29,7 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetFolderByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, if_none_match: Union[None, str] = None, boxapi: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -41,13 +43,13 @@ class GetFolderByIdOptionsArg(BaseObject):
             applied to the file by specifying the `metadata` field as well
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `304 Not Modified` if the item has not
             changed since.
-        :type if_none_match: Union[None, str], optional
+        :type if_none_match: Optional[str], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -55,7 +57,7 @@ class GetFolderByIdOptionsArg(BaseObject):
             use `shared_link=[link]&shared_link_password=[password]`.
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
-        :type boxapi: Union[None, str], optional
+        :type boxapi: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -68,10 +70,10 @@ class UpdateFolderByIdRequestBodyArgSyncStateField(str, Enum):
     PARTIALLY_SYNCED = 'partially_synced'
 
 class UpdateFolderByIdRequestBodyArgParentField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of the new parent folder
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -82,18 +84,18 @@ class UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField(str, Enum):
     COLLABORATORS = 'collaborators'
 
 class UpdateFolderByIdRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
-    def __init__(self, can_download: Union[None, bool] = None, **kwargs):
+    def __init__(self, can_download: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
             This can only be set when `access` is set to
             `open` or `company`.
-        :type can_download: Union[None, bool], optional
+        :type can_download: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
 
 class UpdateFolderByIdRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Union[None, str] = None, vanity_name: Union[None, str] = None, unshared_at: Union[None, str] = None, permissions: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+    def __init__(self, access: Optional[UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderByIdRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -105,20 +107,20 @@ class UpdateFolderByIdRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Optional[UpdateFolderByIdRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             A password can only be set when `access` is set to `open`.
-        :type password: Union[None, str], optional
+        :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
             for example `https://app.box.com/v/my-shared-link`.
             Custom URLs should not be used when sharing sensitive content
             as vanity URLs are a lot easier to guess than regular shared links.
-        :type vanity_name: Union[None, str], optional
+        :type vanity_name: Optional[str], optional
         :param unshared_at: The timestamp at which this shared link will
             expire. This field can only be set by
             users with paid accounts.
-        :type unshared_at: Union[None, str], optional
+        :type unshared_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -132,7 +134,7 @@ class UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum)
     COLLABORATORS = 'collaborators'
 
 class UpdateFolderByIdRequestBodyArgFolderUploadEmailField(BaseObject):
-    def __init__(self, access: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
+    def __init__(self, access: Optional[UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
         """
         :param access: When this parameter has been set, users can email files
             to the email address that has been automatically
@@ -144,51 +146,51 @@ class UpdateFolderByIdRequestBodyArgFolderUploadEmailField(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField], optional
+        :type access: Optional[UpdateFolderByIdRequestBodyArgFolderUploadEmailFieldAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
 
 class UpdateFolderByIdRequestBodyArgCollectionsField(BaseObject):
-    def __init__(self, id: Union[None, str] = None, type: Union[None, str] = None, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier for this object
-        :type id: Union[None, str], optional
+        :type id: Optional[str], optional
         :param type: The type for this object
-        :type type: Union[None, str], optional
+        :type type: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 class UpdateFolderByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Union[None, str] = None, description: Union[None, str] = None, sync_state: Union[None, UpdateFolderByIdRequestBodyArgSyncStateField] = None, can_non_owners_invite: Union[None, bool] = None, parent: Union[None, UpdateFolderByIdRequestBodyArgParentField] = None, shared_link: Union[None, UpdateFolderByIdRequestBodyArgSharedLinkField] = None, folder_upload_email: Union[None, UpdateFolderByIdRequestBodyArgFolderUploadEmailField] = None, tags: Union[None, List[str]] = None, is_collaboration_restricted_to_enterprise: Union[None, bool] = None, collections: Union[None, List[UpdateFolderByIdRequestBodyArgCollectionsField]] = None, can_non_owners_view_collaborators: Union[None, bool] = None, **kwargs):
+    def __init__(self, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdRequestBodyArgSyncStateField] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdRequestBodyArgParentField] = None, shared_link: Optional[UpdateFolderByIdRequestBodyArgSharedLinkField] = None, folder_upload_email: Optional[UpdateFolderByIdRequestBodyArgFolderUploadEmailField] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List[UpdateFolderByIdRequestBodyArgCollectionsField]] = None, can_non_owners_view_collaborators: Optional[bool] = None, **kwargs):
         """
         :param name: The optional new name for this folder.
-        :type name: Union[None, str], optional
+        :type name: Optional[str], optional
         :param description: The optional description of this folder
-        :type description: Union[None, str], optional
+        :type description: Optional[str], optional
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Union[None, UpdateFolderByIdRequestBodyArgSyncStateField], optional
+        :type sync_state: Optional[UpdateFolderByIdRequestBodyArgSyncStateField], optional
         :param can_non_owners_invite: Specifies if users who are not the owner
             of the folder can invite new collaborators to the folder.
-        :type can_non_owners_invite: Union[None, bool], optional
+        :type can_non_owners_invite: Optional[bool], optional
         :param parent: The parent folder for this folder. Use this to move
             the folder or to restore it out of the trash.
-        :type parent: Union[None, UpdateFolderByIdRequestBodyArgParentField], optional
+        :type parent: Optional[UpdateFolderByIdRequestBodyArgParentField], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
             modify them, and then update this field.
             There is a limit of 100 tags per item, and 10,000
             unique tags per enterprise.
-        :type tags: Union[None, List[str]], optional
+        :type tags: Optional[List[str]], optional
         :param is_collaboration_restricted_to_enterprise: Specifies if new invites to this folder are restricted to users
             within the enterprise. This does not affect existing
             collaborations.
-        :type is_collaboration_restricted_to_enterprise: Union[None, bool], optional
+        :type is_collaboration_restricted_to_enterprise: Optional[bool], optional
         :param collections: An array of collections to make this folder
             a member of. Currently
             we only support the `favorites` collection.
@@ -197,7 +199,7 @@ class UpdateFolderByIdRequestBodyArg(BaseObject):
             Passing an empty array `[]` or `null` will remove
             the folder from all collections.
             [1]: ../advanced-files-and-folders/#get-collections
-        :type collections: Union[None, List[UpdateFolderByIdRequestBodyArgCollectionsField]], optional
+        :type collections: Optional[List[UpdateFolderByIdRequestBodyArgCollectionsField]], optional
         :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
             this folder from viewing other collaborations on
             this folder.
@@ -206,7 +208,7 @@ class UpdateFolderByIdRequestBodyArg(BaseObject):
             When setting this field to `false`, it is required
             to also set `can_non_owners_invite_collaborators` to
             `false` if it has not already been set.
-        :type can_non_owners_view_collaborators: Union[None, bool], optional
+        :type can_non_owners_view_collaborators: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -222,7 +224,7 @@ class UpdateFolderByIdRequestBodyArg(BaseObject):
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
 
 class UpdateFolderByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, if_match: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, if_match: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -232,21 +234,21 @@ class UpdateFolderByIdOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
         self.if_match = if_match
 
 class DeleteFolderByIdOptionsArg(BaseObject):
-    def __init__(self, if_match: Union[None, str] = None, recursive: Union[None, bool] = None, **kwargs):
+    def __init__(self, if_match: Optional[str] = None, recursive: Optional[bool] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
@@ -254,10 +256,10 @@ class DeleteFolderByIdOptionsArg(BaseObject):
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         :param recursive: Delete a folder that is not empty by recursively deleting the
             folder and all of its content.
-        :type recursive: Union[None, bool], optional
+        :type recursive: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.if_match = if_match
@@ -274,7 +276,7 @@ class GetFolderItemsOptionsArgDirectionField(str, Enum):
     DESC = 'DESC'
 
 class GetFolderItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, usemarker: Union[None, bool] = None, marker: Union[None, str] = None, offset: Union[None, int] = None, limit: Union[None, int] = None, boxapi: Union[None, str] = None, sort: Union[None, GetFolderItemsOptionsArgSortField] = None, direction: Union[None, GetFolderItemsOptionsArgDirectionField] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, boxapi: Optional[str] = None, sort: Optional[GetFolderItemsOptionsArgSortField] = None, direction: Optional[GetFolderItemsOptionsArgDirectionField] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -288,25 +290,25 @@ class GetFolderItemsOptionsArg(BaseObject):
             applied to the file by specifying the `metadata` field as well
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         :param usemarker: Specifies whether to use marker-based pagination instead of
             offset-based pagination. Only one pagination method can
             be used at a time.
             By setting this value to true, the API will return a `marker` field
             that can be passed as a parameter to this endpoint to get the next
             page of the response.
-        :type usemarker: Union[None, bool], optional
+        :type usemarker: Optional[bool], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         :param limit: The maximum number of items to return per page.
-        :type limit: Union[None, int], optional
+        :type limit: Optional[int], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -314,7 +316,7 @@ class GetFolderItemsOptionsArg(BaseObject):
             use `shared_link=[link]&shared_link_password=[password]`.
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
-        :type boxapi: Union[None, str], optional
+        :type boxapi: Optional[str], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
@@ -322,10 +324,10 @@ class GetFolderItemsOptionsArg(BaseObject):
             before web links.
             This parameter is not supported for marker-based pagination
             on the root folder (the folder with an ID of `0`).
-        :type sort: Union[None, GetFolderItemsOptionsArgSortField], optional
+        :type sort: Optional[GetFolderItemsOptionsArgSortField], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Union[None, GetFolderItemsOptionsArgDirectionField], optional
+        :type direction: Optional[GetFolderItemsOptionsArgDirectionField], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -351,7 +353,7 @@ class CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField(str, Enum):
     COLLABORATORS = 'collaborators'
 
 class CreateFolderRequestBodyArgFolderUploadEmailField(BaseObject):
-    def __init__(self, access: Union[None, CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
+    def __init__(self, access: Optional[CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField] = None, **kwargs):
         """
         :param access: When this parameter has been set, users can email files
             to the email address that has been automatically
@@ -363,7 +365,7 @@ class CreateFolderRequestBodyArgFolderUploadEmailField(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Union[None, CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField], optional
+        :type access: Optional[CreateFolderRequestBodyArgFolderUploadEmailFieldAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -374,7 +376,7 @@ class CreateFolderRequestBodyArgSyncStateField(str, Enum):
     PARTIALLY_SYNCED = 'partially_synced'
 
 class CreateFolderRequestBodyArg(BaseObject):
-    def __init__(self, name: str, parent: CreateFolderRequestBodyArgParentField, folder_upload_email: Union[None, CreateFolderRequestBodyArgFolderUploadEmailField] = None, sync_state: Union[None, CreateFolderRequestBodyArgSyncStateField] = None, **kwargs):
+    def __init__(self, name: str, parent: CreateFolderRequestBodyArgParentField, folder_upload_email: Optional[CreateFolderRequestBodyArgFolderUploadEmailField] = None, sync_state: Optional[CreateFolderRequestBodyArgSyncStateField] = None, **kwargs):
         """
         :param name: The name for the new folder.
             There are some restrictions to the file name. Names containing
@@ -389,7 +391,7 @@ class CreateFolderRequestBodyArg(BaseObject):
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Union[None, CreateFolderRequestBodyArgSyncStateField], optional
+        :type sync_state: Optional[CreateFolderRequestBodyArgSyncStateField], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -398,7 +400,7 @@ class CreateFolderRequestBodyArg(BaseObject):
         self.sync_state = sync_state
 
 class CreateFolderOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -408,7 +410,7 @@ class CreateFolderOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields
@@ -423,7 +425,7 @@ class CopyFolderRequestBodyArgParentField(BaseObject):
         self.id = id
 
 class CopyFolderRequestBodyArg(BaseObject):
-    def __init__(self, parent: CopyFolderRequestBodyArgParentField, name: Union[None, str] = None, **kwargs):
+    def __init__(self, parent: CopyFolderRequestBodyArgParentField, name: Optional[str] = None, **kwargs):
         """
         :param parent: The destination folder to copy the folder to.
         :type parent: CopyFolderRequestBodyArgParentField
@@ -434,14 +436,14 @@ class CopyFolderRequestBodyArg(BaseObject):
             prohibited.
             Additionally, the names `.` and `..` are
             not allowed either.
-        :type name: Union[None, str], optional
+        :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.parent = parent
         self.name = name
 
 class CopyFolderOptionsArg(BaseObject):
-    def __init__(self, fields: Union[None, str] = None, **kwargs):
+    def __init__(self, fields: Optional[str] = None, **kwargs):
         """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
@@ -451,7 +453,7 @@ class CopyFolderOptionsArg(BaseObject):
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Union[None, str], optional
+        :type fields: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.fields = fields

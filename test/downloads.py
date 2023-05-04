@@ -27,7 +27,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 client: Client = Client(auth=auth)
 
 def test_download_file():
-    new_file_name = get_uuid()
+    new_file_name: str = get_uuid()
     file_content_stream = generate_byte_stream()
     uploaded_files = client.uploads.upload_file(UploadFileRequestBodyArg(attributes=UploadFileRequestBodyArgAttributesField(name=new_file_name, parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')), file=file_content_stream))
     uploaded_file = uploaded_files.entries[0]

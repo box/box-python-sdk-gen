@@ -96,3 +96,6 @@ class BaseObject:
             return annotation.from_dict(value)
         except Exception:
             return value
+
+    def __repr__(self) -> str:
+        return f'{self.__class__} {self.to_dict()}'

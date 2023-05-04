@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
+
+from typing import Union
 
 import json
 
@@ -25,7 +27,7 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class UpdateFileRequestByIdOptionsArg(BaseObject):
-    def __init__(self, if_match: Union[None, str] = None, **kwargs):
+    def __init__(self, if_match: Optional[str] = None, **kwargs):
         """
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
@@ -33,7 +35,7 @@ class UpdateFileRequestByIdOptionsArg(BaseObject):
             into this header and the endpoint will fail
             with a `412 Precondition Failed` if it
             has changed since.
-        :type if_match: Union[None, str], optional
+        :type if_match: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.if_match = if_match

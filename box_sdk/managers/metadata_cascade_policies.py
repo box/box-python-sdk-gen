@@ -1,8 +1,10 @@
-from typing import Union
+from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Union
 
 import json
 
@@ -27,21 +29,21 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class GetMetadataCascadePoliciesOptionsArg(BaseObject):
-    def __init__(self, owner_enterprise_id: Union[None, str] = None, marker: Union[None, str] = None, offset: Union[None, int] = None, **kwargs):
+    def __init__(self, owner_enterprise_id: Optional[str] = None, marker: Optional[str] = None, offset: Optional[int] = None, **kwargs):
         """
         :param owner_enterprise_id: The ID of the enterprise ID for which to find metadata
             cascade policies. If not specified, it defaults to the
             current enterprise.
-        :type owner_enterprise_id: Union[None, str], optional
+        :type owner_enterprise_id: Optional[str], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
-        :type marker: Union[None, str], optional
+        :type marker: Optional[str], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
             with a 400 response.
-        :type offset: Union[None, int], optional
+        :type offset: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.owner_enterprise_id = owner_enterprise_id
