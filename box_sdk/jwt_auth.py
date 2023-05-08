@@ -2,12 +2,16 @@ from datetime import datetime, timedelta
 import json
 import random
 import string
-import jwt
 
 from typing import Optional, Any
 from urllib.parse import urlencode
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
+
+try:
+    import jwt
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import serialization
+except ImportError:
+    jwt, default_backend, serialization = None, None, None
 
 from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
 from .fetch import fetch, FetchResponse, FetchOptions
@@ -116,6 +120,12 @@ class JWTAuth:
         :param config:
             Configuration object of Client Credentials Grant auth.
         """
+        if None in (default_backend, serialization, jwt):
+            raise Exception(
+                'Missing dependencies required for JWTAuth. To install them use command: '
+                '`pip install "boxsdk@git+https://github.com/box/box-python-sdk-generated.git#boxsdk[jwt]"`'
+            )
+
         self.config = config
         self.token = None
 
