@@ -33,11 +33,11 @@ client: Client = Client(auth=auth)
 def test_upload_file_and_file_version():
     new_file_name: str = get_uuid()
     file_content_stream = generate_byte_stream()
-    uploaded_files = client.uploads.upload_file(UploadFileRequestBodyArg(attributes=UploadFileRequestBodyArgAttributesField(name=new_file_name, parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')), file=file_content_stream))
-    uploaded_file = uploaded_files.entries[0]
+    uploaded_files: Files = client.uploads.upload_file(UploadFileRequestBodyArg(attributes=UploadFileRequestBodyArgAttributesField(name=new_file_name, parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')), file=file_content_stream))
+    uploaded_file: Files = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
-    uploaded_files_version = client.uploads.upload_file_version(uploaded_file.id, UploadFileVersionRequestBodyArg(attributes=UploadFileVersionRequestBodyArgAttributesField(name=new_file_version_name), file=file_content_stream))
-    new_file_version = uploaded_files_version.entries[0]
+    uploaded_files_version: Files = client.uploads.upload_file_version(uploaded_file.id, UploadFileVersionRequestBodyArg(attributes=UploadFileVersionRequestBodyArgAttributesField(name=new_file_version_name), file=file_content_stream))
+    new_file_version: Files = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name
     client.files.delete_file_by_id(new_file_version.id)

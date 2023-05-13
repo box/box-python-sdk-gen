@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
+import re
+
 from typing import Union
 
 import json
@@ -65,6 +67,8 @@ class UploadFileVersionRequestBodyArg(BaseObject):
         :type file: str
         """
         super().__init__(**kwargs)
+        if isinstance(file, str) and not re.match('^[01]+$', file):
+            raise Exception('Invalid binary provided for constructor of UploadFileVersionRequestBodyArg in argument file')
         self.attributes = attributes
         self.file = file
 
@@ -149,6 +153,8 @@ class UploadFileRequestBodyArg(BaseObject):
         :type file: str
         """
         super().__init__(**kwargs)
+        if isinstance(file, str) and not re.match('^[01]+$', file):
+            raise Exception('Invalid binary provided for constructor of UploadFileRequestBodyArg in argument file')
         self.attributes = attributes
         self.file = file
 

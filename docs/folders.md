@@ -15,7 +15,6 @@ iterate through a folder's contents and perform other common folder operations (
 - [Move a Folder](#move-a-folder)
 - [Rename a Folder](#rename-a-folder)
 - [Delete a Folder](#delete-a-folder)
-- [Restore a Folder from Trash](#restore-a-folder-from-trash)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -169,19 +168,4 @@ client.folders.delete_folder_by_id(
     DeleteFolderByIdOptionsArg(recursive=True)
 )
 print('Folder with id: 12345 was successfully deleted')
-```
-
-# Restore a Folder from Trash
-
-To restore a folder that has been moved to the trash, call `restore_folder_from_trash` method.
-An optional new parent ID can be provided to restore the folder to in case the original folder has been deleted.
-
-```python
-from box_sdk.managers.folders import RestoreFolderFromTrashRequestBodyArg
-
-restored_folder = client.folders.restore_folder_from_trash(
-  '12345',
-  RestoreFolderFromTrashRequestBodyArg(id='54321')
-)
-print(f'Folder with id: {restored_folder.id} was successfully restored to folder: {restored_folder.parent.name}')
 ```

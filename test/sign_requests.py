@@ -42,17 +42,17 @@ def test_create_get_cancel_and_list_sign_request():
     signer_email: str = ''.join([get_uuid(), '@box.com'])
     file_to_sign = upload_new_file()
     destination_folder = create_new_folder()
-    created_sign_request = client.sign_requests.create_sign_request(SignRequestCreateRequest(signers=[SignRequestCreateSigner(email=signer_email)], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value), source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)]))
+    created_sign_request: SignRequest = client.sign_requests.create_sign_request(SignRequestCreateRequest(signers=[SignRequestCreateSigner(email=signer_email)], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value), source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)]))
     assert created_sign_request.sign_files.files[0].name == file_to_sign.name
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.parent_folder.id == destination_folder.id
-    new_sign_request = client.sign_requests.get_sign_request_by_id(created_sign_request.id)
+    new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(created_sign_request.id)
     assert new_sign_request.sign_files.files[0].name == file_to_sign.name
     assert new_sign_request.signers[1].email == signer_email
     assert new_sign_request.parent_folder.id == destination_folder.id
-    cancelled_sign_request = client.sign_requests.cancel_sign_request(created_sign_request.id)
+    cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(created_sign_request.id)
     assert cancelled_sign_request.status == SignRequestStatusField.CANCELLED.value
-    sign_requests = client.sign_requests.get_sign_requests()
+    sign_requests: SignRequests = client.sign_requests.get_sign_requests()
     assert sign_requests.entries[0].type == SignRequestTypeField.SIGN_REQUEST.value
     client.folders.delete_folder_by_id(destination_folder.id, DeleteFolderByIdOptionsArg(recursive=True))
     client.files.delete_file_by_id(file_to_sign.id)
