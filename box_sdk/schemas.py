@@ -1723,11 +1723,8 @@ class FileVersionMini(FileVersionBase):
 class FileMini(FileBase):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileBase._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileBase._json_to_fields_mapping}
-    def __init__(self, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -1739,6 +1736,9 @@ class FileMini(FileBase):
         :type type: FileBaseTypeField
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
@@ -1746,8 +1746,8 @@ class FileMini(FileBase):
         """
         super().__init__(id=id, type=type, etag=etag, **kwargs)
         self.sequence_id = sequence_id
-        self.sha_1 = sha_1
         self.name = name
+        self.sha_1 = sha_1
         self.file_version = file_version
 
 class SignRequestSignFilesField(BaseObject):
@@ -1785,27 +1785,21 @@ class FilesUnderRetention(BaseObject):
 class FileConflict(FileMini):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileMini._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileMini._json_to_fields_mapping}
-    def __init__(self, sequence_id: str, id: str, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, type: FileBaseTypeField = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, id: str = None, type: FileBaseTypeField = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param sequence_id: The unique identifier that represent a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-        :type sequence_id: str
-        :param id: `file`
-        :type id: str
         :param sha_1: The SHA1 hash of the file.
         :type sha_1: Optional[str], optional
         :param type: The name of the file
         :type type: FileBaseTypeField, optional
+        :param sequence_id: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha_1=None, id=id, type=type, name=name, file_version=None, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=None, file_version=None, etag=etag, **kwargs)
         self.sha_1 = sha_1
         self.file_version = file_version
 
@@ -4022,14 +4016,14 @@ class UserBase(BaseObject):
         self.id = id
 
 class UserCollaborations(UserBase):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
-        :type name: str
-        :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
+        :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
@@ -4038,14 +4032,14 @@ class UserCollaborations(UserBase):
         self.login = login
 
 class UserMini(UserBase):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
@@ -4054,12 +4048,8 @@ class UserMini(UserBase):
         self.login = login
 
 class User(UserMini):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param created_at: When the user object was created
@@ -4092,10 +4082,14 @@ class User(UserMini):
             the email address to which notifications are sent instead of
             to the primary email address.
         :type notification_email: Optional[UserNotificationEmailField], optional
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
-        super().__init__(name=name, login=login, type=type, id=id, **kwargs)
+        super().__init__(type=type, name=name, login=login, id=id, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.language = language
@@ -5156,25 +5150,8 @@ class FileFullLockField(BaseObject):
         self.app_type = app_type
 
 class File(FileMini):
-    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param description: The optional description of this file
-        :type description: str
-        :param size: The file size in bytes. Be careful parsing this integer as it can
-            get very large and cause an integer overflow.
-        :type size: int
-        :param created_at: The date and time when the file was created on Box.
-        :type created_at: str
-        :param modified_at: The date and time when the file was last updated on Box.
-        :type modified_at: str
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FileItemStatusField
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -5184,6 +5161,15 @@ class File(FileMini):
         :type id: str
         :param type: `file`
         :type type: FileBaseTypeField
+        :param description: The optional description of this file
+        :type description: Optional[str], optional
+        :param size: The file size in bytes. Be careful parsing this integer as it can
+            get very large and cause an integer overflow.
+        :type size: Optional[int], optional
+        :param created_at: The date and time when the file was created on Box.
+        :type created_at: Optional[str], optional
+        :param modified_at: The date and time when the file was last updated on Box.
+        :type modified_at: Optional[str], optional
         :param trashed_at: The time at which this file was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this file is expected to be purged
@@ -5195,29 +5181,37 @@ class File(FileMini):
         :param content_modified_at: The date and time at which this file was last updated,
             which might be before it was uploaded to Box.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FileItemStatusField], optional
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
         self.description = description
         self.size = size
         self.path_collection = path_collection
         self.created_at = created_at
         self.modified_at = modified_at
-        self.modified_by = modified_by
-        self.owned_by = owned_by
-        self.item_status = item_status
         self.trashed_at = trashed_at
         self.purged_at = purged_at
         self.content_created_at = content_created_at
         self.content_modified_at = content_modified_at
         self.created_by = created_by
+        self.modified_by = modified_by
+        self.owned_by = owned_by
         self.shared_link = shared_link
         self.parent = parent
+        self.item_status = item_status
 
 class Files(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[File]] = None, **kwargs):
@@ -5899,17 +5893,8 @@ class Items(BaseObject):
         self.entries = entries
 
 class Folder(FolderMini):
-    def __init__(self, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param size: The folder size in bytes.
-            Be careful parsing this integer as its
-            value can get very large.
-        :type size: int
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FolderItemStatusField
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting a folder in the web application
@@ -5927,6 +5912,10 @@ class Folder(FolderMini):
             be `null` for some folders such as the root folder or the trash
             folder.
         :type modified_at: Optional[str], optional
+        :param size: The folder size in bytes.
+            Be careful parsing this integer as its
+            value can get very large.
+        :type size: Optional[int], optional
         :param trashed_at: The time at which this folder was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this folder is expected to be purged
@@ -5937,6 +5926,11 @@ class Folder(FolderMini):
         :type content_created_at: Optional[str], optional
         :param content_modified_at: The date and time at which this folder was last updated.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
@@ -5945,23 +5939,23 @@ class Folder(FolderMini):
         :type etag: Optional[str], optional
         """
         super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.description = description
         self.size = size
         self.path_collection = path_collection
         self.created_by = created_by
         self.modified_by = modified_by
-        self.owned_by = owned_by
-        self.item_status = item_status
-        self.item_collection = item_collection
-        self.created_at = created_at
-        self.modified_at = modified_at
-        self.description = description
         self.trashed_at = trashed_at
         self.purged_at = purged_at
         self.content_created_at = content_created_at
         self.content_modified_at = content_modified_at
+        self.owned_by = owned_by
         self.shared_link = shared_link
         self.folder_upload_email = folder_upload_email
         self.parent = parent
+        self.item_status = item_status
+        self.item_collection = item_collection
 
 class SearchResultWithSharedLink(BaseObject):
     def __init__(self, accessible_via_shared_link: Optional[str] = None, item: Optional[Union[File, Folder, WebLink]] = None, type: Optional[str] = None, **kwargs):
@@ -6151,17 +6145,8 @@ class FileVersionLegalHolds(BaseObject):
         self.entries = entries
 
 class FolderFull(Folder):
-    def __init__(self, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param size: The folder size in bytes.
-            Be careful parsing this integer as its
-            value can get very large.
-        :type size: int
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FolderItemStatusField
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting a folder in the web application
@@ -6202,6 +6187,10 @@ class FolderFull(Folder):
             be `null` for some folders such as the root folder or the trash
             folder.
         :type modified_at: Optional[str], optional
+        :param size: The folder size in bytes.
+            Be careful parsing this integer as its
+            value can get very large.
+        :type size: Optional[int], optional
         :param trashed_at: The time at which this folder was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this folder is expected to be purged
@@ -6212,6 +6201,11 @@ class FolderFull(Folder):
         :type content_created_at: Optional[str], optional
         :param content_modified_at: The date and time at which this folder was last updated.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
@@ -6219,7 +6213,7 @@ class FolderFull(Folder):
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, owned_by=owned_by, item_status=item_status, item_collection=item_collection, id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, owned_by=owned_by, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, item_status=item_status, item_collection=item_collection, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
         self.sync_state = sync_state
         self.has_collaborations = has_collaborations
         self.permissions = permissions
@@ -6719,25 +6713,8 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self.url = url
 
 class FileFull(File):
-    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param description: The optional description of this file
-        :type description: str
-        :param size: The file size in bytes. Be careful parsing this integer as it can
-            get very large and cause an integer overflow.
-        :type size: int
-        :param created_at: The date and time when the file was created on Box.
-        :type created_at: str
-        :param modified_at: The date and time when the file was last updated on Box.
-        :type modified_at: str
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FileItemStatusField
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -6776,6 +6753,15 @@ class FileFull(File):
         :param shared_link_permission_options: A list of the types of roles that user can be invited at
             when sharing this file.
         :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
+        :param description: The optional description of this file
+        :type description: Optional[str], optional
+        :param size: The file size in bytes. Be careful parsing this integer as it can
+            get very large and cause an integer overflow.
+        :type size: Optional[int], optional
+        :param created_at: The date and time when the file was created on Box.
+        :type created_at: Optional[str], optional
+        :param modified_at: The date and time when the file was last updated on Box.
+        :type modified_at: Optional[str], optional
         :param trashed_at: The time at which this file was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this file is expected to be purged
@@ -6787,14 +6773,22 @@ class FileFull(File):
         :param content_modified_at: The date and time at which this file was last updated,
             which might be before it was uploaded to Box.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FileItemStatusField], optional
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, modified_by=modified_by, owned_by=owned_by, item_status=item_status, sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, shared_link=shared_link, parent=parent, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, modified_by=modified_by, owned_by=owned_by, shared_link=shared_link, parent=parent, item_status=item_status, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
         self.version_number = version_number
         self.comment_count = comment_count
         self.permissions = permissions
@@ -7931,12 +7925,8 @@ class TrackingCode(BaseObject):
         self.value = value
 
 class UserFull(User):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param role: The user’s enterprise role
@@ -7999,10 +7989,14 @@ class UserFull(User):
             the email address to which notifications are sent instead of
             to the primary email address.
         :type notification_email: Optional[UserNotificationEmailField], optional
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
-        super().__init__(name=name, login=login, type=type, created_at=created_at, modified_at=modified_at, language=language, timezone=timezone, space_amount=space_amount, space_used=space_used, max_upload_size=max_upload_size, status=status, job_title=job_title, phone=phone, address=address, avatar_url=avatar_url, notification_email=notification_email, id=id, **kwargs)
+        super().__init__(type=type, created_at=created_at, modified_at=modified_at, language=language, timezone=timezone, space_amount=space_amount, space_used=space_used, max_upload_size=max_upload_size, status=status, job_title=job_title, phone=phone, address=address, avatar_url=avatar_url, notification_email=notification_email, name=name, login=login, id=id, **kwargs)
         self.role = role
         self.tracking_codes = tracking_codes
         self.can_see_managed_users = can_see_managed_users
