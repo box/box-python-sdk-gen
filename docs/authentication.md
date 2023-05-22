@@ -111,7 +111,7 @@ make calls as that user. See the [API documentation](https://developer.box.com/)
 for detailed instructions on how to use app auth.
 
 Clients for making calls as an App User can be created with the same JSON JWT config file generated through the
-[Box Developer Console][dev_console], but it is also required to call `auth.authenticate_user('USER_ID')`, with
+[Box Developer Console][dev_console], but it is also required to call `auth.as_user('USER_ID')`, with
 a user ID you want to authenticate.
 
 ```python
@@ -120,7 +120,7 @@ from box_sdk.jwt_auth import JWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/settings.json')
 auth = JWTAuth(config=jwt_config)
-auth.authenticate_user('USER_ID')
+auth.as_user('USER_ID')
 user_client = Client(auth=auth)
 ```
 
@@ -224,15 +224,15 @@ client = Client(auth=auth)
 In order to switch between being authenticated as Service Account and a User you can call:
 
 ```python
-auth.authenticate_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
+auth.as_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
 ```
 
 to authenticate as enterprise or
 
 ```python
-auth.authenticate_user(user_id='YOUR_USER_ID')
+auth.as_user(user_id='YOUR_USER_ID')
 ```
 
-to authenticate as User with provided ID.
+to authenticate as User with provided ID. The new token will be automatically fetched with a next API call.
 
 [ccg_guide]: https://developer.box.com/guides/authentication/client-credentials/client-credentials-setup/
