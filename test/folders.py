@@ -10,6 +10,8 @@ from box_sdk.schemas import FolderBaseTypeField
 
 from box_sdk.managers.folders import CreateFolderRequestBodyArg
 
+from box_sdk.managers.folders import GetFolderByIdOptionsArg
+
 from box_sdk.managers.folders import CopyFolderRequestBodyArgParentField
 
 from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArgParentField
@@ -37,6 +39,12 @@ def test_get_folder_info():
     assert root_folder.id == '0'
     assert root_folder.name == 'All Files'
     assert root_folder.type == FolderBaseTypeField.FOLDER.value
+
+def test_get_folder_full_info_with_extra_fields():
+    root_folder: FolderFull = client.folders.get_folder_by_id('0', GetFolderByIdOptionsArg(fields='has_collaborations,tags'))
+    assert root_folder.id == '0'
+    assert root_folder.has_collaborations == False
+    assert len(root_folder.tags) == 0
 
 def test_create_and_delete_folder():
     new_folder_name: str = get_uuid()

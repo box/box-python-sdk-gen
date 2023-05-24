@@ -370,6 +370,25 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         super().__init__(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at, **kwargs)
         self.folder = folder
 
+class IntegrationMappingSlackCreateRequestPartnerItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequestBoxItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequestOptionsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequest(BaseObject):
+    def __init__(self, partner_item: IntegrationMappingSlackCreateRequestPartnerItemField, box_item: IntegrationMappingSlackCreateRequestBoxItemField, options: Optional[IntegrationMappingSlackCreateRequestOptionsField] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.partner_item = partner_item
+        self.box_item = box_item
+        self.options = options
+
 class ClientErrorTypeField(str, Enum):
     ERROR = 'error'
 
@@ -2201,6 +2220,78 @@ class FolderLockLockedOperationsField(BaseObject):
         self.move = move
         self.delete = delete
 
+class IntegrationMappingTypeField(str, Enum):
+    INTEGRATION_MAPPING = 'integration_mapping'
+
+class IntegrationMappingBoxItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingOptionsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingCreatedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingModifiedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingBaseIntegrationTypeField(str, Enum):
+    SLACK = 'slack'
+
+class IntegrationMappingBase(BaseObject):
+    def __init__(self, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.integration_type = integration_type
+
+class IntegrationMappingMiniPartnerItemTypeField(str, Enum):
+    CHANNEL = 'channel'
+
+class IntegrationMappingMiniBoxItemTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class IntegrationMappingMini(IntegrationMappingBase):
+    def __init__(self, partner_item_id: Optional[str] = None, partner_item_type: Optional[IntegrationMappingMiniPartnerItemTypeField] = None, box_item_id: Optional[str] = None, box_item_type: Optional[IntegrationMappingMiniBoxItemTypeField] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param partner_item_id: ID of the mapped partner item
+        :type partner_item_id: Optional[str], optional
+        :param partner_item_type: Domain-specific type of the mapped partner item
+        :type partner_item_type: Optional[IntegrationMappingMiniPartnerItemTypeField], optional
+        :param box_item_id: ID of the Box item mapped to the object referenced in `partner_item_id`
+        :type box_item_id: Optional[str], optional
+        :param box_item_type: Type of the Box object referenced in `box_item_id`
+        :type box_item_type: Optional[IntegrationMappingMiniBoxItemTypeField], optional
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(id=id, integration_type=integration_type, **kwargs)
+        self.partner_item_id = partner_item_id
+        self.partner_item_type = partner_item_type
+        self.box_item_id = box_item_id
+        self.box_item_type = box_item_type
+
 class GroupsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
@@ -4014,6 +4105,22 @@ class UserBase(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
+class UserIntegrationMappings(UserBase):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
+        """
+        :param type: `user`
+        :type type: UserBaseTypeField
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
+        :param id: The unique identifier for this user
+        :type id: Optional[str], optional
+        """
+        super().__init__(type=type, id=id, **kwargs)
+        self.name = name
+        self.login = login
 
 class UserCollaborations(UserBase):
     def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -7038,6 +7145,120 @@ class KeywordSkillCard(BaseObject):
         self.entries = entries
         self.created_at = created_at
         self.skill_card_title = skill_card_title
+
+class IntegrationMappingSlackOptions(BaseObject):
+    def __init__(self, is_access_management_disabled: Optional[bool] = None, **kwargs):
+        """
+        :param is_access_management_disabled: Indicates whether or not channel member
+            access to the underlying box item
+            should be automatically managed.
+            Depending on type of channel, access is managed
+            through creating collaborations or shared links.
+        :type is_access_management_disabled: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.is_access_management_disabled = is_access_management_disabled
+
+class IntegrationMappingPartnerItemSlackTypeField(str, Enum):
+    CHANNEL = 'channel'
+
+class IntegrationMappingPartnerItemSlack(BaseObject):
+    def __init__(self, type: IntegrationMappingPartnerItemSlackTypeField, id: str, slack_workspace_id: Optional[str] = None, slack_org_id: Optional[str] = None, **kwargs):
+        """
+        :param type: Type of the mapped item referenced in `id`
+        :type type: IntegrationMappingPartnerItemSlackTypeField
+        :param id: ID of the mapped item (of type referenced in `type`)
+        :type id: str
+        :param slack_workspace_id: ID of the Slack workspace with which the item is associated
+        :type slack_workspace_id: Optional[str], optional
+        :param slack_org_id: ID of the Slack organization with which the item is associated
+        :type slack_org_id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.slack_workspace_id = slack_workspace_id
+        self.slack_org_id = slack_org_id
+
+class IntegrationMapping(IntegrationMappingBase):
+    def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: IntegrationMappingBoxItemField, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[IntegrationMappingCreatedByField] = None, modified_by: Optional[IntegrationMappingModifiedByField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param type: Mapping type
+        :type type: IntegrationMappingTypeField
+        :param partner_item: Mapped item object for Slack
+        :type partner_item: Union[IntegrationMappingPartnerItemSlack]
+        :param box_item: The Box folder, to which the object from the
+            partner app domain (referenced in `partner_item_id`) is mapped
+        :type box_item: IntegrationMappingBoxItemField
+        :param is_manually_created: Identifies whether the mapping has
+            been manually set
+            (as opposed to being automatically created)
+        :type is_manually_created: Optional[bool], optional
+        :param options: Integration mapping options for Slack
+        :type options: Optional[IntegrationMappingOptionsField], optional
+        :param created_by: An object representing the user who
+            created the integration mapping
+        :type created_by: Optional[IntegrationMappingCreatedByField], optional
+        :param modified_by: The user who
+            last modified the integration mapping
+        :type modified_by: Optional[IntegrationMappingModifiedByField], optional
+        :param created_at: When the integration mapping object was created
+        :type created_at: Optional[str], optional
+        :param modified_at: When the integration mapping object was last modified
+        :type modified_at: Optional[str], optional
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(id=id, integration_type=integration_type, **kwargs)
+        self.type = type
+        self.partner_item = partner_item
+        self.box_item = box_item
+        self.is_manually_created = is_manually_created
+        self.options = options
+        self.created_by = created_by
+        self.modified_by = modified_by
+        self.created_at = created_at
+        self.modified_at = modified_at
+
+class IntegrationMappings(BaseObject):
+    def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[IntegrationMapping]] = None, **kwargs):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
+
+class IntegrationMappingBoxItemSlackTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class IntegrationMappingBoxItemSlack(BaseObject):
+    def __init__(self, type: IntegrationMappingBoxItemSlackTypeField, id: str, **kwargs):
+        """
+        :param type: Type of the mapped item referenced in `id`
+        :type type: IntegrationMappingBoxItemSlackTypeField
+        :param id: ID of the mapped item (of type referenced in `type`)
+        :type id: str
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
 
 class TimelineSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'

@@ -29,7 +29,7 @@ def test_ccg_auth():
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
     new_user: UserFull = client.users.get_user_me(GetUserMeOptionsArg(fields='enterprise'))
-    assert new_user.enterprise.id == enterprise_id
+    assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 
 def test_jwt_auth():
@@ -43,7 +43,7 @@ def test_jwt_auth():
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
     new_user: UserFull = client.users.get_user_me(GetUserMeOptionsArg(fields='enterprise'))
-    assert new_user.enterprise.id == enterprise_id
+    assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 
 def test_developer_token_auth():

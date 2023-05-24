@@ -5,6 +5,7 @@ import time
 from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Optional, Dict, TYPE_CHECKING, Union, List
+from sys import version_info as py_version
 
 import requests
 from requests import Response, RequestException
@@ -20,6 +21,10 @@ if TYPE_CHECKING:
 MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5
 _RETRY_BASE_INTERVAL = 1
+SDK_VERSION = '0.1.0'
+USER_AGENT_HEADER = f'box-python-generated-sdk-{SDK_VERSION}'
+X_BOX_UA_HEADER = f'agent=box-python-generated-sdk/{SDK_VERSION}; ' \
+                  f'env=python/{py_version.major}.{py_version.minor}.{py_version.micro}'
 
 
 @dataclass
@@ -75,10 +80,7 @@ class APIException(Exception):
 
 
 def fetch(url: str, options: FetchOptions) -> FetchResponse:
-    headers = __filter_entries_with_none_values(options.headers)
-    if options.auth:
-        headers['Authorization'] = f'Bearer {options.auth.retrieve_token()}'
-
+    headers = __compose_headers_for_request(options)
     params = __filter_entries_with_none_values(options.params)
 
     attempt_nr = 1
@@ -126,6 +128,16 @@ def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> D
     if not dictionary:
         return {}
     return {k: v for k, v in dictionary.items() if v is not None}
+
+
+def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
+    headers = __filter_entries_with_none_values(options.headers)
+    if options.auth:
+        headers['Authorization'] = f'Bearer {options.auth.retrieve_token()}'
+
+    headers['User-Agent'] = USER_AGENT_HEADER
+    headers['X-Box-UA'] = X_BOX_UA_HEADER
+    return headers
 
 
 def __make_request(method, url, headers, body, content_type, params, multipart_data, attempt_nr) -> APIResponse:

@@ -136,6 +136,8 @@ from box_sdk.managers.workflows import WorkflowsManager
 
 from box_sdk.managers.sign_templates import SignTemplatesManager
 
+from box_sdk.managers.integration_mappings import IntegrationMappingsManager
+
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -213,3 +215,4 @@ class Client(BaseObject):
         self.sign_requests = SignRequestsManager(auth=self.auth)
         self.workflows = WorkflowsManager(auth=self.auth)
         self.sign_templates = SignTemplatesManager(auth=self.auth)
+        self.integration_mappings = IntegrationMappingsManager(auth=self.auth)
