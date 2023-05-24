@@ -1,3 +1,5 @@
+import re
+
 from box_sdk.base_object import BaseObject
 
 from typing import Union
@@ -31,6 +33,8 @@ class CreateUserAvatarRequestBodyArg(BaseObject):
         :type pic: str
         """
         super().__init__(**kwargs)
+        if isinstance(pic, str) and not re.match('^[01]+$', pic):
+            raise Exception('Invalid binary provided for constructor of CreateUserAvatarRequestBodyArg in argument pic')
         self.pic = pic
 
 class AvatarsManager(BaseObject):

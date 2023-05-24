@@ -134,6 +134,8 @@ from box_sdk.managers.sign_requests import SignRequestsManager
 
 from box_sdk.managers.workflows import WorkflowsManager
 
+from box_sdk.managers.sign_templates import SignTemplatesManager
+
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 from box_sdk.ccg_auth import CCGAuth
@@ -210,3 +212,4 @@ class Client(BaseObject):
         self.zip_downloads = ZipDownloadsManager(auth=self.auth)
         self.sign_requests = SignRequestsManager(auth=self.auth)
         self.workflows = WorkflowsManager(auth=self.auth)
+        self.sign_templates = SignTemplatesManager(auth=self.auth)

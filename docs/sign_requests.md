@@ -25,13 +25,13 @@ from box_sdk.schemas import SignRequestCreateRequest, SignRequestCreateSigner, \
 
 destination_folder_id = '12345'
 file_to_sign_id = '11111'
-signer_email = signer@box.com
+signer_email = 'signer@box.com'
 
 created_sign_request = client.sign_requests.create_sign_request(
     SignRequestCreateRequest(
         signers=[SignRequestCreateSigner(email=signer_email)],
         parent_folder=FolderMini(id=destination_folder_id, type=FolderBaseTypeField.FOLDER.value),
-        source_files=[FileBase(id=file_id_to_sign, type=FileBaseTypeField.FILE.value)]
+        source_files=[FileBase(id=file_to_sign_id, type=FileBaseTypeField.FILE.value)]
     )
 )
 

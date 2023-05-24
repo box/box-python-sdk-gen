@@ -370,11 +370,6 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         super().__init__(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at, **kwargs)
         self.folder = folder
 
-class SignRequestCreateRequestSignatureColorField(str, Enum):
-    BLUE = 'blue'
-    BLACK = 'black'
-    RED = 'red'
-
 class ClientErrorTypeField(str, Enum):
     ERROR = 'error'
 
@@ -624,6 +619,7 @@ class WebhookInvocationTriggerField(str, Enum):
     SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 class AccessTokenTokenTypeField(str, Enum):
     BEARER = 'bearer'
@@ -1727,11 +1723,8 @@ class FileVersionMini(FileVersionBase):
 class FileMini(FileBase):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileBase._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileBase._json_to_fields_mapping}
-    def __init__(self, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -1743,6 +1736,9 @@ class FileMini(FileBase):
         :type type: FileBaseTypeField
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
@@ -1750,8 +1746,8 @@ class FileMini(FileBase):
         """
         super().__init__(id=id, type=type, etag=etag, **kwargs)
         self.sequence_id = sequence_id
-        self.sha_1 = sha_1
         self.name = name
+        self.sha_1 = sha_1
         self.file_version = file_version
 
 class SignRequestSignFilesField(BaseObject):
@@ -1789,27 +1785,21 @@ class FilesUnderRetention(BaseObject):
 class FileConflict(FileMini):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileMini._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileMini._json_to_fields_mapping}
-    def __init__(self, sequence_id: str, id: str, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, type: FileBaseTypeField = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, id: str = None, type: FileBaseTypeField = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param sequence_id: The unique identifier that represent a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-        :type sequence_id: str
-        :param id: `file`
-        :type id: str
         :param sha_1: The SHA1 hash of the file.
         :type sha_1: Optional[str], optional
         :param type: The name of the file
         :type type: FileBaseTypeField, optional
+        :param sequence_id: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha_1=None, id=id, type=type, name=name, file_version=None, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=None, file_version=None, etag=etag, **kwargs)
         self.sha_1 = sha_1
         self.file_version = file_version
 
@@ -3468,6 +3458,153 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
 class TermsOfServiceUserStatusTypeField(str, Enum):
     TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
 
+class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
+    EMAIL_SUBJECT = 'email_subject'
+    EMAIL_MESSAGE = 'email_message'
+    NAME = 'name'
+    DAYS_VALID = 'days_valid'
+    SIGNERS = 'signers'
+    SOURCE_FILES = 'source_files'
+
+class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
+    def __init__(self, signers: Optional[List[List[Union[str]]]] = None, **kwargs):
+        """
+        :param signers: Required signer fields.
+        :type signers: Optional[List[List[Union[str]]]], optional
+        """
+        super().__init__(**kwargs)
+        self.signers = signers
+
+class SignTemplateAdditionalInfoField(BaseObject):
+    def __init__(self, non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]] = None, required: Optional[SignTemplateAdditionalInfoFieldRequiredField] = None, **kwargs):
+        """
+        :param non_editable: Non editable fields.
+        :type non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]], optional
+        :param required: Required fields.
+        :type required: Optional[SignTemplateAdditionalInfoFieldRequiredField], optional
+        """
+        super().__init__(**kwargs)
+        self.non_editable = non_editable
+        self.required = required
+
+class SignTemplateReadySignLinkField(BaseObject):
+    def __init__(self, url: Optional[str] = None, name: Optional[str] = None, instructions: Optional[str] = None, folder_id: Optional[str] = None, is_notification_disabled: Optional[bool] = None, is_active: Optional[bool] = None, **kwargs):
+        """
+        :param url: The URL that can be sent to signers.
+        :type url: Optional[str], optional
+        :param name: Request name.
+        :type name: Optional[str], optional
+        :param instructions: Extra instructions for all signers.
+        :type instructions: Optional[str], optional
+        :param folder_id: The destination folder to place final,
+            signed document and signing
+            log. Only `ID` and `type` fields are required.
+            The root folder,
+            folder ID `0`, cannot be used.
+        :type folder_id: Optional[str], optional
+        :param is_notification_disabled: Whether to disable notifications when
+            a signer has signed.
+        :type is_notification_disabled: Optional[bool], optional
+        :param is_active: Whether the ready sign link is enabled or not.
+        :type is_active: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.url = url
+        self.name = name
+        self.instructions = instructions
+        self.folder_id = folder_id
+        self.is_notification_disabled = is_notification_disabled
+        self.is_active = is_active
+
+class SignTemplateCustomBrandingField(BaseObject):
+    def __init__(self, company_name: Optional[str] = None, logo_uri: Optional[str] = None, branding_color: Optional[str] = None, email_footer_text: Optional[str] = None, **kwargs):
+        """
+        :param company_name: Name of the company
+        :type company_name: Optional[str], optional
+        :param logo_uri: Custom branding logo URI in the form of a base64 image.
+        :type logo_uri: Optional[str], optional
+        :param branding_color: Custom branding color in hex.
+        :type branding_color: Optional[str], optional
+        :param email_footer_text: Content of the email footer.
+        :type email_footer_text: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.company_name = company_name
+        self.logo_uri = logo_uri
+        self.branding_color = branding_color
+        self.email_footer_text = email_footer_text
+
+class SignTemplates(BaseObject):
+    def __init__(self, limit: Optional[int] = None, next_marker: Optional[str] = None, prev_marker: Optional[str] = None, **kwargs):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+
+class TemplateSignerRoleField(str, Enum):
+    SIGNER = 'signer'
+    APPROVER = 'approver'
+    FINAL_COPY_READER = 'final_copy_reader'
+
+class TemplateSignerInputTypeField(str, Enum):
+    SIGNATURE = 'signature'
+    DATE = 'date'
+    TEXT = 'text'
+    CHECKBOX = 'checkbox'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
+
+class TemplateSignerInputContentTypeField(str, Enum):
+    SIGNATURE = 'signature'
+    INITIAL = 'initial'
+    STAMP = 'stamp'
+    DATE = 'date'
+    CHECKBOX = 'checkbox'
+    TEXT = 'text'
+    FULL_NAME = 'full_name'
+    FIRST_NAME = 'first_name'
+    LAST_NAME = 'last_name'
+    COMPANY = 'company'
+    TITLE = 'title'
+    EMAIL = 'email'
+    ATTACHMENT = 'attachment'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
+
+class TemplateSignerInputCoordinatesField(BaseObject):
+    def __init__(self, x: Optional[int] = None, y: Optional[int] = None, **kwargs):
+        """
+        :param x: Relative x coordinate to the page the input is on, ranging from 0 to 1.
+        :type x: Optional[int], optional
+        :param y: Relative y coordinate to the page the input is on, ranging from 0 to 1.
+        :type y: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.x = x
+        self.y = y
+
+class TemplateSignerInputDimensionsField(BaseObject):
+    def __init__(self, width: Optional[int] = None, height: Optional[int] = None, **kwargs):
+        """
+        :param width: Relative width to the page the input is on, ranging from 0 to 1.
+        :type width: Optional[int], optional
+        :param height: Relative height to the page the input is on, ranging from 0 to 1.
+        :type height: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.width = width
+        self.height = height
+
 class TrashFileTypeField(str, Enum):
     FILE = 'file'
 
@@ -3879,14 +4016,14 @@ class UserBase(BaseObject):
         self.id = id
 
 class UserCollaborations(UserBase):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
-        :type name: str
-        :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
+        :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
@@ -3895,14 +4032,14 @@ class UserCollaborations(UserBase):
         self.login = login
 
 class UserMini(UserBase):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
@@ -3911,12 +4048,8 @@ class UserMini(UserBase):
         self.login = login
 
 class User(UserMini):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param created_at: When the user object was created
@@ -3949,10 +4082,14 @@ class User(UserMini):
             the email address to which notifications are sent instead of
             to the primary email address.
         :type notification_email: Optional[UserNotificationEmailField], optional
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
-        super().__init__(name=name, login=login, type=type, id=id, **kwargs)
+        super().__init__(type=type, name=name, login=login, id=id, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.language = language
@@ -5013,25 +5150,8 @@ class FileFullLockField(BaseObject):
         self.app_type = app_type
 
 class File(FileMini):
-    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param description: The optional description of this file
-        :type description: str
-        :param size: The file size in bytes. Be careful parsing this integer as it can
-            get very large and cause an integer overflow.
-        :type size: int
-        :param created_at: The date and time when the file was created on Box.
-        :type created_at: str
-        :param modified_at: The date and time when the file was last updated on Box.
-        :type modified_at: str
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FileItemStatusField
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -5041,6 +5161,15 @@ class File(FileMini):
         :type id: str
         :param type: `file`
         :type type: FileBaseTypeField
+        :param description: The optional description of this file
+        :type description: Optional[str], optional
+        :param size: The file size in bytes. Be careful parsing this integer as it can
+            get very large and cause an integer overflow.
+        :type size: Optional[int], optional
+        :param created_at: The date and time when the file was created on Box.
+        :type created_at: Optional[str], optional
+        :param modified_at: The date and time when the file was last updated on Box.
+        :type modified_at: Optional[str], optional
         :param trashed_at: The time at which this file was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this file is expected to be purged
@@ -5052,29 +5181,37 @@ class File(FileMini):
         :param content_modified_at: The date and time at which this file was last updated,
             which might be before it was uploaded to Box.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FileItemStatusField], optional
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
         self.description = description
         self.size = size
         self.path_collection = path_collection
         self.created_at = created_at
         self.modified_at = modified_at
-        self.modified_by = modified_by
-        self.owned_by = owned_by
-        self.item_status = item_status
         self.trashed_at = trashed_at
         self.purged_at = purged_at
         self.content_created_at = content_created_at
         self.content_modified_at = content_modified_at
         self.created_by = created_by
+        self.modified_by = modified_by
+        self.owned_by = owned_by
         self.shared_link = shared_link
         self.parent = parent
+        self.item_status = item_status
 
 class Files(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[File]] = None, **kwargs):
@@ -5453,6 +5590,7 @@ class WebhookTriggersField(str, Enum):
     SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 class WebhookMiniTypeField(str, Enum):
     WEBHOOK = 'webhook'
@@ -5755,17 +5893,8 @@ class Items(BaseObject):
         self.entries = entries
 
 class Folder(FolderMini):
-    def __init__(self, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param size: The folder size in bytes.
-            Be careful parsing this integer as its
-            value can get very large.
-        :type size: int
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FolderItemStatusField
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting a folder in the web application
@@ -5783,6 +5912,10 @@ class Folder(FolderMini):
             be `null` for some folders such as the root folder or the trash
             folder.
         :type modified_at: Optional[str], optional
+        :param size: The folder size in bytes.
+            Be careful parsing this integer as its
+            value can get very large.
+        :type size: Optional[int], optional
         :param trashed_at: The time at which this folder was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this folder is expected to be purged
@@ -5793,6 +5926,11 @@ class Folder(FolderMini):
         :type content_created_at: Optional[str], optional
         :param content_modified_at: The date and time at which this folder was last updated.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
@@ -5801,23 +5939,23 @@ class Folder(FolderMini):
         :type etag: Optional[str], optional
         """
         super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.description = description
         self.size = size
         self.path_collection = path_collection
         self.created_by = created_by
         self.modified_by = modified_by
-        self.owned_by = owned_by
-        self.item_status = item_status
-        self.item_collection = item_collection
-        self.created_at = created_at
-        self.modified_at = modified_at
-        self.description = description
         self.trashed_at = trashed_at
         self.purged_at = purged_at
         self.content_created_at = content_created_at
         self.content_modified_at = content_modified_at
+        self.owned_by = owned_by
         self.shared_link = shared_link
         self.folder_upload_email = folder_upload_email
         self.parent = parent
+        self.item_status = item_status
+        self.item_collection = item_collection
 
 class SearchResultWithSharedLink(BaseObject):
     def __init__(self, accessible_via_shared_link: Optional[str] = None, item: Optional[Union[File, Folder, WebLink]] = None, type: Optional[str] = None, **kwargs):
@@ -6007,17 +6145,8 @@ class FileVersionLegalHolds(BaseObject):
         self.entries = entries
 
 class FolderFull(Folder):
-    def __init__(self, size: int, path_collection: FolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: FolderItemStatusField, item_collection: Items, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param size: The folder size in bytes.
-            Be careful parsing this integer as its
-            value can get very large.
-        :type size: int
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FolderItemStatusField
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
             by visiting a folder in the web application
@@ -6058,6 +6187,10 @@ class FolderFull(Folder):
             be `null` for some folders such as the root folder or the trash
             folder.
         :type modified_at: Optional[str], optional
+        :param size: The folder size in bytes.
+            Be careful parsing this integer as its
+            value can get very large.
+        :type size: Optional[int], optional
         :param trashed_at: The time at which this folder was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this folder is expected to be purged
@@ -6068,6 +6201,11 @@ class FolderFull(Folder):
         :type content_created_at: Optional[str], optional
         :param content_modified_at: The date and time at which this folder was last updated.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
@@ -6075,7 +6213,7 @@ class FolderFull(Folder):
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, owned_by=owned_by, item_status=item_status, item_collection=item_collection, id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, owned_by=owned_by, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, item_status=item_status, item_collection=item_collection, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
         self.sync_state = sync_state
         self.has_collaborations = has_collaborations
         self.permissions = permissions
@@ -6575,25 +6713,8 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self.url = url
 
 class FileFull(File):
-    def __init__(self, description: str, size: int, path_collection: FilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: FileItemStatusField, sequence_id: str, sha_1: str, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param description: The optional description of this file
-        :type description: str
-        :param size: The file size in bytes. Be careful parsing this integer as it can
-            get very large and cause an integer overflow.
-        :type size: int
-        :param created_at: The date and time when the file was created on Box.
-        :type created_at: str
-        :param modified_at: The date and time when the file was last updated on Box.
-        :type modified_at: str
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: FileItemStatusField
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: str
         :param id: The unique identifier that represent a file.
             The ID for any file can be determined
             by visiting a file in the web application
@@ -6632,6 +6753,15 @@ class FileFull(File):
         :param shared_link_permission_options: A list of the types of roles that user can be invited at
             when sharing this file.
         :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
+        :param description: The optional description of this file
+        :type description: Optional[str], optional
+        :param size: The file size in bytes. Be careful parsing this integer as it can
+            get very large and cause an integer overflow.
+        :type size: Optional[int], optional
+        :param created_at: The date and time when the file was created on Box.
+        :type created_at: Optional[str], optional
+        :param modified_at: The date and time when the file was last updated on Box.
+        :type modified_at: Optional[str], optional
         :param trashed_at: The time at which this file was put in the trash.
         :type trashed_at: Optional[str], optional
         :param purged_at: The time at which this file is expected to be purged
@@ -6643,14 +6773,22 @@ class FileFull(File):
         :param content_modified_at: The date and time at which this file was last updated,
             which might be before it was uploaded to Box.
         :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FileItemStatusField], optional
         :param name: The name of the file
         :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, modified_by=modified_by, owned_by=owned_by, item_status=item_status, sequence_id=sequence_id, sha_1=sha_1, id=id, type=type, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, shared_link=shared_link, parent=parent, name=name, file_version=file_version, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, modified_by=modified_by, owned_by=owned_by, shared_link=shared_link, parent=parent, item_status=item_status, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
         self.version_number = version_number
         self.comment_count = comment_count
         self.permissions = permissions
@@ -7354,7 +7492,7 @@ class SignRequestPrefillTag(BaseObject):
         self.date_value = date_value
 
 class SignRequestBase(BaseObject):
-    def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, **kwargs):
+    def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
         """
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
@@ -7374,12 +7512,14 @@ class SignRequestBase(BaseObject):
         :type name: Optional[str], optional
         :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
         :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
-        :param days_valid: Number of days after which this request will automatically expire if not completed.
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
         :type days_valid: Optional[int], optional
         :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
         :type external_id: Optional[str], optional
         :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
         :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.parent_folder = parent_folder
@@ -7395,20 +7535,16 @@ class SignRequestBase(BaseObject):
         self.days_valid = days_valid
         self.external_id = external_id
         self.is_phone_verification_required_to_view = is_phone_verification_required_to_view
+        self.template_id = template_id
 
 class SignRequestCreateRequest(SignRequestBase):
-    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, signature_color: Optional[SignRequestCreateRequestSignatureColorField] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, **kwargs):
+    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
         """
         :param signers: Array of signers for the sign request. 35 is the
             max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
-        :param source_files: List of files to create a signing document from. This is currently
-            limited to 10 files. Only the `ID` and `type` fields are required
-            for each file. The array will be empty if the `source_files`
-            are deleted.
+        :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
         :type source_files: Optional[List[FileBase]], optional
-        :param signature_color: Force a specific signature color (blue, black, or red).
-        :type signature_color: Optional[SignRequestCreateRequestSignatureColorField], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -7427,17 +7563,137 @@ class SignRequestCreateRequest(SignRequestBase):
         :type name: Optional[str], optional
         :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
         :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
-        :param days_valid: Number of days after which this request will automatically expire if not completed.
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
         :type days_valid: Optional[int], optional
         :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
         :type external_id: Optional[str], optional
         :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
         :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
         """
-        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, **kwargs)
+        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id, **kwargs)
         self.signers = signers
         self.source_files = source_files
-        self.signature_color = signature_color
+
+class TemplateSignerInput(SignRequestPrefillTag):
+    def __init__(self, page_index: int, type: Optional[TemplateSignerInputTypeField] = None, content_type: Optional[TemplateSignerInputContentTypeField] = None, is_required: Optional[bool] = None, document_id: Optional[str] = None, dropdown_choices: Optional[List[str]] = None, group_id: Optional[str] = None, coordinates: Optional[TemplateSignerInputCoordinatesField] = None, dimensions: Optional[TemplateSignerInputDimensionsField] = None, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
+        """
+        :param page_index: Index of page that the input is on.
+        :type page_index: int
+        :param type: Type of input
+        :type type: Optional[TemplateSignerInputTypeField], optional
+        :param content_type: Content type of input
+        :type content_type: Optional[TemplateSignerInputContentTypeField], optional
+        :param is_required: Whether or not the input is required.
+        :type is_required: Optional[bool], optional
+        :param document_id: Document identifier.
+        :type document_id: Optional[str], optional
+        :param dropdown_choices: When the input is of the type `dropdown` this values will be filled with all the dropdown options.
+        :type dropdown_choices: Optional[List[str]], optional
+        :param group_id: When the input is of type `radio` they can be grouped to gather with this identifier.
+        :type group_id: Optional[str], optional
+        :param coordinates: Where the input is located on a page.
+        :type coordinates: Optional[TemplateSignerInputCoordinatesField], optional
+        :param dimensions: The size of the input.
+        :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
+        :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
+        :type document_tag_id: Optional[str], optional
+        :param text_value: Text prefill value
+        :type text_value: Optional[str], optional
+        :param checkbox_value: Checkbox prefill value
+        :type checkbox_value: Optional[bool], optional
+        :param date_value: Date prefill value
+        :type date_value: Optional[str], optional
+        """
+        super().__init__(document_tag_id=document_tag_id, text_value=text_value, checkbox_value=checkbox_value, date_value=date_value, **kwargs)
+        self.page_index = page_index
+        self.type = type
+        self.content_type = content_type
+        self.is_required = is_required
+        self.document_id = document_id
+        self.dropdown_choices = dropdown_choices
+        self.group_id = group_id
+        self.coordinates = coordinates
+        self.dimensions = dimensions
+
+class TemplateSigner(BaseObject):
+    def __init__(self, inputs: Optional[List[TemplateSignerInput]] = None, email: Optional[str] = None, role: Optional[TemplateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, **kwargs):
+        """
+        :param email: Email address of the signer
+        :type email: Optional[str], optional
+        :param role: Defines the role of the signer in the signature request. A role of
+            `signer` needs to sign the document, a role `approver`
+            approves the document and
+            a `final_copy_reader` role only
+            receives the final signed document and signing log.
+        :type role: Optional[TemplateSignerRoleField], optional
+        :param is_in_person: Used in combination with an embed URL for a sender.
+            After the sender signs, they will be
+            redirected to the next `in_person` signer.
+        :type is_in_person: Optional[bool], optional
+        :param order: Order of the signer
+        :type order: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.inputs = inputs
+        self.email = email
+        self.role = role
+        self.is_in_person = is_in_person
+        self.order = order
+
+class SignTemplate(BaseObject):
+    def __init__(self, id: Optional[str] = None, name: Optional[str] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, days_valid: Optional[int] = None, parent_folder: Optional[FolderMini] = None, source_files: Optional[List[FileMini]] = None, are_fields_locked: Optional[bool] = None, are_options_locked: Optional[bool] = None, are_recipients_locked: Optional[bool] = None, are_email_settings_locked: Optional[bool] = None, are_files_locked: Optional[bool] = None, signers: Optional[List[TemplateSigner]] = None, additional_info: Optional[SignTemplateAdditionalInfoField] = None, ready_sign_link: Optional[SignTemplateReadySignLinkField] = None, custom_branding: Optional[SignTemplateCustomBrandingField] = None, **kwargs):
+        """
+        :param id: Template identifier.
+        :type id: Optional[str], optional
+        :param name: The name of the template.
+        :type name: Optional[str], optional
+        :param email_subject: Subject of signature request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
+        :type email_subject: Optional[str], optional
+        :param email_message: Message to include in signature request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
+        :type email_message: Optional[str], optional
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
+        :type days_valid: Optional[int], optional
+        :param source_files: List of files to create a signing document from. Only the ID and type fields are required for each file.
+        :type source_files: Optional[List[FileMini]], optional
+        :param are_fields_locked: Indicates if the template input fields are editable or not.
+        :type are_fields_locked: Optional[bool], optional
+        :param are_options_locked: Indicates if the template document options are editable or not, for example renaming the document.
+        :type are_options_locked: Optional[bool], optional
+        :param are_recipients_locked: Indicates if the template signers are editable or not.
+        :type are_recipients_locked: Optional[bool], optional
+        :param are_email_settings_locked: Indicates if the template email settings are editable or not.
+        :type are_email_settings_locked: Optional[bool], optional
+        :param are_files_locked: Indicates if the template files are editable or not. This includes deleting or renaming template files.
+        :type are_files_locked: Optional[bool], optional
+        :param signers: Array of signers for the template.
+        :type signers: Optional[List[TemplateSigner]], optional
+        :param additional_info: Additional information on which fields are required and which fields are not editable.
+        :type additional_info: Optional[SignTemplateAdditionalInfoField], optional
+        :param ready_sign_link: Box's ready-sign link feature enables you to create a link to a signature request that you've created from a template. Use this link when you want to post a signature request on a public form — such as an email, social media post, or web page — without knowing who the signers will be. Note: The ready-sign link feature is limited to Enterprise Plus customers and not available to Box Verified Enterprises.
+        :type ready_sign_link: Optional[SignTemplateReadySignLinkField], optional
+        :param custom_branding: Custom branding applied to notifications
+            and signature requests.
+        :type custom_branding: Optional[SignTemplateCustomBrandingField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.name = name
+        self.email_subject = email_subject
+        self.email_message = email_message
+        self.days_valid = days_valid
+        self.parent_folder = parent_folder
+        self.source_files = source_files
+        self.are_fields_locked = are_fields_locked
+        self.are_options_locked = are_options_locked
+        self.are_recipients_locked = are_recipients_locked
+        self.are_email_settings_locked = are_email_settings_locked
+        self.are_files_locked = are_files_locked
+        self.signers = signers
+        self.additional_info = additional_info
+        self.ready_sign_link = ready_sign_link
+        self.custom_branding = custom_branding
 
 class SignRequestSignerInputTypeField(str, Enum):
     SIGNATURE = 'signature'
@@ -7554,10 +7810,12 @@ class SignRequestSigner(SignRequestCreateSigner):
         self.embed_url = embed_url
 
 class SignRequest(SignRequestBase):
-    def __init__(self, parent_folder: FolderMini, type: Optional[SignRequestTypeField] = None, signers: Optional[List[SignRequestSigner]] = None, signature_color: Optional[str] = None, id: Optional[str] = None, prepare_url: Optional[str] = None, signing_log: Optional[FileMini] = None, status: Optional[SignRequestStatusField] = None, sign_files: Optional[SignRequestSignFilesField] = None, auto_expire_at: Optional[str] = None, source_files: Optional[List[FileMini]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, **kwargs):
+    def __init__(self, parent_folder: FolderMini, type: Optional[SignRequestTypeField] = None, source_files: Optional[List[FileBase]] = None, signers: Optional[List[SignRequestSigner]] = None, signature_color: Optional[str] = None, id: Optional[str] = None, prepare_url: Optional[str] = None, signing_log: Optional[FileMini] = None, status: Optional[SignRequestStatusField] = None, sign_files: Optional[SignRequestSignFilesField] = None, auto_expire_at: Optional[str] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
         """
         :param type: object type
         :type type: Optional[SignRequestTypeField], optional
+        :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
+        :type source_files: Optional[List[FileBase]], optional
         :param signers: Array of signers for the sign request
         :type signers: Optional[List[SignRequestSigner]], optional
         :param signature_color: Force a specific color for the signature (blue, black, or red).
@@ -7576,8 +7834,6 @@ class SignRequest(SignRequestBase):
         :type sign_files: Optional[SignRequestSignFilesField], optional
         :param auto_expire_at: Uses `days_valid` to calculate the date and time, in GMT, the sign request will expire if unsigned.
         :type auto_expire_at: Optional[str], optional
-        :param source_files: List of files to create a signing document from. Only the ID and type fields are required for each file. The array will be empty if the `source_files` are deleted.
-        :type source_files: Optional[List[FileMini]], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -7596,15 +7852,18 @@ class SignRequest(SignRequestBase):
         :type name: Optional[str], optional
         :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
         :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
-        :param days_valid: Number of days after which this request will automatically expire if not completed.
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
         :type days_valid: Optional[int], optional
         :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
         :type external_id: Optional[str], optional
         :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
         :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
         """
-        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, **kwargs)
+        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id, **kwargs)
         self.type = type
+        self.source_files = source_files
         self.signers = signers
         self.signature_color = signature_color
         self.id = id
@@ -7613,7 +7872,6 @@ class SignRequest(SignRequestBase):
         self.status = status
         self.sign_files = sign_files
         self.auto_expire_at = auto_expire_at
-        self.source_files = source_files
 
 class SignRequests(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[SignRequest]] = None, **kwargs):
@@ -7667,12 +7925,8 @@ class TrackingCode(BaseObject):
         self.value = value
 
 class UserFull(User):
-    def __init__(self, name: str, login: str, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(self, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
-        :param name: The display name of this user
-        :type name: str
-        :param login: The primary email address of this user
-        :type login: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param role: The user’s enterprise role
@@ -7735,10 +7989,14 @@ class UserFull(User):
             the email address to which notifications are sent instead of
             to the primary email address.
         :type notification_email: Optional[UserNotificationEmailField], optional
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
         :param id: The unique identifier for this user
         :type id: Optional[str], optional
         """
-        super().__init__(name=name, login=login, type=type, created_at=created_at, modified_at=modified_at, language=language, timezone=timezone, space_amount=space_amount, space_used=space_used, max_upload_size=max_upload_size, status=status, job_title=job_title, phone=phone, address=address, avatar_url=avatar_url, notification_email=notification_email, id=id, **kwargs)
+        super().__init__(type=type, created_at=created_at, modified_at=modified_at, language=language, timezone=timezone, space_amount=space_amount, space_used=space_used, max_upload_size=max_upload_size, status=status, job_title=job_title, phone=phone, address=address, avatar_url=avatar_url, notification_email=notification_email, name=name, login=login, id=id, **kwargs)
         self.role = role
         self.tracking_codes = tracking_codes
         self.can_see_managed_users = can_see_managed_users

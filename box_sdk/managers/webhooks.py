@@ -98,6 +98,7 @@ class CreateWebhookRequestBodyArgTriggersField(str, Enum):
     SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 class CreateWebhookRequestBodyArg(BaseObject):
     def __init__(self, target: CreateWebhookRequestBodyArgTargetField, address: str, triggers: List[CreateWebhookRequestBodyArgTriggersField], **kwargs):
@@ -171,6 +172,7 @@ class UpdateWebhookByIdRequestBodyArgTriggersField(str, Enum):
     SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
     SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 class UpdateWebhookByIdRequestBodyArg(BaseObject):
     def __init__(self, target: Optional[UpdateWebhookByIdRequestBodyArgTargetField] = None, address: Optional[str] = None, triggers: Optional[List[UpdateWebhookByIdRequestBodyArgTriggersField]] = None, **kwargs):

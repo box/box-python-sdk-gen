@@ -100,9 +100,9 @@ class CCGAuth:
         self.token = token_response.access_token
         return self.token
 
-    def authenticate_user(self, user_id: str):
+    def as_user(self, user_id: str):
         """
-        Get an access token for a User.
+        Set authentication as user. The new token will be automatically fetched with a next API call.
 
         May be one of this application's created App User. Depending on the
         configured User Access Level, may also be any other App User or Managed
@@ -113,22 +113,18 @@ class CCGAuth:
 
         :param user_id:
             The id of the user to authenticate.
-        :return:
-            The access token for the user.
         """
         self.subject_id = user_id
         self.subject_type = TokenRequestBoxSubjectType.USER
-        return self.refresh()
+        self.token = None
 
-    def authenticate_enterprise(self, enterprise_id: str):
+    def as_enterprise(self, enterprise_id: str):
         """
-        Get an access token for a Box Developer Edition enterprise.
+        Set authentication as enterprise. The new token will be automatically fetched with a next API call.
 
         :param enterprise_id:
             The ID of the Box Developer Edition enterprise.
-        :return:
-            The access token for the enterprise which can provision/deprovision app users.
         """
         self.subject_id = enterprise_id
         self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-        return self.refresh()
+        self.token = None

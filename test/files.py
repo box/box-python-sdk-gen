@@ -1,5 +1,3 @@
-import pytest
-
 from box_sdk.utils import decode_base_64
 
 from box_sdk.utils import get_env_var
@@ -53,16 +51,16 @@ def testCreateandDeleteFile():
     new_file_name: str = get_uuid()
     updated_content_stream = generate_byte_stream()
     uploaded_file = upload_file(new_file_name, updated_content_stream)
-    file = client.files.get_file_by_id(uploaded_file.id)
+    file: FileFull = client.files.get_file_by_id(uploaded_file.id)
     assert file.name == new_file_name
     client.files.delete_file_by_id(uploaded_file.id)
-    with pytest.raises(Exception):
-        client.files.get_file_by_id(uploaded_file.id)
+    trashed_file: TrashFile = client.trashed_files.get_file_trash(uploaded_file.id)
+    assert file.id == trashed_file.id
 
 def testUpdateFile():
     file_to_update = upload_new_file()
     updated_name: str = get_uuid()
-    updated_file = client.files.update_file_by_id(file_to_update.id, UpdateFileByIdRequestBodyArg(name=updated_name, description='Updated description'))
+    updated_file: FileFull = client.files.update_file_by_id(file_to_update.id, UpdateFileByIdRequestBodyArg(name=updated_name, description='Updated description'))
     assert updated_file.name == updated_name
     assert updated_file.description == 'Updated description'
     client.files.delete_file_by_id(updated_file.id)
@@ -70,7 +68,7 @@ def testUpdateFile():
 def testCopyFile():
     file_origin = upload_new_file()
     copied_file_name: str = get_uuid()
-    copied_file = client.files.copy_file(file_origin.id, CopyFileRequestBodyArg(parent=CopyFileRequestBodyArgParentField(id='0'), name=copied_file_name))
+    copied_file: FileFull = client.files.copy_file(file_origin.id, CopyFileRequestBodyArg(parent=CopyFileRequestBodyArgParentField(id='0'), name=copied_file_name))
     assert copied_file.parent.id == '0'
     assert copied_file.name == copied_file_name
     client.files.delete_file_by_id(file_origin.id)
