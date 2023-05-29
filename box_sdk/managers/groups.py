@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Groups
 
@@ -16,11 +16,9 @@ from box_sdk.schemas import Group
 
 from box_sdk.schemas import GroupFull
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -226,9 +224,12 @@ class UpdateGroupByIdOptionsArg(BaseObject):
         self.fields = fields
 
 class GroupsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_groups(self, options: GetGroupsOptionsArg = None) -> Groups:
         """
         Retrieves all of the groups for a given enterprise. The user
@@ -238,7 +239,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = GetGroupsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filter_term, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filter_term, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
         return Groups.from_dict(json.loads(response.text))
     def create_group(self, request_body: CreateGroupRequestBodyArg, options: CreateGroupOptionsArg = None) -> Group:
         """
@@ -249,7 +250,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = CreateGroupOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Group.from_dict(json.loads(response.text))
     def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> GroupFull:
         """
@@ -266,7 +267,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = GetGroupByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
     def update_group_by_id(self, group_id: str, request_body: UpdateGroupByIdRequestBodyArg, options: UpdateGroupByIdOptionsArg = None) -> GroupFull:
         """
@@ -283,7 +284,7 @@ class GroupsManager(BaseObject):
         """
         if options is None:
             options = UpdateGroupByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
     def delete_group_by_id(self, group_id: str):
         """
@@ -295,5 +296,5 @@ class GroupsManager(BaseObject):
             Example: "57645"
         :type group_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

@@ -4,19 +4,17 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Items
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -85,9 +83,12 @@ class GetFolderTrashItemsOptionsArg(BaseObject):
         self.sort = sort
 
 class TrashedItemsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_folder_trash_items(self, options: GetFolderTrashItemsOptionsArg = None) -> Items:
         """
         Retrieves the files and folders that have been moved
@@ -112,5 +113,5 @@ class TrashedItemsManager(BaseObject):
         """
         if options is None:
             options = GetFolderTrashItemsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset, 'usemarker': options.usemarker, 'marker': options.marker, 'direction': options.direction, 'sort': options.sort}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset, 'usemarker': options.usemarker, 'marker': options.marker, 'direction': options.direction, 'sort': options.sort}, auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

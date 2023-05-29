@@ -4,19 +4,17 @@ from enum import Enum
 
 from typing import Optional
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import WebLink
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -182,14 +180,17 @@ class UpdateWebLinkByIdRequestBodyArg(BaseObject):
         self.shared_link = shared_link
 
 class WebLinksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def create_web_link(self, request_body: CreateWebLinkRequestBodyArg) -> WebLink:
         """
         Creates a web link object within a folder.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_by_id(self, web_link_id: str, options: GetWebLinkByIdOptionsArg = None) -> WebLink:
         """
@@ -200,7 +201,7 @@ class WebLinksManager(BaseObject):
         """
         if options is None:
             options = GetWebLinkByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers={'boxapi': options.boxapi}, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_by_id(self, web_link_id: str, request_body: UpdateWebLinkByIdRequestBodyArg) -> WebLink:
         """
@@ -209,7 +210,7 @@ class WebLinksManager(BaseObject):
             Example: "12345"
         :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def delete_web_link_by_id(self, web_link_id: str):
         """
@@ -218,5 +219,5 @@ class WebLinksManager(BaseObject):
             Example: "12345"
         :type web_link_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

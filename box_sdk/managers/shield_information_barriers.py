@@ -4,19 +4,17 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import ShieldInformationBarrier
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -55,9 +53,12 @@ class GetShieldInformationBarriersOptionsArg(BaseObject):
         self.limit = limit
 
 class ShieldInformationBarriersManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_shield_information_barrier_by_id(self, shield_information_barrier_id: str) -> ShieldInformationBarrier:
         """
         Get shield information barrier based on provided ID..
@@ -65,13 +66,13 @@ class ShieldInformationBarriersManager(BaseObject):
             Example: "1910967"
         :type shield_information_barrier_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shield_information_barrier_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shield_information_barrier_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
     def create_shield_information_barrier_change_status(self, request_body: CreateShieldInformationBarrierChangeStatusRequestBodyArg) -> ShieldInformationBarrier:
         """
         Change status of shield information barrier with the specified ID.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
     def get_shield_information_barriers(self, options: GetShieldInformationBarriersOptionsArg = None) -> None:
         """
@@ -82,7 +83,7 @@ class ShieldInformationBarriersManager(BaseObject):
         """
         if options is None:
             options = GetShieldInformationBarriersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier(self, request_body: ShieldInformationBarrier) -> ShieldInformationBarrier:
         """
@@ -94,5 +95,5 @@ class ShieldInformationBarriersManager(BaseObject):
         firm and prevents confidential information passing between them.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))

@@ -6,19 +6,17 @@ from enum import Enum
 
 from typing import List
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Workflows
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -131,9 +129,12 @@ class CreateWorkflowStartRequestBodyArg(BaseObject):
         self.outcomes = outcomes
 
 class WorkflowsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_workflows(self, folder_id: str, options: GetWorkflowsOptionsArg = None) -> Workflows:
         """
         Returns list of workflows that act on a given `folder ID`, and
@@ -159,7 +160,7 @@ class WorkflowsManager(BaseObject):
         """
         if options is None:
             options = GetWorkflowsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folder_id, 'trigger_type': options.trigger_type, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params={'folder_id': folder_id, 'trigger_type': options.trigger_type, 'limit': options.limit, 'marker': options.marker}, auth=self.auth, network_session=self.network_session))
         return Workflows.from_dict(json.loads(response.text))
     def create_workflow_start(self, workflow_id: str, request_body: CreateWorkflowStartRequestBodyArg):
         """
@@ -174,5 +175,5 @@ class WorkflowsManager(BaseObject):
             Example: "12345"
         :type workflow_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return response.content

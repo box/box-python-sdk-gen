@@ -1,6 +1,8 @@
-from typing import Union
+from typing import Optional
 
 import json
+
+from typing import Dict
 
 from box_sdk.base_object import BaseObject
 
@@ -12,11 +14,9 @@ from box_sdk.schemas import ZipDownloadRequest
 
 from box_sdk.schemas import ZipDownloadStatus
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -25,9 +25,12 @@ from box_sdk.fetch import FetchOptions
 from box_sdk.fetch import FetchResponse
 
 class ZipDownloadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def create_zip_download(self, request_body: ZipDownloadRequest) -> ZipDownload:
         """
         Creates a request to download multiple files and folders as a single `zip`
@@ -50,7 +53,7 @@ class ZipDownloadsManager(BaseObject):
         10,000 files, whichever is met first
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ZipDownload.from_dict(json.loads(response.text))
     def get_zip_download_content(self, zip_download_id: str):
         """
@@ -89,7 +92,7 @@ class ZipDownloadsManager(BaseObject):
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
         :type zip_download_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://dl.boxcloud.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://dl.boxcloud.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return response.content
     def get_zip_download_status(self, zip_download_id: str) -> ZipDownloadStatus:
         """
@@ -125,5 +128,5 @@ class ZipDownloadsManager(BaseObject):
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
         :type zip_download_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return ZipDownloadStatus.from_dict(json.loads(response.text))

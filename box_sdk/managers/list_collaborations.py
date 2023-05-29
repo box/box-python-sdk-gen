@@ -4,19 +4,17 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Collaborations
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -108,9 +106,12 @@ class GetGroupCollaborationsOptionsArg(BaseObject):
         self.offset = offset
 
 class ListCollaborationsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_file_collaborations(self, file_id: str, options: GetFileCollaborationsOptionsArg = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
@@ -131,7 +132,7 @@ class ListCollaborationsManager(BaseObject):
         """
         if options is None:
             options = GetFileCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_folder_collaborations(self, folder_id: str, options: GetFolderCollaborationsOptionsArg = None) -> Collaborations:
         """
@@ -153,7 +154,7 @@ class ListCollaborationsManager(BaseObject):
         """
         if options is None:
             options = GetFolderCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_collaborations(self, status: GetCollaborationsStatusArg, options: GetCollaborationsOptionsArg = None) -> Collaborations:
         """
@@ -164,7 +165,7 @@ class ListCollaborationsManager(BaseObject):
         """
         if options is None:
             options = GetCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params={'status': status, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params={'status': status, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_group_collaborations(self, group_id: str, options: GetGroupCollaborationsOptionsArg = None) -> Collaborations:
         """
@@ -184,5 +185,5 @@ class ListCollaborationsManager(BaseObject):
         """
         if options is None:
             options = GetGroupCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))

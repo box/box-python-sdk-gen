@@ -1,9 +1,11 @@
 import json
 from urllib.parse import urlencode
-from typing import Union
+from typing import Union, Optional
 
+from .auth import Authentication
 from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
 from .fetch import fetch, FetchResponse, FetchOptions
+from .network import NetworkSession
 
 
 class CCGConfig:
@@ -48,7 +50,7 @@ class CCGConfig:
         self.user_id = user_id
 
 
-class CCGAuth:
+class CCGAuth(Authentication):
     def __init__(self,  config: CCGConfig):
         """
         :param config:
@@ -64,17 +66,17 @@ class CCGAuth:
             self.subject_id = self.config.user_id
             self.subject_type = TokenRequestBoxSubjectType.USER
 
-    def retrieve_token(self) -> str:
+    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
         """
         Return a current token or get a new one when not available.
         :return:
             Access token
         """
         if self.token is None:
-            return self.refresh()
+            return self.refresh(network_session=network_session)
         return self.token
 
-    def refresh(self) -> str:
+    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
         """
         Fetch a new access token
         :return:
@@ -93,7 +95,9 @@ class CCGAuth:
             FetchOptions(
                 method='POST',
                 body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'})
+                headers={'content-type': 'application/x-www-form-urlencoded'},
+                network_session=network_session
+            )
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))

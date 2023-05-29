@@ -13,8 +13,10 @@ try:
 except ImportError:
     jwt, default_backend, serialization = None, None, None
 
+from .auth import Authentication
 from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
 from .fetch import fetch, FetchResponse, FetchOptions
+from .network import NetworkSession
 
 
 class JWTConfig:
@@ -114,7 +116,7 @@ class JWTConfig:
             return cls.from_config_json_string(config_file.read(), **kwargs)
 
 
-class JWTAuth:
+class JWTAuth(Authentication):
     def __init__(self, config: JWTConfig):
         """
         :param config:
@@ -138,17 +140,17 @@ class JWTAuth:
 
         self._rsa_private_key = self._get_rsa_private_key(config.private_key, config.private_key_passphrase)
 
-    def retrieve_token(self) -> str:
+    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
         """
         Return a current token or get a new one when not available.
         :return:
             Access token
         """
         if self.token is None:
-            return self.refresh()
+            return self.refresh(network_session=network_session)
         return self.token
 
-    def refresh(self) -> str:
+    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
         """
         Fetch a new access token
         :return:
@@ -189,7 +191,9 @@ class JWTAuth:
             FetchOptions(
                 method='POST',
                 body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'})
+                headers={'content-type': 'application/x-www-form-urlencoded'},
+                network_session=network_session
+            )
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))

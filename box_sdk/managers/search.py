@@ -4,9 +4,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import MetadataQueryResults
 
@@ -22,11 +22,9 @@ from box_sdk.schemas import SearchResultsWithSharedLinks
 
 from box_sdk.schemas import MetadataFilter
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -286,9 +284,12 @@ class GetSearchOptionsArg(BaseObject):
         self.deleted_at_range = deleted_at_range
 
 class SearchManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def create_metadata_query_execute_read(self, request_body: MetadataQuery) -> MetadataQueryResults:
         """
         Create a search using SQL-like syntax to return items that match specific
@@ -305,7 +306,7 @@ class SearchManager(BaseObject):
         of the metadata, use the `fields` attribute in the query.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return MetadataQueryResults.from_dict(json.loads(response.text))
     def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str) -> MetadataQueryIndices:
         """
@@ -317,7 +318,7 @@ class SearchManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params={'scope': scope, 'template_key': template_key}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params={'scope': scope, 'template_key': template_key}, auth=self.auth, network_session=self.network_session))
         return MetadataQueryIndices.from_dict(json.loads(response.text))
     def get_search(self, options: GetSearchOptionsArg = None) -> None:
         """
@@ -328,5 +329,5 @@ class SearchManager(BaseObject):
         """
         if options is None:
             options = GetSearchOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params={'query': options.query, 'scope': options.scope, 'file_extensions': options.file_extensions, 'created_at_range': options.created_at_range, 'updated_at_range': options.updated_at_range, 'size_range': options.size_range, 'owner_user_ids': options.owner_user_ids, 'recent_updater_user_ids': options.recent_updater_user_ids, 'ancestor_folder_ids': options.ancestor_folder_ids, 'content_types': options.content_types, 'type': options.type, 'trash_content': options.trash_content, 'mdfilters': options.mdfilters, 'sort': options.sort, 'direction': options.direction, 'limit': options.limit, 'include_recent_shared_links': options.include_recent_shared_links, 'fields': options.fields, 'offset': options.offset, 'deleted_user_ids': options.deleted_user_ids, 'deleted_at_range': options.deleted_at_range}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params={'query': options.query, 'scope': options.scope, 'file_extensions': options.file_extensions, 'created_at_range': options.created_at_range, 'updated_at_range': options.updated_at_range, 'size_range': options.size_range, 'owner_user_ids': options.owner_user_ids, 'recent_updater_user_ids': options.recent_updater_user_ids, 'ancestor_folder_ids': options.ancestor_folder_ids, 'content_types': options.content_types, 'type': options.type, 'trash_content': options.trash_content, 'mdfilters': options.mdfilters, 'sort': options.sort, 'direction': options.direction, 'limit': options.limit, 'include_recent_shared_links': options.include_recent_shared_links, 'fields': options.fields, 'offset': options.offset, 'deleted_user_ids': options.deleted_user_ids, 'deleted_at_range': options.deleted_at_range}, auth=self.auth, network_session=self.network_session))
         return None

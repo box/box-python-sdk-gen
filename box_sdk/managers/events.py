@@ -4,9 +4,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Events
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import RealtimeServers
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -90,9 +88,12 @@ class GetEventsOptionsArg(BaseObject):
         self.created_before = created_before
 
 class EventsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_events(self, options: GetEventsOptionsArg = None) -> Events:
         """
         Returns up to a year of past events for a given user
@@ -120,7 +121,7 @@ class EventsManager(BaseObject):
         """
         if options is None:
             options = GetEventsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.stream_type, 'stream_position': options.stream_position, 'limit': options.limit, 'event_type': options.event_type, 'created_after': options.created_after, 'created_before': options.created_before}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.stream_type, 'stream_position': options.stream_position, 'limit': options.limit, 'event_type': options.event_type, 'created_after': options.created_after, 'created_before': options.created_before}, auth=self.auth, network_session=self.network_session))
         return Events.from_dict(json.loads(response.text))
     def get_events_with_long_polling(self) -> RealtimeServers:
         """
@@ -198,5 +199,5 @@ class EventsManager(BaseObject):
         first.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='OPTIONS', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='OPTIONS', auth=self.auth, network_session=self.network_session))
         return RealtimeServers.from_dict(json.loads(response.text))
