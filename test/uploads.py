@@ -37,7 +37,8 @@ def test_upload_file_and_file_version():
     uploaded_file: Files = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
-    uploaded_files_version: Files = client.uploads.upload_file_version(uploaded_file.id, UploadFileVersionRequestBodyArg(attributes=UploadFileVersionRequestBodyArgAttributesField(name=new_file_version_name), file=file_content_stream))
+    new_file_content_stream = generate_byte_stream()
+    uploaded_files_version: Files = client.uploads.upload_file_version(uploaded_file.id, UploadFileVersionRequestBodyArg(attributes=UploadFileVersionRequestBodyArgAttributesField(name=new_file_version_name), file=new_file_content_stream))
     new_file_version: Files = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name
     client.files.delete_file_by_id(new_file_version.id)

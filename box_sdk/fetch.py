@@ -31,7 +31,7 @@ X_BOX_UA_HEADER = f'agent=box-python-generated-sdk/{SDK_VERSION}; ' \
 class MultipartItem:
     part_name: str
     body: str = None
-    file_stream: io.BytesIO = None
+    file_stream: Union[io.BytesIO, bytes] = None
     file_name: str = ''
     content_type: str = None
 
@@ -147,9 +147,10 @@ def __make_request(method, url, headers, body, content_type, params, multipart_d
             if part.body:
                 fields[part.part_name] = part.body
             else:
-                file_stream_position = part.file_stream.tell()
-                part.file_stream.seek(file_stream_position)
-                fields[part.part_name] = (part.file_name, part.file_stream, part.content_type)
+                file_stream = io.BytesIO(part.file_stream) if type(part.file_stream) == bytes else part.file_stream
+                file_stream_position = file_stream.tell()
+                file_stream.seek(file_stream_position)
+                fields[part.part_name] = (part.file_name, file_stream, part.content_type)
 
         multipart_stream = MultipartEncoder(fields)
         body = multipart_stream
