@@ -48,6 +48,7 @@ class GetSearchOptionsArgTypeField(str, Enum):
 class GetSearchOptionsArgTrashContentField(str, Enum):
     NON_TRASHED_ONLY = 'non_trashed_only'
     TRASHED_ONLY = 'trashed_only'
+    ALL_ITEMS = 'all_items'
 
 class GetSearchOptionsArgSortField(str, Enum):
     MODIFIED_AT = 'modified_at'
@@ -189,6 +190,7 @@ class GetSearchOptionsArg(BaseObject):
             * `trashed_only` - Only searches for items currently in the trash
             * `non_trashed_only` - Only searches for items currently not in
               the trash
+            * `all_items` - Searches for both trashed and non-trashed items.
         :type trash_content: Optional[GetSearchOptionsArgTrashContentField], optional
         :param mdfilters: Limits the search results to any items for which the metadata matches
             the provided filter.
