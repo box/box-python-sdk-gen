@@ -27,7 +27,6 @@ class GetFolderTrashItemsOptionsArgDirectionField(str, Enum):
     DESC = 'DESC'
 
 class GetFolderTrashItemsOptionsArgSortField(str, Enum):
-    ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
