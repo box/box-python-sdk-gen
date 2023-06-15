@@ -7,7 +7,7 @@ class BaseObject:
     _fields_to_json_mapping = {}
 
     def __init__(self, **kwargs):
-        pass
+        self.__dict__.update(kwargs)
 
     @classmethod
     def from_dict(cls, data: dict):
