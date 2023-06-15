@@ -52,6 +52,9 @@ class CreateWebLinkRequestBodyArgSharedLinkField(BaseObject):
         :type access: Optional[CreateWebLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
+            Passwords must now be at least eight characters
+            long and include a number, upper case letter, or
+            a non-numeric or non-alphabetical character.
             A password can only be set when `access` is set to `open`.
         :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
@@ -139,6 +142,9 @@ class UpdateWebLinkByIdRequestBodyArgSharedLinkField(BaseObject):
         :type access: Optional[UpdateWebLinkByIdRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
+            Passwords must now be at least eight characters
+            long and include a number, upper case letter, or
+            a non-numeric or non-alphabetical character.
             A password can only be set when `access` is set to `open`.
         :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
