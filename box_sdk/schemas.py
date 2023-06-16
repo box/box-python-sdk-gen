@@ -370,6 +370,25 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         super().__init__(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at, **kwargs)
         self.folder = folder
 
+class IntegrationMappingSlackCreateRequestPartnerItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequestBoxItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequestOptionsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingSlackCreateRequest(BaseObject):
+    def __init__(self, partner_item: IntegrationMappingSlackCreateRequestPartnerItemField, box_item: IntegrationMappingSlackCreateRequestBoxItemField, options: Optional[IntegrationMappingSlackCreateRequestOptionsField] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.partner_item = partner_item
+        self.box_item = box_item
+        self.options = options
+
 class ClientErrorTypeField(str, Enum):
     ERROR = 'error'
 
@@ -931,6 +950,8 @@ class CollaborationAllowlistEntries(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of allowed collaboration domains
+        :type entries: Optional[List[CollaborationAllowlistEntry]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -1008,6 +1029,10 @@ class CollaborationAllowlistExemptTargets(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of users exempt from any of the restrictions
+            imposed by the list of allowed collaboration domains
+            for this enterprise.
+        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -1082,6 +1107,8 @@ class Collections(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CollectionsOrderField]], optional
+        :param entries: A list of collections
+        :type entries: Optional[List[Collection]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -1181,6 +1208,8 @@ class EmailAliases(BaseObject):
         """
         :param total_count: The number of email aliases.
         :type total_count: Optional[int], optional
+        :param entries: A list of email aliases
+        :type entries: Optional[List[EmailAlias]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -1303,6 +1332,9 @@ class EventEventTypeField(str, Enum):
     SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED'
     SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION'
     SHIELD_JUSTIFICATION_APPROVAL = 'SHIELD_JUSTIFICATION_APPROVAL'
+    SHIELD_SHARED_LINK_ACCESS_BLOCKED = 'SHIELD_SHARED_LINK_ACCESS_BLOCKED'
+    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE'
+    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE'
     SIGN_DOCUMENT_ASSIGNED = 'SIGN_DOCUMENT_ASSIGNED'
     SIGN_DOCUMENT_CANCELLED = 'SIGN_DOCUMENT_CANCELLED'
     SIGN_DOCUMENT_COMPLETED = 'SIGN_DOCUMENT_COMPLETED'
@@ -1775,6 +1807,8 @@ class FilesUnderRetention(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of files
+        :type entries: Optional[List[FileMini]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2095,7 +2129,7 @@ class FolderBase(BaseObject):
         self.etag = etag
 
 class FolderMini(FolderBase):
-    def __init__(self, id: str, type: FolderBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
@@ -2108,14 +2142,26 @@ class FolderMini(FolderBase):
         :type type: FolderBaseTypeField
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
         super().__init__(id=id, type=type, etag=etag, **kwargs)
-        self.sequence_id = sequence_id
         self.name = name
+        self.sequence_id = sequence_id
 
 class WebLinkPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
@@ -2200,6 +2246,78 @@ class FolderLockLockedOperationsField(BaseObject):
         super().__init__(**kwargs)
         self.move = move
         self.delete = delete
+
+class IntegrationMappingTypeField(str, Enum):
+    INTEGRATION_MAPPING = 'integration_mapping'
+
+class IntegrationMappingBoxItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingOptionsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingCreatedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingModifiedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingBaseIntegrationTypeField(str, Enum):
+    SLACK = 'slack'
+
+class IntegrationMappingBase(BaseObject):
+    def __init__(self, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.integration_type = integration_type
+
+class IntegrationMappingMiniPartnerItemTypeField(str, Enum):
+    CHANNEL = 'channel'
+
+class IntegrationMappingMiniBoxItemTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class IntegrationMappingMini(IntegrationMappingBase):
+    def __init__(self, partner_item_id: Optional[str] = None, partner_item_type: Optional[IntegrationMappingMiniPartnerItemTypeField] = None, box_item_id: Optional[str] = None, box_item_type: Optional[IntegrationMappingMiniBoxItemTypeField] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param partner_item_id: ID of the mapped partner item
+        :type partner_item_id: Optional[str], optional
+        :param partner_item_type: Domain-specific type of the mapped partner item
+        :type partner_item_type: Optional[IntegrationMappingMiniPartnerItemTypeField], optional
+        :param box_item_id: ID of the Box item mapped to the object referenced in `partner_item_id`
+        :type box_item_id: Optional[str], optional
+        :param box_item_type: Type of the Box object referenced in `box_item_id`
+        :type box_item_type: Optional[IntegrationMappingMiniBoxItemTypeField], optional
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(id=id, integration_type=integration_type, **kwargs)
+        self.partner_item_id = partner_item_id
+        self.partner_item_type = partner_item_type
+        self.box_item_id = box_item_id
+        self.box_item_type = box_item_type
 
 class GroupsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
@@ -2293,6 +2411,8 @@ class Groups(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[GroupsOrderField]], optional
+        :param entries: A list of groups
+        :type entries: Optional[List[GroupMini]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -2504,6 +2624,9 @@ class LegalHoldPolicyAssignments(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of legal hold
+            policy assignments
+        :type entries: Optional[List[LegalHoldPolicyAssignmentBase]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2663,6 +2786,8 @@ class MetadataCascadePolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of metadata cascade policies
+        :type entries: Optional[List[MetadataCascadePolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2838,6 +2963,8 @@ class MetadataTemplates(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of metadata templates
+        :type entries: Optional[List[MetadataTemplate]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2877,6 +3004,8 @@ class RealtimeServers(BaseObject):
         """
         :param chunk_size: The number of items in this response.
         :type chunk_size: Optional[int], optional
+        :param entries: A list of real-time servers
+        :type entries: Optional[List[RealtimeServer]], optional
         """
         super().__init__(**kwargs)
         self.chunk_size = chunk_size
@@ -3016,6 +3145,8 @@ class FileVersionRetentions(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of file version retentions
+        :type entries: Optional[List[FileVersionRetention]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3041,6 +3172,8 @@ class RetentionPolicyAssignmentBase(BaseObject):
 class RetentionPolicyAssignments(BaseObject):
     def __init__(self, entries: Optional[List[RetentionPolicyAssignmentBase]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
         """
+        :param entries: A list of retention policy assignments
+        :type entries: Optional[List[RetentionPolicyAssignmentBase]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed. The maximum value varies by API.
@@ -3296,6 +3429,8 @@ class StoragePolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of storage policies
+        :type entries: Optional[List[StoragePolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3332,6 +3467,8 @@ class StoragePolicyAssignments(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of storage policy assignments
+        :type entries: Optional[List[StoragePolicyAssignment]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3432,6 +3569,8 @@ class TermsOfServices(BaseObject):
         """
         :param total_count: The total number of objects.
         :type total_count: Optional[int], optional
+        :param entries: A list of terms of service objects
+        :type entries: Optional[List[TermsOfService]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -3840,6 +3979,9 @@ class UploadParts(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[UploadPartsOrderField]], optional
+        :param entries: A list of uploaded chunks for an upload
+            session
+        :type entries: Optional[List[UploadPart]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4015,6 +4157,22 @@ class UserBase(BaseObject):
         self.type = type
         self.id = id
 
+class UserIntegrationMappings(UserBase):
+    def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
+        """
+        :param type: `user`
+        :type type: UserBaseTypeField
+        :param name: The display name of this user
+        :type name: Optional[str], optional
+        :param login: The primary email address of this user
+        :type login: Optional[str], optional
+        :param id: The unique identifier for this user
+        :type id: Optional[str], optional
+        """
+        super().__init__(type=type, id=id, **kwargs)
+        self.name = name
+        self.login = login
+
 class UserCollaborations(UserBase):
     def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
@@ -4126,6 +4284,8 @@ class Users(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[UsersOrderField]], optional
+        :param entries: A list of users
+        :type entries: Optional[List[User]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4584,6 +4744,8 @@ class TermsOfServiceUserStatuses(BaseObject):
         """
         :param total_count: The total number of objects.
         :type total_count: Optional[int], optional
+        :param entries: A list of terms of service user statuses
+        :type entries: Optional[List[TermsOfServiceUserStatus]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4629,6 +4791,8 @@ class TaskAssignments(BaseObject):
         """
         :param total_count: The total number of items in this collection.
         :type total_count: Optional[int], optional
+        :param entries: A list of task assignments
+        :type entries: Optional[List[TaskAssignment]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4680,6 +4844,8 @@ class Tasks(BaseObject):
             The total number of entries in the collection may be less than
             `total_count`.
         :type total_count: Optional[int], optional
+        :param entries: A list of tasks
+        :type entries: Optional[List[Task]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4863,6 +5029,8 @@ class LegalHoldPolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of legal hold policies
+        :type entries: Optional[List[LegalHoldPolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -4941,6 +5109,8 @@ class GroupMemberships(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[GroupMembershipsOrderField]], optional
+        :param entries: A list of group memberships
+        :type entries: Optional[List[GroupMembership]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5008,6 +5178,8 @@ class FileVersions(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[FileVersionsOrderField]], optional
+        :param entries: A list of file versions
+        :type entries: Optional[List[FileVersion]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5244,6 +5416,8 @@ class DevicePinner(BaseObject):
 class DevicePinners(BaseObject):
     def __init__(self, entries: Optional[List[DevicePinner]] = None, limit: Optional[int] = None, next_marker: Optional[int] = None, order: Optional[List[DevicePinnersOrderField]] = None, **kwargs):
         """
+        :param entries: A list of device pins
+        :type entries: Optional[List[DevicePinner]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed.
@@ -5331,6 +5505,8 @@ class Comments(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CommentsOrderField]], optional
+        :param entries: A list of comments
+        :type entries: Optional[List[Comment]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5526,6 +5702,8 @@ class FolderLocks(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of folder locks
+        :type entries: Optional[List[FolderLock]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -5637,6 +5815,8 @@ class Webhooks(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of webhooks
+        :type entries: Optional[List[WebhookMini]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -5893,7 +6073,7 @@ class Items(BaseObject):
         self.entries = entries
 
 class Folder(FolderMini):
-    def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
@@ -5933,12 +6113,24 @@ class Folder(FolderMini):
         :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, name=name, sequence_id=sequence_id, etag=etag, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.description = description
@@ -6053,6 +6245,8 @@ class RecentItems(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of recent items
+        :type entries: Optional[List[RecentItem]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6137,6 +6331,8 @@ class FileVersionLegalHolds(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of file version legal holds
+        :type entries: Optional[List[FileVersionLegalHold]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6145,7 +6341,7 @@ class FileVersionLegalHolds(BaseObject):
         self.entries = entries
 
 class FolderFull(Folder):
-    def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a folder.
             The ID for any folder can be determined
@@ -6208,12 +6404,24 @@ class FolderFull(Folder):
         :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, owned_by=owned_by, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, item_status=item_status, item_collection=item_collection, sequence_id=sequence_id, name=name, etag=etag, **kwargs)
+        super().__init__(id=id, type=type, created_at=created_at, modified_at=modified_at, description=description, size=size, path_collection=path_collection, created_by=created_by, modified_by=modified_by, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, owned_by=owned_by, shared_link=shared_link, folder_upload_email=folder_upload_email, parent=parent, item_status=item_status, item_collection=item_collection, name=name, sequence_id=sequence_id, etag=etag, **kwargs)
         self.sync_state = sync_state
         self.has_collaborations = has_collaborations
         self.permissions = permissions
@@ -6292,6 +6500,8 @@ class Collaborations(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CollaborationsOrderField]], optional
+        :param entries: A list of collaborations
+        :type entries: Optional[List[Collaboration]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -6541,6 +6751,8 @@ class Workflows(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of workflows
+        :type entries: Optional[List[Workflow]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6915,6 +7127,8 @@ class Events(BaseObject):
         :param next_stream_position: The stream position of the start of the next page (chunk)
             of events.
         :type next_stream_position: Optional[str], optional
+        :param entries: A list of events
+        :type entries: Optional[List[Event]], optional
         """
         super().__init__(**kwargs)
         self.chunk_size = chunk_size
@@ -7038,6 +7252,122 @@ class KeywordSkillCard(BaseObject):
         self.entries = entries
         self.created_at = created_at
         self.skill_card_title = skill_card_title
+
+class IntegrationMappingSlackOptions(BaseObject):
+    def __init__(self, is_access_management_disabled: Optional[bool] = None, **kwargs):
+        """
+        :param is_access_management_disabled: Indicates whether or not channel member
+            access to the underlying box item
+            should be automatically managed.
+            Depending on type of channel, access is managed
+            through creating collaborations or shared links.
+        :type is_access_management_disabled: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.is_access_management_disabled = is_access_management_disabled
+
+class IntegrationMappingPartnerItemSlackTypeField(str, Enum):
+    CHANNEL = 'channel'
+
+class IntegrationMappingPartnerItemSlack(BaseObject):
+    def __init__(self, type: IntegrationMappingPartnerItemSlackTypeField, id: str, slack_workspace_id: Optional[str] = None, slack_org_id: Optional[str] = None, **kwargs):
+        """
+        :param type: Type of the mapped item referenced in `id`
+        :type type: IntegrationMappingPartnerItemSlackTypeField
+        :param id: ID of the mapped item (of type referenced in `type`)
+        :type id: str
+        :param slack_workspace_id: ID of the Slack workspace with which the item is associated
+        :type slack_workspace_id: Optional[str], optional
+        :param slack_org_id: ID of the Slack organization with which the item is associated
+        :type slack_org_id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.slack_workspace_id = slack_workspace_id
+        self.slack_org_id = slack_org_id
+
+class IntegrationMapping(IntegrationMappingBase):
+    def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: IntegrationMappingBoxItemField, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[IntegrationMappingCreatedByField] = None, modified_by: Optional[IntegrationMappingModifiedByField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+        """
+        :param type: Mapping type
+        :type type: IntegrationMappingTypeField
+        :param partner_item: Mapped item object for Slack
+        :type partner_item: Union[IntegrationMappingPartnerItemSlack]
+        :param box_item: The Box folder, to which the object from the
+            partner app domain (referenced in `partner_item_id`) is mapped
+        :type box_item: IntegrationMappingBoxItemField
+        :param is_manually_created: Identifies whether the mapping has
+            been manually set
+            (as opposed to being automatically created)
+        :type is_manually_created: Optional[bool], optional
+        :param options: Integration mapping options for Slack
+        :type options: Optional[IntegrationMappingOptionsField], optional
+        :param created_by: An object representing the user who
+            created the integration mapping
+        :type created_by: Optional[IntegrationMappingCreatedByField], optional
+        :param modified_by: The user who
+            last modified the integration mapping
+        :type modified_by: Optional[IntegrationMappingModifiedByField], optional
+        :param created_at: When the integration mapping object was created
+        :type created_at: Optional[str], optional
+        :param modified_at: When the integration mapping object was last modified
+        :type modified_at: Optional[str], optional
+        :param id: A unique identifier of a folder mapping
+            (part of a composite key together
+            with `integration_type`)
+        :type id: Optional[str], optional
+        :param integration_type: Identifies the Box partner app,
+            with which the mapping is associated.
+            Currently only supports Slack.
+            (part of the composite key together with `id`)
+        :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        """
+        super().__init__(id=id, integration_type=integration_type, **kwargs)
+        self.type = type
+        self.partner_item = partner_item
+        self.box_item = box_item
+        self.is_manually_created = is_manually_created
+        self.options = options
+        self.created_by = created_by
+        self.modified_by = modified_by
+        self.created_at = created_at
+        self.modified_at = modified_at
+
+class IntegrationMappings(BaseObject):
+    def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[IntegrationMapping]] = None, **kwargs):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
+        :param entries: A list of integration mappings
+        :type entries: Optional[List[IntegrationMapping]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
+
+class IntegrationMappingBoxItemSlackTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class IntegrationMappingBoxItemSlack(BaseObject):
+    def __init__(self, type: IntegrationMappingBoxItemSlackTypeField, id: str, **kwargs):
+        """
+        :param type: Type of the mapped item referenced in `id`
+        :type type: IntegrationMappingBoxItemSlackTypeField
+        :param id: ID of the mapped item (of type referenced in `type`)
+        :type id: str
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
 
 class TimelineSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
@@ -7884,6 +8214,8 @@ class SignRequests(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of sign requests
+        :type entries: Optional[List[SignRequest]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit

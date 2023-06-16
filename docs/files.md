@@ -8,6 +8,7 @@ file's contents, upload new versions, and perform other common file operations
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Get a File's Information](#get-a-files-information)
+  - [Getting additional fields](#getting-additional-fields)
 - [Update a File's Information](#update-a-files-information)
 - [Copy a File](#copy-a-file)
 - [Delete a File](#delete-a-file)
@@ -23,11 +24,30 @@ To retreive information about a File, call `get_file_by_id` method. This method 
 <!-- sample get_files_id -->
 
 ```python
-from box_sdk.schemas import File
+from box_sdk.schemas import FileFull
 
-file: File = client.files.get_file_by_id(file_id='123456789')
+file: FileFull = client.files.get_file_by_id(file_id='123456789')
 print(f'File with id {file.id} has name {file.name}')
 ```
+
+### Getting additional fields
+
+If you want the response object to contain additional fields that are not return by default, you should pass a list of
+such fields in a comma-separated string
+
+```python
+from box_sdk.schemas import FileFull
+from box_sdk.managers.files import GetFileByIdOptionsArg
+
+file: FileFull = client.files.get_file_by_id(
+    '12345',
+    GetFileByIdOptionsArg(fields='is_externally_owned,has_collaborations')
+)
+```
+
+NOTE: Be aware that specifying `fields` parameter will have the effect that none of the standard fields
+are returned in the response unless explicitly specified, instead only fields defined in `FileBase`
+are returned, additional to the fields requested.
 
 ## Update a File's Information
 
@@ -38,10 +58,10 @@ To update a file's information, call `update_file_by_id` method. This method ret
 ```python
 
 from box_sdk.managers.files import UpdateFileByIdRequestBodyArg
-from box_sdk.schemas import File
+from box_sdk.schemas import FileFull
 
 updates = UpdateFileByIdRequestBodyArg(name='test.txt', description='Test file')
-file: File = client.files.update_file_by_id(file_id='123', request_body=updates)
+file: FileFull = client.files.update_file_by_id(file_id='123', request_body=updates)
 
 print(f'File with id {file.id} has new name {file.name}')
 ```
@@ -56,9 +76,10 @@ This method returns a `File` object which contains information about the copied 
 
 ```python
 from box_sdk.managers.files import CopyFileRequestBodyArg, CopyFileRequestBodyArgParentField
+from box_sdk.schemas import FileFull
 
 
-file: File = client.files.copy_file(
+file: FileFull = client.files.copy_file(
     file_id='123456789',
     request_body=CopyFileRequestBodyArg(
         parent=CopyFileRequestBodyArgParentField(id='0'),

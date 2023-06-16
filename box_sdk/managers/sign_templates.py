@@ -2,9 +2,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import SignTemplates
 
@@ -12,11 +12,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import SignTemplate
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -39,16 +37,19 @@ class GetSignTemplatesOptionsArg(BaseObject):
         self.limit = limit
 
 class SignTemplatesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_sign_templates(self, options: GetSignTemplatesOptionsArg = None) -> SignTemplates:
         """
         Gets Box Sign templates created by a user.
         """
         if options is None:
             options = GetSignTemplatesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return SignTemplates.from_dict(json.loads(response.text))
     def get_sign_template_by_id(self, template_id: str) -> SignTemplate:
         """
@@ -57,5 +58,5 @@ class SignTemplatesManager(BaseObject):
             Example: "123075213-7d117509-8f05-42e4-a5ef-5190a319d41d"
         :type template_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates/', template_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates/', template_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return SignTemplate.from_dict(json.loads(response.text))

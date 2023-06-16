@@ -4,17 +4,15 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
+from typing import Dict
 
 from box_sdk.schemas import AccessToken
 
 from box_sdk.schemas import OAuth2Error
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -54,9 +52,12 @@ class GetAuthorizeOptionsArg(BaseObject):
         self.scope = scope
 
 class AuthorizationManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, options: GetAuthorizeOptionsArg = None) -> None:
         """
         Authorize a user by sending them through the [Box](https://box.com)
@@ -89,5 +90,5 @@ class AuthorizationManager(BaseObject):
         """
         if options is None:
             options = GetAuthorizeOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params={'response_type': response_type, 'client_id': client_id, 'redirect_uri': options.redirect_uri, 'state': options.state, 'scope': options.scope}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params={'response_type': response_type, 'client_id': client_id, 'redirect_uri': options.redirect_uri, 'state': options.state, 'scope': options.scope}, auth=self.auth, network_session=self.network_session))
         return None

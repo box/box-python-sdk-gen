@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import FileVersions
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import FileVersionFull
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -123,9 +121,12 @@ class PromoteFileVersionOptionsArg(BaseObject):
         self.fields = fields
 
 class FileVersionsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_file_versions(self, file_id: str, options: GetFileVersionsOptionsArg = None) -> FileVersions:
         """
         Retrieve a list of the past versions for a file.
@@ -146,7 +147,7 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = GetFileVersionsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
         return FileVersions.from_dict(json.loads(response.text))
     def get_file_version_by_id(self, file_id: str, file_version_id: str, options: GetFileVersionByIdOptionsArg = None) -> FileVersionFull:
         """
@@ -168,7 +169,7 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = GetFileVersionByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
     def update_file_version_by_id(self, file_id: str, file_version_id: str, request_body: UpdateFileVersionByIdRequestBodyArg) -> FileVersionFull:
         """
@@ -194,7 +195,7 @@ class FileVersionsManager(BaseObject):
             Example: "1234"
         :type file_version_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
     def delete_file_version_by_id(self, file_id: str, file_version_id: str, options: DeleteFileVersionByIdOptionsArg = None):
         """
@@ -216,7 +217,7 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = DeleteFileVersionByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers={'if-match': options.if_match}, auth=self.auth, network_session=self.network_session))
         return response.content
     def promote_file_version(self, file_id: str, request_body: PromoteFileVersionRequestBodyArg, options: PromoteFileVersionOptionsArg = None) -> FileVersionFull:
         """
@@ -265,5 +266,5 @@ class FileVersionsManager(BaseObject):
         """
         if options is None:
             options = PromoteFileVersionOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))

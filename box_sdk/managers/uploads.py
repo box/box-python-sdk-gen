@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 import re
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Files
 
@@ -16,11 +16,9 @@ from box_sdk.schemas import UploadUrl
 
 from box_sdk.schemas import ConflictError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -201,9 +199,12 @@ class PreflightFileUploadRequestBodyArg(BaseObject):
         self.parent = parent
 
 class UploadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def upload_file_version(self, file_id: str, request_body: UploadFileVersionRequestBodyArg, options: UploadFileVersionOptionsArg = None) -> Files:
         """
         Update a file's content. For file sizes over 50MB we recommend
@@ -236,7 +237,7 @@ class UploadsManager(BaseObject):
         """
         if options is None:
             options = UploadFileVersionOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params={'fields': options.fields}, headers={'if-match': options.if_match, 'content-md5': options.content_md_5}, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file)], content_type='multipart/form-data', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params={'fields': options.fields}, headers={'if-match': options.if_match, 'content-md5': options.content_md_5}, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
     def upload_file(self, request_body: UploadFileRequestBodyArg, options: UploadFileOptionsArg = None) -> Files:
         """
@@ -262,7 +263,7 @@ class UploadsManager(BaseObject):
         """
         if options is None:
             options = UploadFileOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/content']), FetchOptions(method='POST', params={'fields': options.fields}, headers={'content-md5': options.content_md_5}, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file)], content_type='multipart/form-data', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/content']), FetchOptions(method='POST', params={'fields': options.fields}, headers={'content-md5': options.content_md_5}, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
     def preflight_file_upload(self, request_body: PreflightFileUploadRequestBodyArg) -> UploadUrl:
         """
@@ -271,5 +272,5 @@ class UploadsManager(BaseObject):
         before you upload the entire file.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/content']), FetchOptions(method='OPTIONS', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/content']), FetchOptions(method='OPTIONS', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UploadUrl.from_dict(json.loads(response.text))

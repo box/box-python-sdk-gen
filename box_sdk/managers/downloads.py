@@ -2,15 +2,13 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
+from typing import Dict
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -46,9 +44,12 @@ class DownloadFileOptionsArg(BaseObject):
         self.access_token = access_token
 
 class DownloadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def download_file(self, file_id: str, options: DownloadFileOptionsArg = None):
         """
         Returns the contents of a file in binary format.
@@ -63,5 +64,5 @@ class DownloadsManager(BaseObject):
         """
         if options is None:
             options = DownloadFileOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params={'version': options.version, 'access_token': options.access_token}, headers={'range': options.range, 'boxapi': options.boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params={'version': options.version, 'access_token': options.access_token}, headers={'range': options.range, 'boxapi': options.boxapi}, auth=self.auth, network_session=self.network_session))
         return response.content

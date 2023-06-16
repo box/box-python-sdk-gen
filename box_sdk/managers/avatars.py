@@ -2,19 +2,19 @@ import re
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
+from typing import Optional
 
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import UserAvatar
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -38,9 +38,12 @@ class CreateUserAvatarRequestBodyArg(BaseObject):
         self.pic = pic
 
 class AvatarsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_user_avatar(self, user_id: str):
         """
         Retrieves an image of a the user's avatar.
@@ -48,7 +51,7 @@ class AvatarsManager(BaseObject):
             Example: "12345"
         :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return response.content
     def create_user_avatar(self, user_id: str, request_body: CreateUserAvatarRequestBodyArg) -> UserAvatar:
         """
@@ -57,7 +60,7 @@ class AvatarsManager(BaseObject):
             Example: "12345"
         :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='POST', multipart_data=[MultipartItem(part_name='pic', file_stream=request_body.pic)], content_type='multipart/form-data', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='POST', multipart_data=[MultipartItem(part_name='pic', file_stream=request_body.pic)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
         return UserAvatar.from_dict(json.loads(response.text))
     def delete_user_avatar(self, user_id: str):
         """
@@ -69,5 +72,5 @@ class AvatarsManager(BaseObject):
             Example: "12345"
         :type user_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

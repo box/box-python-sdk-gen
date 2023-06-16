@@ -4,19 +4,17 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import WebLink
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -87,6 +85,9 @@ class UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         :type access: Optional[UpdateWebLinkAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
+            Passwords must now be at least eight characters
+            long and include a number, upper case letter, or
+            a non-numeric or non-alphabetic character.
             A password can only be set when `access` is set to `open`.
         :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
@@ -159,6 +160,9 @@ class UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         :type access: Optional[UpdateWebLinkUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
+            Passwords must now be at least eight characters
+            long and include a number, upper case letter, or
+            a non-numeric or non-alphabetic character.
             A password can only be set when `access` is set to `open`.
         :type password: Optional[str], optional
         :param vanity_name: Defines a custom vanity name to use in the shared link URL,
@@ -204,9 +208,12 @@ class UpdateWebLinkRemoveSharedLinkRequestBodyArg(BaseObject):
         self.shared_link = shared_link
 
 class SharedLinksWebLinksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_shared_item_web_links(self, boxapi: str, options: GetSharedItemWebLinksOptionsArg = None) -> WebLink:
         """
         Returns the web link represented by a shared link.
@@ -231,7 +238,7 @@ class SharedLinksWebLinksManager(BaseObject):
         """
         if options is None:
             options = GetSharedItemWebLinksOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
         """
@@ -244,7 +251,7 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_add_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkAddSharedLinkRequestBodyArg) -> WebLink:
         """
@@ -257,7 +264,7 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_update_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkUpdateSharedLinkRequestBodyArg) -> WebLink:
         """
@@ -270,7 +277,7 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_remove_shared_link(self, web_link_id: str, fields: str, request_body: UpdateWebLinkRemoveSharedLinkRequestBodyArg) -> WebLink:
         """
@@ -283,5 +290,5 @@ class SharedLinksWebLinksManager(BaseObject):
             Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))

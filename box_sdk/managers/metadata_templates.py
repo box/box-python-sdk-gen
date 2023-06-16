@@ -6,9 +6,9 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import MetadataTemplates
 
@@ -16,11 +16,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import MetadataTemplate
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -152,9 +150,12 @@ class CreateMetadataTemplateSchemaRequestBodyArg(BaseObject):
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
 
 class MetadataTemplatesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_metadata_templates(self, metadata_instance_id: str) -> MetadataTemplates:
         """
         Finds a metadata template by searching for the ID of an instance of the
@@ -165,7 +166,7 @@ class MetadataTemplatesManager(BaseObject):
             Example: "01234500-12f1-1234-aa12-b1d234cb567e"
         :type metadata_instance_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates']), FetchOptions(method='GET', params={'metadata_instance_id': metadata_instance_id}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates']), FetchOptions(method='GET', params={'metadata_instance_id': metadata_instance_id}, auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
     def get_metadata_template_schema(self, scope: GetMetadataTemplateSchemaScopeArg, template_key: str) -> MetadataTemplate:
         """
@@ -183,7 +184,7 @@ class MetadataTemplatesManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
     def delete_metadata_template_schema(self, scope: DeleteMetadataTemplateSchemaScopeArg, template_key: str):
         """
@@ -198,7 +199,7 @@ class MetadataTemplatesManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content
     def get_metadata_template_by_id(self, template_id: str) -> MetadataTemplate:
         """
@@ -207,7 +208,7 @@ class MetadataTemplatesManager(BaseObject):
             Example: "f7a9891f"
         :type template_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', template_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', template_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
     def get_metadata_template_global(self, options: GetMetadataTemplateGlobalOptionsArg = None) -> MetadataTemplates:
         """
@@ -218,7 +219,7 @@ class MetadataTemplatesManager(BaseObject):
         """
         if options is None:
             options = GetMetadataTemplateGlobalOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/global']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/global']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
     def get_metadata_template_enterprise(self, options: GetMetadataTemplateEnterpriseOptionsArg = None) -> MetadataTemplates:
         """
@@ -229,7 +230,7 @@ class MetadataTemplatesManager(BaseObject):
         """
         if options is None:
             options = GetMetadataTemplateEnterpriseOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
     def create_metadata_template_schema(self, request_body: CreateMetadataTemplateSchemaRequestBodyArg) -> MetadataTemplate:
         """
@@ -238,5 +239,5 @@ class MetadataTemplatesManager(BaseObject):
         files and folders.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))

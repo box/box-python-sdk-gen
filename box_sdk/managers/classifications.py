@@ -6,19 +6,17 @@ from box_sdk.base_object import BaseObject
 
 from typing import List
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import ClassificationTemplate
 
 from box_sdk.schemas import ClientError
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -140,9 +138,12 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArg(BaseObject):
         self.fields = fields
 
 class ClassificationsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_metadata_template_enterprise_security_classification_schema(self) -> ClassificationTemplate:
         """
         Retrieves the classification metadata template and lists all the
@@ -159,7 +160,7 @@ class ClassificationsManager(BaseObject):
         `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return ClassificationTemplate.from_dict(json.loads(response.text))
     def delete_metadata_template_enterprise_security_classification_schema(self):
         """
@@ -168,7 +169,7 @@ class ClassificationsManager(BaseObject):
         metadata template.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content
     def create_metadata_template_schema_classification(self, request_body: CreateMetadataTemplateSchemaClassificationRequestBodyArg) -> ClassificationTemplate:
         """
@@ -189,5 +190,5 @@ class ClassificationsManager(BaseObject):
         classifications.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema#classifications']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema#classifications']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ClassificationTemplate.from_dict(json.loads(response.text))

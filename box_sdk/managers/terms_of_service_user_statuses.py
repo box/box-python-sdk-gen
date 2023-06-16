@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 from enum import Enum
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import TermsOfServiceUserStatuses
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TermsOfServiceUserStatus
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -90,9 +88,12 @@ class UpdateTermOfServiceUserStatusByIdRequestBodyArg(BaseObject):
         self.is_accepted = is_accepted
 
 class TermsOfServiceUserStatusesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_term_of_service_user_statuses(self, tos_id: str, options: GetTermOfServiceUserStatusesOptionsArg = None) -> TermsOfServiceUserStatuses:
         """
         Retrieves an overview of users and their status for a
@@ -108,13 +109,13 @@ class TermsOfServiceUserStatusesManager(BaseObject):
         """
         if options is None:
             options = GetTermOfServiceUserStatusesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.user_id}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.user_id}, auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
     def create_term_of_service_user_status(self, request_body: CreateTermOfServiceUserStatusRequestBodyArg) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
     def update_term_of_service_user_status_by_id(self, terms_of_service_user_status_id: str, request_body: UpdateTermOfServiceUserStatusByIdRequestBodyArg) -> TermsOfServiceUserStatus:
         """
@@ -123,5 +124,5 @@ class TermsOfServiceUserStatusesManager(BaseObject):
             Example: "324234"
         :type terms_of_service_user_status_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))

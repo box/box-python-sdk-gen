@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import TaskAssignments
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import TaskAssignment
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -92,9 +90,12 @@ class UpdateTaskAssignmentByIdRequestBodyArg(BaseObject):
         self.resolution_state = resolution_state
 
 class TaskAssignmentsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_task_assignments(self, task_id: str) -> TaskAssignments:
         """
         Lists all of the assignments for a given task.
@@ -102,7 +103,7 @@ class TaskAssignmentsManager(BaseObject):
             Example: "12345"
         :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return TaskAssignments.from_dict(json.loads(response.text))
     def create_task_assignment(self, request_body: CreateTaskAssignmentRequestBodyArg) -> TaskAssignment:
         """
@@ -114,7 +115,7 @@ class TaskAssignmentsManager(BaseObject):
         assignments.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
     def get_task_assignment_by_id(self, task_assignment_id: str) -> TaskAssignment:
         """
@@ -123,7 +124,7 @@ class TaskAssignmentsManager(BaseObject):
             Example: "12345"
         :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
     def update_task_assignment_by_id(self, task_assignment_id: str, request_body: UpdateTaskAssignmentByIdRequestBodyArg) -> TaskAssignment:
         """
@@ -135,7 +136,7 @@ class TaskAssignmentsManager(BaseObject):
             Example: "12345"
         :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
     def delete_task_assignment_by_id(self, task_assignment_id: str):
         """
@@ -144,5 +145,5 @@ class TaskAssignmentsManager(BaseObject):
             Example: "12345"
         :type task_assignment_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

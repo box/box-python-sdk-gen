@@ -8,6 +8,7 @@ iterate through a folder's contents and perform other common folder operations (
 
 - [Get Information About a Folder](#get-information-about-a-folder)
   - [Get the User's Root Folder Information](#get-the-users-root-folder-information)
+  - [Getting additional fields](#getting-additional-fields)
 - [Get the Items in a Folder](#get-the-items-in-a-folder)
 - [Create a Folder](#create-a-folder)
 - [Update a Folder](#update-a-folder)
@@ -39,6 +40,25 @@ To get the current user's root folder, call `get_folder_by_id` with `folder_id` 
 ```python
 root_folder = client.folders.get_folder_by_id(folder_id='0')
 ```
+
+## Getting additional fields
+
+If you want the response object to contain additional fields that are not return by default, you should pass a list of
+such fields in a comma-separated string
+
+```python
+from box_sdk.schemas import FolderFull
+from box_sdk.managers.folders import GetFolderByIdOptionsArg
+
+folder: FolderFull = client.folders.get_folder_by_id(
+  '12345',
+  GetFolderByIdOptionsArg(fields='has_collaborations,tags')
+)
+```
+
+NOTE: Be aware that specifying `fields` parameter will have the effect that none of the standard fields
+are returned in the response unless explicitly specified, instead only fields defined in `FolderBase`
+are returned, additional to the fields requested.
 
 # Get the Items in a Folder
 

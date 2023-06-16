@@ -2,9 +2,11 @@ from enum import Enum
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
+from typing import Optional
 
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Metadatas
 
@@ -12,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Metadata
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -41,9 +41,12 @@ class DeleteFolderMetadataByIdScopeArg(str, Enum):
     ENTERPRISE = 'enterprise'
 
 class FolderMetadataManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_folder_metadata(self, folder_id: str) -> Metadatas:
         """
         Retrieves all metadata for a given folder. This can not be used on the root
@@ -61,7 +64,7 @@ class FolderMetadataManager(BaseObject):
             Example: "12345"
         :type folder_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Metadatas.from_dict(json.loads(response.text))
     def get_folder_metadata_by_id(self, folder_id: str, scope: GetFolderMetadataByIdScopeArg, template_key: str) -> Metadata:
         """
@@ -86,7 +89,7 @@ class FolderMetadataManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
     def create_folder_metadata_by_id(self, folder_id: str, scope: CreateFolderMetadataByIdScopeArg, template_key: str, request_body: CreateFolderMetadataByIdRequestBodyArg) -> Metadata:
         """
@@ -126,7 +129,7 @@ class FolderMetadataManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
     def delete_folder_metadata_by_id(self, folder_id: str, scope: DeleteFolderMetadataByIdScopeArg, template_key: str):
         """
@@ -148,5 +151,5 @@ class FolderMetadataManager(BaseObject):
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

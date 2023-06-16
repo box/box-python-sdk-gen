@@ -4,9 +4,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import TermsOfServices
 
@@ -16,11 +16,9 @@ from box_sdk.schemas import Task
 
 from box_sdk.schemas import TermsOfService
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -84,9 +82,12 @@ class UpdateTermOfServiceByIdRequestBodyArg(BaseObject):
         self.text = text
 
 class TermsOfServicesManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_term_of_services(self, options: GetTermOfServicesOptionsArg = None) -> TermsOfServices:
         """
         Returns the current terms of service text and settings
@@ -96,7 +97,7 @@ class TermsOfServicesManager(BaseObject):
         """
         if options is None:
             options = GetTermOfServicesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params={'tos_type': options.tos_type}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params={'tos_type': options.tos_type}, auth=self.auth, network_session=self.network_session))
         return TermsOfServices.from_dict(json.loads(response.text))
     def create_term_of_service(self, request_body: CreateTermOfServiceRequestBodyArg) -> Task:
         """
@@ -105,7 +106,7 @@ class TermsOfServicesManager(BaseObject):
         and type of user.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def get_term_of_service_by_id(self, terms_of_service_id: str) -> TermsOfService:
         """
@@ -114,7 +115,7 @@ class TermsOfServicesManager(BaseObject):
             Example: "324234"
         :type terms_of_service_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return TermsOfService.from_dict(json.loads(response.text))
     def update_term_of_service_by_id(self, terms_of_service_id: str, request_body: UpdateTermOfServiceByIdRequestBodyArg) -> TermsOfService:
         """
@@ -123,5 +124,5 @@ class TermsOfServicesManager(BaseObject):
             Example: "324234"
         :type terms_of_service_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfService.from_dict(json.loads(response.text))

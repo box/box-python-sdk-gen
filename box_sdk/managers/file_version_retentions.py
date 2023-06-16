@@ -4,9 +4,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import FileVersionRetentions
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import FileVersionRetention
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -66,16 +64,19 @@ class GetFileVersionRetentionsOptionsArg(BaseObject):
         self.marker = marker
 
 class FileVersionRetentionsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_file_version_retentions(self, options: GetFileVersionRetentionsOptionsArg = None) -> FileVersionRetentions:
         """
         Retrieves all file version retentions for the given enterprise.
         """
         if options is None:
             options = GetFileVersionRetentionsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params={'file_id': options.file_id, 'file_version_id': options.file_version_id, 'policy_id': options.policy_id, 'disposition_action': options.disposition_action, 'disposition_before': options.disposition_before, 'disposition_after': options.disposition_after, 'limit': options.limit, 'marker': options.marker}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params={'file_id': options.file_id, 'file_version_id': options.file_version_id, 'policy_id': options.policy_id, 'disposition_action': options.disposition_action, 'disposition_before': options.disposition_before, 'disposition_after': options.disposition_after, 'limit': options.limit, 'marker': options.marker}, auth=self.auth, network_session=self.network_session))
         return FileVersionRetentions.from_dict(json.loads(response.text))
     def get_file_version_retention_by_id(self, file_version_retention_id: str) -> FileVersionRetention:
         """
@@ -84,5 +85,5 @@ class FileVersionRetentionsManager(BaseObject):
             Example: "3424234"
         :type file_version_retention_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions/', file_version_retention_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions/', file_version_retention_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return FileVersionRetention.from_dict(json.loads(response.text))

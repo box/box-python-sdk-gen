@@ -4,9 +4,9 @@ from typing import Optional
 
 from typing import List
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import UploadSession
 
@@ -20,11 +20,9 @@ from box_sdk.schemas import Files
 
 from box_sdk.schemas import UploadPart
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -105,14 +103,17 @@ class CreateFileUploadSessionCommitOptionsArg(BaseObject):
         self.if_none_match = if_none_match
 
 class ChunkedUploadsManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def create_file_upload_session(self, request_body: CreateFileUploadSessionRequestBodyArg) -> UploadSession:
         """
         Creates an upload session for a new file.
         """
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
     def create_file_upload_session_for_existing_file(self, file_id: str, request_body: CreateFileUploadSessionForExistingFileRequestBodyArg) -> UploadSession:
         """
@@ -126,7 +127,7 @@ class ChunkedUploadsManager(BaseObject):
             Example: "12345"
         :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
     def get_file_upload_session_by_id(self, upload_session_id: str) -> UploadSession:
         """
@@ -135,7 +136,7 @@ class ChunkedUploadsManager(BaseObject):
             Example: "D5E3F7A"
         :type upload_session_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
     def delete_file_upload_session_by_id(self, upload_session_id: str):
         """
@@ -147,7 +148,7 @@ class ChunkedUploadsManager(BaseObject):
             Example: "D5E3F7A"
         :type upload_session_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content
     def get_file_upload_session_parts(self, upload_session_id: str, options: GetFileUploadSessionPartsOptionsArg = None) -> UploadParts:
         """
@@ -161,7 +162,7 @@ class ChunkedUploadsManager(BaseObject):
         """
         if options is None:
             options = GetFileUploadSessionPartsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params={'offset': options.offset, 'limit': options.limit}, auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params={'offset': options.offset, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
         return UploadParts.from_dict(json.loads(response.text))
     def create_file_upload_session_commit(self, upload_session_id: str, digest: str, request_body: CreateFileUploadSessionCommitRequestBodyArg, options: CreateFileUploadSessionCommitOptionsArg = None) -> Files:
         """
@@ -182,5 +183,5 @@ class ChunkedUploadsManager(BaseObject):
         """
         if options is None:
             options = CreateFileUploadSessionCommitOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers={'digest': digest, 'if-match': options.if_match, 'if-none-match': options.if_none_match}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers={'digest': digest, 'if-match': options.if_match, 'if-none-match': options.if_none_match}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))

@@ -4,29 +4,32 @@ import random
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Optional, Dict, TYPE_CHECKING, Union, List
+from typing import Optional, Dict, List, Union
+from sys import version_info as py_version
 
 import requests
 from requests import Response, RequestException
 from requests_toolbelt import MultipartEncoder
 
 from .box_response import APIResponse
+from .network import NetworkSession
+from .auth import Authentication
 
-if TYPE_CHECKING:
-    from .ccg_auth import CCGAuth
-    from .developer_token_auth import DeveloperTokenAuth
-    from .jwt_auth import JWTAuth
 
-MAX_ATTEMPTS = 5
+DEFAULT_MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5
 _RETRY_BASE_INTERVAL = 1
+SDK_VERSION = '0.1.0'
+USER_AGENT_HEADER = f'box-python-generated-sdk-{SDK_VERSION}'
+X_BOX_UA_HEADER = f'agent=box-python-generated-sdk/{SDK_VERSION}; ' \
+                  f'env=python/{py_version.major}.{py_version.minor}.{py_version.micro}'
 
 
 @dataclass
 class MultipartItem:
     part_name: str
     body: str = None
-    file_stream: io.BytesIO = None
+    file_stream: Union[io.BytesIO, bytes] = None
     file_name: str = ''
     content_type: str = None
 
@@ -39,7 +42,8 @@ class FetchOptions:
     body: str = None
     multipart_data: List[MultipartItem] = None
     content_type: str = ""
-    auth: Union['CCGAuth', 'DeveloperTokenAuth', 'JWTAuth'] = None
+    auth: Authentication = None
+    network_session: NetworkSession = None
 
 
 @dataclass
@@ -75,14 +79,19 @@ class APIException(Exception):
 
 
 def fetch(url: str, options: FetchOptions) -> FetchResponse:
-    headers = __filter_entries_with_none_values(options.headers)
-    if options.auth:
-        headers['Authorization'] = f'Bearer {options.auth.retrieve_token()}'
+    if options.network_session:
+        max_attempts = options.network_session.MAX_ATTEMPTS
+        requests_session= options.network_session.requests_session
+    else:
+        max_attempts = DEFAULT_MAX_ATTEMPTS
+        requests_session = requests.Session()
 
+    headers = __compose_headers_for_request(options)
     params = __filter_entries_with_none_values(options.params)
 
     attempt_nr = 1
     response: APIResponse = __make_request(
+        session=requests_session,
         method=options.method,
         url=url,
         headers=headers,
@@ -93,12 +102,12 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         attempt_nr=attempt_nr
     )
 
-    while attempt_nr < MAX_ATTEMPTS:
+    while attempt_nr < max_attempts:
         if response.ok:
             return FetchResponse(status=response.status_code, text=response.text, content=response.content)
 
         if response.reauthentication_needed:
-            options.auth.refresh()
+            options.auth.refresh(options.network_session)
         elif response.status_code != 429 and response.status_code < 500:
             __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
 
@@ -108,6 +117,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         ))
 
         response: APIResponse = __make_request(
+            session=requests_session,
             method=options.method,
             url=url,
             headers=headers,
@@ -128,16 +138,27 @@ def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> D
     return {k: v for k, v in dictionary.items() if v is not None}
 
 
-def __make_request(method, url, headers, body, content_type, params, multipart_data, attempt_nr) -> APIResponse:
+def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
+    headers = __filter_entries_with_none_values(options.headers)
+    if options.auth:
+        headers['Authorization'] = f'Bearer {options.auth.retrieve_token(options.network_session)}'
+
+    headers['User-Agent'] = USER_AGENT_HEADER
+    headers['X-Box-UA'] = X_BOX_UA_HEADER
+    return headers
+
+
+def __make_request(session, method, url, headers, body, content_type, params, multipart_data, attempt_nr) -> APIResponse:
     if content_type == 'multipart/form-data':
         fields = OrderedDict()
         for part in multipart_data:
             if part.body:
                 fields[part.part_name] = part.body
             else:
-                file_stream_position = part.file_stream.tell()
-                part.file_stream.seek(file_stream_position)
-                fields[part.part_name] = (part.file_name, part.file_stream, part.content_type)
+                file_stream = io.BytesIO(part.file_stream) if type(part.file_stream) == bytes else part.file_stream
+                file_stream_position = file_stream.tell()
+                file_stream.seek(file_stream_position)
+                fields[part.part_name] = (part.file_name, file_stream, part.content_type)
 
         multipart_stream = MultipartEncoder(fields)
         body = multipart_stream
@@ -205,6 +226,3 @@ def __get_retry_after_time(attempt_number: int, retry_after_header: Optional[str
     randomization = (random.uniform(0, 1) * (max_randomization - min_randomization)) + min_randomization
     exponential = math.pow(2, attempt_number)
     return exponential * _RETRY_BASE_INTERVAL * randomization
-
-
-session = requests.Session()

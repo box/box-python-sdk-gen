@@ -4,9 +4,9 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
-from typing import Union
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import Tasks
 
@@ -14,11 +14,9 @@ from box_sdk.schemas import ClientError
 
 from box_sdk.schemas import Task
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk.auth import Authentication
 
-from box_sdk.ccg_auth import CCGAuth
-
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk.network import NetworkSession
 
 from box_sdk.fetch import fetch
 
@@ -114,9 +112,12 @@ class UpdateTaskByIdRequestBodyArg(BaseObject):
         self.completion_rule = completion_rule
 
 class TasksManager(BaseObject):
-    def __init__(self, auth: Union[DeveloperTokenAuth, CCGAuth, JWTAuth], **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
         super().__init__(**kwargs)
         self.auth = auth
+        self.network_session = network_session
     def get_file_tasks(self, file_id: str) -> Tasks:
         """
         Retrieves a list of all the tasks for a file. This
@@ -132,7 +133,7 @@ class TasksManager(BaseObject):
             Example: "12345"
         :type file_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Tasks.from_dict(json.loads(response.text))
     def create_task(self, request_body: CreateTaskRequestBodyArg) -> Task:
         """
@@ -141,7 +142,7 @@ class TasksManager(BaseObject):
         will need to be assigned separately.
 
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def get_task_by_id(self, task_id: str) -> Task:
         """
@@ -150,7 +151,7 @@ class TasksManager(BaseObject):
             Example: "12345"
         :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def update_task_by_id(self, task_id: str, request_body: UpdateTaskByIdRequestBodyArg) -> Task:
         """
@@ -162,7 +163,7 @@ class TasksManager(BaseObject):
             Example: "12345"
         :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def delete_task_by_id(self, task_id: str):
         """
@@ -171,5 +172,5 @@ class TasksManager(BaseObject):
             Example: "12345"
         :type task_id: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='DELETE', auth=self.auth))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
         return response.content

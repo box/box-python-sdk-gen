@@ -16,6 +16,8 @@ from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesFieldPare
 
 from box_sdk.managers.files import UpdateFileByIdRequestBodyArg
 
+from box_sdk.managers.files import GetFileByIdOptionsArg
+
 from box_sdk.managers.files import CopyFileRequestBodyArgParentField
 
 from box_sdk.managers.files import CopyFileRequestBodyArg
@@ -47,7 +49,16 @@ def testGetFileThumbnail():
     assert not client.files.get_file_thumbnail_by_id(thumbnail_file.id, GetFileThumbnailByIdExtensionArg.PNG.value) == read_byte_stream(thumbnail_content_stream)
     client.files.delete_file_by_id(thumbnail_file.id)
 
-def testCreateandDeleteFile():
+def testGetFileFullExtraFields():
+    new_file_name: str = get_uuid()
+    file_content = generate_byte_stream()
+    uploaded_file = upload_file(new_file_name, file_content)
+    file: FileFull = client.files.get_file_by_id(uploaded_file.id, GetFileByIdOptionsArg(fields='is_externally_owned,has_collaborations'))
+    assert file.is_externally_owned == False
+    assert file.has_collaborations == False
+    client.files.delete_file_by_id(file.id)
+
+def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
     updated_content_stream = generate_byte_stream()
     uploaded_file = upload_file(new_file_name, updated_content_stream)
