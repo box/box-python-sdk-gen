@@ -950,6 +950,8 @@ class CollaborationAllowlistEntries(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of allowed collaboration domains
+        :type entries: Optional[List[CollaborationAllowlistEntry]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -1027,6 +1029,10 @@ class CollaborationAllowlistExemptTargets(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of users exempt from any of the restrictions
+            imposed by the list of allowed collaboration domains
+            for this enterprise.
+        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -1101,6 +1107,8 @@ class Collections(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CollectionsOrderField]], optional
+        :param entries: A list of collections
+        :type entries: Optional[List[Collection]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -1200,6 +1208,8 @@ class EmailAliases(BaseObject):
         """
         :param total_count: The number of email aliases.
         :type total_count: Optional[int], optional
+        :param entries: A list of email aliases
+        :type entries: Optional[List[EmailAlias]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -1797,6 +1807,8 @@ class FilesUnderRetention(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of files
+        :type entries: Optional[List[FileMini]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2399,6 +2411,8 @@ class Groups(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[GroupsOrderField]], optional
+        :param entries: A list of groups
+        :type entries: Optional[List[GroupMini]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -2610,6 +2624,9 @@ class LegalHoldPolicyAssignments(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of legal hold
+            policy assignments
+        :type entries: Optional[List[LegalHoldPolicyAssignmentBase]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2769,6 +2786,8 @@ class MetadataCascadePolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of metadata cascade policies
+        :type entries: Optional[List[MetadataCascadePolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2944,6 +2963,8 @@ class MetadataTemplates(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of metadata templates
+        :type entries: Optional[List[MetadataTemplate]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -2983,6 +3004,8 @@ class RealtimeServers(BaseObject):
         """
         :param chunk_size: The number of items in this response.
         :type chunk_size: Optional[int], optional
+        :param entries: A list of real-time servers
+        :type entries: Optional[List[RealtimeServer]], optional
         """
         super().__init__(**kwargs)
         self.chunk_size = chunk_size
@@ -3122,6 +3145,8 @@ class FileVersionRetentions(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of file version retentions
+        :type entries: Optional[List[FileVersionRetention]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3147,6 +3172,8 @@ class RetentionPolicyAssignmentBase(BaseObject):
 class RetentionPolicyAssignments(BaseObject):
     def __init__(self, entries: Optional[List[RetentionPolicyAssignmentBase]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
         """
+        :param entries: A list of retention policy assignments
+        :type entries: Optional[List[RetentionPolicyAssignmentBase]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed. The maximum value varies by API.
@@ -3402,6 +3429,8 @@ class StoragePolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of storage policies
+        :type entries: Optional[List[StoragePolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3438,6 +3467,8 @@ class StoragePolicyAssignments(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of storage policy assignments
+        :type entries: Optional[List[StoragePolicyAssignment]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -3538,6 +3569,8 @@ class TermsOfServices(BaseObject):
         """
         :param total_count: The total number of objects.
         :type total_count: Optional[int], optional
+        :param entries: A list of terms of service objects
+        :type entries: Optional[List[TermsOfService]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -3946,6 +3979,9 @@ class UploadParts(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[UploadPartsOrderField]], optional
+        :param entries: A list of uploaded chunks for an upload
+            session
+        :type entries: Optional[List[UploadPart]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4248,6 +4284,8 @@ class Users(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[UsersOrderField]], optional
+        :param entries: A list of users
+        :type entries: Optional[List[User]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4706,6 +4744,8 @@ class TermsOfServiceUserStatuses(BaseObject):
         """
         :param total_count: The total number of objects.
         :type total_count: Optional[int], optional
+        :param entries: A list of terms of service user statuses
+        :type entries: Optional[List[TermsOfServiceUserStatus]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4751,6 +4791,8 @@ class TaskAssignments(BaseObject):
         """
         :param total_count: The total number of items in this collection.
         :type total_count: Optional[int], optional
+        :param entries: A list of task assignments
+        :type entries: Optional[List[TaskAssignment]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4802,6 +4844,8 @@ class Tasks(BaseObject):
             The total number of entries in the collection may be less than
             `total_count`.
         :type total_count: Optional[int], optional
+        :param entries: A list of tasks
+        :type entries: Optional[List[Task]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4985,6 +5029,8 @@ class LegalHoldPolicies(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of legal hold policies
+        :type entries: Optional[List[LegalHoldPolicy]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -5063,6 +5109,8 @@ class GroupMemberships(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[GroupMembershipsOrderField]], optional
+        :param entries: A list of group memberships
+        :type entries: Optional[List[GroupMembership]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5130,6 +5178,8 @@ class FileVersions(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[FileVersionsOrderField]], optional
+        :param entries: A list of file versions
+        :type entries: Optional[List[FileVersion]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5366,6 +5416,8 @@ class DevicePinner(BaseObject):
 class DevicePinners(BaseObject):
     def __init__(self, entries: Optional[List[DevicePinner]] = None, limit: Optional[int] = None, next_marker: Optional[int] = None, order: Optional[List[DevicePinnersOrderField]] = None, **kwargs):
         """
+        :param entries: A list of device pins
+        :type entries: Optional[List[DevicePinner]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed.
@@ -5453,6 +5505,8 @@ class Comments(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CommentsOrderField]], optional
+        :param entries: A list of comments
+        :type entries: Optional[List[Comment]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -5648,6 +5702,8 @@ class FolderLocks(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of folder locks
+        :type entries: Optional[List[FolderLock]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -5759,6 +5815,8 @@ class Webhooks(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of webhooks
+        :type entries: Optional[List[WebhookMini]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6187,6 +6245,8 @@ class RecentItems(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of recent items
+        :type entries: Optional[List[RecentItem]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6271,6 +6331,8 @@ class FileVersionLegalHolds(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of file version legal holds
+        :type entries: Optional[List[FileVersionLegalHold]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -6438,6 +6500,8 @@ class Collaborations(BaseObject):
             This field is only returned for calls that use offset-based pagination.
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CollaborationsOrderField]], optional
+        :param entries: A list of collaborations
+        :type entries: Optional[List[Collaboration]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -6687,6 +6751,8 @@ class Workflows(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of workflows
+        :type entries: Optional[List[Workflow]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -7061,6 +7127,8 @@ class Events(BaseObject):
         :param next_stream_position: The stream position of the start of the next page (chunk)
             of events.
         :type next_stream_position: Optional[str], optional
+        :param entries: A list of events
+        :type entries: Optional[List[Event]], optional
         """
         super().__init__(**kwargs)
         self.chunk_size = chunk_size
@@ -7277,6 +7345,8 @@ class IntegrationMappings(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of integration mappings
+        :type entries: Optional[List[IntegrationMapping]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -8144,6 +8214,8 @@ class SignRequests(BaseObject):
         :type next_marker: Optional[int], optional
         :param prev_marker: The marker for the start of the previous page of results.
         :type prev_marker: Optional[int], optional
+        :param entries: A list of sign requests
+        :type entries: Optional[List[SignRequest]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
