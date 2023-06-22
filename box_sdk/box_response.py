@@ -27,5 +27,5 @@ class APIResponse:
     def get_header(self, header_name: str, default_value: Optional[str] = None) -> Optional[str]:
         try:
             return self.network_response.headers[header_name]
-        except ValueError:
+        except (ValueError, KeyError):
             return default_value
