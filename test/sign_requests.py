@@ -1,3 +1,9 @@
+from box_sdk.schemas import FolderBaseTypeField
+
+from box_sdk.schemas import FileBaseTypeField
+
+from box_sdk.managers.folders import DeleteFolderByIdOptionsArg
+
 from box_sdk.utils import decode_base_64
 
 from box_sdk.utils import get_env_var
@@ -8,23 +14,13 @@ from test.commons import upload_new_file
 
 from test.commons import create_new_folder
 
-from box_sdk.managers.folders import DeleteFolderByIdOptionsArg
-
 from box_sdk.schemas import SignRequestCreateRequest
 
 from box_sdk.schemas import SignRequestCreateSigner
 
 from box_sdk.schemas import FolderMini
 
-from box_sdk.schemas import FolderBaseTypeField
-
 from box_sdk.schemas import FileBase
-
-from box_sdk.schemas import FileBaseTypeField
-
-from box_sdk.schemas import SignRequestTypeField
-
-from box_sdk.schemas import SignRequestStatusField
 
 from box_sdk.client import Client
 
@@ -51,8 +47,8 @@ def test_create_get_cancel_and_list_sign_request():
     assert new_sign_request.signers[1].email == signer_email
     assert new_sign_request.parent_folder.id == destination_folder.id
     cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(created_sign_request.id)
-    assert cancelled_sign_request.status == SignRequestStatusField.CANCELLED.value
+    assert cancelled_sign_request.status == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
-    assert sign_requests.entries[0].type == SignRequestTypeField.SIGN_REQUEST.value
+    assert sign_requests.entries[0].type == 'sign-request'
     client.folders.delete_folder_by_id(destination_folder.id, DeleteFolderByIdOptionsArg(recursive=True))
     client.files.delete_file_by_id(file_to_sign.id)

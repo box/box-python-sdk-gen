@@ -1,26 +1,24 @@
 import pytest
 
-from box_sdk.utils import decode_base_64
-
-from box_sdk.utils import get_env_var
-
-from box_sdk.utils import get_uuid
-
-from box_sdk.schemas import FolderBaseTypeField
+from box_sdk.managers.folders import GetFolderByIdOptionsArg
 
 from box_sdk.managers.folders import CreateFolderRequestBodyArg
 
-from box_sdk.managers.folders import GetFolderByIdOptionsArg
+from box_sdk.managers.folders import CreateFolderRequestBodyArgParentField
+
+from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArg
+
+from box_sdk.managers.folders import CopyFolderRequestBodyArg
 
 from box_sdk.managers.folders import CopyFolderRequestBodyArgParentField
 
 from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArgParentField
 
-from box_sdk.managers.folders import CopyFolderRequestBodyArg
+from box_sdk.utils import decode_base_64
 
-from box_sdk.managers.folders import CreateFolderRequestBodyArgParentField
+from box_sdk.utils import get_env_var
 
-from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArg
+from box_sdk.utils import get_uuid
 
 from box_sdk.client import Client
 
@@ -38,7 +36,7 @@ def test_get_folder_info():
     root_folder: FolderFull = client.folders.get_folder_by_id('0')
     assert root_folder.id == '0'
     assert root_folder.name == 'All Files'
-    assert root_folder.type == FolderBaseTypeField.FOLDER.value
+    assert root_folder.type == 'folder'
 
 def test_get_folder_full_info_with_extra_fields():
     root_folder: FolderFull = client.folders.get_folder_by_id('0', GetFolderByIdOptionsArg(fields='has_collaborations,tags'))

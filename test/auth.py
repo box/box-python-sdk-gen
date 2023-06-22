@@ -14,6 +14,10 @@ from box_sdk.ccg_auth import CCGConfig
 
 from box_sdk.developer_token_auth import DeveloperTokenAuth
 
+from box_sdk.oauth import OAuth
+
+from box_sdk.oauth import OAuthConfig
+
 from box_sdk.schemas import UserFull
 
 from box_sdk.managers.users import GetUserMeOptionsArg
@@ -56,3 +60,10 @@ def test_developer_token_auth():
     client: Client = Client(auth=dev_auth)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
+
+def test_oauth_auth():
+    config: OAuthConfig = OAuthConfig(client_id='OAUTH_CLIENT_ID', client_secret='OAUTH_CLIENT_SECRET')
+    auth: OAuth = OAuth(config=config)
+    auth_url: str = auth.get_authorize_url()
+    expected_auth_url: str = 'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
+    assert auth_url == expected_auth_url

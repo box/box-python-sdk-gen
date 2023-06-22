@@ -1,3 +1,9 @@
+from box_sdk.managers.uploads import UploadFileRequestBodyArg
+
+from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesField
+
+from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesFieldParentField
+
 from box_sdk.utils import decode_base_64
 
 from box_sdk.utils import get_env_var
@@ -7,12 +13,6 @@ from box_sdk.utils import get_uuid
 from box_sdk.utils import generate_byte_stream
 
 from box_sdk.utils import read_byte_stream
-
-from box_sdk.managers.uploads import UploadFileRequestBodyArg
-
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesField
-
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesFieldParentField
 
 from box_sdk.client import Client
 
