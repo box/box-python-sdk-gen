@@ -6,8 +6,6 @@ from box_sdk.base_object import BaseObject
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import StoragePolicyAssignments
 
 from box_sdk.schemas import ClientError
@@ -109,11 +107,8 @@ class UpdateStoragePolicyAssignmentByIdRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.storage_policy = storage_policy
 
-class StoragePolicyAssignmentsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class StoragePolicyAssignmentsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, options: GetStoragePolicyAssignmentsOptionsArg = None) -> StoragePolicyAssignments:

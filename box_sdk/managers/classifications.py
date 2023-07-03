@@ -8,8 +8,6 @@ from typing import List
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import ClassificationTemplate
 
 from box_sdk.schemas import ClientError
@@ -137,11 +135,8 @@ class CreateMetadataTemplateSchemaClassificationRequestBodyArg(BaseObject):
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
 
-class ClassificationsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class ClassificationsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_metadata_template_enterprise_security_classification_schema(self) -> ClassificationTemplate:

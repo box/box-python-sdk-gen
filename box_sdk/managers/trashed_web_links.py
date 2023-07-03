@@ -4,8 +4,6 @@ from box_sdk.base_object import BaseObject
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import TrashWebLinkRestored
 
 from box_sdk.schemas import ClientError
@@ -73,11 +71,8 @@ class GetWebLinkTrashOptionsArg(BaseObject):
         super().__init__(**kwargs)
         self.fields = fields
 
-class TrashedWebLinksManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class TrashedWebLinksManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def create_web_link_by_id(self, web_link_id: str, request_body: CreateWebLinkByIdRequestBodyArg, options: CreateWebLinkByIdOptionsArg = None) -> TrashWebLinkRestored:

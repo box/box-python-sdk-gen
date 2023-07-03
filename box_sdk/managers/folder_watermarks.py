@@ -6,8 +6,6 @@ from typing import Optional
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import Watermark
 
 from box_sdk.schemas import ClientError
@@ -44,11 +42,8 @@ class UpdateFolderWatermarkRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.watermark = watermark
 
-class FolderWatermarksManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class FolderWatermarksManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_folder_watermark(self, folder_id: str) -> Watermark:

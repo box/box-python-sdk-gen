@@ -6,8 +6,6 @@ from box_sdk.base_object import BaseObject
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import MetadataQueryResults
 
 from box_sdk.schemas import ClientError
@@ -285,11 +283,8 @@ class GetSearchOptionsArg(BaseObject):
         self.deleted_user_ids = deleted_user_ids
         self.deleted_at_range = deleted_at_range
 
-class SearchManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class SearchManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def create_metadata_query_execute_read(self, request_body: MetadataQuery) -> MetadataQueryResults:

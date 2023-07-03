@@ -6,8 +6,6 @@ from typing import Optional
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import Metadatas
 
 from box_sdk.schemas import ClientError
@@ -40,11 +38,8 @@ class DeleteFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class FolderMetadataManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class FolderMetadataManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_folder_metadata(self, folder_id: str) -> Metadatas:

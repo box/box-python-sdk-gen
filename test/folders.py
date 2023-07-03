@@ -42,12 +42,14 @@ def test_get_folder_full_info_with_extra_fields():
     root_folder: FolderFull = client.folders.get_folder_by_id('0', GetFolderByIdOptionsArg(fields='has_collaborations,tags'))
     assert root_folder.id == '0'
     assert root_folder.has_collaborations == False
-    assert len(root_folder.tags) == 0
+    tags_length: int = len(root_folder.tags)
+    assert tags_length == 0
 
 def test_create_and_delete_folder():
     new_folder_name: str = get_uuid()
     new_folder: FolderFull = client.folders.create_folder(CreateFolderRequestBodyArg(name=new_folder_name, parent=CreateFolderRequestBodyArgParentField(id='0')))
-    assert client.folders.get_folder_by_id(new_folder.id).name == new_folder_name
+    created_folder: FolderFull = client.folders.get_folder_by_id(new_folder.id)
+    assert created_folder.name == new_folder_name
     client.folders.delete_folder_by_id(new_folder.id)
     with pytest.raises(Exception):
         client.folders.get_folder_by_id(new_folder.id)

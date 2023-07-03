@@ -59,12 +59,12 @@ class CCGAuth(Authentication):
         self.config = config
         self.token: Union[None, str] = None
 
-        if config.enterprise_id:
-            self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-            self.subject_id = self.config.enterprise_id
-        else:
+        if config.user_id:
             self.subject_id = self.config.user_id
             self.subject_type = TokenRequestBoxSubjectType.USER
+        else:
+            self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
+            self.subject_id = self.config.enterprise_id
 
     def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
         """

@@ -3605,11 +3605,14 @@ class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
     SIGNERS = 'signers'
     SOURCE_FILES = 'source_files'
 
+class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
+    EMAIL = 'email'
+
 class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
-    def __init__(self, signers: Optional[List[List[Union[str]]]] = None, **kwargs):
+    def __init__(self, signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]] = None, **kwargs):
         """
         :param signers: Required signer fields.
-        :type signers: Optional[List[List[Union[str]]]], optional
+        :type signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]], optional
         """
         super().__init__(**kwargs)
         self.signers = signers
@@ -6786,8 +6789,31 @@ class WorkflowFull(Workflow):
         self.created_by = created_by
         self.modified_by = modified_by
 
+class ZipDownloadNameConflictsFieldTypeField(str, Enum):
+    FILE = 'file'
+    FOLDER = 'folder'
+
+class ZipDownloadNameConflictsField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[ZipDownloadNameConflictsFieldTypeField] = None, original_name: Optional[str] = None, download_name: Optional[str] = None, **kwargs):
+        """
+        :param id: The identifier of the item
+        :type id: Optional[str], optional
+        :param type: The type of this item
+        :type type: Optional[ZipDownloadNameConflictsFieldTypeField], optional
+        :param original_name: The original name of this item
+        :type original_name: Optional[str], optional
+        :param download_name: The new name of this item as it will appear in the
+            downloaded `zip` archive.
+        :type download_name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.original_name = original_name
+        self.download_name = download_name
+
 class ZipDownload(BaseObject):
-    def __init__(self, download_url: Optional[str] = None, status_url: Optional[str] = None, expires_at: Optional[str] = None, name_conflicts: Optional[List[List]] = None, **kwargs):
+    def __init__(self, download_url: Optional[str] = None, status_url: Optional[str] = None, expires_at: Optional[str] = None, name_conflicts: Optional[List[List[ZipDownloadNameConflictsField]]] = None, **kwargs):
         """
         :param download_url: The URL that can be used to download the `zip` archive. A `Get` request to
             this URL will start streaming the items requested. By default, this URL
@@ -6821,7 +6847,7 @@ class ZipDownload(BaseObject):
             name.
             For every conflict, both files will be renamed and therefore this list
             will always be a multiple of 2.
-        :type name_conflicts: Optional[List[List]], optional
+        :type name_conflicts: Optional[List[List[ZipDownloadNameConflictsField]]], optional
         """
         super().__init__(**kwargs)
         self.download_url = download_url

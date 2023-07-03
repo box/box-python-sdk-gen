@@ -8,8 +8,6 @@ from typing import List
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import FileFull
 
 from box_sdk.schemas import ClientError
@@ -320,11 +318,8 @@ class GetFileThumbnailByIdOptionsArg(BaseObject):
         self.max_height = max_height
         self.max_width = max_width
 
-class FilesManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class FilesManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_file_by_id(self, file_id: str, options: GetFileByIdOptionsArg = None) -> FileFull:

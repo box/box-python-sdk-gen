@@ -4,8 +4,6 @@ from box_sdk.base_object import BaseObject
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import CollaborationAllowlistExemptTargets
 
 from box_sdk.schemas import ClientError
@@ -54,11 +52,8 @@ class CreateCollaborationWhitelistExemptTargetRequestBodyArg(BaseObject):
         super().__init__(**kwargs)
         self.user = user
 
-class CollaborationAllowlistExemptTargetsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class CollaborationAllowlistExemptTargetsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_collaboration_whitelist_exempt_targets(self, options: GetCollaborationWhitelistExemptTargetsOptionsArg = None) -> CollaborationAllowlistExemptTargets:

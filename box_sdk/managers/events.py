@@ -6,8 +6,6 @@ from box_sdk.base_object import BaseObject
 
 import json
 
-from typing import Dict
-
 from box_sdk.schemas import Events
 
 from box_sdk.schemas import ClientError
@@ -87,11 +85,8 @@ class GetEventsOptionsArg(BaseObject):
         self.created_after = created_after
         self.created_before = created_before
 
-class EventsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class EventsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
     def get_events(self, options: GetEventsOptionsArg = None) -> Events:
