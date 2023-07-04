@@ -1,10 +1,8 @@
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import Dict
 
 import json
-
-from typing import Dict
 
 from box_sdk.schemas import SignTemplates
 
@@ -16,15 +14,21 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetSignTemplatesOptionsArg(BaseObject):
-    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
+class SignTemplatesManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_sign_templates(self, marker: Optional[str] = None, limit: Optional[int] = None) -> SignTemplates:
         """
+        Gets Box Sign templates created by a user.
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
@@ -32,24 +36,8 @@ class GetSignTemplatesOptionsArg(BaseObject):
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        super().__init__(**kwargs)
-        self.marker = marker
-        self.limit = limit
-
-class SignTemplatesManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def get_sign_templates(self, options: GetSignTemplatesOptionsArg = None) -> SignTemplates:
-        """
-        Gets Box Sign templates created by a user.
-        """
-        if options is None:
-            options = GetSignTemplatesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return SignTemplates.from_dict(json.loads(response.text))
     def get_sign_template_by_id(self, template_id: str) -> SignTemplate:
         """

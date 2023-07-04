@@ -16,14 +16,13 @@ To upload a small file from a readable stream, call `upload_file` method. This m
 <!-- sample post_files_content -->
 
 ```python
-from box_sdk.managers.uploads import UploadFileRequestBodyArg, UploadFileRequestBodyArgAttributesField, UploadFileRequestBodyArgAttributesFieldParentField
+from box_sdk.managers.uploads import UploadFileAttributesArg, UploadFileAttributesArgParentField
 
-attrs = UploadFileRequestBodyArgAttributesField(
+attrs = UploadFileAttributesArg(
     name='filename.txt',
-    parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')
+    parent=UploadFileAttributesArgParentField(id='0')
 )
-body = UploadFileRequestBodyArg(attributes=attrs, file=open('filename.txt', 'rb'))
-files: File = client.uploads.upload_file(request_body=body)
+files: File = client.uploads.upload_file(attributes=attrs, file=open('filename.txt', 'rb'))
 file = files.entries[0]
 print(f'File uploaded with id {file.id}, name {file.name}')
 ```

@@ -1,12 +1,18 @@
+from box_sdk.base_object import BaseObject
+
 from enum import Enum
 
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import List
+
+from typing import Union
 
 import json
 
 from typing import Dict
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import MetadataQueryResults
 
@@ -26,41 +32,131 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
+class CreateMetadataQueryExecuteReadQueryParamsArg(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
 class GetMetadataQueryIndicesScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
-class GetSearchOptionsArgScopeField(str, Enum):
+class GetSearchScopeArg(str, Enum):
     USER_CONTENT = 'user_content'
     ENTERPRISE_CONTENT = 'enterprise_content'
 
-class GetSearchOptionsArgTypeField(str, Enum):
+class GetSearchTypeArg(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
     WEB_LINK = 'web_link'
 
-class GetSearchOptionsArgTrashContentField(str, Enum):
+class GetSearchTrashContentArg(str, Enum):
     NON_TRASHED_ONLY = 'non_trashed_only'
     TRASHED_ONLY = 'trashed_only'
     ALL_ITEMS = 'all_items'
 
-class GetSearchOptionsArgSortField(str, Enum):
+class GetSearchSortArg(str, Enum):
     MODIFIED_AT = 'modified_at'
     RELEVANCE = 'relevance'
 
-class GetSearchOptionsArgDirectionField(str, Enum):
+class GetSearchDirectionArg(str, Enum):
     DESC = 'DESC'
     ASC = 'ASC'
 
-class GetSearchOptionsArg(BaseObject):
-    def __init__(self, query: Optional[str] = None, scope: Optional[GetSearchOptionsArgScopeField] = None, file_extensions: Optional[str] = None, created_at_range: Optional[str] = None, updated_at_range: Optional[str] = None, size_range: Optional[str] = None, owner_user_ids: Optional[str] = None, recent_updater_user_ids: Optional[str] = None, ancestor_folder_ids: Optional[str] = None, content_types: Optional[str] = None, type: Optional[GetSearchOptionsArgTypeField] = None, trash_content: Optional[GetSearchOptionsArgTrashContentField] = None, mdfilters: Optional[str] = None, sort: Optional[GetSearchOptionsArgSortField] = None, direction: Optional[GetSearchOptionsArgDirectionField] = None, limit: Optional[int] = None, include_recent_shared_links: Optional[bool] = None, fields: Optional[str] = None, offset: Optional[int] = None, deleted_user_ids: Optional[str] = None, deleted_at_range: Optional[str] = None, **kwargs):
+class SearchManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def create_metadata_query_execute_read(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg] = None, order_by: Optional[List] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None) -> MetadataQueryResults:
         """
+        Create a search using SQL-like syntax to return items that match specific
+        
+        metadata.
+
+        
+        By default, this endpoint returns only the most basic info about the items for
+
+        
+        which the query matches. To get additional fields for each item, including any
+
+        
+        of the metadata, use the `fields` attribute in the query.
+
+        :param from_: Specifies the template used in the query. Must be in the form
+            `scope.templateKey`. Not all templates can be used in this field,
+            most notably the built-in, Box-provided classification templates
+            can not be used in a query.
+        :type from_: str
+        :param ancestor_folder_id: The ID of the folder that you are restricting the query to. A
+            value of zero will return results from all folders you have access
+            to. A non-zero value will only return results found in the folder
+            corresponding to the ID or in any of its subfolders.
+        :type ancestor_folder_id: str
+        :param query: The query to perform. A query is a logical expression that is very similar
+            to a SQL `SELECT` statement. Values in the search query can be turned into
+            parameters specified in the `query_param` arguments list to prevent having
+            to manually insert search values into the query string.
+            For example, a value of `:amount` would represent the `amount` value in
+            `query_params` object.
+        :type query: Optional[str], optional
+        :param query_params: Set of arguments corresponding to the parameters specified in the
+            `query`. The type of each parameter used in the `query_params` must match
+            the type of the corresponding metadata template field.
+        :type query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg], optional
+        :param order_by: A list of template fields and directions to sort the metadata query
+            results by.
+            The ordering `direction` must be the same for each item in the array.
+        :type order_by: Optional[List], optional
+        :param limit: A value between 0 and 100 that indicates the maximum number of results
+            to return for a single request. This only specifies a maximum
+            boundary and will not guarantee the minimum number of results
+            returned.
+        :type limit: Optional[int], optional
+        :param marker: Marker to use for requesting the next page.
+        :type marker: Optional[str], optional
+        :param fields: By default, this endpoint returns only the most basic info about the items for
+            which the query matches. This attribute can be used to specify a list of
+            additional attributes to return for any item, including its metadata.
+            This attribute takes a list of item fields, metadata template identifiers,
+            or metadata template field identifiers.
+            For example:
+            * `created_by` will add the details of the user who created the item to
+            the response.
+            * `metadata.<scope>.<templateKey>` will return the mini-representation
+            of the metadata instance identified by the `scope` and `templateKey`.
+            * `metadata.<scope>.<templateKey>.<field>` will return all the mini-representation
+            of the metadata instance identified by the `scope` and `templateKey` plus
+            the field specified by the `field` name. Multiple fields for the same
+            `scope` and `templateKey` can be defined.
+        :type fields: Optional[List[str]], optional
+        """
+        request_body: BaseObject = BaseObject(from_=from_, query=query, query_params=query_params, ancestor_folder_id=ancestor_folder_id, order_by=order_by, limit=limit, marker=marker, fields=fields)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        return MetadataQueryResults.from_dict(json.loads(response.text))
+    def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str) -> MetadataQueryIndices:
+        """
+        Retrieves the metadata query indices for a given scope and template key.
+        :param scope: The scope of the metadata template
+        :type scope: GetMetadataQueryIndicesScopeArg
+        :param template_key: The name of the metadata template
+        :type template_key: str
+        """
+        query_params: Dict = {'scope': scope, 'template_key': template_key}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return MetadataQueryIndices.from_dict(json.loads(response.text))
+    def get_search(self, query: Optional[str] = None, scope: Optional[GetSearchScopeArg] = None, file_extensions: Optional[str] = None, created_at_range: Optional[str] = None, updated_at_range: Optional[str] = None, size_range: Optional[str] = None, owner_user_ids: Optional[str] = None, recent_updater_user_ids: Optional[str] = None, ancestor_folder_ids: Optional[str] = None, content_types: Optional[str] = None, type: Optional[GetSearchTypeArg] = None, trash_content: Optional[GetSearchTrashContentArg] = None, mdfilters: Optional[str] = None, sort: Optional[GetSearchSortArg] = None, direction: Optional[GetSearchDirectionArg] = None, limit: Optional[int] = None, include_recent_shared_links: Optional[bool] = None, fields: Optional[str] = None, offset: Optional[int] = None, deleted_user_ids: Optional[str] = None, deleted_at_range: Optional[str] = None) -> None:
+        """
+        Searches for files, folders, web links, and shared files across the
+        
+        users content or across the entire enterprise.
+
         :param query: The string to search for. This query is matched against item names,
             descriptions, text content of files, and various other fields of
             the different item types.
@@ -101,7 +197,7 @@ class GetSearchOptionsArg(BaseObject):
             support channels. Once this scope has been enabled for a user, it
             will allow that use to query for content across the entire
             enterprise and not only the content that they have access to.
-        :type scope: Optional[GetSearchOptionsArgScopeField], optional
+        :type scope: Optional[GetSearchScopeArg], optional
         :param file_extensions: Limits the search results to any files that match any of the provided
             file extensions. This list is a comma-separated list of file extensions
             without the dots.
@@ -183,7 +279,7 @@ class GetSearchOptionsArg(BaseObject):
             * `folder` - Limits the search results to folders
             * `web_link` - Limits the search results to web links, also known
                as bookmarks
-        :type type: Optional[GetSearchOptionsArgTypeField], optional
+        :type type: Optional[GetSearchTypeArg], optional
         :param trash_content: Determines if the search should look in the trash for items.
             By default, this API only returns search results for items
             not currently in the trash (`non_trashed_only`).
@@ -191,7 +287,7 @@ class GetSearchOptionsArg(BaseObject):
             * `non_trashed_only` - Only searches for items currently not in
               the trash
             * `all_items` - Searches for both trashed and non-trashed items.
-        :type trash_content: Optional[GetSearchOptionsArgTrashContentField], optional
+        :type trash_content: Optional[GetSearchTrashContentArg], optional
         :param mdfilters: Limits the search results to any items for which the metadata matches
             the provided filter.
             This parameter contains a list of 1 metadata template to filter
@@ -207,13 +303,13 @@ class GetSearchOptionsArg(BaseObject):
             term in the items name, description, content, and additional properties.
             * `modified_at` returns the results ordered in descending order by date
             at which the item was last modified.
-        :type sort: Optional[GetSearchOptionsArgSortField], optional
+        :type sort: Optional[GetSearchSortArg], optional
         :param direction: Defines the direction in which search results are ordered. This API
             defaults to returning items in descending (`DESC`) order unless this
             parameter is explicitly specified.
             When results are sorted by `relevance` the ordering is locked to returning
             items in descending order of relevance, and this parameter is ignored.
-        :type direction: Optional[GetSearchOptionsArgDirectionField], optional
+        :type direction: Optional[GetSearchDirectionArg], optional
         :param limit: Defines the maximum number of items to return as part of a page of
             results.
         :type limit: Optional[int], optional
@@ -262,74 +358,6 @@ class GetSearchOptionsArg(BaseObject):
             Data available from 2023-02-01 onwards.
         :type deleted_at_range: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.query = query
-        self.scope = scope
-        self.file_extensions = file_extensions
-        self.created_at_range = created_at_range
-        self.updated_at_range = updated_at_range
-        self.size_range = size_range
-        self.owner_user_ids = owner_user_ids
-        self.recent_updater_user_ids = recent_updater_user_ids
-        self.ancestor_folder_ids = ancestor_folder_ids
-        self.content_types = content_types
-        self.type = type
-        self.trash_content = trash_content
-        self.mdfilters = mdfilters
-        self.sort = sort
-        self.direction = direction
-        self.limit = limit
-        self.include_recent_shared_links = include_recent_shared_links
-        self.fields = fields
-        self.offset = offset
-        self.deleted_user_ids = deleted_user_ids
-        self.deleted_at_range = deleted_at_range
-
-class SearchManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def create_metadata_query_execute_read(self, request_body: MetadataQuery) -> MetadataQueryResults:
-        """
-        Create a search using SQL-like syntax to return items that match specific
-        
-        metadata.
-
-        
-        By default, this endpoint returns only the most basic info about the items for
-
-        
-        which the query matches. To get additional fields for each item, including any
-
-        
-        of the metadata, use the `fields` attribute in the query.
-
-        """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
-        return MetadataQueryResults.from_dict(json.loads(response.text))
-    def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str) -> MetadataQueryIndices:
-        """
-        Retrieves the metadata query indices for a given scope and template key.
-        :param scope: The scope of the metadata template
-            Example: "global"
-        :type scope: GetMetadataQueryIndicesScopeArg
-        :param template_key: The name of the metadata template
-            Example: "properties"
-        :type template_key: str
-        """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params={'scope': scope, 'template_key': template_key}, auth=self.auth, network_session=self.network_session))
-        return MetadataQueryIndices.from_dict(json.loads(response.text))
-    def get_search(self, options: GetSearchOptionsArg = None) -> None:
-        """
-        Searches for files, folders, web links, and shared files across the
-        
-        users content or across the entire enterprise.
-
-        """
-        if options is None:
-            options = GetSearchOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params={'query': options.query, 'scope': options.scope, 'file_extensions': options.file_extensions, 'created_at_range': options.created_at_range, 'updated_at_range': options.updated_at_range, 'size_range': options.size_range, 'owner_user_ids': options.owner_user_ids, 'recent_updater_user_ids': options.recent_updater_user_ids, 'ancestor_folder_ids': options.ancestor_folder_ids, 'content_types': options.content_types, 'type': options.type, 'trash_content': options.trash_content, 'mdfilters': options.mdfilters, 'sort': options.sort, 'direction': options.direction, 'limit': options.limit, 'include_recent_shared_links': options.include_recent_shared_links, 'fields': options.fields, 'offset': options.offset, 'deleted_user_ids': options.deleted_user_ids, 'deleted_at_range': options.deleted_at_range}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'query': query, 'scope': scope, 'file_extensions': file_extensions, 'created_at_range': created_at_range, 'updated_at_range': updated_at_range, 'size_range': size_range, 'owner_user_ids': owner_user_ids, 'recent_updater_user_ids': recent_updater_user_ids, 'ancestor_folder_ids': ancestor_folder_ids, 'content_types': content_types, 'type': type, 'trash_content': trash_content, 'mdfilters': mdfilters, 'sort': sort, 'direction': direction, 'limit': limit, 'include_recent_shared_links': include_recent_shared_links, 'fields': fields, 'offset': offset, 'deleted_user_ids': deleted_user_ids, 'deleted_at_range': deleted_at_range}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return None

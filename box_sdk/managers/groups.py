@@ -1,12 +1,12 @@
+from enum import Enum
+
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
-
-from enum import Enum
+from typing import Dict
 
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Groups
 
@@ -20,15 +20,44 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetGroupsOptionsArg(BaseObject):
-    def __init__(self, filter_term: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
+class CreateGroupInvitabilityLevelArg(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class CreateGroupMemberViewabilityLevelArg(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class UpdateGroupByIdInvitabilityLevelArg(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class UpdateGroupByIdMemberViewabilityLevelArg(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class GroupsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_groups(self, filter_term: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> Groups:
         """
+        Retrieves all of the groups for a given enterprise. The user
+        
+        must have admin permissions to inspect enterprise's groups.
+
         :param filter_term: Limits the results to only groups whose `name` starts
             with the search term.
         :type filter_term: Optional[str], optional
@@ -49,25 +78,15 @@ class GetGroupsOptionsArg(BaseObject):
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        super().__init__(**kwargs)
-        self.filter_term = filter_term
-        self.fields = fields
-        self.limit = limit
-        self.offset = offset
-
-class CreateGroupRequestBodyArgInvitabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class CreateGroupRequestBodyArgMemberViewabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class CreateGroupRequestBodyArg(BaseObject):
-    def __init__(self, name: str, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[CreateGroupRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Optional[CreateGroupRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+        query_params: Dict = {'filter_term': filter_term, 'fields': fields, 'limit': limit, 'offset': offset}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return Groups.from_dict(json.loads(response.text))
+    def create_group(self, name: str, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[CreateGroupInvitabilityLevelArg] = None, member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> Group:
         """
+        Creates a new group of users in an enterprise. Only users with admin
+        
+        permissions can create new groups.
+
         :param name: The name of the new group to be created. This name must be unique
             within the enterprise.
         :type name: str
@@ -98,26 +117,14 @@ class CreateGroupRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Optional[CreateGroupRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Optional[CreateGroupInvitabilityLevelArg], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Optional[CreateGroupRequestBodyArgMemberViewabilityLevelField], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.provenance = provenance
-        self.external_sync_identifier = external_sync_identifier
-        self.description = description
-        self.invitability_level = invitability_level
-        self.member_viewability_level = member_viewability_level
-
-class CreateGroupOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
+        :type member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -128,12 +135,22 @@ class CreateGroupOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class GetGroupByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
+        request_body: BaseObject = BaseObject(name=name, provenance=provenance, external_sync_identifier=external_sync_identifier, description=description, invitability_level=invitability_level, member_viewability_level=member_viewability_level)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        return Group.from_dict(json.loads(response.text))
+    def get_group_by_id(self, group_id: str, fields: Optional[str] = None) -> GroupFull:
         """
+        Retrieves information about a group. Only members of this
+        
+        group or users with admin-level permissions will be able to
+
+        
+        use this API.
+
+        :param group_id: The ID of the group.
+            Example: "57645"
+        :type group_id: str
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -144,22 +161,21 @@ class GetGroupByIdOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class UpdateGroupByIdRequestBodyArgInvitabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class UpdateGroupByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Optional[str] = None, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[UpdateGroupByIdRequestBodyArgInvitabilityLevelField] = None, member_viewability_level: Optional[UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField] = None, **kwargs):
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return GroupFull.from_dict(json.loads(response.text))
+    def update_group_by_id(self, group_id: str, name: Optional[str] = None, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg] = None, member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> GroupFull:
         """
+        Updates a specific group. Only admins of this
+        
+        group or users with admin-level permissions will be able to
+
+        
+        use this API.
+
+        :param group_id: The ID of the group.
+            Example: "57645"
+        :type group_id: str
         :param name: The name of the new group to be created. Must be unique within the
             enterprise.
         :type name: Optional[str], optional
@@ -190,26 +206,14 @@ class UpdateGroupByIdRequestBodyArg(BaseObject):
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Optional[UpdateGroupByIdRequestBodyArgInvitabilityLevelField], optional
+        :type invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Optional[UpdateGroupByIdRequestBodyArgMemberViewabilityLevelField], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.provenance = provenance
-        self.external_sync_identifier = external_sync_identifier
-        self.description = description
-        self.invitability_level = invitability_level
-        self.member_viewability_level = member_viewability_level
-
-class UpdateGroupByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
+        :type member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevelArg], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -220,71 +224,9 @@ class UpdateGroupByIdOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class GroupsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def get_groups(self, options: GetGroupsOptionsArg = None) -> Groups:
-        """
-        Retrieves all of the groups for a given enterprise. The user
-        
-        must have admin permissions to inspect enterprise's groups.
-
-        """
-        if options is None:
-            options = GetGroupsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params={'filter_term': options.filter_term, 'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
-        return Groups.from_dict(json.loads(response.text))
-    def create_group(self, request_body: CreateGroupRequestBodyArg, options: CreateGroupOptionsArg = None) -> Group:
-        """
-        Creates a new group of users in an enterprise. Only users with admin
-        
-        permissions can create new groups.
-
-        """
-        if options is None:
-            options = CreateGroupOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
-        return Group.from_dict(json.loads(response.text))
-    def get_group_by_id(self, group_id: str, options: GetGroupByIdOptionsArg = None) -> GroupFull:
-        """
-        Retrieves information about a group. Only members of this
-        
-        group or users with admin-level permissions will be able to
-
-        
-        use this API.
-
-        :param group_id: The ID of the group.
-            Example: "57645"
-        :type group_id: str
-        """
-        if options is None:
-            options = GetGroupByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
-        return GroupFull.from_dict(json.loads(response.text))
-    def update_group_by_id(self, group_id: str, request_body: UpdateGroupByIdRequestBodyArg, options: UpdateGroupByIdOptionsArg = None) -> GroupFull:
-        """
-        Updates a specific group. Only admins of this
-        
-        group or users with admin-level permissions will be able to
-
-        
-        use this API.
-
-        :param group_id: The ID of the group.
-            Example: "57645"
-        :type group_id: str
-        """
-        if options is None:
-            options = UpdateGroupByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(name=name, provenance=provenance, external_sync_identifier=external_sync_identifier, description=description, invitability_level=invitability_level, member_viewability_level=member_viewability_level)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
     def delete_group_by_id(self, group_id: str):
         """

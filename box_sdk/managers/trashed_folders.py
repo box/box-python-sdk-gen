@@ -2,9 +2,11 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
+from typing import Dict
+
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import TrashFolderRestored
 
@@ -16,13 +18,15 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class RestoreFolderFromTrashRequestBodyArgParentField(BaseObject):
+class RestoreFolderFromTrashParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -31,56 +35,11 @@ class RestoreFolderFromTrashRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class RestoreFolderFromTrashRequestBodyArg(BaseObject):
-    def __init__(self, name: Optional[str] = None, parent: Optional[RestoreFolderFromTrashRequestBodyArgParentField] = None, **kwargs):
-        """
-        :param name: An optional new name for the folder.
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.parent = parent
-
-class RestoreFolderFromTrashOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class GetFolderTrashOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class TrashedFoldersManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class TrashedFoldersManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def restore_folder_from_trash(self, folder_id: str, request_body: RestoreFolderFromTrashRequestBodyArg, options: RestoreFolderFromTrashOptionsArg = None) -> TrashFolderRestored:
+    def restore_folder_from_trash(self, folder_id: str, name: Optional[str] = None, parent: Optional[RestoreFolderFromTrashParentArg] = None, fields: Optional[str] = None) -> TrashFolderRestored:
         """
         Restores a folder that has been moved to the trash.
         
@@ -117,12 +76,23 @@ class TrashedFoldersManager(BaseObject):
             always represented by the ID `0`.
             Example: "12345"
         :type folder_id: str
+        :param name: An optional new name for the folder.
+        :type name: Optional[str], optional
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = RestoreFolderFromTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(name=name, parent=parent)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TrashFolderRestored.from_dict(json.loads(response.text))
-    def get_folder_trash(self, folder_id: str, options: GetFolderTrashOptionsArg = None) -> TrashFolder:
+    def get_folder_trash(self, folder_id: str, fields: Optional[str] = None) -> TrashFolder:
         """
         Retrieves a folder that has been moved to the trash.
         
@@ -159,10 +129,18 @@ class TrashedFoldersManager(BaseObject):
             always represented by the ID `0`.
             Example: "12345"
         :type folder_id: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = GetFolderTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return TrashFolder.from_dict(json.loads(response.text))
     def delete_folder_trash(self, folder_id: str):
         """

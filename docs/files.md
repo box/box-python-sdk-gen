@@ -37,12 +37,8 @@ such fields in a comma-separated string
 
 ```python
 from box_sdk.schemas import FileFull
-from box_sdk.managers.files import GetFileByIdOptionsArg
 
-file: FileFull = client.files.get_file_by_id(
-    '12345',
-    GetFileByIdOptionsArg(fields='is_externally_owned,has_collaborations')
-)
+file: FileFull = client.files.get_file_by_id(file_id='12345', fields='is_externally_owned,has_collaborations')
 ```
 
 NOTE: Be aware that specifying `fields` parameter will have the effect that none of the standard fields
@@ -56,13 +52,9 @@ To update a file's information, call `update_file_by_id` method. This method ret
 <!-- sample put_files_id -->
 
 ```python
-
-from box_sdk.managers.files import UpdateFileByIdRequestBodyArg
 from box_sdk.schemas import FileFull
 
-updates = UpdateFileByIdRequestBodyArg(name='test.txt', description='Test file')
-file: FileFull = client.files.update_file_by_id(file_id='123', request_body=updates)
-
+file: FileFull = client.files.update_file_by_id(file_id='123', name='test.txt', description='Test file')
 print(f'File with id {file.id} has new name {file.name}')
 ```
 
@@ -75,16 +67,14 @@ This method returns a `File` object which contains information about the copied 
 <!-- sample post_files_id_copy -->
 
 ```python
-from box_sdk.managers.files import CopyFileRequestBodyArg, CopyFileRequestBodyArgParentField
+from box_sdk.managers.files import CopyFileParentArg
 from box_sdk.schemas import FileFull
 
 
 file: FileFull = client.files.copy_file(
     file_id='123456789',
-    request_body=CopyFileRequestBodyArg(
-        parent=CopyFileRequestBodyArgParentField(id='0'),
-        name='test_copy.txt'
-    )
+    parent=CopyFileParentArg(id='0'),
+    name='test_copy.txt'
 )
 print(f'File copied with id {file.id}, name {file.name}')
 ```
@@ -122,18 +112,15 @@ Optionally, you can specify the information about the thumbnail you want to retr
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
-from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg, GetFileThumbnailByIdOptionsArg
+from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg
 
-options = GetFileThumbnailByIdOptionsArg(
+thumbnail = client.files.get_file_thumbnail_by_id(
+    file_id='1199932968894',
+    extension=GetFileThumbnailByIdExtensionArg.PNG,
     min_height=256,
     min_width=256,
     max_height=256,
     max_width=256,
-)
-thumbnail = client.files.get_file_thumbnail_by_id(
-    file_id='1199932968894',
-    extension=GetFileThumbnailByIdExtensionArg.PNG,
-    options=options
 )
 with open('thumbnail.png', 'wb') as f:
     f.write(thumbnail)

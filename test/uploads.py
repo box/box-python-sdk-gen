@@ -1,12 +1,8 @@
-from box_sdk.managers.uploads import UploadFileRequestBodyArg
+from box_sdk.managers.uploads import UploadFileAttributesArg
 
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesField
+from box_sdk.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesFieldParentField
-
-from box_sdk.managers.uploads import UploadFileVersionRequestBodyArg
-
-from box_sdk.managers.uploads import UploadFileVersionRequestBodyArgAttributesField
+from box_sdk.managers.uploads import UploadFileVersionAttributesArg
 
 from box_sdk.utils import decode_base_64
 
@@ -33,12 +29,12 @@ client: Client = Client(auth=auth)
 def test_upload_file_and_file_version():
     new_file_name: str = get_uuid()
     file_content_stream = generate_byte_stream()
-    uploaded_files: Files = client.uploads.upload_file(UploadFileRequestBodyArg(attributes=UploadFileRequestBodyArgAttributesField(name=new_file_name, parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')), file=file_content_stream))
+    uploaded_files: Files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_content_stream)
     uploaded_file: Files = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
     new_file_content_stream = generate_byte_stream()
-    uploaded_files_version: Files = client.uploads.upload_file_version(uploaded_file.id, UploadFileVersionRequestBodyArg(attributes=UploadFileVersionRequestBodyArgAttributesField(name=new_file_version_name), file=new_file_content_stream))
+    uploaded_files_version: Files = client.uploads.upload_file_version(file_id=uploaded_file.id, attributes=UploadFileVersionAttributesArg(name=new_file_version_name), file=new_file_content_stream)
     new_file_version: Files = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name
-    client.files.delete_file_by_id(new_file_version.id)
+    client.files.delete_file_by_id(file_id=new_file_version.id)

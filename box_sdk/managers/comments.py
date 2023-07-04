@@ -1,12 +1,14 @@
-from typing import Optional
+from enum import Enum
 
 from box_sdk.base_object import BaseObject
 
-from enum import Enum
+from typing import Optional
+
+from typing import Dict
 
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Comments
 
@@ -20,15 +22,45 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFileCommentsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
+class CreateCommentItemArgTypeField(str, Enum):
+    FILE = 'file'
+    COMMENT = 'comment'
+
+class CreateCommentItemArg(BaseObject):
+    def __init__(self, id: str, type: CreateCommentItemArgTypeField, **kwargs):
         """
+        :param id: The ID of the item
+        :type id: str
+        :param type: The type of the item that this comment will be placed on.
+        :type type: CreateCommentItemArgTypeField
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+
+class CommentsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_file_comments(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> Comments:
+        """
+        Retrieves a list of comments for a file.
+        :param file_id: The unique identifier that represents a file.
+            The ID for any file can be determined
+            by visiting a file in the web application
+            and copying the ID from the URL. For example,
+            for the URL `https://*.app.box.com/files/123`
+            the `file_id` is `123`.
+            Example: "12345"
+        :type file_id: str
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -46,14 +78,18 @@ class GetFileCommentsOptionsArg(BaseObject):
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.limit = limit
-        self.offset = offset
-
-class GetCommentByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
+        query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return Comments.from_dict(json.loads(response.text))
+    def get_comment_by_id(self, comment_id: str, fields: Optional[str] = None) -> CommentFull:
         """
+        Retrieves the message and metadata for a specific comment, as well
+        
+        as information on the user who created the comment.
+
+        :param comment_id: The ID of the comment.
+            Example: "12345"
+        :type comment_id: str
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -64,21 +100,17 @@ class GetCommentByIdOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class UpdateCommentByIdRequestBodyArg(BaseObject):
-    def __init__(self, message: Optional[str] = None, **kwargs):
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return CommentFull.from_dict(json.loads(response.text))
+    def update_comment_by_id(self, comment_id: str, message: Optional[str] = None, fields: Optional[str] = None) -> CommentFull:
         """
+        Update the message of a comment.
+        :param comment_id: The ID of the comment.
+            Example: "12345"
+        :type comment_id: str
         :param message: The text of the comment to update
         :type message: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.message = message
-
-class UpdateCommentByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -89,28 +121,25 @@ class UpdateCommentByIdOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class CreateCommentRequestBodyArgItemFieldTypeField(str, Enum):
-    FILE = 'file'
-    COMMENT = 'comment'
-
-class CreateCommentRequestBodyArgItemField(BaseObject):
-    def __init__(self, id: str, type: CreateCommentRequestBodyArgItemFieldTypeField, **kwargs):
+        request_body: BaseObject = BaseObject(message=message)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        return CommentFull.from_dict(json.loads(response.text))
+    def delete_comment_by_id(self, comment_id: str):
         """
-        :param id: The ID of the item
-        :type id: str
-        :param type: The type of the item that this comment will be placed on.
-        :type type: CreateCommentRequestBodyArgItemFieldTypeField
+        Permanently deletes a comment.
+        :param comment_id: The ID of the comment.
+            Example: "12345"
+        :type comment_id: str
         """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
+        return response.content
+    def create_comment(self, message: str, tagged_message: Optional[str] = None, item: Optional[CreateCommentItemArg] = None, fields: Optional[str] = None) -> Comment:
+        """
+        Adds a comment by the user to a specific file, or
+        
+        as a reply to an other comment.
 
-class CreateCommentRequestBodyArg(BaseObject):
-    def __init__(self, message: str, tagged_message: Optional[str] = None, item: Optional[CreateCommentRequestBodyArgItemField] = None, **kwargs):
-        """
         :param message: The text of the comment.
             To mention a user, use the `tagged_message`
             parameter instead.
@@ -126,16 +155,7 @@ class CreateCommentRequestBodyArg(BaseObject):
             instead.
         :type tagged_message: Optional[str], optional
         :param item: The item to attach the comment to.
-        :type item: Optional[CreateCommentRequestBodyArgItemField], optional
-        """
-        super().__init__(**kwargs)
-        self.message = message
-        self.tagged_message = tagged_message
-        self.item = item
-
-class CreateCommentOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
+        :type item: Optional[CreateCommentItemArg], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -146,74 +166,7 @@ class CreateCommentOptionsArg(BaseObject):
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class CommentsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def get_file_comments(self, file_id: str, options: GetFileCommentsOptionsArg = None) -> Comments:
-        """
-        Retrieves a list of comments for a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        """
-        if options is None:
-            options = GetFileCommentsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
-        return Comments.from_dict(json.loads(response.text))
-    def get_comment_by_id(self, comment_id: str, options: GetCommentByIdOptionsArg = None) -> CommentFull:
-        """
-        Retrieves the message and metadata for a specific comment, as well
-        
-        as information on the user who created the comment.
-
-        :param comment_id: The ID of the comment.
-            Example: "12345"
-        :type comment_id: str
-        """
-        if options is None:
-            options = GetCommentByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
-        return CommentFull.from_dict(json.loads(response.text))
-    def update_comment_by_id(self, comment_id: str, request_body: UpdateCommentByIdRequestBodyArg, options: UpdateCommentByIdOptionsArg = None) -> CommentFull:
-        """
-        Update the message of a comment.
-        :param comment_id: The ID of the comment.
-            Example: "12345"
-        :type comment_id: str
-        """
-        if options is None:
-            options = UpdateCommentByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
-        return CommentFull.from_dict(json.loads(response.text))
-    def delete_comment_by_id(self, comment_id: str):
-        """
-        Permanently deletes a comment.
-        :param comment_id: The ID of the comment.
-            Example: "12345"
-        :type comment_id: str
-        """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def create_comment(self, request_body: CreateCommentRequestBodyArg, options: CreateCommentOptionsArg = None) -> Comment:
-        """
-        Adds a comment by the user to a specific file, or
-        
-        as a reply to an other comment.
-
-        """
-        if options is None:
-            options = CreateCommentOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(message=message, tagged_message=tagged_message, item=item)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Comment.from_dict(json.loads(response.text))

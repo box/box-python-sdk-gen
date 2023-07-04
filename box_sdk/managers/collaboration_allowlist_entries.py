@@ -1,12 +1,12 @@
+from enum import Enum
+
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
-
-from enum import Enum
+from typing import Dict
 
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import CollaborationAllowlistEntries
 
@@ -18,15 +18,29 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetCollaborationWhitelistEntriesOptionsArg(BaseObject):
-    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
+class CreateCollaborationWhitelistEntryDirectionArg(str, Enum):
+    INBOUND = 'inbound'
+    OUTBOUND = 'outbound'
+    BOTH = 'both'
+
+class CollaborationAllowlistEntriesManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_collaboration_whitelist_entries(self, marker: Optional[str] = None, limit: Optional[int] = None) -> CollaborationAllowlistEntries:
         """
+        Returns the list domains that have been deemed safe to create collaborations
+        
+        for within the current enterprise.
+
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
@@ -34,53 +48,22 @@ class GetCollaborationWhitelistEntriesOptionsArg(BaseObject):
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        super().__init__(**kwargs)
-        self.marker = marker
-        self.limit = limit
-
-class CreateCollaborationWhitelistEntryRequestBodyArgDirectionField(str, Enum):
-    INBOUND = 'inbound'
-    OUTBOUND = 'outbound'
-    BOTH = 'both'
-
-class CreateCollaborationWhitelistEntryRequestBodyArg(BaseObject):
-    def __init__(self, domain: str, direction: CreateCollaborationWhitelistEntryRequestBodyArgDirectionField, **kwargs):
-        """
-        :param domain: The domain to add to the list of allowed domains.
-        :type domain: str
-        :param direction: The direction in which to allow collaborations.
-        :type direction: CreateCollaborationWhitelistEntryRequestBodyArgDirectionField
-        """
-        super().__init__(**kwargs)
-        self.domain = domain
-        self.direction = direction
-
-class CollaborationAllowlistEntriesManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def get_collaboration_whitelist_entries(self, options: GetCollaborationWhitelistEntriesOptionsArg = None) -> CollaborationAllowlistEntries:
-        """
-        Returns the list domains that have been deemed safe to create collaborations
-        
-        for within the current enterprise.
-
-        """
-        if options is None:
-            options = GetCollaborationWhitelistEntriesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistEntries.from_dict(json.loads(response.text))
-    def create_collaboration_whitelist_entry(self, request_body: CreateCollaborationWhitelistEntryRequestBodyArg) -> CollaborationAllowlistEntry:
+    def create_collaboration_whitelist_entry(self, domain: str, direction: CreateCollaborationWhitelistEntryDirectionArg) -> CollaborationAllowlistEntry:
         """
         Creates a new entry in the list of allowed domains to allow
         
         collaboration for.
 
+        :param domain: The domain to add to the list of allowed domains.
+        :type domain: str
+        :param direction: The direction in which to allow collaborations.
+        :type direction: CreateCollaborationWhitelistEntryDirectionArg
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(domain=domain, direction=direction)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
     def get_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str) -> CollaborationAllowlistEntry:
         """

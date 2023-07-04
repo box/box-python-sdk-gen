@@ -1,9 +1,5 @@
 from typing import Optional
 
-from typing import Dict
-
-from box_sdk.base_object import BaseObject
-
 from box_sdk.managers.authorization import AuthorizationManager
 
 from box_sdk.managers.files import FilesManager
@@ -144,11 +140,8 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-class Client(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class Client:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         if network_session is None:
             network_session = NetworkSession()
         self.auth = auth

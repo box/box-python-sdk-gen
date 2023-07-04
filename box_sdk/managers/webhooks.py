@@ -1,14 +1,18 @@
+from enum import Enum
+
 from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from enum import Enum
-
-from typing import List
+from typing import Dict
 
 import json
 
-from typing import Dict
+from typing import List
+
+from typing import Union
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Webhooks
 
@@ -20,182 +24,51 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetWebhooksOptionsArg(BaseObject):
-    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
-        """
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.marker = marker
-        self.limit = limit
-
-class CreateWebhookRequestBodyArgTargetFieldTypeField(str, Enum):
+class CreateWebhookTargetArgTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
-class CreateWebhookRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[CreateWebhookRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+class CreateWebhookTargetArg(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateWebhookTargetArgTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Optional[CreateWebhookRequestBodyArgTargetFieldTypeField], optional
+        :type type: Optional[CreateWebhookTargetArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class CreateWebhookRequestBodyArgTriggersField(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
-
-class CreateWebhookRequestBodyArg(BaseObject):
-    def __init__(self, target: CreateWebhookRequestBodyArgTargetField, address: str, triggers: List[CreateWebhookRequestBodyArgTriggersField], **kwargs):
-        """
-        :param target: The item that will trigger the webhook
-        :type target: CreateWebhookRequestBodyArgTargetField
-        :param address: The URL that is notified by this webhook
-        :type address: str
-        :param triggers: An array of event names that this webhook is
-            to be triggered for
-        :type triggers: List[CreateWebhookRequestBodyArgTriggersField]
-        """
-        super().__init__(**kwargs)
-        self.target = target
-        self.address = address
-        self.triggers = triggers
-
-class UpdateWebhookByIdRequestBodyArgTargetFieldTypeField(str, Enum):
+class UpdateWebhookByIdTargetArgTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
-class UpdateWebhookByIdRequestBodyArgTargetField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[UpdateWebhookByIdRequestBodyArgTargetFieldTypeField] = None, **kwargs):
+class UpdateWebhookByIdTargetArg(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[UpdateWebhookByIdTargetArgTypeField] = None, **kwargs):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Optional[UpdateWebhookByIdRequestBodyArgTargetFieldTypeField], optional
+        :type type: Optional[UpdateWebhookByIdTargetArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
-class UpdateWebhookByIdRequestBodyArgTriggersField(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
-
-class UpdateWebhookByIdRequestBodyArg(BaseObject):
-    def __init__(self, target: Optional[UpdateWebhookByIdRequestBodyArgTargetField] = None, address: Optional[str] = None, triggers: Optional[List[UpdateWebhookByIdRequestBodyArgTriggersField]] = None, **kwargs):
-        """
-        :param target: The item that will trigger the webhook
-        :type target: Optional[UpdateWebhookByIdRequestBodyArgTargetField], optional
-        :param address: The URL that is notified by this webhook
-        :type address: Optional[str], optional
-        :param triggers: An array of event names that this webhook is
-            to be triggered for
-        :type triggers: Optional[List[UpdateWebhookByIdRequestBodyArgTriggersField]], optional
-        """
-        super().__init__(**kwargs)
-        self.target = target
-        self.address = address
-        self.triggers = triggers
-
-class WebhooksManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class WebhooksManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_webhooks(self, options: GetWebhooksOptionsArg = None) -> Webhooks:
+    def get_webhooks(self, marker: Optional[str] = None, limit: Optional[int] = None) -> Webhooks:
         """
         Returns all defined webhooks for the requesting application.
         
@@ -210,16 +83,29 @@ class WebhooksManager(BaseObject):
         
         vice versa.
 
+        :param marker: Defines the position marker at which to begin returning results. This is
+            used when paginating using marker-based pagination.
+            This requires `usemarker` to be set to `true`.
+        :type marker: Optional[str], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
         """
-        if options is None:
-            options = GetWebhooksOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Webhooks.from_dict(json.loads(response.text))
-    def create_webhook(self, request_body: CreateWebhookRequestBodyArg) -> Webhook:
+    def create_webhook(self, target: CreateWebhookTargetArg, address: str, triggers: List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]) -> Webhook:
         """
         Creates a webhook.
+        :param target: The item that will trigger the webhook
+        :type target: CreateWebhookTargetArg
+        :param address: The URL that is notified by this webhook
+        :type address: str
+        :param triggers: An array of event names that this webhook is
+            to be triggered for
+        :type triggers: List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
     def get_webhook_by_id(self, webhook_id: str) -> Webhook:
         """
@@ -230,14 +116,22 @@ class WebhooksManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
-    def update_webhook_by_id(self, webhook_id: str, request_body: UpdateWebhookByIdRequestBodyArg) -> Webhook:
+    def update_webhook_by_id(self, webhook_id: str, target: Optional[UpdateWebhookByIdTargetArg] = None, address: Optional[str] = None, triggers: Optional[List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]] = None) -> Webhook:
         """
         Updates a webhook.
         :param webhook_id: The ID of the webhook.
             Example: "3321123"
         :type webhook_id: str
+        :param target: The item that will trigger the webhook
+        :type target: Optional[UpdateWebhookByIdTargetArg], optional
+        :param address: The URL that is notified by this webhook
+        :type address: Optional[str], optional
+        :param triggers: An array of event names that this webhook is
+            to be triggered for
+        :type triggers: Optional[List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
     def delete_webhook_by_id(self, webhook_id: str):
         """

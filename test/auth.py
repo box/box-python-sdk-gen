@@ -20,8 +20,6 @@ from box_sdk.oauth import OAuthConfig
 
 from box_sdk.schemas import UserFull
 
-from box_sdk.managers.users import GetUserMeOptionsArg
-
 def test_ccg_auth():
     user_id: str = get_env_var('USER_ID')
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
@@ -32,7 +30,7 @@ def test_ccg_auth():
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
-    new_user: UserFull = client.users.get_user_me(GetUserMeOptionsArg(fields='enterprise'))
+    new_user: UserFull = client.users.get_user_me('enterprise')
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 
@@ -46,7 +44,7 @@ def test_jwt_auth():
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
-    new_user: UserFull = client.users.get_user_me(GetUserMeOptionsArg(fields='enterprise'))
+    new_user: UserFull = client.users.get_user_me('enterprise')
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 

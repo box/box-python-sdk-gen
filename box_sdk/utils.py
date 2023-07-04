@@ -2,6 +2,7 @@ import base64
 import io
 import os
 import uuid
+from typing import Union
 
 
 def get_env_var(name: str) -> str:
@@ -24,3 +25,15 @@ def read_byte_stream(byte_stream: io.BytesIO) -> bytes:
     return byte_stream.read()
 
 
+def to_map(obj: Union[object, dict]) -> dict:
+    try:
+        return obj.to_dict()
+    except AttributeError:
+        return {k: __try_convert_to_dict(v) for k, v in obj.items()}
+
+
+def __try_convert_to_dict(value):
+    try:
+        return value.to_dict()
+    except AttributeError:
+        return value

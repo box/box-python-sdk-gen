@@ -1,10 +1,10 @@
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import Dict
 
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import LegalHoldPolicies
 
@@ -16,15 +16,24 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetLegalHoldPoliciesOptionsArg(BaseObject):
-    def __init__(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
+class LegalHoldPoliciesManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_legal_hold_policies(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None) -> LegalHoldPolicies:
         """
+        Retrieves a list of legal hold policies that belong to
+        
+        an enterprise.
+
         :param policy_name: Limits results to policies for which the names start with
             this search term. This is a case-insensitive prefix.
         :type policy_name: Optional[str], optional
@@ -44,15 +53,12 @@ class GetLegalHoldPoliciesOptionsArg(BaseObject):
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        super().__init__(**kwargs)
-        self.policy_name = policy_name
-        self.fields = fields
-        self.marker = marker
-        self.limit = limit
-
-class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None, **kwargs):
+        query_params: Dict = {'policy_name': policy_name, 'fields': fields, 'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        return LegalHoldPolicies.from_dict(json.loads(response.text))
+    def create_legal_hold_policy(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None) -> LegalHoldPolicy:
         """
+        Create a new legal hold policy.
         :param policy_name: The name of the policy.
         :type policy_name: str
         :param description: A description for the policy.
@@ -84,51 +90,8 @@ class CreateLegalHoldPolicyRequestBodyArg(BaseObject):
             Required if no filter dates are set.
         :type is_ongoing: Optional[bool], optional
         """
-        super().__init__(**kwargs)
-        self.policy_name = policy_name
-        self.description = description
-        self.filter_started_at = filter_started_at
-        self.filter_ended_at = filter_ended_at
-        self.is_ongoing = is_ongoing
-
-class UpdateLegalHoldPolicyByIdRequestBodyArg(BaseObject):
-    def __init__(self, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None, **kwargs):
-        """
-        :param policy_name: The name of the policy.
-        :type policy_name: Optional[str], optional
-        :param description: A description for the policy.
-        :type description: Optional[str], optional
-        :param release_notes: Notes around why the policy was released.
-        :type release_notes: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.policy_name = policy_name
-        self.description = description
-        self.release_notes = release_notes
-
-class LegalHoldPoliciesManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.auth = auth
-        self.network_session = network_session
-    def get_legal_hold_policies(self, options: GetLegalHoldPoliciesOptionsArg = None) -> LegalHoldPolicies:
-        """
-        Retrieves a list of legal hold policies that belong to
-        
-        an enterprise.
-
-        """
-        if options is None:
-            options = GetLegalHoldPoliciesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params={'policy_name': options.policy_name, 'fields': options.fields, 'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
-        return LegalHoldPolicies.from_dict(json.loads(response.text))
-    def create_legal_hold_policy(self, request_body: CreateLegalHoldPolicyRequestBodyArg) -> LegalHoldPolicy:
-        """
-        Create a new legal hold policy.
-        """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, filter_started_at=filter_started_at, filter_ended_at=filter_ended_at, is_ongoing=is_ongoing)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
     def get_legal_hold_policy_by_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
         """
@@ -139,14 +102,21 @@ class LegalHoldPoliciesManager(BaseObject):
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, request_body: UpdateLegalHoldPolicyByIdRequestBodyArg) -> LegalHoldPolicy:
+    def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None) -> LegalHoldPolicy:
         """
         Update legal hold policy.
         :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
         :type legal_hold_policy_id: str
+        :param policy_name: The name of the policy.
+        :type policy_name: Optional[str], optional
+        :param description: A description for the policy.
+        :type description: Optional[str], optional
+        :param release_notes: Notes around why the policy was released.
+        :type release_notes: Optional[str], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, release_notes=release_notes)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
     def delete_legal_hold_policy_by_id(self, legal_hold_policy_id: str):
         """

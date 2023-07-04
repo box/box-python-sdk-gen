@@ -1,18 +1,10 @@
-from box_sdk.managers.uploads import UploadFileRequestBodyArg
+from box_sdk.managers.uploads import UploadFileAttributesArg
 
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesField
-
-from box_sdk.managers.uploads import UploadFileRequestBodyArgAttributesFieldParentField
+from box_sdk.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg
 
-from box_sdk.managers.files import GetFileByIdOptionsArg
-
-from box_sdk.managers.files import UpdateFileByIdRequestBodyArg
-
-from box_sdk.managers.files import CopyFileRequestBodyArg
-
-from box_sdk.managers.files import CopyFileRequestBodyArgParentField
+from box_sdk.managers.files import CopyFileParentArg
 
 from box_sdk.utils import decode_base_64
 
@@ -39,48 +31,48 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 client: Client = Client(auth=auth)
 
 def upload_file(file_name, file_stream):
-    uploaded_files = client.uploads.upload_file(UploadFileRequestBodyArg(attributes=UploadFileRequestBodyArgAttributesField(name=file_name, parent=UploadFileRequestBodyArgAttributesFieldParentField(id='0')), file=file_stream))
+    uploaded_files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_stream)
     return uploaded_files.entries[0]
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
     thumbnail_content_stream = generate_byte_stream()
     thumbnail_file = upload_file(thumbnail_file_name, thumbnail_content_stream)
-    assert not client.files.get_file_thumbnail_by_id(thumbnail_file.id, GetFileThumbnailByIdExtensionArg.PNG.value) == read_byte_stream(thumbnail_content_stream)
-    client.files.delete_file_by_id(thumbnail_file.id)
+    assert not client.files.get_file_thumbnail_by_id(file_id=thumbnail_file.id, extension=GetFileThumbnailByIdExtensionArg.PNG.value) == read_byte_stream(thumbnail_content_stream)
+    client.files.delete_file_by_id(file_id=thumbnail_file.id)
 
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
     file_content = generate_byte_stream()
     uploaded_file = upload_file(new_file_name, file_content)
-    file: FileFull = client.files.get_file_by_id(uploaded_file.id, GetFileByIdOptionsArg(fields='is_externally_owned,has_collaborations'))
+    file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id, fields='is_externally_owned,has_collaborations')
     assert file.is_externally_owned == False
     assert file.has_collaborations == False
-    client.files.delete_file_by_id(file.id)
+    client.files.delete_file_by_id(file_id=file.id)
 
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
     updated_content_stream = generate_byte_stream()
     uploaded_file = upload_file(new_file_name, updated_content_stream)
-    file: FileFull = client.files.get_file_by_id(uploaded_file.id)
+    file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
     assert file.name == new_file_name
-    client.files.delete_file_by_id(uploaded_file.id)
-    trashed_file: TrashFile = client.trashed_files.get_file_trash(uploaded_file.id)
+    client.files.delete_file_by_id(file_id=uploaded_file.id)
+    trashed_file: TrashFile = client.trashed_files.get_file_trash(file_id=uploaded_file.id)
     assert file.id == trashed_file.id
 
 def testUpdateFile():
     file_to_update = upload_new_file()
     updated_name: str = get_uuid()
-    updated_file: FileFull = client.files.update_file_by_id(file_to_update.id, UpdateFileByIdRequestBodyArg(name=updated_name, description='Updated description'))
+    updated_file: FileFull = client.files.update_file_by_id(file_id=file_to_update.id, name=updated_name, description='Updated description')
     assert updated_file.name == updated_name
     assert updated_file.description == 'Updated description'
-    client.files.delete_file_by_id(updated_file.id)
+    client.files.delete_file_by_id(file_id=updated_file.id)
 
 def testCopyFile():
     file_origin = upload_new_file()
     copied_file_name: str = get_uuid()
-    copied_file: FileFull = client.files.copy_file(file_origin.id, CopyFileRequestBodyArg(parent=CopyFileRequestBodyArgParentField(id='0'), name=copied_file_name))
+    copied_file: FileFull = client.files.copy_file(file_id=file_origin.id, name=copied_file_name, parent=CopyFileParentArg(id='0'))
     assert copied_file.parent.id == '0'
     assert copied_file.name == copied_file_name
-    client.files.delete_file_by_id(file_origin.id)
-    client.files.delete_file_by_id(copied_file.id)
+    client.files.delete_file_by_id(file_id=file_origin.id)
+    client.files.delete_file_by_id(file_id=copied_file.id)

@@ -1,8 +1,10 @@
 from typing import Optional
 
-import json
+from typing import List
 
-from typing import Dict
+from typing import Union
+
+import json
 
 from box_sdk.base_object import BaseObject
 
@@ -18,20 +20,19 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class ZipDownloadsManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class ZipDownloadsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_zip_download(self, request_body: ZipDownloadRequest) -> ZipDownload:
+    def create_zip_download(self, items: List, download_file_name: Optional[str] = None) -> ZipDownload:
         """
         Creates a request to download multiple files and folders as a single `zip`
         
@@ -52,8 +53,15 @@ class ZipDownloadsManager(BaseObject):
         
         10,000 files, whichever is met first
 
+        :param items: A list of items to add to the `zip` archive. These can
+            be folders or files.
+        :type items: List
+        :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
+            `.zip` file extension, for example `January Financials.zip`.
+        :type download_file_name: Optional[str], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(items=items, download_file_name=download_file_name)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ZipDownload.from_dict(json.loads(response.text))
     def get_zip_download_content(self, zip_download_id: str):
         """

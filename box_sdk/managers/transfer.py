@@ -2,9 +2,11 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
+from typing import Dict
+
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import FolderFull
 
@@ -14,13 +16,15 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class TransferOwnedFolderRequestBodyArgOwnedByField(BaseObject):
+class TransferOwnedFolderOwnedByArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user who the folder will be
@@ -30,43 +34,11 @@ class TransferOwnedFolderRequestBodyArgOwnedByField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class TransferOwnedFolderRequestBodyArg(BaseObject):
-    def __init__(self, owned_by: TransferOwnedFolderRequestBodyArgOwnedByField, **kwargs):
-        """
-        :param owned_by: The user who the folder will be transferred to
-        :type owned_by: TransferOwnedFolderRequestBodyArgOwnedByField
-        """
-        super().__init__(**kwargs)
-        self.owned_by = owned_by
-
-class TransferOwnedFolderOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, notify: Optional[bool] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        :param notify: Determines if users should receive email notification
-            for the action performed.
-        :type notify: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.notify = notify
-
-class TransferManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class TransferManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def transfer_owned_folder(self, user_id: str, request_body: TransferOwnedFolderRequestBodyArg, options: TransferOwnedFolderOptionsArg = None) -> FolderFull:
+    def transfer_owned_folder(self, user_id: str, owned_by: TransferOwnedFolderOwnedByArg, fields: Optional[str] = None, notify: Optional[bool] = None) -> FolderFull:
         """
         Move all of the items (files, folders and workflows) owned by a user into
         
@@ -138,8 +110,22 @@ class TransferManager(BaseObject):
         :param user_id: The ID of the user.
             Example: "12345"
         :type user_id: str
+        :param owned_by: The user who the folder will be transferred to
+        :type owned_by: TransferOwnedFolderOwnedByArg
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
+        :param notify: Determines if users should receive email notification
+            for the action performed.
+        :type notify: Optional[bool], optional
         """
-        if options is None:
-            options = TransferOwnedFolderOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params={'fields': options.fields, 'notify': options.notify}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(owned_by=owned_by)
+        query_params: Dict = {'fields': fields, 'notify': notify}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

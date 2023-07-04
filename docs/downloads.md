@@ -26,9 +26,6 @@ print('File was successfully downloaded as "file.pdf"')
 Additionally, only a part of the file can be downloaded by specifying a byte range.
 
 ```python
-from box_sdk.managers.downloads import DownloadFileOptionsArg
-
-options = DownloadFileOptionsArg(range='bytes=0-100')
-file_content: bytes = client.downloads.download_file(file_id='123456789', options=options)
+file_content: bytes = client.downloads.download_file(file_id='123456789', range='bytes=0-100')
 print('File content size: ', len(file_content))
 ```

@@ -1,12 +1,14 @@
-from typing import Optional
+from enum import Enum
 
 from box_sdk.base_object import BaseObject
 
-from enum import Enum
+from typing import Optional
+
+from typing import Dict
 
 import json
 
-from typing import Dict
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import TermsOfServiceUserStatuses
 
@@ -18,29 +20,22 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetTermOfServiceUserStatusesOptionsArg(BaseObject):
-    def __init__(self, user_id: Optional[str] = None, **kwargs):
-        """
-        :param user_id: Limits results to the given user ID.
-        :type user_id: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.user_id = user_id
-
-class CreateTermOfServiceUserStatusRequestBodyArgTosFieldTypeField(str, Enum):
+class CreateTermOfServiceUserStatusTosArgTypeField(str, Enum):
     TERMS_OF_SERVICE = 'terms_of_service'
 
-class CreateTermOfServiceUserStatusRequestBodyArgTosField(BaseObject):
-    def __init__(self, type: CreateTermOfServiceUserStatusRequestBodyArgTosFieldTypeField, id: str, **kwargs):
+class CreateTermOfServiceUserStatusTosArg(BaseObject):
+    def __init__(self, type: CreateTermOfServiceUserStatusTosArgTypeField, id: str, **kwargs):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusRequestBodyArgTosFieldTypeField
+        :type type: CreateTermOfServiceUserStatusTosArgTypeField
         :param id: The ID of terms of service
         :type id: str
         """
@@ -48,14 +43,14 @@ class CreateTermOfServiceUserStatusRequestBodyArgTosField(BaseObject):
         self.type = type
         self.id = id
 
-class CreateTermOfServiceUserStatusRequestBodyArgUserFieldTypeField(str, Enum):
+class CreateTermOfServiceUserStatusUserArgTypeField(str, Enum):
     USER = 'user'
 
-class CreateTermOfServiceUserStatusRequestBodyArgUserField(BaseObject):
-    def __init__(self, type: CreateTermOfServiceUserStatusRequestBodyArgUserFieldTypeField, id: str, **kwargs):
+class CreateTermOfServiceUserStatusUserArg(BaseObject):
+    def __init__(self, type: CreateTermOfServiceUserStatusUserArgTypeField, id: str, **kwargs):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusRequestBodyArgUserFieldTypeField
+        :type type: CreateTermOfServiceUserStatusUserArgTypeField
         :param id: The ID of user
         :type id: str
         """
@@ -63,38 +58,11 @@ class CreateTermOfServiceUserStatusRequestBodyArgUserField(BaseObject):
         self.type = type
         self.id = id
 
-class CreateTermOfServiceUserStatusRequestBodyArg(BaseObject):
-    def __init__(self, tos: CreateTermOfServiceUserStatusRequestBodyArgTosField, user: CreateTermOfServiceUserStatusRequestBodyArgUserField, is_accepted: bool, **kwargs):
-        """
-        :param tos: The terms of service to set the status for.
-        :type tos: CreateTermOfServiceUserStatusRequestBodyArgTosField
-        :param user: The user to set the status for.
-        :type user: CreateTermOfServiceUserStatusRequestBodyArgUserField
-        :param is_accepted: Whether the user has accepted the terms.
-        :type is_accepted: bool
-        """
-        super().__init__(**kwargs)
-        self.tos = tos
-        self.user = user
-        self.is_accepted = is_accepted
-
-class UpdateTermOfServiceUserStatusByIdRequestBodyArg(BaseObject):
-    def __init__(self, is_accepted: bool, **kwargs):
-        """
-        :param is_accepted: Whether the user has accepted the terms.
-        :type is_accepted: bool
-        """
-        super().__init__(**kwargs)
-        self.is_accepted = is_accepted
-
-class TermsOfServiceUserStatusesManager(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'network_session': 'networkSession', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'networkSession': 'network_session', **BaseObject._json_to_fields_mapping}
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None, **kwargs):
-        super().__init__(**kwargs)
+class TermsOfServiceUserStatusesManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_term_of_service_user_statuses(self, tos_id: str, options: GetTermOfServiceUserStatusesOptionsArg = None) -> TermsOfServiceUserStatuses:
+    def get_term_of_service_user_statuses(self, tos_id: str, user_id: Optional[str] = None) -> TermsOfServiceUserStatuses:
         """
         Retrieves an overview of users and their status for a
         
@@ -104,25 +72,35 @@ class TermsOfServiceUserStatusesManager(BaseObject):
         the terms and when.
 
         :param tos_id: The ID of the terms of service.
-            Example: "324234"
         :type tos_id: str
+        :param user_id: Limits results to the given user ID.
+        :type user_id: Optional[str], optional
         """
-        if options is None:
-            options = GetTermOfServiceUserStatusesOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params={'tos_id': tos_id, 'user_id': options.user_id}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'tos_id': tos_id, 'user_id': user_id}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
-    def create_term_of_service_user_status(self, request_body: CreateTermOfServiceUserStatusRequestBodyArg) -> TermsOfServiceUserStatus:
+    def create_term_of_service_user_status(self, tos: CreateTermOfServiceUserStatusTosArg, user: CreateTermOfServiceUserStatusUserArg, is_accepted: bool) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
+        :param tos: The terms of service to set the status for.
+        :type tos: CreateTermOfServiceUserStatusTosArg
+        :param user: The user to set the status for.
+        :type user: CreateTermOfServiceUserStatusUserArg
+        :param is_accepted: Whether the user has accepted the terms.
+        :type is_accepted: bool
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(tos=tos, user=user, is_accepted=is_accepted)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
-    def update_term_of_service_user_status_by_id(self, terms_of_service_user_status_id: str, request_body: UpdateTermOfServiceUserStatusByIdRequestBodyArg) -> TermsOfServiceUserStatus:
+    def update_term_of_service_user_status_by_id(self, terms_of_service_user_status_id: str, is_accepted: bool) -> TermsOfServiceUserStatus:
         """
         Updates the status for a terms of service for a user.
         :param terms_of_service_user_status_id: The ID of the terms of service status.
             Example: "324234"
         :type terms_of_service_user_status_id: str
+        :param is_accepted: Whether the user has accepted the terms.
+        :type is_accepted: bool
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(is_accepted=is_accepted)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
