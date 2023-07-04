@@ -318,11 +318,19 @@ class GetFolderItemsOptionsArg(BaseObject):
         :type boxapi: Optional[str], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
-            Items are always sorted by their `type` first, with
-            folders listed before files, and files listed
-            before web links.
-            This parameter is not supported for marker-based pagination
-            on the root folder (the folder with an ID of `0`).
+            The folder type affects the way the items
+            are sorted:
+            * **Standard folder**:
+              Items are always sorted by their `type` first, with
+              folders listed before files, and files listed
+              before web links.
+            * **Root folder**:
+              This parameter is not supported for marker-based pagination
+              on the root folder (the folder with an `id` of `0`).
+            * **Shared folder with parent path to the associated folder visible to the collaborator**:
+              Items are always sorted by their `type` first, with
+              folders listed before files, and files listed
+              before web links.
         :type sort: Optional[GetFolderItemsOptionsArgSortField], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
