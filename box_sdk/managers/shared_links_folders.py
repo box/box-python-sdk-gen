@@ -1,10 +1,14 @@
+from enum import Enum
+
 from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-from enum import Enum
+from typing import Dict
 
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import FolderFull
 
@@ -14,41 +18,20 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetSharedItemFoldersOptionsArg(BaseObject):
-    def __init__(self, if_none_match: Optional[str] = None, fields: Optional[str] = None, **kwargs):
-        """
-        :param if_none_match: Ensures an item is only returned if it has changed.
-            Pass in the item's last observed `etag` value
-            into this header and the endpoint will fail
-            with a `304 Not Modified` if the item has not
-            changed since.
-        :type if_none_match: Optional[str], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.if_none_match = if_none_match
-        self.fields = fields
-
-class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFolderAddSharedLinkSharedLinkArgAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFolderAddSharedLinkSharedLinkArgPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -68,8 +51,8 @@ class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(Bas
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Optional[UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFolderAddSharedLinkSharedLinkArg(BaseObject):
+    def __init__(self, access: Optional[UpdateFolderAddSharedLinkSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderAddSharedLinkSharedLinkArgPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -81,7 +64,7 @@ class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFolderAddSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Optional[UpdateFolderAddSharedLinkSharedLinkArgAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -108,23 +91,12 @@ class UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class UpdateFolderAddSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Optional[UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
-        """
-        :param shared_link: The settings for the shared link to create on the folder.
-            Use an empty object (`{}`) to use the default settings for shared
-            links.
-        :type shared_link: Optional[UpdateFolderAddSharedLinkRequestBodyArgSharedLinkField], optional
-        """
-        super().__init__(**kwargs)
-        self.shared_link = shared_link
-
-class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField(str, Enum):
+class UpdateFolderUpdateSharedLinkSharedLinkArgAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
-class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(BaseObject):
+class UpdateFolderUpdateSharedLinkSharedLinkArgPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -144,8 +116,8 @@ class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField(
         self.can_preview = can_preview
         self.can_edit = can_edit
 
-class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
-    def __init__(self, access: Optional[UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldPermissionsField] = None, **kwargs):
+class UpdateFolderUpdateSharedLinkSharedLinkArg(BaseObject):
+    def __init__(self, access: Optional[UpdateFolderUpdateSharedLinkSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderUpdateSharedLinkSharedLinkArgPermissionsField] = None, **kwargs):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -157,7 +129,7 @@ class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkFieldAccessField], optional
+        :type access: Optional[UpdateFolderUpdateSharedLinkSharedLinkArgAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -184,34 +156,15 @@ class UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
-class UpdateFolderUpdateSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Optional[UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
-        """
-        :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[UpdateFolderUpdateSharedLinkRequestBodyArgSharedLinkField], optional
-        """
-        super().__init__(**kwargs)
-        self.shared_link = shared_link
-
-class UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField(BaseObject):
+class UpdateFolderRemoveSharedLinkSharedLinkArg(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-class UpdateFolderRemoveSharedLinkRequestBodyArg(BaseObject):
-    def __init__(self, shared_link: Optional[UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField] = None, **kwargs):
-        """
-        :param shared_link: By setting this value to `null`, the shared link
-            is removed from the folder.
-        :type shared_link: Optional[UpdateFolderRemoveSharedLinkRequestBodyArgSharedLinkField], optional
-        """
-        super().__init__(**kwargs)
-        self.shared_link = shared_link
 
 class SharedLinksFoldersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_shared_item_folders(self, boxapi: str, options: GetSharedItemFoldersOptionsArg = None) -> FolderFull:
+    def get_shared_item_folders(self, boxapi: str, fields: Optional[str] = None, if_none_match: Optional[str] = None) -> FolderFull:
         """
         Return the folder represented by a shared link.
         
@@ -230,12 +183,26 @@ class SharedLinksFoldersManager:
             shared link.
             The format for this header is as follows.
             `shared_link=[link]&shared_link_password=[password]`
-            Example: "shared_link=[link]&shared_link_password=[password]"
         :type boxapi: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
+        :param if_none_match: Ensures an item is only returned if it has changed.
+            Pass in the item's last observed `etag` value
+            into this header and the endpoint will fail
+            with a `304 Not Modified` if the item has not
+            changed since.
+        :type if_none_match: Optional[str], optional
         """
-        if options is None:
-            options = GetSharedItemFoldersOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params={'fields': options.fields}, headers={'if-none-match': options.if_none_match, 'boxapi': boxapi}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def get_folder_get_shared_link(self, folder_id: str, fields: str) -> FolderFull:
         """
@@ -252,12 +219,12 @@ class SharedLinksFoldersManager:
         :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
-            Example: "shared_link"
         :type fields: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params={'fields': fields}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_add_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderAddSharedLinkRequestBodyArg) -> FolderFull:
+    def update_folder_add_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
         Adds a shared link to a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -272,12 +239,17 @@ class SharedLinksFoldersManager:
         :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
-            Example: "shared_link"
         :type fields: str
+        :param shared_link: The settings for the shared link to create on the folder.
+            Use an empty object (`{}`) to use the default settings for shared
+            links.
+        :type shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(shared_link=shared_link)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_update_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderUpdateSharedLinkRequestBodyArg) -> FolderFull:
+    def update_folder_update_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
         Updates a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -292,12 +264,15 @@ class SharedLinksFoldersManager:
         :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
-            Example: "shared_link"
         :type fields: str
+        :param shared_link: The settings for the shared link to update.
+        :type shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(shared_link=shared_link)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_remove_shared_link(self, folder_id: str, fields: str, request_body: UpdateFolderRemoveSharedLinkRequestBodyArg) -> FolderFull:
+    def update_folder_remove_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
         Removes a shared link from a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -312,8 +287,12 @@ class SharedLinksFoldersManager:
         :type folder_id: str
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
-            Example: "shared_link"
         :type fields: str
+        :param shared_link: By setting this value to `null`, the shared link
+            is removed from the folder.
+        :type shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params={'fields': fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(shared_link=shared_link)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

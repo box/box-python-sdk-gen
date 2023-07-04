@@ -1,10 +1,10 @@
 from enum import Enum
 
-from box_sdk.base_object import BaseObject
-
 from typing import Optional
 
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Metadatas
 
@@ -15,6 +15,8 @@ from box_sdk.schemas import Metadata
 from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
+
+from box_sdk.utils import to_map
 
 from box_sdk.fetch import fetch
 
@@ -29,10 +31,6 @@ class GetFileMetadataByIdScopeArg(str, Enum):
 class CreateFileMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
-
-class CreateFileMetadataByIdRequestBodyArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
 class DeleteFileMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
@@ -79,7 +77,7 @@ class FileMetadataManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
-    def create_file_metadata_by_id(self, file_id: str, scope: CreateFileMetadataByIdScopeArg, template_key: str, request_body: CreateFileMetadataByIdRequestBodyArg) -> Metadata:
+    def create_file_metadata_by_id(self, file_id: str, scope: CreateFileMetadataByIdScopeArg, template_key: str) -> Metadata:
         """
         Applies an instance of a metadata template to a file.
         
@@ -106,7 +104,8 @@ class FileMetadataManager:
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject()
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
     def delete_file_metadata_by_id(self, file_id: str, scope: DeleteFileMetadataByIdScopeArg, template_key: str):
         """

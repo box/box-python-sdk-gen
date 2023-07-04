@@ -1,8 +1,20 @@
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
-
 import json
+
+from typing import Dict
+
+from typing import List
+
+from box_sdk.schemas import FileBase
+
+from box_sdk.schemas import SignRequestCreateSigner
+
+from box_sdk.schemas import FolderMini
+
+from box_sdk.schemas import SignRequestPrefillTag
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import SignRequest
 
@@ -16,25 +28,13 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
-
-class GetSignRequestsOptionsArg(BaseObject):
-    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
-        """
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.marker = marker
-        self.limit = limit
 
 class SignRequestsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -67,23 +67,60 @@ class SignRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))
-    def get_sign_requests(self, options: GetSignRequestsOptionsArg = None) -> SignRequests:
+    def get_sign_requests(self, marker: Optional[str] = None, limit: Optional[int] = None) -> SignRequests:
         """
         Gets sign requests created by a user. If the `sign_files` and/or
         
         `parent_folder` are deleted, the sign request will not return in the list.
 
+        :param marker: Defines the position marker at which to begin returning results. This is
+            used when paginating using marker-based pagination.
+            This requires `usemarker` to be set to `true`.
+        :type marker: Optional[str], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
         """
-        if options is None:
-            options = GetSignRequestsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params={'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return SignRequests.from_dict(json.loads(response.text))
-    def create_sign_request(self, request_body: SignRequestCreateRequest) -> SignRequest:
+    def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None) -> SignRequest:
         """
         Creates a sign request. This involves preparing a document for signing and
         
         sending the sign request to signers.
 
+        :param signers: Array of signers for the sign request. 35 is the
+            max number of signers permitted.
+        :type signers: List[SignRequestCreateSigner]
+        :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
+        :type source_files: Optional[List[FileBase]], optional
+        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
+        :type is_document_preparation_needed: Optional[bool], optional
+        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
+        :type redirect_url: Optional[str], optional
+        :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document.
+        :type declined_redirect_url: Optional[str], optional
+        :param are_text_signatures_enabled: Disables the usage of signatures generated by typing (text).
+        :type are_text_signatures_enabled: Optional[bool], optional
+        :param email_subject: Subject of sign request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
+        :type email_subject: Optional[str], optional
+        :param email_message: Message to include in sign request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
+        :type email_message: Optional[str], optional
+        :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
+        :type are_reminders_enabled: Optional[bool], optional
+        :param name: Name of the sign request.
+        :type name: Optional[str], optional
+        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
+        :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
+        :type days_valid: Optional[int], optional
+        :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
+        :type external_id: Optional[str], optional
+        :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
+        :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(source_files=source_files, signers=signers, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, parent_folder=parent_folder, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))

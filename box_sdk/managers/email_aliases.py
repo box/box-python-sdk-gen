@@ -1,8 +1,8 @@
-from box_sdk.base_object import BaseObject
-
 from typing import Optional
 
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import EmailAliases
 
@@ -14,25 +14,13 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
-
-class CreateUserEmailAliasRequestBodyArg(BaseObject):
-    def __init__(self, email: str, **kwargs):
-        """
-        :param email: The email address to add to the account as an alias.
-            Note: The domain of the email alias needs to be registered
-             to your enterprise.
-            See the [domain verification guide](
-              https://support.box.com/hc/en-us/articles/4408619650579-Domain-Verification
-              ) for steps to add a new domain.
-        :type email: str
-        """
-        super().__init__(**kwargs)
-        self.email = email
 
 class EmailAliasesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -50,14 +38,22 @@ class EmailAliasesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return EmailAliases.from_dict(json.loads(response.text))
-    def create_user_email_alias(self, user_id: str, request_body: CreateUserEmailAliasRequestBodyArg) -> EmailAlias:
+    def create_user_email_alias(self, user_id: str, email: str) -> EmailAlias:
         """
         Adds a new email alias to a user account..
         :param user_id: The ID of the user.
             Example: "12345"
         :type user_id: str
+        :param email: The email address to add to the account as an alias.
+            Note: The domain of the email alias needs to be registered
+             to your enterprise.
+            See the [domain verification guide](
+              https://support.box.com/hc/en-us/articles/4408619650579-Domain-Verification
+              ) for steps to add a new domain.
+        :type email: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(email=email)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return EmailAlias.from_dict(json.loads(response.text))
     def delete_user_email_alias_by_id(self, user_id: str, email_alias_id: str):
         """

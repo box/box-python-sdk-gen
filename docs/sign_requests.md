@@ -20,19 +20,16 @@ The `create_sign_request`method will create a Sign Request. You need to provide 
 (from which the signing document will be created) and at least one signer to receive the Sign Request.
 
 ```python
-from box_sdk.schemas import SignRequestCreateRequest, SignRequestCreateSigner, \
-    FileBaseTypeField, FolderBaseTypeField, FileBase, FolderMini
+from box_sdk.schemas import SignRequestCreateSigner, FileBaseTypeField, FolderBaseTypeField, FileBase, FolderMini
 
 destination_folder_id = '12345'
 file_to_sign_id = '11111'
 signer_email = 'signer@box.com'
 
 created_sign_request = client.sign_requests.create_sign_request(
-    SignRequestCreateRequest(
-        signers=[SignRequestCreateSigner(email=signer_email)],
-        parent_folder=FolderMini(id=destination_folder_id, type=FolderBaseTypeField.FOLDER.value),
-        source_files=[FileBase(id=file_to_sign_id, type=FileBaseTypeField.FILE.value)]
-    )
+    signers=[SignRequestCreateSigner(email=signer_email)],
+    parent_folder=FolderMini(id=destination_folder_id, type=FolderBaseTypeField.FOLDER.value),
+    source_files=[FileBase(id=file_to_sign_id, type=FileBaseTypeField.FILE.value)]
 )
 
 print(f'(Sign Request ID: {created_sign_request.id})')

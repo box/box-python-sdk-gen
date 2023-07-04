@@ -1,8 +1,8 @@
+from enum import Enum
+
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
-
-from enum import Enum
+from typing import Dict
 
 import json
 
@@ -14,100 +14,22 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFileCollaborationsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.limit = limit
-        self.marker = marker
-
-class GetFolderCollaborationsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
 class GetCollaborationsStatusArg(str, Enum):
     PENDING = 'pending'
-
-class GetCollaborationsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.offset = offset
-        self.limit = limit
-
-class GetGroupCollaborationsOptionsArg(BaseObject):
-    def __init__(self, limit: Optional[int] = None, offset: Optional[int] = None, **kwargs):
-        """
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.offset = offset
 
 class ListCollaborationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_collaborations(self, file_id: str, options: GetFileCollaborationsOptionsArg = None) -> Collaborations:
+    def get_file_collaborations(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
         
@@ -124,12 +46,26 @@ class ListCollaborationsManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
+        :param marker: Defines the position marker at which to begin returning results. This is
+            used when paginating using marker-based pagination.
+            This requires `usemarker` to be set to `true`.
+        :type marker: Optional[str], optional
         """
-        if options is None:
-            options = GetFileCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields, 'limit': limit, 'marker': marker}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
-    def get_folder_collaborations(self, folder_id: str, options: GetFolderCollaborationsOptionsArg = None) -> Collaborations:
+    def get_folder_collaborations(self, folder_id: str, fields: Optional[str] = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
         
@@ -146,23 +82,45 @@ class ListCollaborationsManager:
             the `folder_id` is `123`.
             Example: "12345"
         :type folder_id: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = GetFolderCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
-    def get_collaborations(self, status: GetCollaborationsStatusArg, options: GetCollaborationsOptionsArg = None) -> Collaborations:
+    def get_collaborations(self, status: GetCollaborationsStatusArg, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Collaborations:
         """
         Retrieves all pending collaboration invites for this user.
         :param status: The status of the collaborations to retrieve
-            Example: "pending"
         :type status: GetCollaborationsStatusArg
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
+        :param offset: The offset of the item at which to begin the response.
+            Queries with offset parameter value
+            exceeding 10000 will be rejected
+            with a 400 response.
+        :type offset: Optional[int], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
         """
-        if options is None:
-            options = GetCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params={'status': status, 'fields': options.fields, 'offset': options.offset, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'status': status, 'fields': fields, 'offset': offset, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
-    def get_group_collaborations(self, group_id: str, options: GetGroupCollaborationsOptionsArg = None) -> Collaborations:
+    def get_group_collaborations(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> Collaborations:
         """
         Retrieves all the collaborations for a group. The user
         
@@ -177,8 +135,14 @@ class ListCollaborationsManager:
         :param group_id: The ID of the group.
             Example: "57645"
         :type group_id: str
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
+        :param offset: The offset of the item at which to begin the response.
+            Queries with offset parameter value
+            exceeding 10000 will be rejected
+            with a 400 response.
+        :type offset: Optional[int], optional
         """
-        if options is None:
-            options = GetGroupCollaborationsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params={'limit': options.limit, 'offset': options.offset}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'limit': limit, 'offset': offset}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))

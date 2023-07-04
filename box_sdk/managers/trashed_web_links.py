@@ -2,7 +2,11 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
+from typing import Dict
+
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import TrashWebLinkRestored
 
@@ -14,13 +18,15 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class CreateWebLinkByIdRequestBodyArgParentField(BaseObject):
+class CreateWebLinkByIdParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -29,53 +35,11 @@ class CreateWebLinkByIdRequestBodyArgParentField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class CreateWebLinkByIdRequestBodyArg(BaseObject):
-    def __init__(self, name: Optional[str] = None, parent: Optional[CreateWebLinkByIdRequestBodyArgParentField] = None, **kwargs):
-        """
-        :param name: An optional new name for the web link.
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.parent = parent
-
-class CreateWebLinkByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class GetWebLinkTrashOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
 class TrashedWebLinksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_web_link_by_id(self, web_link_id: str, request_body: CreateWebLinkByIdRequestBodyArg, options: CreateWebLinkByIdOptionsArg = None) -> TrashWebLinkRestored:
+    def create_web_link_by_id(self, web_link_id: str, name: Optional[str] = None, parent: Optional[CreateWebLinkByIdParentArg] = None, fields: Optional[str] = None) -> TrashWebLinkRestored:
         """
         Restores a web link that has been moved to the trash.
         
@@ -87,21 +51,40 @@ class TrashedWebLinksManager:
         :param web_link_id: The ID of the web link.
             Example: "12345"
         :type web_link_id: str
+        :param name: An optional new name for the web link.
+        :type name: Optional[str], optional
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = CreateWebLinkByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(name=name, parent=parent)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TrashWebLinkRestored.from_dict(json.loads(response.text))
-    def get_web_link_trash(self, web_link_id: str, options: GetWebLinkTrashOptionsArg = None) -> TrashWebLink:
+    def get_web_link_trash(self, web_link_id: str, fields: Optional[str] = None) -> TrashWebLink:
         """
         Retrieves a web link that has been moved to the trash.
         :param web_link_id: The ID of the web link.
             Example: "12345"
         :type web_link_id: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = GetWebLinkTrashOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return TrashWebLink.from_dict(json.loads(response.text))
     def delete_web_link_trash(self, web_link_id: str):
         """

@@ -2,7 +2,7 @@ from enum import Enum
 
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import Dict
 
 import json
 
@@ -16,22 +16,49 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetEventsOptionsArgStreamTypeField(str, Enum):
+class GetEventsStreamTypeArg(str, Enum):
     ALL = 'all'
     CHANGES = 'changes'
     SYNC = 'sync'
     ADMIN_LOGS = 'admin_logs'
     ADMIN_LOGS_STREAMING = 'admin_logs_streaming'
 
-class GetEventsOptionsArg(BaseObject):
-    def __init__(self, stream_type: Optional[GetEventsOptionsArgStreamTypeField] = None, stream_position: Optional[str] = None, limit: Optional[int] = None, event_type: Optional[str] = None, created_after: Optional[str] = None, created_before: Optional[str] = None, **kwargs):
+class EventsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_events(self, stream_type: Optional[GetEventsStreamTypeArg] = None, stream_position: Optional[str] = None, limit: Optional[int] = None, event_type: Optional[str] = None, created_after: Optional[str] = None, created_before: Optional[str] = None) -> Events:
         """
+        Returns up to a year of past events for a given user
+        
+        or for the entire enterprise.
+
+        
+        By default this returns events for the authenticated user. To retrieve events
+
+        
+        for the entire enterprise, set the `stream_type` to `admin_logs_streaming`
+
+        
+        for live monitoring of new events, or `admin_logs` for querying across
+
+        
+        historical events. The user making the API call will
+
+        
+        need to have admin privileges, and the application will need to have the
+
+        
+        scope `manage enterprise properties` checked.
+
         :param stream_type: Defines the type of events that are returned
             * `all` returns everything for a user and is the default
             * `changes` returns events that may cause file tree changes
@@ -50,7 +77,7 @@ class GetEventsOptionsArg(BaseObject):
               the enterprise. Latency will be much lower than `admin_logs`, but
               events will not be returned in chronological order and may
               contain duplicates.
-        :type stream_type: Optional[GetEventsOptionsArgStreamTypeField], optional
+        :type stream_type: Optional[GetEventsStreamTypeArg], optional
         :param stream_position: The location in the event stream to start receiving events from.
             * `now` will return an empty list events and
             the latest stream position for initialization.
@@ -77,46 +104,8 @@ class GetEventsOptionsArg(BaseObject):
             other `stream_type` this value will be ignored.
         :type created_before: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.stream_type = stream_type
-        self.stream_position = stream_position
-        self.limit = limit
-        self.event_type = event_type
-        self.created_after = created_after
-        self.created_before = created_before
-
-class EventsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
-        self.auth = auth
-        self.network_session = network_session
-    def get_events(self, options: GetEventsOptionsArg = None) -> Events:
-        """
-        Returns up to a year of past events for a given user
-        
-        or for the entire enterprise.
-
-        
-        By default this returns events for the authenticated user. To retrieve events
-
-        
-        for the entire enterprise, set the `stream_type` to `admin_logs_streaming`
-
-        
-        for live monitoring of new events, or `admin_logs` for querying across
-
-        
-        historical events. The user making the API call will
-
-        
-        need to have admin privileges, and the application will need to have the
-
-        
-        scope `manage enterprise properties` checked.
-
-        """
-        if options is None:
-            options = GetEventsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params={'stream_type': options.stream_type, 'stream_position': options.stream_position, 'limit': options.limit, 'event_type': options.event_type, 'created_after': options.created_after, 'created_before': options.created_before}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'stream_type': stream_type, 'stream_position': stream_position, 'limit': limit, 'event_type': event_type, 'created_after': created_after, 'created_before': created_before}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Events.from_dict(json.loads(response.text))
     def get_events_with_long_polling(self) -> RealtimeServers:
         """

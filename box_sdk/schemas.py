@@ -462,190 +462,6 @@ class OAuth2Error(BaseObject):
         self.error = error
         self.error_description = error_description
 
-class SkillInvocationTypeField(str, Enum):
-    SKILL_INVOCATION = 'skill_invocation'
-
-class SkillInvocationSkillFieldTypeField(str, Enum):
-    SKILL = 'skill'
-
-class SkillInvocationSkillField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationSkillFieldTypeField] = None, name: Optional[str] = None, api_key: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this skill
-        :type id: Optional[str], optional
-        :param type: `skill`
-        :type type: Optional[SkillInvocationSkillFieldTypeField], optional
-        :param name: The name of the skill
-        :type name: Optional[str], optional
-        :param api_key: The client ID of the application
-        :type api_key: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-        self.api_key = api_key
-
-class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
-    BEARER = 'bearer'
-
-class SkillInvocationTokenFieldReadField(BaseObject):
-    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
-        """
-        :param access_token: The requested access token.
-        :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
-        :type expires_in: Optional[int], optional
-        :param token_type: The type of access token returned.
-        :type token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField], optional
-        :param restricted_to: The permissions that this access token permits,
-            providing a list of resources (files, folders, etc)
-            and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-
-class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
-    BEARER = 'bearer'
-
-class SkillInvocationTokenFieldWriteField(BaseObject):
-    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
-        """
-        :param access_token: The requested access token.
-        :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
-        :type expires_in: Optional[int], optional
-        :param token_type: The type of access token returned.
-        :type token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField], optional
-        :param restricted_to: The permissions that this access token permits,
-            providing a list of resources (files, folders, etc)
-            and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-
-class SkillInvocationTokenField(BaseObject):
-    def __init__(self, read: Optional[SkillInvocationTokenFieldReadField] = None, write: Optional[SkillInvocationTokenFieldWriteField] = None, **kwargs):
-        """
-        :param read: The basics of an access token
-        :type read: Optional[SkillInvocationTokenFieldReadField], optional
-        :param write: The basics of an access token
-        :type write: Optional[SkillInvocationTokenFieldWriteField], optional
-        """
-        super().__init__(**kwargs)
-        self.read = read
-        self.write = write
-
-class SkillInvocationStatusFieldStateField(str, Enum):
-    INVOKED = 'invoked'
-    PROCESSING = 'processing'
-    SUCCESS = 'success'
-    TRANSIENT_FAILURE = 'transient_failure'
-    PERMANENT_FAILURE = 'permanent_failure'
-
-class SkillInvocationStatusField(BaseObject):
-    def __init__(self, state: Optional[SkillInvocationStatusFieldStateField] = None, message: Optional[str] = None, error_code: Optional[str] = None, additional_info: Optional[str] = None, **kwargs):
-        """
-        :param state: The state of this event.
-            * `invoked` - Triggered the skill with event details to start
-              applying skill on the file.
-            * `processing` - Currently processing.
-            * `success` - Completed processing with a success.
-            * `transient_failure` - Encountered an issue which can be
-              retried.
-            * `permanent_failure` -  Encountered a permanent issue and
-              retry would not help.
-        :type state: Optional[SkillInvocationStatusFieldStateField], optional
-        :param message: Status information
-        :type message: Optional[str], optional
-        :param error_code: Error code information, if error occurred.
-        :type error_code: Optional[str], optional
-        :param additional_info: Additional status information.
-        :type additional_info: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.state = state
-        self.message = message
-        self.error_code = error_code
-        self.additional_info = additional_info
-
-class SkillInvocationEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-class SkillInvocationEnterpriseField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[SkillInvocationEnterpriseFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-class WebhookInvocationTypeField(str, Enum):
-    WEBHOOK_EVENT = 'webhook_event'
-
-class WebhookInvocationTriggerField(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
-
-class AccessTokenTokenTypeField(str, Enum):
-    BEARER = 'bearer'
-
-class AccessTokenIssuedTokenTypeField(str, Enum):
-    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
-
 class ClassificationTemplateField(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
@@ -825,71 +641,6 @@ class ClassificationTemplate(BaseObject):
         self.hidden = hidden
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
-
-class CollaborationTypeField(str, Enum):
-    COLLABORATION = 'collaboration'
-
-class CollaborationRoleField(str, Enum):
-    EDITOR = 'editor'
-    VIEWER = 'viewer'
-    PREVIEWER = 'previewer'
-    UPLOADER = 'uploader'
-    PREVIEWER_UPLOADER = 'previewer uploader'
-    VIEWER_UPLOADER = 'viewer uploader'
-    CO_OWNER = 'co-owner'
-    OWNER = 'owner'
-
-class CollaborationStatusField(str, Enum):
-    ACCEPTED = 'accepted'
-    PENDING = 'pending'
-    REJECTED = 'rejected'
-
-class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField(BaseObject):
-    def __init__(self, enterprise_has_strong_password_required_for_external_users: Optional[bool] = None, user_has_strong_password: Optional[bool] = None, **kwargs):
-        """
-        :param enterprise_has_strong_password_required_for_external_users: Whether or not the enterprise that owns the content requires
-            a strong password to collaborate on the content.
-        :type enterprise_has_strong_password_required_for_external_users: Optional[bool], optional
-        :param user_has_strong_password: Whether or not the user has a strong password set for their
-            account. The field is `null` when a strong password is not
-            required.
-        :type user_has_strong_password: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.enterprise_has_strong_password_required_for_external_users = enterprise_has_strong_password_required_for_external_users
-        self.user_has_strong_password = user_has_strong_password
-
-class CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField(BaseObject):
-    def __init__(self, enterprise_has_two_factor_auth_enabled: Optional[bool] = None, user_has_two_factor_authentication_enabled: Optional[bool] = None, **kwargs):
-        """
-        :param enterprise_has_two_factor_auth_enabled: Whether or not the enterprise that owns the content requires
-            two-factor authentication to be enabled in order to
-            collaborate on the content.
-        :type enterprise_has_two_factor_auth_enabled: Optional[bool], optional
-        :param user_has_two_factor_authentication_enabled: Whether or not the user has two-factor authentication
-            enabled. The field is `null` when two-factor
-            authentication is not required.
-        :type user_has_two_factor_authentication_enabled: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.enterprise_has_two_factor_auth_enabled = enterprise_has_two_factor_auth_enabled
-        self.user_has_two_factor_authentication_enabled = user_has_two_factor_authentication_enabled
-
-class CollaborationsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class CollaborationsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[CollaborationsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[CollaborationsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
 
 class CollaborationAllowlistEntryTypeField(str, Enum):
     COLLABORATION_WHITELIST_ENTRY = 'collaboration_whitelist_entry'
@@ -1117,34 +868,6 @@ class Collections(BaseObject):
         self.order = order
         self.entries = entries
 
-class CommentItemField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this object
-        :type id: Optional[str], optional
-        :param type: The type for this object
-        :type type: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-
-class CommentsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class CommentsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[CommentsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[CommentsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
 class CommentBaseTypeField(str, Enum):
     COMMENT = 'comment'
 
@@ -1159,28 +882,6 @@ class CommentBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
-
-class DevicePinnerTypeField(str, Enum):
-    DEVICE_PINNER = 'device_pinner'
-
-class DevicePinnersOrderFieldByField(str, Enum):
-    ID = 'id'
-
-class DevicePinnersOrderFieldDirectionField(str, Enum):
-    ASC = 'asc'
-    DESC = 'desc'
-
-class DevicePinnersOrderField(BaseObject):
-    def __init__(self, by: Optional[DevicePinnersOrderFieldByField] = None, direction: Optional[DevicePinnersOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field that is ordered by
-        :type by: Optional[DevicePinnersOrderFieldByField], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[DevicePinnersOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
 
 class EmailAliasTypeField(str, Enum):
     EMAIL_ALIAS = 'email_alias'
@@ -1230,466 +931,6 @@ class EnterpriseBase(BaseObject):
         self.id = id
         self.type = type
 
-class EventEventTypeField(str, Enum):
-    ACCESS_GRANTED = 'ACCESS_GRANTED'
-    ACCESS_REVOKED = 'ACCESS_REVOKED'
-    ADD_DEVICE_ASSOCIATION = 'ADD_DEVICE_ASSOCIATION'
-    ADD_LOGIN_ACTIVITY_DEVICE = 'ADD_LOGIN_ACTIVITY_DEVICE'
-    ADMIN_LOGIN = 'ADMIN_LOGIN'
-    APPLICATION_CREATED = 'APPLICATION_CREATED'
-    APPLICATION_PUBLIC_KEY_ADDED = 'APPLICATION_PUBLIC_KEY_ADDED'
-    APPLICATION_PUBLIC_KEY_DELETED = 'APPLICATION_PUBLIC_KEY_DELETED'
-    CHANGE_ADMIN_ROLE = 'CHANGE_ADMIN_ROLE'
-    CHANGE_FOLDER_PERMISSION = 'CHANGE_FOLDER_PERMISSION'
-    COLLABORATION_ACCEPT = 'COLLABORATION_ACCEPT'
-    COLLABORATION_EXPIRATION = 'COLLABORATION_EXPIRATION'
-    COLLABORATION_INVITE = 'COLLABORATION_INVITE'
-    COLLABORATION_REMOVE = 'COLLABORATION_REMOVE'
-    COLLABORATION_ROLE_CHANGE = 'COLLABORATION_ROLE_CHANGE'
-    COLLAB_ADD_COLLABORATOR = 'COLLAB_ADD_COLLABORATOR'
-    COLLAB_INVITE_COLLABORATOR = 'COLLAB_INVITE_COLLABORATOR'
-    COLLAB_REMOVE_COLLABORATOR = 'COLLAB_REMOVE_COLLABORATOR'
-    COLLAB_ROLE_CHANGE = 'COLLAB_ROLE_CHANGE'
-    COMMENT_CREATE = 'COMMENT_CREATE'
-    COMMENT_DELETE = 'COMMENT_DELETE'
-    CONTENT_ACCESS = 'CONTENT_ACCESS'
-    CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY = 'CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY'
-    CONTENT_WORKFLOW_AUTOMATION_ADD = 'CONTENT_WORKFLOW_AUTOMATION_ADD'
-    CONTENT_WORKFLOW_AUTOMATION_DELETE = 'CONTENT_WORKFLOW_AUTOMATION_DELETE'
-    CONTENT_WORKFLOW_POLICY_ADD = 'CONTENT_WORKFLOW_POLICY_ADD'
-    CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION = 'CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION'
-    CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION = 'CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION'
-    COPY = 'COPY'
-    DATA_RETENTION_CREATE_RETENTION = 'DATA_RETENTION_CREATE_RETENTION'
-    DATA_RETENTION_REMOVE_RETENTION = 'DATA_RETENTION_REMOVE_RETENTION'
-    DELETE = 'DELETE'
-    DELETE_USER = 'DELETE_USER'
-    DEVICE_TRUST_CHECK_FAILED = 'DEVICE_TRUST_CHECK_FAILED'
-    DOWNLOAD = 'DOWNLOAD'
-    EDIT = 'EDIT'
-    EDIT_USER = 'EDIT_USER'
-    EMAIL_ALIAS_CONFIRM = 'EMAIL_ALIAS_CONFIRM'
-    EMAIL_ALIAS_REMOVE = 'EMAIL_ALIAS_REMOVE'
-    ENABLE_TWO_FACTOR_AUTH = 'ENABLE_TWO_FACTOR_AUTH'
-    ENTERPRISE_APP_AUTHORIZATION_UPDATE = 'ENTERPRISE_APP_AUTHORIZATION_UPDATE'
-    FAILED_LOGIN = 'FAILED_LOGIN'
-    FILE_MARKED_MALICIOUS = 'FILE_MARKED_MALICIOUS'
-    FILE_WATERMARKED_DOWNLOAD = 'FILE_WATERMARKED_DOWNLOAD'
-    GROUP_ADD_ITEM = 'GROUP_ADD_ITEM'
-    GROUP_ADD_USER = 'GROUP_ADD_USER'
-    GROUP_CREATION = 'GROUP_CREATION'
-    GROUP_DELETION = 'GROUP_DELETION'
-    GROUP_EDITED = 'GROUP_EDITED'
-    GROUP_REMOVE_ITEM = 'GROUP_REMOVE_ITEM'
-    GROUP_REMOVE_USER = 'GROUP_REMOVE_USER'
-    ITEM_COPY = 'ITEM_COPY'
-    ITEM_CREATE = 'ITEM_CREATE'
-    ITEM_DOWNLOAD = 'ITEM_DOWNLOAD'
-    ITEM_MAKE_CURRENT_VERSION = 'ITEM_MAKE_CURRENT_VERSION'
-    ITEM_MODIFY = 'ITEM_MODIFY'
-    ITEM_MOVE = 'ITEM_MOVE'
-    ITEM_OPEN = 'ITEM_OPEN'
-    ITEM_PREVIEW = 'ITEM_PREVIEW'
-    ITEM_RENAME = 'ITEM_RENAME'
-    ITEM_SHARED = 'ITEM_SHARED'
-    ITEM_SHARED_CREATE = 'ITEM_SHARED_CREATE'
-    ITEM_SHARED_UNSHARE = 'ITEM_SHARED_UNSHARE'
-    ITEM_SHARED_UPDATE = 'ITEM_SHARED_UPDATE'
-    ITEM_SYNC = 'ITEM_SYNC'
-    ITEM_TRASH = 'ITEM_TRASH'
-    ITEM_UNDELETE_VIA_TRASH = 'ITEM_UNDELETE_VIA_TRASH'
-    ITEM_UNSYNC = 'ITEM_UNSYNC'
-    ITEM_UPLOAD = 'ITEM_UPLOAD'
-    LEGAL_HOLD_ASSIGNMENT_CREATE = 'LEGAL_HOLD_ASSIGNMENT_CREATE'
-    LEGAL_HOLD_ASSIGNMENT_DELETE = 'LEGAL_HOLD_ASSIGNMENT_DELETE'
-    LEGAL_HOLD_POLICY_CREATE = 'LEGAL_HOLD_POLICY_CREATE'
-    LEGAL_HOLD_POLICY_DELETE = 'LEGAL_HOLD_POLICY_DELETE'
-    LEGAL_HOLD_POLICY_UPDATE = 'LEGAL_HOLD_POLICY_UPDATE'
-    LOCK = 'LOCK'
-    LOCK_CREATE = 'LOCK_CREATE'
-    LOCK_DESTROY = 'LOCK_DESTROY'
-    LOGIN = 'LOGIN'
-    MASTER_INVITE_ACCEPT = 'MASTER_INVITE_ACCEPT'
-    MASTER_INVITE_REJECT = 'MASTER_INVITE_REJECT'
-    METADATA_INSTANCE_CREATE = 'METADATA_INSTANCE_CREATE'
-    METADATA_INSTANCE_DELETE = 'METADATA_INSTANCE_DELETE'
-    METADATA_INSTANCE_UPDATE = 'METADATA_INSTANCE_UPDATE'
-    METADATA_TEMPLATE_CREATE = 'METADATA_TEMPLATE_CREATE'
-    METADATA_TEMPLATE_DELETE = 'METADATA_TEMPLATE_DELETE'
-    METADATA_TEMPLATE_UPDATE = 'METADATA_TEMPLATE_UPDATE'
-    MOVE = 'MOVE'
-    NEW_USER = 'NEW_USER'
-    PREVIEW = 'PREVIEW'
-    REMOVE_DEVICE_ASSOCIATION = 'REMOVE_DEVICE_ASSOCIATION'
-    REMOVE_LOGIN_ACTIVITY_DEVICE = 'REMOVE_LOGIN_ACTIVITY_DEVICE'
-    RENAME = 'RENAME'
-    RETENTION_POLICY_ASSIGNMENT_ADD = 'RETENTION_POLICY_ASSIGNMENT_ADD'
-    SHARE = 'SHARE'
-    SHARE_EXPIRATION = 'SHARE_EXPIRATION'
-    SHIELD_ALERT = 'SHIELD_ALERT'
-    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED'
-    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION'
-    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED'
-    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION'
-    SHIELD_JUSTIFICATION_APPROVAL = 'SHIELD_JUSTIFICATION_APPROVAL'
-    SHIELD_SHARED_LINK_ACCESS_BLOCKED = 'SHIELD_SHARED_LINK_ACCESS_BLOCKED'
-    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE'
-    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE'
-    SIGN_DOCUMENT_ASSIGNED = 'SIGN_DOCUMENT_ASSIGNED'
-    SIGN_DOCUMENT_CANCELLED = 'SIGN_DOCUMENT_CANCELLED'
-    SIGN_DOCUMENT_COMPLETED = 'SIGN_DOCUMENT_COMPLETED'
-    SIGN_DOCUMENT_CONVERTED = 'SIGN_DOCUMENT_CONVERTED'
-    SIGN_DOCUMENT_CREATED = 'SIGN_DOCUMENT_CREATED'
-    SIGN_DOCUMENT_DECLINED = 'SIGN_DOCUMENT_DECLINED'
-    SIGN_DOCUMENT_EXPIRED = 'SIGN_DOCUMENT_EXPIRED'
-    SIGN_DOCUMENT_SIGNED = 'SIGN_DOCUMENT_SIGNED'
-    SIGN_DOCUMENT_VIEWED_BY_SIGNED = 'SIGN_DOCUMENT_VIEWED_BY_SIGNED'
-    SIGNER_DOWNLOADED = 'SIGNER_DOWNLOADED'
-    SIGNER_FORWARDED = 'SIGNER_FORWARDED'
-    STORAGE_EXPIRATION = 'STORAGE_EXPIRATION'
-    TAG_ITEM_CREATE = 'TAG_ITEM_CREATE'
-    TASK_ASSIGNMENT_CREATE = 'TASK_ASSIGNMENT_CREATE'
-    TASK_ASSIGNMENT_DELETE = 'TASK_ASSIGNMENT_DELETE'
-    TASK_ASSIGNMENT_UPDATE = 'TASK_ASSIGNMENT_UPDATE'
-    TASK_CREATE = 'TASK_CREATE'
-    TASK_UPDATE = 'TASK_UPDATE'
-    TERMS_OF_SERVICE_ACCEPT = 'TERMS_OF_SERVICE_ACCEPT'
-    TERMS_OF_SERVICE_REJECT = 'TERMS_OF_SERVICE_REJECT'
-    UNDELETE = 'UNDELETE'
-    UNLOCK = 'UNLOCK'
-    UNSHARE = 'UNSHARE'
-    UPDATE_COLLABORATION_EXPIRATION = 'UPDATE_COLLABORATION_EXPIRATION'
-    UPDATE_SHARE_EXPIRATION = 'UPDATE_SHARE_EXPIRATION'
-    UPLOAD = 'UPLOAD'
-    USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE = 'USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE'
-    WATERMARK_LABEL_CREATE = 'WATERMARK_LABEL_CREATE'
-    WATERMARK_LABEL_DELETE = 'WATERMARK_LABEL_DELETE'
-
-class EventAdditionalDetailsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class FileSharedLinkFieldAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class FileSharedLinkFieldEffectiveAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class FileSharedLinkFieldEffectivePermissionField(str, Enum):
-    CAN_EDIT = 'can_edit'
-    CAN_DOWNLOAD = 'can_download'
-    CAN_PREVIEW = 'can_preview'
-    NO_ACCESS = 'no_access'
-
-class FileSharedLinkFieldPermissionsField(BaseObject):
-    def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
-        """
-        :param can_download: Defines if the shared link allows for the item to be downloaded. For
-            shared links on folders, this also applies to any items in the folder.
-            This value can be set to `true` when the effective access level is
-            set to `open` or `company`, not `collaborators`.
-        :type can_download: bool
-        :param can_preview: Defines if the shared link allows for the item to be previewed.
-            This value is always `true`. For shared links on folders this also
-            applies to any items in the folder.
-        :type can_preview: bool
-        :param can_edit: Defines if the shared link allows for the item to be edited.
-            This value can only be `true` if `can_download` is also `true` and if
-            the item has a type of `file`.
-        :type can_edit: bool
-        """
-        super().__init__(**kwargs)
-        self.can_download = can_download
-        self.can_preview = can_preview
-        self.can_edit = can_edit
-
-class FileSharedLinkField(BaseObject):
-    def __init__(self, url: str, effective_access: FileSharedLinkFieldEffectiveAccessField, effective_permission: FileSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FileSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FileSharedLinkFieldPermissionsField] = None, **kwargs):
-        """
-        :param url: The URL that can be used to access the item on Box.
-            This URL will display the item in Box's preview UI where the file
-            can be downloaded if allowed.
-            This URL will continue to work even when a custom `vanity_url`
-            has been set for this shared link.
-        :type url: str
-        :param effective_access: The effective access level for the shared link. This can be a more
-            restrictive access level than the value in the `access` field when the
-            enterprise settings restrict the allowed access levels.
-        :type effective_access: FileSharedLinkFieldEffectiveAccessField
-        :param effective_permission: The effective permissions for this shared link.
-            These result in the more restrictive combination of
-            the share link permissions and the item permissions set
-            by the administrator, the owner, and any ancestor item
-            such as a folder.
-        :type effective_permission: FileSharedLinkFieldEffectivePermissionField
-        :param is_password_enabled: Defines if the shared link requires a password to access the item.
-        :type is_password_enabled: bool
-        :param download_count: The number of times this item has been downloaded.
-        :type download_count: int
-        :param preview_count: The number of times this item has been previewed.
-        :type preview_count: int
-        :param download_url: A URL that can be used to download the file. This URL can be used in
-            a browser to download the file. This URL includes the file
-            extension so that the file will be saved with the right file type.
-            This property will be `null` for folders.
-        :type download_url: Optional[str], optional
-        :param vanity_url: The "Custom URL" that can also be used to preview the item on Box.  Custom
-            URLs can only be created or modified in the Box Web application.
-        :type vanity_url: Optional[str], optional
-        :param vanity_name: The custom name of a shared link, as used in the `vanity_url` field.
-        :type vanity_name: Optional[str], optional
-        :param access: The access level for this shared link.
-            * `open` - provides access to this item to anyone with this link
-            * `company` - only provides access to this item to people the same company
-            * `collaborators` - only provides access to this item to people who are
-               collaborators on this item
-            If this field is omitted when creating the shared link, the access level
-            will be set to the default access level specified by the enterprise admin.
-        :type access: Optional[FileSharedLinkFieldAccessField], optional
-        :param unshared_at: The date and time when this link will be unshared. This field can only be
-            set by users with paid accounts.
-        :type unshared_at: Optional[str], optional
-        :param permissions: Defines if this link allows a user to preview, edit, and download an item.
-            These permissions refer to the shared link only and
-            do not supersede permissions applied to the item itself.
-        :type permissions: Optional[FileSharedLinkFieldPermissionsField], optional
-        """
-        super().__init__(**kwargs)
-        self.url = url
-        self.effective_access = effective_access
-        self.effective_permission = effective_permission
-        self.is_password_enabled = is_password_enabled
-        self.download_count = download_count
-        self.preview_count = preview_count
-        self.download_url = download_url
-        self.vanity_url = vanity_url
-        self.vanity_name = vanity_name
-        self.access = access
-        self.unshared_at = unshared_at
-        self.permissions = permissions
-
-class FileItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class FileFullPermissionsField(BaseObject):
-    def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_annotate: Optional[bool] = None, can_comment: Optional[bool] = None, can_preview: Optional[bool] = None, can_upload: Optional[bool] = None, can_view_annotations_all: Optional[bool] = None, can_view_annotations_self: Optional[bool] = None, **kwargs):
-        """
-        :param can_delete: Specifies if the current user can delete this item.
-        :type can_delete: bool
-        :param can_download: Specifies if the current user can download this item.
-        :type can_download: bool
-        :param can_invite_collaborator: Specifies if the current user can invite new
-            users to collaborate on this item, and if the user can
-            update the role of a user already collaborated on this
-            item.
-        :type can_invite_collaborator: bool
-        :param can_rename: Specifies if the user can rename this item.
-        :type can_rename: bool
-        :param can_set_share_access: Specifies if the user can change the access level of an
-            existing shared link on this item.
-        :type can_set_share_access: bool
-        :param can_share: Specifies if the user can create a shared link for this item.
-        :type can_share: bool
-        :param can_annotate: Specifies if the user can place annotations on this file.
-        :type can_annotate: Optional[bool], optional
-        :param can_comment: Specifies if the user can place comments on this file.
-        :type can_comment: Optional[bool], optional
-        :param can_preview: Specifies if the user can preview this file.
-        :type can_preview: Optional[bool], optional
-        :param can_upload: Specifies if the user can upload a new version of this file.
-        :type can_upload: Optional[bool], optional
-        :param can_view_annotations_all: Specifies if the user view all annotations placed on this file
-        :type can_view_annotations_all: Optional[bool], optional
-        :param can_view_annotations_self: Specifies if the user view annotations placed by themselves
-            on this file
-        :type can_view_annotations_self: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.can_delete = can_delete
-        self.can_download = can_download
-        self.can_invite_collaborator = can_invite_collaborator
-        self.can_rename = can_rename
-        self.can_set_share_access = can_set_share_access
-        self.can_share = can_share
-        self.can_annotate = can_annotate
-        self.can_comment = can_comment
-        self.can_preview = can_preview
-        self.can_upload = can_upload
-        self.can_view_annotations_all = can_view_annotations_all
-        self.can_view_annotations_self = can_view_annotations_self
-
-class FileFullLockFieldTypeField(str, Enum):
-    LOCK = 'lock'
-
-class FileFullLockFieldAppTypeField(str, Enum):
-    GSUITE = 'gsuite'
-    OFFICE_WOPI = 'office_wopi'
-    OFFICE_WOPIPLUS = 'office_wopiplus'
-    OTHER = 'other'
-
-class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
-    BEARER = 'bearer'
-
-class FileFullWatermarkInfoField(BaseObject):
-    def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
-        """
-        :param is_watermarked: Specifies if this item has a watermark applied.
-        :type is_watermarked: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.is_watermarked = is_watermarked
-
-class FileFullAllowedInviteeRolesField(str, Enum):
-    EDITOR = 'editor'
-    VIEWER = 'viewer'
-    PREVIEWER = 'previewer'
-    UPLOADER = 'uploader'
-    PREVIEWER_UPLOADER = 'previewer uploader'
-    VIEWER_UPLOADER = 'viewer uploader'
-    CO_OWNER = 'co-owner'
-
-class FileFullMetadataField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
-    def __init__(self, url_template: Optional[str] = None, **kwargs):
-        """
-        :param url_template: The download URL that can be used to fetch the representation.
-            Make sure to make an authenticated API call to this endpoint.
-            This URL is a template and will require the `{+asset_path}` to
-            be replaced by a path. In general, for unpaged representations
-            it can be replaced by an empty string.
-            For paged representations, replace the `{+asset_path}` with the
-            page to request plus the extension for the file, for example
-            `1.pdf`.
-            When requesting the download URL the following additional
-            query params can be passed along.
-            * `set_content_disposition_type` - Sets the
-            `Content-Disposition` header in the API response with the
-            specified disposition type of either `inline` or `attachment`.
-            If not supplied, the `Content-Disposition` header is not
-            included in the response.
-            * `set_content_disposition_filename` - Allows the application to
-              define the representation's file name used in the
-              `Content-Disposition` header.  If not defined, the filename
-              is derived from the source file name in Box combined with the
-              extension of the representation.
-        :type url_template: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.url_template = url_template
-
-class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
-    def __init__(self, url: Optional[str] = None, **kwargs):
-        """
-        :param url: The API URL that can be used to get more info on this file
-            representation. Make sure to make an authenticated API call
-            to this endpoint.
-        :type url: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.url = url
-
-class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
-    def __init__(self, dimensions: Optional[str] = None, paged: Optional[bool] = None, thumb: Optional[bool] = None, **kwargs):
-        """
-        :param dimensions: The width by height size of this representation in pixels.
-        :type dimensions: Optional[str], optional
-        :param paged: Indicates if the representation is build up out of multiple
-            pages.
-        :type paged: Optional[bool], optional
-        :param thumb: Indicates if the representation can be used as a thumbnail of
-            the file.
-        :type thumb: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.dimensions = dimensions
-        self.paged = paged
-        self.thumb = thumb
-
-class FileFullRepresentationsFieldEntriesFieldStatusFieldStateField(str, Enum):
-    SUCCESS = 'success'
-    VIEWABLE = 'viewable'
-    PENDING = 'pending'
-    NONE = 'none'
-
-class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
-    def __init__(self, state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField] = None, **kwargs):
-        """
-        :param state: The status of the representation.
-            * `success` defines the representation as ready to be viewed.
-            * `viewable` defines a video to be ready for viewing.
-            * `pending` defines the representation as to be generated. Retry
-              this endpoint to re-check the status.
-            * `none` defines that the representation will be created when
-              requested. Request the URL defined in the `info` object to
-              trigger this generation.
-        :type state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField], optional
-        """
-        super().__init__(**kwargs)
-        self.state = state
-
-class FileFullRepresentationsFieldEntriesField(BaseObject):
-    def __init__(self, content: Optional[FileFullRepresentationsFieldEntriesFieldContentField] = None, info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField] = None, properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField] = None, representation: Optional[str] = None, status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField] = None, **kwargs):
-        """
-        :param content: An object containing the URL that can be used to actually fetch
-            the representation.
-        :type content: Optional[FileFullRepresentationsFieldEntriesFieldContentField], optional
-        :param info: An object containing the URL that can be used to fetch more info
-            on this representation.
-        :type info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField], optional
-        :param properties: An object containing the size and type of this presentation.
-        :type properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField], optional
-        :param representation: Indicates the file type of the returned representation.
-        :type representation: Optional[str], optional
-        :param status: An object containing the status of this representation.
-        :type status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField], optional
-        """
-        super().__init__(**kwargs)
-        self.content = content
-        self.info = info
-        self.properties = properties
-        self.representation = representation
-        self.status = status
-
-class FileFullRepresentationsField(BaseObject):
-    def __init__(self, entries: Optional[List[FileFullRepresentationsFieldEntriesField]] = None, **kwargs):
-        """
-        :param entries: A list of files
-        :type entries: Optional[List[FileFullRepresentationsFieldEntriesField]], optional
-        """
-        super().__init__(**kwargs)
-        self.entries = entries
-
-class FileFullClassificationField(BaseObject):
-    def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
-        """
-        :param name: The name of the classification
-        :type name: Optional[str], optional
-        :param definition: An explanation of the meaning of this classification.
-        :type definition: Optional[str], optional
-        :param color: The color that is used to display the
-            classification label in a user-interface. Colors are defined by the admin
-            or co-admin who created the classification in the Box web app.
-        :type color: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.definition = definition
-        self.color = color
-
-class FileFullSharedLinkPermissionOptionsField(str, Enum):
-    CAN_PREVIEW = 'can_preview'
-    CAN_DOWNLOAD = 'can_download'
-    CAN_EDIT = 'can_edit'
-
 class FileBaseTypeField(str, Enum):
     FILE = 'file'
 
@@ -1714,13 +955,6 @@ class FileBase(BaseObject):
         self.id = id
         self.type = type
         self.etag = etag
-
-class FileRequestTypeField(str, Enum):
-    FILE_REQUEST = 'file_request'
-
-class FileRequestStatusField(str, Enum):
-    ACTIVE = 'active'
-    INACTIVE = 'inactive'
 
 class FileVersionBaseTypeField(str, Enum):
     FILE_VERSION = 'file_version'
@@ -1782,19 +1016,63 @@ class FileMini(FileBase):
         self.sha_1 = sha_1
         self.file_version = file_version
 
-class SignRequestSignFilesField(BaseObject):
-    def __init__(self, files: Optional[List[FileMini]] = None, is_ready_for_download: Optional[bool] = None, **kwargs):
+class FileScopeScopeField(str, Enum):
+    ANNOTATION_EDIT = 'annotation_edit'
+    ANNOTATION_VIEW_ALL = 'annotation_view_all'
+    ANNOTATION_VIEW_SELF = 'annotation_view_self'
+    BASE_EXPLORER = 'base_explorer'
+    BASE_PICKER = 'base_picker'
+    BASE_PREVIEW = 'base_preview'
+    BASE_UPLOAD = 'base_upload'
+    ITEM_DELETE = 'item_delete'
+    ITEM_DOWNLOAD = 'item_download'
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_RENAME = 'item_rename'
+    ITEM_SHARE = 'item_share'
+
+class FileScope(BaseObject):
+    def __init__(self, scope: Optional[FileScopeScopeField] = None, object: Optional[FileMini] = None, **kwargs):
         """
-        :param is_ready_for_download: Indicates whether the `sign_files` documents are processing
-            and the PDFs may be out of date. A change to any document
-            requires processing on all `sign_files`. We
-            recommended waiting until processing is finished
-            (and this value is true) before downloading the PDFs.
-        :type is_ready_for_download: Optional[bool], optional
+        :param scope: The file scopes for the file access
+        :type scope: Optional[FileScopeScopeField], optional
         """
         super().__init__(**kwargs)
-        self.files = files
-        self.is_ready_for_download = is_ready_for_download
+        self.scope = scope
+        self.object = object
+
+class AccessTokenTokenTypeField(str, Enum):
+    BEARER = 'bearer'
+
+class AccessTokenIssuedTokenTypeField(str, Enum):
+    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
+
+class AccessToken(BaseObject):
+    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[AccessTokenTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, refresh_token: Optional[str] = None, issued_token_type: Optional[AccessTokenIssuedTokenTypeField] = None, **kwargs):
+        """
+        :param access_token: The requested access token.
+        :type access_token: Optional[str], optional
+        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :type expires_in: Optional[int], optional
+        :param token_type: The type of access token returned.
+        :type token_type: Optional[AccessTokenTokenTypeField], optional
+        :param restricted_to: The permissions that this access token permits,
+            providing a list of resources (files, folders, etc)
+            and the scopes permitted for each of those resources.
+        :type restricted_to: Optional[List[FileScope]], optional
+        :param refresh_token: The refresh token for this access token, which can be used
+            to request a new access token when the current one expires.
+        :type refresh_token: Optional[str], optional
+        :param issued_token_type: The type of downscoped access token returned. This is only
+            returned if an access token has been downscoped.
+        :type issued_token_type: Optional[AccessTokenIssuedTokenTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.token_type = token_type
+        self.restricted_to = restricted_to
+        self.refresh_token = refresh_token
+        self.issued_token_type = issued_token_type
 
 class FilesUnderRetention(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[FileMini]] = None, **kwargs):
@@ -1868,241 +1146,6 @@ class ConflictError(ClientError):
         super().__init__(type=type, status=status, code=code, message=message, context_info=None, help_url=help_url, request_id=request_id, **kwargs)
         self.context_info = context_info
 
-class FileVersionsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class FileVersionsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[FileVersionsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[FileVersionsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-class FileVersionLegalHoldTypeField(str, Enum):
-    FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
-
-class FileVersionRetentionTypeField(str, Enum):
-    FILE_VERSION_RETENTION = 'file_version_retention'
-
-class FolderSharedLinkFieldAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class FolderSharedLinkFieldEffectiveAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class FolderSharedLinkFieldEffectivePermissionField(str, Enum):
-    CAN_EDIT = 'can_edit'
-    CAN_DOWNLOAD = 'can_download'
-    CAN_PREVIEW = 'can_preview'
-    NO_ACCESS = 'no_access'
-
-class FolderSharedLinkFieldPermissionsField(BaseObject):
-    def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
-        """
-        :param can_download: Defines if the shared link allows for the item to be downloaded. For
-            shared links on folders, this also applies to any items in the folder.
-            This value can be set to `true` when the effective access level is
-            set to `open` or `company`, not `collaborators`.
-        :type can_download: bool
-        :param can_preview: Defines if the shared link allows for the item to be previewed.
-            This value is always `true`. For shared links on folders this also
-            applies to any items in the folder.
-        :type can_preview: bool
-        :param can_edit: Defines if the shared link allows for the item to be edited.
-            This value can only be `true` if `can_download` is also `true` and if
-            the item has a type of `file`.
-        :type can_edit: bool
-        """
-        super().__init__(**kwargs)
-        self.can_download = can_download
-        self.can_preview = can_preview
-        self.can_edit = can_edit
-
-class FolderSharedLinkField(BaseObject):
-    def __init__(self, url: str, effective_access: FolderSharedLinkFieldEffectiveAccessField, effective_permission: FolderSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FolderSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FolderSharedLinkFieldPermissionsField] = None, **kwargs):
-        """
-        :param url: The URL that can be used to access the item on Box.
-            This URL will display the item in Box's preview UI where the file
-            can be downloaded if allowed.
-            This URL will continue to work even when a custom `vanity_url`
-            has been set for this shared link.
-        :type url: str
-        :param effective_access: The effective access level for the shared link. This can be a more
-            restrictive access level than the value in the `access` field when the
-            enterprise settings restrict the allowed access levels.
-        :type effective_access: FolderSharedLinkFieldEffectiveAccessField
-        :param effective_permission: The effective permissions for this shared link.
-            These result in the more restrictive combination of
-            the share link permissions and the item permissions set
-            by the administrator, the owner, and any ancestor item
-            such as a folder.
-        :type effective_permission: FolderSharedLinkFieldEffectivePermissionField
-        :param is_password_enabled: Defines if the shared link requires a password to access the item.
-        :type is_password_enabled: bool
-        :param download_count: The number of times this item has been downloaded.
-        :type download_count: int
-        :param preview_count: The number of times this item has been previewed.
-        :type preview_count: int
-        :param download_url: A URL that can be used to download the file. This URL can be used in
-            a browser to download the file. This URL includes the file
-            extension so that the file will be saved with the right file type.
-            This property will be `null` for folders.
-        :type download_url: Optional[str], optional
-        :param vanity_url: The "Custom URL" that can also be used to preview the item on Box.  Custom
-            URLs can only be created or modified in the Box Web application.
-        :type vanity_url: Optional[str], optional
-        :param vanity_name: The custom name of a shared link, as used in the `vanity_url` field.
-        :type vanity_name: Optional[str], optional
-        :param access: The access level for this shared link.
-            * `open` - provides access to this item to anyone with this link
-            * `company` - only provides access to this item to people the same company
-            * `collaborators` - only provides access to this item to people who are
-               collaborators on this item
-            If this field is omitted when creating the shared link, the access level
-            will be set to the default access level specified by the enterprise admin.
-        :type access: Optional[FolderSharedLinkFieldAccessField], optional
-        :param unshared_at: The date and time when this link will be unshared. This field can only be
-            set by users with paid accounts.
-        :type unshared_at: Optional[str], optional
-        :param permissions: Defines if this link allows a user to preview, edit, and download an item.
-            These permissions refer to the shared link only and
-            do not supersede permissions applied to the item itself.
-        :type permissions: Optional[FolderSharedLinkFieldPermissionsField], optional
-        """
-        super().__init__(**kwargs)
-        self.url = url
-        self.effective_access = effective_access
-        self.effective_permission = effective_permission
-        self.is_password_enabled = is_password_enabled
-        self.download_count = download_count
-        self.preview_count = preview_count
-        self.download_url = download_url
-        self.vanity_url = vanity_url
-        self.vanity_name = vanity_name
-        self.access = access
-        self.unshared_at = unshared_at
-        self.permissions = permissions
-
-class FolderFolderUploadEmailFieldAccessField(str, Enum):
-    OPEN = 'open'
-    COLLABORATORS = 'collaborators'
-
-class FolderFolderUploadEmailField(BaseObject):
-    def __init__(self, access: Optional[FolderFolderUploadEmailFieldAccessField] = None, email: Optional[str] = None, **kwargs):
-        """
-        :param access: When this parameter has been set, users can email files
-            to the email address that has been automatically
-            created for this folder.
-            To create an email address, set this property either when
-            creating or updating the folder.
-            When set to `collaborators`, only emails from registered email
-            addresses for collaborators will be accepted. This includes
-            any email aliases a user might have registered.
-            When set to `open` it will accept emails from any email
-            address.
-        :type access: Optional[FolderFolderUploadEmailFieldAccessField], optional
-        :param email: The optional upload email address for this folder.
-        :type email: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.access = access
-        self.email = email
-
-class FolderItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class FolderFullSyncStateField(str, Enum):
-    SYNCED = 'synced'
-    NOT_SYNCED = 'not_synced'
-    PARTIALLY_SYNCED = 'partially_synced'
-
-class FolderFullPermissionsField(BaseObject):
-    def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_upload: Optional[bool] = None, **kwargs):
-        """
-        :param can_delete: Specifies if the current user can delete this item.
-        :type can_delete: bool
-        :param can_download: Specifies if the current user can download this item.
-        :type can_download: bool
-        :param can_invite_collaborator: Specifies if the current user can invite new
-            users to collaborate on this item, and if the user can
-            update the role of a user already collaborated on this
-            item.
-        :type can_invite_collaborator: bool
-        :param can_rename: Specifies if the user can rename this item.
-        :type can_rename: bool
-        :param can_set_share_access: Specifies if the user can change the access level of an
-            existing shared link on this item.
-        :type can_set_share_access: bool
-        :param can_share: Specifies if the user can create a shared link for this item.
-        :type can_share: bool
-        :param can_upload: Specifies if the user can upload into this folder.
-        :type can_upload: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.can_delete = can_delete
-        self.can_download = can_download
-        self.can_invite_collaborator = can_invite_collaborator
-        self.can_rename = can_rename
-        self.can_set_share_access = can_set_share_access
-        self.can_share = can_share
-        self.can_upload = can_upload
-
-class FolderFullMetadataField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class FolderFullAllowedInviteeRolesField(str, Enum):
-    EDITOR = 'editor'
-    VIEWER = 'viewer'
-    PREVIEWER = 'previewer'
-    UPLOADER = 'uploader'
-    PREVIEWER_UPLOADER = 'previewer uploader'
-    VIEWER_UPLOADER = 'viewer uploader'
-    CO_OWNER = 'co-owner'
-
-class FolderFullWatermarkInfoField(BaseObject):
-    def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
-        """
-        :param is_watermarked: Specifies if this item has a watermark applied.
-        :type is_watermarked: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.is_watermarked = is_watermarked
-
-class FolderFullClassificationField(BaseObject):
-    def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
-        """
-        :param name: The name of the classification
-        :type name: Optional[str], optional
-        :param definition: An explanation of the meaning of this classification.
-        :type definition: Optional[str], optional
-        :param color: The color that is used to display the
-            classification label in a user-interface. Colors are defined by the admin
-            or co-admin who created the classification in the Box web app.
-        :type color: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.definition = definition
-        self.color = color
-
 class FolderBaseTypeField(str, Enum):
     FOLDER = 'folder'
 
@@ -2163,109 +1206,6 @@ class FolderMini(FolderBase):
         self.name = name
         self.sequence_id = sequence_id
 
-class WebLinkPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashWebLinkRestoredPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashFolderRestoredPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashFileRestoredPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class FolderPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class FilePathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: The parent folders for this item
-        :type entries: List[FolderMini]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class FolderLockLockedOperationsField(BaseObject):
-    def __init__(self, move: bool, delete: bool, **kwargs):
-        """
-        :param move: Whether moving the folder is restricted.
-        :type move: bool
-        :param delete: Whether deleting the folder is restricted.
-        :type delete: bool
-        """
-        super().__init__(**kwargs)
-        self.move = move
-        self.delete = delete
-
-class IntegrationMappingTypeField(str, Enum):
-    INTEGRATION_MAPPING = 'integration_mapping'
-
-class IntegrationMappingBoxItemField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingOptionsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingCreatedByField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingModifiedByField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 class IntegrationMappingBaseIntegrationTypeField(str, Enum):
     SLACK = 'slack'
 
@@ -2319,22 +1259,6 @@ class IntegrationMappingMini(IntegrationMappingBase):
         self.box_item_id = box_item_id
         self.box_item_type = box_item_type
 
-class GroupsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class GroupsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[GroupsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[GroupsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
 class GroupBaseTypeField(str, Enum):
     GROUP = 'group'
 
@@ -2349,25 +1273,6 @@ class GroupBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
-
-class GroupFullInvitabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class GroupFullMemberViewabilityLevelField(str, Enum):
-    ADMINS_ONLY = 'admins_only'
-    ADMINS_AND_MEMBERS = 'admins_and_members'
-    ALL_MANAGED_USERS = 'all_managed_users'
-
-class GroupFullPermissionsField(BaseObject):
-    def __init__(self, can_invite_as_collaborator: Optional[bool] = None, **kwargs):
-        """
-        :param can_invite_as_collaborator: Specifies if the user can invite the group to collaborate on any items.
-        :type can_invite_as_collaborator: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.can_invite_as_collaborator = can_invite_as_collaborator
 
 class GroupMiniGroupTypeField(str, Enum):
     MANAGED_GROUP = 'managed_group'
@@ -2388,6 +1293,22 @@ class GroupMini(GroupBase):
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.group_type = group_type
+
+class GroupsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class GroupsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[GroupsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[GroupsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
 
 class Groups(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[GroupsOrderField]] = None, entries: Optional[List[GroupMini]] = None, **kwargs):
@@ -2440,6 +1361,25 @@ class Group(GroupMini):
         super().__init__(name=name, group_type=group_type, id=id, type=type, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
+
+class GroupFullInvitabilityLevelField(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class GroupFullMemberViewabilityLevelField(str, Enum):
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
+
+class GroupFullPermissionsField(BaseObject):
+    def __init__(self, can_invite_as_collaborator: Optional[bool] = None, **kwargs):
+        """
+        :param can_invite_as_collaborator: Specifies if the user can invite the group to collaborate on any items.
+        :type can_invite_as_collaborator: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.can_invite_as_collaborator = can_invite_as_collaborator
 
 class GroupFull(Group):
     def __init__(self, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[GroupFullInvitabilityLevelField] = None, member_viewability_level: Optional[GroupFullMemberViewabilityLevelField] = None, permissions: Optional[GroupFullPermissionsField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, name: Optional[str] = None, group_type: Optional[GroupMiniGroupTypeField] = None, id: Optional[str] = None, type: Optional[GroupBaseTypeField] = None, **kwargs):
@@ -2498,90 +1438,6 @@ class GroupFull(Group):
         self.invitability_level = invitability_level
         self.member_viewability_level = member_viewability_level
         self.permissions = permissions
-
-class GroupMembershipTypeField(str, Enum):
-    GROUP_MEMBERSHIP = 'group_membership'
-
-class GroupMembershipRoleField(str, Enum):
-    MEMBER = 'member'
-    ADMIN = 'admin'
-
-class GroupMembershipsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class GroupMembershipsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[GroupMembershipsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[GroupMembershipsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-class InviteTypeField(str, Enum):
-    INVITE = 'invite'
-
-class InviteInvitedToFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-class InviteInvitedToField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[InviteInvitedToFieldTypeField] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[InviteInvitedToFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-class ItemsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class ItemsOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[ItemsOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[ItemsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-class LegalHoldPolicyStatusField(str, Enum):
-    ACTIVE = 'active'
-    APPLYING = 'applying'
-    RELEASING = 'releasing'
-    RELEASED = 'released'
-
-class LegalHoldPolicyAssignmentCountsField(BaseObject):
-    def __init__(self, user: Optional[int] = None, folder: Optional[int] = None, file: Optional[int] = None, file_version: Optional[int] = None, **kwargs):
-        """
-        :param user: The number of users this policy is applied to
-        :type user: Optional[int], optional
-        :param folder: The number of folders this policy is applied to
-        :type folder: Optional[int], optional
-        :param file: The number of files this policy is applied to
-        :type file: Optional[int], optional
-        :param file_version: The number of file versions this policy is applied to
-        :type file_version: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.user = user
-        self.folder = folder
-        self.file = file
-        self.file_version = file_version
 
 class LegalHoldPolicyMiniTypeField(str, Enum):
     LEGAL_HOLD_POLICY = 'legal_hold_policy'
@@ -3011,44 +1867,6 @@ class RealtimeServers(BaseObject):
         self.chunk_size = chunk_size
         self.entries = entries
 
-class RecentItemInteractionTypeField(str, Enum):
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_UPLOAD = 'item_upload'
-    ITEM_COMMENT = 'item_comment'
-    ITEM_OPEN = 'item_open'
-    ITEM_MODIFY = 'item_modify'
-
-class RetentionPolicyPolicyTypeField(str, Enum):
-    FINITE = 'finite'
-    INDEFINITE = 'indefinite'
-
-class RetentionPolicyRetentionTypeField(str, Enum):
-    MODIFIABLE = 'modifiable'
-    NON_MODIFIABLE = 'non-modifiable'
-
-class RetentionPolicyStatusField(str, Enum):
-    ACTIVE = 'active'
-    RETIRED = 'retired'
-
-class RetentionPolicyAssignmentCountsField(BaseObject):
-    def __init__(self, enterprise: Optional[int] = None, folder: Optional[int] = None, metadata_template: Optional[int] = None, **kwargs):
-        """
-        :param enterprise: The number of enterprise assignments this policy has. The maximum value is 1.
-        :type enterprise: Optional[int], optional
-        :param folder: The number of folder assignments this policy has.
-        :type folder: Optional[int], optional
-        :param metadata_template: The number of metadata template assignments this policy has.
-        :type metadata_template: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.enterprise = enterprise
-        self.folder = folder
-        self.metadata_template = metadata_template
-
-class RetentionPolicyMiniDispositionActionField(str, Enum):
-    PERMANENTLY_DELETE = 'permanently_delete'
-    REMOVE_RETENTION = 'remove_retention'
-
 class RetentionPolicyBaseTypeField(str, Enum):
     RETENTION_POLICY = 'retention_policy'
 
@@ -3063,6 +1881,10 @@ class RetentionPolicyBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
+class RetentionPolicyMiniDispositionActionField(str, Enum):
+    PERMANENTLY_DELETE = 'permanently_delete'
+    REMOVE_RETENTION = 'remove_retention'
 
 class RetentionPolicyMini(RetentionPolicyBase):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, policy_name: Optional[str] = None, retention_length: Optional[str] = None, disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None, **kwargs):
@@ -3110,6 +1932,9 @@ class RetentionPolicies(BaseObject):
         self.entries = entries
         self.limit = limit
         self.next_marker = next_marker
+
+class FileVersionRetentionTypeField(str, Enum):
+    FILE_VERSION_RETENTION = 'file_version_retention'
 
 class FileVersionRetention(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[FileVersionRetentionTypeField] = None, file_version: Optional[FileVersionMini] = None, file: Optional[FileMini] = None, applied_at: Optional[str] = None, disposition_at: Optional[str] = None, winning_retention_policy: Optional[RetentionPolicyMini] = None, **kwargs):
@@ -3186,50 +2011,6 @@ class RetentionPolicyAssignments(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
-class RetentionPolicyAssignmentTypeField(str, Enum):
-    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
-
-class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
-    FOLDER = 'folder'
-    ENTERPRISE = 'enterprise'
-    METADATA_TEMPLATE = 'metadata_template'
-
-class RetentionPolicyAssignmentAssignedToField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField] = None, **kwargs):
-        """
-        :param id: The ID of the folder, enterprise, or metadata template
-            the policy is assigned to.
-        :type id: Optional[str], optional
-        :param type: The type of resource the policy is assigned to.
-        :type type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-
-class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
-    def __init__(self, field: Optional[str] = None, value: Optional[str] = None, **kwargs):
-        """
-        :param field: The metadata attribute key id.
-        :type field: Optional[str], optional
-        :param value: The metadata attribute field id. For value, only
-            enum and multiselect types are supported.
-        :type value: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.field = field
-        self.value = value
-
-class ShieldInformationBarrierTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
-
-class ShieldInformationBarrierStatusField(str, Enum):
-    DRAFT = 'draft'
-    PENDING = 'pending'
-    DISABLED = 'disabled'
-    ENABLED = 'enabled'
-    INVALID = 'invalid'
-
 class ShieldInformationBarrierBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
@@ -3250,20 +2031,6 @@ class ShieldInformationBarrierReference(BaseObject):
         super().__init__(**kwargs)
         self.shield_information_barrier = shield_information_barrier
 
-class ShieldInformationBarrierReportShieldInformationBarrierField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class ShieldInformationBarrierReportStatusField(str, Enum):
-    PENDING = 'pending'
-    ERROR = 'error'
-    DONE = 'done'
-    CANCELLED = 'cancelled'
-
-class ShieldInformationBarrierReportDetailsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 class ShieldInformationBarrierReportBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_REPORT = 'shield_information_barrier_report'
 
@@ -3274,25 +2041,6 @@ class ShieldInformationBarrierReportBase(BaseObject):
         :type id: Optional[str], optional
         :param type: The type of the shield information barrier report
         :type type: Optional[ShieldInformationBarrierReportBaseTypeField], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-
-class ShieldInformationBarrierSegmentTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
-
-class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
-
-class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
-        """
-        :param id: The ID reference of the requesting
-            shield information barrier segment.
-        :type id: Optional[str], optional
-        :param type: The type of the shield information barrier segment
-        :type type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3405,39 +2153,6 @@ class StoragePolicyMini(BaseObject):
         self.id = id
         self.type = type
 
-class StoragePolicy(StoragePolicyMini):
-    def __init__(self, name: Optional[str] = None, id: Optional[str] = None, type: Optional[StoragePolicyMiniTypeField] = None, **kwargs):
-        """
-        :param name: A descriptive name of the region
-        :type name: Optional[str], optional
-        :param id: The unique identifier for this storage policy
-        :type id: Optional[str], optional
-        :param type: `storage_policy`
-        :type type: Optional[StoragePolicyMiniTypeField], optional
-        """
-        super().__init__(id=id, type=type, **kwargs)
-        self.name = name
-
-class StoragePolicies(BaseObject):
-    def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[StoragePolicy]] = None, **kwargs):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of storage policies
-        :type entries: Optional[List[StoragePolicy]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
-
 class StoragePolicyAssignmentAssignedToField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
@@ -3476,25 +2191,53 @@ class StoragePolicyAssignments(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class TaskTypeField(str, Enum):
-    TASK = 'task'
+class StoragePolicy(StoragePolicyMini):
+    def __init__(self, name: Optional[str] = None, id: Optional[str] = None, type: Optional[StoragePolicyMiniTypeField] = None, **kwargs):
+        """
+        :param name: A descriptive name of the region
+        :type name: Optional[str], optional
+        :param id: The unique identifier for this storage policy
+        :type id: Optional[str], optional
+        :param type: `storage_policy`
+        :type type: Optional[StoragePolicyMiniTypeField], optional
+        """
+        super().__init__(id=id, type=type, **kwargs)
+        self.name = name
 
-class TaskActionField(str, Enum):
-    REVIEW = 'review'
-    COMPLETE = 'complete'
+class StoragePolicies(BaseObject):
+    def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[StoragePolicy]] = None, **kwargs):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
+        :param entries: A list of storage policies
+        :type entries: Optional[List[StoragePolicy]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
 
-class TaskCompletionRuleField(str, Enum):
-    ALL_ASSIGNEES = 'all_assignees'
-    ANY_ASSIGNEE = 'any_assignee'
+class TermsOfServiceBaseTypeField(str, Enum):
+    TERMS_OF_SERVICE = 'terms_of_service'
 
-class TaskAssignmentTypeField(str, Enum):
-    TASK_ASSIGNMENT = 'task_assignment'
-
-class TaskAssignmentResolutionStateField(str, Enum):
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    APPROVED = 'approved'
-    REJECTED = 'rejected'
+class TermsOfServiceBase(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceBaseTypeField] = None, **kwargs):
+        """
+        :param id: The unique identifier for this terms of service.
+        :type id: Optional[str], optional
+        :param type: `terms_of_service`
+        :type type: Optional[TermsOfServiceBaseTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
 
 class TermsOfServiceStatusField(str, Enum):
     ENABLED = 'enabled'
@@ -3521,21 +2264,6 @@ class TermsOfServiceEnterpriseField(BaseObject):
 class TermsOfServiceTosTypeField(str, Enum):
     MANAGED = 'managed'
     EXTERNAL = 'external'
-
-class TermsOfServiceBaseTypeField(str, Enum):
-    TERMS_OF_SERVICE = 'terms_of_service'
-
-class TermsOfServiceBase(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceBaseTypeField] = None, **kwargs):
-        """
-        :param id: The unique identifier for this terms of service.
-        :type id: Optional[str], optional
-        :param type: `terms_of_service`
-        :type type: Optional[TermsOfServiceBaseTypeField], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
 
 class TermsOfService(TermsOfServiceBase):
     def __init__(self, status: Optional[TermsOfServiceStatusField] = None, enterprise: Optional[TermsOfServiceEnterpriseField] = None, tos_type: Optional[TermsOfServiceTosTypeField] = None, text: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, type: Optional[TermsOfServiceBaseTypeField] = None, **kwargs):
@@ -3576,106 +2304,6 @@ class TermsOfServices(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
-class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField(BaseObject):
-    def __init__(self, is_accepted: Optional[bool] = None, terms_of_service: Optional[TermsOfServiceBase] = None, **kwargs):
-        """
-        :param is_accepted: Whether or not the terms of service have been accepted.  The
-            field is `null` when there is no terms of service required.
-        :type is_accepted: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.is_accepted = is_accepted
-        self.terms_of_service = terms_of_service
-
-class CollaborationAcceptanceRequirementsStatusField(BaseObject):
-    def __init__(self, terms_of_service_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField] = None, strong_password_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField] = None, two_factor_authentication_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.terms_of_service_requirement = terms_of_service_requirement
-        self.strong_password_requirement = strong_password_requirement
-        self.two_factor_authentication_requirement = two_factor_authentication_requirement
-
-class TermsOfServiceUserStatusTypeField(str, Enum):
-    TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
-
-class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
-    EMAIL_SUBJECT = 'email_subject'
-    EMAIL_MESSAGE = 'email_message'
-    NAME = 'name'
-    DAYS_VALID = 'days_valid'
-    SIGNERS = 'signers'
-    SOURCE_FILES = 'source_files'
-
-class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
-    EMAIL = 'email'
-
-class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
-    def __init__(self, signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]] = None, **kwargs):
-        """
-        :param signers: Required signer fields.
-        :type signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]], optional
-        """
-        super().__init__(**kwargs)
-        self.signers = signers
-
-class SignTemplateAdditionalInfoField(BaseObject):
-    def __init__(self, non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]] = None, required: Optional[SignTemplateAdditionalInfoFieldRequiredField] = None, **kwargs):
-        """
-        :param non_editable: Non editable fields.
-        :type non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]], optional
-        :param required: Required fields.
-        :type required: Optional[SignTemplateAdditionalInfoFieldRequiredField], optional
-        """
-        super().__init__(**kwargs)
-        self.non_editable = non_editable
-        self.required = required
-
-class SignTemplateReadySignLinkField(BaseObject):
-    def __init__(self, url: Optional[str] = None, name: Optional[str] = None, instructions: Optional[str] = None, folder_id: Optional[str] = None, is_notification_disabled: Optional[bool] = None, is_active: Optional[bool] = None, **kwargs):
-        """
-        :param url: The URL that can be sent to signers.
-        :type url: Optional[str], optional
-        :param name: Request name.
-        :type name: Optional[str], optional
-        :param instructions: Extra instructions for all signers.
-        :type instructions: Optional[str], optional
-        :param folder_id: The destination folder to place final,
-            signed document and signing
-            log. Only `ID` and `type` fields are required.
-            The root folder,
-            folder ID `0`, cannot be used.
-        :type folder_id: Optional[str], optional
-        :param is_notification_disabled: Whether to disable notifications when
-            a signer has signed.
-        :type is_notification_disabled: Optional[bool], optional
-        :param is_active: Whether the ready sign link is enabled or not.
-        :type is_active: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.url = url
-        self.name = name
-        self.instructions = instructions
-        self.folder_id = folder_id
-        self.is_notification_disabled = is_notification_disabled
-        self.is_active = is_active
-
-class SignTemplateCustomBrandingField(BaseObject):
-    def __init__(self, company_name: Optional[str] = None, logo_uri: Optional[str] = None, branding_color: Optional[str] = None, email_footer_text: Optional[str] = None, **kwargs):
-        """
-        :param company_name: Name of the company
-        :type company_name: Optional[str], optional
-        :param logo_uri: Custom branding logo URI in the form of a base64 image.
-        :type logo_uri: Optional[str], optional
-        :param branding_color: Custom branding color in hex.
-        :type branding_color: Optional[str], optional
-        :param email_footer_text: Content of the email footer.
-        :type email_footer_text: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.company_name = company_name
-        self.logo_uri = logo_uri
-        self.branding_color = branding_color
-        self.email_footer_text = email_footer_text
-
 class SignTemplates(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[str] = None, prev_marker: Optional[str] = None, **kwargs):
         """
@@ -3692,216 +2320,6 @@ class SignTemplates(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
         self.prev_marker = prev_marker
-
-class TemplateSignerRoleField(str, Enum):
-    SIGNER = 'signer'
-    APPROVER = 'approver'
-    FINAL_COPY_READER = 'final_copy_reader'
-
-class TemplateSignerInputTypeField(str, Enum):
-    SIGNATURE = 'signature'
-    DATE = 'date'
-    TEXT = 'text'
-    CHECKBOX = 'checkbox'
-    RADIO = 'radio'
-    DROPDOWN = 'dropdown'
-
-class TemplateSignerInputContentTypeField(str, Enum):
-    SIGNATURE = 'signature'
-    INITIAL = 'initial'
-    STAMP = 'stamp'
-    DATE = 'date'
-    CHECKBOX = 'checkbox'
-    TEXT = 'text'
-    FULL_NAME = 'full_name'
-    FIRST_NAME = 'first_name'
-    LAST_NAME = 'last_name'
-    COMPANY = 'company'
-    TITLE = 'title'
-    EMAIL = 'email'
-    ATTACHMENT = 'attachment'
-    RADIO = 'radio'
-    DROPDOWN = 'dropdown'
-
-class TemplateSignerInputCoordinatesField(BaseObject):
-    def __init__(self, x: Optional[int] = None, y: Optional[int] = None, **kwargs):
-        """
-        :param x: Relative x coordinate to the page the input is on, ranging from 0 to 1.
-        :type x: Optional[int], optional
-        :param y: Relative y coordinate to the page the input is on, ranging from 0 to 1.
-        :type y: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.x = x
-        self.y = y
-
-class TemplateSignerInputDimensionsField(BaseObject):
-    def __init__(self, width: Optional[int] = None, height: Optional[int] = None, **kwargs):
-        """
-        :param width: Relative width to the page the input is on, ranging from 0 to 1.
-        :type width: Optional[int], optional
-        :param height: Relative height to the page the input is on, ranging from 0 to 1.
-        :type height: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.width = width
-        self.height = height
-
-class TrashFileTypeField(str, Enum):
-    FILE = 'file'
-
-class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = 'folder'
-
-class TrashFilePathCollectionFieldEntriesField(BaseObject):
-    def __init__(self, type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param type: `folder`
-        :type type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField], optional
-        :param id: The unique identifier that represent a folder.
-        :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder
-        :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder
-        :type etag: Optional[str], optional
-        :param name: The name of the Trash folder.
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-        self.sequence_id = sequence_id
-        self.etag = etag
-        self.name = name
-
-class TrashFilePathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[TrashFilePathCollectionFieldEntriesField], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashFilePathCollectionFieldEntriesField]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashFileItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class TrashFolderTypeField(str, Enum):
-    FOLDER = 'folder'
-
-class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = 'folder'
-
-class TrashFolderPathCollectionFieldEntriesField(BaseObject):
-    def __init__(self, type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param type: `folder`
-        :type type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField], optional
-        :param id: The unique identifier that represent a folder.
-        :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder
-        :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder
-        :type etag: Optional[str], optional
-        :param name: The name of the Trash folder.
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-        self.sequence_id = sequence_id
-        self.etag = etag
-        self.name = name
-
-class TrashFolderPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[TrashFolderPathCollectionFieldEntriesField], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashFolderPathCollectionFieldEntriesField]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashFolderItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class TrashWebLinkTypeField(str, Enum):
-    WEB_LINK = 'web_link'
-
-class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = 'folder'
-
-class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
-    def __init__(self, type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param type: `folder`
-        :type type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField], optional
-        :param id: The unique identifier that represent a folder.
-        :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder
-        :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder
-        :type etag: Optional[str], optional
-        :param name: The name of the Trash folder.
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-        self.sequence_id = sequence_id
-        self.etag = etag
-        self.name = name
-
-class TrashWebLinkPathCollectionField(BaseObject):
-    def __init__(self, total_count: int, entries: List[TrashWebLinkPathCollectionFieldEntriesField], **kwargs):
-        """
-        :param total_count: The number of folders in this list.
-        :type total_count: int
-        :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashWebLinkPathCollectionFieldEntriesField]
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.entries = entries
-
-class TrashWebLinkItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class TrashFileRestoredTypeField(str, Enum):
-    FILE = 'file'
-
-class TrashFileRestoredItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class TrashFolderRestoredTypeField(str, Enum):
-    FOLDER = 'folder'
-
-class TrashFolderRestoredItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
-
-class TrashWebLinkRestoredTypeField(str, Enum):
-    WEB_LINK = 'web_link'
-
-class TrashWebLinkRestoredItemStatusField(str, Enum):
-    ACTIVE = 'active'
-    TRASHED = 'trashed'
-    DELETED = 'deleted'
 
 class UploadPartMini(BaseObject):
     def __init__(self, part_id: Optional[str] = None, offset: Optional[int] = None, size: Optional[int] = None, **kwargs):
@@ -3938,11 +2356,6 @@ class UploadPart(UploadPartMini):
         """
         super().__init__(part_id=part_id, offset=offset, size=size, **kwargs)
         self.sha_1 = sha_1
-
-class UploadedPart(BaseObject):
-    def __init__(self, part: Optional[UploadPart] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.part = part
 
 class UploadPartsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
@@ -3992,6 +2405,11 @@ class UploadParts(BaseObject):
         self.offset = offset
         self.order = order
         self.entries = entries
+
+class UploadedPart(BaseObject):
+    def __init__(self, part: Optional[UploadPart] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.part = part
 
 class UploadSessionTypeField(str, Enum):
     UPLOAD_SESSION = 'upload_session'
@@ -4064,24 +2482,6 @@ class UploadUrl(BaseObject):
         self.upload_url = upload_url
         self.upload_token = upload_token
 
-class UserStatusField(str, Enum):
-    ACTIVE = 'active'
-    INACTIVE = 'inactive'
-    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
-    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
-
-class UserNotificationEmailField(BaseObject):
-    def __init__(self, email: Optional[str] = None, is_confirmed: Optional[bool] = None, **kwargs):
-        """
-        :param email: The email address to send the notifications to.
-        :type email: Optional[str], optional
-        :param is_confirmed: Specifies if this email address has been confirmed.
-        :type is_confirmed: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.email = email
-        self.is_confirmed = is_confirmed
-
 class UserAvatarPicUrlsField(BaseObject):
     def __init__(self, small: Optional[str] = None, large: Optional[str] = None, preview: Optional[str] = None, **kwargs):
         """
@@ -4105,45 +2505,6 @@ class UserAvatar(BaseObject):
         """
         super().__init__(**kwargs)
         self.pic_urls = pic_urls
-
-class UsersOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-class UsersOrderField(BaseObject):
-    def __init__(self, by: Optional[str] = None, direction: Optional[UsersOrderFieldDirectionField] = None, **kwargs):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[UsersOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-class UserFullRoleField(str, Enum):
-    ADMIN = 'admin'
-    COADMIN = 'coadmin'
-    USER = 'user'
-
-class UserFullEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-class UserFullEnterpriseField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[UserFullEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[UserFullEnterpriseFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
 
 class UserBaseTypeField(str, Enum):
     USER = 'user'
@@ -4208,6 +2569,61 @@ class UserMini(UserBase):
         self.name = name
         self.login = login
 
+class EventSourceItemTypeField(str, Enum):
+    FILE = 'file'
+    FOLDER = 'folder'
+
+class EventSourceClassificationField(BaseObject):
+    def __init__(self, name: Optional[str] = None, **kwargs):
+        """
+        :param name: The classification's name
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.name = name
+
+class EventSource(BaseObject):
+    def __init__(self, item_type: EventSourceItemTypeField, item_id: str, item_name: str, classification: Optional[EventSourceClassificationField] = None, parent: Optional[FolderMini] = None, owned_by: Optional[UserMini] = None, **kwargs):
+        """
+        :param item_type: The type of the item that the event
+            represents. Can be `file` or `folder`.
+        :type item_type: EventSourceItemTypeField
+        :param item_id: The unique identifier that represents the
+            item.
+        :type item_id: str
+        :param item_name: The name of the item.
+        :type item_name: str
+        :param classification: The object containing classification information for the item that
+            triggered the event. This field will not appear if the item does not
+            have a classification set.
+        :type classification: Optional[EventSourceClassificationField], optional
+        """
+        super().__init__(**kwargs)
+        self.item_type = item_type
+        self.item_id = item_id
+        self.item_name = item_name
+        self.classification = classification
+        self.parent = parent
+        self.owned_by = owned_by
+
+class UserStatusField(str, Enum):
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
+    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
+
+class UserNotificationEmailField(BaseObject):
+    def __init__(self, email: Optional[str] = None, is_confirmed: Optional[bool] = None, **kwargs):
+        """
+        :param email: The email address to send the notifications to.
+        :type email: Optional[str], optional
+        :param is_confirmed: Specifies if this email address has been confirmed.
+        :type is_confirmed: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.email = email
+        self.is_confirmed = is_confirmed
+
 class User(UserMini):
     def __init__(self, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
@@ -4265,6 +2681,22 @@ class User(UserMini):
         self.avatar_url = avatar_url
         self.notification_email = notification_email
 
+class UsersOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class UsersOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[UsersOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[UsersOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
 class Users(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[UsersOrderField]] = None, entries: Optional[List[User]] = None, **kwargs):
         """
@@ -4296,6 +2728,26 @@ class Users(BaseObject):
         self.offset = offset
         self.order = order
         self.entries = entries
+
+class TrashWebLinkRestoredTypeField(str, Enum):
+    WEB_LINK = 'web_link'
+
+class TrashWebLinkRestoredPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashWebLinkRestoredItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 class TrashWebLinkRestored(BaseObject):
     def __init__(self, sequence_id: str, path_collection: TrashWebLinkRestoredPathCollectionField, type: Optional[TrashWebLinkRestoredTypeField] = None, id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, url: Optional[str] = None, parent: Optional[FolderMini] = None, description: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, item_status: Optional[TrashWebLinkRestoredItemStatusField] = None, **kwargs):
@@ -4353,6 +2805,26 @@ class TrashWebLinkRestored(BaseObject):
         self.owned_by = owned_by
         self.shared_link = shared_link
         self.item_status = item_status
+
+class TrashFolderRestoredTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class TrashFolderRestoredPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashFolderRestoredItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 class TrashFolderRestored(BaseObject):
     def __init__(self, id: Optional[str] = None, etag: Optional[str] = None, type: Optional[TrashFolderRestoredTypeField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[TrashFolderRestoredPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, folder_upload_email: Optional[str] = None, parent: Optional[FolderMini] = None, item_status: Optional[TrashFolderRestoredItemStatusField] = None, **kwargs):
@@ -4432,6 +2904,26 @@ class TrashFolderRestored(BaseObject):
         self.parent = parent
         self.item_status = item_status
 
+class TrashFileRestoredTypeField(str, Enum):
+    FILE = 'file'
+
+class TrashFileRestoredPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashFileRestoredItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
+
 class TrashFileRestored(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
@@ -4510,6 +3002,50 @@ class TrashFileRestored(BaseObject):
         self.shared_link = shared_link
         self.parent = parent
 
+class TrashWebLinkTypeField(str, Enum):
+    WEB_LINK = 'web_link'
+
+class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
+    def __init__(self, type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param type: `folder`
+        :type type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField], optional
+        :param id: The unique identifier that represent a folder.
+        :type id: Optional[str], optional
+        :param sequence_id: This field is null for the Trash folder
+        :type sequence_id: Optional[str], optional
+        :param etag: This field is null for the Trash folder
+        :type etag: Optional[str], optional
+        :param name: The name of the Trash folder.
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.sequence_id = sequence_id
+        self.etag = etag
+        self.name = name
+
+class TrashWebLinkPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[TrashWebLinkPathCollectionFieldEntriesField], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: Array of folders for this item's path collection
+        :type entries: List[TrashWebLinkPathCollectionFieldEntriesField]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashWebLinkItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
+
 class TrashWebLink(BaseObject):
     def __init__(self, type: Optional[TrashWebLinkTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, url: Optional[str] = None, parent: Optional[FolderMini] = None, description: Optional[str] = None, path_collection: Optional[TrashWebLinkPathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, item_status: Optional[TrashWebLinkItemStatusField] = None, **kwargs):
         """
@@ -4564,6 +3100,50 @@ class TrashWebLink(BaseObject):
         self.owned_by = owned_by
         self.shared_link = shared_link
         self.item_status = item_status
+
+class TrashFolderTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class TrashFolderPathCollectionFieldEntriesField(BaseObject):
+    def __init__(self, type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param type: `folder`
+        :type type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField], optional
+        :param id: The unique identifier that represent a folder.
+        :type id: Optional[str], optional
+        :param sequence_id: This field is null for the Trash folder
+        :type sequence_id: Optional[str], optional
+        :param etag: This field is null for the Trash folder
+        :type etag: Optional[str], optional
+        :param name: The name of the Trash folder.
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.sequence_id = sequence_id
+        self.etag = etag
+        self.name = name
+
+class TrashFolderPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[TrashFolderPathCollectionFieldEntriesField], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: Array of folders for this item's path collection
+        :type entries: List[TrashFolderPathCollectionFieldEntriesField]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashFolderItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 class TrashFolder(BaseObject):
     def __init__(self, id: str, type: TrashFolderTypeField, name: str, description: str, size: int, path_collection: TrashFolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: TrashFolderItemStatusField, etag: Optional[str] = None, sequence_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[str] = None, folder_upload_email: Optional[str] = None, parent: Optional[FolderMini] = None, **kwargs):
@@ -4642,6 +3222,50 @@ class TrashFolder(BaseObject):
         self.folder_upload_email = folder_upload_email
         self.parent = parent
 
+class TrashFileTypeField(str, Enum):
+    FILE = 'file'
+
+class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
+    FOLDER = 'folder'
+
+class TrashFilePathCollectionFieldEntriesField(BaseObject):
+    def __init__(self, type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param type: `folder`
+        :type type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField], optional
+        :param id: The unique identifier that represent a folder.
+        :type id: Optional[str], optional
+        :param sequence_id: This field is null for the Trash folder
+        :type sequence_id: Optional[str], optional
+        :param etag: This field is null for the Trash folder
+        :type etag: Optional[str], optional
+        :param name: The name of the Trash folder.
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.sequence_id = sequence_id
+        self.etag = etag
+        self.name = name
+
+class TrashFilePathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[TrashFilePathCollectionFieldEntriesField], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: Array of folders for this item's path collection
+        :type entries: List[TrashFilePathCollectionFieldEntriesField]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class TrashFileItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
+
 class TrashFile(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
@@ -4719,6 +3343,9 @@ class TrashFile(BaseObject):
         self.shared_link = shared_link
         self.parent = parent
 
+class TermsOfServiceUserStatusTypeField(str, Enum):
+    TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
+
 class TermsOfServiceUserStatus(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceUserStatusTypeField] = None, tos: Optional[TermsOfServiceBase] = None, user: Optional[UserMini] = None, is_accepted: Optional[bool] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
         """
@@ -4753,6 +3380,15 @@ class TermsOfServiceUserStatuses(BaseObject):
         super().__init__(**kwargs)
         self.total_count = total_count
         self.entries = entries
+
+class TaskAssignmentTypeField(str, Enum):
+    TASK_ASSIGNMENT = 'task_assignment'
+
+class TaskAssignmentResolutionStateField(str, Enum):
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
 
 class TaskAssignment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TaskAssignmentTypeField] = None, item: Optional[FileMini] = None, assigned_to: Optional[UserMini] = None, message: Optional[str] = None, completed_at: Optional[str] = None, assigned_at: Optional[str] = None, reminded_at: Optional[str] = None, resolution_state: Optional[TaskAssignmentResolutionStateField] = None, assigned_by: Optional[UserMini] = None, **kwargs):
@@ -4800,6 +3436,17 @@ class TaskAssignments(BaseObject):
         super().__init__(**kwargs)
         self.total_count = total_count
         self.entries = entries
+
+class TaskTypeField(str, Enum):
+    TASK = 'task'
+
+class TaskActionField(str, Enum):
+    REVIEW = 'review'
+    COMPLETE = 'complete'
+
+class TaskCompletionRuleField(str, Enum):
+    ALL_ASSIGNEES = 'all_assignees'
+    ANY_ASSIGNEE = 'any_assignee'
 
 class Task(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TaskTypeField] = None, item: Optional[FileMini] = None, due_at: Optional[str] = None, action: Optional[TaskActionField] = None, message: Optional[str] = None, task_assignment_collection: Optional[TaskAssignments] = None, is_completed: Optional[bool] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, completion_rule: Optional[TaskCompletionRuleField] = None, **kwargs):
@@ -4854,6 +3501,40 @@ class Tasks(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+class RetentionPolicyAssignmentTypeField(str, Enum):
+    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
+
+class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
+    FOLDER = 'folder'
+    ENTERPRISE = 'enterprise'
+    METADATA_TEMPLATE = 'metadata_template'
+
+class RetentionPolicyAssignmentAssignedToField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField] = None, **kwargs):
+        """
+        :param id: The ID of the folder, enterprise, or metadata template
+            the policy is assigned to.
+        :type id: Optional[str], optional
+        :param type: The type of resource the policy is assigned to.
+        :type type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+
+class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
+    def __init__(self, field: Optional[str] = None, value: Optional[str] = None, **kwargs):
+        """
+        :param field: The metadata attribute key id.
+        :type field: Optional[str], optional
+        :param value: The metadata attribute field id. For value, only
+            enum and multiselect types are supported.
+        :type value: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.field = field
+        self.value = value
+
 class RetentionPolicyAssignment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[RetentionPolicyAssignmentTypeField] = None, retention_policy: Optional[RetentionPolicyMini] = None, assigned_to: Optional[RetentionPolicyAssignmentAssignedToField] = None, filter_fields: Optional[List[RetentionPolicyAssignmentFilterFieldsField]] = None, assigned_by: Optional[UserMini] = None, assigned_at: Optional[str] = None, start_date_field: Optional[str] = None, **kwargs):
         """
@@ -4885,6 +3566,33 @@ class RetentionPolicyAssignment(BaseObject):
         self.assigned_by = assigned_by
         self.assigned_at = assigned_at
         self.start_date_field = start_date_field
+
+class RetentionPolicyPolicyTypeField(str, Enum):
+    FINITE = 'finite'
+    INDEFINITE = 'indefinite'
+
+class RetentionPolicyRetentionTypeField(str, Enum):
+    MODIFIABLE = 'modifiable'
+    NON_MODIFIABLE = 'non-modifiable'
+
+class RetentionPolicyStatusField(str, Enum):
+    ACTIVE = 'active'
+    RETIRED = 'retired'
+
+class RetentionPolicyAssignmentCountsField(BaseObject):
+    def __init__(self, enterprise: Optional[int] = None, folder: Optional[int] = None, metadata_template: Optional[int] = None, **kwargs):
+        """
+        :param enterprise: The number of enterprise assignments this policy has. The maximum value is 1.
+        :type enterprise: Optional[int], optional
+        :param folder: The number of folder assignments this policy has.
+        :type folder: Optional[int], optional
+        :param metadata_template: The number of metadata template assignments this policy has.
+        :type metadata_template: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.enterprise = enterprise
+        self.folder = folder
+        self.metadata_template = metadata_template
 
 class RetentionPolicy(RetentionPolicyMini):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, description: Optional[str] = None, policy_type: Optional[RetentionPolicyPolicyTypeField] = None, retention_type: Optional[RetentionPolicyRetentionTypeField] = None, status: Optional[RetentionPolicyStatusField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, assignment_counts: Optional[RetentionPolicyAssignmentCountsField] = None, policy_name: Optional[str] = None, retention_length: Optional[str] = None, disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None, **kwargs):
@@ -4968,6 +3676,30 @@ class RetentionPolicy(RetentionPolicyMini):
         self.custom_notification_recipients = custom_notification_recipients
         self.assignment_counts = assignment_counts
 
+class LegalHoldPolicyStatusField(str, Enum):
+    ACTIVE = 'active'
+    APPLYING = 'applying'
+    RELEASING = 'releasing'
+    RELEASED = 'released'
+
+class LegalHoldPolicyAssignmentCountsField(BaseObject):
+    def __init__(self, user: Optional[int] = None, folder: Optional[int] = None, file: Optional[int] = None, file_version: Optional[int] = None, **kwargs):
+        """
+        :param user: The number of users this policy is applied to
+        :type user: Optional[int], optional
+        :param folder: The number of folders this policy is applied to
+        :type folder: Optional[int], optional
+        :param file: The number of files this policy is applied to
+        :type file: Optional[int], optional
+        :param file_version: The number of file versions this policy is applied to
+        :type file_version: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.user = user
+        self.folder = folder
+        self.file = file
+        self.file_version = file_version
+
 class LegalHoldPolicy(LegalHoldPolicyMini):
     def __init__(self, policy_name: Optional[str] = None, description: Optional[str] = None, status: Optional[LegalHoldPolicyStatusField] = None, assignment_counts: Optional[LegalHoldPolicyAssignmentCountsField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, deleted_at: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, release_notes: Optional[str] = None, id: Optional[str] = None, type: Optional[LegalHoldPolicyMiniTypeField] = None, **kwargs):
         """
@@ -5041,6 +3773,27 @@ class LegalHoldPolicies(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+class InviteTypeField(str, Enum):
+    INVITE = 'invite'
+
+class InviteInvitedToFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
+
+class InviteInvitedToField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[InviteInvitedToFieldTypeField] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this enterprise.
+        :type id: Optional[str], optional
+        :param type: `enterprise`
+        :type type: Optional[InviteInvitedToFieldTypeField], optional
+        :param name: The name of the enterprise
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+
 class Invite(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[InviteTypeField] = None, invited_to: Optional[InviteInvitedToField] = None, actionable_by: Optional[UserMini] = None, invited_by: Optional[UserMini] = None, status: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
         """
@@ -5067,6 +3820,13 @@ class Invite(BaseObject):
         self.created_at = created_at
         self.modified_at = modified_at
 
+class GroupMembershipTypeField(str, Enum):
+    GROUP_MEMBERSHIP = 'group_membership'
+
+class GroupMembershipRoleField(str, Enum):
+    MEMBER = 'member'
+    ADMIN = 'admin'
+
 class GroupMembership(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[GroupMembershipTypeField] = None, user: Optional[UserMini] = None, group: Optional[GroupMini] = None, role: Optional[GroupMembershipRoleField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
         """
@@ -5089,6 +3849,22 @@ class GroupMembership(BaseObject):
         self.role = role
         self.created_at = created_at
         self.modified_at = modified_at
+
+class GroupMembershipsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class GroupMembershipsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[GroupMembershipsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[GroupMembershipsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
 
 class GroupMemberships(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[GroupMembershipsOrderField]] = None, entries: Optional[List[GroupMembership]] = None, **kwargs):
@@ -5159,6 +3935,22 @@ class FileVersion(FileVersionMini):
         self.purged_at = purged_at
         self.uploader_display_name = uploader_display_name
 
+class FileVersionsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class FileVersionsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[FileVersionsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[FileVersionsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
 class FileVersions(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[FileVersionsOrderField]] = None, entries: Optional[List[FileVersion]] = None, **kwargs):
         """
@@ -5219,6 +4011,13 @@ class FileVersionFull(FileVersion):
         """
         super().__init__(id=id, type=type, name=name, size=size, created_at=created_at, modified_at=modified_at, modified_by=modified_by, trashed_at=trashed_at, trashed_by=trashed_by, restored_at=restored_at, restored_by=restored_by, purged_at=purged_at, uploader_display_name=uploader_display_name, sha_1=sha_1, **kwargs)
         self.version_number = version_number
+
+class FileRequestTypeField(str, Enum):
+    FILE_REQUEST = 'file_request'
+
+class FileRequestStatusField(str, Enum):
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
 
 class FileRequest(BaseObject):
     def __init__(self, folder: FolderMini, created_at: str, updated_at: str, id: Optional[str] = None, type: Optional[FileRequestTypeField] = None, title: Optional[str] = None, description: Optional[str] = None, status: Optional[FileRequestStatusField] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, url: Optional[str] = None, etag: Optional[str] = None, created_by: Optional[UserMini] = None, updated_by: Optional[UserMini] = None, **kwargs):
@@ -5296,33 +4095,125 @@ class FileRequest(BaseObject):
         self.created_by = created_by
         self.updated_by = updated_by
 
-class FileFullLockField(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[FileFullLockFieldTypeField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, expired_at: Optional[str] = None, is_download_prevented: Optional[bool] = None, app_type: Optional[FileFullLockFieldAppTypeField] = None, **kwargs):
+class FilePathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
         """
-        :param id: The unique identifier for this lock
-        :type id: Optional[str], optional
-        :param type: `lock`
-        :type type: Optional[FileFullLockFieldTypeField], optional
-        :param created_at: The time this lock was created at.
-        :type created_at: Optional[str], optional
-        :param expired_at: The time this lock is to expire at, which might be in the past.
-        :type expired_at: Optional[str], optional
-        :param is_download_prevented: Whether or not the file can be downloaded while locked.
-        :type is_download_prevented: Optional[bool], optional
-        :param app_type: If the lock is managed by an application rather than a user, this
-            field identifies the type of the application that holds the lock.
-            This is an open enum and may be extended with additional values in
-            the future.
-        :type app_type: Optional[FileFullLockFieldAppTypeField], optional
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.created_by = created_by
-        self.created_at = created_at
-        self.expired_at = expired_at
-        self.is_download_prevented = is_download_prevented
-        self.app_type = app_type
+        self.total_count = total_count
+        self.entries = entries
+
+class FileSharedLinkFieldAccessField(str, Enum):
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
+
+class FileSharedLinkFieldEffectiveAccessField(str, Enum):
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
+
+class FileSharedLinkFieldEffectivePermissionField(str, Enum):
+    CAN_EDIT = 'can_edit'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_PREVIEW = 'can_preview'
+    NO_ACCESS = 'no_access'
+
+class FileSharedLinkFieldPermissionsField(BaseObject):
+    def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
+        """
+        :param can_download: Defines if the shared link allows for the item to be downloaded. For
+            shared links on folders, this also applies to any items in the folder.
+            This value can be set to `true` when the effective access level is
+            set to `open` or `company`, not `collaborators`.
+        :type can_download: bool
+        :param can_preview: Defines if the shared link allows for the item to be previewed.
+            This value is always `true`. For shared links on folders this also
+            applies to any items in the folder.
+        :type can_preview: bool
+        :param can_edit: Defines if the shared link allows for the item to be edited.
+            This value can only be `true` if `can_download` is also `true` and if
+            the item has a type of `file`.
+        :type can_edit: bool
+        """
+        super().__init__(**kwargs)
+        self.can_download = can_download
+        self.can_preview = can_preview
+        self.can_edit = can_edit
+
+class FileSharedLinkField(BaseObject):
+    def __init__(self, url: str, effective_access: FileSharedLinkFieldEffectiveAccessField, effective_permission: FileSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FileSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FileSharedLinkFieldPermissionsField] = None, **kwargs):
+        """
+        :param url: The URL that can be used to access the item on Box.
+            This URL will display the item in Box's preview UI where the file
+            can be downloaded if allowed.
+            This URL will continue to work even when a custom `vanity_url`
+            has been set for this shared link.
+        :type url: str
+        :param effective_access: The effective access level for the shared link. This can be a more
+            restrictive access level than the value in the `access` field when the
+            enterprise settings restrict the allowed access levels.
+        :type effective_access: FileSharedLinkFieldEffectiveAccessField
+        :param effective_permission: The effective permissions for this shared link.
+            These result in the more restrictive combination of
+            the share link permissions and the item permissions set
+            by the administrator, the owner, and any ancestor item
+            such as a folder.
+        :type effective_permission: FileSharedLinkFieldEffectivePermissionField
+        :param is_password_enabled: Defines if the shared link requires a password to access the item.
+        :type is_password_enabled: bool
+        :param download_count: The number of times this item has been downloaded.
+        :type download_count: int
+        :param preview_count: The number of times this item has been previewed.
+        :type preview_count: int
+        :param download_url: A URL that can be used to download the file. This URL can be used in
+            a browser to download the file. This URL includes the file
+            extension so that the file will be saved with the right file type.
+            This property will be `null` for folders.
+        :type download_url: Optional[str], optional
+        :param vanity_url: The "Custom URL" that can also be used to preview the item on Box.  Custom
+            URLs can only be created or modified in the Box Web application.
+        :type vanity_url: Optional[str], optional
+        :param vanity_name: The custom name of a shared link, as used in the `vanity_url` field.
+        :type vanity_name: Optional[str], optional
+        :param access: The access level for this shared link.
+            * `open` - provides access to this item to anyone with this link
+            * `company` - only provides access to this item to people the same company
+            * `collaborators` - only provides access to this item to people who are
+               collaborators on this item
+            If this field is omitted when creating the shared link, the access level
+            will be set to the default access level specified by the enterprise admin.
+        :type access: Optional[FileSharedLinkFieldAccessField], optional
+        :param unshared_at: The date and time when this link will be unshared. This field can only be
+            set by users with paid accounts.
+        :type unshared_at: Optional[str], optional
+        :param permissions: Defines if this link allows a user to preview, edit, and download an item.
+            These permissions refer to the shared link only and
+            do not supersede permissions applied to the item itself.
+        :type permissions: Optional[FileSharedLinkFieldPermissionsField], optional
+        """
+        super().__init__(**kwargs)
+        self.url = url
+        self.effective_access = effective_access
+        self.effective_permission = effective_permission
+        self.is_password_enabled = is_password_enabled
+        self.download_count = download_count
+        self.preview_count = preview_count
+        self.download_url = download_url
+        self.vanity_url = vanity_url
+        self.vanity_name = vanity_name
+        self.access = access
+        self.unshared_at = unshared_at
+        self.permissions = permissions
+
+class FileItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 class File(FileMini):
     def __init__(self, id: str, type: FileBaseTypeField, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
@@ -5388,6 +4279,369 @@ class File(FileMini):
         self.parent = parent
         self.item_status = item_status
 
+class FileFullPermissionsField(BaseObject):
+    def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_annotate: Optional[bool] = None, can_comment: Optional[bool] = None, can_preview: Optional[bool] = None, can_upload: Optional[bool] = None, can_view_annotations_all: Optional[bool] = None, can_view_annotations_self: Optional[bool] = None, **kwargs):
+        """
+        :param can_delete: Specifies if the current user can delete this item.
+        :type can_delete: bool
+        :param can_download: Specifies if the current user can download this item.
+        :type can_download: bool
+        :param can_invite_collaborator: Specifies if the current user can invite new
+            users to collaborate on this item, and if the user can
+            update the role of a user already collaborated on this
+            item.
+        :type can_invite_collaborator: bool
+        :param can_rename: Specifies if the user can rename this item.
+        :type can_rename: bool
+        :param can_set_share_access: Specifies if the user can change the access level of an
+            existing shared link on this item.
+        :type can_set_share_access: bool
+        :param can_share: Specifies if the user can create a shared link for this item.
+        :type can_share: bool
+        :param can_annotate: Specifies if the user can place annotations on this file.
+        :type can_annotate: Optional[bool], optional
+        :param can_comment: Specifies if the user can place comments on this file.
+        :type can_comment: Optional[bool], optional
+        :param can_preview: Specifies if the user can preview this file.
+        :type can_preview: Optional[bool], optional
+        :param can_upload: Specifies if the user can upload a new version of this file.
+        :type can_upload: Optional[bool], optional
+        :param can_view_annotations_all: Specifies if the user view all annotations placed on this file
+        :type can_view_annotations_all: Optional[bool], optional
+        :param can_view_annotations_self: Specifies if the user view annotations placed by themselves
+            on this file
+        :type can_view_annotations_self: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.can_delete = can_delete
+        self.can_download = can_download
+        self.can_invite_collaborator = can_invite_collaborator
+        self.can_rename = can_rename
+        self.can_set_share_access = can_set_share_access
+        self.can_share = can_share
+        self.can_annotate = can_annotate
+        self.can_comment = can_comment
+        self.can_preview = can_preview
+        self.can_upload = can_upload
+        self.can_view_annotations_all = can_view_annotations_all
+        self.can_view_annotations_self = can_view_annotations_self
+
+class FileFullLockFieldTypeField(str, Enum):
+    LOCK = 'lock'
+
+class FileFullLockFieldAppTypeField(str, Enum):
+    GSUITE = 'gsuite'
+    OFFICE_WOPI = 'office_wopi'
+    OFFICE_WOPIPLUS = 'office_wopiplus'
+    OTHER = 'other'
+
+class FileFullLockField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[FileFullLockFieldTypeField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, expired_at: Optional[str] = None, is_download_prevented: Optional[bool] = None, app_type: Optional[FileFullLockFieldAppTypeField] = None, **kwargs):
+        """
+        :param id: The unique identifier for this lock
+        :type id: Optional[str], optional
+        :param type: `lock`
+        :type type: Optional[FileFullLockFieldTypeField], optional
+        :param created_at: The time this lock was created at.
+        :type created_at: Optional[str], optional
+        :param expired_at: The time this lock is to expire at, which might be in the past.
+        :type expired_at: Optional[str], optional
+        :param is_download_prevented: Whether or not the file can be downloaded while locked.
+        :type is_download_prevented: Optional[bool], optional
+        :param app_type: If the lock is managed by an application rather than a user, this
+            field identifies the type of the application that holds the lock.
+            This is an open enum and may be extended with additional values in
+            the future.
+        :type app_type: Optional[FileFullLockFieldAppTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.created_by = created_by
+        self.created_at = created_at
+        self.expired_at = expired_at
+        self.is_download_prevented = is_download_prevented
+        self.app_type = app_type
+
+class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
+
+class FileFullExpiringEmbedLinkField(BaseObject):
+    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, url: Optional[str] = None, **kwargs):
+        """
+        :param access_token: The requested access token.
+        :type access_token: Optional[str], optional
+        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :type expires_in: Optional[int], optional
+        :param token_type: The type of access token returned.
+        :type token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField], optional
+        :param restricted_to: The permissions that this access token permits,
+            providing a list of resources (files, folders, etc)
+            and the scopes permitted for each of those resources.
+        :type restricted_to: Optional[List[FileScope]], optional
+        :param url: The actual expiring embed URL for this file, constructed
+            from the file ID and access tokens specified in this object.
+        :type url: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.token_type = token_type
+        self.restricted_to = restricted_to
+        self.url = url
+
+class FileFullWatermarkInfoField(BaseObject):
+    def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
+        """
+        :param is_watermarked: Specifies if this item has a watermark applied.
+        :type is_watermarked: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.is_watermarked = is_watermarked
+
+class FileFullAllowedInviteeRolesField(str, Enum):
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
+
+class FileFullMetadataField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
+    def __init__(self, url_template: Optional[str] = None, **kwargs):
+        """
+        :param url_template: The download URL that can be used to fetch the representation.
+            Make sure to make an authenticated API call to this endpoint.
+            This URL is a template and will require the `{+asset_path}` to
+            be replaced by a path. In general, for unpaged representations
+            it can be replaced by an empty string.
+            For paged representations, replace the `{+asset_path}` with the
+            page to request plus the extension for the file, for example
+            `1.pdf`.
+            When requesting the download URL the following additional
+            query params can be passed along.
+            * `set_content_disposition_type` - Sets the
+            `Content-Disposition` header in the API response with the
+            specified disposition type of either `inline` or `attachment`.
+            If not supplied, the `Content-Disposition` header is not
+            included in the response.
+            * `set_content_disposition_filename` - Allows the application to
+              define the representation's file name used in the
+              `Content-Disposition` header.  If not defined, the filename
+              is derived from the source file name in Box combined with the
+              extension of the representation.
+        :type url_template: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.url_template = url_template
+
+class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
+    def __init__(self, url: Optional[str] = None, **kwargs):
+        """
+        :param url: The API URL that can be used to get more info on this file
+            representation. Make sure to make an authenticated API call
+            to this endpoint.
+        :type url: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.url = url
+
+class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
+    def __init__(self, dimensions: Optional[str] = None, paged: Optional[bool] = None, thumb: Optional[bool] = None, **kwargs):
+        """
+        :param dimensions: The width by height size of this representation in pixels.
+        :type dimensions: Optional[str], optional
+        :param paged: Indicates if the representation is build up out of multiple
+            pages.
+        :type paged: Optional[bool], optional
+        :param thumb: Indicates if the representation can be used as a thumbnail of
+            the file.
+        :type thumb: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.dimensions = dimensions
+        self.paged = paged
+        self.thumb = thumb
+
+class FileFullRepresentationsFieldEntriesFieldStatusFieldStateField(str, Enum):
+    SUCCESS = 'success'
+    VIEWABLE = 'viewable'
+    PENDING = 'pending'
+    NONE = 'none'
+
+class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
+    def __init__(self, state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField] = None, **kwargs):
+        """
+        :param state: The status of the representation.
+            * `success` defines the representation as ready to be viewed.
+            * `viewable` defines a video to be ready for viewing.
+            * `pending` defines the representation as to be generated. Retry
+              this endpoint to re-check the status.
+            * `none` defines that the representation will be created when
+              requested. Request the URL defined in the `info` object to
+              trigger this generation.
+        :type state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField], optional
+        """
+        super().__init__(**kwargs)
+        self.state = state
+
+class FileFullRepresentationsFieldEntriesField(BaseObject):
+    def __init__(self, content: Optional[FileFullRepresentationsFieldEntriesFieldContentField] = None, info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField] = None, properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField] = None, representation: Optional[str] = None, status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField] = None, **kwargs):
+        """
+        :param content: An object containing the URL that can be used to actually fetch
+            the representation.
+        :type content: Optional[FileFullRepresentationsFieldEntriesFieldContentField], optional
+        :param info: An object containing the URL that can be used to fetch more info
+            on this representation.
+        :type info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField], optional
+        :param properties: An object containing the size and type of this presentation.
+        :type properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField], optional
+        :param representation: Indicates the file type of the returned representation.
+        :type representation: Optional[str], optional
+        :param status: An object containing the status of this representation.
+        :type status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField], optional
+        """
+        super().__init__(**kwargs)
+        self.content = content
+        self.info = info
+        self.properties = properties
+        self.representation = representation
+        self.status = status
+
+class FileFullRepresentationsField(BaseObject):
+    def __init__(self, entries: Optional[List[FileFullRepresentationsFieldEntriesField]] = None, **kwargs):
+        """
+        :param entries: A list of files
+        :type entries: Optional[List[FileFullRepresentationsFieldEntriesField]], optional
+        """
+        super().__init__(**kwargs)
+        self.entries = entries
+
+class FileFullClassificationField(BaseObject):
+    def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
+        """
+        :param name: The name of the classification
+        :type name: Optional[str], optional
+        :param definition: An explanation of the meaning of this classification.
+        :type definition: Optional[str], optional
+        :param color: The color that is used to display the
+            classification label in a user-interface. Colors are defined by the admin
+            or co-admin who created the classification in the Box web app.
+        :type color: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.name = name
+        self.definition = definition
+        self.color = color
+
+class FileFullSharedLinkPermissionOptionsField(str, Enum):
+    CAN_PREVIEW = 'can_preview'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_EDIT = 'can_edit'
+
+class FileFull(File):
+    def __init__(self, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier that represent a file.
+            The ID for any file can be determined
+            by visiting a file in the web application
+            and copying the ID from the URL. For example,
+            for the URL `https://*.app.box.com/files/123`
+            the `file_id` is `123`.
+        :type id: str
+        :param type: `file`
+        :type type: FileBaseTypeField
+        :param version_number: The version number of this file
+        :type version_number: Optional[str], optional
+        :param comment_count: The number of comments on this file
+        :type comment_count: Optional[int], optional
+        :param extension: Indicates the (optional) file extension for this file. By default,
+            this is set to an empty string.
+        :type extension: Optional[str], optional
+        :param is_package: Indicates if the file is a package. Packages are commonly used
+            by Mac Applications and can include iWork files.
+        :type is_package: Optional[bool], optional
+        :param is_accessible_via_shared_link: Specifies if the file can be accessed
+            via the direct shared link or a shared link
+            to a parent folder.
+        :type is_accessible_via_shared_link: Optional[bool], optional
+        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
+            when sharing this file.
+        :type allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]], optional
+        :param is_externally_owned: Specifies if this file is owned by a user outside of the
+            authenticated enterprise.
+        :type is_externally_owned: Optional[bool], optional
+        :param has_collaborations: Specifies if this file has any other collaborators.
+        :type has_collaborations: Optional[bool], optional
+        :param expires_at: When the file will automatically be deleted
+        :type expires_at: Optional[str], optional
+        :param disposition_at: The retention expiration timestamp for the given file
+        :type disposition_at: Optional[str], optional
+        :param shared_link_permission_options: A list of the types of roles that user can be invited at
+            when sharing this file.
+        :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
+        :param description: The optional description of this file
+        :type description: Optional[str], optional
+        :param size: The file size in bytes. Be careful parsing this integer as it can
+            get very large and cause an integer overflow.
+        :type size: Optional[int], optional
+        :param created_at: The date and time when the file was created on Box.
+        :type created_at: Optional[str], optional
+        :param modified_at: The date and time when the file was last updated on Box.
+        :type modified_at: Optional[str], optional
+        :param trashed_at: The time at which this file was put in the trash.
+        :type trashed_at: Optional[str], optional
+        :param purged_at: The time at which this file is expected to be purged
+            from the trash.
+        :type purged_at: Optional[str], optional
+        :param content_created_at: The date and time at which this file was originally
+            created, which might be before it was uploaded to Box.
+        :type content_created_at: Optional[str], optional
+        :param content_modified_at: The date and time at which this file was last updated,
+            which might be before it was uploaded to Box.
+        :type content_modified_at: Optional[str], optional
+        :param item_status: Defines if this item has been deleted or not.
+            * `active` when the item has is not in the trash
+            * `trashed` when the item has been moved to the trash but not deleted
+            * `deleted` when the item has been permanently deleted.
+        :type item_status: Optional[FileItemStatusField], optional
+        :param name: The name of the file
+        :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
+            of a file on Box with a local file.
+        :type sha_1: Optional[str], optional
+        :param etag: The HTTP `etag` of this file. This can be used within some API
+            endpoints in the `If-Match` and `If-None-Match` headers to only
+            perform changes on the file if (no) changes have happened.
+        :type etag: Optional[str], optional
+        """
+        super().__init__(id=id, type=type, description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, modified_by=modified_by, owned_by=owned_by, shared_link=shared_link, parent=parent, item_status=item_status, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
+        self.version_number = version_number
+        self.comment_count = comment_count
+        self.permissions = permissions
+        self.tags = tags
+        self.lock = lock
+        self.extension = extension
+        self.is_package = is_package
+        self.expiring_embed_link = expiring_embed_link
+        self.watermark_info = watermark_info
+        self.is_accessible_via_shared_link = is_accessible_via_shared_link
+        self.allowed_invitee_roles = allowed_invitee_roles
+        self.is_externally_owned = is_externally_owned
+        self.has_collaborations = has_collaborations
+        self.metadata = metadata
+        self.expires_at = expires_at
+        self.representations = representations
+        self.classification = classification
+        self.uploader_display_name = uploader_display_name
+        self.disposition_at = disposition_at
+        self.shared_link_permission_options = shared_link_permission_options
+
 class Files(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[File]] = None, **kwargs):
         """
@@ -5399,6 +4653,9 @@ class Files(BaseObject):
         super().__init__(**kwargs)
         self.total_count = total_count
         self.entries = entries
+
+class DevicePinnerTypeField(str, Enum):
+    DEVICE_PINNER = 'device_pinner'
 
 class DevicePinner(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[DevicePinnerTypeField] = None, owned_by: Optional[UserMini] = None, product_name: Optional[str] = None, **kwargs):
@@ -5415,6 +4672,25 @@ class DevicePinner(BaseObject):
         self.type = type
         self.owned_by = owned_by
         self.product_name = product_name
+
+class DevicePinnersOrderFieldByField(str, Enum):
+    ID = 'id'
+
+class DevicePinnersOrderFieldDirectionField(str, Enum):
+    ASC = 'asc'
+    DESC = 'desc'
+
+class DevicePinnersOrderField(BaseObject):
+    def __init__(self, by: Optional[DevicePinnersOrderFieldByField] = None, direction: Optional[DevicePinnersOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field that is ordered by
+        :type by: Optional[DevicePinnersOrderFieldByField], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[DevicePinnersOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
 
 class DevicePinners(BaseObject):
     def __init__(self, entries: Optional[List[DevicePinner]] = None, limit: Optional[int] = None, next_marker: Optional[int] = None, order: Optional[List[DevicePinnersOrderField]] = None, **kwargs):
@@ -5435,6 +4711,18 @@ class DevicePinners(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
         self.order = order
+
+class CommentItemField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this object
+        :type id: Optional[str], optional
+        :param type: The type for this object
+        :type type: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
 
 class Comment(CommentBase):
     def __init__(self, is_reply_comment: Optional[bool] = None, message: Optional[str] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, item: Optional[CommentItemField] = None, id: Optional[str] = None, type: Optional[CommentBaseTypeField] = None, **kwargs):
@@ -5485,6 +4773,22 @@ class CommentFull(Comment):
         """
         super().__init__(is_reply_comment=is_reply_comment, message=message, created_by=created_by, created_at=created_at, modified_at=modified_at, item=item, id=id, type=type, **kwargs)
         self.tagged_message = tagged_message
+
+class CommentsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class CommentsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[CommentsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[CommentsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
 
 class Comments(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[CommentsOrderField]] = None, entries: Optional[List[Comment]] = None, **kwargs):
@@ -5560,6 +4864,22 @@ class ShieldInformationBarrierSegmentMemberMini(ShieldInformationBarrierSegmentM
         super().__init__(id=id, type=type, **kwargs)
         self.user = user
 
+class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
+class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
+        """
+        :param id: The ID reference of the requesting
+            shield information barrier segment.
+        :type id: Optional[str], optional
+        :param type: The type of the shield information barrier segment
+        :type type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+
 class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMemberMini):
     def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, shield_information_barrier_segment: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField] = None, user: Optional[UserBase] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
         """
@@ -5586,6 +4906,9 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         self.created_by = created_by
         self.updated_at = updated_at
         self.updated_by = updated_by
+
+class ShieldInformationBarrierSegmentTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 class ShieldInformationBarrierSegment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentTypeField] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, name: Optional[str] = None, description: Optional[str] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, **kwargs):
@@ -5616,6 +4939,20 @@ class ShieldInformationBarrierSegment(BaseObject):
         self.updated_at = updated_at
         self.updated_by = updated_by
 
+class ShieldInformationBarrierReportShieldInformationBarrierField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class ShieldInformationBarrierReportStatusField(str, Enum):
+    PENDING = 'pending'
+    ERROR = 'error'
+    DONE = 'done'
+    CANCELLED = 'cancelled'
+
+class ShieldInformationBarrierReportDetailsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
 class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
     def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierReportShieldInformationBarrierField] = None, status: Optional[ShieldInformationBarrierReportStatusField] = None, details: Optional[ShieldInformationBarrierReportDetailsField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
         """
@@ -5639,6 +4976,16 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
         self.created_at = created_at
         self.created_by = created_by
         self.updated_at = updated_at
+
+class ShieldInformationBarrierTypeField(str, Enum):
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
+
+class ShieldInformationBarrierStatusField(str, Enum):
+    DRAFT = 'draft'
+    PENDING = 'pending'
+    DISABLED = 'disabled'
+    ENABLED = 'enabled'
+    INVALID = 'invalid'
 
 class ShieldInformationBarrier(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierTypeField] = None, enterprise: Optional[EnterpriseBase] = None, status: Optional[ShieldInformationBarrierStatusField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, enabled_at: Optional[str] = None, enabled_by: Optional[UserBase] = None, **kwargs):
@@ -5668,6 +5015,18 @@ class ShieldInformationBarrier(BaseObject):
         self.updated_by = updated_by
         self.enabled_at = enabled_at
         self.enabled_by = enabled_by
+
+class FolderLockLockedOperationsField(BaseObject):
+    def __init__(self, move: bool, delete: bool, **kwargs):
+        """
+        :param move: Whether moving the folder is restricted.
+        :type move: bool
+        :param delete: Whether deleting the folder is restricted.
+        :type delete: bool
+        """
+        super().__init__(**kwargs)
+        self.move = move
+        self.delete = delete
 
 class FolderLock(BaseObject):
     def __init__(self, folder: Optional[FolderMini] = None, id: Optional[str] = None, type: Optional[str] = None, created_by: Optional[UserBase] = None, created_at: Optional[str] = None, locked_operations: Optional[FolderLockLockedOperationsField] = None, lock_type: Optional[str] = None, **kwargs):
@@ -5731,48 +5090,6 @@ class Watermark(BaseObject):
         super().__init__(**kwargs)
         self.watermark = watermark
 
-class WebhookTriggersField(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
-
 class WebhookMiniTypeField(str, Enum):
     WEBHOOK = 'webhook'
 
@@ -5827,6 +5144,48 @@ class Webhooks(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+class WebhookTriggersField(str, Enum):
+    FILE_UPLOADED = 'FILE.UPLOADED'
+    FILE_PREVIEWED = 'FILE.PREVIEWED'
+    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
+    FILE_TRASHED = 'FILE.TRASHED'
+    FILE_DELETED = 'FILE.DELETED'
+    FILE_RESTORED = 'FILE.RESTORED'
+    FILE_COPIED = 'FILE.COPIED'
+    FILE_MOVED = 'FILE.MOVED'
+    FILE_LOCKED = 'FILE.LOCKED'
+    FILE_UNLOCKED = 'FILE.UNLOCKED'
+    FILE_RENAMED = 'FILE.RENAMED'
+    COMMENT_CREATED = 'COMMENT.CREATED'
+    COMMENT_UPDATED = 'COMMENT.UPDATED'
+    COMMENT_DELETED = 'COMMENT.DELETED'
+    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
+    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
+    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
+    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
+    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
+    FOLDER_CREATED = 'FOLDER.CREATED'
+    FOLDER_RENAMED = 'FOLDER.RENAMED'
+    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
+    FOLDER_RESTORED = 'FOLDER.RESTORED'
+    FOLDER_DELETED = 'FOLDER.DELETED'
+    FOLDER_COPIED = 'FOLDER.COPIED'
+    FOLDER_MOVED = 'FOLDER.MOVED'
+    FOLDER_TRASHED = 'FOLDER.TRASHED'
+    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
+    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
+    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
+    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
+    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
+    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
+    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
+    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
+    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
+    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
+    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
+    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
+
 class Webhook(WebhookMini):
     def __init__(self, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, address: Optional[str] = None, triggers: Optional[List[WebhookTriggersField]] = None, id: Optional[str] = None, type: Optional[WebhookMiniTypeField] = None, target: Optional[WebhookMiniTargetField] = None, **kwargs):
         """
@@ -5850,6 +5209,57 @@ class Webhook(WebhookMini):
         self.created_at = created_at
         self.address = address
         self.triggers = triggers
+
+class WebLinkBaseTypeField(str, Enum):
+    WEB_LINK = 'web_link'
+
+class WebLinkBase(BaseObject):
+    def __init__(self, id: str, type: WebLinkBaseTypeField, etag: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this web link
+        :type id: str
+        :param type: `web_link`
+        :type type: WebLinkBaseTypeField
+        :param etag: The entity tag of this web link. Used with `If-Match`
+            headers.
+        :type etag: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.etag = etag
+
+class WebLinkMini(WebLinkBase):
+    def __init__(self, id: str, type: WebLinkBaseTypeField, url: Optional[str] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this web link
+        :type id: str
+        :param type: `web_link`
+        :type type: WebLinkBaseTypeField
+        :param url: The URL this web link points to
+        :type url: Optional[str], optional
+        :param name: The name of the web link
+        :type name: Optional[str], optional
+        :param etag: The entity tag of this web link. Used with `If-Match`
+            headers.
+        :type etag: Optional[str], optional
+        """
+        super().__init__(id=id, type=type, etag=etag, **kwargs)
+        self.url = url
+        self.sequence_id = sequence_id
+        self.name = name
+
+class WebLinkPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
 
 class WebLinkSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
@@ -5959,45 +5369,6 @@ class WebLinkItemStatusField(str, Enum):
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
-class WebLinkBaseTypeField(str, Enum):
-    WEB_LINK = 'web_link'
-
-class WebLinkBase(BaseObject):
-    def __init__(self, id: str, type: WebLinkBaseTypeField, etag: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this web link
-        :type id: str
-        :param type: `web_link`
-        :type type: WebLinkBaseTypeField
-        :param etag: The entity tag of this web link. Used with `If-Match`
-            headers.
-        :type etag: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.etag = etag
-
-class WebLinkMini(WebLinkBase):
-    def __init__(self, id: str, type: WebLinkBaseTypeField, url: Optional[str] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier for this web link
-        :type id: str
-        :param type: `web_link`
-        :type type: WebLinkBaseTypeField
-        :param url: The URL this web link points to
-        :type url: Optional[str], optional
-        :param name: The name of the web link
-        :type name: Optional[str], optional
-        :param etag: The entity tag of this web link. Used with `If-Match`
-            headers.
-        :type etag: Optional[str], optional
-        """
-        super().__init__(id=id, type=type, etag=etag, **kwargs)
-        self.url = url
-        self.sequence_id = sequence_id
-        self.name = name
-
 class WebLink(WebLinkMini):
     def __init__(self, id: str, type: WebLinkBaseTypeField, parent: Optional[FolderMini] = None, description: Optional[str] = None, path_collection: Optional[WebLinkPathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[WebLinkSharedLinkField] = None, item_status: Optional[WebLinkItemStatusField] = None, url: Optional[str] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
         """
@@ -6043,6 +5414,22 @@ class WebLink(WebLinkMini):
         self.shared_link = shared_link
         self.item_status = item_status
 
+class ItemsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class ItemsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[ItemsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[ItemsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
 class Items(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[ItemsOrderField]] = None, entries: Optional[List[Union[FileMini, FolderMini, WebLinkMini]]] = None, **kwargs):
         """
@@ -6074,6 +5461,151 @@ class Items(BaseObject):
         self.offset = offset
         self.order = order
         self.entries = entries
+
+class FolderPathCollectionField(BaseObject):
+    def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
+        """
+        :param total_count: The number of folders in this list.
+        :type total_count: int
+        :param entries: The parent folders for this item
+        :type entries: List[FolderMini]
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.entries = entries
+
+class FolderSharedLinkFieldAccessField(str, Enum):
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
+
+class FolderSharedLinkFieldEffectiveAccessField(str, Enum):
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
+
+class FolderSharedLinkFieldEffectivePermissionField(str, Enum):
+    CAN_EDIT = 'can_edit'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_PREVIEW = 'can_preview'
+    NO_ACCESS = 'no_access'
+
+class FolderSharedLinkFieldPermissionsField(BaseObject):
+    def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
+        """
+        :param can_download: Defines if the shared link allows for the item to be downloaded. For
+            shared links on folders, this also applies to any items in the folder.
+            This value can be set to `true` when the effective access level is
+            set to `open` or `company`, not `collaborators`.
+        :type can_download: bool
+        :param can_preview: Defines if the shared link allows for the item to be previewed.
+            This value is always `true`. For shared links on folders this also
+            applies to any items in the folder.
+        :type can_preview: bool
+        :param can_edit: Defines if the shared link allows for the item to be edited.
+            This value can only be `true` if `can_download` is also `true` and if
+            the item has a type of `file`.
+        :type can_edit: bool
+        """
+        super().__init__(**kwargs)
+        self.can_download = can_download
+        self.can_preview = can_preview
+        self.can_edit = can_edit
+
+class FolderSharedLinkField(BaseObject):
+    def __init__(self, url: str, effective_access: FolderSharedLinkFieldEffectiveAccessField, effective_permission: FolderSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FolderSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FolderSharedLinkFieldPermissionsField] = None, **kwargs):
+        """
+        :param url: The URL that can be used to access the item on Box.
+            This URL will display the item in Box's preview UI where the file
+            can be downloaded if allowed.
+            This URL will continue to work even when a custom `vanity_url`
+            has been set for this shared link.
+        :type url: str
+        :param effective_access: The effective access level for the shared link. This can be a more
+            restrictive access level than the value in the `access` field when the
+            enterprise settings restrict the allowed access levels.
+        :type effective_access: FolderSharedLinkFieldEffectiveAccessField
+        :param effective_permission: The effective permissions for this shared link.
+            These result in the more restrictive combination of
+            the share link permissions and the item permissions set
+            by the administrator, the owner, and any ancestor item
+            such as a folder.
+        :type effective_permission: FolderSharedLinkFieldEffectivePermissionField
+        :param is_password_enabled: Defines if the shared link requires a password to access the item.
+        :type is_password_enabled: bool
+        :param download_count: The number of times this item has been downloaded.
+        :type download_count: int
+        :param preview_count: The number of times this item has been previewed.
+        :type preview_count: int
+        :param download_url: A URL that can be used to download the file. This URL can be used in
+            a browser to download the file. This URL includes the file
+            extension so that the file will be saved with the right file type.
+            This property will be `null` for folders.
+        :type download_url: Optional[str], optional
+        :param vanity_url: The "Custom URL" that can also be used to preview the item on Box.  Custom
+            URLs can only be created or modified in the Box Web application.
+        :type vanity_url: Optional[str], optional
+        :param vanity_name: The custom name of a shared link, as used in the `vanity_url` field.
+        :type vanity_name: Optional[str], optional
+        :param access: The access level for this shared link.
+            * `open` - provides access to this item to anyone with this link
+            * `company` - only provides access to this item to people the same company
+            * `collaborators` - only provides access to this item to people who are
+               collaborators on this item
+            If this field is omitted when creating the shared link, the access level
+            will be set to the default access level specified by the enterprise admin.
+        :type access: Optional[FolderSharedLinkFieldAccessField], optional
+        :param unshared_at: The date and time when this link will be unshared. This field can only be
+            set by users with paid accounts.
+        :type unshared_at: Optional[str], optional
+        :param permissions: Defines if this link allows a user to preview, edit, and download an item.
+            These permissions refer to the shared link only and
+            do not supersede permissions applied to the item itself.
+        :type permissions: Optional[FolderSharedLinkFieldPermissionsField], optional
+        """
+        super().__init__(**kwargs)
+        self.url = url
+        self.effective_access = effective_access
+        self.effective_permission = effective_permission
+        self.is_password_enabled = is_password_enabled
+        self.download_count = download_count
+        self.preview_count = preview_count
+        self.download_url = download_url
+        self.vanity_url = vanity_url
+        self.vanity_name = vanity_name
+        self.access = access
+        self.unshared_at = unshared_at
+        self.permissions = permissions
+
+class FolderFolderUploadEmailFieldAccessField(str, Enum):
+    OPEN = 'open'
+    COLLABORATORS = 'collaborators'
+
+class FolderFolderUploadEmailField(BaseObject):
+    def __init__(self, access: Optional[FolderFolderUploadEmailFieldAccessField] = None, email: Optional[str] = None, **kwargs):
+        """
+        :param access: When this parameter has been set, users can email files
+            to the email address that has been automatically
+            created for this folder.
+            To create an email address, set this property either when
+            creating or updating the folder.
+            When set to `collaborators`, only emails from registered email
+            addresses for collaborators will be accepted. This includes
+            any email aliases a user might have registered.
+            When set to `open` it will accept emails from any email
+            address.
+        :type access: Optional[FolderFolderUploadEmailFieldAccessField], optional
+        :param email: The optional upload email address for this folder.
+        :type email: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.access = access
+        self.email = email
+
+class FolderItemStatusField(str, Enum):
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 class Folder(FolderMini):
     def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -6216,6 +5748,13 @@ class SearchResults(BaseObject):
         self.offset = offset
         self.entries = entries
 
+class RecentItemInteractionTypeField(str, Enum):
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_UPLOAD = 'item_upload'
+    ITEM_COMMENT = 'item_comment'
+    ITEM_OPEN = 'item_open'
+    ITEM_MODIFY = 'item_modify'
+
 class RecentItem(BaseObject):
     def __init__(self, type: Optional[str] = None, item: Optional[Union[File, Folder, WebLink]] = None, interaction_type: Optional[RecentItemInteractionTypeField] = None, interacted_at: Optional[str] = None, interaction_shared_link: Optional[str] = None, **kwargs):
         """
@@ -6302,6 +5841,9 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         self.assigned_at = assigned_at
         self.deleted_at = deleted_at
 
+class FileVersionLegalHoldTypeField(str, Enum):
+    FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
+
 class FileVersionLegalHold(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[FileVersionLegalHoldTypeField] = None, file_version: Optional[FileVersionMini] = None, file: Optional[FileMini] = None, legal_hold_policy_assignments: Optional[List[LegalHoldPolicyAssignment]] = None, deleted_at: Optional[str] = None, **kwargs):
         """
@@ -6342,6 +5884,86 @@ class FileVersionLegalHolds(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
+class FolderFullSyncStateField(str, Enum):
+    SYNCED = 'synced'
+    NOT_SYNCED = 'not_synced'
+    PARTIALLY_SYNCED = 'partially_synced'
+
+class FolderFullPermissionsField(BaseObject):
+    def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_upload: Optional[bool] = None, **kwargs):
+        """
+        :param can_delete: Specifies if the current user can delete this item.
+        :type can_delete: bool
+        :param can_download: Specifies if the current user can download this item.
+        :type can_download: bool
+        :param can_invite_collaborator: Specifies if the current user can invite new
+            users to collaborate on this item, and if the user can
+            update the role of a user already collaborated on this
+            item.
+        :type can_invite_collaborator: bool
+        :param can_rename: Specifies if the user can rename this item.
+        :type can_rename: bool
+        :param can_set_share_access: Specifies if the user can change the access level of an
+            existing shared link on this item.
+        :type can_set_share_access: bool
+        :param can_share: Specifies if the user can create a shared link for this item.
+        :type can_share: bool
+        :param can_upload: Specifies if the user can upload into this folder.
+        :type can_upload: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.can_delete = can_delete
+        self.can_download = can_download
+        self.can_invite_collaborator = can_invite_collaborator
+        self.can_rename = can_rename
+        self.can_set_share_access = can_set_share_access
+        self.can_share = can_share
+        self.can_upload = can_upload
+
+class FolderFullMetadataField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
+
+class FolderFullAllowedInviteeRolesField(str, Enum):
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
+
+class FolderFullWatermarkInfoField(BaseObject):
+    def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
+        """
+        :param is_watermarked: Specifies if this item has a watermark applied.
+        :type is_watermarked: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.is_watermarked = is_watermarked
+
+class FolderFullClassificationField(BaseObject):
+    def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
+        """
+        :param name: The name of the classification
+        :type name: Optional[str], optional
+        :param definition: An explanation of the meaning of this classification.
+        :type definition: Optional[str], optional
+        :param color: The color that is used to display the
+            classification label in a user-interface. Colors are defined by the admin
+            or co-admin who created the classification in the Box web app.
+        :type color: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.name = name
+        self.definition = definition
+        self.color = color
 
 class FolderFull(Folder):
     def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -6440,6 +6062,421 @@ class FolderFull(Folder):
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
 
+class EventEventTypeField(str, Enum):
+    ACCESS_GRANTED = 'ACCESS_GRANTED'
+    ACCESS_REVOKED = 'ACCESS_REVOKED'
+    ADD_DEVICE_ASSOCIATION = 'ADD_DEVICE_ASSOCIATION'
+    ADD_LOGIN_ACTIVITY_DEVICE = 'ADD_LOGIN_ACTIVITY_DEVICE'
+    ADMIN_LOGIN = 'ADMIN_LOGIN'
+    APPLICATION_CREATED = 'APPLICATION_CREATED'
+    APPLICATION_PUBLIC_KEY_ADDED = 'APPLICATION_PUBLIC_KEY_ADDED'
+    APPLICATION_PUBLIC_KEY_DELETED = 'APPLICATION_PUBLIC_KEY_DELETED'
+    CHANGE_ADMIN_ROLE = 'CHANGE_ADMIN_ROLE'
+    CHANGE_FOLDER_PERMISSION = 'CHANGE_FOLDER_PERMISSION'
+    COLLABORATION_ACCEPT = 'COLLABORATION_ACCEPT'
+    COLLABORATION_EXPIRATION = 'COLLABORATION_EXPIRATION'
+    COLLABORATION_INVITE = 'COLLABORATION_INVITE'
+    COLLABORATION_REMOVE = 'COLLABORATION_REMOVE'
+    COLLABORATION_ROLE_CHANGE = 'COLLABORATION_ROLE_CHANGE'
+    COLLAB_ADD_COLLABORATOR = 'COLLAB_ADD_COLLABORATOR'
+    COLLAB_INVITE_COLLABORATOR = 'COLLAB_INVITE_COLLABORATOR'
+    COLLAB_REMOVE_COLLABORATOR = 'COLLAB_REMOVE_COLLABORATOR'
+    COLLAB_ROLE_CHANGE = 'COLLAB_ROLE_CHANGE'
+    COMMENT_CREATE = 'COMMENT_CREATE'
+    COMMENT_DELETE = 'COMMENT_DELETE'
+    CONTENT_ACCESS = 'CONTENT_ACCESS'
+    CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY = 'CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY'
+    CONTENT_WORKFLOW_AUTOMATION_ADD = 'CONTENT_WORKFLOW_AUTOMATION_ADD'
+    CONTENT_WORKFLOW_AUTOMATION_DELETE = 'CONTENT_WORKFLOW_AUTOMATION_DELETE'
+    CONTENT_WORKFLOW_POLICY_ADD = 'CONTENT_WORKFLOW_POLICY_ADD'
+    CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION = 'CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION'
+    CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION = 'CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION'
+    COPY = 'COPY'
+    DATA_RETENTION_CREATE_RETENTION = 'DATA_RETENTION_CREATE_RETENTION'
+    DATA_RETENTION_REMOVE_RETENTION = 'DATA_RETENTION_REMOVE_RETENTION'
+    DELETE = 'DELETE'
+    DELETE_USER = 'DELETE_USER'
+    DEVICE_TRUST_CHECK_FAILED = 'DEVICE_TRUST_CHECK_FAILED'
+    DOWNLOAD = 'DOWNLOAD'
+    EDIT = 'EDIT'
+    EDIT_USER = 'EDIT_USER'
+    EMAIL_ALIAS_CONFIRM = 'EMAIL_ALIAS_CONFIRM'
+    EMAIL_ALIAS_REMOVE = 'EMAIL_ALIAS_REMOVE'
+    ENABLE_TWO_FACTOR_AUTH = 'ENABLE_TWO_FACTOR_AUTH'
+    ENTERPRISE_APP_AUTHORIZATION_UPDATE = 'ENTERPRISE_APP_AUTHORIZATION_UPDATE'
+    FAILED_LOGIN = 'FAILED_LOGIN'
+    FILE_MARKED_MALICIOUS = 'FILE_MARKED_MALICIOUS'
+    FILE_WATERMARKED_DOWNLOAD = 'FILE_WATERMARKED_DOWNLOAD'
+    GROUP_ADD_ITEM = 'GROUP_ADD_ITEM'
+    GROUP_ADD_USER = 'GROUP_ADD_USER'
+    GROUP_CREATION = 'GROUP_CREATION'
+    GROUP_DELETION = 'GROUP_DELETION'
+    GROUP_EDITED = 'GROUP_EDITED'
+    GROUP_REMOVE_ITEM = 'GROUP_REMOVE_ITEM'
+    GROUP_REMOVE_USER = 'GROUP_REMOVE_USER'
+    ITEM_COPY = 'ITEM_COPY'
+    ITEM_CREATE = 'ITEM_CREATE'
+    ITEM_DOWNLOAD = 'ITEM_DOWNLOAD'
+    ITEM_MAKE_CURRENT_VERSION = 'ITEM_MAKE_CURRENT_VERSION'
+    ITEM_MODIFY = 'ITEM_MODIFY'
+    ITEM_MOVE = 'ITEM_MOVE'
+    ITEM_OPEN = 'ITEM_OPEN'
+    ITEM_PREVIEW = 'ITEM_PREVIEW'
+    ITEM_RENAME = 'ITEM_RENAME'
+    ITEM_SHARED = 'ITEM_SHARED'
+    ITEM_SHARED_CREATE = 'ITEM_SHARED_CREATE'
+    ITEM_SHARED_UNSHARE = 'ITEM_SHARED_UNSHARE'
+    ITEM_SHARED_UPDATE = 'ITEM_SHARED_UPDATE'
+    ITEM_SYNC = 'ITEM_SYNC'
+    ITEM_TRASH = 'ITEM_TRASH'
+    ITEM_UNDELETE_VIA_TRASH = 'ITEM_UNDELETE_VIA_TRASH'
+    ITEM_UNSYNC = 'ITEM_UNSYNC'
+    ITEM_UPLOAD = 'ITEM_UPLOAD'
+    LEGAL_HOLD_ASSIGNMENT_CREATE = 'LEGAL_HOLD_ASSIGNMENT_CREATE'
+    LEGAL_HOLD_ASSIGNMENT_DELETE = 'LEGAL_HOLD_ASSIGNMENT_DELETE'
+    LEGAL_HOLD_POLICY_CREATE = 'LEGAL_HOLD_POLICY_CREATE'
+    LEGAL_HOLD_POLICY_DELETE = 'LEGAL_HOLD_POLICY_DELETE'
+    LEGAL_HOLD_POLICY_UPDATE = 'LEGAL_HOLD_POLICY_UPDATE'
+    LOCK = 'LOCK'
+    LOCK_CREATE = 'LOCK_CREATE'
+    LOCK_DESTROY = 'LOCK_DESTROY'
+    LOGIN = 'LOGIN'
+    MASTER_INVITE_ACCEPT = 'MASTER_INVITE_ACCEPT'
+    MASTER_INVITE_REJECT = 'MASTER_INVITE_REJECT'
+    METADATA_INSTANCE_CREATE = 'METADATA_INSTANCE_CREATE'
+    METADATA_INSTANCE_DELETE = 'METADATA_INSTANCE_DELETE'
+    METADATA_INSTANCE_UPDATE = 'METADATA_INSTANCE_UPDATE'
+    METADATA_TEMPLATE_CREATE = 'METADATA_TEMPLATE_CREATE'
+    METADATA_TEMPLATE_DELETE = 'METADATA_TEMPLATE_DELETE'
+    METADATA_TEMPLATE_UPDATE = 'METADATA_TEMPLATE_UPDATE'
+    MOVE = 'MOVE'
+    NEW_USER = 'NEW_USER'
+    PREVIEW = 'PREVIEW'
+    REMOVE_DEVICE_ASSOCIATION = 'REMOVE_DEVICE_ASSOCIATION'
+    REMOVE_LOGIN_ACTIVITY_DEVICE = 'REMOVE_LOGIN_ACTIVITY_DEVICE'
+    RENAME = 'RENAME'
+    RETENTION_POLICY_ASSIGNMENT_ADD = 'RETENTION_POLICY_ASSIGNMENT_ADD'
+    SHARE = 'SHARE'
+    SHARE_EXPIRATION = 'SHARE_EXPIRATION'
+    SHIELD_ALERT = 'SHIELD_ALERT'
+    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED'
+    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION'
+    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED'
+    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION'
+    SHIELD_JUSTIFICATION_APPROVAL = 'SHIELD_JUSTIFICATION_APPROVAL'
+    SHIELD_SHARED_LINK_ACCESS_BLOCKED = 'SHIELD_SHARED_LINK_ACCESS_BLOCKED'
+    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE'
+    SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE = 'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE'
+    SIGN_DOCUMENT_ASSIGNED = 'SIGN_DOCUMENT_ASSIGNED'
+    SIGN_DOCUMENT_CANCELLED = 'SIGN_DOCUMENT_CANCELLED'
+    SIGN_DOCUMENT_COMPLETED = 'SIGN_DOCUMENT_COMPLETED'
+    SIGN_DOCUMENT_CONVERTED = 'SIGN_DOCUMENT_CONVERTED'
+    SIGN_DOCUMENT_CREATED = 'SIGN_DOCUMENT_CREATED'
+    SIGN_DOCUMENT_DECLINED = 'SIGN_DOCUMENT_DECLINED'
+    SIGN_DOCUMENT_EXPIRED = 'SIGN_DOCUMENT_EXPIRED'
+    SIGN_DOCUMENT_SIGNED = 'SIGN_DOCUMENT_SIGNED'
+    SIGN_DOCUMENT_VIEWED_BY_SIGNED = 'SIGN_DOCUMENT_VIEWED_BY_SIGNED'
+    SIGNER_DOWNLOADED = 'SIGNER_DOWNLOADED'
+    SIGNER_FORWARDED = 'SIGNER_FORWARDED'
+    STORAGE_EXPIRATION = 'STORAGE_EXPIRATION'
+    TAG_ITEM_CREATE = 'TAG_ITEM_CREATE'
+    TASK_ASSIGNMENT_CREATE = 'TASK_ASSIGNMENT_CREATE'
+    TASK_ASSIGNMENT_DELETE = 'TASK_ASSIGNMENT_DELETE'
+    TASK_ASSIGNMENT_UPDATE = 'TASK_ASSIGNMENT_UPDATE'
+    TASK_CREATE = 'TASK_CREATE'
+    TASK_UPDATE = 'TASK_UPDATE'
+    TERMS_OF_SERVICE_ACCEPT = 'TERMS_OF_SERVICE_ACCEPT'
+    TERMS_OF_SERVICE_REJECT = 'TERMS_OF_SERVICE_REJECT'
+    UNDELETE = 'UNDELETE'
+    UNLOCK = 'UNLOCK'
+    UNSHARE = 'UNSHARE'
+    UPDATE_COLLABORATION_EXPIRATION = 'UPDATE_COLLABORATION_EXPIRATION'
+    UPDATE_SHARE_EXPIRATION = 'UPDATE_SHARE_EXPIRATION'
+    UPLOAD = 'UPLOAD'
+    USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE = 'USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE'
+    WATERMARK_LABEL_CREATE = 'WATERMARK_LABEL_CREATE'
+    WATERMARK_LABEL_DELETE = 'WATERMARK_LABEL_DELETE'
+
+class EventAdditionalDetailsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class Event(BaseObject):
+    def __init__(self, type: Optional[str] = None, created_at: Optional[str] = None, recorded_at: Optional[str] = None, event_id: Optional[str] = None, created_by: Optional[UserMini] = None, event_type: Optional[EventEventTypeField] = None, session_id: Optional[str] = None, source: Optional[Union[User, EventSource, File, Folder]] = None, additional_details: Optional[EventAdditionalDetailsField] = None, **kwargs):
+        """
+        :param type: `event`
+        :type type: Optional[str], optional
+        :param created_at: When the event object was created
+        :type created_at: Optional[str], optional
+        :param recorded_at: When the event object was recorded in database
+        :type recorded_at: Optional[str], optional
+        :param event_id: The ID of the event object. You can use this to detect duplicate events
+        :type event_id: Optional[str], optional
+        :param session_id: The session of the user that performed the action. Not all events will
+            populate this attribute.
+        :type session_id: Optional[str], optional
+        :param additional_details: This object provides additional information about the event if available.
+            This can include how a user performed an event as well as additional
+            information to correlate an event to external KeySafe logs. Not all events
+            have an `additional_details` object.  This object is only available in the
+            Enterprise Events.
+        :type additional_details: Optional[EventAdditionalDetailsField], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.created_at = created_at
+        self.recorded_at = recorded_at
+        self.event_id = event_id
+        self.created_by = created_by
+        self.event_type = event_type
+        self.session_id = session_id
+        self.source = source
+        self.additional_details = additional_details
+
+class Events(BaseObject):
+    def __init__(self, chunk_size: Optional[int] = None, next_stream_position: Optional[str] = None, entries: Optional[List[Event]] = None, **kwargs):
+        """
+        :param chunk_size: The number of events returned in this response.
+        :type chunk_size: Optional[int], optional
+        :param next_stream_position: The stream position of the start of the next page (chunk)
+            of events.
+        :type next_stream_position: Optional[str], optional
+        :param entries: A list of events
+        :type entries: Optional[List[Event]], optional
+        """
+        super().__init__(**kwargs)
+        self.chunk_size = chunk_size
+        self.next_stream_position = next_stream_position
+        self.entries = entries
+
+class SkillInvocationTypeField(str, Enum):
+    SKILL_INVOCATION = 'skill_invocation'
+
+class SkillInvocationSkillFieldTypeField(str, Enum):
+    SKILL = 'skill'
+
+class SkillInvocationSkillField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationSkillFieldTypeField] = None, name: Optional[str] = None, api_key: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this skill
+        :type id: Optional[str], optional
+        :param type: `skill`
+        :type type: Optional[SkillInvocationSkillFieldTypeField], optional
+        :param name: The name of the skill
+        :type name: Optional[str], optional
+        :param api_key: The client ID of the application
+        :type api_key: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+        self.api_key = api_key
+
+class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
+
+class SkillInvocationTokenFieldReadField(BaseObject):
+    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
+        """
+        :param access_token: The requested access token.
+        :type access_token: Optional[str], optional
+        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :type expires_in: Optional[int], optional
+        :param token_type: The type of access token returned.
+        :type token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField], optional
+        :param restricted_to: The permissions that this access token permits,
+            providing a list of resources (files, folders, etc)
+            and the scopes permitted for each of those resources.
+        :type restricted_to: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.token_type = token_type
+        self.restricted_to = restricted_to
+
+class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
+    BEARER = 'bearer'
+
+class SkillInvocationTokenFieldWriteField(BaseObject):
+    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
+        """
+        :param access_token: The requested access token.
+        :type access_token: Optional[str], optional
+        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :type expires_in: Optional[int], optional
+        :param token_type: The type of access token returned.
+        :type token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField], optional
+        :param restricted_to: The permissions that this access token permits,
+            providing a list of resources (files, folders, etc)
+            and the scopes permitted for each of those resources.
+        :type restricted_to: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.token_type = token_type
+        self.restricted_to = restricted_to
+
+class SkillInvocationTokenField(BaseObject):
+    def __init__(self, read: Optional[SkillInvocationTokenFieldReadField] = None, write: Optional[SkillInvocationTokenFieldWriteField] = None, **kwargs):
+        """
+        :param read: The basics of an access token
+        :type read: Optional[SkillInvocationTokenFieldReadField], optional
+        :param write: The basics of an access token
+        :type write: Optional[SkillInvocationTokenFieldWriteField], optional
+        """
+        super().__init__(**kwargs)
+        self.read = read
+        self.write = write
+
+class SkillInvocationStatusFieldStateField(str, Enum):
+    INVOKED = 'invoked'
+    PROCESSING = 'processing'
+    SUCCESS = 'success'
+    TRANSIENT_FAILURE = 'transient_failure'
+    PERMANENT_FAILURE = 'permanent_failure'
+
+class SkillInvocationStatusField(BaseObject):
+    def __init__(self, state: Optional[SkillInvocationStatusFieldStateField] = None, message: Optional[str] = None, error_code: Optional[str] = None, additional_info: Optional[str] = None, **kwargs):
+        """
+        :param state: The state of this event.
+            * `invoked` - Triggered the skill with event details to start
+              applying skill on the file.
+            * `processing` - Currently processing.
+            * `success` - Completed processing with a success.
+            * `transient_failure` - Encountered an issue which can be
+              retried.
+            * `permanent_failure` -  Encountered a permanent issue and
+              retry would not help.
+        :type state: Optional[SkillInvocationStatusFieldStateField], optional
+        :param message: Status information
+        :type message: Optional[str], optional
+        :param error_code: Error code information, if error occurred.
+        :type error_code: Optional[str], optional
+        :param additional_info: Additional status information.
+        :type additional_info: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.state = state
+        self.message = message
+        self.error_code = error_code
+        self.additional_info = additional_info
+
+class SkillInvocationEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
+
+class SkillInvocationEnterpriseField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this enterprise.
+        :type id: Optional[str], optional
+        :param type: `enterprise`
+        :type type: Optional[SkillInvocationEnterpriseFieldTypeField], optional
+        :param name: The name of the enterprise
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+
+class SkillInvocation(BaseObject):
+    def __init__(self, type: Optional[SkillInvocationTypeField] = None, id: Optional[str] = None, skill: Optional[SkillInvocationSkillField] = None, token: Optional[SkillInvocationTokenField] = None, status: Optional[SkillInvocationStatusField] = None, created_at: Optional[str] = None, trigger: Optional[str] = None, enterprise: Optional[SkillInvocationEnterpriseField] = None, source: Optional[Union[File, Folder]] = None, event: Optional[Event] = None, **kwargs):
+        """
+        :param type: `skill_invocation`
+        :type type: Optional[SkillInvocationTypeField], optional
+        :param id: Unique identifier for the invocation request.
+        :type id: Optional[str], optional
+        :param token: The read-only and read-write access tokens for this item
+        :type token: Optional[SkillInvocationTokenField], optional
+        :param status: The details status of this event.
+        :type status: Optional[SkillInvocationStatusField], optional
+        :param created_at: The time this invocation was created.
+        :type created_at: Optional[str], optional
+        :param trigger: Action that triggered the invocation
+        :type trigger: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+        self.skill = skill
+        self.token = token
+        self.status = status
+        self.created_at = created_at
+        self.trigger = trigger
+        self.enterprise = enterprise
+        self.source = source
+        self.event = event
+
+class CollaborationTypeField(str, Enum):
+    COLLABORATION = 'collaboration'
+
+class CollaborationRoleField(str, Enum):
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
+    OWNER = 'owner'
+
+class CollaborationStatusField(str, Enum):
+    ACCEPTED = 'accepted'
+    PENDING = 'pending'
+    REJECTED = 'rejected'
+
+class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField(BaseObject):
+    def __init__(self, is_accepted: Optional[bool] = None, terms_of_service: Optional[TermsOfServiceBase] = None, **kwargs):
+        """
+        :param is_accepted: Whether or not the terms of service have been accepted.  The
+            field is `null` when there is no terms of service required.
+        :type is_accepted: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.is_accepted = is_accepted
+        self.terms_of_service = terms_of_service
+
+class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField(BaseObject):
+    def __init__(self, enterprise_has_strong_password_required_for_external_users: Optional[bool] = None, user_has_strong_password: Optional[bool] = None, **kwargs):
+        """
+        :param enterprise_has_strong_password_required_for_external_users: Whether or not the enterprise that owns the content requires
+            a strong password to collaborate on the content.
+        :type enterprise_has_strong_password_required_for_external_users: Optional[bool], optional
+        :param user_has_strong_password: Whether or not the user has a strong password set for their
+            account. The field is `null` when a strong password is not
+            required.
+        :type user_has_strong_password: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.enterprise_has_strong_password_required_for_external_users = enterprise_has_strong_password_required_for_external_users
+        self.user_has_strong_password = user_has_strong_password
+
+class CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField(BaseObject):
+    def __init__(self, enterprise_has_two_factor_auth_enabled: Optional[bool] = None, user_has_two_factor_authentication_enabled: Optional[bool] = None, **kwargs):
+        """
+        :param enterprise_has_two_factor_auth_enabled: Whether or not the enterprise that owns the content requires
+            two-factor authentication to be enabled in order to
+            collaborate on the content.
+        :type enterprise_has_two_factor_auth_enabled: Optional[bool], optional
+        :param user_has_two_factor_authentication_enabled: Whether or not the user has two-factor authentication
+            enabled. The field is `null` when two-factor
+            authentication is not required.
+        :type user_has_two_factor_authentication_enabled: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.enterprise_has_two_factor_auth_enabled = enterprise_has_two_factor_auth_enabled
+        self.user_has_two_factor_authentication_enabled = user_has_two_factor_authentication_enabled
+
+class CollaborationAcceptanceRequirementsStatusField(BaseObject):
+    def __init__(self, terms_of_service_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField] = None, strong_password_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField] = None, two_factor_authentication_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.terms_of_service_requirement = terms_of_service_requirement
+        self.strong_password_requirement = strong_password_requirement
+        self.two_factor_authentication_requirement = two_factor_authentication_requirement
+
 class Collaboration(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationTypeField] = None, item: Optional[Union[File, Folder, WebLink]] = None, accessible_by: Optional[UserCollaborations] = None, invite_email: Optional[str] = None, role: Optional[CollaborationRoleField] = None, expires_at: Optional[str] = None, status: Optional[CollaborationStatusField] = None, acknowledged_at: Optional[str] = None, created_by: Optional[UserCollaborations] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, acceptance_requirements_status: Optional[CollaborationAcceptanceRequirementsStatusField] = None, **kwargs):
         """
@@ -6481,6 +6518,22 @@ class Collaboration(BaseObject):
         self.modified_at = modified_at
         self.acceptance_requirements_status = acceptance_requirements_status
 
+class CollaborationsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class CollaborationsOrderField(BaseObject):
+    def __init__(self, by: Optional[str] = None, direction: Optional[CollaborationsOrderFieldDirectionField] = None, **kwargs):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[CollaborationsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
 class Collaborations(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[CollaborationsOrderField]] = None, entries: Optional[List[Collaboration]] = None, **kwargs):
         """
@@ -6513,6 +6566,51 @@ class Collaborations(BaseObject):
         self.order = order
         self.entries = entries
 
+class WebhookInvocationTypeField(str, Enum):
+    WEBHOOK_EVENT = 'webhook_event'
+
+class WebhookInvocationTriggerField(str, Enum):
+    FILE_UPLOADED = 'FILE.UPLOADED'
+    FILE_PREVIEWED = 'FILE.PREVIEWED'
+    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
+    FILE_TRASHED = 'FILE.TRASHED'
+    FILE_DELETED = 'FILE.DELETED'
+    FILE_RESTORED = 'FILE.RESTORED'
+    FILE_COPIED = 'FILE.COPIED'
+    FILE_MOVED = 'FILE.MOVED'
+    FILE_LOCKED = 'FILE.LOCKED'
+    FILE_UNLOCKED = 'FILE.UNLOCKED'
+    FILE_RENAMED = 'FILE.RENAMED'
+    COMMENT_CREATED = 'COMMENT.CREATED'
+    COMMENT_UPDATED = 'COMMENT.UPDATED'
+    COMMENT_DELETED = 'COMMENT.DELETED'
+    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
+    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
+    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
+    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
+    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
+    FOLDER_CREATED = 'FOLDER.CREATED'
+    FOLDER_RENAMED = 'FOLDER.RENAMED'
+    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
+    FOLDER_RESTORED = 'FOLDER.RESTORED'
+    FOLDER_DELETED = 'FOLDER.DELETED'
+    FOLDER_COPIED = 'FOLDER.COPIED'
+    FOLDER_MOVED = 'FOLDER.MOVED'
+    FOLDER_TRASHED = 'FOLDER.TRASHED'
+    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
+    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
+    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
+    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
+    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
+    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
+    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
+    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
+    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
+    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
+    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
+    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
+
 class WebhookInvocation(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WebhookInvocationTypeField] = None, webhook: Optional[Webhook] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, trigger: Optional[WebhookInvocationTriggerField] = None, source: Optional[Union[File, Folder]] = None, **kwargs):
         """
@@ -6532,6 +6630,30 @@ class WebhookInvocation(BaseObject):
         self.created_at = created_at
         self.trigger = trigger
         self.source = source
+
+class WorkflowMiniTypeField(str, Enum):
+    WORKFLOW = 'workflow'
+
+class WorkflowMini(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
+        """
+        :param id: The unique identifier for the workflow
+        :type id: Optional[str], optional
+        :param type: `workflow`
+        :type type: Optional[WorkflowMiniTypeField], optional
+        :param name: The name of the workflow
+        :type name: Optional[str], optional
+        :param description: The description for a workflow.
+        :type description: Optional[str], optional
+        :param is_enabled: Specifies if this workflow is enabled
+        :type is_enabled: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+        self.description = description
+        self.is_enabled = is_enabled
 
 class WorkflowFlowsFieldTypeField(str, Enum):
     FLOW = 'flow'
@@ -6700,30 +6822,6 @@ class WorkflowFlowsField(BaseObject):
         self.created_at = created_at
         self.created_by = created_by
 
-class WorkflowMiniTypeField(str, Enum):
-    WORKFLOW = 'workflow'
-
-class WorkflowMini(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
-        """
-        :param id: The unique identifier for the workflow
-        :type id: Optional[str], optional
-        :param type: `workflow`
-        :type type: Optional[WorkflowMiniTypeField], optional
-        :param name: The name of the workflow
-        :type name: Optional[str], optional
-        :param description: The description for a workflow.
-        :type description: Optional[str], optional
-        :param is_enabled: Specifies if this workflow is enabled
-        :type is_enabled: Optional[bool], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-        self.description = description
-        self.is_enabled = is_enabled
-
 class Workflow(WorkflowMini):
     def __init__(self, flows: Optional[List[WorkflowFlowsField]] = None, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
         """
@@ -6887,308 +6985,6 @@ class ZipDownloadStatus(BaseObject):
         self.skipped_folder_count = skipped_folder_count
         self.state = state
 
-class SignRequestTypeField(str, Enum):
-    SIGN_REQUEST = 'sign-request'
-
-class SignRequestStatusField(str, Enum):
-    CONVERTING = 'converting'
-    CREATED = 'created'
-    SENT = 'sent'
-    VIEWED = 'viewed'
-    SIGNED = 'signed'
-    CANCELLED = 'cancelled'
-    DECLINED = 'declined'
-    ERROR_CONVERTING = 'error_converting'
-    ERROR_SENDING = 'error_sending'
-    EXPIRED = 'expired'
-
-class FileScopeScopeField(str, Enum):
-    ANNOTATION_EDIT = 'annotation_edit'
-    ANNOTATION_VIEW_ALL = 'annotation_view_all'
-    ANNOTATION_VIEW_SELF = 'annotation_view_self'
-    BASE_EXPLORER = 'base_explorer'
-    BASE_PICKER = 'base_picker'
-    BASE_PREVIEW = 'base_preview'
-    BASE_UPLOAD = 'base_upload'
-    ITEM_DELETE = 'item_delete'
-    ITEM_DOWNLOAD = 'item_download'
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_RENAME = 'item_rename'
-    ITEM_SHARE = 'item_share'
-
-class FileScope(BaseObject):
-    def __init__(self, scope: Optional[FileScopeScopeField] = None, object: Optional[FileMini] = None, **kwargs):
-        """
-        :param scope: The file scopes for the file access
-        :type scope: Optional[FileScopeScopeField], optional
-        """
-        super().__init__(**kwargs)
-        self.scope = scope
-        self.object = object
-
-class FileFullExpiringEmbedLinkField(BaseObject):
-    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, url: Optional[str] = None, **kwargs):
-        """
-        :param access_token: The requested access token.
-        :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
-        :type expires_in: Optional[int], optional
-        :param token_type: The type of access token returned.
-        :type token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField], optional
-        :param restricted_to: The permissions that this access token permits,
-            providing a list of resources (files, folders, etc)
-            and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[List[FileScope]], optional
-        :param url: The actual expiring embed URL for this file, constructed
-            from the file ID and access tokens specified in this object.
-        :type url: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-        self.url = url
-
-class FileFull(File):
-    def __init__(self, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
-        """
-        :param id: The unique identifier that represent a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-        :type id: str
-        :param type: `file`
-        :type type: FileBaseTypeField
-        :param version_number: The version number of this file
-        :type version_number: Optional[str], optional
-        :param comment_count: The number of comments on this file
-        :type comment_count: Optional[int], optional
-        :param extension: Indicates the (optional) file extension for this file. By default,
-            this is set to an empty string.
-        :type extension: Optional[str], optional
-        :param is_package: Indicates if the file is a package. Packages are commonly used
-            by Mac Applications and can include iWork files.
-        :type is_package: Optional[bool], optional
-        :param is_accessible_via_shared_link: Specifies if the file can be accessed
-            via the direct shared link or a shared link
-            to a parent folder.
-        :type is_accessible_via_shared_link: Optional[bool], optional
-        :param allowed_invitee_roles: A list of the types of roles that user can be invited at
-            when sharing this file.
-        :type allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]], optional
-        :param is_externally_owned: Specifies if this file is owned by a user outside of the
-            authenticated enterprise.
-        :type is_externally_owned: Optional[bool], optional
-        :param has_collaborations: Specifies if this file has any other collaborators.
-        :type has_collaborations: Optional[bool], optional
-        :param expires_at: When the file will automatically be deleted
-        :type expires_at: Optional[str], optional
-        :param disposition_at: The retention expiration timestamp for the given file
-        :type disposition_at: Optional[str], optional
-        :param shared_link_permission_options: A list of the types of roles that user can be invited at
-            when sharing this file.
-        :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
-        :param description: The optional description of this file
-        :type description: Optional[str], optional
-        :param size: The file size in bytes. Be careful parsing this integer as it can
-            get very large and cause an integer overflow.
-        :type size: Optional[int], optional
-        :param created_at: The date and time when the file was created on Box.
-        :type created_at: Optional[str], optional
-        :param modified_at: The date and time when the file was last updated on Box.
-        :type modified_at: Optional[str], optional
-        :param trashed_at: The time at which this file was put in the trash.
-        :type trashed_at: Optional[str], optional
-        :param purged_at: The time at which this file is expected to be purged
-            from the trash.
-        :type purged_at: Optional[str], optional
-        :param content_created_at: The date and time at which this file was originally
-            created, which might be before it was uploaded to Box.
-        :type content_created_at: Optional[str], optional
-        :param content_modified_at: The date and time at which this file was last updated,
-            which might be before it was uploaded to Box.
-        :type content_modified_at: Optional[str], optional
-        :param item_status: Defines if this item has been deleted or not.
-            * `active` when the item has is not in the trash
-            * `trashed` when the item has been moved to the trash but not deleted
-            * `deleted` when the item has been permanently deleted.
-        :type item_status: Optional[FileItemStatusField], optional
-        :param name: The name of the file
-        :type name: Optional[str], optional
-        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
-            of a file on Box with a local file.
-        :type sha_1: Optional[str], optional
-        :param etag: The HTTP `etag` of this file. This can be used within some API
-            endpoints in the `If-Match` and `If-None-Match` headers to only
-            perform changes on the file if (no) changes have happened.
-        :type etag: Optional[str], optional
-        """
-        super().__init__(id=id, type=type, description=description, size=size, path_collection=path_collection, created_at=created_at, modified_at=modified_at, trashed_at=trashed_at, purged_at=purged_at, content_created_at=content_created_at, content_modified_at=content_modified_at, created_by=created_by, modified_by=modified_by, owned_by=owned_by, shared_link=shared_link, parent=parent, item_status=item_status, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
-        self.version_number = version_number
-        self.comment_count = comment_count
-        self.permissions = permissions
-        self.tags = tags
-        self.lock = lock
-        self.extension = extension
-        self.is_package = is_package
-        self.expiring_embed_link = expiring_embed_link
-        self.watermark_info = watermark_info
-        self.is_accessible_via_shared_link = is_accessible_via_shared_link
-        self.allowed_invitee_roles = allowed_invitee_roles
-        self.is_externally_owned = is_externally_owned
-        self.has_collaborations = has_collaborations
-        self.metadata = metadata
-        self.expires_at = expires_at
-        self.representations = representations
-        self.classification = classification
-        self.uploader_display_name = uploader_display_name
-        self.disposition_at = disposition_at
-        self.shared_link_permission_options = shared_link_permission_options
-
-class AccessToken(BaseObject):
-    def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[AccessTokenTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, refresh_token: Optional[str] = None, issued_token_type: Optional[AccessTokenIssuedTokenTypeField] = None, **kwargs):
-        """
-        :param access_token: The requested access token.
-        :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
-        :type expires_in: Optional[int], optional
-        :param token_type: The type of access token returned.
-        :type token_type: Optional[AccessTokenTokenTypeField], optional
-        :param restricted_to: The permissions that this access token permits,
-            providing a list of resources (files, folders, etc)
-            and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[List[FileScope]], optional
-        :param refresh_token: The refresh token for this access token, which can be used
-            to request a new access token when the current one expires.
-        :type refresh_token: Optional[str], optional
-        :param issued_token_type: The type of downscoped access token returned. This is only
-            returned if an access token has been downscoped.
-        :type issued_token_type: Optional[AccessTokenIssuedTokenTypeField], optional
-        """
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-        self.refresh_token = refresh_token
-        self.issued_token_type = issued_token_type
-
-class EventSourceItemTypeField(str, Enum):
-    FILE = 'file'
-    FOLDER = 'folder'
-
-class EventSourceClassificationField(BaseObject):
-    def __init__(self, name: Optional[str] = None, **kwargs):
-        """
-        :param name: The classification's name
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.name = name
-
-class EventSource(BaseObject):
-    def __init__(self, item_type: EventSourceItemTypeField, item_id: str, item_name: str, classification: Optional[EventSourceClassificationField] = None, parent: Optional[FolderMini] = None, owned_by: Optional[UserMini] = None, **kwargs):
-        """
-        :param item_type: The type of the item that the event
-            represents. Can be `file` or `folder`.
-        :type item_type: EventSourceItemTypeField
-        :param item_id: The unique identifier that represents the
-            item.
-        :type item_id: str
-        :param item_name: The name of the item.
-        :type item_name: str
-        :param classification: The object containing classification information for the item that
-            triggered the event. This field will not appear if the item does not
-            have a classification set.
-        :type classification: Optional[EventSourceClassificationField], optional
-        """
-        super().__init__(**kwargs)
-        self.item_type = item_type
-        self.item_id = item_id
-        self.item_name = item_name
-        self.classification = classification
-        self.parent = parent
-        self.owned_by = owned_by
-
-class Event(BaseObject):
-    def __init__(self, type: Optional[str] = None, created_at: Optional[str] = None, recorded_at: Optional[str] = None, event_id: Optional[str] = None, created_by: Optional[UserMini] = None, event_type: Optional[EventEventTypeField] = None, session_id: Optional[str] = None, source: Optional[Union[User, EventSource, File, Folder]] = None, additional_details: Optional[EventAdditionalDetailsField] = None, **kwargs):
-        """
-        :param type: `event`
-        :type type: Optional[str], optional
-        :param created_at: When the event object was created
-        :type created_at: Optional[str], optional
-        :param recorded_at: When the event object was recorded in database
-        :type recorded_at: Optional[str], optional
-        :param event_id: The ID of the event object. You can use this to detect duplicate events
-        :type event_id: Optional[str], optional
-        :param session_id: The session of the user that performed the action. Not all events will
-            populate this attribute.
-        :type session_id: Optional[str], optional
-        :param additional_details: This object provides additional information about the event if available.
-            This can include how a user performed an event as well as additional
-            information to correlate an event to external KeySafe logs. Not all events
-            have an `additional_details` object.  This object is only available in the
-            Enterprise Events.
-        :type additional_details: Optional[EventAdditionalDetailsField], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.created_at = created_at
-        self.recorded_at = recorded_at
-        self.event_id = event_id
-        self.created_by = created_by
-        self.event_type = event_type
-        self.session_id = session_id
-        self.source = source
-        self.additional_details = additional_details
-
-class Events(BaseObject):
-    def __init__(self, chunk_size: Optional[int] = None, next_stream_position: Optional[str] = None, entries: Optional[List[Event]] = None, **kwargs):
-        """
-        :param chunk_size: The number of events returned in this response.
-        :type chunk_size: Optional[int], optional
-        :param next_stream_position: The stream position of the start of the next page (chunk)
-            of events.
-        :type next_stream_position: Optional[str], optional
-        :param entries: A list of events
-        :type entries: Optional[List[Event]], optional
-        """
-        super().__init__(**kwargs)
-        self.chunk_size = chunk_size
-        self.next_stream_position = next_stream_position
-        self.entries = entries
-
-class SkillInvocation(BaseObject):
-    def __init__(self, type: Optional[SkillInvocationTypeField] = None, id: Optional[str] = None, skill: Optional[SkillInvocationSkillField] = None, token: Optional[SkillInvocationTokenField] = None, status: Optional[SkillInvocationStatusField] = None, created_at: Optional[str] = None, trigger: Optional[str] = None, enterprise: Optional[SkillInvocationEnterpriseField] = None, source: Optional[Union[File, Folder]] = None, event: Optional[Event] = None, **kwargs):
-        """
-        :param type: `skill_invocation`
-        :type type: Optional[SkillInvocationTypeField], optional
-        :param id: Unique identifier for the invocation request.
-        :type id: Optional[str], optional
-        :param token: The read-only and read-write access tokens for this item
-        :type token: Optional[SkillInvocationTokenField], optional
-        :param status: The details status of this event.
-        :type status: Optional[SkillInvocationStatusField], optional
-        :param created_at: The time this invocation was created.
-        :type created_at: Optional[str], optional
-        :param trigger: Action that triggered the invocation
-        :type trigger: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.id = id
-        self.skill = skill
-        self.token = token
-        self.status = status
-        self.created_at = created_at
-        self.trigger = trigger
-        self.enterprise = enterprise
-        self.source = source
-        self.event = event
-
 class KeywordSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
@@ -7312,6 +7108,25 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
         self.id = id
         self.slack_workspace_id = slack_workspace_id
         self.slack_org_id = slack_org_id
+
+class IntegrationMappingTypeField(str, Enum):
+    INTEGRATION_MAPPING = 'integration_mapping'
+
+class IntegrationMappingBoxItemField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingOptionsField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingCreatedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class IntegrationMappingModifiedByField(BaseObject):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 class IntegrationMapping(IntegrationMappingBase):
     def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: IntegrationMappingBoxItemField, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[IntegrationMappingCreatedByField] = None, modified_by: Optional[IntegrationMappingModifiedByField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
@@ -7847,210 +7662,6 @@ class SignRequestPrefillTag(BaseObject):
         self.checkbox_value = checkbox_value
         self.date_value = date_value
 
-class SignRequestBase(BaseObject):
-    def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
-        """
-        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
-        :type is_document_preparation_needed: Optional[bool], optional
-        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
-        :type redirect_url: Optional[str], optional
-        :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document.
-        :type declined_redirect_url: Optional[str], optional
-        :param are_text_signatures_enabled: Disables the usage of signatures generated by typing (text).
-        :type are_text_signatures_enabled: Optional[bool], optional
-        :param email_subject: Subject of sign request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
-        :type email_subject: Optional[str], optional
-        :param email_message: Message to include in sign request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
-        :type email_message: Optional[str], optional
-        :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
-        :type are_reminders_enabled: Optional[bool], optional
-        :param name: Name of the sign request.
-        :type name: Optional[str], optional
-        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
-        :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
-        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
-        :type days_valid: Optional[int], optional
-        :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
-        :type external_id: Optional[str], optional
-        :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
-        :type is_phone_verification_required_to_view: Optional[bool], optional
-        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
-        :type template_id: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.parent_folder = parent_folder
-        self.is_document_preparation_needed = is_document_preparation_needed
-        self.redirect_url = redirect_url
-        self.declined_redirect_url = declined_redirect_url
-        self.are_text_signatures_enabled = are_text_signatures_enabled
-        self.email_subject = email_subject
-        self.email_message = email_message
-        self.are_reminders_enabled = are_reminders_enabled
-        self.name = name
-        self.prefill_tags = prefill_tags
-        self.days_valid = days_valid
-        self.external_id = external_id
-        self.is_phone_verification_required_to_view = is_phone_verification_required_to_view
-        self.template_id = template_id
-
-class SignRequestCreateRequest(SignRequestBase):
-    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
-        """
-        :param signers: Array of signers for the sign request. 35 is the
-            max number of signers permitted.
-        :type signers: List[SignRequestCreateSigner]
-        :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
-        :type source_files: Optional[List[FileBase]], optional
-        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
-        :type is_document_preparation_needed: Optional[bool], optional
-        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
-        :type redirect_url: Optional[str], optional
-        :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document.
-        :type declined_redirect_url: Optional[str], optional
-        :param are_text_signatures_enabled: Disables the usage of signatures generated by typing (text).
-        :type are_text_signatures_enabled: Optional[bool], optional
-        :param email_subject: Subject of sign request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
-        :type email_subject: Optional[str], optional
-        :param email_message: Message to include in sign request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
-        :type email_message: Optional[str], optional
-        :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
-        :type are_reminders_enabled: Optional[bool], optional
-        :param name: Name of the sign request.
-        :type name: Optional[str], optional
-        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
-        :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
-        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
-        :type days_valid: Optional[int], optional
-        :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
-        :type external_id: Optional[str], optional
-        :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
-        :type is_phone_verification_required_to_view: Optional[bool], optional
-        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
-        :type template_id: Optional[str], optional
-        """
-        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id, **kwargs)
-        self.signers = signers
-        self.source_files = source_files
-
-class TemplateSignerInput(SignRequestPrefillTag):
-    def __init__(self, page_index: int, type: Optional[TemplateSignerInputTypeField] = None, content_type: Optional[TemplateSignerInputContentTypeField] = None, is_required: Optional[bool] = None, document_id: Optional[str] = None, dropdown_choices: Optional[List[str]] = None, group_id: Optional[str] = None, coordinates: Optional[TemplateSignerInputCoordinatesField] = None, dimensions: Optional[TemplateSignerInputDimensionsField] = None, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
-        """
-        :param page_index: Index of page that the input is on.
-        :type page_index: int
-        :param type: Type of input
-        :type type: Optional[TemplateSignerInputTypeField], optional
-        :param content_type: Content type of input
-        :type content_type: Optional[TemplateSignerInputContentTypeField], optional
-        :param is_required: Whether or not the input is required.
-        :type is_required: Optional[bool], optional
-        :param document_id: Document identifier.
-        :type document_id: Optional[str], optional
-        :param dropdown_choices: When the input is of the type `dropdown` this values will be filled with all the dropdown options.
-        :type dropdown_choices: Optional[List[str]], optional
-        :param group_id: When the input is of type `radio` they can be grouped to gather with this identifier.
-        :type group_id: Optional[str], optional
-        :param coordinates: Where the input is located on a page.
-        :type coordinates: Optional[TemplateSignerInputCoordinatesField], optional
-        :param dimensions: The size of the input.
-        :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
-        :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
-        :type document_tag_id: Optional[str], optional
-        :param text_value: Text prefill value
-        :type text_value: Optional[str], optional
-        :param checkbox_value: Checkbox prefill value
-        :type checkbox_value: Optional[bool], optional
-        :param date_value: Date prefill value
-        :type date_value: Optional[str], optional
-        """
-        super().__init__(document_tag_id=document_tag_id, text_value=text_value, checkbox_value=checkbox_value, date_value=date_value, **kwargs)
-        self.page_index = page_index
-        self.type = type
-        self.content_type = content_type
-        self.is_required = is_required
-        self.document_id = document_id
-        self.dropdown_choices = dropdown_choices
-        self.group_id = group_id
-        self.coordinates = coordinates
-        self.dimensions = dimensions
-
-class TemplateSigner(BaseObject):
-    def __init__(self, inputs: Optional[List[TemplateSignerInput]] = None, email: Optional[str] = None, role: Optional[TemplateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, **kwargs):
-        """
-        :param email: Email address of the signer
-        :type email: Optional[str], optional
-        :param role: Defines the role of the signer in the signature request. A role of
-            `signer` needs to sign the document, a role `approver`
-            approves the document and
-            a `final_copy_reader` role only
-            receives the final signed document and signing log.
-        :type role: Optional[TemplateSignerRoleField], optional
-        :param is_in_person: Used in combination with an embed URL for a sender.
-            After the sender signs, they will be
-            redirected to the next `in_person` signer.
-        :type is_in_person: Optional[bool], optional
-        :param order: Order of the signer
-        :type order: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.inputs = inputs
-        self.email = email
-        self.role = role
-        self.is_in_person = is_in_person
-        self.order = order
-
-class SignTemplate(BaseObject):
-    def __init__(self, id: Optional[str] = None, name: Optional[str] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, days_valid: Optional[int] = None, parent_folder: Optional[FolderMini] = None, source_files: Optional[List[FileMini]] = None, are_fields_locked: Optional[bool] = None, are_options_locked: Optional[bool] = None, are_recipients_locked: Optional[bool] = None, are_email_settings_locked: Optional[bool] = None, are_files_locked: Optional[bool] = None, signers: Optional[List[TemplateSigner]] = None, additional_info: Optional[SignTemplateAdditionalInfoField] = None, ready_sign_link: Optional[SignTemplateReadySignLinkField] = None, custom_branding: Optional[SignTemplateCustomBrandingField] = None, **kwargs):
-        """
-        :param id: Template identifier.
-        :type id: Optional[str], optional
-        :param name: The name of the template.
-        :type name: Optional[str], optional
-        :param email_subject: Subject of signature request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
-        :type email_subject: Optional[str], optional
-        :param email_message: Message to include in signature request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
-        :type email_message: Optional[str], optional
-        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
-        :type days_valid: Optional[int], optional
-        :param source_files: List of files to create a signing document from. Only the ID and type fields are required for each file.
-        :type source_files: Optional[List[FileMini]], optional
-        :param are_fields_locked: Indicates if the template input fields are editable or not.
-        :type are_fields_locked: Optional[bool], optional
-        :param are_options_locked: Indicates if the template document options are editable or not, for example renaming the document.
-        :type are_options_locked: Optional[bool], optional
-        :param are_recipients_locked: Indicates if the template signers are editable or not.
-        :type are_recipients_locked: Optional[bool], optional
-        :param are_email_settings_locked: Indicates if the template email settings are editable or not.
-        :type are_email_settings_locked: Optional[bool], optional
-        :param are_files_locked: Indicates if the template files are editable or not. This includes deleting or renaming template files.
-        :type are_files_locked: Optional[bool], optional
-        :param signers: Array of signers for the template.
-        :type signers: Optional[List[TemplateSigner]], optional
-        :param additional_info: Additional information on which fields are required and which fields are not editable.
-        :type additional_info: Optional[SignTemplateAdditionalInfoField], optional
-        :param ready_sign_link: Box's ready-sign link feature enables you to create a link to a signature request that you've created from a template. Use this link when you want to post a signature request on a public form — such as an email, social media post, or web page — without knowing who the signers will be. Note: The ready-sign link feature is limited to Enterprise Plus customers and not available to Box Verified Enterprises.
-        :type ready_sign_link: Optional[SignTemplateReadySignLinkField], optional
-        :param custom_branding: Custom branding applied to notifications
-            and signature requests.
-        :type custom_branding: Optional[SignTemplateCustomBrandingField], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.name = name
-        self.email_subject = email_subject
-        self.email_message = email_message
-        self.days_valid = days_valid
-        self.parent_folder = parent_folder
-        self.source_files = source_files
-        self.are_fields_locked = are_fields_locked
-        self.are_options_locked = are_options_locked
-        self.are_recipients_locked = are_recipients_locked
-        self.are_email_settings_locked = are_email_settings_locked
-        self.are_files_locked = are_files_locked
-        self.signers = signers
-        self.additional_info = additional_info
-        self.ready_sign_link = ready_sign_link
-        self.custom_branding = custom_branding
-
 class SignRequestSignerInputTypeField(str, Enum):
     SIGNATURE = 'signature'
     DATE = 'date'
@@ -8165,6 +7776,81 @@ class SignRequestSigner(SignRequestCreateSigner):
         self.inputs = inputs
         self.embed_url = embed_url
 
+class SignRequestBase(BaseObject):
+    def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
+        """
+        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
+        :type is_document_preparation_needed: Optional[bool], optional
+        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
+        :type redirect_url: Optional[str], optional
+        :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document.
+        :type declined_redirect_url: Optional[str], optional
+        :param are_text_signatures_enabled: Disables the usage of signatures generated by typing (text).
+        :type are_text_signatures_enabled: Optional[bool], optional
+        :param email_subject: Subject of sign request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
+        :type email_subject: Optional[str], optional
+        :param email_message: Message to include in sign request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
+        :type email_message: Optional[str], optional
+        :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
+        :type are_reminders_enabled: Optional[bool], optional
+        :param name: Name of the sign request.
+        :type name: Optional[str], optional
+        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
+        :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
+        :type days_valid: Optional[int], optional
+        :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
+        :type external_id: Optional[str], optional
+        :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
+        :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.parent_folder = parent_folder
+        self.is_document_preparation_needed = is_document_preparation_needed
+        self.redirect_url = redirect_url
+        self.declined_redirect_url = declined_redirect_url
+        self.are_text_signatures_enabled = are_text_signatures_enabled
+        self.email_subject = email_subject
+        self.email_message = email_message
+        self.are_reminders_enabled = are_reminders_enabled
+        self.name = name
+        self.prefill_tags = prefill_tags
+        self.days_valid = days_valid
+        self.external_id = external_id
+        self.is_phone_verification_required_to_view = is_phone_verification_required_to_view
+        self.template_id = template_id
+
+class SignRequestTypeField(str, Enum):
+    SIGN_REQUEST = 'sign-request'
+
+class SignRequestStatusField(str, Enum):
+    CONVERTING = 'converting'
+    CREATED = 'created'
+    SENT = 'sent'
+    VIEWED = 'viewed'
+    SIGNED = 'signed'
+    CANCELLED = 'cancelled'
+    DECLINED = 'declined'
+    ERROR_CONVERTING = 'error_converting'
+    ERROR_SENDING = 'error_sending'
+    EXPIRED = 'expired'
+
+class SignRequestSignFilesField(BaseObject):
+    def __init__(self, files: Optional[List[FileMini]] = None, is_ready_for_download: Optional[bool] = None, **kwargs):
+        """
+        :param is_ready_for_download: Indicates whether the `sign_files` documents are processing
+            and the PDFs may be out of date. A change to any document
+            requires processing on all `sign_files`. We
+            recommended waiting until processing is finished
+            (and this value is true) before downloading the PDFs.
+        :type is_ready_for_download: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.files = files
+        self.is_ready_for_download = is_ready_for_download
+
 class SignRequest(SignRequestBase):
     def __init__(self, parent_folder: FolderMini, type: Optional[SignRequestTypeField] = None, source_files: Optional[List[FileBase]] = None, signers: Optional[List[SignRequestSigner]] = None, signature_color: Optional[str] = None, id: Optional[str] = None, prepare_url: Optional[str] = None, signing_log: Optional[FileMini] = None, status: Optional[SignRequestStatusField] = None, sign_files: Optional[SignRequestSignFilesField] = None, auto_expire_at: Optional[str] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
         """
@@ -8249,6 +7935,297 @@ class SignRequests(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+class SignRequestCreateRequest(SignRequestBase):
+    def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
+        """
+        :param signers: Array of signers for the sign request. 35 is the
+            max number of signers permitted.
+        :type signers: List[SignRequestCreateSigner]
+        :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
+        :type source_files: Optional[List[FileBase]], optional
+        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
+        :type is_document_preparation_needed: Optional[bool], optional
+        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
+        :type redirect_url: Optional[str], optional
+        :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document.
+        :type declined_redirect_url: Optional[str], optional
+        :param are_text_signatures_enabled: Disables the usage of signatures generated by typing (text).
+        :type are_text_signatures_enabled: Optional[bool], optional
+        :param email_subject: Subject of sign request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
+        :type email_subject: Optional[str], optional
+        :param email_message: Message to include in sign request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
+        :type email_message: Optional[str], optional
+        :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
+        :type are_reminders_enabled: Optional[bool], optional
+        :param name: Name of the sign request.
+        :type name: Optional[str], optional
+        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
+        :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
+        :type days_valid: Optional[int], optional
+        :param external_id: This can be used to reference an ID in an external system that the sign request is related to.
+        :type external_id: Optional[str], optional
+        :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
+        :type is_phone_verification_required_to_view: Optional[bool], optional
+        :param template_id: When a signature request is created from a template this field will indicate the id of that template.
+        :type template_id: Optional[str], optional
+        """
+        super().__init__(parent_folder=parent_folder, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id, **kwargs)
+        self.signers = signers
+        self.source_files = source_files
+
+class TemplateSignerInputTypeField(str, Enum):
+    SIGNATURE = 'signature'
+    DATE = 'date'
+    TEXT = 'text'
+    CHECKBOX = 'checkbox'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
+
+class TemplateSignerInputContentTypeField(str, Enum):
+    SIGNATURE = 'signature'
+    INITIAL = 'initial'
+    STAMP = 'stamp'
+    DATE = 'date'
+    CHECKBOX = 'checkbox'
+    TEXT = 'text'
+    FULL_NAME = 'full_name'
+    FIRST_NAME = 'first_name'
+    LAST_NAME = 'last_name'
+    COMPANY = 'company'
+    TITLE = 'title'
+    EMAIL = 'email'
+    ATTACHMENT = 'attachment'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
+
+class TemplateSignerInputCoordinatesField(BaseObject):
+    def __init__(self, x: Optional[int] = None, y: Optional[int] = None, **kwargs):
+        """
+        :param x: Relative x coordinate to the page the input is on, ranging from 0 to 1.
+        :type x: Optional[int], optional
+        :param y: Relative y coordinate to the page the input is on, ranging from 0 to 1.
+        :type y: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.x = x
+        self.y = y
+
+class TemplateSignerInputDimensionsField(BaseObject):
+    def __init__(self, width: Optional[int] = None, height: Optional[int] = None, **kwargs):
+        """
+        :param width: Relative width to the page the input is on, ranging from 0 to 1.
+        :type width: Optional[int], optional
+        :param height: Relative height to the page the input is on, ranging from 0 to 1.
+        :type height: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.width = width
+        self.height = height
+
+class TemplateSignerInput(SignRequestPrefillTag):
+    def __init__(self, page_index: int, type: Optional[TemplateSignerInputTypeField] = None, content_type: Optional[TemplateSignerInputContentTypeField] = None, is_required: Optional[bool] = None, document_id: Optional[str] = None, dropdown_choices: Optional[List[str]] = None, group_id: Optional[str] = None, coordinates: Optional[TemplateSignerInputCoordinatesField] = None, dimensions: Optional[TemplateSignerInputDimensionsField] = None, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
+        """
+        :param page_index: Index of page that the input is on.
+        :type page_index: int
+        :param type: Type of input
+        :type type: Optional[TemplateSignerInputTypeField], optional
+        :param content_type: Content type of input
+        :type content_type: Optional[TemplateSignerInputContentTypeField], optional
+        :param is_required: Whether or not the input is required.
+        :type is_required: Optional[bool], optional
+        :param document_id: Document identifier.
+        :type document_id: Optional[str], optional
+        :param dropdown_choices: When the input is of the type `dropdown` this values will be filled with all the dropdown options.
+        :type dropdown_choices: Optional[List[str]], optional
+        :param group_id: When the input is of type `radio` they can be grouped to gather with this identifier.
+        :type group_id: Optional[str], optional
+        :param coordinates: Where the input is located on a page.
+        :type coordinates: Optional[TemplateSignerInputCoordinatesField], optional
+        :param dimensions: The size of the input.
+        :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
+        :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
+        :type document_tag_id: Optional[str], optional
+        :param text_value: Text prefill value
+        :type text_value: Optional[str], optional
+        :param checkbox_value: Checkbox prefill value
+        :type checkbox_value: Optional[bool], optional
+        :param date_value: Date prefill value
+        :type date_value: Optional[str], optional
+        """
+        super().__init__(document_tag_id=document_tag_id, text_value=text_value, checkbox_value=checkbox_value, date_value=date_value, **kwargs)
+        self.page_index = page_index
+        self.type = type
+        self.content_type = content_type
+        self.is_required = is_required
+        self.document_id = document_id
+        self.dropdown_choices = dropdown_choices
+        self.group_id = group_id
+        self.coordinates = coordinates
+        self.dimensions = dimensions
+
+class TemplateSignerRoleField(str, Enum):
+    SIGNER = 'signer'
+    APPROVER = 'approver'
+    FINAL_COPY_READER = 'final_copy_reader'
+
+class TemplateSigner(BaseObject):
+    def __init__(self, inputs: Optional[List[TemplateSignerInput]] = None, email: Optional[str] = None, role: Optional[TemplateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, **kwargs):
+        """
+        :param email: Email address of the signer
+        :type email: Optional[str], optional
+        :param role: Defines the role of the signer in the signature request. A role of
+            `signer` needs to sign the document, a role `approver`
+            approves the document and
+            a `final_copy_reader` role only
+            receives the final signed document and signing log.
+        :type role: Optional[TemplateSignerRoleField], optional
+        :param is_in_person: Used in combination with an embed URL for a sender.
+            After the sender signs, they will be
+            redirected to the next `in_person` signer.
+        :type is_in_person: Optional[bool], optional
+        :param order: Order of the signer
+        :type order: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.inputs = inputs
+        self.email = email
+        self.role = role
+        self.is_in_person = is_in_person
+        self.order = order
+
+class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
+    EMAIL_SUBJECT = 'email_subject'
+    EMAIL_MESSAGE = 'email_message'
+    NAME = 'name'
+    DAYS_VALID = 'days_valid'
+    SIGNERS = 'signers'
+    SOURCE_FILES = 'source_files'
+
+class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
+    EMAIL = 'email'
+
+class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
+    def __init__(self, signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]] = None, **kwargs):
+        """
+        :param signers: Required signer fields.
+        :type signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]], optional
+        """
+        super().__init__(**kwargs)
+        self.signers = signers
+
+class SignTemplateAdditionalInfoField(BaseObject):
+    def __init__(self, non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]] = None, required: Optional[SignTemplateAdditionalInfoFieldRequiredField] = None, **kwargs):
+        """
+        :param non_editable: Non editable fields.
+        :type non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]], optional
+        :param required: Required fields.
+        :type required: Optional[SignTemplateAdditionalInfoFieldRequiredField], optional
+        """
+        super().__init__(**kwargs)
+        self.non_editable = non_editable
+        self.required = required
+
+class SignTemplateReadySignLinkField(BaseObject):
+    def __init__(self, url: Optional[str] = None, name: Optional[str] = None, instructions: Optional[str] = None, folder_id: Optional[str] = None, is_notification_disabled: Optional[bool] = None, is_active: Optional[bool] = None, **kwargs):
+        """
+        :param url: The URL that can be sent to signers.
+        :type url: Optional[str], optional
+        :param name: Request name.
+        :type name: Optional[str], optional
+        :param instructions: Extra instructions for all signers.
+        :type instructions: Optional[str], optional
+        :param folder_id: The destination folder to place final,
+            signed document and signing
+            log. Only `ID` and `type` fields are required.
+            The root folder,
+            folder ID `0`, cannot be used.
+        :type folder_id: Optional[str], optional
+        :param is_notification_disabled: Whether to disable notifications when
+            a signer has signed.
+        :type is_notification_disabled: Optional[bool], optional
+        :param is_active: Whether the ready sign link is enabled or not.
+        :type is_active: Optional[bool], optional
+        """
+        super().__init__(**kwargs)
+        self.url = url
+        self.name = name
+        self.instructions = instructions
+        self.folder_id = folder_id
+        self.is_notification_disabled = is_notification_disabled
+        self.is_active = is_active
+
+class SignTemplateCustomBrandingField(BaseObject):
+    def __init__(self, company_name: Optional[str] = None, logo_uri: Optional[str] = None, branding_color: Optional[str] = None, email_footer_text: Optional[str] = None, **kwargs):
+        """
+        :param company_name: Name of the company
+        :type company_name: Optional[str], optional
+        :param logo_uri: Custom branding logo URI in the form of a base64 image.
+        :type logo_uri: Optional[str], optional
+        :param branding_color: Custom branding color in hex.
+        :type branding_color: Optional[str], optional
+        :param email_footer_text: Content of the email footer.
+        :type email_footer_text: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.company_name = company_name
+        self.logo_uri = logo_uri
+        self.branding_color = branding_color
+        self.email_footer_text = email_footer_text
+
+class SignTemplate(BaseObject):
+    def __init__(self, id: Optional[str] = None, name: Optional[str] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, days_valid: Optional[int] = None, parent_folder: Optional[FolderMini] = None, source_files: Optional[List[FileMini]] = None, are_fields_locked: Optional[bool] = None, are_options_locked: Optional[bool] = None, are_recipients_locked: Optional[bool] = None, are_email_settings_locked: Optional[bool] = None, are_files_locked: Optional[bool] = None, signers: Optional[List[TemplateSigner]] = None, additional_info: Optional[SignTemplateAdditionalInfoField] = None, ready_sign_link: Optional[SignTemplateReadySignLinkField] = None, custom_branding: Optional[SignTemplateCustomBrandingField] = None, **kwargs):
+        """
+        :param id: Template identifier.
+        :type id: Optional[str], optional
+        :param name: The name of the template.
+        :type name: Optional[str], optional
+        :param email_subject: Subject of signature request email. This is cleaned by sign request. If this field is not passed, a default subject will be used.
+        :type email_subject: Optional[str], optional
+        :param email_message: Message to include in signature request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used.
+        :type email_message: Optional[str], optional
+        :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
+        :type days_valid: Optional[int], optional
+        :param source_files: List of files to create a signing document from. Only the ID and type fields are required for each file.
+        :type source_files: Optional[List[FileMini]], optional
+        :param are_fields_locked: Indicates if the template input fields are editable or not.
+        :type are_fields_locked: Optional[bool], optional
+        :param are_options_locked: Indicates if the template document options are editable or not, for example renaming the document.
+        :type are_options_locked: Optional[bool], optional
+        :param are_recipients_locked: Indicates if the template signers are editable or not.
+        :type are_recipients_locked: Optional[bool], optional
+        :param are_email_settings_locked: Indicates if the template email settings are editable or not.
+        :type are_email_settings_locked: Optional[bool], optional
+        :param are_files_locked: Indicates if the template files are editable or not. This includes deleting or renaming template files.
+        :type are_files_locked: Optional[bool], optional
+        :param signers: Array of signers for the template.
+        :type signers: Optional[List[TemplateSigner]], optional
+        :param additional_info: Additional information on which fields are required and which fields are not editable.
+        :type additional_info: Optional[SignTemplateAdditionalInfoField], optional
+        :param ready_sign_link: Box's ready-sign link feature enables you to create a link to a signature request that you've created from a template. Use this link when you want to post a signature request on a public form — such as an email, social media post, or web page — without knowing who the signers will be. Note: The ready-sign link feature is limited to Enterprise Plus customers and not available to Box Verified Enterprises.
+        :type ready_sign_link: Optional[SignTemplateReadySignLinkField], optional
+        :param custom_branding: Custom branding applied to notifications
+            and signature requests.
+        :type custom_branding: Optional[SignTemplateCustomBrandingField], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.name = name
+        self.email_subject = email_subject
+        self.email_message = email_message
+        self.days_valid = days_valid
+        self.parent_folder = parent_folder
+        self.source_files = source_files
+        self.are_fields_locked = are_fields_locked
+        self.are_options_locked = are_options_locked
+        self.are_recipients_locked = are_recipients_locked
+        self.are_email_settings_locked = are_email_settings_locked
+        self.are_files_locked = are_files_locked
+        self.signers = signers
+        self.additional_info = additional_info
+        self.ready_sign_link = ready_sign_link
+        self.custom_branding = custom_branding
+
 class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
     def __init__(self, folder_id: Optional[str] = None, **kwargs):
         """
@@ -8281,6 +8258,29 @@ class TrackingCode(BaseObject):
         self.type = type
         self.name = name
         self.value = value
+
+class UserFullRoleField(str, Enum):
+    ADMIN = 'admin'
+    COADMIN = 'coadmin'
+    USER = 'user'
+
+class UserFullEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
+
+class UserFullEnterpriseField(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[UserFullEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this enterprise.
+        :type id: Optional[str], optional
+        :param type: `enterprise`
+        :type type: Optional[UserFullEnterpriseFieldTypeField], optional
+        :param name: The name of the enterprise
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
 
 class UserFull(User):
     def __init__(self, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):

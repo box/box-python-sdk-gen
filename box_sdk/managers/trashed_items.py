@@ -2,7 +2,7 @@ from enum import Enum
 
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import Dict
 
 import json
 
@@ -14,24 +14,48 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetFolderTrashItemsOptionsArgDirectionField(str, Enum):
+class GetFolderTrashItemsDirectionArg(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
-class GetFolderTrashItemsOptionsArgSortField(str, Enum):
+class GetFolderTrashItemsSortArg(str, Enum):
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
-class GetFolderTrashItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsOptionsArgDirectionField] = None, sort: Optional[GetFolderTrashItemsOptionsArgSortField] = None, **kwargs):
+class TrashedItemsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_folder_trash_items(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsDirectionArg] = None, sort: Optional[GetFolderTrashItemsSortArg] = None) -> Items:
         """
+        Retrieves the files and folders that have been moved
+        
+        to the trash.
+
+        
+        Any attribute in the full files or folders objects can be passed
+
+        
+        in with the `fields` parameter to retrieve those specific
+
+        
+        attributes that are not returned by default.
+
+        
+        This endpoint defaults to use offset-based pagination, yet also supports
+
+        
+        marker-based pagination using the `marker` parameter.
+
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -61,51 +85,15 @@ class GetFolderTrashItemsOptionsArg(BaseObject):
         :type marker: Optional[str], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetFolderTrashItemsOptionsArgDirectionField], optional
+        :type direction: Optional[GetFolderTrashItemsDirectionArg], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
             folders listed before files, and files listed
             before web links.
             This parameter is not supported when using marker-based pagination.
-        :type sort: Optional[GetFolderTrashItemsOptionsArgSortField], optional
+        :type sort: Optional[GetFolderTrashItemsSortArg], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.limit = limit
-        self.offset = offset
-        self.usemarker = usemarker
-        self.marker = marker
-        self.direction = direction
-        self.sort = sort
-
-class TrashedItemsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
-        self.auth = auth
-        self.network_session = network_session
-    def get_folder_trash_items(self, options: GetFolderTrashItemsOptionsArg = None) -> Items:
-        """
-        Retrieves the files and folders that have been moved
-        
-        to the trash.
-
-        
-        Any attribute in the full files or folders objects can be passed
-
-        
-        in with the `fields` parameter to retrieve those specific
-
-        
-        attributes that are not returned by default.
-
-        
-        This endpoint defaults to use offset-based pagination, yet also supports
-
-        
-        marker-based pagination using the `marker` parameter.
-
-        """
-        if options is None:
-            options = GetFolderTrashItemsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'offset': options.offset, 'usemarker': options.usemarker, 'marker': options.marker, 'direction': options.direction, 'sort': options.sort}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset, 'usemarker': usemarker, 'marker': marker, 'direction': direction, 'sort': sort}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

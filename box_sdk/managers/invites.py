@@ -2,7 +2,11 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
+from typing import Dict
+
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Invite
 
@@ -12,13 +16,15 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class CreateInviteRequestBodyArgEnterpriseField(BaseObject):
+class CreateInviteEnterpriseArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the enterprise
@@ -27,7 +33,7 @@ class CreateInviteRequestBodyArgEnterpriseField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
-class CreateInviteRequestBodyArgActionableByField(BaseObject):
+class CreateInviteActionableByArg(BaseObject):
     def __init__(self, login: Optional[str] = None, **kwargs):
         """
         :param login: The login of the invited user
@@ -36,55 +42,11 @@ class CreateInviteRequestBodyArgActionableByField(BaseObject):
         super().__init__(**kwargs)
         self.login = login
 
-class CreateInviteRequestBodyArg(BaseObject):
-    def __init__(self, enterprise: CreateInviteRequestBodyArgEnterpriseField, actionable_by: CreateInviteRequestBodyArgActionableByField, **kwargs):
-        """
-        :param enterprise: The enterprise to invite the user to
-        :type enterprise: CreateInviteRequestBodyArgEnterpriseField
-        :param actionable_by: The user to invite
-        :type actionable_by: CreateInviteRequestBodyArgActionableByField
-        """
-        super().__init__(**kwargs)
-        self.enterprise = enterprise
-        self.actionable_by = actionable_by
-
-class CreateInviteOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
-class GetInviteByIdOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, **kwargs):
-        """
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.fields = fields
-
 class InvitesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_invite(self, request_body: CreateInviteRequestBodyArg, options: CreateInviteOptionsArg = None) -> Invite:
+    def create_invite(self, enterprise: CreateInviteEnterpriseArg, actionable_by: CreateInviteActionableByArg, fields: Optional[str] = None) -> Invite:
         """
         Invites an existing external user to join an enterprise.
         
@@ -105,19 +67,40 @@ class InvitesManager:
         
         the application, which can be enabled within the developer console.
 
+        :param enterprise: The enterprise to invite the user to
+        :type enterprise: CreateInviteEnterpriseArg
+        :param actionable_by: The user to invite
+        :type actionable_by: CreateInviteActionableByArg
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = CreateInviteOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params={'fields': options.fields}, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(enterprise=enterprise, actionable_by=actionable_by)
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))
-    def get_invite_by_id(self, invite_id: str, options: GetInviteByIdOptionsArg = None) -> Invite:
+    def get_invite_by_id(self, invite_id: str, fields: Optional[str] = None) -> Invite:
         """
         Returns the status of a user invite.
         :param invite_id: The ID of an invite.
             Example: "213723"
         :type invite_id: str
+        :param fields: A comma-separated list of attributes to include in the
+            response. This can be used to request fields that are
+            not normally returned in a standard response.
+            Be aware that specifying this parameter will have the
+            effect that none of the standard fields are returned in
+            the response unless explicitly specified, instead only
+            fields for the mini representation are returned, additional
+            to the fields requested.
+        :type fields: Optional[str], optional
         """
-        if options is None:
-            options = GetInviteByIdOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params={'fields': options.fields}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))

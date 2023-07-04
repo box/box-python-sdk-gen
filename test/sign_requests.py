@@ -1,8 +1,6 @@
-from box_sdk.schemas import FolderBaseTypeField
-
 from box_sdk.schemas import FileBaseTypeField
 
-from box_sdk.managers.folders import DeleteFolderByIdOptionsArg
+from box_sdk.schemas import FolderBaseTypeField
 
 from box_sdk.utils import decode_base_64
 
@@ -38,7 +36,7 @@ def test_create_get_cancel_and_list_sign_request():
     signer_email: str = ''.join([get_uuid(), '@box.com'])
     file_to_sign = upload_new_file()
     destination_folder = create_new_folder()
-    created_sign_request: SignRequest = client.sign_requests.create_sign_request(SignRequestCreateRequest(signers=[SignRequestCreateSigner(email=signer_email)], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value), source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)]))
+    created_sign_request: SignRequest = client.sign_requests.create_sign_request(source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)], signers=[SignRequestCreateSigner(email=signer_email)], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value))
     assert created_sign_request.sign_files.files[0].name == file_to_sign.name
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.parent_folder.id == destination_folder.id
@@ -50,5 +48,5 @@ def test_create_get_cancel_and_list_sign_request():
     assert cancelled_sign_request.status == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
     assert sign_requests.entries[0].type == 'sign-request'
-    client.folders.delete_folder_by_id(destination_folder.id, DeleteFolderByIdOptionsArg(recursive=True))
-    client.files.delete_file_by_id(file_to_sign.id)
+    client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
+    client.files.delete_file_by_id(file_id=file_to_sign.id)

@@ -48,12 +48,8 @@ such fields in a comma-separated string
 
 ```python
 from box_sdk.schemas import FolderFull
-from box_sdk.managers.folders import GetFolderByIdOptionsArg
 
-folder: FolderFull = client.folders.get_folder_by_id(
-  '12345',
-  GetFolderByIdOptionsArg(fields='has_collaborations,tags')
-)
+folder: FolderFull = client.folders.get_folder_by_id(folder_id='12345', fields='has_collaborations,tags')
 ```
 
 NOTE: Be aware that specifying `fields` parameter will have the effect that none of the standard fields
@@ -79,12 +75,9 @@ A folder can be created by calling `create_folder` method with required request 
 This method returns a new `FolderFull` representing the created subfolder.
 
 ```python
-from box_sdk.managers.folders import CreateFolderRequestBodyArg
-from box_sdk.managers.folders import CreateFolderRequestBodyArgParentField
+from box_sdk.managers.folders import CreateFolderParentArg
 
-subfolder = client.folders.create_folder(
-    CreateFolderRequestBodyArg(name='New Folder Name', parent=CreateFolderRequestBodyArgParentField(id='0'))
-)
+subfolder = client.folders.create_folder(name='New Folder Name', parent=CreateFolderParentArg(id='0'))
 print(f'Created subfolder with ID {subfolder.id}')
 ```
 
@@ -96,11 +89,10 @@ to update on the folder. This method returns an updated `FolderFull` object.
 <!-- sample put_folders_id -->
 
 ```python
-from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArg
-
 updated_folder = client.folders.update_folder_by_id(
-    '12345',
-    UpdateFolderByIdRequestBodyArg(name='Updated folder name', description='Updated description')
+  folder_id='12345',
+  name='Updated folder name',
+  description='Updated description'
 )
 print(f'Folder with ID {updated_folder.id} new name: {updated_folder.name}')
 ```
@@ -114,15 +106,15 @@ This method returns a new `FolderFull` object representing the copy of the folde
 <!-- sample post_folders_id_copy -->
 
 ```python
-from box_sdk.managers.folders import CopyFolderRequestBodyArg
-from box_sdk.managers.folders import CopyFolderRequestBodyArgParentField
+from box_sdk.managers.folders import CopyFolderParentArg
 
 folder_id = '22222'
 destination_folder_id = '44444'
 
 folder_copy = client.folders.copy_folder(
-    folder_id,
-    CopyFolderRequestBodyArg(parent=CopyFolderRequestBodyArgParentField(id=destination_folder_id), name='Copied folder name')
+  folder_id=folder_id,
+  parent=CopyFolderParentArg(id=destination_folder_id),
+  name='Copied folder name'
 )
 
 print(f'Folder "{folder_copy.name}" has been copied into folder "{folder_copy.parent.name}"')
@@ -135,19 +127,15 @@ destination folder to move the folder into. You can optionally provide a `name` 
 folder in case of a name conflict in the destination folder. This method returns the updated `FolderFull` object.
 
 ```python
-from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArg
-from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArgParentField
+from box_sdk.managers.folders import CopyFolderParentArg
 
 folder_id = '11111'
 destination_folder_id = '44444'
 
 moved_folder = client.folders.update_folder_by_id(
-    folder_id,
-    UpdateFolderByIdRequestBodyArg(
-        parent=UpdateFolderByIdRequestBodyArgParentField(id=destination_folder_id),
-        name='Moved folder new name'
-    )
-
+  folder_id=folder_id,
+  parent=CopyFolderParentArg(id=destination_folder_id),
+  name='Moved folder new name'
 )
 print(f'Folder "{moved_folder.name}" has been moved into folder "{moved_folder.parent.name}"')
 ```
@@ -158,11 +146,9 @@ A folder can be renamed by calling `update_folder_by_id` method and passing a ne
 This method returns the updated `FolderFull` object with a new name.
 
 ```python
-from box_sdk.managers.folders import UpdateFolderByIdRequestBodyArg
-
 updated_folder = client.folders.update_folder_by_id(
-    folder_id,
-    UpdateFolderByIdRequestBodyArg(name='Updated folder name')
+  folder_id=folder_id,
+  name='Updated folder name'
 )
 
 print(f'Folder "{updated_folder.id}" has a new name "{updated_folder.name}"')
@@ -181,11 +167,9 @@ By default, the method will not delete the folder when folder is not empty. To d
 set the `recursive` parameter to `True`.
 
 ```python
-from box_sdk.managers.folders import DeleteFolderByIdOptionsArg
-
 client.folders.delete_folder_by_id(
-    '12345',
-    DeleteFolderByIdOptionsArg(recursive=True)
+    folder_id='12345',
+    recursive=True
 )
 print('Folder with id: 12345 was successfully deleted')
 ```

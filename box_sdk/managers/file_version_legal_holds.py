@@ -1,8 +1,8 @@
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
-
 import json
+
+from typing import Dict
 
 from box_sdk.schemas import FileVersionLegalHold
 
@@ -14,25 +14,13 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
-
-class GetFileVersionLegalHoldsOptionsArg(BaseObject):
-    def __init__(self, marker: Optional[str] = None, limit: Optional[int] = None, **kwargs):
-        """
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.marker = marker
-        self.limit = limit
 
 class FileVersionLegalHoldsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -50,7 +38,7 @@ class FileVersionLegalHoldsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds/', file_version_legal_hold_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHold.from_dict(json.loads(response.text))
-    def get_file_version_legal_holds(self, policy_id: str, options: GetFileVersionLegalHoldsOptionsArg = None) -> FileVersionLegalHolds:
+    def get_file_version_legal_holds(self, policy_id: str, marker: Optional[str] = None, limit: Optional[int] = None) -> FileVersionLegalHolds:
         """
         Get a list of file versions on legal hold for a legal hold
         
@@ -97,10 +85,14 @@ class FileVersionLegalHoldsManager:
 
         :param policy_id: The ID of the legal hold policy to get the file version legal
             holds for.
-            Example: "133870"
         :type policy_id: str
+        :param marker: Defines the position marker at which to begin returning results. This is
+            used when paginating using marker-based pagination.
+            This requires `usemarker` to be set to `true`.
+        :type marker: Optional[str], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
         """
-        if options is None:
-            options = GetFileVersionLegalHoldsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds']), FetchOptions(method='GET', params={'policy_id': policy_id, 'marker': options.marker, 'limit': options.limit}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'policy_id': policy_id, 'marker': marker, 'limit': limit}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

@@ -6,6 +6,8 @@ from typing import Optional
 
 import json
 
+from box_sdk.base_object import BaseObject
+
 from box_sdk.schemas import Watermark
 
 from box_sdk.schemas import ClientError
@@ -14,33 +16,26 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class UpdateFileWatermarkRequestBodyArgWatermarkFieldImprintField(str, Enum):
+class UpdateFileWatermarkWatermarkArgImprintField(str, Enum):
     DEFAULT = 'default'
 
-class UpdateFileWatermarkRequestBodyArgWatermarkField(BaseObject):
-    def __init__(self, imprint: UpdateFileWatermarkRequestBodyArgWatermarkFieldImprintField, **kwargs):
+class UpdateFileWatermarkWatermarkArg(BaseObject):
+    def __init__(self, imprint: UpdateFileWatermarkWatermarkArgImprintField, **kwargs):
         """
         :param imprint: The type of watermark to apply.
             Currently only supports one option.
-        :type imprint: UpdateFileWatermarkRequestBodyArgWatermarkFieldImprintField
+        :type imprint: UpdateFileWatermarkWatermarkArgImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
-
-class UpdateFileWatermarkRequestBodyArg(BaseObject):
-    def __init__(self, watermark: UpdateFileWatermarkRequestBodyArgWatermarkField, **kwargs):
-        """
-        :param watermark: The watermark to imprint on the file
-        :type watermark: UpdateFileWatermarkRequestBodyArgWatermarkField
-        """
-        super().__init__(**kwargs)
-        self.watermark = watermark
 
 class FileWatermarksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -60,7 +55,7 @@ class FileWatermarksManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Watermark.from_dict(json.loads(response.text))
-    def update_file_watermark(self, file_id: str, request_body: UpdateFileWatermarkRequestBodyArg) -> Watermark:
+    def update_file_watermark(self, file_id: str, watermark: UpdateFileWatermarkWatermarkArg) -> Watermark:
         """
         Applies or update a watermark on a file.
         :param file_id: The unique identifier that represents a file.
@@ -71,8 +66,11 @@ class FileWatermarksManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param watermark: The watermark to imprint on the file
+        :type watermark: UpdateFileWatermarkWatermarkArg
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject(watermark=watermark)
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Watermark.from_dict(json.loads(response.text))
     def delete_file_watermark(self, file_id: str):
         """

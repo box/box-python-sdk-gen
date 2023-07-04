@@ -1,10 +1,10 @@
 from enum import Enum
 
-from box_sdk.base_object import BaseObject
-
 from typing import Optional
 
 import json
+
+from box_sdk.base_object import BaseObject
 
 from box_sdk.schemas import Metadatas
 
@@ -15,6 +15,8 @@ from box_sdk.schemas import Metadata
 from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
+
+from box_sdk.utils import to_map
 
 from box_sdk.fetch import fetch
 
@@ -29,10 +31,6 @@ class GetFolderMetadataByIdScopeArg(str, Enum):
 class CreateFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
-
-class CreateFolderMetadataByIdRequestBodyArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
 class DeleteFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
@@ -86,7 +84,7 @@ class FolderMetadataManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
-    def create_folder_metadata_by_id(self, folder_id: str, scope: CreateFolderMetadataByIdScopeArg, template_key: str, request_body: CreateFolderMetadataByIdRequestBodyArg) -> Metadata:
+    def create_folder_metadata_by_id(self, folder_id: str, scope: CreateFolderMetadataByIdScopeArg, template_key: str) -> Metadata:
         """
         Applies an instance of a metadata template to a folder.
         
@@ -124,7 +122,8 @@ class FolderMetadataManager:
             Example: "properties"
         :type template_key: str
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        request_body: BaseObject = BaseObject()
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Metadata.from_dict(json.loads(response.text))
     def delete_folder_metadata_by_id(self, folder_id: str, scope: DeleteFolderMetadataByIdScopeArg, template_key: str):
         """

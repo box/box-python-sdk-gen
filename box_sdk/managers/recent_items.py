@@ -1,6 +1,6 @@
 from typing import Optional
 
-from box_sdk.base_object import BaseObject
+from typing import Dict
 
 import json
 
@@ -12,15 +12,27 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
+from box_sdk.utils import to_map
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
 
-class GetRecentItemsOptionsArg(BaseObject):
-    def __init__(self, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, **kwargs):
+class RecentItemsManager:
+    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+        self.auth = auth
+        self.network_session = network_session
+    def get_recent_items(self, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> RecentItems:
         """
+        Returns information about the recent items accessed
+        
+        by a user, either in the last 90 days or up to the last
+
+        
+        1000 items accessed.
+
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -37,26 +49,6 @@ class GetRecentItemsOptionsArg(BaseObject):
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
         """
-        super().__init__(**kwargs)
-        self.fields = fields
-        self.limit = limit
-        self.marker = marker
-
-class RecentItemsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
-        self.auth = auth
-        self.network_session = network_session
-    def get_recent_items(self, options: GetRecentItemsOptionsArg = None) -> RecentItems:
-        """
-        Returns information about the recent items accessed
-        
-        by a user, either in the last 90 days or up to the last
-
-        
-        1000 items accessed.
-
-        """
-        if options is None:
-            options = GetRecentItemsOptionsArg()
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/recent_items']), FetchOptions(method='GET', params={'fields': options.fields, 'limit': options.limit, 'marker': options.marker}, auth=self.auth, network_session=self.network_session))
+        query_params: Dict = {'fields': fields, 'limit': limit, 'marker': marker}
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/recent_items']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
         return RecentItems.from_dict(json.loads(response.text))
