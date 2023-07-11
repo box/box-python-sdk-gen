@@ -1051,7 +1051,7 @@ class AccessToken(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[AccessTokenTokenTypeField], optional
@@ -4371,7 +4371,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField], optional
@@ -6281,7 +6281,7 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField], optional
@@ -6304,7 +6304,7 @@ class SkillInvocationTokenFieldWriteField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField], optional
