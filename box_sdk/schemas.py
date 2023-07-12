@@ -7836,6 +7836,8 @@ class SignRequestStatusField(str, Enum):
     ERROR_CONVERTING = 'error_converting'
     ERROR_SENDING = 'error_sending'
     EXPIRED = 'expired'
+    FINALIZING = 'finalizing'
+    ERROR_FINALIZING = 'error_finalizing'
 
 class SignRequestSignFilesField(BaseObject):
     def __init__(self, files: Optional[List[FileMini]] = None, is_ready_for_download: Optional[bool] = None, **kwargs):
