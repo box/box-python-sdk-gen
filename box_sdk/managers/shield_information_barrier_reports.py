@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -43,14 +43,14 @@ class ShieldInformationBarrierReportsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'shield_information_barrier_id': shield_information_barrier_id, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier_report(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None) -> ShieldInformationBarrierReport:
         """
         Creates a shield information barrier report for a given barrier.
         """
         request_body: BaseObject = BaseObject(shield_information_barrier=shield_information_barrier)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
     def get_shield_information_barrier_report_by_id(self, shield_information_barrier_report_id: str) -> ShieldInformationBarrierReport:
         """

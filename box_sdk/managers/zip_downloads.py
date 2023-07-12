@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -61,7 +61,7 @@ class ZipDownloadsManager:
         :type download_file_name: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(items=items, download_file_name=download_file_name)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ZipDownload.from_dict(json.loads(response.text))
     def get_zip_download_content(self, zip_download_id: str):
         """

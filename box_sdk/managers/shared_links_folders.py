@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -202,7 +202,7 @@ class SharedLinksFoldersManager:
         """
         query_params: Dict = {'fields': fields}
         headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def get_folder_get_shared_link(self, folder_id: str, fields: str) -> FolderFull:
         """
@@ -222,7 +222,7 @@ class SharedLinksFoldersManager:
         :type fields: str
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def update_folder_add_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
@@ -247,7 +247,7 @@ class SharedLinksFoldersManager:
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def update_folder_update_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
@@ -270,7 +270,7 @@ class SharedLinksFoldersManager:
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def update_folder_remove_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg] = None) -> FolderFull:
         """
@@ -294,5 +294,5 @@ class SharedLinksFoldersManager:
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

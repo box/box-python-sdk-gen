@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -64,7 +64,7 @@ class ShieldInformationBarriersManager:
         :type status: CreateShieldInformationBarrierChangeStatusStatusArg
         """
         request_body: BaseObject = BaseObject(id=id, status=status)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
     def get_shield_information_barriers(self, marker: Optional[str] = None, limit: Optional[int] = None) -> None:
         """
@@ -80,7 +80,7 @@ class ShieldInformationBarriersManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierTypeArg] = None, enterprise: Optional[EnterpriseBase] = None, status: Optional[CreateShieldInformationBarrierStatusArg] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, enabled_at: Optional[str] = None, enabled_by: Optional[UserBase] = None) -> ShieldInformationBarrier:
         """
@@ -106,5 +106,5 @@ class ShieldInformationBarriersManager:
         :type enabled_at: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(id=id, type=type, enterprise=enterprise, status=status, created_at=created_at, created_by=created_by, updated_at=updated_at, updated_by=updated_by, enabled_at=enabled_at, enabled_by=enabled_by)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrier.from_dict(json.loads(response.text))

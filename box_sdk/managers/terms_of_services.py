@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -58,7 +58,7 @@ class TermsOfServicesManager:
         :type tos_type: Optional[GetTermOfServicesTosTypeArg], optional
         """
         query_params: Dict = {'tos_type': tos_type}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return TermsOfServices.from_dict(json.loads(response.text))
     def create_term_of_service(self, status: CreateTermOfServiceStatusArg, text: str, tos_type: Optional[CreateTermOfServiceTosTypeArg] = None) -> Task:
         """
@@ -76,7 +76,7 @@ class TermsOfServicesManager:
         :type tos_type: Optional[CreateTermOfServiceTosTypeArg], optional
         """
         request_body: BaseObject = BaseObject(status=status, tos_type=tos_type, text=text)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def get_term_of_service_by_id(self, terms_of_service_id: str) -> TermsOfService:
         """
@@ -100,5 +100,5 @@ class TermsOfServicesManager:
         :type text: str
         """
         request_body: BaseObject = BaseObject(status=status, text=text)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfService.from_dict(json.loads(response.text))

@@ -32,7 +32,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -138,7 +138,7 @@ class SearchManager:
         :type fields: Optional[List[str]], optional
         """
         request_body: BaseObject = BaseObject(from_=from_, query=query, query_params=query_params, ancestor_folder_id=ancestor_folder_id, order_by=order_by, limit=limit, marker=marker, fields=fields)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return MetadataQueryResults.from_dict(json.loads(response.text))
     def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str) -> MetadataQueryIndices:
         """
@@ -149,7 +149,7 @@ class SearchManager:
         :type template_key: str
         """
         query_params: Dict = {'scope': scope, 'template_key': template_key}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return MetadataQueryIndices.from_dict(json.loads(response.text))
     def get_search(self, query: Optional[str] = None, scope: Optional[GetSearchScopeArg] = None, file_extensions: Optional[str] = None, created_at_range: Optional[str] = None, updated_at_range: Optional[str] = None, size_range: Optional[str] = None, owner_user_ids: Optional[str] = None, recent_updater_user_ids: Optional[str] = None, ancestor_folder_ids: Optional[str] = None, content_types: Optional[str] = None, type: Optional[GetSearchTypeArg] = None, trash_content: Optional[GetSearchTrashContentArg] = None, mdfilters: Optional[str] = None, sort: Optional[GetSearchSortArg] = None, direction: Optional[GetSearchDirectionArg] = None, limit: Optional[int] = None, include_recent_shared_links: Optional[bool] = None, fields: Optional[str] = None, offset: Optional[int] = None, deleted_user_ids: Optional[str] = None, deleted_at_range: Optional[str] = None) -> None:
         """
@@ -359,5 +359,5 @@ class SearchManager:
         :type deleted_at_range: Optional[str], optional
         """
         query_params: Dict = {'query': query, 'scope': scope, 'file_extensions': file_extensions, 'created_at_range': created_at_range, 'updated_at_range': updated_at_range, 'size_range': size_range, 'owner_user_ids': owner_user_ids, 'recent_updater_user_ids': recent_updater_user_ids, 'ancestor_folder_ids': ancestor_folder_ids, 'content_types': content_types, 'type': type, 'trash_content': trash_content, 'mdfilters': mdfilters, 'sort': sort, 'direction': direction, 'limit': limit, 'include_recent_shared_links': include_recent_shared_links, 'fields': fields, 'offset': offset, 'deleted_user_ids': deleted_user_ids, 'deleted_at_range': deleted_at_range}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return None

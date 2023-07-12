@@ -16,7 +16,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -105,7 +105,7 @@ class EventsManager:
         :type created_before: Optional[str], optional
         """
         query_params: Dict = {'stream_type': stream_type, 'stream_position': stream_position, 'limit': limit, 'event_type': event_type, 'created_after': created_after, 'created_before': created_before}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Events.from_dict(json.loads(response.text))
     def get_events_with_long_polling(self) -> RealtimeServers:
         """

@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -75,7 +75,7 @@ class FolderLocksManager:
         :type folder_id: str
         """
         query_params: Dict = {'folder_id': folder_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FolderLocks.from_dict(json.loads(response.text))
     def create_folder_lock(self, folder: CreateFolderLockFolderArg, locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None) -> FolderLock:
         """
@@ -97,7 +97,7 @@ class FolderLocksManager:
         :type locked_operations: Optional[CreateFolderLockLockedOperationsArg], optional
         """
         request_body: BaseObject = BaseObject(locked_operations=locked_operations, folder=folder)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderLock.from_dict(json.loads(response.text))
     def delete_folder_lock_by_id(self, folder_lock_id: str):
         """

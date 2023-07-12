@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -91,7 +91,7 @@ class TaskAssignmentsManager:
         :type assign_to: CreateTaskAssignmentAssignToArg
         """
         request_body: BaseObject = BaseObject(task=task, assign_to=assign_to)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
     def get_task_assignment_by_id(self, task_assignment_id: str) -> TaskAssignment:
         """
@@ -121,7 +121,7 @@ class TaskAssignmentsManager:
         :type resolution_state: Optional[UpdateTaskAssignmentByIdResolutionStateArg], optional
         """
         request_body: BaseObject = BaseObject(message=message, resolution_state=resolution_state)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
     def delete_task_assignment_by_id(self, task_assignment_id: str):
         """

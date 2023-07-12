@@ -37,7 +37,7 @@ class MultipartItem:
 @dataclass
 class FetchOptions:
     method: str = "GET"
-    params: dict = None
+    params: Dict[str, str] = None
     headers: Dict[str, str] = None
     body: str = None
     multipart_data: List[MultipartItem] = None
@@ -87,7 +87,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         requests_session = requests.Session()
 
     headers = __compose_headers_for_request(options)
-    params = __filter_entries_with_none_values(options.params)
+    params = options.params or {}
 
     attempt_nr = 1
     response: APIResponse = __make_request(
@@ -132,14 +132,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
     __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
 
 
-def __filter_entries_with_none_values(dictionary: Optional[Dict[str, str]]) -> Dict[str, str]:
-    if not dictionary:
-        return {}
-    return {k: v for k, v in dictionary.items() if v is not None}
-
-
 def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
-    headers = __filter_entries_with_none_values(options.headers)
+    headers = options.headers or {}
     if options.auth:
         headers['Authorization'] = f'Bearer {options.auth.retrieve_token(options.network_session)}'
 

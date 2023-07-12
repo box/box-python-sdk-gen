@@ -26,7 +26,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -91,7 +91,7 @@ class IntegrationMappingsManager:
         :type is_manually_created: Optional[bool], optional
         """
         query_params: Dict = {'marker': marker, 'limit': limit, 'partner_item_type': partner_item_type, 'partner_item_id': partner_item_id, 'box_item_id': box_item_id, 'box_item_type': box_item_type, 'is_manually_created': is_manually_created}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return IntegrationMappings.from_dict(json.loads(response.text))
     def create_integration_mapping_slack(self, partner_item: CreateIntegrationMappingSlackPartnerItemArg, box_item: CreateIntegrationMappingSlackBoxItemArg, options: Optional[CreateIntegrationMappingSlackOptionsArg] = None) -> IntegrationMapping:
         """
@@ -107,7 +107,7 @@ class IntegrationMappingsManager:
 
         """
         request_body: BaseObject = BaseObject(partner_item=partner_item, box_item=box_item, options=options)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return IntegrationMapping.from_dict(json.loads(response.text))
     def update_integration_mapping_slack_by_id(self, integration_mapping_id: str, box_item: Optional[UpdateIntegrationMappingSlackByIdBoxItemArg] = None, options: Optional[UpdateIntegrationMappingSlackByIdOptionsArg] = None) -> IntegrationMapping:
         """
@@ -126,7 +126,7 @@ class IntegrationMappingsManager:
         :type integration_mapping_id: str
         """
         request_body: BaseObject = BaseObject(box_item=box_item, options=options)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return IntegrationMapping.from_dict(json.loads(response.text))
     def delete_integration_mapping_slack_by_id(self, integration_mapping_id: str):
         """

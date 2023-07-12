@@ -22,7 +22,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -79,7 +79,7 @@ class CommentsManager:
         :type offset: Optional[int], optional
         """
         query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Comments.from_dict(json.loads(response.text))
     def get_comment_by_id(self, comment_id: str, fields: Optional[str] = None) -> CommentFull:
         """
@@ -101,7 +101,7 @@ class CommentsManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return CommentFull.from_dict(json.loads(response.text))
     def update_comment_by_id(self, comment_id: str, message: Optional[str] = None, fields: Optional[str] = None) -> CommentFull:
         """
@@ -123,7 +123,7 @@ class CommentsManager:
         """
         request_body: BaseObject = BaseObject(message=message)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return CommentFull.from_dict(json.loads(response.text))
     def delete_comment_by_id(self, comment_id: str):
         """
@@ -168,5 +168,5 @@ class CommentsManager:
         """
         request_body: BaseObject = BaseObject(message=message, tagged_message=tagged_message, item=item)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Comment.from_dict(json.loads(response.text))

@@ -16,7 +16,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -58,7 +58,7 @@ class FileVersionRetentionsManager:
         :type marker: Optional[str], optional
         """
         query_params: Dict = {'file_id': file_id, 'file_version_id': file_version_id, 'policy_id': policy_id, 'disposition_action': disposition_action, 'disposition_before': disposition_before, 'disposition_after': disposition_after, 'limit': limit, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FileVersionRetentions.from_dict(json.loads(response.text))
     def get_file_version_retention_by_id(self, file_version_retention_id: str) -> FileVersionRetention:
         """

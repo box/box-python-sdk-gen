@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -67,7 +67,7 @@ class MetadataCascadePoliciesManager:
         :type offset: Optional[int], optional
         """
         query_params: Dict = {'folder_id': folder_id, 'owner_enterprise_id': owner_enterprise_id, 'marker': marker, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
     def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str) -> MetadataCascadePolicy:
         """
@@ -106,7 +106,7 @@ class MetadataCascadePoliciesManager:
         :type template_key: str
         """
         request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, template_key=template_key)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
     def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str) -> MetadataCascadePolicy:
         """
@@ -150,5 +150,5 @@ class MetadataCascadePoliciesManager:
         :type conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg
         """
         request_body: BaseObject = BaseObject(conflict_resolution=conflict_resolution)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return response.content

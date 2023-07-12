@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -105,7 +105,7 @@ class TasksManager:
         :type completion_rule: Optional[CreateTaskCompletionRuleArg], optional
         """
         request_body: BaseObject = BaseObject(item=item, action=action, message=message, due_at=due_at, completion_rule=completion_rule)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def get_task_by_id(self, task_id: str) -> Task:
         """
@@ -143,7 +143,7 @@ class TasksManager:
         :type completion_rule: Optional[UpdateTaskByIdCompletionRuleArg], optional
         """
         request_body: BaseObject = BaseObject(action=action, message=message, due_at=due_at, completion_rule=completion_rule)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
     def delete_task_by_id(self, task_id: str):
         """
