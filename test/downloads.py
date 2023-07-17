@@ -26,8 +26,8 @@ client: Client = Client(auth=auth)
 
 def test_download_file():
     new_file_name: str = get_uuid()
-    file_content_stream = generate_byte_stream()
-    file_buffer = read_byte_stream(file_content_stream)
+    file_content_stream: ByteStream = generate_byte_stream(1048576)
+    file_buffer: Buffer = read_byte_stream(file_content_stream)
     uploaded_files: Files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_buffer)
     uploaded_file: Files = uploaded_files.entries[0]
     downloaded_file_content = client.downloads.download_file(file_id=uploaded_file.id)

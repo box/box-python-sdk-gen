@@ -26,7 +26,7 @@ client: Client = Client(auth=auth)
 
 def upload_new_file():
     new_file_name: str = ''.join([get_uuid(), '.pdf'])
-    file_content_stream = generate_byte_stream()
+    file_content_stream = generate_byte_stream(1048576)
     uploaded_files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_content_stream)
     return uploaded_files.entries[0]
 

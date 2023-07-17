@@ -28,12 +28,12 @@ client: Client = Client(auth=auth)
 
 def test_upload_file_and_file_version():
     new_file_name: str = get_uuid()
-    file_content_stream = generate_byte_stream()
+    file_content_stream: ByteStream = generate_byte_stream(1048576)
     uploaded_files: Files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_content_stream)
     uploaded_file: Files = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
-    new_file_content_stream = generate_byte_stream()
+    new_file_content_stream: ByteStream = generate_byte_stream(1048576)
     uploaded_files_version: Files = client.uploads.upload_file_version(file_id=uploaded_file.id, attributes=UploadFileVersionAttributesArg(name=new_file_version_name), file=new_file_content_stream)
     new_file_version: Files = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name

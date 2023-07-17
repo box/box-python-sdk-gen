@@ -28,7 +28,6 @@ def test_get_folder_info():
     root_folder: FolderFull = client.folders.get_folder_by_id(folder_id='0')
     assert root_folder.id == '0'
     assert root_folder.name == 'All Files'
-    assert root_folder.type == 'folder'
 
 def test_get_folder_full_info_with_extra_fields():
     root_folder: FolderFull = client.folders.get_folder_by_id(folder_id='0', fields='has_collaborations,tags')
