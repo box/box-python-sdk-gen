@@ -152,7 +152,7 @@ def __make_request(session, method, url, headers, body, content_type, params, mu
                 file_stream = io.BytesIO(part.file_stream) if type(part.file_stream) == bytes else part.file_stream
                 file_stream_position = file_stream.tell()
                 file_stream.seek(file_stream_position)
-                fields[part.part_name] = (part.file_name, file_stream, part.content_type)
+                fields[part.part_name] = (part.file_name or '', file_stream, part.content_type)
 
         multipart_stream = MultipartEncoder(fields)
         body = multipart_stream

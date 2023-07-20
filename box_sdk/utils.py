@@ -23,6 +23,10 @@ def generate_byte_stream(size: int) -> io.BytesIO:
     return io.BytesIO(os.urandom(size))
 
 
+def decode_base_64_byte_stream(value: str) -> str:
+    return base64.b64decode(value)
+
+
 def read_byte_stream(byte_stream: io.BytesIO) -> bytes:
     return byte_stream.read()
 
