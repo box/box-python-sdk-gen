@@ -1051,7 +1051,7 @@ class AccessToken(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[AccessTokenTokenTypeField], optional
@@ -4371,7 +4371,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField], optional
@@ -5700,8 +5700,11 @@ class SearchResultWithSharedLink(BaseObject):
         self.item = item
         self.type = type
 
+class SearchResultsWithSharedLinksTypeField(str, Enum):
+    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
+
 class SearchResultsWithSharedLinks(BaseObject):
-    def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, entries: Optional[List[SearchResultWithSharedLink]] = None, **kwargs):
+    def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, type: Optional[SearchResultsWithSharedLinksTypeField] = None, entries: Optional[List[SearchResultWithSharedLink]] = None, **kwargs):
         """
         :param total_count: One greater than the offset of the last entry in the search results.
             The total number of entries in the collection may be less than
@@ -5714,6 +5717,8 @@ class SearchResultsWithSharedLinks(BaseObject):
         :param offset: The 0-based offset of the first entry in this set. This will be the same
             as the `offset` query parameter used.
         :type offset: Optional[int], optional
+        :param type: Specifies the response as search result items with shared links
+        :type type: Optional[SearchResultsWithSharedLinksTypeField], optional
         :param entries: The search results for the query provided, including the
             additional information about any shared links through
             which the item has been shared with the user.
@@ -5723,10 +5728,14 @@ class SearchResultsWithSharedLinks(BaseObject):
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
+        self.type = type
         self.entries = entries
 
+class SearchResultsTypeField(str, Enum):
+    SEARCH_RESULTS_ITEMS = 'search_results_items'
+
 class SearchResults(BaseObject):
-    def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, entries: Optional[List[Union[File, Folder, WebLink]]] = None, **kwargs):
+    def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, type: Optional[SearchResultsTypeField] = None, entries: Optional[List[Union[File, Folder, WebLink]]] = None, **kwargs):
         """
         :param total_count: One greater than the offset of the last entry in the search results.
             The total number of entries in the collection may be less than
@@ -5739,6 +5748,8 @@ class SearchResults(BaseObject):
         :param offset: The 0-based offset of the first entry in this set. This will be the same
             as the `offset` query parameter used.
         :type offset: Optional[int], optional
+        :param type: Specifies the response as search result items without shared links
+        :type type: Optional[SearchResultsTypeField], optional
         :param entries: The search results for the query provided.
         :type entries: Optional[List[Union[File, Folder, WebLink]]], optional
         """
@@ -5746,6 +5757,7 @@ class SearchResults(BaseObject):
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
+        self.type = type
         self.entries = entries
 
 class RecentItemInteractionTypeField(str, Enum):
@@ -6281,7 +6293,7 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField], optional
@@ -6304,7 +6316,7 @@ class SkillInvocationTokenFieldWriteField(BaseObject):
         """
         :param access_token: The requested access token.
         :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds in seconds by which this token will expire.
+        :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
         :type token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField], optional
@@ -7836,6 +7848,8 @@ class SignRequestStatusField(str, Enum):
     ERROR_CONVERTING = 'error_converting'
     ERROR_SENDING = 'error_sending'
     EXPIRED = 'expired'
+    FINALIZING = 'finalizing'
+    ERROR_FINALIZING = 'error_finalizing'
 
 class SignRequestSignFilesField(BaseObject):
     def __init__(self, files: Optional[List[FileMini]] = None, is_ready_for_download: Optional[bool] = None, **kwargs):

@@ -26,7 +26,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -141,7 +141,7 @@ class UsersManager:
         :type marker: Optional[str], optional
         """
         query_params: Dict = {'filter_term': filter_term, 'user_type': user_type, 'external_app_user_id': external_app_user_id, 'fields': fields, 'offset': offset, 'limit': limit, 'usemarker': usemarker, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Users.from_dict(json.loads(response.text))
     def create_user(self, name: str, login: Optional[str] = None, is_platform_access_only: Optional[bool] = None, role: Optional[CreateUserRoleArg] = None, language: Optional[str] = None, is_sync_enabled: Optional[bool] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, space_amount: Optional[int] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, timezone: Optional[str] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, status: Optional[CreateUserStatusArg] = None, external_app_user_id: Optional[str] = None, fields: Optional[str] = None) -> User:
         """
@@ -211,7 +211,7 @@ class UsersManager:
         """
         request_body: BaseObject = BaseObject(name=name, login=login, is_platform_access_only=is_platform_access_only, role=role, language=language, is_sync_enabled=is_sync_enabled, job_title=job_title, phone=phone, address=address, space_amount=space_amount, tracking_codes=tracking_codes, can_see_managed_users=can_see_managed_users, timezone=timezone, is_external_collab_restricted=is_external_collab_restricted, is_exempt_from_device_limits=is_exempt_from_device_limits, is_exempt_from_login_verification=is_exempt_from_login_verification, status=status, external_app_user_id=external_app_user_id)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return User.from_dict(json.loads(response.text))
     def get_user_me(self, fields: Optional[str] = None) -> UserFull:
         """
@@ -245,7 +245,7 @@ class UsersManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return UserFull.from_dict(json.loads(response.text))
     def get_user_by_id(self, user_id: str, fields: Optional[str] = None) -> UserFull:
         """
@@ -288,7 +288,7 @@ class UsersManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return UserFull.from_dict(json.loads(response.text))
     def update_user_by_id(self, user_id: str, enterprise: Optional[str] = None, notify: Optional[bool] = None, name: Optional[str] = None, login: Optional[str] = None, role: Optional[UpdateUserByIdRoleArg] = None, language: Optional[str] = None, is_sync_enabled: Optional[bool] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, timezone: Optional[str] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, is_password_reset_required: Optional[bool] = None, status: Optional[UpdateUserByIdStatusArg] = None, space_amount: Optional[int] = None, notification_email: Optional[UpdateUserByIdNotificationEmailArg] = None, external_app_user_id: Optional[str] = None, fields: Optional[str] = None) -> UserFull:
         """
@@ -375,7 +375,7 @@ class UsersManager:
         """
         request_body: BaseObject = BaseObject(enterprise=enterprise, notify=notify, name=name, login=login, role=role, language=language, is_sync_enabled=is_sync_enabled, job_title=job_title, phone=phone, address=address, tracking_codes=tracking_codes, can_see_managed_users=can_see_managed_users, timezone=timezone, is_external_collab_restricted=is_external_collab_restricted, is_exempt_from_device_limits=is_exempt_from_device_limits, is_exempt_from_login_verification=is_exempt_from_login_verification, is_password_reset_required=is_password_reset_required, status=status, space_amount=space_amount, notification_email=notification_email, external_app_user_id=external_app_user_id)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UserFull.from_dict(json.loads(response.text))
     def delete_user_by_id(self, user_id: str, notify: Optional[bool] = None, force: Optional[bool] = None):
         """
@@ -400,5 +400,5 @@ class UsersManager:
         :type force: Optional[bool], optional
         """
         query_params: Dict = {'notify': notify, 'force': force}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='DELETE', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='DELETE', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return response.content

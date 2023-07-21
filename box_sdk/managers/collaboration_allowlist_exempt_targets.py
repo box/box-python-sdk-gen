@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -53,7 +53,7 @@ class CollaborationAllowlistExemptTargetsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistExemptTargets.from_dict(json.loads(response.text))
     def create_collaboration_whitelist_exempt_target(self, user: CreateCollaborationWhitelistExemptTargetUserArg) -> CollaborationAllowlistExemptTarget:
         """
@@ -65,7 +65,7 @@ class CollaborationAllowlistExemptTargetsManager:
         :type user: CreateCollaborationWhitelistExemptTargetUserArg
         """
         request_body: BaseObject = BaseObject(user=user)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
     def get_collaboration_whitelist_exempt_target_by_id(self, collaboration_whitelist_exempt_target_id: str) -> CollaborationAllowlistExemptTarget:
         """

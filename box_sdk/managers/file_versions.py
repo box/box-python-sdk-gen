@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -68,7 +68,7 @@ class FileVersionsManager:
         :type offset: Optional[int], optional
         """
         query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FileVersions.from_dict(json.loads(response.text))
     def get_file_version_by_id(self, file_id: str, file_version_id: str, fields: Optional[str] = None) -> FileVersionFull:
         """
@@ -98,7 +98,7 @@ class FileVersionsManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
     def update_file_version_by_id(self, file_id: str, file_version_id: str, trashed_at: Optional[str] = None) -> FileVersionFull:
         """
@@ -128,7 +128,7 @@ class FileVersionsManager:
         :type trashed_at: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(trashed_at=trashed_at)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
     def delete_file_version_by_id(self, file_id: str, file_version_id: str, if_match: Optional[str] = None):
         """
@@ -156,7 +156,7 @@ class FileVersionsManager:
         :type if_match: Optional[str], optional
         """
         headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return response.content
     def promote_file_version(self, file_id: str, id: Optional[str] = None, type: Optional[PromoteFileVersionTypeArg] = None, fields: Optional[str] = None) -> FileVersionFull:
         """
@@ -218,5 +218,5 @@ class FileVersionsManager:
         """
         request_body: BaseObject = BaseObject(id=id, type=type)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))

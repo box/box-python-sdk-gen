@@ -14,7 +14,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -44,7 +44,7 @@ class SessionTerminationManager:
         :type user_logins: List[str]
         """
         request_body: BaseObject = BaseObject(user_ids=user_ids, user_logins=user_logins)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return SessionTerminationMessage.from_dict(json.loads(response.text))
     def create_group_terminate_session(self, group_ids: List[str]) -> SessionTerminationMessage:
         """
@@ -62,5 +62,5 @@ class SessionTerminationManager:
         :type group_ids: List[str]
         """
         request_body: BaseObject = BaseObject(group_ids=group_ids)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return SessionTerminationMessage.from_dict(json.loads(response.text))

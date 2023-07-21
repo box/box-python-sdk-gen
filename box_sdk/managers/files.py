@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -201,7 +201,7 @@ class FilesManager:
         """
         query_params: Dict = {'fields': fields}
         headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi, 'x_rep_hints': x_rep_hints}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
     def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FileFull:
         """
@@ -262,7 +262,7 @@ class FilesManager:
         request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, tags=tags)
         query_params: Dict = {'fields': fields}
         headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=to_map(query_params), headers=to_map(headers), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=prepare_params(query_params), headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
     def delete_file_by_id(self, file_id: str, if_match: Optional[str] = None):
         """
@@ -293,7 +293,7 @@ class FilesManager:
         :type if_match: Optional[str], optional
         """
         headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return response.content
     def copy_file(self, file_id: str, parent: CopyFileParentArg, name: Optional[str] = None, version: Optional[str] = None, fields: Optional[str] = None) -> FileFull:
         """
@@ -329,7 +329,7 @@ class FilesManager:
         """
         request_body: BaseObject = BaseObject(name=name, version=version, parent=parent)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
     def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, min_height: Optional[int] = None, min_width: Optional[int] = None, max_height: Optional[int] = None, max_width: Optional[int] = None):
         """
@@ -373,5 +373,5 @@ class FilesManager:
         :type max_width: Optional[int], optional
         """
         query_params: Dict = {'min_height': min_height, 'min_width': min_width, 'max_height': max_height, 'max_width': max_width}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return response.content

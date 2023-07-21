@@ -18,7 +18,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -152,7 +152,7 @@ class WebLinksManager:
         :type shared_link: Optional[CreateWebLinkSharedLinkArg], optional
         """
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description, shared_link=shared_link)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_by_id(self, web_link_id: str, boxapi: Optional[str] = None) -> WebLink:
         """
@@ -170,7 +170,7 @@ class WebLinksManager:
         :type boxapi: Optional[str], optional
         """
         headers: Dict = {'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_by_id(self, web_link_id: str, url: Optional[str] = None, parent: Optional[UpdateWebLinkByIdParentArg] = None, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None) -> WebLink:
         """
@@ -189,7 +189,7 @@ class WebLinksManager:
         :type shared_link: Optional[UpdateWebLinkByIdSharedLinkArg], optional
         """
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description, shared_link=shared_link)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def delete_web_link_by_id(self, web_link_id: str):
         """

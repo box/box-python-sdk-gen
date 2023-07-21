@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -87,7 +87,7 @@ class MembershipsManager:
         :type offset: Optional[int], optional
         """
         query_params: Dict = {'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
     def get_group_memberships(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> GroupMemberships:
         """
@@ -110,7 +110,7 @@ class MembershipsManager:
         :type offset: Optional[int], optional
         """
         query_params: Dict = {'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
     def create_group_membership(self, user: CreateGroupMembershipUserArg, group: CreateGroupMembershipGroupArg, role: Optional[CreateGroupMembershipRoleArg] = None, configurable_permissions: Optional[CreateGroupMembershipConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
         """
@@ -145,7 +145,7 @@ class MembershipsManager:
         """
         request_body: BaseObject = BaseObject(user=user, group=group, role=role, configurable_permissions=configurable_permissions)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
     def get_group_membership_by_id(self, group_membership_id: str, fields: Optional[str] = None) -> GroupMembership:
         """
@@ -170,7 +170,7 @@ class MembershipsManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
     def update_group_membership_by_id(self, group_membership_id: str, role: Optional[UpdateGroupMembershipByIdRoleArg] = None, configurable_permissions: Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
         """
@@ -207,7 +207,7 @@ class MembershipsManager:
         """
         request_body: BaseObject = BaseObject(role=role, configurable_permissions=configurable_permissions)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
     def delete_group_membership_by_id(self, group_membership_id: str):
         """

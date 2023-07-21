@@ -24,7 +24,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -47,7 +47,7 @@ class ChunkedUploadsManager:
         :type file_name: str
         """
         request_body: BaseObject = BaseObject(folder_id=folder_id, file_size=file_size, file_name=file_name)
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
     def create_file_upload_session_for_existing_file(self, file_id: str, file_size: int, file_name: Optional[str] = None) -> UploadSession:
         """
@@ -66,7 +66,7 @@ class ChunkedUploadsManager:
         :type file_name: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(file_size=file_size, file_name=file_name)
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
     def get_file_upload_session_by_id(self, upload_session_id: str) -> UploadSession:
         """
@@ -77,6 +77,37 @@ class ChunkedUploadsManager:
         """
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
+    def upload_file_part(self, upload_session_id: str, digest: str, content_range: str) -> UploadedPart:
+        """
+        Updates a chunk of an upload session for a file.
+        :param upload_session_id: The ID of the upload session.
+            Example: "D5E3F7A"
+        :type upload_session_id: str
+        :param digest: The [RFC3230][1] message digest of the chunk uploaded.
+            Only SHA1 is supported. The SHA1 digest must be base64
+            encoded. The format of this header is as
+            `sha=BASE64_ENCODED_DIGEST`.
+            To get the value for the `SHA` digest, use the
+            openSSL command to encode the file part:
+            `openssl sha1 -binary <FILE_PART_NAME> | base64`
+            [1]: https://tools.ietf.org/html/rfc3230
+        :type digest: str
+        :param content_range: The byte range of the chunk.
+            Must not overlap with the range of a part already
+            uploaded this session. Each part’s size must be
+            exactly equal in size to the part size specified
+            in the upload session that you created.
+            One exception is the last part of the file, as this can be smaller.
+            When providing the value for `content-range`, remember that:
+            * The lower bound of each part's byte range
+              must be a multiple of the part size.
+            * The higher bound must be a multiple of the part size - 1.
+        :type content_range: str
+        """
+        request_body: BaseObject = BaseObject()
+        headers: Dict = {'digest': digest, 'content_range': content_range}
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=prepare_params(headers), body=request_body, content_type='application/octet-stream', auth=self.auth, network_session=self.network_session))
+        return UploadedPart.from_dict(json.loads(response.text))
     def delete_file_upload_session_by_id(self, upload_session_id: str):
         """
         Abort an upload session and discard all data uploaded.
@@ -107,7 +138,7 @@ class ChunkedUploadsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return UploadParts.from_dict(json.loads(response.text))
     def create_file_upload_session_commit(self, upload_session_id: str, parts: List[UploadPart], digest: str, if_match: Optional[str] = None, if_none_match: Optional[str] = None) -> Files:
         """
@@ -142,5 +173,5 @@ class ChunkedUploadsManager:
         """
         request_body: BaseObject = BaseObject(parts=parts)
         headers: Dict = {'digest': digest, 'if_match': if_match, 'if_none_match': if_none_match}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers=to_map(headers), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))

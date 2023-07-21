@@ -22,7 +22,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -93,7 +93,7 @@ class ShieldInformationBarrierSegmentMembersManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'shield_information_barrier_segment_id': shield_information_barrier_segment_id, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier_segment_member(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg, user: UserBase, type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None) -> ShieldInformationBarrierSegmentMember:
         """
@@ -105,5 +105,5 @@ class ShieldInformationBarrierSegmentMembersManager:
         :type type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg], optional
         """
         request_body: BaseObject = BaseObject(type=type, shield_information_barrier=shield_information_barrier, shield_information_barrier_segment=shield_information_barrier_segment, user=user)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrierSegmentMember.from_dict(json.loads(response.text))

@@ -14,7 +14,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -95,5 +95,5 @@ class TrashedItemsManager:
         :type sort: Optional[GetFolderTrashItemsSortArg], optional
         """
         query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset, 'usemarker': usemarker, 'marker': marker, 'direction': direction, 'sort': sort}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

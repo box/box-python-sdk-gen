@@ -24,7 +24,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -87,7 +87,7 @@ class RetentionPolicyAssignmentsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'type': type, 'fields': fields, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignments.from_dict(json.loads(response.text))
     def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List] = None, start_date_field: Optional[str] = None) -> RetentionPolicyAssignment:
         """
@@ -107,7 +107,7 @@ class RetentionPolicyAssignmentsManager:
         :type start_date_field: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(policy_id=policy_id, assign_to=assign_to, filter_fields=filter_fields, start_date_field=start_date_field)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
     def get_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, fields: Optional[str] = None) -> RetentionPolicyAssignment:
         """
@@ -126,7 +126,7 @@ class RetentionPolicyAssignmentsManager:
         :type fields: Optional[str], optional
         """
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
     def delete_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str):
         """
@@ -154,7 +154,7 @@ class RetentionPolicyAssignmentsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))
     def get_retention_policy_assignment_file_version_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None) -> FilesUnderRetention:
         """
@@ -173,5 +173,5 @@ class RetentionPolicyAssignmentsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))

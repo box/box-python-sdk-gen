@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -95,7 +95,7 @@ class StoragePolicyAssignmentsManager:
         :type marker: Optional[str], optional
         """
         query_params: Dict = {'marker': marker, 'resolved_for_type': resolved_for_type, 'resolved_for_id': resolved_for_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignments.from_dict(json.loads(response.text))
     def create_storage_policy_assignment(self, storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg, assigned_to: CreateStoragePolicyAssignmentAssignedToArg) -> StoragePolicyAssignment:
         """
@@ -108,7 +108,7 @@ class StoragePolicyAssignmentsManager:
         :type assigned_to: CreateStoragePolicyAssignmentAssignedToArg
         """
         request_body: BaseObject = BaseObject(storage_policy=storage_policy, assigned_to=assigned_to)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str) -> StoragePolicyAssignment:
         """
@@ -130,7 +130,7 @@ class StoragePolicyAssignmentsManager:
         :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg
         """
         request_body: BaseObject = BaseObject(storage_policy=storage_policy)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def delete_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str):
         """

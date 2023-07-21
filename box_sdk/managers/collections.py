@@ -14,7 +14,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -53,7 +53,7 @@ class CollectionsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Collections.from_dict(json.loads(response.text))
     def get_collection_items(self, collection_id: str, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Items:
         """
@@ -82,5 +82,5 @@ class CollectionsManager:
         :type limit: Optional[int], optional
         """
         query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

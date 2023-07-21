@@ -20,7 +20,7 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
@@ -77,7 +77,7 @@ class TermsOfServiceUserStatusesManager:
         :type user_id: Optional[str], optional
         """
         query_params: Dict = {'tos_id': tos_id, 'user_id': user_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params=to_map(query_params), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
     def create_term_of_service_user_status(self, tos: CreateTermOfServiceUserStatusTosArg, user: CreateTermOfServiceUserStatusUserArg, is_accepted: bool) -> TermsOfServiceUserStatus:
         """
@@ -90,7 +90,7 @@ class TermsOfServiceUserStatusesManager:
         :type is_accepted: bool
         """
         request_body: BaseObject = BaseObject(tos=tos, user=user, is_accepted=is_accepted)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
     def update_term_of_service_user_status_by_id(self, terms_of_service_user_status_id: str, is_accepted: bool) -> TermsOfServiceUserStatus:
         """
@@ -102,5 +102,5 @@ class TermsOfServiceUserStatusesManager:
         :type is_accepted: bool
         """
         request_body: BaseObject = BaseObject(is_accepted=is_accepted)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses/', terms_of_service_user_status_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatus.from_dict(json.loads(response.text))

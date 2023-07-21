@@ -36,14 +36,14 @@ def upload_file(file_name, file_stream):
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
-    thumbnail_content_stream = generate_byte_stream()
+    thumbnail_content_stream: ByteStream = generate_byte_stream(1048576)
     thumbnail_file = upload_file(thumbnail_file_name, thumbnail_content_stream)
     assert not client.files.get_file_thumbnail_by_id(file_id=thumbnail_file.id, extension=GetFileThumbnailByIdExtensionArg.PNG.value) == read_byte_stream(thumbnail_content_stream)
     client.files.delete_file_by_id(file_id=thumbnail_file.id)
 
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
-    file_content = generate_byte_stream()
+    file_content: ByteStream = generate_byte_stream(1048576)
     uploaded_file = upload_file(new_file_name, file_content)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id, fields='is_externally_owned,has_collaborations')
     assert file.is_externally_owned == False
@@ -52,7 +52,7 @@ def testGetFileFullExtraFields():
 
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
-    updated_content_stream = generate_byte_stream()
+    updated_content_stream: ByteStream = generate_byte_stream(1048576)
     uploaded_file = upload_file(new_file_name, updated_content_stream)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
     assert file.name == new_file_name

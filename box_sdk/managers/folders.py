@@ -22,13 +22,23 @@ from box_sdk.auth import Authentication
 
 from box_sdk.network import NetworkSession
 
-from box_sdk.utils import to_map
+from box_sdk.utils import prepare_params
 
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
 
 from box_sdk.fetch import FetchResponse
+
+class GetFolderByIdSortArg(str, Enum):
+    ID = 'id'
+    NAME = 'name'
+    DATE = 'date'
+    SIZE = 'size'
+
+class GetFolderByIdDirectionArg(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 class UpdateFolderByIdSyncStateArg(str, Enum):
     SYNCED = 'synced'
@@ -179,14 +189,26 @@ class FoldersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_by_id(self, folder_id: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None) -> FolderFull:
+    def get_folder_by_id(self, folder_id: str, fields: Optional[str] = None, sort: Optional[GetFolderByIdSortArg] = None, direction: Optional[GetFolderByIdDirectionArg] = None, offset: Optional[int] = None, limit: Optional[int] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None) -> FolderFull:
         """
         Retrieves details for a folder, including the first 100 entries
         
         in the folder.
 
         
-        To fetch more items within the folder, please use the
+        Passing `sort`, `direction`, `offset`, and `limit`
+
+        
+        parameters in query allows you to manage the
+
+        
+        list of returned
+
+        
+        [folder items](r://folder--full#param-item-collection).
+
+        
+        To fetch more items within the folder, use the
 
         
         [Get items in a folder](#get-folders-id-items) endpoint.
@@ -214,6 +236,40 @@ class FoldersManager:
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
         :type fields: Optional[str], optional
+        :param sort: Defines the **second** attribute by which items
+            are sorted.
+            The folder type affects the way the items
+            are sorted:
+              * **Standard folder**:
+              Items are always sorted by
+              their `type` first, with
+              folders listed before files,
+              and files listed
+              before web links.
+              * **Root folder**:
+              This parameter is not supported
+              for marker-based pagination
+              on the root folder
+              (the folder with an `id` of `0`).
+              * **Shared folder with parent path
+              to the associated folder visible to
+              the collaborator**:
+              Items are always sorted by
+              their `type` first, with
+              folders listed before files,
+              and files listed
+              before web links.
+        :type sort: Optional[GetFolderByIdSortArg], optional
+        :param direction: The direction to sort results in. This can be either in alphabetical ascending
+            (`ASC`) or descending (`DESC`) order.
+        :type direction: Optional[GetFolderByIdDirectionArg], optional
+        :param offset: The offset of the item at which to begin the response.
+            Queries with offset parameter value
+            exceeding 10000 will be rejected
+            with a 400 response.
+        :type offset: Optional[int], optional
+        :param limit: The maximum number of items to return per page.
+        :type limit: Optional[int], optional
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
@@ -229,9 +285,9 @@ class FoldersManager:
             or folders nested within the item.
         :type boxapi: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
+        query_params: Dict = {'fields': fields, 'sort': sort, 'direction': direction, 'offset': offset, 'limit': limit}
         headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FolderFull:
         """
@@ -312,7 +368,7 @@ class FoldersManager:
         request_body: BaseObject = BaseObject(name=name, description=description, sync_state=sync_state, can_non_owners_invite=can_non_owners_invite, parent=parent, shared_link=shared_link, folder_upload_email=folder_upload_email, tags=tags, is_collaboration_restricted_to_enterprise=is_collaboration_restricted_to_enterprise, collections=collections, can_non_owners_view_collaborators=can_non_owners_view_collaborators)
         query_params: Dict = {'fields': fields}
         headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params=to_map(query_params), headers=to_map(headers), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params=prepare_params(query_params), headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def delete_folder_by_id(self, folder_id: str, recursive: Optional[bool] = None, if_match: Optional[str] = None):
         """
@@ -343,7 +399,7 @@ class FoldersManager:
         """
         query_params: Dict = {'recursive': recursive}
         headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return response.content
     def get_folder_items(self, folder_id: str, fields: Optional[str] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, sort: Optional[GetFolderItemsSortArg] = None, direction: Optional[GetFolderItemsDirectionArg] = None, boxapi: Optional[str] = None) -> Items:
         """
@@ -355,7 +411,7 @@ class FoldersManager:
         To request more information about the folder itself, like its size,
 
         
-        please use the [Get a folder](#get-folders-id) endpoint instead.
+        use the [Get a folder](#get-folders-id) endpoint instead.
 
         :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
@@ -402,16 +458,24 @@ class FoldersManager:
             are sorted.
             The folder type affects the way the items
             are sorted:
-            * **Standard folder**:
-              Items are always sorted by their `type` first, with
-              folders listed before files, and files listed
+              * **Standard folder**:
+              Items are always sorted by
+              their `type` first, with
+              folders listed before files,
+              and files listed
               before web links.
-            * **Root folder**:
-              This parameter is not supported for marker-based pagination
-              on the root folder (the folder with an `id` of `0`).
-            * **Shared folder with parent path to the associated folder visible to the collaborator**:
-              Items are always sorted by their `type` first, with
-              folders listed before files, and files listed
+              * **Root folder**:
+              This parameter is not supported
+              for marker-based pagination
+              on the root folder
+              (the folder with an `id` of `0`).
+              * **Shared folder with parent path
+              to the associated folder visible to
+              the collaborator**:
+              Items are always sorted by
+              their `type` first, with
+              folders listed before files,
+              and files listed
               before web links.
         :type sort: Optional[GetFolderItemsSortArg], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
@@ -428,7 +492,7 @@ class FoldersManager:
         """
         query_params: Dict = {'fields': fields, 'usemarker': usemarker, 'marker': marker, 'offset': offset, 'limit': limit, 'sort': sort, 'direction': direction}
         headers: Dict = {'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params=to_map(query_params), headers=to_map(headers), auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))
     def create_folder(self, name: str, parent: CreateFolderParentArg, folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None, sync_state: Optional[CreateFolderSyncStateArg] = None, fields: Optional[str] = None) -> FolderFull:
         """
@@ -459,7 +523,7 @@ class FoldersManager:
         """
         request_body: BaseObject = BaseObject(name=name, parent=parent, folder_upload_email=folder_upload_email, sync_state=sync_state)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
     def copy_folder(self, folder_id: str, parent: CopyFolderParentArg, name: Optional[str] = None, fields: Optional[str] = None) -> FolderFull:
         """
@@ -498,5 +562,5 @@ class FoldersManager:
         """
         request_body: BaseObject = BaseObject(name=name, parent=parent)
         query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params=to_map(query_params), body=json.dumps(to_map(request_body)), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
