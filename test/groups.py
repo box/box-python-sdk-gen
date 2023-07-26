@@ -1,3 +1,5 @@
+import pytest
+
 from box_sdk.utils import decode_base_64
 
 from box_sdk.utils import get_env_var
@@ -32,3 +34,5 @@ def test_create_get_delete_group():
     updated_group: GroupFull = client.groups.update_group_by_id(group_id=group.id, name=updated_group_name)
     assert updated_group.name == updated_group_name
     client.groups.delete_group_by_id(group.id)
+    with pytest.raises(Exception):
+        client.groups.get_group_by_id(group_id=group.id)

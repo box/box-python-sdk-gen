@@ -1,8 +1,8 @@
 from box_sdk.base_object import BaseObject
 
-from enum import Enum
-
 from typing import Optional
+
+from enum import Enum
 
 import json
 
@@ -34,50 +34,6 @@ class CreateWebLinkParentArg(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-
-class CreateWebLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
-
-class CreateWebLinkSharedLinkArg(BaseObject):
-    def __init__(self, access: Optional[CreateWebLinkSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, **kwargs):
-        """
-        :param access: The level of access for the shared link. This can be
-            restricted to anyone with the link (`open`), only people
-            within the company (`company`) and only those who
-            have been invited to the folder (`collaborators`).
-            If not set, this field defaults to the access level specified
-            by the enterprise admin. To create a shared link with this
-            default setting pass the `shared_link` object with
-            no `access` field, for example `{ "shared_link": {} }`.
-            The `company` access level is only available to paid
-            accounts.
-        :type access: Optional[CreateWebLinkSharedLinkArgAccessField], optional
-        :param password: The password required to access the shared link. Set the
-            password to `null` to remove it.
-            Passwords must now be at least eight characters
-            long and include a number, upper case letter, or
-            a non-numeric or non-alphabetic character.
-            A password can only be set when `access` is set to `open`.
-        :type password: Optional[str], optional
-        :param vanity_name: Defines a custom vanity name to use in the shared link URL,
-            for example `https://app.box.com/v/my-shared-link`.
-            Custom URLs should not be used when sharing sensitive content
-            as vanity URLs are a lot easier to guess than regular shared
-            links.
-        :type vanity_name: Optional[str], optional
-        :param unshared_at: The timestamp at which this shared link will
-            expire. This field can only be set by
-            users with paid accounts. The value must be greater than the
-            current date and time.
-        :type unshared_at: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.access = access
-        self.password = password
-        self.vanity_name = vanity_name
-        self.unshared_at = unshared_at
 
 class UpdateWebLinkByIdParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
@@ -136,7 +92,7 @@ class WebLinksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_web_link(self, url: str, parent: CreateWebLinkParentArg, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[CreateWebLinkSharedLinkArg] = None) -> WebLink:
+    def create_web_link(self, url: str, parent: CreateWebLinkParentArg, name: Optional[str] = None, description: Optional[str] = None) -> WebLink:
         """
         Creates a web link object within a folder.
         :param url: The URL that this web link links to. Must start with
@@ -148,10 +104,8 @@ class WebLinksManager:
         :type name: Optional[str], optional
         :param description: Description of the web link.
         :type description: Optional[str], optional
-        :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[CreateWebLinkSharedLinkArg], optional
         """
-        request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description, shared_link=shared_link)
+        request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_by_id(self, web_link_id: str, boxapi: Optional[str] = None) -> WebLink:

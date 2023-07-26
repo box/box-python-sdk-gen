@@ -337,7 +337,7 @@ class FoldersManager:
             [List all collections][1] endpoint.
             Passing an empty array `[]` or `null` will remove
             the folder from all collections.
-            [1]: ../advanced-files-and-folders/#get-collections
+            [1]: e://get-collections
         :type collections: Optional[List], optional
         :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
             this folder from viewing other collaborations on

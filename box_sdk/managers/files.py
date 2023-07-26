@@ -203,7 +203,7 @@ class FilesManager:
         headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi, 'x_rep_hints': x_rep_hints}
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FileFull:
+    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, collections: Optional[List] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,
         
@@ -235,6 +235,15 @@ class FilesManager:
         :type disposition_at: Optional[str], optional
         :param permissions: Defines who can download a file.
         :type permissions: Optional[UpdateFileByIdPermissionsArg], optional
+        :param collections: An array of collections to make this file
+            a member of. Currently
+            we only support the `favorites` collection.
+            To get the ID for a collection, use the
+            [List all collections][1] endpoint.
+            Passing an empty array `[]` or `null` will remove
+            the file from all collections.
+            [1]: e://get-collections
+        :type collections: Optional[List], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -259,7 +268,7 @@ class FilesManager:
             has changed since.
         :type if_match: Optional[str], optional
         """
-        request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, tags=tags)
+        request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, collections=collections, tags=tags)
         query_params: Dict = {'fields': fields}
         headers: Dict = {'if_match': if_match}
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=prepare_params(query_params), headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))

@@ -51,7 +51,28 @@ class ZipDownloadsManager:
         The limit for an archive is either the Account's upload limit or
 
         
-        10,000 files, whichever is met first
+        10,000 files, whichever is met first.
+
+        
+        **Note**: Downloading a large file can be
+
+        
+        affected by various
+
+        
+        factors such as distance, network latency,
+
+        
+        bandwidth, and congestion, as well as packet loss
+
+        
+        ratio and current server load.
+
+        
+        For these reasons we recommend that a maximum ZIP archive
+
+        
+        total size does not exceed 25GB.
 
         :param items: A list of items to add to the `zip` archive. These can
             be folders or files.
