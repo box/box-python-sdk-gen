@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions

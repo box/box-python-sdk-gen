@@ -14,6 +14,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -74,6 +76,6 @@ class AuthorizationManager:
             for the application in its configuration page.
         :type scope: Optional[str], optional
         """
-        query_params: Dict = {'response_type': response_type, 'client_id': client_id, 'redirect_uri': redirect_uri, 'state': state, 'scope': scope}
-        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'response_type': to_string(response_type), 'client_id': to_string(client_id), 'redirect_uri': to_string(redirect_uri), 'state': to_string(state), 'scope': to_string(scope)})
+        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return None

@@ -13,7 +13,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetFileVersionRetentionsQueryParamsArg]`
+- query_params `GetFileVersionRetentionsQueryParamsArg`
   - Used as queryParams for the API call
 
 

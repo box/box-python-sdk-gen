@@ -16,7 +16,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetIntegrationMappingSlackQueryParamsArg]`
+- query_params `GetIntegrationMappingSlackQueryParamsArg`
   - Used as queryParams for the API call
 
 

@@ -22,7 +22,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetSharedItemsQueryParamsArg]`
+- query_params `GetSharedItemsQueryParamsArg`
   - Used as queryParams for the API call
 - headers `GetSharedItemsHeadersArg`
   - Used as headers for the API call

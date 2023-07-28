@@ -17,7 +17,7 @@ client.groups.get_groups()
 
 ### Arguments
 
-- query_params `Optional[GetGroupsQueryParamsArg]`
+- query_params `GetGroupsQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -48,7 +48,7 @@ client.groups.create_group(CreateGroupRequestBodyArg(name&#x3D;get_uuid()))
 
 - request_body `CreateGroupRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[CreateGroupQueryParamsArg]`
+- query_params `CreateGroupQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -80,7 +80,7 @@ client.groups.get_group_by_id(group.id)
 - group_id `str`
   - The ID of the group.
   - Used as `group_id` in path `path` of the API call
-- query_params `Optional[GetGroupByIdQueryParamsArg]`
+- query_params `GetGroupByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -114,7 +114,7 @@ client.groups.update_group_by_id(group.id, UpdateGroupByIdRequestBodyArg(name&#x
   - Used as `group_id` in path `path` of the API call
 - request_body `UpdateGroupByIdRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[UpdateGroupByIdQueryParamsArg]`
+- query_params `UpdateGroupByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 

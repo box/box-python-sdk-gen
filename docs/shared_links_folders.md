@@ -19,7 +19,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetSharedItemFoldersQueryParamsArg]`
+- query_params `GetSharedItemFoldersQueryParamsArg`
   - Used as queryParams for the API call
 - headers `GetSharedItemFoldersHeadersArg`
   - Used as headers for the API call

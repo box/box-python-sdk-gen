@@ -26,6 +26,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -90,8 +92,8 @@ class WebhooksManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Webhooks.from_dict(json.loads(response.text))
     def create_webhook(self, target: CreateWebhookTargetArg, address: str, triggers: List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]) -> Webhook:
         """

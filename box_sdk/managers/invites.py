@@ -18,6 +18,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -82,8 +84,8 @@ class InvitesManager:
         :type fields: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(enterprise=enterprise, actionable_by=actionable_by)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))
     def get_invite_by_id(self, invite_id: str, fields: Optional[str] = None) -> Invite:
         """
@@ -101,6 +103,6 @@ class InvitesManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))

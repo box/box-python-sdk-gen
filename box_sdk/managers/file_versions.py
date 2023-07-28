@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -67,8 +69,8 @@ class FileVersionsManager:
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return FileVersions.from_dict(json.loads(response.text))
     def get_file_version_by_id(self, file_id: str, file_version_id: str, fields: Optional[str] = None) -> FileVersionFull:
         """
@@ -97,8 +99,8 @@ class FileVersionsManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
     def update_file_version_by_id(self, file_id: str, file_version_id: str, trashed_at: Optional[str] = None) -> FileVersionFull:
         """
@@ -155,8 +157,8 @@ class FileVersionsManager:
             has changed since.
         :type if_match: Optional[str], optional
         """
-        headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=headers_map, auth=self.auth, network_session=self.network_session))
         return response.content
     def promote_file_version(self, file_id: str, id: Optional[str] = None, type: Optional[PromoteFileVersionTypeArg] = None, fields: Optional[str] = None) -> FileVersionFull:
         """
@@ -217,6 +219,6 @@ class FileVersionsManager:
         :type fields: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(id=id, type=type)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))

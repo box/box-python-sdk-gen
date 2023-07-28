@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -109,8 +111,8 @@ class UserCollaborationsManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))
     def update_collaboration_by_id(self, collaboration_id: str, role: UpdateCollaborationByIdRoleArg, status: Optional[UpdateCollaborationByIdStatusArg] = None, expires_at: Optional[str] = None, can_view_path: Optional[bool] = None) -> Collaboration:
         """
@@ -239,6 +241,6 @@ class UserCollaborationsManager:
         :type notify: Optional[bool], optional
         """
         request_body: BaseObject = BaseObject(item=item, accessible_by=accessible_by, role=role, can_view_path=can_view_path, expires_at=expires_at)
-        query_params: Dict = {'fields': fields, 'notify': notify}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'notify': to_string(notify)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))

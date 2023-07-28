@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -94,8 +96,8 @@ class StoragePolicyAssignmentsManager:
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
         """
-        query_params: Dict = {'marker': marker, 'resolved_for_type': resolved_for_type, 'resolved_for_id': resolved_for_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'resolved_for_type': to_string(resolved_for_type), 'resolved_for_id': to_string(resolved_for_id)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignments.from_dict(json.loads(response.text))
     def create_storage_policy_assignment(self, storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg, assigned_to: CreateStoragePolicyAssignmentAssignedToArg) -> StoragePolicyAssignment:
         """

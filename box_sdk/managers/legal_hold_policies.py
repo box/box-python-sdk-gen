@@ -18,6 +18,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -53,8 +55,8 @@ class LegalHoldPoliciesManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'policy_name': policy_name, 'fields': fields, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicies.from_dict(json.loads(response.text))
     def create_legal_hold_policy(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None) -> LegalHoldPolicy:
         """

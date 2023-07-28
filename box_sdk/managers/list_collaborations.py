@@ -16,6 +16,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -62,8 +64,8 @@ class ListCollaborationsManager:
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields, 'limit': limit, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_folder_collaborations(self, folder_id: str, fields: Optional[str] = None) -> Collaborations:
         """
@@ -92,8 +94,8 @@ class ListCollaborationsManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_collaborations(self, status: GetCollaborationsStatusArg, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Collaborations:
         """
@@ -117,8 +119,8 @@ class ListCollaborationsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'status': status, 'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'status': to_string(status), 'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
     def get_group_collaborations(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> Collaborations:
         """
@@ -143,6 +145,6 @@ class ListCollaborationsManager:
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        query_params: Dict = {'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))

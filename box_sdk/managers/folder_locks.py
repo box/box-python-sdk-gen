@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -74,8 +76,8 @@ class FolderLocksManager:
             always represented by the ID `0`.
         :type folder_id: str
         """
-        query_params: Dict = {'folder_id': folder_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return FolderLocks.from_dict(json.loads(response.text))
     def create_folder_lock(self, folder: CreateFolderLockFolderArg, locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None) -> FolderLock:
         """

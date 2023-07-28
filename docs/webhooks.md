@@ -21,7 +21,7 @@ client.webhooks.get_webhooks()
 
 ### Arguments
 
-- query_params `Optional[GetWebhooksQueryParamsArg]`
+- query_params `GetWebhooksQueryParamsArg`
   - Used as queryParams for the API call
 
 

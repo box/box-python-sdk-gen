@@ -23,7 +23,7 @@ See the endpoint docs at
 
 - request_body `CreateInviteRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[CreateInviteQueryParamsArg]`
+- query_params `CreateInviteQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -50,7 +50,7 @@ See the endpoint docs at
 - invite_id `str`
   - The ID of an invite.
   - Used as `invite_id` in path `path` of the API call
-- query_params `Optional[GetInviteByIdQueryParamsArg]`
+- query_params `GetInviteByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 

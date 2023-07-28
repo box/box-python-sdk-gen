@@ -18,6 +18,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -104,8 +106,8 @@ class EventsManager:
             other `stream_type` this value will be ignored.
         :type created_before: Optional[str], optional
         """
-        query_params: Dict = {'stream_type': stream_type, 'stream_position': stream_position, 'limit': limit, 'event_type': event_type, 'created_after': created_after, 'created_before': created_before}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'stream_type': to_string(stream_type), 'stream_position': to_string(stream_position), 'limit': to_string(limit), 'event_type': to_string(event_type), 'created_after': to_string(created_after), 'created_before': to_string(created_before)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Events.from_dict(json.loads(response.text))
     def get_events_with_long_polling(self) -> RealtimeServers:
         """

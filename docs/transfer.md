@@ -50,7 +50,7 @@ See the endpoint docs at
   - Used as `user_id` in path `path` of the API call
 - request_body `TransferOwnedFolderRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[TransferOwnedFolderQueryParamsArg]`
+- query_params `TransferOwnedFolderQueryParamsArg`
   - Used as queryParams for the API call
 
 

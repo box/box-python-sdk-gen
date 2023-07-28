@@ -18,6 +18,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -126,6 +128,6 @@ class TransferManager:
         :type notify: Optional[bool], optional
         """
         request_body: BaseObject = BaseObject(owned_by=owned_by)
-        query_params: Dict = {'fields': fields, 'notify': notify}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'notify': to_string(notify)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

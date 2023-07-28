@@ -16,6 +16,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -94,6 +96,6 @@ class TrashedItemsManager:
             This parameter is not supported when using marker-based pagination.
         :type sort: Optional[GetFolderTrashItemsSortArg], optional
         """
-        query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset, 'usemarker': usemarker, 'marker': marker, 'direction': direction, 'sort': sort}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset), 'usemarker': to_string(usemarker), 'marker': to_string(marker), 'direction': to_string(direction), 'sort': to_string(sort)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

@@ -14,7 +14,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetTermOfServicesQueryParamsArg]`
+- query_params `GetTermOfServicesQueryParamsArg`
   - Used as queryParams for the API call
 
 

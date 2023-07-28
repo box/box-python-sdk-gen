@@ -14,7 +14,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetCollaborationWhitelistEntriesQueryParamsArg]`
+- query_params `GetCollaborationWhitelistEntriesQueryParamsArg`
   - Used as queryParams for the API call
 
 

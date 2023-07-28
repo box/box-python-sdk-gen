@@ -19,7 +19,7 @@ See the endpoint docs at
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
-- query_params `Optional[GetFileVersionsQueryParamsArg]`
+- query_params `GetFileVersionsQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -51,7 +51,7 @@ See the endpoint docs at
 - file_version_id `str`
   - The ID of the file version
   - Used as `file_version_id` in path `path` of the API call
-- query_params `Optional[GetFileVersionByIdQueryParamsArg]`
+- query_params `GetFileVersionByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -120,7 +120,7 @@ See the endpoint docs at
 - file_version_id `str`
   - The ID of the file version
   - Used as `file_version_id` in path `path` of the API call
-- headers `Optional[DeleteFileVersionByIdHeadersArg]`
+- headers `DeleteFileVersionByIdHeadersArg`
   - Used as headers for the API call
 
 
@@ -157,7 +157,7 @@ See the endpoint docs at
   - Used as `file_id` in path `path` of the API call
 - request_body `PromoteFileVersionRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[PromoteFileVersionQueryParamsArg]`
+- query_params `PromoteFileVersionQueryParamsArg`
   - Used as queryParams for the API call
 
 

@@ -24,6 +24,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -79,8 +81,8 @@ class RetentionPoliciesManager:
             used when paginating using marker-based pagination.
         :type marker: Optional[str], optional
         """
-        query_params: Dict = {'policy_name': policy_name, 'policy_type': policy_type, 'created_by_user_id': created_by_user_id, 'fields': fields, 'limit': limit, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'policy_type': to_string(policy_type), 'created_by_user_id': to_string(created_by_user_id), 'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return RetentionPolicies.from_dict(json.loads(response.text))
     def create_retention_policy(self, policy_name: str, policy_type: CreateRetentionPolicyPolicyTypeArg, disposition_action: CreateRetentionPolicyDispositionActionArg, description: Optional[str] = None, retention_length: Optional[str] = None, retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
         """
@@ -152,8 +154,8 @@ class RetentionPoliciesManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
     def update_retention_policy_by_id(self, retention_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg] = None, retention_type: Optional[str] = None, retention_length: Optional[str] = None, status: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
         """

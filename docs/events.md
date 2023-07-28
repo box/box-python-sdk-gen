@@ -21,7 +21,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetEventsQueryParamsArg]`
+- query_params `GetEventsQueryParamsArg`
   - Used as queryParams for the API call
 
 

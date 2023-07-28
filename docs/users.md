@@ -21,7 +21,7 @@ client.users.get_users()
 
 ### Arguments
 
-- query_params `Optional[GetUsersQueryParamsArg]`
+- query_params `GetUsersQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -52,7 +52,7 @@ client.users.create_user(CreateUserRequestBodyArg(name&#x3D;user_name, login&#x3
 
 - request_body `CreateUserRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[CreateUserQueryParamsArg]`
+- query_params `CreateUserQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -88,7 +88,7 @@ client.users.get_user_me()
 
 ### Arguments
 
-- query_params `Optional[GetUserMeQueryParamsArg]`
+- query_params `GetUserMeQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -128,7 +128,7 @@ client.users.get_user_by_id(user.id)
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
-- query_params `Optional[GetUserByIdQueryParamsArg]`
+- query_params `GetUserByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -167,7 +167,7 @@ client.users.update_user_by_id(user.id, UpdateUserByIdRequestBodyArg(name&#x3D;u
   - Used as `user_id` in path `path` of the API call
 - request_body `UpdateUserByIdRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[UpdateUserByIdQueryParamsArg]`
+- query_params `UpdateUserByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -200,7 +200,7 @@ client.users.delete_user_by_id(user.id)
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
-- query_params `Optional[DeleteUserByIdQueryParamsArg]`
+- query_params `DeleteUserByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 

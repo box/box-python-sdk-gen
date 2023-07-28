@@ -24,6 +24,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -159,9 +161,9 @@ class UploadsManager:
         if isinstance(file, str) and not re.match('^[01]+$', file):
             raise Exception('Invalid binary provided to function upload_file_version in argument file')
         request_body: BaseObject = BaseObject(attributes=attributes, file=file, file_file_name=file_file_name, file_content_type=file_content_type)
-        query_params: Dict = {'fields': fields}
-        headers: Dict = {'if_match': if_match, 'content_md_5': content_md_5}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params=prepare_params(query_params), headers=prepare_params(headers), multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), 'content-md5': to_string(content_md_5)})
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
     def upload_file(self, attributes: UploadFileAttributesArg, file: str, file_file_name: Optional[str] = None, file_content_type: Optional[str] = None, fields: Optional[str] = None, content_md_5: Optional[str] = None) -> Files:
         """
@@ -218,9 +220,9 @@ class UploadsManager:
         if isinstance(file, str) and not re.match('^[01]+$', file):
             raise Exception('Invalid binary provided to function upload_file in argument file')
         request_body: BaseObject = BaseObject(attributes=attributes, file=file, file_file_name=file_file_name, file_content_type=file_content_type)
-        query_params: Dict = {'fields': fields}
-        headers: Dict = {'content_md_5': content_md_5}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/content']), FetchOptions(method='POST', params=prepare_params(query_params), headers=prepare_params(headers), multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({'content-md5': to_string(content_md_5)})
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/content']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
     def preflight_file_upload(self, name: Optional[str] = None, size: Optional[int] = None, parent: Optional[PreflightFileUploadParentArg] = None) -> UploadUrl:
         """

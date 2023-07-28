@@ -21,7 +21,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetFolderTrashItemsQueryParamsArg]`
+- query_params `GetFolderTrashItemsQueryParamsArg`
   - Used as queryParams for the API call
 
 

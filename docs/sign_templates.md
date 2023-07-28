@@ -13,7 +13,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetSignTemplatesQueryParamsArg]`
+- query_params `GetSignTemplatesQueryParamsArg`
   - Used as queryParams for the API call
 
 

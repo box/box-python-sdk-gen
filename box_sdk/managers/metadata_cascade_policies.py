@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -66,8 +68,8 @@ class MetadataCascadePoliciesManager:
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        query_params: Dict = {'folder_id': folder_id, 'owner_enterprise_id': owner_enterprise_id, 'marker': marker, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'owner_enterprise_id': to_string(owner_enterprise_id), 'marker': to_string(marker), 'offset': to_string(offset)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
     def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str) -> MetadataCascadePolicy:
         """

@@ -18,6 +18,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -72,6 +74,6 @@ class DevicePinnersManager:
             (`ASC`) or descending (`DESC`) order.
         :type direction: Optional[GetEnterpriseDevicePinnersDirectionArg], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit, 'direction': direction}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'direction': to_string(direction)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return DevicePinners.from_dict(json.loads(response.text))

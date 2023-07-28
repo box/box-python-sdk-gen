@@ -46,7 +46,7 @@ client.web_links.get_web_link_by_id(weblink.id)
 - web_link_id `str`
   - The ID of the web link.
   - Used as `web_link_id` in path `path` of the API call
-- headers `Optional[GetWebLinkByIdHeadersArg]`
+- headers `GetWebLinkByIdHeadersArg`
   - Used as headers for the API call
 
 

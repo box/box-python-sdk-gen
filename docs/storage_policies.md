@@ -13,7 +13,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetStoragePoliciesQueryParamsArg]`
+- query_params `GetStoragePoliciesQueryParamsArg`
   - Used as queryParams for the API call
 
 

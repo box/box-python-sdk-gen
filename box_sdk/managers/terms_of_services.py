@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -57,8 +59,8 @@ class TermsOfServicesManager:
         :param tos_type: Limits the results to the terms of service of the given type.
         :type tos_type: Optional[GetTermOfServicesTosTypeArg], optional
         """
-        query_params: Dict = {'tos_type': tos_type}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'tos_type': to_string(tos_type)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return TermsOfServices.from_dict(json.loads(response.text))
     def create_term_of_service(self, status: CreateTermOfServiceStatusArg, text: str, tos_type: Optional[CreateTermOfServiceTosTypeArg] = None) -> Task:
         """

@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -123,8 +125,8 @@ class WebLinksManager:
             or folders nested within the item.
         :type boxapi: Optional[str], optional
         """
-        headers: Dict = {'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({'boxapi': to_string(boxapi)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=headers_map, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_by_id(self, web_link_id: str, url: Optional[str] = None, parent: Optional[UpdateWebLinkByIdParentArg] = None, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None) -> WebLink:
         """

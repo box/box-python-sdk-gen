@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -69,8 +71,8 @@ class TrashedFilesManager:
         :type fields: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(name=name, parent=parent)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return TrashFileRestored.from_dict(json.loads(response.text))
     def get_file_trash(self, file_id: str, fields: Optional[str] = None) -> TrashFile:
         """
@@ -117,8 +119,8 @@ class TrashedFilesManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return TrashFile.from_dict(json.loads(response.text))
     def delete_file_trash(self, file_id: str):
         """

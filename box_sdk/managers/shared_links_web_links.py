@@ -20,6 +20,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -198,9 +200,9 @@ class SharedLinksWebLinksManager:
             changed since.
         :type if_none_match: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#web_links']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def get_web_link_get_shared_link(self, web_link_id: str, fields: str) -> WebLink:
         """
@@ -212,8 +214,8 @@ class SharedLinksWebLinksManager:
             to be returned for this item.
         :type fields: str
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_add_shared_link(self, web_link_id: str, fields: str, shared_link: Optional[UpdateWebLinkAddSharedLinkSharedLinkArg] = None) -> WebLink:
         """
@@ -230,8 +232,8 @@ class SharedLinksWebLinksManager:
         :type shared_link: Optional[UpdateWebLinkAddSharedLinkSharedLinkArg], optional
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_update_shared_link(self, web_link_id: str, fields: str, shared_link: Optional[UpdateWebLinkUpdateSharedLinkSharedLinkArg] = None) -> WebLink:
         """
@@ -246,8 +248,8 @@ class SharedLinksWebLinksManager:
         :type shared_link: Optional[UpdateWebLinkUpdateSharedLinkSharedLinkArg], optional
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#update_shared_link']), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
     def update_web_link_remove_shared_link(self, web_link_id: str, fields: str, shared_link: Optional[UpdateWebLinkRemoveSharedLinkSharedLinkArg] = None) -> WebLink:
         """
@@ -263,6 +265,6 @@ class SharedLinksWebLinksManager:
         :type shared_link: Optional[UpdateWebLinkRemoveSharedLinkSharedLinkArg], optional
         """
         request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '#remove_shared_link']), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))

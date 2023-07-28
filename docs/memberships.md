@@ -21,7 +21,7 @@ client.memberships.get_user_memberships(user.id)
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
-- query_params `Optional[GetUserMembershipsQueryParamsArg]`
+- query_params `GetUserMembershipsQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -54,7 +54,7 @@ client.memberships.get_group_memberships(group.id)
 - group_id `str`
   - The ID of the group.
   - Used as `group_id` in path `path` of the API call
-- query_params `Optional[GetGroupMembershipsQueryParamsArg]`
+- query_params `GetGroupMembershipsQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -85,7 +85,7 @@ client.memberships.create_group_membership(CreateGroupMembershipRequestBodyArg(u
 
 - request_body `CreateGroupMembershipRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[CreateGroupMembershipQueryParamsArg]`
+- query_params `CreateGroupMembershipQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -117,7 +117,7 @@ client.memberships.get_group_membership_by_id(group_membership.id)
 - group_membership_id `str`
   - The ID of the group membership.
   - Used as `group_membership_id` in path `path` of the API call
-- query_params `Optional[GetGroupMembershipByIdQueryParamsArg]`
+- query_params `GetGroupMembershipByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -151,7 +151,7 @@ client.memberships.update_group_membership_by_id(group_membership.id, UpdateGrou
   - Used as `group_membership_id` in path `path` of the API call
 - request_body `UpdateGroupMembershipByIdRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[UpdateGroupMembershipByIdQueryParamsArg]`
+- query_params `UpdateGroupMembershipByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 

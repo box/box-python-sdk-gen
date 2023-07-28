@@ -16,6 +16,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -52,8 +54,8 @@ class CollectionsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Collections.from_dict(json.loads(response.text))
     def get_collection_items(self, collection_id: str, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Items:
         """
@@ -81,6 +83,6 @@ class CollectionsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

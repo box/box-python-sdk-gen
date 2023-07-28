@@ -14,7 +14,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetLegalHoldPoliciesQueryParamsArg]`
+- query_params `GetLegalHoldPoliciesQueryParamsArg`
   - Used as queryParams for the API call
 
 

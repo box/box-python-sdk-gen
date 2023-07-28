@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -76,8 +78,8 @@ class TermsOfServiceUserStatusesManager:
         :param user_id: Limits results to the given user ID.
         :type user_id: Optional[str], optional
         """
-        query_params: Dict = {'tos_id': tos_id, 'user_id': user_id}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'tos_id': to_string(tos_id), 'user_id': to_string(user_id)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
     def create_term_of_service_user_status(self, tos: CreateTermOfServiceUserStatusTosArg, user: CreateTermOfServiceUserStatusUserArg, is_accepted: bool) -> TermsOfServiceUserStatus:
         """

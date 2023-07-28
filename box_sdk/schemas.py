@@ -1095,25 +1095,28 @@ class FilesUnderRetention(BaseObject):
         self.entries = entries
 
 class FileConflict(FileMini):
-    _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileMini._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileMini._json_to_fields_mapping}
-    def __init__(self, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, id: str = None, type: FileBaseTypeField = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: FileBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
-        :param sha_1: The SHA1 hash of the file.
-        :type sha_1: Optional[str], optional
-        :param type: The name of the file
-        :type type: FileBaseTypeField, optional
-        :param sequence_id: The SHA1 hash of the file. This can be used to compare the contents
+        :param id: The unique identifier that represent a file.
+            The ID for any file can be determined
+            by visiting a file in the web application
+            and copying the ID from the URL. For example,
+            for the URL `https://*.app.box.com/files/123`
+            the `file_id` is `123`.
+        :type id: str
+        :param type: `file`
+        :type type: FileBaseTypeField
+        :param name: The name of the file
+        :type name: Optional[str], optional
+        :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
             of a file on Box with a local file.
-        :type sequence_id: Optional[str], optional
+        :type sha_1: Optional[str], optional
         :param etag: The HTTP `etag` of this file. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the file if (no) changes have happened.
         :type etag: Optional[str], optional
         """
-        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=None, file_version=None, etag=etag, **kwargs)
-        self.sha_1 = sha_1
-        self.file_version = file_version
+        super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
 
 class ConflictErrorContextInfoField(BaseObject):
     def __init__(self, conflicts: Optional[List[FileConflict]] = None, **kwargs):
@@ -1125,26 +1128,27 @@ class ConflictErrorContextInfoField(BaseObject):
         self.conflicts = conflicts
 
 class ConflictError(ClientError):
-    def __init__(self, context_info: Optional[ConflictErrorContextInfoField] = None, type: Optional[ClientErrorTypeField] = None, status: Optional[int] = None, code: Optional[ClientErrorCodeField] = None, message: Optional[str] = None, help_url: Optional[str] = None, request_id: Optional[str] = None, **kwargs):
+    def __init__(self, type: Optional[ClientErrorTypeField] = None, status: Optional[int] = None, code: Optional[ClientErrorCodeField] = None, message: Optional[str] = None, context_info: Optional[ClientErrorContextInfoField] = None, help_url: Optional[str] = None, request_id: Optional[str] = None, **kwargs):
         """
-        :param type: The HTTP status of the response.
+        :param type: `error`
         :type type: Optional[ClientErrorTypeField], optional
-        :param status: A Box-specific error code
+        :param status: The HTTP status of the response.
         :type status: Optional[int], optional
-        :param code: A short message describing the error.
+        :param code: A Box-specific error code
         :type code: Optional[ClientErrorCodeField], optional
-        :param message: A free-form object that contains additional context
+        :param message: A short message describing the error.
+        :type message: Optional[str], optional
+        :param context_info: A free-form object that contains additional context
             about the error. The possible fields are defined on
             a per-endpoint basis. `message` is only one example.
-        :type message: Optional[str], optional
+        :type context_info: Optional[ClientErrorContextInfoField], optional
         :param help_url: A URL that links to more information about why this error occurred.
         :type help_url: Optional[str], optional
         :param request_id: A unique identifier for this response, which can be used
             when contacting Box support.
         :type request_id: Optional[str], optional
         """
-        super().__init__(type=type, status=status, code=code, message=message, context_info=None, help_url=help_url, request_id=request_id, **kwargs)
-        self.context_info = context_info
+        super().__init__(type=type, status=status, code=code, message=message, context_info=context_info, help_url=help_url, request_id=request_id, **kwargs)
 
 class FolderBaseTypeField(str, Enum):
     FOLDER = 'folder'
@@ -4881,7 +4885,7 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
         self.type = type
 
 class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMemberMini):
-    def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, shield_information_barrier_segment: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField] = None, user: Optional[UserBase] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
+    def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, shield_information_barrier_segment: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, user: Optional[UserBase] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
         """
         :param shield_information_barrier_segment: The `type` and `id` of the requested
             shield information barrier segment.
@@ -4898,10 +4902,9 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         :param type: The type of the shield information barrier segment member
         :type type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField], optional
         """
-        super().__init__(user=None, id=id, type=type, **kwargs)
+        super().__init__(user=user, id=id, type=type, **kwargs)
         self.shield_information_barrier = shield_information_barrier
         self.shield_information_barrier_segment = shield_information_barrier_segment
-        self.user = user
         self.created_at = created_at
         self.created_by = created_by
         self.updated_at = updated_at

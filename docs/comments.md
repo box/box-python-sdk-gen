@@ -19,7 +19,7 @@ client.comments.get_file_comments(file_id)
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
-- query_params `Optional[GetFileCommentsQueryParamsArg]`
+- query_params `GetFileCommentsQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -51,7 +51,7 @@ client.comments.get_comment_by_id(new_comment.id)
 - comment_id `str`
   - The ID of the comment.
   - Used as `comment_id` in path `path` of the API call
-- query_params `Optional[GetCommentByIdQueryParamsArg]`
+- query_params `GetCommentByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -83,7 +83,7 @@ client.comments.update_comment_by_id(new_reply_comment.id, UpdateCommentByIdRequ
   - Used as `comment_id` in path `path` of the API call
 - request_body `UpdateCommentByIdRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[UpdateCommentByIdQueryParamsArg]`
+- query_params `UpdateCommentByIdQueryParamsArg`
   - Used as queryParams for the API call
 
 
@@ -134,7 +134,7 @@ client.comments.create_comment(CreateCommentRequestBodyArg(message&#x3D;message,
 
 - request_body `CreateCommentRequestBodyArg`
   - Used as requestBody for the API call
-- query_params `Optional[CreateCommentQueryParamsArg]`
+- query_params `CreateCommentQueryParamsArg`
   - Used as queryParams for the API call
 
 

@@ -28,6 +28,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -90,8 +92,8 @@ class IntegrationMappingsManager:
         :param is_manually_created: Whether the mapping has been manually created
         :type is_manually_created: Optional[bool], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit, 'partner_item_type': partner_item_type, 'partner_item_id': partner_item_id, 'box_item_id': box_item_id, 'box_item_type': box_item_type, 'is_manually_created': is_manually_created}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'partner_item_type': to_string(partner_item_type), 'partner_item_id': to_string(partner_item_id), 'box_item_id': to_string(box_item_id), 'box_item_type': to_string(box_item_type), 'is_manually_created': to_string(is_manually_created)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return IntegrationMappings.from_dict(json.loads(response.text))
     def create_integration_mapping_slack(self, partner_item: CreateIntegrationMappingSlackPartnerItemArg, box_item: CreateIntegrationMappingSlackBoxItemArg, options: Optional[CreateIntegrationMappingSlackOptionsArg] = None) -> IntegrationMapping:
         """

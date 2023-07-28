@@ -26,6 +26,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -86,8 +88,8 @@ class RetentionPolicyAssignmentsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'type': type, 'fields': fields, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'type': to_string(type), 'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignments.from_dict(json.loads(response.text))
     def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List] = None, start_date_field: Optional[str] = None) -> RetentionPolicyAssignment:
         """
@@ -125,8 +127,8 @@ class RetentionPolicyAssignmentsManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
     def delete_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str):
         """
@@ -153,8 +155,8 @@ class RetentionPolicyAssignmentsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))
     def get_retention_policy_assignment_file_version_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None) -> FilesUnderRetention:
         """
@@ -172,6 +174,6 @@ class RetentionPolicyAssignmentsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))

@@ -26,6 +26,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -105,8 +107,8 @@ class ChunkedUploadsManager:
         :type content_range: str
         """
         request_body: BaseObject = BaseObject()
-        headers: Dict = {'digest': digest, 'content_range': content_range}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=prepare_params(headers), body=request_body, content_type='application/octet-stream', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'content-range': to_string(content_range)})
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=headers_map, body=request_body, content_type='application/octet-stream', auth=self.auth, network_session=self.network_session))
         return UploadedPart.from_dict(json.loads(response.text))
     def delete_file_upload_session_by_id(self, upload_session_id: str):
         """
@@ -137,8 +139,8 @@ class ChunkedUploadsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'offset': to_string(offset), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return UploadParts.from_dict(json.loads(response.text))
     def create_file_upload_session_commit(self, upload_session_id: str, parts: List[UploadPart], digest: str, if_match: Optional[str] = None, if_none_match: Optional[str] = None) -> Files:
         """
@@ -172,6 +174,6 @@ class ChunkedUploadsManager:
         :type if_none_match: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(parts=parts)
-        headers: Dict = {'digest': digest, 'if_match': if_match, 'if_none_match': if_none_match}
-        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'if-match': to_string(if_match), 'if-none-match': to_string(if_none_match)})
+        response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))

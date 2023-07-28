@@ -24,6 +24,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -92,8 +94,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'shield_information_barrier_segment_id': shield_information_barrier_segment_id, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'shield_information_barrier_segment_id': to_string(shield_information_barrier_segment_id), 'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier_segment_member(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg, user: UserBase, type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None) -> ShieldInformationBarrierSegmentMember:
         """

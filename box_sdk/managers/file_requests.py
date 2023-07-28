@@ -24,6 +24,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -128,8 +130,8 @@ class FileRequestsManager:
         :type if_match: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at)
-        headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))
     def delete_file_request_by_id(self, file_request_id: str):
         """

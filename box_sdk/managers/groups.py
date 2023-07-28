@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -78,8 +80,8 @@ class GroupsManager:
             with a 400 response.
         :type offset: Optional[int], optional
         """
-        query_params: Dict = {'filter_term': filter_term, 'fields': fields, 'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'filter_term': to_string(filter_term), 'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return Groups.from_dict(json.loads(response.text))
     def create_group(self, name: str, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[CreateGroupInvitabilityLevelArg] = None, member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> Group:
         """
@@ -136,8 +138,8 @@ class GroupsManager:
         :type fields: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(name=name, provenance=provenance, external_sync_identifier=external_sync_identifier, description=description, invitability_level=invitability_level, member_viewability_level=member_viewability_level)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return Group.from_dict(json.loads(response.text))
     def get_group_by_id(self, group_id: str, fields: Optional[str] = None) -> GroupFull:
         """
@@ -161,8 +163,8 @@ class GroupsManager:
             to the fields requested.
         :type fields: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
     def update_group_by_id(self, group_id: str, name: Optional[str] = None, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg] = None, member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> GroupFull:
         """
@@ -225,8 +227,8 @@ class GroupsManager:
         :type fields: Optional[str], optional
         """
         request_body: BaseObject = BaseObject(name=name, provenance=provenance, external_sync_identifier=external_sync_identifier, description=description, invitability_level=invitability_level, member_viewability_level=member_viewability_level)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
     def delete_group_by_id(self, group_id: str):
         """

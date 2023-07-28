@@ -15,7 +15,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetRecentItemsQueryParamsArg]`
+- query_params `GetRecentItemsQueryParamsArg`
   - Used as queryParams for the API call
 
 

@@ -22,6 +22,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -79,8 +81,8 @@ class ShieldInformationBarriersManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return None
     def create_shield_information_barrier(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierTypeArg] = None, enterprise: Optional[EnterpriseBase] = None, status: Optional[CreateShieldInformationBarrierStatusArg] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, enabled_at: Optional[str] = None, enabled_by: Optional[UserBase] = None) -> ShieldInformationBarrier:
         """

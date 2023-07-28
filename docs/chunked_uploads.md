@@ -144,7 +144,7 @@ See the endpoint docs at
 - upload_session_id `str`
   - The ID of the upload session.
   - Used as `upload_session_id` in path `path` of the API call
-- query_params `Optional[GetFileUploadSessionPartsQueryParamsArg]`
+- query_params `GetFileUploadSessionPartsQueryParamsArg`
   - Used as queryParams for the API call
 
 

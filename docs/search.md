@@ -67,7 +67,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `Optional[GetSearchQueryParamsArg]`
+- query_params `GetSearchQueryParamsArg`
   - Used as queryParams for the API call
 
 

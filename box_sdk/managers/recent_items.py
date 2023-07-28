@@ -14,6 +14,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -49,6 +51,6 @@ class RecentItemsManager:
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
         """
-        query_params: Dict = {'fields': fields, 'limit': limit, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/recent_items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/recent_items']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return RecentItems.from_dict(json.loads(response.text))

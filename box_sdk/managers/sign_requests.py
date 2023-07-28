@@ -30,6 +30,8 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -80,8 +82,8 @@ class SignRequestsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         """
-        query_params: Dict = {'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
         return SignRequests.from_dict(json.loads(response.text))
     def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None) -> SignRequest:
         """
