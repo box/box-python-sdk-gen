@@ -14,6 +14,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -27,7 +31,7 @@ class AuthorizationManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, redirect_uri: Optional[str] = None, state: Optional[str] = None, scope: Optional[str] = None) -> None:
+    def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, redirect_uri: Optional[str] = None, state: Optional[str] = None, scope: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Authorize a user by sending them through the [Box](https://box.com)
         
@@ -73,7 +77,12 @@ class AuthorizationManager:
             authenticate the user for. This defaults to all the scopes configured
             for the application in its configuration page.
         :type scope: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'response_type': response_type, 'client_id': client_id, 'redirect_uri': redirect_uri, 'state': state, 'scope': scope}
-        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'response_type': to_string(response_type), 'client_id': to_string(client_id), 'redirect_uri': to_string(redirect_uri), 'state': to_string(state), 'scope': to_string(scope)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None

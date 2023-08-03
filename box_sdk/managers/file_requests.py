@@ -4,11 +4,9 @@ from typing import Optional
 
 from box_sdk.base_object import BaseObject
 
-import json
-
 from typing import Dict
 
-from box_sdk.base_object import BaseObject
+import json
 
 from box_sdk.schemas import FileRequest
 
@@ -23,6 +21,10 @@ from box_sdk.auth import Authentication
 from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
+
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -58,7 +60,7 @@ class FileRequestsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_request_by_id(self, file_request_id: str) -> FileRequest:
+    def get_file_request_by_id(self, file_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileRequest:
         """
         Retrieves the information about a file request.
         :param file_request_id: The unique identifier that represent a file request.
@@ -69,10 +71,15 @@ class FileRequestsManager:
             the `file_request_id` is `123`.
             Example: "123"
         :type file_request_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))
-    def update_file_request_by_id(self, file_request_id: str, title: Optional[str] = None, description: Optional[str] = None, status: Optional[UpdateFileRequestByIdStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, if_match: Optional[str] = None) -> FileRequest:
+    def update_file_request_by_id(self, file_request_id: str, title: Optional[str] = None, description: Optional[str] = None, status: Optional[UpdateFileRequestByIdStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileRequest:
         """
         Updates a file request. This can be used to activate or
         
@@ -126,12 +133,16 @@ class FileRequestsManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        request_body: BaseObject = BaseObject(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at)
-        headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: FileRequestUpdateRequest = FileRequestUpdateRequest(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at)
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))
-    def delete_file_request_by_id(self, file_request_id: str):
+    def delete_file_request_by_id(self, file_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a file request permanently.
         :param file_request_id: The unique identifier that represent a file request.
@@ -142,10 +153,15 @@ class FileRequestsManager:
             the `file_request_id` is `123`.
             Example: "123"
         :type file_request_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def create_file_request_copy(self, file_request_id: str, folder: CreateFileRequestCopyFolderArg, title: Optional[str] = None, description: Optional[str] = None, status: Optional[CreateFileRequestCopyStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None) -> FileRequest:
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def create_file_request_copy(self, file_request_id: str, folder: CreateFileRequestCopyFolderArg, title: Optional[str] = None, description: Optional[str] = None, status: Optional[CreateFileRequestCopyStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileRequest:
         """
         Copies an existing file request that is already present on one folder,
         
@@ -194,7 +210,12 @@ class FileRequestsManager:
             `inactive`.
             This will default to the value on the existing file request.
         :type expires_at: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        request_body: BaseObject = BaseObject(folder=folder, title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: FileRequestCopyRequest = FileRequestCopyRequest(folder=folder, title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at)
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))

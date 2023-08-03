@@ -16,6 +16,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -35,7 +39,7 @@ class TrashedItemsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_trash_items(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsDirectionArg] = None, sort: Optional[GetFolderTrashItemsSortArg] = None) -> Items:
+    def get_folder_trash_items(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsDirectionArg] = None, sort: Optional[GetFolderTrashItemsSortArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Items:
         """
         Retrieves the files and folders that have been moved
         
@@ -93,7 +97,12 @@ class TrashedItemsManager:
             before web links.
             This parameter is not supported when using marker-based pagination.
         :type sort: Optional[GetFolderTrashItemsSortArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields, 'limit': limit, 'offset': offset, 'usemarker': usemarker, 'marker': marker, 'direction': direction, 'sort': sort}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset), 'usemarker': to_string(usemarker), 'marker': to_string(marker), 'direction': to_string(direction), 'sort': to_string(sort)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

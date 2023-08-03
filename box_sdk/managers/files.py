@@ -22,6 +22,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -145,7 +149,7 @@ class FilesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_by_id(self, file_id: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, x_rep_hints: Optional[str] = None) -> FileFull:
+    def get_file_by_id(self, file_id: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, x_rep_hints: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
         """
         Retrieves the details about a file.
         :param file_id: The unique identifier that represents a file.
@@ -198,12 +202,16 @@ class FilesManager:
             representation.
             `x-rep-hints: [extracted_text]`
         :type x_rep_hints: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields}
-        headers: Dict = {'if_none_match': if_none_match, 'boxapi': boxapi, 'x_rep_hints': x_rep_hints}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=prepare_params(query_params), headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), 'x-rep-hints': to_string(x_rep_hints), **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FileFull:
+    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, collections: Optional[List] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,
         
@@ -235,6 +243,15 @@ class FilesManager:
         :type disposition_at: Optional[str], optional
         :param permissions: Defines who can download a file.
         :type permissions: Optional[UpdateFileByIdPermissionsArg], optional
+        :param collections: An array of collections to make this file
+            a member of. Currently
+            we only support the `favorites` collection.
+            To get the ID for a collection, use the
+            [List all collections][1] endpoint.
+            Passing an empty array `[]` or `null` will remove
+            the file from all collections.
+            [1]: e://get-collections
+        :type collections: Optional[List], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -258,13 +275,17 @@ class FilesManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, tags=tags)
-        query_params: Dict = {'fields': fields}
-        headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=prepare_params(query_params), headers=prepare_params(headers), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, collections=collections, tags=tags)
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
-    def delete_file_by_id(self, file_id: str, if_match: Optional[str] = None):
+    def delete_file_by_id(self, file_id: str, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a file, either permanently or by moving it to
         
@@ -291,11 +312,15 @@ class FilesManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers: Dict = {'if_match': if_match}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers=prepare_params(headers), auth=self.auth, network_session=self.network_session))
-        return response.content
-    def copy_file(self, file_id: str, parent: CopyFileParentArg, name: Optional[str] = None, version: Optional[str] = None, fields: Optional[str] = None) -> FileFull:
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def copy_file(self, file_id: str, parent: CopyFileParentArg, name: Optional[str] = None, version: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
         """
         Creates a copy of a file.
         :param file_id: The unique identifier that represents a file.
@@ -326,12 +351,17 @@ class FilesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(name=name, version=version, parent=parent)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
-    def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, min_height: Optional[int] = None, min_width: Optional[int] = None, max_height: Optional[int] = None, max_width: Optional[int] = None):
+    def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, min_height: Optional[int] = None, min_width: Optional[int] = None, max_height: Optional[int] = None, max_width: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ByteStream:
         """
         Retrieves a thumbnail, or smaller image representation, of a file.
         
@@ -371,7 +401,12 @@ class FilesManager:
         :type max_height: Optional[int], optional
         :param max_width: The maximum width of the thumbnail
         :type max_width: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'min_height': min_height, 'min_width': min_width, 'max_height': max_height, 'max_width': max_width}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'min_height': to_string(min_height), 'min_width': to_string(min_width), 'max_height': to_string(max_height), 'max_width': to_string(max_width)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='binary', auth=self.auth, network_session=self.network_session))
         return response.content

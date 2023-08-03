@@ -16,6 +16,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -26,7 +30,7 @@ class CollectionsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_collections(self, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Collections:
+    def get_collections(self, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collections:
         """
         Retrieves all collections for a given user.
         
@@ -51,11 +55,16 @@ class CollectionsManager:
         :type offset: Optional[int], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collections.from_dict(json.loads(response.text))
-    def get_collection_items(self, collection_id: str, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Items:
+    def get_collection_items(self, collection_id: str, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Items:
         """
         Retrieves the files and/or folders contained within
         
@@ -80,7 +89,12 @@ class CollectionsManager:
         :type offset: Optional[int], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields, 'offset': offset, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))

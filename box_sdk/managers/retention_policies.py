@@ -24,6 +24,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -54,7 +58,7 @@ class RetentionPoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_retention_policies(self, policy_name: Optional[str] = None, policy_type: Optional[GetRetentionPoliciesPolicyTypeArg] = None, created_by_user_id: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> RetentionPolicies:
+    def get_retention_policies(self, policy_name: Optional[str] = None, policy_type: Optional[GetRetentionPoliciesPolicyTypeArg] = None, created_by_user_id: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicies:
         """
         Retrieves all of the retention policies for an enterprise.
         :param policy_name: Filters results by a case sensitive prefix of the name of
@@ -78,11 +82,16 @@ class RetentionPoliciesManager:
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
         :type marker: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'policy_name': policy_name, 'policy_type': policy_type, 'created_by_user_id': created_by_user_id, 'fields': fields, 'limit': limit, 'marker': marker}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'policy_type': to_string(policy_type), 'created_by_user_id': to_string(created_by_user_id), 'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicies.from_dict(json.loads(response.text))
-    def create_retention_policy(self, policy_name: str, policy_type: CreateRetentionPolicyPolicyTypeArg, disposition_action: CreateRetentionPolicyDispositionActionArg, description: Optional[str] = None, retention_length: Optional[str] = None, retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
+    def create_retention_policy(self, policy_name: str, policy_type: CreateRetentionPolicyPolicyTypeArg, disposition_action: CreateRetentionPolicyDispositionActionArg, description: Optional[str] = None, retention_length: Optional[str] = None, retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicy:
         """
         Creates a retention policy.
         :param policy_name: The name for the retention policy
@@ -132,11 +141,16 @@ class RetentionPoliciesManager:
         :param custom_notification_recipients: A list of users notified when
             the retention policy duration is about to end.
         :type custom_notification_recipients: Optional[List[UserMini]], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, policy_type=policy_type, disposition_action=disposition_action, retention_length=retention_length, retention_type=retention_type, can_owner_extend_retention=can_owner_extend_retention, are_owners_notified=are_owners_notified, custom_notification_recipients=custom_notification_recipients)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def get_retention_policy_by_id(self, retention_policy_id: str, fields: Optional[str] = None) -> RetentionPolicy:
+    def get_retention_policy_by_id(self, retention_policy_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicy:
         """
         Retrieves a retention policy.
         :param retention_policy_id: The ID of the retention policy.
@@ -151,11 +165,16 @@ class RetentionPoliciesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def update_retention_policy_by_id(self, retention_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg] = None, retention_type: Optional[str] = None, retention_length: Optional[str] = None, status: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
+    def update_retention_policy_by_id(self, retention_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg] = None, retention_type: Optional[str] = None, retention_length: Optional[str] = None, status: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicy:
         """
         Updates a retention policy.
         :param retention_policy_id: The ID of the retention policy.
@@ -211,16 +230,26 @@ class RetentionPoliciesManager:
         :type are_owners_notified: Optional[bool], optional
         :param custom_notification_recipients: A list of users notified when the retention duration is about to end.
         :type custom_notification_recipients: Optional[List[UserMini]], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, disposition_action=disposition_action, retention_type=retention_type, retention_length=retention_length, status=status, can_owner_extend_retention=can_owner_extend_retention, are_owners_notified=are_owners_notified, custom_notification_recipients=custom_notification_recipients)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
-    def delete_retention_policy_by_id(self, retention_policy_id: str):
+    def delete_retention_policy_by_id(self, retention_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Permanently deletes a retention policy.
         :param retention_policy_id: The ID of the retention policy.
             Example: "982312"
         :type retention_policy_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

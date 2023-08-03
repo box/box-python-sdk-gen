@@ -22,6 +22,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -48,7 +52,7 @@ class TermsOfServicesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_term_of_services(self, tos_type: Optional[GetTermOfServicesTosTypeArg] = None) -> TermsOfServices:
+    def get_term_of_services(self, tos_type: Optional[GetTermOfServicesTosTypeArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TermsOfServices:
         """
         Returns the current terms of service text and settings
         
@@ -56,11 +60,16 @@ class TermsOfServicesManager:
 
         :param tos_type: Limits the results to the terms of service of the given type.
         :type tos_type: Optional[GetTermOfServicesTosTypeArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'tos_type': tos_type}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'tos_type': to_string(tos_type)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TermsOfServices.from_dict(json.loads(response.text))
-    def create_term_of_service(self, status: CreateTermOfServiceStatusArg, text: str, tos_type: Optional[CreateTermOfServiceTosTypeArg] = None) -> Task:
+    def create_term_of_service(self, status: CreateTermOfServiceStatusArg, text: str, tos_type: Optional[CreateTermOfServiceTosTypeArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Task:
         """
         Creates a terms of service for a given enterprise
         
@@ -74,20 +83,30 @@ class TermsOfServicesManager:
         :param tos_type: The type of user to set the terms of
             service for.
         :type tos_type: Optional[CreateTermOfServiceTosTypeArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(status=status, tos_type=tos_type, text=text)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
-    def get_term_of_service_by_id(self, terms_of_service_id: str) -> TermsOfService:
+    def get_term_of_service_by_id(self, terms_of_service_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TermsOfService:
         """
         Fetches a specific terms of service.
         :param terms_of_service_id: The ID of the terms of service.
             Example: "324234"
         :type terms_of_service_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TermsOfService.from_dict(json.loads(response.text))
-    def update_term_of_service_by_id(self, terms_of_service_id: str, status: UpdateTermOfServiceByIdStatusArg, text: str) -> TermsOfService:
+    def update_term_of_service_by_id(self, terms_of_service_id: str, status: UpdateTermOfServiceByIdStatusArg, text: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TermsOfService:
         """
         Updates a specific terms of service.
         :param terms_of_service_id: The ID of the terms of service.
@@ -98,7 +117,12 @@ class TermsOfServicesManager:
         :param text: The terms of service text to display to users.
             The text can be set to empty if the `status` is set to `disabled`.
         :type text: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(status=status, text=text)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return TermsOfService.from_dict(json.loads(response.text))

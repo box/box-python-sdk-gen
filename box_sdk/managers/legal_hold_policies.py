@@ -18,6 +18,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -28,7 +32,7 @@ class LegalHoldPoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_legal_hold_policies(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None) -> LegalHoldPolicies:
+    def get_legal_hold_policies(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> LegalHoldPolicies:
         """
         Retrieves a list of legal hold policies that belong to
         
@@ -52,11 +56,16 @@ class LegalHoldPoliciesManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'policy_name': policy_name, 'fields': fields, 'marker': marker, 'limit': limit}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicies.from_dict(json.loads(response.text))
-    def create_legal_hold_policy(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None) -> LegalHoldPolicy:
+    def create_legal_hold_policy(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> LegalHoldPolicy:
         """
         Create a new legal hold policy.
         :param policy_name: The name of the policy.
@@ -89,20 +98,30 @@ class LegalHoldPoliciesManager:
             get held. This will continue until the policy is retired.
             Required if no filter dates are set.
         :type is_ongoing: Optional[bool], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, filter_started_at=filter_started_at, filter_ended_at=filter_ended_at, is_ongoing=is_ongoing)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def get_legal_hold_policy_by_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
+    def get_legal_hold_policy_by_id(self, legal_hold_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> LegalHoldPolicy:
         """
         Retrieve a legal hold policy.
         :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
         :type legal_hold_policy_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None) -> LegalHoldPolicy:
+    def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> LegalHoldPolicy:
         """
         Update legal hold policy.
         :param legal_hold_policy_id: The ID of the legal hold policy
@@ -114,11 +133,16 @@ class LegalHoldPoliciesManager:
         :type description: Optional[str], optional
         :param release_notes: Notes around why the policy was released.
         :type release_notes: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, release_notes=release_notes)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
-    def delete_legal_hold_policy_by_id(self, legal_hold_policy_id: str):
+    def delete_legal_hold_policy_by_id(self, legal_hold_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Delete an existing legal hold policy.
         
@@ -130,6 +154,11 @@ class LegalHoldPoliciesManager:
         :param legal_hold_policy_id: The ID of the legal hold policy
             Example: "324432"
         :type legal_hold_policy_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

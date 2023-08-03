@@ -105,16 +105,22 @@ print(f'File restored with id {file.id}, name {file.name}')
 
 ## Get Thumbnail
 
-To retrieve a thumbnail for a file, call `get_file_thumbnail_by_id` method. This method returns a `bytes` object which contains the thumbnail data in the specified format.
+To retrieve a thumbnail for a file, call `get_file_thumbnail_by_id` method. This method returns a `ByteStream` object,
+which is an implementation of `io.BufferedIOBase`, which contains the thumbnail data in the specified format.
 
-Optionally, you can specify the information about the thumbnail you want to retrieve, including the `max_height`, `max_width`, `min_height`, `min_width`.
+Optionally, you can specify the information about the thumbnail you want to retrieve,
+including the `max_height`, `max_width`, `min_height`, `min_width`.
+
+To save downloaded thumbnail to your local disk you can use e.g. `shutil.copyfileobj()` method:
 
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
+import shutil
 from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg
+from box_sdk.utils import ByteStream
 
-thumbnail = client.files.get_file_thumbnail_by_id(
+thumbnail: ByteStream = client.files.get_file_thumbnail_by_id(
     file_id='1199932968894',
     extension=GetFileThumbnailByIdExtensionArg.PNG,
     min_height=256,
@@ -123,5 +129,5 @@ thumbnail = client.files.get_file_thumbnail_by_id(
     max_width=256,
 )
 with open('thumbnail.png', 'wb') as f:
-    f.write(thumbnail)
+    shutil.copyfileobj(thumbnail, f)
 ```

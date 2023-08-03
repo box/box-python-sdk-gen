@@ -8,11 +8,9 @@ from typing import List
 
 from typing import Union
 
-import json
-
 from typing import Dict
 
-from box_sdk.base_object import BaseObject
+import json
 
 from box_sdk.schemas import MetadataQueryResults
 
@@ -33,6 +31,10 @@ from box_sdk.auth import Authentication
 from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
+
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -74,7 +76,7 @@ class SearchManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_metadata_query_execute_read(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg] = None, order_by: Optional[List] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None) -> MetadataQueryResults:
+    def create_metadata_query_execute_read(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg] = None, order_by: Optional[List] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataQueryResults:
         """
         Create a search using SQL-like syntax to return items that match specific
         
@@ -136,22 +138,32 @@ class SearchManager:
             the field specified by the `field` name. Multiple fields for the same
             `scope` and `templateKey` can be defined.
         :type fields: Optional[List[str]], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        request_body: BaseObject = BaseObject(from_=from_, query=query, query_params=query_params, ancestor_folder_id=ancestor_folder_id, order_by=order_by, limit=limit, marker=marker, fields=fields)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: MetadataQuery = MetadataQuery(from_=from_, query=query, query_params=query_params, ancestor_folder_id=ancestor_folder_id, order_by=order_by, limit=limit, marker=marker, fields=fields)
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_queries/execute_read']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataQueryResults.from_dict(json.loads(response.text))
-    def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str) -> MetadataQueryIndices:
+    def get_metadata_query_indices(self, scope: GetMetadataQueryIndicesScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataQueryIndices:
         """
         Retrieves the metadata query indices for a given scope and template key.
         :param scope: The scope of the metadata template
         :type scope: GetMetadataQueryIndicesScopeArg
         :param template_key: The name of the metadata template
         :type template_key: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'scope': scope, 'template_key': template_key}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'scope': to_string(scope), 'template_key': to_string(template_key)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_query_indices']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataQueryIndices.from_dict(json.loads(response.text))
-    def get_search(self, query: Optional[str] = None, scope: Optional[GetSearchScopeArg] = None, file_extensions: Optional[str] = None, created_at_range: Optional[str] = None, updated_at_range: Optional[str] = None, size_range: Optional[str] = None, owner_user_ids: Optional[str] = None, recent_updater_user_ids: Optional[str] = None, ancestor_folder_ids: Optional[str] = None, content_types: Optional[str] = None, type: Optional[GetSearchTypeArg] = None, trash_content: Optional[GetSearchTrashContentArg] = None, mdfilters: Optional[str] = None, sort: Optional[GetSearchSortArg] = None, direction: Optional[GetSearchDirectionArg] = None, limit: Optional[int] = None, include_recent_shared_links: Optional[bool] = None, fields: Optional[str] = None, offset: Optional[int] = None, deleted_user_ids: Optional[str] = None, deleted_at_range: Optional[str] = None) -> None:
+    def get_search(self, query: Optional[str] = None, scope: Optional[GetSearchScopeArg] = None, file_extensions: Optional[str] = None, created_at_range: Optional[str] = None, updated_at_range: Optional[str] = None, size_range: Optional[str] = None, owner_user_ids: Optional[str] = None, recent_updater_user_ids: Optional[str] = None, ancestor_folder_ids: Optional[str] = None, content_types: Optional[str] = None, type: Optional[GetSearchTypeArg] = None, trash_content: Optional[GetSearchTrashContentArg] = None, mdfilters: Optional[str] = None, sort: Optional[GetSearchSortArg] = None, direction: Optional[GetSearchDirectionArg] = None, limit: Optional[int] = None, include_recent_shared_links: Optional[bool] = None, fields: Optional[str] = None, offset: Optional[int] = None, deleted_user_ids: Optional[str] = None, deleted_at_range: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Searches for files, folders, web links, and shared files across the
         
@@ -357,7 +369,12 @@ class SearchManager:
             is returned.
             Data available from 2023-02-01 onwards.
         :type deleted_at_range: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'query': query, 'scope': scope, 'file_extensions': file_extensions, 'created_at_range': created_at_range, 'updated_at_range': updated_at_range, 'size_range': size_range, 'owner_user_ids': owner_user_ids, 'recent_updater_user_ids': recent_updater_user_ids, 'ancestor_folder_ids': ancestor_folder_ids, 'content_types': content_types, 'type': type, 'trash_content': trash_content, 'mdfilters': mdfilters, 'sort': sort, 'direction': direction, 'limit': limit, 'include_recent_shared_links': include_recent_shared_links, 'fields': fields, 'offset': offset, 'deleted_user_ids': deleted_user_ids, 'deleted_at_range': deleted_at_range}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'query': to_string(query), 'scope': to_string(scope), 'file_extensions': to_string(file_extensions), 'created_at_range': to_string(created_at_range), 'updated_at_range': to_string(updated_at_range), 'size_range': to_string(size_range), 'owner_user_ids': to_string(owner_user_ids), 'recent_updater_user_ids': to_string(recent_updater_user_ids), 'ancestor_folder_ids': to_string(ancestor_folder_ids), 'content_types': to_string(content_types), 'type': to_string(type), 'trash_content': to_string(trash_content), 'mdfilters': to_string(mdfilters), 'sort': to_string(sort), 'direction': to_string(direction), 'limit': to_string(limit), 'include_recent_shared_links': to_string(include_recent_shared_links), 'fields': to_string(fields), 'offset': to_string(offset), 'deleted_user_ids': to_string(deleted_user_ids), 'deleted_at_range': to_string(deleted_at_range)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/search']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return None

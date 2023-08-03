@@ -22,6 +22,10 @@ from box_sdk.network import NetworkSession
 
 from box_sdk.utils import prepare_params
 
+from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -66,7 +70,7 @@ class MembershipsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_user_memberships(self, user_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> GroupMemberships:
+    def get_user_memberships(self, user_id: str, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> GroupMemberships:
         """
         Retrieves all the groups for a user. Only members of this
         
@@ -85,11 +89,16 @@ class MembershipsManager:
             exceeding 10000 will be rejected
             with a 400 response.
         :type offset: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
-    def get_group_memberships(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> GroupMemberships:
+    def get_group_memberships(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> GroupMemberships:
         """
         Retrieves all the members for a group. Only members of this
         
@@ -108,11 +117,16 @@ class MembershipsManager:
             exceeding 10000 will be rejected
             with a 400 response.
         :type offset: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'limit': limit, 'offset': offset}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
-    def create_group_membership(self, user: CreateGroupMembershipUserArg, group: CreateGroupMembershipGroupArg, role: Optional[CreateGroupMembershipRoleArg] = None, configurable_permissions: Optional[CreateGroupMembershipConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
+    def create_group_membership(self, user: CreateGroupMembershipUserArg, group: CreateGroupMembershipGroupArg, role: Optional[CreateGroupMembershipRoleArg] = None, configurable_permissions: Optional[CreateGroupMembershipConfigurablePermissionsArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> GroupMembership:
         """
         Creates a group membership. Only users with
         
@@ -142,12 +156,17 @@ class MembershipsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(user=user, group=group, role=role, configurable_permissions=configurable_permissions)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
-    def get_group_membership_by_id(self, group_membership_id: str, fields: Optional[str] = None) -> GroupMembership:
+    def get_group_membership_by_id(self, group_membership_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> GroupMembership:
         """
         Retrieves a specific group membership. Only admins of this
         
@@ -168,11 +187,16 @@ class MembershipsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params=prepare_params(query_params), auth=self.auth, network_session=self.network_session))
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
-    def update_group_membership_by_id(self, group_membership_id: str, role: Optional[UpdateGroupMembershipByIdRoleArg] = None, configurable_permissions: Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
+    def update_group_membership_by_id(self, group_membership_id: str, role: Optional[UpdateGroupMembershipByIdRoleArg] = None, configurable_permissions: Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> GroupMembership:
         """
         Updates a user's group membership. Only admins of this
         
@@ -204,12 +228,17 @@ class MembershipsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(role=role, configurable_permissions=configurable_permissions)
-        query_params: Dict = {'fields': fields}
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params=prepare_params(query_params), body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
-    def delete_group_membership_by_id(self, group_membership_id: str):
+    def delete_group_membership_by_id(self, group_membership_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a specific group membership. Only admins of this
         
@@ -221,6 +250,11 @@ class MembershipsManager:
         :param group_membership_id: The ID of the group membership.
             Example: "434534"
         :type group_membership_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
