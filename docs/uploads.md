@@ -11,12 +11,13 @@ Uploads module is used to upload files to Box. It supports uploading files from 
 
 ## Upload a File
 
-To upload a small file from a readable stream, call `upload_file` method. This method returns a `Files` object which contains information about the uploaded files.
+To upload a small file from a readable stream, call `upload_file` method.
+This method returns a `Files` object which contains information about the uploaded files.
 
 <!-- sample post_files_content -->
 
 ```python
-from box_sdk.managers.uploads import UploadFileAttributesArg, UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesArg, UploadFileAttributesArgParentField
 
 attrs = UploadFileAttributesArg(
     name='filename.txt',

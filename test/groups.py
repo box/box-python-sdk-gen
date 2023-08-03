@@ -1,14 +1,16 @@
-from box_sdk.utils import decode_base_64
+import pytest
 
-from box_sdk.utils import get_env_var
+from box_sdk_gen.utils import decode_base_64
 
-from box_sdk.utils import get_uuid
+from box_sdk_gen.utils import get_env_var
 
-from box_sdk.client import Client
+from box_sdk_gen.utils import get_uuid
 
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk_gen.client import Client
 
-from box_sdk.jwt_auth import JWTConfig
+from box_sdk_gen.jwt_auth import JWTAuth
+
+from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config = JWTConfig.from_config_json_string(decode_base_64(get_env_var('JWT_CONFIG_BASE_64')))
 
@@ -32,3 +34,5 @@ def test_create_get_delete_group():
     updated_group: GroupFull = client.groups.update_group_by_id(group_id=group.id, name=updated_group_name)
     assert updated_group.name == updated_group_name
     client.groups.delete_group_by_id(group.id)
+    with pytest.raises(Exception):
+        client.groups.get_group_by_id(group_id=group.id)

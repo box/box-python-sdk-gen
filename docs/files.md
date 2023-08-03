@@ -24,7 +24,7 @@ To retreive information about a File, call `get_file_by_id` method. This method 
 <!-- sample get_files_id -->
 
 ```python
-from box_sdk.schemas import FileFull
+from box_sdk_gen.schemas import FileFull
 
 file: FileFull = client.files.get_file_by_id(file_id='123456789')
 print(f'File with id {file.id} has name {file.name}')
@@ -36,7 +36,7 @@ If you want the response object to contain additional fields that are not return
 such fields in a comma-separated string
 
 ```python
-from box_sdk.schemas import FileFull
+from box_sdk_gen.schemas import FileFull
 
 file: FileFull = client.files.get_file_by_id(file_id='12345', fields='is_externally_owned,has_collaborations')
 ```
@@ -52,7 +52,7 @@ To update a file's information, call `update_file_by_id` method. This method ret
 <!-- sample put_files_id -->
 
 ```python
-from box_sdk.schemas import FileFull
+from box_sdk_gen.schemas import FileFull
 
 file: FileFull = client.files.update_file_by_id(file_id='123', name='test.txt', description='Test file')
 print(f'File with id {file.id} has new name {file.name}')
@@ -67,8 +67,8 @@ This method returns a `File` object which contains information about the copied 
 <!-- sample post_files_id_copy -->
 
 ```python
-from box_sdk.managers.files import CopyFileParentArg
-from box_sdk.schemas import FileFull
+from box_sdk_gen.managers.files import CopyFileParentArg
+from box_sdk_gen.schemas import FileFull
 
 
 file: FileFull = client.files.copy_file(
@@ -97,7 +97,7 @@ This method returns a `TrashFileRestored` object which contains information abou
 <!-- sample post_files_id -->
 
 ```python
-from box_sdk.schemas import TrashFileRestored
+from box_sdk_gen.schemas import TrashFileRestored
 
 file: TrashFileRestored = client.files.restore_file_from_trash(file_id='123456789')
 print(f'File restored with id {file.id}, name {file.name}')
@@ -105,16 +105,22 @@ print(f'File restored with id {file.id}, name {file.name}')
 
 ## Get Thumbnail
 
-To retrieve a thumbnail for a file, call `get_file_thumbnail_by_id` method. This method returns a `bytes` object which contains the thumbnail data in the specified format.
+To retrieve a thumbnail for a file, call `get_file_thumbnail_by_id` method. This method returns a `ByteStream` object,
+which is an implementation of `io.BufferedIOBase`, which contains the thumbnail data in the specified format.
 
-Optionally, you can specify the information about the thumbnail you want to retrieve, including the `max_height`, `max_width`, `min_height`, `min_width`.
+Optionally, you can specify the information about the thumbnail you want to retrieve,
+including the `max_height`, `max_width`, `min_height`, `min_width`.
+
+To save downloaded thumbnail to your local disk you can use e.g. `shutil.copyfileobj()` method:
 
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
-from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg
+import shutil
+from box_sdk_gen.managers.files import GetFileThumbnailByIdExtensionArg
+from box_sdk_gen.utils import ByteStream
 
-thumbnail = client.files.get_file_thumbnail_by_id(
+thumbnail: ByteStream = client.files.get_file_thumbnail_by_id(
     file_id='1199932968894',
     extension=GetFileThumbnailByIdExtensionArg.PNG,
     min_height=256,
@@ -123,5 +129,5 @@ thumbnail = client.files.get_file_thumbnail_by_id(
     max_width=256,
 )
 with open('thumbnail.png', 'wb') as f:
-    f.write(thumbnail)
+    shutil.copyfileobj(thumbnail, f)
 ```

@@ -16,7 +16,7 @@
 # Installing
 
 ```console
-pip install boxsdk@git+https://github.com/box/box-python-sdk-generated.git
+pip install box-sdk-gen
 ```
 
 Use your GitHub account login and GitHub Personal access token as a password when prompt.
@@ -28,7 +28,7 @@ Supported Python versions are Python 3.8 and above.
 To install also extra dependencies required for JWT authentication, use command:
 
 ```console
-pip install "boxsdk@git+https://github.com/box/box-python-sdk-generated.git#boxsdk[jwt]"
+pip install box-sdk-gen[jwt]
 ```
 
 # Getting Started
@@ -43,8 +43,8 @@ Using `Client` object you can access managers, which allow you to perform some o
 The example below demonstrates how to authenticate with Developer Token and print names of all items inside a root folder.
 
 ```python
-from box_sdk.developer_token_auth import DeveloperTokenAuth
-from box_sdk.client import Client
+from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
+from box_sdk_gen.client import Client
 
 
 def main(token: str):

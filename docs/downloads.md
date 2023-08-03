@@ -11,21 +11,30 @@ Downloads module is used to download files from Box.
 
 ## Download a File
 
-To get the entire contents of the file as `bytes`, call `download_file` method.
-This method returns a `bytes` object which contains the file content.
+To get the entire contents of the file as stream of bytes, call `download_file` method.
+This method returns a `ByteStream` object, which is an implementation of `io.BufferedIOBase`, what allows
+reading downloaded file as a stream. Thanks to that, the file parts will be downloaded just when needed and
+it won;t be necessary to store the entire file content in-memory.
+
+To get the full content of the file in `bytes` format just call `read()` method on returned object.
+
+```python
+from box_sdk_gen.utils import ByteStream
+
+file_content_stream: ByteStream = client.downloads.download_file(file_id='123456789')
+print('File content: ', file_content_stream.read())
+```
+
+To save downloaded file to your local disk you can use e.g. `shutil.copyfileobj()` method:
 
 <!-- sample get_files_id_content -->
 
 ```python
-file_content: bytes = client.downloads.download_file(file_id='123456789')
+import shutil
+from box_sdk_gen.utils import ByteStream
+
+file_content_stream: ByteStream = client.downloads.download_file(file_id='123456789')
 with open('file.pdf', 'wb') as f:
-    f.write(file_content)
+    shutil.copyfileobj(file_content_stream, f)
 print('File was successfully downloaded as "file.pdf"')
-```
-
-Additionally, only a part of the file can be downloaded by specifying a byte range.
-
-```python
-file_content: bytes = client.downloads.download_file(file_id='123456789', range='bytes=0-100')
-print('File content size: ', len(file_content))
 ```

@@ -1,24 +1,24 @@
-from box_sdk.utils import decode_base_64
+from box_sdk_gen.utils import decode_base_64
 
-from box_sdk.utils import get_env_var
+from box_sdk_gen.utils import get_env_var
 
-from box_sdk.client import Client
+from box_sdk_gen.client import Client
 
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk_gen.jwt_auth import JWTAuth
 
-from box_sdk.jwt_auth import JWTConfig
+from box_sdk_gen.jwt_auth import JWTConfig
 
-from box_sdk.ccg_auth import CCGAuth
+from box_sdk_gen.ccg_auth import CCGAuth
 
-from box_sdk.ccg_auth import CCGConfig
+from box_sdk_gen.ccg_auth import CCGConfig
 
-from box_sdk.developer_token_auth import DeveloperTokenAuth
+from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
 
-from box_sdk.oauth import OAuth
+from box_sdk_gen.oauth import OAuth
 
-from box_sdk.oauth import OAuthConfig
+from box_sdk_gen.oauth import OAuthConfig
 
-from box_sdk.schemas import UserFull
+from box_sdk_gen.schemas import UserFull
 
 def test_ccg_auth():
     user_id: str = get_env_var('USER_ID')
