@@ -16,6 +16,8 @@ See the endpoint docs at
 
 - query_params `GetCollaborationWhitelistExemptTargetsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetCollaborationWhitelistExemptTargetsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -41,6 +43,8 @@ See the endpoint docs at
 
 - request_body `CreateCollaborationWhitelistExemptTargetRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateCollaborationWhitelistExemptTargetHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -67,6 +71,8 @@ See the endpoint docs at
 - collaboration_whitelist_exempt_target_id `str`
   - The ID of the exemption to the list.
   - Used as `collaboration_whitelist_exempt_target_id` in path `path` of the API call
+- headers `GetCollaborationWhitelistExemptTargetByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -93,5 +99,15 @@ See the endpoint docs at
 - collaboration_whitelist_exempt_target_id `str`
   - The ID of the exemption to the list.
   - Used as `collaboration_whitelist_exempt_target_id` in path `path` of the API call
+- headers `DeleteCollaborationWhitelistExemptTargetByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+A blank response is returned if the exemption was
+successfully deleted.
 
 

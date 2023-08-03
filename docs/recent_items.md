@@ -17,6 +17,8 @@ See the endpoint docs at
 
 - query_params `GetRecentItemsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetRecentItemsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

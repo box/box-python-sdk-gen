@@ -23,6 +23,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `RestoreFileFromTrashQueryParamsArg`
   - Used as queryParams for the API call
+- headers `RestoreFileFromTrashHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -63,6 +65,8 @@ client.trashed_files.get_file_trash(uploaded_file.id)
   - Used as `file_id` in path `path` of the API call
 - query_params `GetFileTrashQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileTrashHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -91,5 +95,15 @@ See the endpoint docs at
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
+- headers `DeleteFileTrashHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the file was
+permanently deleted.
 
 

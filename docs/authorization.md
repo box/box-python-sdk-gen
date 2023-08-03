@@ -21,6 +21,8 @@ See the endpoint docs at
 
 - query_params `GetAuthorizeQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetAuthorizeHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

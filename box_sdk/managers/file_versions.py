@@ -22,6 +22,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -35,7 +37,7 @@ class FileVersionsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_versions(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> FileVersions:
+    def get_file_versions(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersions:
         """
         Retrieve a list of the past versions for a file.
         
@@ -68,11 +70,14 @@ class FileVersionsManager:
             exceeding 10000 will be rejected
             with a 400 response.
         :type offset: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersions.from_dict(json.loads(response.text))
-    def get_file_version_by_id(self, file_id: str, file_version_id: str, fields: Optional[str] = None) -> FileVersionFull:
+    def get_file_version_by_id(self, file_id: str, file_version_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionFull:
         """
         Retrieve a specific version of a file.
         
@@ -98,11 +103,14 @@ class FileVersionsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
-    def update_file_version_by_id(self, file_id: str, file_version_id: str, trashed_at: Optional[str] = None) -> FileVersionFull:
+    def update_file_version_by_id(self, file_id: str, file_version_id: str, trashed_at: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionFull:
         """
         Restores a specific version of a file after it was deleted.
         
@@ -128,11 +136,14 @@ class FileVersionsManager:
         :param trashed_at: Set this to `null` to clear
             the date and restore the file.
         :type trashed_at: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(trashed_at=trashed_at)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))
-    def delete_file_version_by_id(self, file_id: str, file_version_id: str, if_match: Optional[str] = None):
+    def delete_file_version_by_id(self, file_id: str, file_version_id: str, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Move a file version to the trash.
         
@@ -156,11 +167,13 @@ class FileVersionsManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=headers_map, auth=self.auth, network_session=self.network_session))
-        return response.content
-    def promote_file_version(self, file_id: str, id: Optional[str] = None, type: Optional[PromoteFileVersionTypeArg] = None, fields: Optional[str] = None) -> FileVersionFull:
+        headers_map: Dict[str, str] = prepare_params({**{'if-match': to_string(if_match)}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def promote_file_version(self, file_id: str, id: Optional[str] = None, type: Optional[PromoteFileVersionTypeArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionFull:
         """
         Promote a specific version of a file.
         
@@ -217,8 +230,11 @@ class FileVersionsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(id=id, type=type)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionFull.from_dict(json.loads(response.text))

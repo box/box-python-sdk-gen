@@ -16,6 +16,8 @@ See the endpoint docs at
 - shield_information_barrier_segment_id `str`
   - The ID of the shield information barrier segment.
   - Used as `shield_information_barrier_segment_id` in path `path` of the API call
+- headers `GetShieldInformationBarrierSegmentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -43,6 +45,8 @@ See the endpoint docs at
   - Used as `shield_information_barrier_segment_id` in path `path` of the API call
 - request_body `UpdateShieldInformationBarrierSegmentByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateShieldInformationBarrierSegmentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -69,6 +73,15 @@ See the endpoint docs at
 - shield_information_barrier_segment_id `str`
   - The ID of the shield information barrier segment.
   - Used as `shield_information_barrier_segment_id` in path `path` of the API call
+- headers `DeleteShieldInformationBarrierSegmentByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Empty body in response
 
 
 ## List shield information barrier segments
@@ -87,6 +100,8 @@ See the endpoint docs at
 
 - query_params `GetShieldInformationBarrierSegmentsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetShieldInformationBarrierSegmentsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -111,6 +126,8 @@ See the endpoint docs at
 
 - request_body `CreateShieldInformationBarrierSegmentRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateShieldInformationBarrierSegmentHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

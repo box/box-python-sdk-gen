@@ -15,6 +15,8 @@ See the endpoint docs at
 
 - query_params `GetFileVersionRetentionsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileVersionRetentionsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -40,6 +42,8 @@ See the endpoint docs at
 - file_version_retention_id `str`
   - The ID of the file version retention
   - Used as `file_version_retention_id` in path `path` of the API call
+- headers `GetFileVersionRetentionByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

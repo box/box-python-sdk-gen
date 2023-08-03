@@ -18,6 +18,8 @@ See the endpoint docs at
 
 - query_params `GetFolderLocksQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFolderLocksHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -47,6 +49,8 @@ See the endpoint docs at
 
 - request_body `CreateFolderLockRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateFolderLockHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -76,5 +80,14 @@ See the endpoint docs at
 - folder_lock_id `str`
   - The ID of the folder lock.
   - Used as `folder_lock_id` in path `path` of the API call
+- headers `DeleteFolderLockByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the folder lock is successfully deleted.
 
 

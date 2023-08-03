@@ -1,8 +1,8 @@
 from typing import Optional
 
-import json
-
 from typing import Dict
+
+import json
 
 from typing import List
 
@@ -32,6 +32,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -42,34 +44,43 @@ class SignRequestsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def cancel_sign_request(self, sign_request_id: str) -> SignRequest:
+    def cancel_sign_request(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SignRequest:
         """
         Cancels a sign request.
         :param sign_request_id: The ID of the sign request
             Example: "33243242"
         :type sign_request_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))
-    def resend_sign_request(self, sign_request_id: str):
+    def resend_sign_request(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Resends a sign request email to all outstanding signers.
         :param sign_request_id: The ID of the sign request
             Example: "33243242"
         :type sign_request_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']), FetchOptions(method='POST', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def get_sign_request_by_id(self, sign_request_id: str) -> SignRequest:
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']), FetchOptions(method='POST', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def get_sign_request_by_id(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SignRequest:
         """
         Gets a sign request by ID.
         :param sign_request_id: The ID of the sign request
             Example: "33243242"
         :type sign_request_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))
-    def get_sign_requests(self, marker: Optional[str] = None, limit: Optional[int] = None) -> SignRequests:
+    def get_sign_requests(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SignRequests:
         """
         Gets sign requests created by a user. If the `sign_files` and/or
         
@@ -81,11 +92,14 @@ class SignRequestsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequests.from_dict(json.loads(response.text))
-    def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None) -> SignRequest:
+    def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SignRequest:
         """
         Creates a sign request. This involves preparing a document for signing and
         
@@ -122,7 +136,10 @@ class SignRequestsManager:
         :type is_phone_verification_required_to_view: Optional[bool], optional
         :param template_id: When a signature request is created from a template this field will indicate the id of that template.
         :type template_id: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(source_files=source_files, signers=signers, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, parent_folder=parent_folder, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))

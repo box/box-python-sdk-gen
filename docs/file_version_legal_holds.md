@@ -17,6 +17,8 @@ See the endpoint docs at
 - file_version_legal_hold_id `str`
   - The ID of the file version legal hold
   - Used as `file_version_legal_hold_id` in path `path` of the API call
+- headers `GetFileVersionLegalHoldByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -60,6 +62,8 @@ See the endpoint docs at
 
 - query_params `GetFileVersionLegalHoldsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileVersionLegalHoldsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

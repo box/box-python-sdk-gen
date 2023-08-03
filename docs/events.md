@@ -23,6 +23,8 @@ See the endpoint docs at
 
 - query_params `GetEventsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetEventsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -80,6 +82,11 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/options-events/).
 
 *Currently we don't have an example for calling `get_events_with_long_polling` in integration tests*
+
+### Arguments
+
+- headers `GetEventsWithLongPollingHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

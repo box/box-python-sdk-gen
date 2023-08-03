@@ -25,6 +25,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `CreateInviteQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateInviteHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -52,6 +54,8 @@ See the endpoint docs at
   - Used as `invite_id` in path `path` of the API call
 - query_params `GetInviteByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetInviteByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

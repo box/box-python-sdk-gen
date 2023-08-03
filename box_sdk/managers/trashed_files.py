@@ -22,6 +22,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -41,7 +43,7 @@ class TrashedFilesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def restore_file_from_trash(self, file_id: str, name: Optional[str] = None, parent: Optional[RestoreFileFromTrashParentArg] = None, fields: Optional[str] = None) -> TrashFileRestored:
+    def restore_file_from_trash(self, file_id: str, name: Optional[str] = None, parent: Optional[RestoreFileFromTrashParentArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TrashFileRestored:
         """
         Restores a file that has been moved to the trash.
         
@@ -69,12 +71,15 @@ class TrashedFilesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(name=name, parent=parent)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return TrashFileRestored.from_dict(json.loads(response.text))
-    def get_file_trash(self, file_id: str, fields: Optional[str] = None) -> TrashFile:
+    def get_file_trash(self, file_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TrashFile:
         """
         Retrieves a file that has been moved to the trash.
         
@@ -118,11 +123,14 @@ class TrashedFilesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TrashFile.from_dict(json.loads(response.text))
-    def delete_file_trash(self, file_id: str):
+    def delete_file_trash(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Permanently deletes a file that is in the trash.
         
@@ -136,6 +144,9 @@ class TrashedFilesManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

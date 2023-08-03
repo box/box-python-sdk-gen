@@ -16,6 +16,8 @@ See the endpoint docs at
 - file_request_id `str`
   - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
   - Used as `file_request_id` in path `path` of the API call
+- headers `GetFileRequestByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -71,6 +73,16 @@ See the endpoint docs at
 - file_request_id `str`
   - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
   - Used as `file_request_id` in path `path` of the API call
+- headers `DeleteFileRequestByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the file request has been successfully
+deleted.
 
 
 ## Copy file request
@@ -92,6 +104,8 @@ See the endpoint docs at
   - Used as `file_request_id` in path `path` of the API call
 - request_body `FileRequestCopyRequest`
   - Used as requestBody for the API call
+- headers `CreateFileRequestCopyHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

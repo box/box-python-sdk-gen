@@ -18,6 +18,8 @@ See the endpoint docs at
 
 - request_body `CreateUserTerminateSessionRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateUserTerminateSessionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -45,6 +47,8 @@ See the endpoint docs at
 
 - request_body `CreateGroupTerminateSessionRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateGroupTerminateSessionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

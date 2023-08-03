@@ -15,6 +15,8 @@ See the endpoint docs at
 
 - query_params `GetSignTemplatesQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetSignTemplatesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -40,6 +42,8 @@ See the endpoint docs at
 - template_id `str`
   - The ID of a Box Sign template.
   - Used as `template_id` in path `path` of the API call
+- headers `GetSignTemplateByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

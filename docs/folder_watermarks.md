@@ -16,6 +16,8 @@ See the endpoint docs at
 - folder_id `str`
   - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
   - Used as `folder_id` in path `path` of the API call
+- headers `GetFolderWatermarkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,8 @@ See the endpoint docs at
   - Used as `folder_id` in path `path` of the API call
 - request_body `UpdateFolderWatermarkRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateFolderWatermarkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -71,5 +75,15 @@ See the endpoint docs at
 - folder_id `str`
   - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
   - Used as `folder_id` in path `path` of the API call
+- headers `DeleteFolderWatermarkHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+An empty response will be returned when the watermark
+was successfully deleted.
 
 

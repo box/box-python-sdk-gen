@@ -17,6 +17,8 @@ See the endpoint docs at
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
+- headers `GetUserEmailAliasesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,8 @@ See the endpoint docs at
   - Used as `user_id` in path `path` of the API call
 - request_body `CreateUserEmailAliasRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateUserEmailAliasHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -72,5 +76,14 @@ See the endpoint docs at
 - email_alias_id `str`
   - The ID of the email alias.
   - Used as `email_alias_id` in path `path` of the API call
+- headers `DeleteUserEmailAliasByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Removes the alias and returns an empty response.
 
 

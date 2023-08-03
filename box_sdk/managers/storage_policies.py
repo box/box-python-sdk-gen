@@ -18,6 +18,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -28,7 +30,7 @@ class StoragePoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_storage_policies(self, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None) -> StoragePolicies:
+    def get_storage_policies(self, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
         :param fields: A comma-separated list of attributes to include in the
@@ -46,16 +48,22 @@ class StoragePoliciesManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicies.from_dict(json.loads(response.text))
-    def get_storage_policy_by_id(self, storage_policy_id: str) -> StoragePolicy:
+    def get_storage_policy_by_id(self, storage_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicy:
         """
         Fetches a specific storage policy.
         :param storage_policy_id: The ID of the storage policy.
             Example: "34342"
         :type storage_policy_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicy.from_dict(json.loads(response.text))

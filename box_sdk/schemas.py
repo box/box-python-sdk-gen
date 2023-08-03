@@ -181,8 +181,8 @@ class MetadataQueryQueryParamsField(BaseObject):
         super().__init__(**kwargs)
 
 class MetadataQueryOrderByFieldDirectionField(str, Enum):
-    ASC = 'asc'
-    DESC = 'desc'
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 class MetadataQueryOrderByField(BaseObject):
     def __init__(self, field_key: Optional[str] = None, direction: Optional[MetadataQueryOrderByFieldDirectionField] = None, **kwargs):

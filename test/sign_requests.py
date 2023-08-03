@@ -40,11 +40,11 @@ def test_create_get_cancel_and_list_sign_request():
     assert created_sign_request.sign_files.files[0].name == file_to_sign.name
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.parent_folder.id == destination_folder.id
-    new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(created_sign_request.id)
+    new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(sign_request_id=created_sign_request.id)
     assert new_sign_request.sign_files.files[0].name == file_to_sign.name
     assert new_sign_request.signers[1].email == signer_email
     assert new_sign_request.parent_folder.id == destination_folder.id
-    cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(created_sign_request.id)
+    cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(sign_request_id=created_sign_request.id)
     assert cancelled_sign_request.status == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
     assert sign_requests.entries[0].type == 'sign-request'

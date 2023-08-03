@@ -4,6 +4,8 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
+from typing import Dict
+
 import json
 
 from box_sdk.base_object import BaseObject
@@ -21,6 +23,8 @@ from box_sdk.network import NetworkSession
 from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -63,7 +67,7 @@ class TasksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_tasks(self, file_id: str) -> Tasks:
+    def get_file_tasks(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Tasks:
         """
         Retrieves a list of all the tasks for a file. This
         
@@ -77,10 +81,13 @@ class TasksManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Tasks.from_dict(json.loads(response.text))
-    def create_task(self, item: CreateTaskItemArg, action: Optional[CreateTaskActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[CreateTaskCompletionRuleArg] = None) -> Task:
+    def create_task(self, item: CreateTaskItemArg, action: Optional[CreateTaskActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[CreateTaskCompletionRuleArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Task:
         """
         Creates a single task on a file. This task is not assigned to any user and
         
@@ -105,20 +112,26 @@ class TasksManager:
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
         :type completion_rule: Optional[CreateTaskCompletionRuleArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(item=item, action=action, message=message, due_at=due_at, completion_rule=completion_rule)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
-    def get_task_by_id(self, task_id: str) -> Task:
+    def get_task_by_id(self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Task:
         """
         Retrieves information about a specific task.
         :param task_id: The ID of the task.
             Example: "12345"
         :type task_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
-    def update_task_by_id(self, task_id: str, action: Optional[UpdateTaskByIdActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[UpdateTaskByIdCompletionRuleArg] = None) -> Task:
+    def update_task_by_id(self, task_id: str, action: Optional[UpdateTaskByIdActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[UpdateTaskByIdCompletionRuleArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Task:
         """
         Updates a task. This can be used to update a task's configuration, or to
         
@@ -143,16 +156,22 @@ class TasksManager:
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
         :type completion_rule: Optional[UpdateTaskByIdCompletionRuleArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(action=action, message=message, due_at=due_at, completion_rule=completion_rule)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
-    def delete_task_by_id(self, task_id: str):
+    def delete_task_by_id(self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Removes a task from a file.
         :param task_id: The ID of the task.
             Example: "12345"
         :type task_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

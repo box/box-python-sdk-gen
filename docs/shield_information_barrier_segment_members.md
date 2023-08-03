@@ -17,6 +17,8 @@ See the endpoint docs at
 - shield_information_barrier_segment_member_id `str`
   - The ID of the shield information barrier segment Member.
   - Used as `shield_information_barrier_segment_member_id` in path `path` of the API call
+- headers `GetShieldInformationBarrierSegmentMemberByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -43,6 +45,16 @@ See the endpoint docs at
 - shield_information_barrier_segment_member_id `str`
   - The ID of the shield information barrier segment Member.
   - Used as `shield_information_barrier_segment_member_id` in path `path` of the API call
+- headers `DeleteShieldInformationBarrierSegmentMemberByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response if the
+segment member was deleted successfully.
 
 
 ## List shield information barrier segment members
@@ -61,6 +73,8 @@ See the endpoint docs at
 
 - query_params `GetShieldInformationBarrierSegmentMembersQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetShieldInformationBarrierSegmentMembersHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -86,6 +100,8 @@ See the endpoint docs at
 
 - request_body `CreateShieldInformationBarrierSegmentMemberRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateShieldInformationBarrierSegmentMemberHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

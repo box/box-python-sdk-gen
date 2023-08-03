@@ -17,6 +17,8 @@ See the endpoint docs at
 - folder_id `str`
   - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
   - Used as `folder_id` in path `path` of the API call
+- headers `GetFolderMetadataHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -52,6 +54,8 @@ See the endpoint docs at
 - template_key `str`
   - The name of the metadata template
   - Used as `template_key` in path `path` of the API call
+- headers `GetFolderMetadataByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -95,6 +99,8 @@ See the endpoint docs at
   - Used as `template_key` in path `path` of the API call
 - request_body `CreateFolderMetadataByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateFolderMetadataByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -127,5 +133,15 @@ See the endpoint docs at
 - template_key `str`
   - The name of the metadata template
   - Used as `template_key` in path `path` of the API call
+- headers `DeleteFolderMetadataByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the metadata is
+successfully deleted.
 
 

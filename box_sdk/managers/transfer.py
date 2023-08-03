@@ -20,6 +20,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -40,7 +42,7 @@ class TransferManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def transfer_owned_folder(self, user_id: str, owned_by: TransferOwnedFolderOwnedByArg, fields: Optional[str] = None, notify: Optional[bool] = None) -> FolderFull:
+    def transfer_owned_folder(self, user_id: str, owned_by: TransferOwnedFolderOwnedByArg, fields: Optional[str] = None, notify: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
         """
         Move all of the items (files, folders and workflows) owned by a user into
         
@@ -126,8 +128,11 @@ class TransferManager:
         :param notify: Determines if users should receive email notification
             for the action performed.
         :type notify: Optional[bool], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(owned_by=owned_by)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'notify': to_string(notify)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

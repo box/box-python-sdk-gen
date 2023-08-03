@@ -23,6 +23,8 @@ client.webhooks.get_webhooks()
 
 - query_params `GetWebhooksQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetWebhooksHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -50,6 +52,8 @@ client.webhooks.create_webhook(CreateWebhookRequestBodyArg(target&#x3D;CreateWeb
 
 - request_body `CreateWebhookRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateWebhookHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -78,6 +82,8 @@ client.webhooks.get_webhook_by_id(webhook.id)
 - webhook_id `str`
   - The ID of the webhook.
   - Used as `webhook_id` in path `path` of the API call
+- headers `GetWebhookByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -108,6 +114,8 @@ client.webhooks.update_webhook_by_id(webhook.id, UpdateWebhookByIdRequestBodyArg
   - Used as `webhook_id` in path `path` of the API call
 - request_body `UpdateWebhookByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateWebhookByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -136,5 +144,15 @@ client.webhooks.delete_webhook_by_id(webhook.id)
 - webhook_id `str`
   - The ID of the webhook.
   - Used as `webhook_id` in path `path` of the API call
+- headers `DeleteWebhookByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+An empty response will be returned when the webhook
+was successfully deleted.
 
 

@@ -18,6 +18,8 @@ client.web_links.create_web_link(CreateWebLinkRequestBodyArg(url&#x3D;url, paren
 
 - request_body `CreateWebLinkRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateWebLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -78,6 +80,8 @@ client.web_links.update_web_link_by_id(weblink.id, UpdateWebLinkByIdRequestBodyA
   - Used as `web_link_id` in path `path` of the API call
 - request_body `UpdateWebLinkByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateWebLinkByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -106,5 +110,15 @@ client.web_links.delete_web_link_by_id(weblink.id)
 - web_link_id `str`
   - The ID of the web link.
   - Used as `web_link_id` in path `path` of the API call
+- headers `DeleteWebLinkByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+An empty response will be returned when the web link
+was successfully deleted.
 
 

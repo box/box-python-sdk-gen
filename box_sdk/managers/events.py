@@ -20,6 +20,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -37,7 +39,7 @@ class EventsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_events(self, stream_type: Optional[GetEventsStreamTypeArg] = None, stream_position: Optional[str] = None, limit: Optional[int] = None, event_type: Optional[str] = None, created_after: Optional[str] = None, created_before: Optional[str] = None) -> Events:
+    def get_events(self, stream_type: Optional[GetEventsStreamTypeArg] = None, stream_position: Optional[str] = None, limit: Optional[int] = None, event_type: Optional[str] = None, created_after: Optional[str] = None, created_before: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Events:
         """
         Returns up to a year of past events for a given user
         
@@ -105,11 +107,14 @@ class EventsManager:
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
         :type created_before: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'stream_type': to_string(stream_type), 'stream_position': to_string(stream_position), 'limit': to_string(limit), 'event_type': to_string(event_type), 'created_after': to_string(created_after), 'created_before': to_string(created_before)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Events.from_dict(json.loads(response.text))
-    def get_events_with_long_polling(self) -> RealtimeServers:
+    def get_events_with_long_polling(self, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> RealtimeServers:
         """
         Returns a list of real-time servers that can be used for long-polling updates
         
@@ -184,6 +189,9 @@ class EventsManager:
         
         first.
 
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='OPTIONS', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/events']), FetchOptions(method='OPTIONS', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RealtimeServers.from_dict(json.loads(response.text))

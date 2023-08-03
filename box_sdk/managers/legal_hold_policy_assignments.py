@@ -26,6 +26,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -60,7 +62,7 @@ class LegalHoldPolicyAssignmentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_legal_hold_policy_assignments(self, policy_id: str, assign_to_type: Optional[GetLegalHoldPolicyAssignmentsAssignToTypeArg] = None, assign_to_id: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None) -> LegalHoldPolicyAssignments:
+    def get_legal_hold_policy_assignments(self, policy_id: str, assign_to_type: Optional[GetLegalHoldPolicyAssignmentsAssignToTypeArg] = None, assign_to_id: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> LegalHoldPolicyAssignments:
         """
         Retrieves a list of items a legal hold policy has been assigned to.
         :param policy_id: The ID of the legal hold policy
@@ -86,31 +88,40 @@ class LegalHoldPolicyAssignmentsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'policy_id': to_string(policy_id), 'assign_to_type': to_string(assign_to_type), 'assign_to_id': to_string(assign_to_id), 'marker': to_string(marker), 'limit': to_string(limit), 'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicyAssignments.from_dict(json.loads(response.text))
-    def create_legal_hold_policy_assignment(self, policy_id: str, assign_to: CreateLegalHoldPolicyAssignmentAssignToArg) -> LegalHoldPolicyAssignment:
+    def create_legal_hold_policy_assignment(self, policy_id: str, assign_to: CreateLegalHoldPolicyAssignmentAssignToArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> LegalHoldPolicyAssignment:
         """
         Assign a legal hold to a file, file version, folder, or user.
         :param policy_id: The ID of the policy to assign.
         :type policy_id: str
         :param assign_to: The item to assign the policy to
         :type assign_to: CreateLegalHoldPolicyAssignmentAssignToArg
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(policy_id=policy_id, assign_to=assign_to)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def get_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str) -> LegalHoldPolicyAssignment:
+    def get_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> LegalHoldPolicyAssignment:
         """
         Retrieve a legal hold policy assignment.
         :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
         :type legal_hold_policy_assignment_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
-    def delete_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str):
+    def delete_legal_hold_policy_assignment_by_id(self, legal_hold_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Remove a legal hold from an item.
         
@@ -122,10 +133,13 @@ class LegalHoldPolicyAssignmentsManager:
         :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
             Example: "753465"
         :type legal_hold_policy_assignment_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def get_legal_hold_policy_assignment_file_on_hold(self, legal_hold_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None) -> FileVersionLegalHolds:
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def get_legal_hold_policy_assignment_file_on_hold(self, legal_hold_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionLegalHolds:
         """
         Get a list of current file versions for a legal hold
         
@@ -182,11 +196,14 @@ class LegalHoldPolicyAssignmentsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/files_on_hold']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/files_on_hold']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))
-    def get_legal_hold_policy_assignment_file_version_on_hold(self, legal_hold_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None) -> FileVersionLegalHolds:
+    def get_legal_hold_policy_assignment_file_version_on_hold(self, legal_hold_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionLegalHolds:
         """
         Get a list of previous file versions for a legal hold
         
@@ -243,7 +260,10 @@ class LegalHoldPolicyAssignmentsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/file_versions_on_hold']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policy_assignments/', legal_hold_policy_assignment_id, '/file_versions_on_hold']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

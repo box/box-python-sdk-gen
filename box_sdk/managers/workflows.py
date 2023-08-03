@@ -26,6 +26,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -66,7 +68,7 @@ class WorkflowsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_workflows(self, folder_id: str, trigger_type: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> Workflows:
+    def get_workflows(self, folder_id: str, trigger_type: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Workflows:
         """
         Returns list of workflows that act on a given `folder ID`, and
         
@@ -95,11 +97,14 @@ class WorkflowsManager:
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'trigger_type': to_string(trigger_type), 'limit': to_string(limit), 'marker': to_string(marker)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Workflows.from_dict(json.loads(response.text))
-    def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List, folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List] = None):
+    def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List, folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
         
@@ -122,7 +127,10 @@ class WorkflowsManager:
         :type type: Optional[CreateWorkflowStartTypeArg], optional
         :param outcomes: A list of outcomes required to be configured at start time.
         :type outcomes: Optional[List], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(type=type, flow=flow, files=files, folder=folder, outcomes=outcomes)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

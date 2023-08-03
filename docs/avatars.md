@@ -19,6 +19,17 @@ client.avatars.get_user_avatar(user.id)
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
+- headers `GetUserAvatarHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `ByteStream`.
+
+When an avatar can be found for the user the
+image data will be returned in the body of the
+response.
 
 
 ## Add or update user avatar
@@ -42,6 +53,8 @@ client.avatars.create_user_avatar(user.id, CreateUserAvatarRequestBodyArg(pic&#x
   - Used as `user_id` in path `path` of the API call
 - request_body `CreateUserAvatarRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateUserAvatarHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -73,5 +86,14 @@ client.avatars.delete_user_avatar(user.id)
 - user_id `str`
   - The ID of the user.
   - Used as `user_id` in path `path` of the API call
+- headers `DeleteUserAvatarHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+* &#x60;no_content&#x60;: Removes the avatar and returns an empty response.
 
 

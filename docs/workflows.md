@@ -19,6 +19,8 @@ See the endpoint docs at
 
 - query_params `GetWorkflowsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetWorkflowsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -49,5 +51,14 @@ See the endpoint docs at
   - Used as `workflow_id` in path `path` of the API call
 - request_body `CreateWorkflowStartRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateWorkflowStartHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Starts the workflow.
 
 

@@ -22,6 +22,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -41,7 +43,7 @@ class TrashedWebLinksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_web_link_by_id(self, web_link_id: str, name: Optional[str] = None, parent: Optional[CreateWebLinkByIdParentArg] = None, fields: Optional[str] = None) -> TrashWebLinkRestored:
+    def create_web_link_by_id(self, web_link_id: str, name: Optional[str] = None, parent: Optional[CreateWebLinkByIdParentArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TrashWebLinkRestored:
         """
         Restores a web link that has been moved to the trash.
         
@@ -64,12 +66,15 @@ class TrashedWebLinksManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(name=name, parent=parent)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return TrashWebLinkRestored.from_dict(json.loads(response.text))
-    def get_web_link_trash(self, web_link_id: str, fields: Optional[str] = None) -> TrashWebLink:
+    def get_web_link_trash(self, web_link_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TrashWebLink:
         """
         Retrieves a web link that has been moved to the trash.
         :param web_link_id: The ID of the web link.
@@ -84,11 +89,14 @@ class TrashedWebLinksManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TrashWebLink.from_dict(json.loads(response.text))
-    def delete_web_link_trash(self, web_link_id: str):
+    def delete_web_link_trash(self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Permanently deletes a web link that is in the trash.
         
@@ -97,6 +105,9 @@ class TrashedWebLinksManager:
         :param web_link_id: The ID of the web link.
             Example: "12345"
         :type web_link_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

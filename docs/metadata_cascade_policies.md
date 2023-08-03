@@ -17,6 +17,8 @@ See the endpoint docs at
 
 - query_params `GetMetadataCascadePoliciesQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetMetadataCascadePoliciesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -46,6 +48,8 @@ See the endpoint docs at
 
 - request_body `CreateMetadataCascadePolicyRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateMetadataCascadePolicyHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -71,6 +75,8 @@ See the endpoint docs at
 - metadata_cascade_policy_id `str`
   - The ID of the metadata cascade policy.
   - Used as `metadata_cascade_policy_id` in path `path` of the API call
+- headers `GetMetadataCascadePolicyByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -96,6 +102,16 @@ See the endpoint docs at
 - metadata_cascade_policy_id `str`
   - The ID of the metadata cascade policy.
   - Used as `metadata_cascade_policy_id` in path `path` of the API call
+- headers `DeleteMetadataCascadePolicyByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the policy
+is successfully deleted.
 
 
 ## Force-apply metadata cascade policy to folder
@@ -119,5 +135,19 @@ See the endpoint docs at
   - Used as `metadata_cascade_policy_id` in path `path` of the API call
 - request_body `CreateMetadataCascadePolicyApplyRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateMetadataCascadePolicyApplyHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the API call was successful. The metadata
+cascade operation will be performed asynchronously.
+
+The API call will return directly, before the cascade operation
+is complete. There is currently no API to check for the status of this
+operation.
 
 

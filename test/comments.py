@@ -48,7 +48,7 @@ def comments():
     assert new_comments.total_count == 2
     assert new_comments.entries[1].message == new_message
     assert not client.comments.get_comment_by_id(comment_id=new_comment.id) == None
-    client.comments.delete_comment_by_id(new_comment.id)
+    client.comments.delete_comment_by_id(comment_id=new_comment.id)
     with pytest.raises(Exception):
         client.comments.get_comment_by_id(comment_id=new_comment.id)
     client.files.delete_file_by_id(file_id=file_id)

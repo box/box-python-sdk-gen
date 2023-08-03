@@ -19,6 +19,8 @@ See the endpoint docs at
   - Used as `retention_policy_id` in path `path` of the API call
 - query_params `GetRetentionPolicyAssignmentsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetRetentionPolicyAssignmentsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,8 @@ See the endpoint docs at
 
 - request_body `CreateRetentionPolicyAssignmentRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateRetentionPolicyAssignmentHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -71,6 +75,8 @@ See the endpoint docs at
   - Used as `retention_policy_assignment_id` in path `path` of the API call
 - query_params `GetRetentionPolicyAssignmentByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetRetentionPolicyAssignmentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -97,6 +103,16 @@ See the endpoint docs at
 - retention_policy_assignment_id `str`
   - The ID of the retention policy assignment.
   - Used as `retention_policy_assignment_id` in path `path` of the API call
+- headers `DeleteRetentionPolicyAssignmentByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the policy assignment
+is successfully deleted.
 
 
 ## Get files under retention
@@ -117,6 +133,8 @@ See the endpoint docs at
   - Used as `retention_policy_assignment_id` in path `path` of the API call
 - query_params `GetRetentionPolicyAssignmentFileUnderRetentionQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetRetentionPolicyAssignmentFileUnderRetentionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -146,6 +164,8 @@ See the endpoint docs at
   - Used as `retention_policy_assignment_id` in path `path` of the API call
 - query_params `GetRetentionPolicyAssignmentFileVersionUnderRetentionQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetRetentionPolicyAssignmentFileVersionUnderRetentionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

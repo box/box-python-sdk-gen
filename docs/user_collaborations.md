@@ -18,6 +18,8 @@ See the endpoint docs at
   - Used as `collaboration_id` in path `path` of the API call
 - query_params `GetCollaborationByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetCollaborationByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -47,6 +49,8 @@ See the endpoint docs at
   - Used as `collaboration_id` in path `path` of the API call
 - request_body `UpdateCollaborationByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateCollaborationByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -74,6 +78,16 @@ See the endpoint docs at
 - collaboration_id `str`
   - The ID of the collaboration
   - Used as `collaboration_id` in path `path` of the API call
+- headers `DeleteCollaborationByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+A blank response is returned if the collaboration was
+successfully deleted.
 
 
 ## Create collaboration
@@ -106,6 +120,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `CreateCollaborationQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateCollaborationHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

@@ -4,6 +4,8 @@ from typing import List
 
 from typing import Union
 
+from typing import Dict
+
 import json
 
 from box_sdk.base_object import BaseObject
@@ -24,6 +26,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -34,7 +38,7 @@ class ZipDownloadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_zip_download(self, items: List, download_file_name: Optional[str] = None) -> ZipDownload:
+    def create_zip_download(self, items: List, download_file_name: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ZipDownload:
         """
         Creates a request to download multiple files and folders as a single `zip`
         
@@ -82,11 +86,14 @@ class ZipDownloadsManager:
         :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
             `.zip` file extension, for example `January Financials.zip`.
         :type download_file_name: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(items=items, download_file_name=download_file_name)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return ZipDownload.from_dict(json.loads(response.text))
-    def get_zip_download_content(self, zip_download_id: str):
+    def get_zip_download_content(self, zip_download_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ByteStream:
         """
         Returns the contents of a `zip` archive in binary format. This URL does not
         
@@ -122,10 +129,13 @@ class ZipDownloadsManager:
         :param zip_download_id: The unique identifier that represent this `zip` archive.
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
         :type zip_download_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://dl.boxcloud.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://dl.boxcloud.com/2.0/zip_downloads/', zip_download_id, '/content']), FetchOptions(method='GET', headers=headers_map, response_format='binary', auth=self.auth, network_session=self.network_session))
         return response.content
-    def get_zip_download_status(self, zip_download_id: str) -> ZipDownloadStatus:
+    def get_zip_download_status(self, zip_download_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ZipDownloadStatus:
         """
         Returns the download status of a `zip` archive, allowing an application to
         
@@ -158,6 +168,9 @@ class ZipDownloadsManager:
         :param zip_download_id: The unique identifier that represent this `zip` archive.
             Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
         :type zip_download_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return ZipDownloadStatus.from_dict(json.loads(response.text))

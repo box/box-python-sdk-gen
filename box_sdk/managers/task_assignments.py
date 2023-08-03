@@ -4,6 +4,8 @@ from box_sdk.base_object import BaseObject
 
 from typing import Optional
 
+from typing import Dict
+
 import json
 
 from box_sdk.base_object import BaseObject
@@ -21,6 +23,8 @@ from box_sdk.network import NetworkSession
 from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -69,16 +73,19 @@ class TaskAssignmentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_task_assignments(self, task_id: str) -> TaskAssignments:
+    def get_task_assignments(self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TaskAssignments:
         """
         Lists all of the assignments for a given task.
         :param task_id: The ID of the task.
             Example: "12345"
         :type task_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TaskAssignments.from_dict(json.loads(response.text))
-    def create_task_assignment(self, task: CreateTaskAssignmentTaskArg, assign_to: CreateTaskAssignmentAssignToArg) -> TaskAssignment:
+    def create_task_assignment(self, task: CreateTaskAssignmentTaskArg, assign_to: CreateTaskAssignmentAssignToArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TaskAssignment:
         """
         Assigns a task to a user.
         
@@ -91,20 +98,26 @@ class TaskAssignmentsManager:
         :type task: CreateTaskAssignmentTaskArg
         :param assign_to: The user to assign the task to.
         :type assign_to: CreateTaskAssignmentAssignToArg
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(task=task, assign_to=assign_to)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def get_task_assignment_by_id(self, task_assignment_id: str) -> TaskAssignment:
+    def get_task_assignment_by_id(self, task_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TaskAssignment:
         """
         Retrieves information about a task assignment.
         :param task_assignment_id: The ID of the task assignment.
             Example: "12345"
         :type task_assignment_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def update_task_assignment_by_id(self, task_assignment_id: str, message: Optional[str] = None, resolution_state: Optional[UpdateTaskAssignmentByIdResolutionStateArg] = None) -> TaskAssignment:
+    def update_task_assignment_by_id(self, task_assignment_id: str, message: Optional[str] = None, resolution_state: Optional[UpdateTaskAssignmentByIdResolutionStateArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> TaskAssignment:
         """
         Updates a task assignment. This endpoint can be
         
@@ -121,16 +134,22 @@ class TaskAssignmentsManager:
             * For a task with an `action` of `review` this can be
             `incomplete`, `approved`, or `rejected`.
         :type resolution_state: Optional[UpdateTaskAssignmentByIdResolutionStateArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(message=message, resolution_state=resolution_state)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return TaskAssignment.from_dict(json.loads(response.text))
-    def delete_task_assignment_by_id(self, task_assignment_id: str):
+    def delete_task_assignment_by_id(self, task_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Deletes a specific task assignment.
         :param task_assignment_id: The ID of the task assignment.
             Example: "12345"
         :type task_assignment_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

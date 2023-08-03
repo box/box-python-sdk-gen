@@ -16,6 +16,8 @@ See the endpoint docs at
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
+- headers `GetFileWatermarkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,8 @@ See the endpoint docs at
   - Used as `file_id` in path `path` of the API call
 - request_body `UpdateFileWatermarkRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateFileWatermarkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -71,5 +75,14 @@ See the endpoint docs at
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
+- headers `DeleteFileWatermarkHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Removes the watermark and returns an empty response.
 
 

@@ -2,9 +2,9 @@ from enum import Enum
 
 from typing import Optional
 
-import json
-
 from typing import Dict
+
+import json
 
 from box_sdk.schemas import DevicePinner
 
@@ -20,6 +20,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -34,25 +36,31 @@ class DevicePinnersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_device_pinner_by_id(self, device_pinner_id: str) -> DevicePinner:
+    def get_device_pinner_by_id(self, device_pinner_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> DevicePinner:
         """
         Retrieves information about an individual device pin.
         :param device_pinner_id: The ID of the device pin
             Example: "2324234"
         :type device_pinner_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return DevicePinner.from_dict(json.loads(response.text))
-    def delete_device_pinner_by_id(self, device_pinner_id: str):
+    def delete_device_pinner_by_id(self, device_pinner_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Deletes an individual device pin.
         :param device_pinner_id: The ID of the device pin
             Example: "2324234"
         :type device_pinner_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def get_enterprise_device_pinners(self, enterprise_id: str, marker: Optional[str] = None, limit: Optional[int] = None, direction: Optional[GetEnterpriseDevicePinnersDirectionArg] = None) -> DevicePinners:
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def get_enterprise_device_pinners(self, enterprise_id: str, marker: Optional[str] = None, limit: Optional[int] = None, direction: Optional[GetEnterpriseDevicePinnersDirectionArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> DevicePinners:
         """
         Retrieves all the device pins within an enterprise.
         
@@ -73,7 +81,10 @@ class DevicePinnersManager:
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
         :type direction: Optional[GetEnterpriseDevicePinnersDirectionArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'direction': to_string(direction)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/enterprises/', enterprise_id, '/device_pinners']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return DevicePinners.from_dict(json.loads(response.text))

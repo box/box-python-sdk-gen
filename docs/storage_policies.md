@@ -15,6 +15,8 @@ See the endpoint docs at
 
 - query_params `GetStoragePoliciesQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetStoragePoliciesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -40,6 +42,8 @@ See the endpoint docs at
 - storage_policy_id `str`
   - The ID of the storage policy.
   - Used as `storage_policy_id` in path `path` of the API call
+- headers `GetStoragePolicyByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

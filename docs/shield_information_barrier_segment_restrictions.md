@@ -17,6 +17,8 @@ See the endpoint docs at
 - shield_information_barrier_segment_restriction_id `str`
   - The ID of the shield information barrier segment Restriction.
   - Used as `shield_information_barrier_segment_restriction_id` in path `path` of the API call
+- headers `GetShieldInformationBarrierSegmentRestrictionByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,15 @@ See the endpoint docs at
 - shield_information_barrier_segment_restriction_id `str`
   - The ID of the shield information barrier segment Restriction.
   - Used as `shield_information_barrier_segment_restriction_id` in path `path` of the API call
+- headers `DeleteShieldInformationBarrierSegmentRestrictionByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Empty body in response
 
 
 ## List shield information barrier segment restrictions
@@ -62,6 +73,8 @@ See the endpoint docs at
 
 - query_params `GetShieldInformationBarrierSegmentRestrictionsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetShieldInformationBarrierSegmentRestrictionsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -88,6 +101,8 @@ See the endpoint docs at
 
 - request_body `CreateShieldInformationBarrierSegmentRestrictionRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateShieldInformationBarrierSegmentRestrictionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

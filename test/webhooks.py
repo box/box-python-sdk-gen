@@ -26,21 +26,21 @@ client: Client = Client(auth=auth)
 
 def testWebhooksCRUD():
     folder: FolderFull = client.folders.create_folder(name=get_uuid(), parent=CreateFolderParentArg(id='0'))
-    webhook: Webhook = client.webhooks.create_webhook(CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), 'https://example.com/new-webhook', ['FILE.UPLOADED'])
+    webhook: Webhook = client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=['FILE.UPLOADED'])
     assert webhook.target.id == folder.id
     assert webhook.target.type == 'folder'
     assert len(webhook.triggers) == len(['FILE.UPLOADED'])
     assert webhook.address == 'https://example.com/new-webhook'
     webhooks: Webhooks = client.webhooks.get_webhooks()
     assert len(webhooks.entries) > 0
-    webhook_from_api: Webhook = client.webhooks.get_webhook_by_id(webhook.id)
+    webhook_from_api: Webhook = client.webhooks.get_webhook_by_id(webhook_id=webhook.id)
     assert webhook.id == webhook_from_api.id
     assert webhook.target.id == webhook_from_api.target.id
     assert webhook.address == webhook_from_api.address
     updated_webhook: Webhook = client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://example.com/updated-webhook')
     assert updated_webhook.id == webhook.id
     assert updated_webhook.address == 'https://example.com/updated-webhook'
-    client.webhooks.delete_webhook_by_id(webhook.id)
+    client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
     with pytest.raises(Exception):
-        client.webhooks.delete_webhook_by_id(webhook.id)
+        client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
     client.folders.delete_folder_by_id(folder_id=folder.id)

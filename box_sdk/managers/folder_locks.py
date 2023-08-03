@@ -22,6 +22,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -57,7 +59,7 @@ class FolderLocksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_locks(self, folder_id: str) -> FolderLocks:
+    def get_folder_locks(self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderLocks:
         """
         Retrieves folder lock details for a given folder.
         
@@ -75,11 +77,14 @@ class FolderLocksManager:
             The root folder of a Box account is
             always represented by the ID `0`.
         :type folder_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderLocks.from_dict(json.loads(response.text))
-    def create_folder_lock(self, folder: CreateFolderLockFolderArg, locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None) -> FolderLock:
+    def create_folder_lock(self, folder: CreateFolderLockFolderArg, locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderLock:
         """
         Creates a folder lock on a folder, preventing it from being moved and/or
         
@@ -97,11 +102,14 @@ class FolderLocksManager:
             included in the request, both `move` and `delete` must also be
             included and both set to `true`.
         :type locked_operations: Optional[CreateFolderLockLockedOperationsArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(locked_operations=locked_operations, folder=folder)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderLock.from_dict(json.loads(response.text))
-    def delete_folder_lock_by_id(self, folder_lock_id: str):
+    def delete_folder_lock_by_id(self, folder_lock_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Deletes a folder lock on a given folder.
         
@@ -113,6 +121,9 @@ class FolderLocksManager:
         :param folder_lock_id: The ID of the folder lock.
             Example: "12345"
         :type folder_lock_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks/', folder_lock_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks/', folder_lock_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

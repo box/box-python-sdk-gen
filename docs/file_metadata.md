@@ -16,6 +16,8 @@ See the endpoint docs at
 - file_id `str`
   - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
   - Used as `file_id` in path `path` of the API call
+- headers `GetFileMetadataHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -51,6 +53,8 @@ See the endpoint docs at
 - template_key `str`
   - The name of the metadata template
   - Used as `template_key` in path `path` of the API call
+- headers `GetFileMetadataByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -90,6 +94,8 @@ See the endpoint docs at
   - Used as `template_key` in path `path` of the API call
 - request_body `CreateFileMetadataByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateFileMetadataByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -122,5 +128,15 @@ See the endpoint docs at
 - template_key `str`
   - The name of the metadata template
   - Used as `template_key` in path `path` of the API call
+- headers `DeleteFileMetadataByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the metadata is
+successfully deleted.
 
 

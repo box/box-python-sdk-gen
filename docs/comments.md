@@ -21,6 +21,8 @@ client.comments.get_file_comments(file_id)
   - Used as `file_id` in path `path` of the API call
 - query_params `GetFileCommentsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileCommentsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -53,6 +55,8 @@ client.comments.get_comment_by_id(new_comment.id)
   - Used as `comment_id` in path `path` of the API call
 - query_params `GetCommentByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetCommentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -85,6 +89,8 @@ client.comments.update_comment_by_id(new_reply_comment.id, UpdateCommentByIdRequ
   - Used as requestBody for the API call
 - query_params `UpdateCommentByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateCommentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -113,6 +119,15 @@ client.comments.delete_comment_by_id(new_comment.id)
 - comment_id `str`
   - The ID of the comment.
   - Used as `comment_id` in path `path` of the API call
+- headers `DeleteCommentByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the comment has been deleted.
 
 
 ## Create comment
@@ -136,6 +151,8 @@ client.comments.create_comment(CreateCommentRequestBodyArg(message&#x3D;message,
   - Used as requestBody for the API call
 - query_params `CreateCommentQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateCommentHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

@@ -30,6 +30,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -66,7 +68,7 @@ class IntegrationMappingsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_integration_mapping_slack(self, marker: Optional[str] = None, limit: Optional[int] = None, partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemTypeArg] = None, partner_item_id: Optional[str] = None, box_item_id: Optional[str] = None, box_item_type: Optional[GetIntegrationMappingSlackBoxItemTypeArg] = None, is_manually_created: Optional[bool] = None) -> IntegrationMappings:
+    def get_integration_mapping_slack(self, marker: Optional[str] = None, limit: Optional[int] = None, partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemTypeArg] = None, partner_item_id: Optional[str] = None, box_item_id: Optional[str] = None, box_item_type: Optional[GetIntegrationMappingSlackBoxItemTypeArg] = None, is_manually_created: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> IntegrationMappings:
         """
         Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack) in a users' enterprise.
         
@@ -91,11 +93,14 @@ class IntegrationMappingsManager:
         :type box_item_type: Optional[GetIntegrationMappingSlackBoxItemTypeArg], optional
         :param is_manually_created: Whether the mapping has been manually created
         :type is_manually_created: Optional[bool], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit), 'partner_item_type': to_string(partner_item_type), 'partner_item_id': to_string(partner_item_id), 'box_item_id': to_string(box_item_id), 'box_item_type': to_string(box_item_type), 'is_manually_created': to_string(is_manually_created)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return IntegrationMappings.from_dict(json.loads(response.text))
-    def create_integration_mapping_slack(self, partner_item: CreateIntegrationMappingSlackPartnerItemArg, box_item: CreateIntegrationMappingSlackBoxItemArg, options: Optional[CreateIntegrationMappingSlackOptionsArg] = None) -> IntegrationMapping:
+    def create_integration_mapping_slack(self, partner_item: CreateIntegrationMappingSlackPartnerItemArg, box_item: CreateIntegrationMappingSlackBoxItemArg, options: Optional[CreateIntegrationMappingSlackOptionsArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> IntegrationMapping:
         """
         Creates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack)
         
@@ -107,11 +112,14 @@ class IntegrationMappingsManager:
         
         use this endpoint.
 
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(partner_item=partner_item, box_item=box_item, options=options)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return IntegrationMapping.from_dict(json.loads(response.text))
-    def update_integration_mapping_slack_by_id(self, integration_mapping_id: str, box_item: Optional[UpdateIntegrationMappingSlackByIdBoxItemArg] = None, options: Optional[UpdateIntegrationMappingSlackByIdOptionsArg] = None) -> IntegrationMapping:
+    def update_integration_mapping_slack_by_id(self, integration_mapping_id: str, box_item: Optional[UpdateIntegrationMappingSlackByIdBoxItemArg] = None, options: Optional[UpdateIntegrationMappingSlackByIdOptionsArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> IntegrationMapping:
         """
         Updates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
         
@@ -126,11 +134,14 @@ class IntegrationMappingsManager:
         :param integration_mapping_id: An ID of an integration mapping
             Example: "11235432"
         :type integration_mapping_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(box_item=box_item, options=options)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return IntegrationMapping.from_dict(json.loads(response.text))
-    def delete_integration_mapping_slack_by_id(self, integration_mapping_id: str):
+    def delete_integration_mapping_slack_by_id(self, integration_mapping_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Deletes a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
         
@@ -142,6 +153,9 @@ class IntegrationMappingsManager:
         :param integration_mapping_id: An ID of an integration mapping
             Example: "11235432"
         :type integration_mapping_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack/', integration_mapping_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

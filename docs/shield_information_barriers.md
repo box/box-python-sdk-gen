@@ -16,6 +16,8 @@ See the endpoint docs at
 - shield_information_barrier_id `str`
   - The ID of the shield information barrier.
   - Used as `shield_information_barrier_id` in path `path` of the API call
+- headers `GetShieldInformationBarrierByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -40,6 +42,8 @@ See the endpoint docs at
 
 - request_body `CreateShieldInformationBarrierChangeStatusRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateShieldInformationBarrierChangeStatusHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -65,6 +69,8 @@ See the endpoint docs at
 
 - query_params `GetShieldInformationBarriersQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetShieldInformationBarriersHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -93,6 +99,8 @@ See the endpoint docs at
 
 - request_body `ShieldInformationBarrier`
   - Used as requestBody for the API call
+- headers `CreateShieldInformationBarrierHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

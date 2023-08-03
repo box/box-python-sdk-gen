@@ -4,7 +4,7 @@ import random
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Optional, Dict, List, Union
+from typing import Optional, Dict, List
 from sys import version_info as py_version
 
 import requests
@@ -14,7 +14,7 @@ from requests_toolbelt import MultipartEncoder
 from .box_response import APIResponse
 from .network import NetworkSession
 from .auth import Authentication
-
+from .utils import ByteStream, ResponseByteStream
 
 DEFAULT_MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5
@@ -29,7 +29,7 @@ X_BOX_UA_HEADER = f'agent=box-python-generated-sdk/{SDK_VERSION}; ' \
 class MultipartItem:
     part_name: str
     body: str = None
-    file_stream: Union[io.BytesIO, bytes] = None
+    file_stream: ByteStream = None
     file_name: str = ''
     content_type: str = None
 
@@ -42,6 +42,7 @@ class FetchOptions:
     body: str = None
     multipart_data: List[MultipartItem] = None
     content_type: str = ""
+    response_format: str = None
     auth: Authentication = None
     network_session: NetworkSession = None
 
@@ -49,8 +50,8 @@ class FetchOptions:
 @dataclass
 class FetchResponse:
     status: int
-    text: str
-    content: bytes
+    text: Optional[str] = None
+    content: Optional[ByteStream] = None
 
 
 @dataclass
@@ -104,7 +105,17 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
     while attempt_nr < max_attempts:
         if response.ok:
-            return FetchResponse(status=response.status_code, text=response.text, content=response.content)
+            if options.response_format == 'binary':
+                return FetchResponse(
+                    status=response.status_code,
+                    content=ResponseByteStream(response.network_response.iter_content(chunk_size=1024))
+                )
+            else:
+                return FetchResponse(
+                    status=response.status_code,
+                    text=response.text,
+                    content=io.BytesIO(response.content)
+                )
 
         if response.reauthentication_needed:
             options.auth.refresh(options.network_session)
@@ -149,7 +160,7 @@ def __make_request(session, method, url, headers, body, content_type, params, mu
             if part.body:
                 fields[part.part_name] = part.body
             else:
-                file_stream = io.BytesIO(part.file_stream) if type(part.file_stream) == bytes else part.file_stream
+                file_stream = part.file_stream
                 file_stream_position = file_stream.tell()
                 file_stream.seek(file_stream_position)
                 fields[part.part_name] = (part.file_name or '', file_stream, part.content_type)
@@ -165,7 +176,8 @@ def __make_request(session, method, url, headers, body, content_type, params, mu
             url=url,
             headers=headers,
             data=body,
-            params=params
+            params=params,
+            stream=True
         )
         reauthentication_needed = network_response.status_code == 401
     except RequestException as request_exc:

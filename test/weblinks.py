@@ -25,7 +25,7 @@ def test_create_get_delete_weblink():
     description: str = 'Weblink description'
     shared_access: str = 'open'
     password: str = 'super-secret-password'
-    weblink: WebLink = client.web_links.create_web_link(url, parent, name, description)
+    weblink: WebLink = client.web_links.create_web_link(url=url, parent=parent, name=name, description=description)
     assert weblink.url == url
     assert weblink.parent.id == parent.id
     assert weblink.name == name
@@ -37,6 +37,6 @@ def test_create_get_delete_weblink():
     updated_weblink: WebLink = client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLinkArg(access=shared_access, password=password))
     assert updated_weblink.name == updated_name
     assert updated_weblink.shared_link.access == shared_access
-    client.web_links.delete_web_link_by_id(weblink.id)
+    client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
     deleted_weblink: WebLink = client.web_links.get_web_link_by_id(web_link_id=weblink.id)
     assert deleted_weblink.item_status == 'trashed'

@@ -17,6 +17,8 @@ See the endpoint docs at
 
 - query_params `GetTermOfServiceUserStatusesQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetTermOfServiceUserStatusesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -41,6 +43,8 @@ See the endpoint docs at
 
 - request_body `CreateTermOfServiceUserStatusRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateTermOfServiceUserStatusHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -68,6 +72,8 @@ See the endpoint docs at
   - Used as `terms_of_service_user_status_id` in path `path` of the API call
 - request_body `UpdateTermOfServiceUserStatusByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateTermOfServiceUserStatusByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

@@ -51,6 +51,8 @@ See the endpoint docs at
   - Used as `web_link_id` in path `path` of the API call
 - query_params `GetWebLinkGetSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetWebLinkGetSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -81,6 +83,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateWebLinkAddSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateWebLinkAddSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -111,6 +115,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateWebLinkUpdateSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateWebLinkUpdateSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -141,6 +147,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateWebLinkRemoveSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateWebLinkRemoveSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

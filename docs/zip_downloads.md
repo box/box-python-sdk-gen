@@ -30,6 +30,8 @@ See the endpoint docs at
 
 - request_body `ZipDownloadRequest`
   - Used as requestBody for the API call
+- headers `CreateZipDownloadHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -69,6 +71,16 @@ See the endpoint docs at
 - zip_download_id `str`
   - The unique identifier that represent this &#x60;zip&#x60; archive.
   - Used as `zip_download_id` in path `path` of the API call
+- headers `GetZipDownloadContentHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `ByteStream`.
+
+Returns the content of the items requested for this download, formatted as
+a stream of files and folders in a &#x60;zip&#x60; archive.
 
 
 ## Get zip download status
@@ -98,6 +110,8 @@ See the endpoint docs at
 - zip_download_id `str`
   - The unique identifier that represent this &#x60;zip&#x60; archive.
   - Used as `zip_download_id` in path `path` of the API call
+- headers `GetZipDownloadStatusHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

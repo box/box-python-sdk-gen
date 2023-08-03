@@ -51,6 +51,8 @@ See the endpoint docs at
   - Used as `folder_id` in path `path` of the API call
 - query_params `GetFolderGetSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFolderGetSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -81,6 +83,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateFolderAddSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateFolderAddSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -111,6 +115,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateFolderUpdateSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateFolderUpdateSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -141,6 +147,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `UpdateFolderRemoveSharedLinkQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateFolderRemoveSharedLinkHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

@@ -16,6 +16,8 @@ See the endpoint docs at
 
 - query_params `GetCollaborationWhitelistEntriesQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetCollaborationWhitelistEntriesHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -41,6 +43,8 @@ See the endpoint docs at
 
 - request_body `CreateCollaborationWhitelistEntryRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateCollaborationWhitelistEntryHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -67,6 +71,8 @@ See the endpoint docs at
 - collaboration_whitelist_entry_id `str`
   - The ID of the entry in the list.
   - Used as `collaboration_whitelist_entry_id` in path `path` of the API call
+- headers `GetCollaborationWhitelistEntryByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -93,5 +99,15 @@ See the endpoint docs at
 - collaboration_whitelist_entry_id `str`
   - The ID of the entry in the list.
   - Used as `collaboration_whitelist_entry_id` in path `path` of the API call
+- headers `DeleteCollaborationWhitelistEntryByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+A blank response is returned if the entry was
+successfully deleted.
 
 

@@ -23,6 +23,8 @@ See the endpoint docs at
 
 - query_params `GetFolderTrashItemsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFolderTrashItemsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

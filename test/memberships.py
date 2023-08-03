@@ -35,8 +35,8 @@ def testMemberships():
     updated_group_membership: GroupMembership = client.memberships.update_group_membership_by_id(group_membership_id=group_membership.id, role=UpdateGroupMembershipByIdRoleArg.ADMIN.value)
     assert updated_group_membership.id == group_membership.id
     assert updated_group_membership.role == 'admin'
-    client.memberships.delete_group_membership_by_id(group_membership.id)
+    client.memberships.delete_group_membership_by_id(group_membership_id=group_membership.id)
     with pytest.raises(Exception):
         client.memberships.get_group_membership_by_id(group_membership_id=group_membership.id)
-    client.groups.delete_group_by_id(group.id)
+    client.groups.delete_group_by_id(group_id=group.id)
     client.users.delete_user_by_id(user_id=user.id)

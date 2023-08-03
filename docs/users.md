@@ -23,6 +23,8 @@ client.users.get_users()
 
 - query_params `GetUsersQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetUsersHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -54,6 +56,8 @@ client.users.create_user(CreateUserRequestBodyArg(name&#x3D;user_name, login&#x3
   - Used as requestBody for the API call
 - query_params `CreateUserQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateUserHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -90,6 +94,8 @@ client.users.get_user_me()
 
 - query_params `GetUserMeQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetUserMeHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -130,6 +136,8 @@ client.users.get_user_by_id(user.id)
   - Used as `user_id` in path `path` of the API call
 - query_params `GetUserByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetUserByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -169,6 +177,8 @@ client.users.update_user_by_id(user.id, UpdateUserByIdRequestBodyArg(name&#x3D;u
   - Used as requestBody for the API call
 - query_params `UpdateUserByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateUserByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -202,5 +212,14 @@ client.users.delete_user_by_id(user.id)
   - Used as `user_id` in path `path` of the API call
 - query_params `DeleteUserByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `DeleteUserByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Removes the user and returns an empty response.
 
 

@@ -22,6 +22,8 @@ from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
 
+from box_sdk.utils import ByteStream
+
 from box_sdk.fetch import fetch
 
 from box_sdk.fetch import FetchOptions
@@ -37,7 +39,7 @@ class CollaborationAllowlistEntriesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_collaboration_whitelist_entries(self, marker: Optional[str] = None, limit: Optional[int] = None) -> CollaborationAllowlistEntries:
+    def get_collaboration_whitelist_entries(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> CollaborationAllowlistEntries:
         """
         Returns the list domains that have been deemed safe to create collaborations
         
@@ -49,11 +51,14 @@ class CollaborationAllowlistEntriesManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='GET', params=query_params_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistEntries.from_dict(json.loads(response.text))
-    def create_collaboration_whitelist_entry(self, domain: str, direction: CreateCollaborationWhitelistEntryDirectionArg) -> CollaborationAllowlistEntry:
+    def create_collaboration_whitelist_entry(self, domain: str, direction: CreateCollaborationWhitelistEntryDirectionArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> CollaborationAllowlistEntry:
         """
         Creates a new entry in the list of allowed domains to allow
         
@@ -63,11 +68,14 @@ class CollaborationAllowlistEntriesManager:
         :type domain: str
         :param direction: The direction in which to allow collaborations.
         :type direction: CreateCollaborationWhitelistEntryDirectionArg
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(domain=domain, direction=direction)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
-    def get_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str) -> CollaborationAllowlistEntry:
+    def get_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> CollaborationAllowlistEntry:
         """
         Returns a domain that has been deemed safe to create collaborations
         
@@ -76,10 +84,13 @@ class CollaborationAllowlistEntriesManager:
         :param collaboration_whitelist_entry_id: The ID of the entry in the list.
             Example: "213123"
         :type collaboration_whitelist_entry_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
-    def delete_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str):
+    def delete_collaboration_whitelist_entry_by_id(self, collaboration_whitelist_entry_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Removes a domain from the list of domains that have been deemed safe to create
         
@@ -88,6 +99,9 @@ class CollaborationAllowlistEntriesManager:
         :param collaboration_whitelist_entry_id: The ID of the entry in the list.
             Example: "213123"
         :type collaboration_whitelist_entry_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaboration_whitelist_entries/', collaboration_whitelist_entry_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

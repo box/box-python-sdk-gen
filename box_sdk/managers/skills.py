@@ -8,6 +8,8 @@ from typing import Union
 
 from box_sdk.base_object import BaseObject
 
+from typing import Dict
+
 import json
 
 from box_sdk.base_object import BaseObject
@@ -31,6 +33,8 @@ from box_sdk.network import NetworkSession
 from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -100,7 +104,7 @@ class SkillsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_metadata_global_box_skills_cards(self, file_id: str) -> SkillCardsMetadata:
+    def get_file_metadata_global_box_skills_cards(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SkillCardsMetadata:
         """
         List the Box Skills metadata cards that are attached to a file.
         :param file_id: The unique identifier that represents a file.
@@ -111,10 +115,13 @@ class SkillsManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def create_file_metadata_global_box_skills_card(self, file_id: str, cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]) -> SkillCardsMetadata:
+    def create_file_metadata_global_box_skills_card(self, file_id: str, cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]], extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> SkillCardsMetadata:
         """
         Applies one or more Box Skills metadata cards to a file.
         :param file_id: The unique identifier that represents a file.
@@ -127,11 +134,14 @@ class SkillsManager:
         :type file_id: str
         :param cards: A list of Box Skill cards to apply to this file.
         :type cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(cards=cards)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
-    def delete_file_metadata_global_box_skills_card(self, file_id: str):
+    def delete_file_metadata_global_box_skills_card(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Removes any Box Skills cards metadata from a file.
         :param file_id: The unique identifier that represents a file.
@@ -142,10 +152,13 @@ class SkillsManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
-    def update_skill_invocation_by_id(self, skill_id: str, status: UpdateSkillInvocationByIdStatusArg, metadata: UpdateSkillInvocationByIdMetadataArg, file: UpdateSkillInvocationByIdFileArg, file_version: Optional[UpdateSkillInvocationByIdFileVersionArg] = None, usage: Optional[UpdateSkillInvocationByIdUsageArg] = None):
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None
+    def update_skill_invocation_by_id(self, skill_id: str, status: UpdateSkillInvocationByIdStatusArg, metadata: UpdateSkillInvocationByIdMetadataArg, file: UpdateSkillInvocationByIdFileArg, file_version: Optional[UpdateSkillInvocationByIdFileVersionArg] = None, usage: Optional[UpdateSkillInvocationByIdUsageArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         An alternative method that can be used to overwrite and update all Box Skill
         
@@ -168,7 +181,10 @@ class SkillsManager:
             Set this to the default values when setting a card to a `success`
             state, and leave it out in most other situations.
         :type usage: Optional[UpdateSkillInvocationByIdUsageArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(status=status, metadata=metadata, file=file, file_version=file_version, usage=usage)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

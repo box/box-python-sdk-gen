@@ -4,9 +4,9 @@ from typing import Optional
 
 from enum import Enum
 
-import json
-
 from typing import Dict
+
+import json
 
 from box_sdk.base_object import BaseObject
 
@@ -21,6 +21,8 @@ from box_sdk.network import NetworkSession
 from box_sdk.utils import prepare_params
 
 from box_sdk.utils import to_string
+
+from box_sdk.utils import ByteStream
 
 from box_sdk.fetch import fetch
 
@@ -94,7 +96,7 @@ class WebLinksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_web_link(self, url: str, parent: CreateWebLinkParentArg, name: Optional[str] = None, description: Optional[str] = None) -> WebLink:
+    def create_web_link(self, url: str, parent: CreateWebLinkParentArg, name: Optional[str] = None, description: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> WebLink:
         """
         Creates a web link object within a folder.
         :param url: The URL that this web link links to. Must start with
@@ -106,11 +108,14 @@ class WebLinksManager:
         :type name: Optional[str], optional
         :param description: Description of the web link.
         :type description: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
-    def get_web_link_by_id(self, web_link_id: str, boxapi: Optional[str] = None) -> WebLink:
+    def get_web_link_by_id(self, web_link_id: str, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> WebLink:
         """
         Retrieve information about a web link.
         :param web_link_id: The ID of the web link.
@@ -124,11 +129,13 @@ class WebLinksManager:
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        headers_map: Dict[str, str] = prepare_params({'boxapi': to_string(boxapi)})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=headers_map, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{'boxapi': to_string(boxapi)}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
-    def update_web_link_by_id(self, web_link_id: str, url: Optional[str] = None, parent: Optional[UpdateWebLinkByIdParentArg] = None, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None) -> WebLink:
+    def update_web_link_by_id(self, web_link_id: str, url: Optional[str] = None, parent: Optional[UpdateWebLinkByIdParentArg] = None, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> WebLink:
         """
         Updates a web link object.
         :param web_link_id: The ID of the web link.
@@ -143,16 +150,22 @@ class WebLinksManager:
         :type description: Optional[str], optional
         :param shared_link: The settings for the shared link to update.
         :type shared_link: Optional[UpdateWebLinkByIdSharedLinkArg], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description, shared_link=shared_link)
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
-    def delete_web_link_by_id(self, web_link_id: str):
+    def delete_web_link_by_id(self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
         """
         Deletes a web link.
         :param web_link_id: The ID of the web link.
             Example: "12345"
         :type web_link_id: str
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
+        :type extra_headers: Optional[Dict[str, Optional[str]]]
         """
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='DELETE', auth=self.auth, network_session=self.network_session))
-        return response.content
+        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        return None

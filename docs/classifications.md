@@ -16,6 +16,11 @@ See the endpoint docs at
 
 *Currently we don't have an example for calling `get_metadata_template_enterprise_security_classification_schema` in integration tests*
 
+### Arguments
+
+- headers `GetMetadataTemplateEnterpriseSecurityClassificationSchemaHeadersArg`
+  - Used as headers for the API call
+
 
 ### Returns
 
@@ -37,6 +42,19 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema/).
 
 *Currently we don't have an example for calling `delete_metadata_template_enterprise_security_classification_schema` in integration tests*
+
+### Arguments
+
+- headers `DeleteMetadataTemplateEnterpriseSecurityClassificationSchemaHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the metadata
+template for classifications is successfully deleted.
 
 
 ## Add initial classifications
@@ -60,6 +78,8 @@ See the endpoint docs at
 
 - request_body `CreateMetadataTemplateSchemaClassificationRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateMetadataTemplateSchemaClassificationHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

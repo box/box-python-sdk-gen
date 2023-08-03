@@ -19,6 +19,8 @@ client.groups.get_groups()
 
 - query_params `GetGroupsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetGroupsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -50,6 +52,8 @@ client.groups.create_group(CreateGroupRequestBodyArg(name&#x3D;get_uuid()))
   - Used as requestBody for the API call
 - query_params `CreateGroupQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateGroupHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -82,6 +86,8 @@ client.groups.get_group_by_id(group.id)
   - Used as `group_id` in path `path` of the API call
 - query_params `GetGroupByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetGroupByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -116,6 +122,8 @@ client.groups.update_group_by_id(group.id, UpdateGroupByIdRequestBodyArg(name&#x
   - Used as requestBody for the API call
 - query_params `UpdateGroupByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateGroupByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -145,5 +153,15 @@ client.groups.delete_group_by_id(group.id)
 - group_id `str`
   - The ID of the group.
   - Used as `group_id` in path `path` of the API call
+- headers `DeleteGroupByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+A blank response is returned if the group was
+successfully deleted.
 
 

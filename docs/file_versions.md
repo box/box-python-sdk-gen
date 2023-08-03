@@ -21,6 +21,8 @@ See the endpoint docs at
   - Used as `file_id` in path `path` of the API call
 - query_params `GetFileVersionsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileVersionsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -53,6 +55,8 @@ See the endpoint docs at
   - Used as `file_version_id` in path `path` of the API call
 - query_params `GetFileVersionByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetFileVersionByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -90,6 +94,8 @@ See the endpoint docs at
   - Used as `file_version_id` in path `path` of the API call
 - request_body `UpdateFileVersionByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateFileVersionByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -122,6 +128,14 @@ See the endpoint docs at
   - Used as `file_version_id` in path `path` of the API call
 - headers `DeleteFileVersionByIdHeadersArg`
   - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the file has been successfully
+deleted.
 
 
 ## Promote file version
@@ -159,6 +173,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `PromoteFileVersionQueryParamsArg`
   - Used as queryParams for the API call
+- headers `PromoteFileVersionHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns

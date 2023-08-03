@@ -23,6 +23,8 @@ client.memberships.get_user_memberships(user.id)
   - Used as `user_id` in path `path` of the API call
 - query_params `GetUserMembershipsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetUserMembershipsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -56,6 +58,8 @@ client.memberships.get_group_memberships(group.id)
   - Used as `group_id` in path `path` of the API call
 - query_params `GetGroupMembershipsQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetGroupMembershipsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -87,6 +91,8 @@ client.memberships.create_group_membership(CreateGroupMembershipRequestBodyArg(u
   - Used as requestBody for the API call
 - query_params `CreateGroupMembershipQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateGroupMembershipHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -119,6 +125,8 @@ client.memberships.get_group_membership_by_id(group_membership.id)
   - Used as `group_membership_id` in path `path` of the API call
 - query_params `GetGroupMembershipByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetGroupMembershipByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -153,6 +161,8 @@ client.memberships.update_group_membership_by_id(group_membership.id, UpdateGrou
   - Used as requestBody for the API call
 - query_params `UpdateGroupMembershipByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `UpdateGroupMembershipByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -183,5 +193,15 @@ client.memberships.delete_group_membership_by_id(group_membership.id)
 - group_membership_id `str`
   - The ID of the group membership.
   - Used as `group_membership_id` in path `path` of the API call
+- headers `DeleteGroupMembershipByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+A blank response is returned if the membership was
+successfully deleted.
 
 

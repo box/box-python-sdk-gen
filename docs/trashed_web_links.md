@@ -23,6 +23,8 @@ See the endpoint docs at
   - Used as requestBody for the API call
 - query_params `CreateWebLinkByIdQueryParamsArg`
   - Used as queryParams for the API call
+- headers `CreateWebLinkByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -50,6 +52,8 @@ See the endpoint docs at
   - Used as `web_link_id` in path `path` of the API call
 - query_params `GetWebLinkTrashQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetWebLinkTrashHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -78,5 +82,15 @@ See the endpoint docs at
 - web_link_id `str`
   - The ID of the web link.
   - Used as `web_link_id` in path `path` of the API call
+- headers `DeleteWebLinkTrashHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the web link was
+permanently deleted.
 
 

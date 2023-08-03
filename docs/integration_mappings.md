@@ -18,6 +18,8 @@ See the endpoint docs at
 
 - query_params `GetIntegrationMappingSlackQueryParamsArg`
   - Used as queryParams for the API call
+- headers `GetIntegrationMappingSlackHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -46,6 +48,8 @@ See the endpoint docs at
 
 - request_body `IntegrationMappingSlackCreateRequest`
   - Used as requestBody for the API call
+- headers `CreateIntegrationMappingSlackHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -77,6 +81,8 @@ See the endpoint docs at
   - Used as `integration_mapping_id` in path `path` of the API call
 - request_body `UpdateIntegrationMappingSlackByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateIntegrationMappingSlackByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -106,5 +112,14 @@ See the endpoint docs at
 - integration_mapping_id `str`
   - An ID of an integration mapping
   - Used as `integration_mapping_id` in path `path` of the API call
+- headers `DeleteIntegrationMappingSlackByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Empty body in response
 
 

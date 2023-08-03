@@ -16,6 +16,8 @@ See the endpoint docs at
 - task_id `str`
   - The ID of the task.
   - Used as `task_id` in path `path` of the API call
+- headers `GetTaskAssignmentsHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -44,6 +46,8 @@ See the endpoint docs at
 
 - request_body `CreateTaskAssignmentRequestBodyArg`
   - Used as requestBody for the API call
+- headers `CreateTaskAssignmentHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -69,6 +73,8 @@ See the endpoint docs at
 - task_assignment_id `str`
   - The ID of the task assignment.
   - Used as `task_assignment_id` in path `path` of the API call
+- headers `GetTaskAssignmentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -98,6 +104,8 @@ See the endpoint docs at
   - Used as `task_assignment_id` in path `path` of the API call
 - request_body `UpdateTaskAssignmentByIdRequestBodyArg`
   - Used as requestBody for the API call
+- headers `UpdateTaskAssignmentByIdHeadersArg`
+  - Used as headers for the API call
 
 
 ### Returns
@@ -123,5 +131,15 @@ See the endpoint docs at
 - task_assignment_id `str`
   - The ID of the task assignment.
   - Used as `task_assignment_id` in path `path` of the API call
+- headers `DeleteTaskAssignmentByIdHeadersArg`
+  - Used as headers for the API call
+
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the task
+assignment was successfully deleted.
 
 
