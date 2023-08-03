@@ -12,6 +12,8 @@ from box_sdk.schemas import Metadatas
 
 from box_sdk.schemas import ClientError
 
+from box_sdk.schemas import MetadataFull
+
 from box_sdk.schemas import Metadata
 
 from box_sdk.auth import Authentication
@@ -63,7 +65,7 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Metadatas.from_dict(json.loads(response.text))
-    def get_file_metadata_by_id(self, file_id: str, scope: GetFileMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Metadata:
+    def get_file_metadata_by_id(self, file_id: str, scope: GetFileMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataFull:
         """
         Retrieves the instance of a metadata template that has been applied to a
         
@@ -88,7 +90,7 @@ class FileMetadataManager:
         """
         headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
-        return Metadata.from_dict(json.loads(response.text))
+        return MetadataFull.from_dict(json.loads(response.text))
     def create_file_metadata_by_id(self, file_id: str, scope: CreateFileMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Metadata:
         """
         Applies an instance of a metadata template to a file.
