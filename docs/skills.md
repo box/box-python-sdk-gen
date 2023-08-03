@@ -1,5 +1,11 @@
 # SkillsManager
 
+
+- [List Box Skill cards on file](#list-box-skill-cards-on-file)
+- [Create Box Skill cards on file](#create-box-skill-cards-on-file)
+- [Remove Box Skill cards from file](#remove-box-skill-cards-from-file)
+- [Update all Box Skill cards on file](#update-all-box-skill-cards-on-file)
+
 ## List Box Skill cards on file
 
 List the Box Skills metadata cards that are attached to a file.
@@ -14,10 +20,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- headers `GetFileMetadataGlobalBoxSkillsCardsHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -44,12 +49,11 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- request_body `CreateFileMetadataGlobalBoxSkillsCardRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateFileMetadataGlobalBoxSkillsCardHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- cards `List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]`
+  - A list of Box Skill cards to apply to this file.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -74,10 +78,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- headers `DeleteFileMetadataGlobalBoxSkillsCardHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -103,12 +106,19 @@ See the endpoint docs at
 ### Arguments
 
 - skill_id `str`
-  - The ID of the skill to apply this metadata for.
-  - Used as `skill_id` in path `path` of the API call
-- request_body `UpdateSkillInvocationByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateSkillInvocationByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the skill to apply this metadata for. Example: "33243242"
+- status `UpdateSkillInvocationByIdStatusArg`
+  - Defines the status of this invocation. Set this to `success` when setting Skill cards.
+- metadata `UpdateSkillInvocationByIdMetadataArg`
+  - The metadata to set for this skill. This is a list of Box Skills cards. These cards will overwrite any existing Box skill cards on the file.
+- file `UpdateSkillInvocationByIdFileArg`
+  - The file to assign the cards to.
+- file_version `Optional[UpdateSkillInvocationByIdFileVersionArg]`
+  - The optional file version to assign the cards to.
+- usage `Optional[UpdateSkillInvocationByIdUsageArg]`
+  - A descriptor that defines what items are affected by this call.  Set this to the default values when setting a card to a `success` state, and leave it out in most other situations.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

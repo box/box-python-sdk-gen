@@ -1,5 +1,11 @@
 # TermsOfServicesManager
 
+
+- [List terms of services](#list-terms-of-services)
+- [Create terms of service](#create-terms-of-service)
+- [Get terms of service](#get-terms-of-service)
+- [Update terms of service](#update-terms-of-service)
+
 ## List terms of services
 
 Returns the current terms of service text and settings
@@ -14,10 +20,10 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetTermOfServicesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetTermOfServicesHeadersArg`
-  - Used as headers for the API call
+- tos_type `Optional[GetTermOfServicesTosTypeArg]`
+  - Limits the results to the terms of service of the given type.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -42,10 +48,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateTermOfServiceRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateTermOfServiceHeadersArg`
-  - Used as headers for the API call
+- status `CreateTermOfServiceStatusArg`
+  - Whether this terms of service is active.
+- tos_type `Optional[CreateTermOfServiceTosTypeArg]`
+  - The type of user to set the terms of service for.
+- text `str`
+  - The terms of service text to display to users.  The text can be set to empty if the `status` is set to `disabled`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -69,10 +79,9 @@ See the endpoint docs at
 ### Arguments
 
 - terms_of_service_id `str`
-  - The ID of the terms of service.
-  - Used as `terms_of_service_id` in path `path` of the API call
-- headers `GetTermOfServiceByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the terms of service. Example: "324234"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -96,12 +105,13 @@ See the endpoint docs at
 ### Arguments
 
 - terms_of_service_id `str`
-  - The ID of the terms of service.
-  - Used as `terms_of_service_id` in path `path` of the API call
-- request_body `UpdateTermOfServiceByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateTermOfServiceByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the terms of service. Example: "324234"
+- status `UpdateTermOfServiceByIdStatusArg`
+  - Whether this terms of service is active.
+- text `str`
+  - The terms of service text to display to users.  The text can be set to empty if the `status` is set to `disabled`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

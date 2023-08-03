@@ -1,5 +1,9 @@
 # StoragePoliciesManager
 
+
+- [List storage policies](#list-storage-policies)
+- [Get storage policy](#get-storage-policy)
+
 ## List storage policies
 
 Fetches all the storage policies in the enterprise.
@@ -13,10 +17,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetStoragePoliciesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetStoragePoliciesHeadersArg`
-  - Used as headers for the API call
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +48,9 @@ See the endpoint docs at
 ### Arguments
 
 - storage_policy_id `str`
-  - The ID of the storage policy.
-  - Used as `storage_policy_id` in path `path` of the API call
-- headers `GetStoragePolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the storage policy. Example: "34342"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

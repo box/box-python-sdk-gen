@@ -50,7 +50,7 @@ class InvitesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_invite(self, enterprise: CreateInviteEnterpriseArg, actionable_by: CreateInviteActionableByArg, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Invite:
+    def create_invite(self, enterprise: CreateInviteEnterpriseArg, actionable_by: CreateInviteActionableByArg, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Invite:
         """
         Invites an existing external user to join an enterprise.
         
@@ -84,15 +84,17 @@ class InvitesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(enterprise=enterprise, actionable_by=actionable_by)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))
-    def get_invite_by_id(self, invite_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Invite:
+    def get_invite_by_id(self, invite_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Invite:
         """
         Returns the status of a user invite.
         :param invite_id: The ID of an invite.
@@ -107,10 +109,12 @@ class InvitesManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites/', invite_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))

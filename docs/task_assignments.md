@@ -1,5 +1,12 @@
 # TaskAssignmentsManager
 
+
+- [List task assignments](#list-task-assignments)
+- [Assign task](#assign-task)
+- [Get task assignment](#get-task-assignment)
+- [Update task assignment](#update-task-assignment)
+- [Unassign task](#unassign-task)
+
 ## List task assignments
 
 Lists all of the assignments for a given task.
@@ -14,10 +21,9 @@ See the endpoint docs at
 ### Arguments
 
 - task_id `str`
-  - The ID of the task.
-  - Used as `task_id` in path `path` of the API call
-- headers `GetTaskAssignmentsHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -44,10 +50,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateTaskAssignmentRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateTaskAssignmentHeadersArg`
-  - Used as headers for the API call
+- task `CreateTaskAssignmentTaskArg`
+  - The task to assign to a user.
+- assign_to `CreateTaskAssignmentAssignToArg`
+  - The user to assign the task to.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -71,10 +79,9 @@ See the endpoint docs at
 ### Arguments
 
 - task_assignment_id `str`
-  - The ID of the task assignment.
-  - Used as `task_assignment_id` in path `path` of the API call
-- headers `GetTaskAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task assignment. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -100,12 +107,13 @@ See the endpoint docs at
 ### Arguments
 
 - task_assignment_id `str`
-  - The ID of the task assignment.
-  - Used as `task_assignment_id` in path `path` of the API call
-- request_body `UpdateTaskAssignmentByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateTaskAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task assignment. Example: "12345"
+- message `Optional[str]`
+  - An optional message by the assignee that can be added to the task.
+- resolution_state `Optional[UpdateTaskAssignmentByIdResolutionStateArg]`
+  - The state of the task assigned to the user.  * For a task with an `action` value of `complete` this can be `incomplete` or `completed`. * For a task with an `action` of `review` this can be `incomplete`, `approved`, or `rejected`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -129,10 +137,9 @@ See the endpoint docs at
 ### Arguments
 
 - task_assignment_id `str`
-  - The ID of the task assignment.
-  - Used as `task_assignment_id` in path `path` of the API call
-- headers `DeleteTaskAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task assignment. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

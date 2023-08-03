@@ -1,8 +1,14 @@
 # IntegrationMappingsManager
 
+
+- [List Slack integration mappings](#list-slack-integration-mappings)
+- [Create Slack integration mapping](#create-slack-integration-mapping)
+- [Update Slack integration mapping](#update-slack-integration-mapping)
+- [Delete Slack integration mapping](#delete-slack-integration-mapping)
+
 ## List Slack integration mappings
 
-Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack) in a users&#x27; enterprise.
+Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack) in a users' enterprise.
 
 You need Admin or Co-Admin role to
 use this endpoint.
@@ -16,10 +22,22 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetIntegrationMappingSlackQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetIntegrationMappingSlackHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- partner_item_type `Optional[GetIntegrationMappingSlackPartnerItemTypeArg]`
+  - Mapped item type, for which the mapping should be returned
+- partner_item_id `Optional[str]`
+  - ID of the mapped item, for which the mapping should be returned
+- box_item_id `Optional[str]`
+  - Box item ID, for which the mappings should be returned
+- box_item_type `Optional[GetIntegrationMappingSlackBoxItemTypeArg]`
+  - Box item type, for which the mappings should be returned
+- is_manually_created `Optional[bool]`
+  - Whether the mapping has been manually created
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -46,10 +64,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `IntegrationMappingSlackCreateRequest`
-  - Used as requestBody for the API call
-- headers `CreateIntegrationMappingSlackHeadersArg`
-  - Used as headers for the API call
+- partner_item `CreateIntegrationMappingSlackPartnerItemArg`
+  - 
+- box_item `CreateIntegrationMappingSlackBoxItemArg`
+  - 
+- options `Optional[CreateIntegrationMappingSlackOptionsArg]`
+  - 
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -77,12 +99,13 @@ See the endpoint docs at
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping
-  - Used as `integration_mapping_id` in path `path` of the API call
-- request_body `UpdateIntegrationMappingSlackByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateIntegrationMappingSlackByIdHeadersArg`
-  - Used as headers for the API call
+  - An ID of an integration mapping Example: "11235432"
+- box_item `Optional[UpdateIntegrationMappingSlackByIdBoxItemArg]`
+  - 
+- options `Optional[UpdateIntegrationMappingSlackByIdOptionsArg]`
+  - 
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -110,10 +133,9 @@ See the endpoint docs at
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping
-  - Used as `integration_mapping_id` in path `path` of the API call
-- headers `DeleteIntegrationMappingSlackByIdHeadersArg`
-  - Used as headers for the API call
+  - An ID of an integration mapping Example: "11235432"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

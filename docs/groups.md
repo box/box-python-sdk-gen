@@ -1,9 +1,16 @@
 # GroupsManager
 
+
+- [List groups for enterprise](#list-groups-for-enterprise)
+- [Create group](#create-group)
+- [Get group](#get-group)
+- [Update group](#update-group)
+- [Remove group](#remove-group)
+
 ## List groups for enterprise
 
 Retrieves all of the groups for a given enterprise. The user
-must have admin permissions to inspect enterprise&#x27;s groups.
+must have admin permissions to inspect enterprise's groups.
 
 This operation is performed by calling function `get_groups`.
 
@@ -17,10 +24,16 @@ client.groups.get_groups()
 
 ### Arguments
 
-- query_params `GetGroupsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetGroupsHeadersArg`
-  - Used as headers for the API call
+- filter_term `Optional[str]`
+  - Limits the results to only groups whose `name` starts with the search term.
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -43,17 +56,27 @@ See the endpoint docs at
 
 <!-- sample post_groups -->
 ```python
-client.groups.create_group(CreateGroupRequestBodyArg(name&#x3D;get_uuid()))
+client.groups.create_group(name=get_uuid())
 ```
 
 ### Arguments
 
-- request_body `CreateGroupRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `CreateGroupQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `CreateGroupHeadersArg`
-  - Used as headers for the API call
+- name `str`
+  - The name of the new group to be created. This name must be unique within the enterprise.
+- provenance `Optional[str]`
+  - Keeps track of which external source this group is coming, for example `Active Directory`, or `Okta`.  Setting this will also prevent Box admins from editing the group name and its members directly via the Box web application.  This is desirable for one-way syncing of groups.
+- external_sync_identifier `Optional[str]`
+  - An arbitrary identifier that can be used by external group sync tools to link this Box Group to an external group.  Example values of this field could be an **Active Directory Object ID** or a **Google Group ID**.  We recommend you use of this field in order to avoid issues when group names are updated in either Box or external systems.
+- description `Optional[str]`
+  - A human readable description of the group.
+- invitability_level `Optional[CreateGroupInvitabilityLevelArg]`
+  - Specifies who can invite the group to collaborate on folders.  When set to `admins_only` the enterprise admin, co-admins, and the group's admin can invite the group.  When set to `admins_and_members` all the admins listed above and group members can invite the group.  When set to `all_managed_users` all managed users in the enterprise can invite the group.
+- member_viewability_level `Optional[CreateGroupMemberViewabilityLevelArg]`
+  - Specifies who can see the members of the group.  * `admins_only` - the enterprise admin, co-admins, group's   group admin * `admins_and_members` - all admins and group members * `all_managed_users` - all managed users in the   enterprise
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -76,18 +99,17 @@ See the endpoint docs at
 
 <!-- sample get_groups_id -->
 ```python
-client.groups.get_group_by_id(group.id)
+client.groups.get_group_by_id(group_id=group.id)
 ```
 
 ### Arguments
 
 - group_id `str`
-  - The ID of the group.
-  - Used as `group_id` in path `path` of the API call
-- query_params `GetGroupByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetGroupByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group. Example: "57645"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -110,20 +132,29 @@ See the endpoint docs at
 
 <!-- sample put_groups_id -->
 ```python
-client.groups.update_group_by_id(group.id, UpdateGroupByIdRequestBodyArg(name&#x3D;updated_group_name))
+client.groups.update_group_by_id(group_id=group.id, name=updated_group_name)
 ```
 
 ### Arguments
 
 - group_id `str`
-  - The ID of the group.
-  - Used as `group_id` in path `path` of the API call
-- request_body `UpdateGroupByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateGroupByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateGroupByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group. Example: "57645"
+- name `Optional[str]`
+  - The name of the new group to be created. Must be unique within the enterprise.
+- provenance `Optional[str]`
+  - Keeps track of which external source this group is coming, for example `Active Directory`, or `Okta`.  Setting this will also prevent Box admins from editing the group name and its members directly via the Box web application.  This is desirable for one-way syncing of groups.
+- external_sync_identifier `Optional[str]`
+  - An arbitrary identifier that can be used by external group sync tools to link this Box Group to an external group.  Example values of this field could be an **Active Directory Object ID** or a **Google Group ID**.  We recommend you use of this field in order to avoid issues when group names are updated in either Box or external systems.
+- description `Optional[str]`
+  - A human readable description of the group.
+- invitability_level `Optional[UpdateGroupByIdInvitabilityLevelArg]`
+  - Specifies who can invite the group to collaborate on folders.  When set to `admins_only` the enterprise admin, co-admins, and the group's admin can invite the group.  When set to `admins_and_members` all the admins listed above and group members can invite the group.  When set to `all_managed_users` all managed users in the enterprise can invite the group.
+- member_viewability_level `Optional[UpdateGroupByIdMemberViewabilityLevelArg]`
+  - Specifies who can see the members of the group.  * `admins_only` - the enterprise admin, co-admins, group's   group admin * `admins_and_members` - all admins and group members * `all_managed_users` - all managed users in the   enterprise
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -145,16 +176,15 @@ See the endpoint docs at
 
 <!-- sample delete_groups_id -->
 ```python
-client.groups.delete_group_by_id(group.id)
+client.groups.delete_group_by_id(group_id=group.id)
 ```
 
 ### Arguments
 
 - group_id `str`
-  - The ID of the group.
-  - Used as `group_id` in path `path` of the API call
-- headers `DeleteGroupByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group. Example: "57645"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

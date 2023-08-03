@@ -1,5 +1,9 @@
 # InvitesManager
 
+
+- [Create user invite](#create-user-invite)
+- [Get user invite status](#get-user-invite-status)
+
 ## Create user invite
 
 Invites an existing external user to join an enterprise.
@@ -9,7 +13,7 @@ must already have a Box account. Once invited, the user will receive an
 email and are prompted to accept the invitation within the
 Box web application.
 
-This method requires the &quot;Manage An Enterprise&quot; scope enabled for
+This method requires the "Manage An Enterprise" scope enabled for
 the application, which can be enabled within the developer console.
 
 This operation is performed by calling function `create_invite`.
@@ -21,12 +25,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateInviteRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `CreateInviteQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `CreateInviteHeadersArg`
-  - Used as headers for the API call
+- enterprise `CreateInviteEnterpriseArg`
+  - The enterprise to invite the user to
+- actionable_by `CreateInviteActionableByArg`
+  - The user to invite
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -50,12 +56,11 @@ See the endpoint docs at
 ### Arguments
 
 - invite_id `str`
-  - The ID of an invite.
-  - Used as `invite_id` in path `path` of the API call
-- query_params `GetInviteByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetInviteByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of an invite. Example: "213723"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

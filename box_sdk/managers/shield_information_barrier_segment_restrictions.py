@@ -72,7 +72,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_shield_information_barrier_segment_restriction_by_id(self, shield_information_barrier_segment_restriction_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ShieldInformationBarrierSegmentRestriction:
+    def get_shield_information_barrier_segment_restriction_by_id(self, shield_information_barrier_segment_restriction_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierSegmentRestriction:
         """
         Retrieves a shield information barrier segment
         
@@ -81,13 +81,15 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         :param shield_information_barrier_segment_restriction_id: The ID of the shield information barrier segment Restriction.
             Example: "4563"
         :type shield_information_barrier_segment_restriction_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shield_information_barrier_segment_restriction_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrierSegmentRestriction.from_dict(json.loads(response.text))
-    def delete_shield_information_barrier_segment_restriction_by_id(self, shield_information_barrier_segment_restriction_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_shield_information_barrier_segment_restriction_by_id(self, shield_information_barrier_segment_restriction_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Delete shield information barrier segment restriction
         
@@ -96,13 +98,15 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         :param shield_information_barrier_segment_restriction_id: The ID of the shield information barrier segment Restriction.
             Example: "4563"
         :type shield_information_barrier_segment_restriction_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions/', shield_information_barrier_segment_restriction_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def get_shield_information_barrier_segment_restrictions(self, shield_information_barrier_segment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def get_shield_information_barrier_segment_restrictions(self, shield_information_barrier_segment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Lists shield information barrier segment restrictions
         
@@ -116,14 +120,16 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'shield_information_barrier_segment_id': to_string(shield_information_barrier_segment_id), 'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return None
-    def create_shield_information_barrier_segment_restriction(self, type: CreateShieldInformationBarrierSegmentRestrictionTypeArg, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg, restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ShieldInformationBarrierSegmentRestriction:
+    def create_shield_information_barrier_segment_restriction(self, type: CreateShieldInformationBarrierSegmentRestrictionTypeArg, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg, restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierSegmentRestriction:
         """
         Creates a shield information barrier
         
@@ -138,10 +144,12 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         :param restricted_segment: The `type` and `id` of the restricted
             shield information barrier segment.
         :type restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(type=type, shield_information_barrier=shield_information_barrier, shield_information_barrier_segment=shield_information_barrier_segment, restricted_segment=restricted_segment)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_restrictions']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrierSegmentRestriction.from_dict(json.loads(response.text))

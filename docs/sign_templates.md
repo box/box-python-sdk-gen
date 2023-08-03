@@ -1,5 +1,9 @@
 # SignTemplatesManager
 
+
+- [List Box Sign templates](#list-box-sign-templates)
+- [Get Box Sign template by ID](#get-box-sign-template-by-id)
+
 ## List Box Sign templates
 
 Gets Box Sign templates created by a user.
@@ -13,10 +17,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetSignTemplatesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetSignTemplatesHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +46,9 @@ See the endpoint docs at
 ### Arguments
 
 - template_id `str`
-  - The ID of a Box Sign template.
-  - Used as `template_id` in path `path` of the API call
-- headers `GetSignTemplateByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of a Box Sign template. Example: "123075213-7d117509-8f05-42e4-a5ef-5190a319d41d"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

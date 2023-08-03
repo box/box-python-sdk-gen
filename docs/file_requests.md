@@ -1,5 +1,11 @@
 # FileRequestsManager
 
+
+- [Get file request](#get-file-request)
+- [Update file request](#update-file-request)
+- [Delete file request](#delete-file-request)
+- [Copy file request](#copy-file-request)
+
 ## Get file request
 
 Retrieves the information about a file request.
@@ -14,10 +20,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_request_id `str`
-  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_request_id` in path `path` of the API call
-- headers `GetFileRequestByIdHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/filerequest/123` the `file_request_id` is `123`. Example: "123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -42,12 +47,23 @@ See the endpoint docs at
 ### Arguments
 
 - file_request_id `str`
-  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_request_id` in path `path` of the API call
-- request_body `FileRequestUpdateRequest`
-  - Used as requestBody for the API call
-- headers `UpdateFileRequestByIdHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/filerequest/123` the `file_request_id` is `123`. Example: "123"
+- title `Optional[str]`
+  - An optional new title for the file request. This can be used to change the title of the file request.  This will default to the value on the existing file request.
+- description `Optional[str]`
+  - An optional new description for the file request. This can be used to change the description of the file request.  This will default to the value on the existing file request.
+- status `Optional[UpdateFileRequestByIdStatusArg]`
+  - An optional new status of the file request.  When the status is set to `inactive`, the file request will no longer accept new submissions, and any visitor to the file request URL will receive a `HTTP 404` status code.  This will default to the value on the existing file request.
+- is_email_required `Optional[bool]`
+  - Whether a file request submitter is required to provide their email address.  When this setting is set to true, the Box UI will show an email field on the file request form.  This will default to the value on the existing file request.
+- is_description_required `Optional[bool]`
+  - Whether a file request submitter is required to provide a description of the files they are submitting.  When this setting is set to true, the Box UI will show a description field on the file request form.  This will default to the value on the existing file request.
+- expires_at `Optional[str]`
+  - The date after which a file request will no longer accept new submissions.  After this date, the `status` will automatically be set to `inactive`.  This will default to the value on the existing file request.
+- if_match `Optional[str]`
+  - Ensures this item hasn't recently changed before making changes.  Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -71,10 +87,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_request_id `str`
-  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_request_id` in path `path` of the API call
-- headers `DeleteFileRequestByIdHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/filerequest/123` the `file_request_id` is `123`. Example: "123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -100,12 +115,23 @@ See the endpoint docs at
 ### Arguments
 
 - file_request_id `str`
-  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/filerequest/123&#x60; the &#x60;file_request_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_request_id` in path `path` of the API call
-- request_body `FileRequestCopyRequest`
-  - Used as requestBody for the API call
-- headers `CreateFileRequestCopyHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a file request.  The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/filerequest/123` the `file_request_id` is `123`. Example: "123"
+- folder `CreateFileRequestCopyFolderArg`
+  - The folder to associate the new file request to.
+- title `Optional[str]`
+  - An optional new title for the file request. This can be used to change the title of the file request.  This will default to the value on the existing file request.
+- description `Optional[str]`
+  - An optional new description for the file request. This can be used to change the description of the file request.  This will default to the value on the existing file request.
+- status `Optional[CreateFileRequestCopyStatusArg]`
+  - An optional new status of the file request.  When the status is set to `inactive`, the file request will no longer accept new submissions, and any visitor to the file request URL will receive a `HTTP 404` status code.  This will default to the value on the existing file request.
+- is_email_required `Optional[bool]`
+  - Whether a file request submitter is required to provide their email address.  When this setting is set to true, the Box UI will show an email field on the file request form.  This will default to the value on the existing file request.
+- is_description_required `Optional[bool]`
+  - Whether a file request submitter is required to provide a description of the files they are submitting.  When this setting is set to true, the Box UI will show a description field on the file request form.  This will default to the value on the existing file request.
+- expires_at `Optional[str]`
+  - The date after which a file request will no longer accept new submissions.  After this date, the `status` will automatically be set to `inactive`.  This will default to the value on the existing file request.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

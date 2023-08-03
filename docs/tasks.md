@@ -1,5 +1,12 @@
 # TasksManager
 
+
+- [List tasks on file](#list-tasks-on-file)
+- [Create task](#create-task)
+- [Get task](#get-task)
+- [Update task](#update-task)
+- [Remove task](#remove-task)
+
 ## List tasks on file
 
 Retrieves a list of all the tasks for a file. This
@@ -15,10 +22,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- headers `GetFileTasksHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -45,10 +51,18 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateTaskRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateTaskHeadersArg`
-  - Used as headers for the API call
+- item `CreateTaskItemArg`
+  - The file to attach the task to.
+- action `Optional[CreateTaskActionArg]`
+  - The action the task assignee will be prompted to do. Must be  * `review` defines an approval task that can be approved or rejected * `complete` defines a general task which can be completed
+- message `Optional[str]`
+  - An optional message to include with the task.
+- due_at `Optional[str]`
+  - Defines when the task is due. Defaults to `null` if not provided.
+- completion_rule `Optional[CreateTaskCompletionRuleArg]`
+  - Defines which assignees need to complete this task before the task is considered completed.  * `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. * `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -72,10 +86,9 @@ See the endpoint docs at
 ### Arguments
 
 - task_id `str`
-  - The ID of the task.
-  - Used as `task_id` in path `path` of the API call
-- headers `GetTaskByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -87,7 +100,7 @@ Returns a task object.
 
 ## Update task
 
-Updates a task. This can be used to update a task&#x27;s configuration, or to
+Updates a task. This can be used to update a task's configuration, or to
 update its completion state.
 
 This operation is performed by calling function `update_task_by_id`.
@@ -100,12 +113,17 @@ See the endpoint docs at
 ### Arguments
 
 - task_id `str`
-  - The ID of the task.
-  - Used as `task_id` in path `path` of the API call
-- request_body `UpdateTaskByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateTaskByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task. Example: "12345"
+- action `Optional[UpdateTaskByIdActionArg]`
+  - The action the task assignee will be prompted to do. Must be  * `review` defines an approval task that can be approved or rejected * `complete` defines a general task which can be completed
+- message `Optional[str]`
+  - The message included with the task.
+- due_at `Optional[str]`
+  - When the task is due at.
+- completion_rule `Optional[UpdateTaskByIdCompletionRuleArg]`
+  - Defines which assignees need to complete this task before the task is considered completed.  * `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. * `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -129,10 +147,9 @@ See the endpoint docs at
 ### Arguments
 
 - task_id `str`
-  - The ID of the task.
-  - Used as `task_id` in path `path` of the API call
-- headers `DeleteTaskByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the task. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

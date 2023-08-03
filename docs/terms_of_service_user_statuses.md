@@ -1,5 +1,10 @@
 # TermsOfServiceUserStatusesManager
 
+
+- [List terms of service user statuses](#list-terms-of-service-user-statuses)
+- [Create terms of service status for new user](#create-terms-of-service-status-for-new-user)
+- [Update terms of service status for existing user](#update-terms-of-service-status-for-existing-user)
+
 ## List terms of service user statuses
 
 Retrieves an overview of users and their status for a
@@ -15,10 +20,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetTermOfServiceUserStatusesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetTermOfServiceUserStatusesHeadersArg`
-  - Used as headers for the API call
+- tos_id `str`
+  - The ID of the terms of service.
+- user_id `Optional[str]`
+  - Limits results to the given user ID.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -41,10 +48,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateTermOfServiceUserStatusRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateTermOfServiceUserStatusHeadersArg`
-  - Used as headers for the API call
+- tos `CreateTermOfServiceUserStatusTosArg`
+  - The terms of service to set the status for.
+- user `CreateTermOfServiceUserStatusUserArg`
+  - The user to set the status for.
+- is_accepted `bool`
+  - Whether the user has accepted the terms.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -68,12 +79,11 @@ See the endpoint docs at
 ### Arguments
 
 - terms_of_service_user_status_id `str`
-  - The ID of the terms of service status.
-  - Used as `terms_of_service_user_status_id` in path `path` of the API call
-- request_body `UpdateTermOfServiceUserStatusByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateTermOfServiceUserStatusByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the terms of service status. Example: "324234"
+- is_accepted `bool`
+  - Whether the user has accepted the terms.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

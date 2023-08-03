@@ -1,5 +1,12 @@
 # ShieldInformationBarrierSegmentsManager
 
+
+- [Get shield information barrier segment with specified ID](#get-shield-information-barrier-segment-with-specified-id)
+- [Update shield information barrier segment with specified ID](#update-shield-information-barrier-segment-with-specified-id)
+- [Delete shield information barrier segment](#delete-shield-information-barrier-segment)
+- [List shield information barrier segments](#list-shield-information-barrier-segments)
+- [Create shield information barrier segment](#create-shield-information-barrier-segment)
+
 ## Get shield information barrier segment with specified ID
 
 Retrieves shield information barrier segment based on provided ID..
@@ -14,10 +21,9 @@ See the endpoint docs at
 ### Arguments
 
 - shield_information_barrier_segment_id `str`
-  - The ID of the shield information barrier segment.
-  - Used as `shield_information_barrier_segment_id` in path `path` of the API call
-- headers `GetShieldInformationBarrierSegmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the shield information barrier segment. Example: "3423"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -41,12 +47,13 @@ See the endpoint docs at
 ### Arguments
 
 - shield_information_barrier_segment_id `str`
-  - The ID of the shield information barrier segment.
-  - Used as `shield_information_barrier_segment_id` in path `path` of the API call
-- request_body `UpdateShieldInformationBarrierSegmentByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateShieldInformationBarrierSegmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the shield information barrier segment. Example: "3423"
+- name `Optional[str]`
+  - The updated name for the shield information barrier segment.
+- description `Optional[str]`
+  - The updated description for the shield information barrier segment.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -71,10 +78,9 @@ See the endpoint docs at
 ### Arguments
 
 - shield_information_barrier_segment_id `str`
-  - The ID of the shield information barrier segment.
-  - Used as `shield_information_barrier_segment_id` in path `path` of the API call
-- headers `DeleteShieldInformationBarrierSegmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the shield information barrier segment. Example: "3423"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -98,10 +104,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetShieldInformationBarrierSegmentsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetShieldInformationBarrierSegmentsHeadersArg`
-  - Used as headers for the API call
+- shield_information_barrier_id `str`
+  - The ID of the shield information barrier.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -124,10 +134,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateShieldInformationBarrierSegmentRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateShieldInformationBarrierSegmentHeadersArg`
-  - Used as headers for the API call
+- shield_information_barrier `ShieldInformationBarrierBase`
+  - 
+- name `str`
+  - Name of the shield information barrier segment
+- description `Optional[str]`
+  - Description of the shield information barrier segment
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

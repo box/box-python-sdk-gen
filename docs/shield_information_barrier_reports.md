@@ -1,5 +1,10 @@
 # ShieldInformationBarrierReportsManager
 
+
+- [List shield information barrier reports](#list-shield-information-barrier-reports)
+- [Create shield information barrier report](#create-shield-information-barrier-report)
+- [Get shield information barrier report by ID](#get-shield-information-barrier-report-by-id)
+
 ## List shield information barrier reports
 
 Lists shield information barrier reports with specific IDs.
@@ -13,10 +18,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetShieldInformationBarrierReportsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetShieldInformationBarrierReportsHeadersArg`
-  - Used as headers for the API call
+- shield_information_barrier_id `str`
+  - The ID of the shield information barrier.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -39,10 +48,10 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `ShieldInformationBarrierReference`
-  - Used as requestBody for the API call
-- headers `CreateShieldInformationBarrierReportHeadersArg`
-  - Used as headers for the API call
+- shield_information_barrier `Optional[ShieldInformationBarrierBase]`
+  - 
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -66,10 +75,9 @@ See the endpoint docs at
 ### Arguments
 
 - shield_information_barrier_report_id `str`
-  - The ID of the shield information barrier Report.
-  - Used as `shield_information_barrier_report_id` in path `path` of the API call
-- headers `GetShieldInformationBarrierReportByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the shield information barrier Report. Example: "3423"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

@@ -1,5 +1,12 @@
 # SharedLinksWebLinksManager
 
+
+- [Find web link for shared link](#find-web-link-for-shared-link)
+- [Get shared link for web link](#get-shared-link-for-web-link)
+- [Add shared link to web link](#add-shared-link-to-web-link)
+- [Update shared link on web link](#update-shared-link-on-web-link)
+- [Remove shared link from web link](#remove-shared-link-from-web-link)
+
 ## Find web link for shared link
 
 Returns the web link represented by a shared link.
@@ -19,10 +26,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetSharedItemWebLinksQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetSharedItemWebLinksHeadersArg`
-  - Used as headers for the API call
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- if_none_match `Optional[str]`
+  - Ensures an item is only returned if it has changed.  Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `304 Not Modified` if the item has not changed since.
+- boxapi `str`
+  - A header containing the shared link and optional password for the shared link.  The format for this header is as follows.  `shared_link=[link]&shared_link_password=[password]`
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -47,12 +58,11 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- query_params `GetWebLinkGetSharedLinkQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetWebLinkGetSharedLinkHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- fields `str`
+  - Explicitly request the `shared_link` fields to be returned for this item.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -77,14 +87,13 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- request_body `UpdateWebLinkAddSharedLinkRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateWebLinkAddSharedLinkQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateWebLinkAddSharedLinkHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- shared_link `Optional[UpdateWebLinkAddSharedLinkSharedLinkArg]`
+  - The settings for the shared link to create on the web link.  Use an empty object (`{}`) to use the default settings for shared links.
+- fields `str`
+  - Explicitly request the `shared_link` fields to be returned for this item.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -109,14 +118,13 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- request_body `UpdateWebLinkUpdateSharedLinkRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateWebLinkUpdateSharedLinkQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateWebLinkUpdateSharedLinkHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- shared_link `Optional[UpdateWebLinkUpdateSharedLinkSharedLinkArg]`
+  - The settings for the shared link to update.
+- fields `str`
+  - Explicitly request the `shared_link` fields to be returned for this item.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -141,14 +149,13 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- request_body `UpdateWebLinkRemoveSharedLinkRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateWebLinkRemoveSharedLinkQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateWebLinkRemoveSharedLinkHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- shared_link `Optional[UpdateWebLinkRemoveSharedLinkSharedLinkArg]`
+  - By setting this value to `null`, the shared link is removed from the web link.
+- fields `str`
+  - Explicitly request the `shared_link` fields to be returned for this item.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

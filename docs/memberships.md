@@ -1,6 +1,14 @@
 # MembershipsManager
 
-## List user&#x27;s groups
+
+- [List user's groups](#list-users-groups)
+- [List members of group](#list-members-of-group)
+- [Add user to group](#add-user-to-group)
+- [Get group membership](#get-group-membership)
+- [Update group membership](#update-group-membership)
+- [Remove user from group](#remove-user-from-group)
+
+## List user's groups
 
 Retrieves all the groups for a user. Only members of this
 group or users with admin-level permissions will be able to
@@ -13,18 +21,19 @@ See the endpoint docs at
 
 <!-- sample get_users_id_memberships -->
 ```python
-client.memberships.get_user_memberships(user.id)
+client.memberships.get_user_memberships(user_id=user.id)
 ```
 
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- query_params `GetUserMembershipsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetUserMembershipsHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -48,18 +57,19 @@ See the endpoint docs at
 
 <!-- sample get_groups_id_memberships -->
 ```python
-client.memberships.get_group_memberships(group.id)
+client.memberships.get_group_memberships(group_id=group.id)
 ```
 
 ### Arguments
 
 - group_id `str`
-  - The ID of the group.
-  - Used as `group_id` in path `path` of the API call
-- query_params `GetGroupMembershipsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetGroupMembershipsHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group. Example: "57645"
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -82,17 +92,23 @@ See the endpoint docs at
 
 <!-- sample post_group_memberships -->
 ```python
-client.memberships.create_group_membership(CreateGroupMembershipRequestBodyArg(user&#x3D;user, group&#x3D;group))
+client.memberships.create_group_membership(user=user, group=group)
 ```
 
 ### Arguments
 
-- request_body `CreateGroupMembershipRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `CreateGroupMembershipQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `CreateGroupMembershipHeadersArg`
-  - Used as headers for the API call
+- user `CreateGroupMembershipUserArg`
+  - The user to add to the group.
+- group `CreateGroupMembershipGroupArg`
+  - The group to add the user to.
+- role `Optional[CreateGroupMembershipRoleArg]`
+  - The role of the user in the group.
+- configurable_permissions `Optional[CreateGroupMembershipConfigurablePermissionsArg]`
+  - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`.  Setting these permissions overwrites the default access levels of an admin.  Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -115,18 +131,17 @@ See the endpoint docs at
 
 <!-- sample get_group_memberships_id -->
 ```python
-client.memberships.get_group_membership_by_id(group_membership.id)
+client.memberships.get_group_membership_by_id(group_membership_id=group_membership.id)
 ```
 
 ### Arguments
 
 - group_membership_id `str`
-  - The ID of the group membership.
-  - Used as `group_membership_id` in path `path` of the API call
-- query_params `GetGroupMembershipByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetGroupMembershipByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group membership. Example: "434534"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -138,7 +153,7 @@ Returns the group membership object.
 
 ## Update group membership
 
-Updates a user&#x27;s group membership. Only admins of this
+Updates a user's group membership. Only admins of this
 group or users with admin-level permissions will be able to
 use this API.
 
@@ -149,20 +164,21 @@ See the endpoint docs at
 
 <!-- sample put_group_memberships_id -->
 ```python
-client.memberships.update_group_membership_by_id(group_membership.id, UpdateGroupMembershipByIdRequestBodyArg(role&#x3D;UpdateGroupMembershipByIdRequestBodyArgRoleField.ADMIN.value))
+client.memberships.update_group_membership_by_id(group_membership_id=group_membership.id, role=UpdateGroupMembershipByIdRoleArg.ADMIN.value)
 ```
 
 ### Arguments
 
 - group_membership_id `str`
-  - The ID of the group membership.
-  - Used as `group_membership_id` in path `path` of the API call
-- request_body `UpdateGroupMembershipByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateGroupMembershipByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateGroupMembershipByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group membership. Example: "434534"
+- role `Optional[UpdateGroupMembershipByIdRoleArg]`
+  - The role of the user in the group.
+- configurable_permissions `Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg]`
+  - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`.  Setting these permissions overwrites the default access levels of an admin.  Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -185,16 +201,15 @@ See the endpoint docs at
 
 <!-- sample delete_group_memberships_id -->
 ```python
-client.memberships.delete_group_membership_by_id(group_membership.id)
+client.memberships.delete_group_membership_by_id(group_membership_id=group_membership.id)
 ```
 
 ### Arguments
 
 - group_membership_id `str`
-  - The ID of the group membership.
-  - Used as `group_membership_id` in path `path` of the API call
-- headers `DeleteGroupMembershipByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group membership. Example: "434534"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

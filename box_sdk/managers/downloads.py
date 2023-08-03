@@ -24,7 +24,7 @@ class DownloadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def download_file(self, file_id: str, version: Optional[str] = None, access_token: Optional[str] = None, range: Optional[str] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ByteStream:
+    def download_file(self, file_id: str, version: Optional[str] = None, access_token: Optional[str] = None, range: Optional[str] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ByteStream:
         """
         Returns the contents of a file in binary format.
         :param file_id: The unique identifier that represents a file.
@@ -52,10 +52,12 @@ class DownloadsManager:
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'version': to_string(version), 'access_token': to_string(access_token)})
-        headers_map: Dict[str, str] = prepare_params({**{'range': to_string(range), 'boxapi': to_string(boxapi)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/content']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='binary', auth=self.auth, network_session=self.network_session))
         return response.content

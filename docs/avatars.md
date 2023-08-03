@@ -1,8 +1,13 @@
 # AvatarsManager
 
+
+- [Get user avatar](#get-user-avatar)
+- [Add or update user avatar](#add-or-update-user-avatar)
+- [Delete user avatar](#delete-user-avatar)
+
 ## Get user avatar
 
-Retrieves an image of a the user&#x27;s avatar.
+Retrieves an image of a the user's avatar.
 
 This operation is performed by calling function `get_user_avatar`.
 
@@ -11,16 +16,15 @@ See the endpoint docs at
 
 <!-- sample get_users_id_avatar -->
 ```python
-client.avatars.get_user_avatar(user.id)
+client.avatars.get_user_avatar(user_id=user.id)
 ```
 
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- headers `GetUserAvatarHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -43,26 +47,29 @@ See the endpoint docs at
 
 <!-- sample post_users_id_avatar -->
 ```python
-client.avatars.create_user_avatar(user.id, CreateUserAvatarRequestBodyArg(pic&#x3D;decode_base_64_byte_stream(&#x27;iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg&#x3D;&#x3D;&#x27;), pic_content_type&#x3D;&#x27;image/png&#x27;, pic_file_name&#x3D;&#x27;avatar.png&#x27;))
+client.avatars.create_user_avatar(user_id=user.id, pic=decode_base_64_byte_stream('iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=='), pic_file_name='avatar.png', pic_content_type='image/png')
 ```
 
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- request_body `CreateUserAvatarRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateUserAvatarHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- pic `ByteStream`
+  - The image file to be uploaded to Box. Accepted file extensions are `.jpg` or `.png`. The maximum file size is 1MB.
+- pic_file_name `Optional[str]`
+  - 
+- pic_content_type `Optional[str]`
+  - 
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
 
 This function returns a value of type `UserAvatar`.
 
-* &#x60;ok&#x60;: Returns the &#x60;pic_urls&#x60; object with URLs to existing
-user avatars that were updated.* &#x60;created&#x60;: Returns the &#x60;pic_urls&#x60; object with URLS to user avatars
+* `ok`: Returns the `pic_urls` object with URLs to existing
+user avatars that were updated.* `created`: Returns the `pic_urls` object with URLS to user avatars
 uploaded to Box with the request.
 
 
@@ -78,22 +85,21 @@ See the endpoint docs at
 
 <!-- sample delete_users_id_avatar -->
 ```python
-client.avatars.delete_user_avatar(user.id)
+client.avatars.delete_user_avatar(user_id=user.id)
 ```
 
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- headers `DeleteUserAvatarHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
 
 This function returns a value of type `None`.
 
-* &#x60;no_content&#x60;: Removes the avatar and returns an empty response.
+* `no_content`: Removes the avatar and returns an empty response.
 
 

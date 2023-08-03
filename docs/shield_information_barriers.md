@@ -1,5 +1,11 @@
 # ShieldInformationBarriersManager
 
+
+- [Get shield information barrier with specified ID](#get-shield-information-barrier-with-specified-id)
+- [Add changed status of shield information barrier with specified ID](#add-changed-status-of-shield-information-barrier-with-specified-id)
+- [List shield information barriers](#list-shield-information-barriers)
+- [Create shield information barrier](#create-shield-information-barrier)
+
 ## Get shield information barrier with specified ID
 
 Get shield information barrier based on provided ID..
@@ -14,10 +20,9 @@ See the endpoint docs at
 ### Arguments
 
 - shield_information_barrier_id `str`
-  - The ID of the shield information barrier.
-  - Used as `shield_information_barrier_id` in path `path` of the API call
-- headers `GetShieldInformationBarrierByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the shield information barrier. Example: "1910967"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +45,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateShieldInformationBarrierChangeStatusRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateShieldInformationBarrierChangeStatusHeadersArg`
-  - Used as headers for the API call
+- id `str`
+  - The ID of the shield information barrier.
+- status `CreateShieldInformationBarrierChangeStatusStatusArg`
+  - The desired status for the shield information barrier.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -67,10 +74,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetShieldInformationBarriersQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetShieldInformationBarriersHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -97,10 +106,28 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `ShieldInformationBarrier`
-  - Used as requestBody for the API call
-- headers `CreateShieldInformationBarrierHeadersArg`
-  - Used as headers for the API call
+- id `Optional[str]`
+  - The unique identifier for the shield information barrier
+- type `Optional[CreateShieldInformationBarrierTypeArg]`
+  - The type of the shield information barrier
+- enterprise `Optional[EnterpriseBase]`
+  - 
+- status `Optional[CreateShieldInformationBarrierStatusArg]`
+  - Status of the shield information barrier
+- created_at `Optional[str]`
+  - ISO date time string when this shield information barrier object was created.
+- created_by `Optional[UserBase]`
+  - 
+- updated_at `Optional[str]`
+  - ISO date time string when this shield information barrier was updated.
+- updated_by `Optional[UserBase]`
+  - 
+- enabled_at `Optional[str]`
+  - ISO date time string when this shield information barrier was enabled.
+- enabled_by `Optional[UserBase]`
+  - 
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

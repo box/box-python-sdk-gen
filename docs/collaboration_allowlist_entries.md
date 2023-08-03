@@ -1,5 +1,11 @@
 # CollaborationAllowlistEntriesManager
 
+
+- [List allowed collaboration domains](#list-allowed-collaboration-domains)
+- [Add domain to list of allowed collaboration domains](#add-domain-to-list-of-allowed-collaboration-domains)
+- [Get allowed collaboration domain](#get-allowed-collaboration-domain)
+- [Remove domain from list of allowed collaboration domains](#remove-domain-from-list-of-allowed-collaboration-domains)
+
 ## List allowed collaboration domains
 
 Returns the list domains that have been deemed safe to create collaborations
@@ -14,10 +20,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetCollaborationWhitelistEntriesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCollaborationWhitelistEntriesHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -41,10 +49,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateCollaborationWhitelistEntryRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateCollaborationWhitelistEntryHeadersArg`
-  - Used as headers for the API call
+- domain `str`
+  - The domain to add to the list of allowed domains.
+- direction `CreateCollaborationWhitelistEntryDirectionArg`
+  - The direction in which to allow collaborations.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -69,10 +79,9 @@ See the endpoint docs at
 ### Arguments
 
 - collaboration_whitelist_entry_id `str`
-  - The ID of the entry in the list.
-  - Used as `collaboration_whitelist_entry_id` in path `path` of the API call
-- headers `GetCollaborationWhitelistEntryByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the entry in the list. Example: "213123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -97,10 +106,9 @@ See the endpoint docs at
 ### Arguments
 
 - collaboration_whitelist_entry_id `str`
-  - The ID of the entry in the list.
-  - Used as `collaboration_whitelist_entry_id` in path `path` of the API call
-- headers `DeleteCollaborationWhitelistEntryByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the entry in the list. Example: "213123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

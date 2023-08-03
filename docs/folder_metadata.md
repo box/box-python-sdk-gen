@@ -1,9 +1,15 @@
 # FolderMetadataManager
 
+
+- [List metadata instances on folder](#list-metadata-instances-on-folder)
+- [Get metadata instance on folder](#get-metadata-instance-on-folder)
+- [Create metadata instance on folder](#create-metadata-instance-on-folder)
+- [Remove metadata instance from folder](#remove-metadata-instance-from-folder)
+
 ## List metadata instances on folder
 
 Retrieves all metadata for a given folder. This can not be used on the root
-folder with ID &#x60;0&#x60;.
+folder with ID `0`.
 
 This operation is performed by calling function `get_folder_metadata`.
 
@@ -15,10 +21,9 @@ See the endpoint docs at
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
-  - Used as `folder_id` in path `path` of the API call
-- headers `GetFolderMetadataHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -34,7 +39,7 @@ all of the metadata associated to the folder.
 ## Get metadata instance on folder
 
 Retrieves the instance of a metadata template that has been applied to a
-folder. This can not be used on the root folder with ID &#x60;0&#x60;.
+folder. This can not be used on the root folder with ID `0`.
 
 This operation is performed by calling function `get_folder_metadata_by_id`.
 
@@ -46,16 +51,13 @@ See the endpoint docs at
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
-  - Used as `folder_id` in path `path` of the API call
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `GetFolderMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `GetFolderMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -63,7 +65,7 @@ See the endpoint docs at
 This function returns a value of type `Metadata`.
 
 An instance of the metadata template that includes
-additional &quot;key:value&quot; pairs defined by the user or
+additional "key:value" pairs defined by the user or
 an application.
 
 
@@ -72,7 +74,7 @@ an application.
 Applies an instance of a metadata template to a folder.
 
 In most cases only values that are present in the metadata template
-will be accepted, except for the &#x60;global.properties&#x60; template which accepts
+will be accepted, except for the `global.properties` template which accepts
 any key-value pair.
 
 To display the metadata template in the Box web app the enterprise needs to be
@@ -89,18 +91,13 @@ See the endpoint docs at
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
-  - Used as `folder_id` in path `path` of the API call
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `CreateFolderMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- request_body `CreateFolderMetadataByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateFolderMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -125,16 +122,13 @@ See the endpoint docs at
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.  The root folder of a Box account is always represented by the ID &#x60;0&#x60;.
-  - Used as `folder_id` in path `path` of the API call
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `DeleteFolderMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `DeleteFolderMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

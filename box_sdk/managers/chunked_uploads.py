@@ -40,7 +40,7 @@ class ChunkedUploadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_file_upload_session(self, folder_id: str, file_size: int, file_name: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadSession:
+    def create_file_upload_session(self, folder_id: str, file_size: int, file_name: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadSession:
         """
         Creates an upload session for a new file.
         :param folder_id: The ID of the folder to upload the new file to.
@@ -49,14 +49,16 @@ class ChunkedUploadsManager:
         :type file_size: int
         :param file_name: The name of new file
         :type file_name: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(folder_id=folder_id, file_size=file_size, file_name=file_name)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
-    def create_file_upload_session_for_existing_file(self, file_id: str, file_size: int, file_name: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadSession:
+    def create_file_upload_session_for_existing_file(self, file_id: str, file_size: int, file_name: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadSession:
         """
         Creates an upload session for an existing file.
         :param file_id: The unique identifier that represents a file.
@@ -71,26 +73,30 @@ class ChunkedUploadsManager:
         :type file_size: int
         :param file_name: The optional new name of new file
         :type file_name: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(file_size=file_size, file_name=file_name)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
-    def get_file_upload_session_by_id(self, upload_session_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadSession:
+    def get_file_upload_session_by_id(self, upload_session_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadSession:
         """
         Return information about an upload session.
         :param upload_session_id: The ID of the upload session.
             Example: "D5E3F7A"
         :type upload_session_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
-    def upload_file_part(self, upload_session_id: str, digest: str, content_range: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadedPart:
+    def upload_file_part(self, upload_session_id: str, digest: str, content_range: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadedPart:
         """
         Updates a chunk of an upload session for a file.
         :param upload_session_id: The ID of the upload session.
@@ -116,14 +122,16 @@ class ChunkedUploadsManager:
               must be a multiple of the part size.
             * The higher bound must be a multiple of the part size - 1.
         :type content_range: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        request_body: BaseObject = BaseObject()
-        headers_map: Dict[str, str] = prepare_params({**{'digest': to_string(digest), 'content-range': to_string(content_range)}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: ByteStream = ByteStream()
+        headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'content-range': to_string(content_range), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=headers_map, body=request_body, content_type='application/octet-stream', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadedPart.from_dict(json.loads(response.text))
-    def delete_file_upload_session_by_id(self, upload_session_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_file_upload_session_by_id(self, upload_session_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Abort an upload session and discard all data uploaded.
         
@@ -132,13 +140,15 @@ class ChunkedUploadsManager:
         :param upload_session_id: The ID of the upload session.
             Example: "D5E3F7A"
         :type upload_session_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def get_file_upload_session_parts(self, upload_session_id: str, offset: Optional[int] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadParts:
+    def get_file_upload_session_parts(self, upload_session_id: str, offset: Optional[int] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadParts:
         """
         Return a list of the chunks uploaded to the upload
         
@@ -154,14 +164,16 @@ class ChunkedUploadsManager:
         :type offset: Optional[int], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'offset': to_string(offset), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadParts.from_dict(json.loads(response.text))
-    def create_file_upload_session_commit(self, upload_session_id: str, parts: List[UploadPart], digest: str, if_match: Optional[str] = None, if_none_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Files:
+    def create_file_upload_session_commit(self, upload_session_id: str, parts: List[UploadPart], digest: str, if_match: Optional[str] = None, if_none_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Files:
         """
         Close an upload session and create a file from the
         
@@ -191,10 +203,12 @@ class ChunkedUploadsManager:
             with a `304 Not Modified` if the item has not
             changed since.
         :type if_none_match: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(parts=parts)
-        headers_map: Dict[str, str] = prepare_params({**{'digest': to_string(digest), 'if-match': to_string(if_match), 'if-none-match': to_string(if_none_match)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'if-match': to_string(if_match), 'if-none-match': to_string(if_none_match), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/commit']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))

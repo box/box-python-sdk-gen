@@ -1,6 +1,11 @@
 # EmailAliasesManager
 
-## List user&#x27;s email aliases
+
+- [List user's email aliases](#list-users-email-aliases)
+- [Create email alias](#create-email-alias)
+- [Remove email alias](#remove-email-alias)
+
+## List user's email aliases
 
 Retrieves all email aliases for a user. The collection
 does not include the primary login for the user.
@@ -15,10 +20,9 @@ See the endpoint docs at
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- headers `GetUserEmailAliasesHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -42,12 +46,11 @@ See the endpoint docs at
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- request_body `CreateUserEmailAliasRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateUserEmailAliasHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- email `str`
+  - The email address to add to the account as an alias.  Note: The domain of the email alias needs to be registered  to your enterprise. See the [domain verification guide](   https://support.box.com/hc/en-us/articles/4408619650579-Domain-Verification   ) for steps to add a new domain.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -71,13 +74,11 @@ See the endpoint docs at
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
+  - The ID of the user. Example: "12345"
 - email_alias_id `str`
-  - The ID of the email alias.
-  - Used as `email_alias_id` in path `path` of the API call
-- headers `DeleteUserEmailAliasByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the email alias. Example: "23432"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

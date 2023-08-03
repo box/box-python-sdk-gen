@@ -1,5 +1,12 @@
 # CommentsManager
 
+
+- [List file comments](#list-file-comments)
+- [Get comment](#get-comment)
+- [Update comment](#update-comment)
+- [Remove comment](#remove-comment)
+- [Create comment](#create-comment)
+
 ## List file comments
 
 Retrieves a list of comments for a file.
@@ -11,18 +18,21 @@ See the endpoint docs at
 
 <!-- sample get_files_id_comments -->
 ```python
-client.comments.get_file_comments(file_id)
+client.comments.get_file_comments(file_id=file_id)
 ```
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- query_params `GetFileCommentsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetFileCommentsHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -45,18 +55,17 @@ See the endpoint docs at
 
 <!-- sample get_comments_id -->
 ```python
-client.comments.get_comment_by_id(new_comment.id)
+client.comments.get_comment_by_id(comment_id=new_comment.id)
 ```
 
 ### Arguments
 
 - comment_id `str`
-  - The ID of the comment.
-  - Used as `comment_id` in path `path` of the API call
-- query_params `GetCommentByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCommentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the comment. Example: "12345"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -77,20 +86,19 @@ See the endpoint docs at
 
 <!-- sample put_comments_id -->
 ```python
-client.comments.update_comment_by_id(new_reply_comment.id, UpdateCommentByIdRequestBodyArg(message&#x3D;new_message))
+client.comments.update_comment_by_id(comment_id=new_reply_comment.id, message=new_message)
 ```
 
 ### Arguments
 
 - comment_id `str`
-  - The ID of the comment.
-  - Used as `comment_id` in path `path` of the API call
-- request_body `UpdateCommentByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `UpdateCommentByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `UpdateCommentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the comment. Example: "12345"
+- message `Optional[str]`
+  - The text of the comment to update
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -111,16 +119,15 @@ See the endpoint docs at
 
 <!-- sample delete_comments_id -->
 ```python
-client.comments.delete_comment_by_id(new_comment.id)
+client.comments.delete_comment_by_id(comment_id=new_comment.id)
 ```
 
 ### Arguments
 
 - comment_id `str`
-  - The ID of the comment.
-  - Used as `comment_id` in path `path` of the API call
-- headers `DeleteCommentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the comment. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -142,17 +149,21 @@ See the endpoint docs at
 
 <!-- sample post_comments -->
 ```python
-client.comments.create_comment(CreateCommentRequestBodyArg(message&#x3D;message, item&#x3D;CreateCommentRequestBodyArgItemField(id&#x3D;new_comment.id, type&#x3D;CreateCommentRequestBodyArgItemFieldTypeField.COMMENT.value)))
+client.comments.create_comment(message=message, item=CreateCommentItemArg(id=new_comment.id, type=CreateCommentItemArgTypeField.COMMENT.value))
 ```
 
 ### Arguments
 
-- request_body `CreateCommentRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `CreateCommentQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `CreateCommentHeadersArg`
-  - Used as headers for the API call
+- message `str`
+  - The text of the comment.  To mention a user, use the `tagged_message` parameter instead.
+- tagged_message `Optional[str]`
+  - The text of the comment, including `@[user_id:name]` somewhere in the message to mention another user, which will send them an email notification, letting them know they have been mentioned.  The `user_id` is the target user's ID, where the `name` can be any custom phrase. In the Box UI this name will link to the user's profile.  If you are not mentioning another user, use `message` instead.
+- item `Optional[CreateCommentItemArg]`
+  - The item to attach the comment to.
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

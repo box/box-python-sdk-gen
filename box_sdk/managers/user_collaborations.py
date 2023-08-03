@@ -97,7 +97,7 @@ class UserCollaborationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_collaboration_by_id(self, collaboration_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Collaboration:
+    def get_collaboration_by_id(self, collaboration_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaboration:
         """
         Retrieves a single collaboration.
         :param collaboration_id: The ID of the collaboration
@@ -112,14 +112,16 @@ class UserCollaborationsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))
-    def update_collaboration_by_id(self, collaboration_id: str, role: UpdateCollaborationByIdRoleArg, status: Optional[UpdateCollaborationByIdStatusArg] = None, expires_at: Optional[str] = None, can_view_path: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Collaboration:
+    def update_collaboration_by_id(self, collaboration_id: str, role: UpdateCollaborationByIdRoleArg, status: Optional[UpdateCollaborationByIdStatusArg] = None, expires_at: Optional[str] = None, can_view_path: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaboration:
         """
         Updates a collaboration.
         
@@ -160,26 +162,30 @@ class UserCollaborationsManager:
             `true`.
             `can_view_path` can only be used for folder collaborations.
         :type can_view_path: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(role=role, status=status, expires_at=expires_at, can_view_path=can_view_path)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))
-    def delete_collaboration_by_id(self, collaboration_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_collaboration_by_id(self, collaboration_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a single collaboration.
         :param collaboration_id: The ID of the collaboration
             Example: "1234"
         :type collaboration_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def create_collaboration(self, item: CreateCollaborationItemArg, accessible_by: CreateCollaborationAccessibleByArg, role: CreateCollaborationRoleArg, can_view_path: Optional[bool] = None, expires_at: Optional[str] = None, fields: Optional[str] = None, notify: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Collaboration:
+    def create_collaboration(self, item: CreateCollaborationItemArg, accessible_by: CreateCollaborationAccessibleByArg, role: CreateCollaborationRoleArg, can_view_path: Optional[bool] = None, expires_at: Optional[str] = None, fields: Optional[str] = None, notify: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaboration:
         """
         Adds a collaboration for a single user or a single group to a file
         
@@ -250,11 +256,13 @@ class UserCollaborationsManager:
         :param notify: Determines if users should receive email notification
             for the action performed.
         :type notify: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(item=item, accessible_by=accessible_by, role=role, can_view_path=can_view_path, expires_at=expires_at)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'notify': to_string(notify)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))

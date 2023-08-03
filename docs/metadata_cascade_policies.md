@@ -1,10 +1,17 @@
 # MetadataCascadePoliciesManager
 
+
+- [List metadata cascade policies](#list-metadata-cascade-policies)
+- [Create metadata cascade policy](#create-metadata-cascade-policy)
+- [Get metadata cascade policy](#get-metadata-cascade-policy)
+- [Remove metadata cascade policy](#remove-metadata-cascade-policy)
+- [Force-apply metadata cascade policy to folder](#force-apply-metadata-cascade-policy-to-folder)
+
 ## List metadata cascade policies
 
 Retrieves a list of all the metadata cascade policies
 that are applied to a given folder. This can not be used on the root
-folder with ID &#x60;0&#x60;.
+folder with ID `0`.
 
 This operation is performed by calling function `get_metadata_cascade_policies`.
 
@@ -15,10 +22,16 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetMetadataCascadePoliciesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetMetadataCascadePoliciesHeadersArg`
-  - Used as headers for the API call
+- folder_id `str`
+  - Specifies which folder to return policies for. This can not be used on the root folder with ID `0`.
+- owner_enterprise_id `Optional[str]`
+  - The ID of the enterprise ID for which to find metadata cascade policies. If not specified, it defaults to the current enterprise.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -46,10 +59,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateMetadataCascadePolicyRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateMetadataCascadePolicyHeadersArg`
-  - Used as headers for the API call
+- folder_id `str`
+  - The ID of the folder to apply the policy to. This folder will need to already have an instance of the targeted metadata template applied to it.
+- scope `CreateMetadataCascadePolicyScopeArg`
+  - The scope of the targeted metadata template. This template will need to already have an instance applied to the targeted folder.
+- template_key `str`
+  - The key of the targeted metadata template. This template will need to already have an instance applied to the targeted folder.  In many cases the template key is automatically derived of its display name, for example `Contract Template` would become `contractTemplate`. In some cases the creator of the template will have provided its own template key.  Please [list the templates for an enterprise][list], or get all instances on a [file][file] or [folder][folder] to inspect a template's key.  [list]: e://get-metadata-templates-enterprise [file]: e://get-files-id-metadata [folder]: e://get-folders-id-metadata
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -73,10 +90,9 @@ See the endpoint docs at
 ### Arguments
 
 - metadata_cascade_policy_id `str`
-  - The ID of the metadata cascade policy.
-  - Used as `metadata_cascade_policy_id` in path `path` of the API call
-- headers `GetMetadataCascadePolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the metadata cascade policy. Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -100,10 +116,9 @@ See the endpoint docs at
 ### Arguments
 
 - metadata_cascade_policy_id `str`
-  - The ID of the metadata cascade policy.
-  - Used as `metadata_cascade_policy_id` in path `path` of the API call
-- headers `DeleteMetadataCascadePolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the metadata cascade policy. Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -131,12 +146,11 @@ See the endpoint docs at
 ### Arguments
 
 - metadata_cascade_policy_id `str`
-  - The ID of the cascade policy to force-apply.
-  - Used as `metadata_cascade_policy_id` in path `path` of the API call
-- request_body `CreateMetadataCascadePolicyApplyRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateMetadataCascadePolicyApplyHeadersArg`
-  - Used as headers for the API call
+  - The ID of the cascade policy to force-apply. Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
+- conflict_resolution `CreateMetadataCascadePolicyApplyConflictResolutionArg`
+  - Describes the desired behavior when dealing with the conflict where a metadata template already has an instance applied to a child.  * `none` will preserve the existing value on the file * `overwrite` will force-apply the templates values over   any existing values.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

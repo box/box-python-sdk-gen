@@ -1,5 +1,10 @@
 # TrashedWebLinksManager
 
+
+- [Restore web link](#restore-web-link)
+- [Get trashed web link](#get-trashed-web-link)
+- [Permanently remove web link](#permanently-remove-web-link)
+
 ## Restore web link
 
 Restores a web link that has been moved to the trash.
@@ -17,14 +22,15 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- request_body `CreateWebLinkByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `CreateWebLinkByIdQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `CreateWebLinkByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- name `Optional[str]`
+  - An optional new name for the web link.
+- parent `Optional[CreateWebLinkByIdParentArg]`
+  - 
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -48,12 +54,11 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- query_params `GetWebLinkTrashQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetWebLinkTrashHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -80,10 +85,9 @@ See the endpoint docs at
 ### Arguments
 
 - web_link_id `str`
-  - The ID of the web link.
-  - Used as `web_link_id` in path `path` of the API call
-- headers `DeleteWebLinkTrashHeadersArg`
-  - Used as headers for the API call
+  - The ID of the web link. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

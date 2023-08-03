@@ -1,5 +1,9 @@
 # FileVersionRetentionsManager
 
+
+- [List file version retentions](#list-file-version-retentions)
+- [Get retention on file](#get-retention-on-file)
+
 ## List file version retentions
 
 Retrieves all file version retentions for the given enterprise.
@@ -13,10 +17,24 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetFileVersionRetentionsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetFileVersionRetentionsHeadersArg`
-  - Used as headers for the API call
+- file_id `Optional[str]`
+  - Filters results by files with this ID.
+- file_version_id `Optional[str]`
+  - Filters results by file versions with this ID.
+- policy_id `Optional[str]`
+  - Filters results by the retention policy with this ID.
+- disposition_action `Optional[GetFileVersionRetentionsDispositionActionArg]`
+  - Filters results by the retention policy with this disposition action.
+- disposition_before `Optional[str]`
+  - Filters results by files that will have their disposition come into effect before this date.
+- disposition_after `Optional[str]`
+  - Filters results by files that will have their disposition come into effect after this date.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +58,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_version_retention_id `str`
-  - The ID of the file version retention
-  - Used as `file_version_retention_id` in path `path` of the API call
-- headers `GetFileVersionRetentionByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the file version retention Example: "3424234"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

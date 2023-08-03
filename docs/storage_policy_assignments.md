@@ -1,5 +1,12 @@
 # StoragePolicyAssignmentsManager
 
+
+- [List storage policy assignments](#list-storage-policy-assignments)
+- [Assign storage policy](#assign-storage-policy)
+- [Get storage policy assignment](#get-storage-policy-assignment)
+- [Update storage policy assignment](#update-storage-policy-assignment)
+- [Unassign storage policy](#unassign-storage-policy)
+
 ## List storage policy assignments
 
 Fetches all the storage policy assignment for an enterprise or user.
@@ -13,10 +20,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetStoragePolicyAssignmentsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetStoragePolicyAssignmentsHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- resolved_for_type `GetStoragePolicyAssignmentsResolvedForTypeArg`
+  - The target type to return assignments for
+- resolved_for_id `str`
+  - The ID of the user or enterprise to return assignments for
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +51,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateStoragePolicyAssignmentRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateStoragePolicyAssignmentHeadersArg`
-  - Used as headers for the API call
+- storage_policy `CreateStoragePolicyAssignmentStoragePolicyArg`
+  - The storage policy to assign to the user or enterprise
+- assigned_to `CreateStoragePolicyAssignmentAssignedToArg`
+  - The user or enterprise to assign the storage policy to.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -67,10 +80,9 @@ See the endpoint docs at
 ### Arguments
 
 - storage_policy_assignment_id `str`
-  - The ID of the storage policy assignment.
-  - Used as `storage_policy_assignment_id` in path `path` of the API call
-- headers `GetStoragePolicyAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the storage policy assignment. Example: "932483"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -94,12 +106,11 @@ See the endpoint docs at
 ### Arguments
 
 - storage_policy_assignment_id `str`
-  - The ID of the storage policy assignment.
-  - Used as `storage_policy_assignment_id` in path `path` of the API call
-- request_body `UpdateStoragePolicyAssignmentByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateStoragePolicyAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the storage policy assignment. Example: "932483"
+- storage_policy `UpdateStoragePolicyAssignmentByIdStoragePolicyArg`
+  - The storage policy to assign to the user or enterprise
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -114,7 +125,7 @@ Returns an updated storage policy assignment object.
 Delete a storage policy assignment.
 
 Deleting a storage policy assignment on a user
-will have the user inherit the enterprise&#x27;s default
+will have the user inherit the enterprise's default
 storage policy.
 
 There is a rate limit for calling this endpoint of only
@@ -130,10 +141,9 @@ See the endpoint docs at
 ### Arguments
 
 - storage_policy_assignment_id `str`
-  - The ID of the storage policy assignment.
-  - Used as `storage_policy_assignment_id` in path `path` of the API call
-- headers `DeleteStoragePolicyAssignmentByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the storage policy assignment. Example: "932483"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

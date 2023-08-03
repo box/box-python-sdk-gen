@@ -1,11 +1,14 @@
 # TransferManager
 
+
+- [Transfer owned folders](#transfer-owned-folders)
+
 ## Transfer owned folders
 
 Move all of the items (files, folders and workflows) owned by a user into
-another user&#x27;s account
+another user's account
 
-Only the root folder (&#x60;0&#x60;) can be transferred.
+Only the root folder (`0`) can be transferred.
 
 Folders can only be moved across users by users with administrative
 permissions.
@@ -24,13 +27,13 @@ asynchronously.
 
 There is currently no way to check for when this operation is finished.
 
-The destination folder&#x27;s name will be in the format &#x60;{User}&#x27;s Files and
-Folders&#x60;, where &#x60;{User}&#x60; is the display name of the user.
+The destination folder's name will be in the format `{User}'s Files and
+Folders`, where `{User}` is the display name of the user.
 
-To make this API call your application will need to have the &quot;Read and write
-all files and folders stored in Box&quot; scope enabled.
+To make this API call your application will need to have the "Read and write
+all files and folders stored in Box" scope enabled.
 
-Please make sure the destination user has access to &#x60;Relay&#x60; or &#x60;Relay Lite&#x60;,
+Please make sure the destination user has access to `Relay` or `Relay Lite`,
 and has access to the files and folders involved in the workflows being
 transferred.
 
@@ -46,14 +49,15 @@ See the endpoint docs at
 ### Arguments
 
 - user_id `str`
-  - The ID of the user.
-  - Used as `user_id` in path `path` of the API call
-- request_body `TransferOwnedFolderRequestBodyArg`
-  - Used as requestBody for the API call
-- query_params `TransferOwnedFolderQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `TransferOwnedFolderHeadersArg`
-  - Used as headers for the API call
+  - The ID of the user. Example: "12345"
+- owned_by `TransferOwnedFolderOwnedByArg`
+  - The user who the folder will be transferred to
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- notify `Optional[bool]`
+  - Determines if users should receive email notification for the action performed.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

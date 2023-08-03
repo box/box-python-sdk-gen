@@ -1,5 +1,10 @@
 # FolderLocksManager
 
+
+- [List folder locks](#list-folder-locks)
+- [Create folder lock](#create-folder-lock)
+- [Delete folder lock](#delete-folder-lock)
+
 ## List folder locks
 
 Retrieves folder lock details for a given folder.
@@ -16,10 +21,10 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetFolderLocksQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetFolderLocksHeadersArg`
-  - Used as headers for the API call
+- folder_id `str`
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -47,10 +52,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateFolderLockRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateFolderLockHeadersArg`
-  - Used as headers for the API call
+- locked_operations `Optional[CreateFolderLockLockedOperationsArg]`
+  - The operations to lock for the folder. If `locked_operations` is included in the request, both `move` and `delete` must also be included and both set to `true`.
+- folder `CreateFolderLockFolderArg`
+  - The folder to apply the lock to.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -78,10 +85,9 @@ See the endpoint docs at
 ### Arguments
 
 - folder_lock_id `str`
-  - The ID of the folder lock.
-  - Used as `folder_lock_id` in path `path` of the API call
-- headers `DeleteFolderLockByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the folder lock. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

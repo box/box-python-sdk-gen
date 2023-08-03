@@ -91,7 +91,7 @@ class UploadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def upload_file_version(self, file_id: str, attributes: UploadFileVersionAttributesArg, file: ByteStream, file_file_name: Optional[str] = None, file_content_type: Optional[str] = None, fields: Optional[str] = None, if_match: Optional[str] = None, content_md_5: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Files:
+    def upload_file_version(self, file_id: str, attributes: UploadFileVersionAttributesArg, file: ByteStream, file_file_name: Optional[str] = None, file_content_type: Optional[str] = None, fields: Optional[str] = None, if_match: Optional[str] = None, content_md_5: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Files:
         """
         Update a file's content. For file sizes over 50MB we recommend
         
@@ -157,15 +157,17 @@ class UploadsManager:
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
         :type content_md_5: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(attributes=attributes, file=file, file_file_name=file_file_name, file_content_type=file_content_type)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{'if-match': to_string(if_match), 'content-md5': to_string(content_md_5)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), 'content-md5': to_string(content_md_5), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', response_format='json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
-    def upload_file(self, attributes: UploadFileAttributesArg, file: ByteStream, file_file_name: Optional[str] = None, file_content_type: Optional[str] = None, fields: Optional[str] = None, content_md_5: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Files:
+    def upload_file(self, attributes: UploadFileAttributesArg, file: ByteStream, file_file_name: Optional[str] = None, file_content_type: Optional[str] = None, fields: Optional[str] = None, content_md_5: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Files:
         """
         Uploads a small file to Box. For file sizes over 50MB we recommend
         
@@ -216,15 +218,17 @@ class UploadsManager:
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
         :type content_md_5: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(attributes=attributes, file=file, file_file_name=file_file_name, file_content_type=file_content_type)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{'content-md5': to_string(content_md_5)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'content-md5': to_string(content_md_5), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/content']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, multipart_data=[MultipartItem(part_name='attributes', body=json.dumps(request_body.attributes.to_dict())), MultipartItem(part_name='file', file_stream=request_body.file, content_type=request_body.file_content_type, file_name=request_body.file_file_name)], content_type='multipart/form-data', response_format='json', auth=self.auth, network_session=self.network_session))
         return Files.from_dict(json.loads(response.text))
-    def preflight_file_upload(self, name: Optional[str] = None, size: Optional[int] = None, parent: Optional[PreflightFileUploadParentArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> UploadUrl:
+    def preflight_file_upload(self, name: Optional[str] = None, size: Optional[int] = None, parent: Optional[PreflightFileUploadParentArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadUrl:
         """
         Performs a check to verify that a file will be accepted by Box
         
@@ -234,10 +238,12 @@ class UploadsManager:
         :type name: Optional[str], optional
         :param size: The size of the file in bytes
         :type size: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(name=name, size=size, parent=parent)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/content']), FetchOptions(method='OPTIONS', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadUrl.from_dict(json.loads(response.text))

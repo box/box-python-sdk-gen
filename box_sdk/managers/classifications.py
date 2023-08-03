@@ -45,7 +45,7 @@ class ClassificationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_metadata_template_enterprise_security_classification_schema(self, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ClassificationTemplate:
+    def get_metadata_template_enterprise_security_classification_schema(self, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ClassificationTemplate:
         """
         Retrieves the classification metadata template and lists all the
         
@@ -60,25 +60,29 @@ class ClassificationsManager:
         
         `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return ClassificationTemplate.from_dict(json.loads(response.text))
-    def delete_metadata_template_enterprise_security_classification_schema(self, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_metadata_template_enterprise_security_classification_schema(self, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Delete all classifications by deleting the classification
         
         metadata template.
 
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def create_metadata_template_schema_classification(self, scope: CreateMetadataTemplateSchemaClassificationScopeArg, display_name: CreateMetadataTemplateSchemaClassificationDisplayNameArg, template_key: Optional[CreateMetadataTemplateSchemaClassificationTemplateKeyArg] = None, hidden: Optional[bool] = None, copy_instance_on_item_copy: Optional[bool] = None, fields: Optional[List] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> ClassificationTemplate:
+    def create_metadata_template_schema_classification(self, scope: CreateMetadataTemplateSchemaClassificationScopeArg, display_name: CreateMetadataTemplateSchemaClassificationDisplayNameArg, template_key: Optional[CreateMetadataTemplateSchemaClassificationTemplateKeyArg] = None, hidden: Optional[bool] = None, copy_instance_on_item_copy: Optional[bool] = None, fields: Optional[List] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ClassificationTemplate:
         """
         When an enterprise does not yet have any classifications, this API call
         
@@ -111,10 +115,12 @@ class ClassificationsManager:
         :param fields: The classification template holds one field, which holds
             all the valid classification values.
         :type fields: Optional[List], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(scope=scope, template_key=template_key, display_name=display_name, hidden=hidden, copy_instance_on_item_copy=copy_instance_on_item_copy, fields=fields)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema#classifications']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return ClassificationTemplate.from_dict(json.loads(response.text))

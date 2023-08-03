@@ -1,10 +1,14 @@
 # CollectionsManager
 
+
+- [List all collections](#list-all-collections)
+- [List collection items](#list-collection-items)
+
 ## List all collections
 
 Retrieves all collections for a given user.
 
-Currently, only the &#x60;favorites&#x60; collection
+Currently, only the `favorites` collection
 is supported.
 
 This operation is performed by calling function `get_collections`.
@@ -16,10 +20,14 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetCollectionsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCollectionsHeadersArg`
-  - Used as headers for the API call
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -44,12 +52,15 @@ See the endpoint docs at
 ### Arguments
 
 - collection_id `str`
-  - The ID of the collection.
-  - Used as `collection_id` in path `path` of the API call
-- query_params `GetCollectionItemsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCollectionItemsHeadersArg`
-  - Used as headers for the API call
+  - The ID of the collection. Example: "926489"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

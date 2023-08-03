@@ -1,5 +1,12 @@
 # LegalHoldPoliciesManager
 
+
+- [List all legal hold policies](#list-all-legal-hold-policies)
+- [Create legal hold policy](#create-legal-hold-policy)
+- [Get legal hold policy](#get-legal-hold-policy)
+- [Update legal hold policy](#update-legal-hold-policy)
+- [Remove legal hold policy](#remove-legal-hold-policy)
+
 ## List all legal hold policies
 
 Retrieves a list of legal hold policies that belong to
@@ -14,10 +21,16 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetLegalHoldPoliciesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetLegalHoldPoliciesHeadersArg`
-  - Used as headers for the API call
+- policy_name `Optional[str]`
+  - Limits results to policies for which the names start with this search term. This is a case-insensitive prefix.
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -40,10 +53,18 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateLegalHoldPolicyRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateLegalHoldPolicyHeadersArg`
-  - Used as headers for the API call
+- policy_name `str`
+  - The name of the policy.
+- description `Optional[str]`
+  - A description for the policy.
+- filter_started_at `Optional[str]`
+  - The filter start date.  When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter.  Required if `is_ongoing` is set to `false`.
+- filter_ended_at `Optional[str]`
+  - The filter end date.  When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter.  Required if `is_ongoing` is set to `false`.
+- is_ongoing `Optional[bool]`
+  - Whether new assignments under this policy should continue applying to files even after initialization.  When this policy is applied using a legal hold assignment, it will continue applying the policy to any new file versions even after it has been applied.  For example, if a legal hold assignment is placed on a user today, and that user uploads a file tomorrow, that file will get held. This will continue until the policy is retired.  Required if no filter dates are set.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -67,10 +88,9 @@ See the endpoint docs at
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy
-  - Used as `legal_hold_policy_id` in path `path` of the API call
-- headers `GetLegalHoldPolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the legal hold policy Example: "324432"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -94,12 +114,15 @@ See the endpoint docs at
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy
-  - Used as `legal_hold_policy_id` in path `path` of the API call
-- request_body `UpdateLegalHoldPolicyByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateLegalHoldPolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the legal hold policy Example: "324432"
+- policy_name `Optional[str]`
+  - The name of the policy.
+- description `Optional[str]`
+  - A description for the policy.
+- release_notes `Optional[str]`
+  - Notes around why the policy was released.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -126,10 +149,9 @@ See the endpoint docs at
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy
-  - Used as `legal_hold_policy_id` in path `path` of the API call
-- headers `DeleteLegalHoldPolicyByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the legal hold policy Example: "324432"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

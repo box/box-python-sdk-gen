@@ -193,7 +193,7 @@ class FoldersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_by_id(self, folder_id: str, fields: Optional[str] = None, sort: Optional[GetFolderByIdSortArg] = None, direction: Optional[GetFolderByIdDirectionArg] = None, offset: Optional[int] = None, limit: Optional[int] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def get_folder_by_id(self, folder_id: str, fields: Optional[str] = None, sort: Optional[GetFolderByIdSortArg] = None, direction: Optional[GetFolderByIdDirectionArg] = None, offset: Optional[int] = None, limit: Optional[int] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Retrieves details for a folder, including the first 100 entries
         
@@ -288,14 +288,16 @@ class FoldersManager:
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'sort': to_string(sort), 'direction': to_string(direction), 'offset': to_string(offset), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Updates a folder. This can be also be used to move the folder,
         
@@ -370,15 +372,17 @@ class FoldersManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(name=name, description=description, sync_state=sync_state, can_non_owners_invite=can_non_owners_invite, parent=parent, shared_link=shared_link, folder_upload_email=folder_upload_email, tags=tags, is_collaboration_restricted_to_enterprise=is_collaboration_restricted_to_enterprise, collections=collections, can_non_owners_view_collaborators=can_non_owners_view_collaborators)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{'if-match': to_string(if_match)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def delete_folder_by_id(self, folder_id: str, recursive: Optional[bool] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_folder_by_id(self, folder_id: str, recursive: Optional[bool] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a folder, either permanently or by moving it to
         
@@ -404,14 +408,16 @@ class FoldersManager:
             with a `412 Precondition Failed` if it
             has changed since.
         :type if_match: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'recursive': to_string(recursive)})
-        headers_map: Dict[str, str] = prepare_params({**{'if-match': to_string(if_match)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params=query_params_map, headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def get_folder_items(self, folder_id: str, fields: Optional[str] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, sort: Optional[GetFolderItemsSortArg] = None, direction: Optional[GetFolderItemsDirectionArg] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> Items:
+    def get_folder_items(self, folder_id: str, fields: Optional[str] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, sort: Optional[GetFolderItemsSortArg] = None, direction: Optional[GetFolderItemsDirectionArg] = None, boxapi: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Items:
         """
         Retrieves a page of items in a folder. These items can be files,
         
@@ -499,14 +505,16 @@ class FoldersManager:
             This header can be used on the file or folder shared, as well as on any files
             or folders nested within the item.
         :type boxapi: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'usemarker': to_string(usemarker), 'marker': to_string(marker), 'offset': to_string(offset), 'limit': to_string(limit), 'sort': to_string(sort), 'direction': to_string(direction)})
-        headers_map: Dict[str, str] = prepare_params({**{'boxapi': to_string(boxapi)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'boxapi': to_string(boxapi), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))
-    def create_folder(self, name: str, parent: CreateFolderParentArg, folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None, sync_state: Optional[CreateFolderSyncStateArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def create_folder(self, name: str, parent: CreateFolderParentArg, folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None, sync_state: Optional[CreateFolderSyncStateArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Creates a new empty folder within the specified parent folder.
         :param name: The name for the new folder.
@@ -532,15 +540,17 @@ class FoldersManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(name=name, parent=parent, folder_upload_email=folder_upload_email, sync_state=sync_state)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def copy_folder(self, folder_id: str, parent: CopyFolderParentArg, name: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def copy_folder(self, folder_id: str, parent: CopyFolderParentArg, name: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Creates a copy of a folder within a destination folder.
         
@@ -574,11 +584,13 @@ class FoldersManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(name=name, parent=parent)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

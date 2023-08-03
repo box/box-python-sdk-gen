@@ -44,7 +44,7 @@ class MetadataCascadePoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_metadata_cascade_policies(self, folder_id: str, owner_enterprise_id: Optional[str] = None, marker: Optional[str] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataCascadePolicies:
+    def get_metadata_cascade_policies(self, folder_id: str, owner_enterprise_id: Optional[str] = None, marker: Optional[str] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicies:
         """
         Retrieves a list of all the metadata cascade policies
         
@@ -69,14 +69,16 @@ class MetadataCascadePoliciesManager:
             exceeding 10000 will be rejected
             with a 400 response.
         :type offset: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'owner_enterprise_id': to_string(owner_enterprise_id), 'marker': to_string(marker), 'offset': to_string(offset)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
-    def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataCascadePolicy:
+    def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicy:
         """
         Creates a new metadata cascade policy that applies a given
         
@@ -111,38 +113,44 @@ class MetadataCascadePoliciesManager:
             [file]: e://get-files-id-metadata
             [folder]: e://get-folders-id-metadata
         :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, template_key=template_key)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataCascadePolicy:
+    def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicy:
         """
         Retrieve a specific metadata cascade policy assigned to a folder.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
             Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
         :type metadata_cascade_policy_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def delete_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Deletes a metadata cascade policy.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
             Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
         :type metadata_cascade_policy_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def create_metadata_cascade_policy_apply(self, metadata_cascade_policy_id: str, conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def create_metadata_cascade_policy_apply(self, metadata_cascade_policy_id: str, conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Force the metadata on a folder with a metadata cascade policy to be applied to
         
@@ -164,10 +172,12 @@ class MetadataCascadePoliciesManager:
             * `overwrite` will force-apply the templates values over
               any existing values.
         :type conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(conflict_resolution=conflict_resolution)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format=None, auth=self.auth, network_session=self.network_session))
         return None

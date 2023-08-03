@@ -1,5 +1,11 @@
 # CollaborationAllowlistExemptTargetsManager
 
+
+- [List users exempt from collaboration domain restrictions](#list-users-exempt-from-collaboration-domain-restrictions)
+- [Create user exemption from collaboration domain restrictions](#create-user-exemption-from-collaboration-domain-restrictions)
+- [Get user exempt from collaboration domain restrictions](#get-user-exempt-from-collaboration-domain-restrictions)
+- [Remove user from list of users exempt from domain restrictions](#remove-user-from-list-of-users-exempt-from-domain-restrictions)
+
 ## List users exempt from collaboration domain restrictions
 
 Returns a list of users who have been exempt from the collaboration
@@ -14,10 +20,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetCollaborationWhitelistExemptTargetsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCollaborationWhitelistExemptTargetsHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -41,10 +49,10 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateCollaborationWhitelistExemptTargetRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateCollaborationWhitelistExemptTargetHeadersArg`
-  - Used as headers for the API call
+- user `CreateCollaborationWhitelistExemptTargetUserArg`
+  - The user to exempt.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -69,22 +77,21 @@ See the endpoint docs at
 ### Arguments
 
 - collaboration_whitelist_exempt_target_id `str`
-  - The ID of the exemption to the list.
-  - Used as `collaboration_whitelist_exempt_target_id` in path `path` of the API call
-- headers `GetCollaborationWhitelistExemptTargetByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the exemption to the list. Example: "984923"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistExemptTarget`.
 
-Returns the user&#x27;s exempted from the list of collaboration domains.
+Returns the user's exempted from the list of collaboration domains.
 
 
 ## Remove user from list of users exempt from domain restrictions
 
-Removes a user&#x27;s exemption from the restrictions set out by the allowed list
+Removes a user's exemption from the restrictions set out by the allowed list
 of domains for collaborations.
 
 This operation is performed by calling function `delete_collaboration_whitelist_exempt_target_by_id`.
@@ -97,10 +104,9 @@ See the endpoint docs at
 ### Arguments
 
 - collaboration_whitelist_exempt_target_id `str`
-  - The ID of the exemption to the list.
-  - Used as `collaboration_whitelist_exempt_target_id` in path `path` of the API call
-- headers `DeleteCollaborationWhitelistExemptTargetByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the exemption to the list. Example: "984923"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

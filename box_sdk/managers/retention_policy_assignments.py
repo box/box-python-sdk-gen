@@ -64,7 +64,7 @@ class RetentionPolicyAssignmentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_retention_policy_assignments(self, retention_policy_id: str, type: Optional[GetRetentionPolicyAssignmentsTypeArg] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> RetentionPolicyAssignments:
+    def get_retention_policy_assignments(self, retention_policy_id: str, type: Optional[GetRetentionPolicyAssignmentsTypeArg] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicyAssignments:
         """
         Returns a list of all retention policy assignments associated with a specified
         
@@ -89,14 +89,16 @@ class RetentionPolicyAssignmentsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'type': to_string(type), 'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignments.from_dict(json.loads(response.text))
-    def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List] = None, start_date_field: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> RetentionPolicyAssignment:
+    def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List] = None, start_date_field: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicyAssignment:
         """
         Assigns a retention policy to an item.
         :param policy_id: The ID of the retention policy to assign
@@ -112,14 +114,16 @@ class RetentionPolicyAssignmentsManager:
             If the `assigned_to` type is `metadata_template`,
             this field can be a date field's metadata attribute key id.
         :type start_date_field: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(policy_id=policy_id, assign_to=assign_to, filter_fields=filter_fields, start_date_field=start_date_field)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
-    def get_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> RetentionPolicyAssignment:
+    def get_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicyAssignment:
         """
         Retrieves a retention policy assignment
         :param retention_policy_assignment_id: The ID of the retention policy assignment.
@@ -134,14 +138,16 @@ class RetentionPolicyAssignmentsManager:
             fields for the mini representation are returned, additional
             to the fields requested.
         :type fields: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignment.from_dict(json.loads(response.text))
-    def delete_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_retention_policy_assignment_by_id(self, retention_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Removes a retention policy assignment
         
@@ -150,13 +156,15 @@ class RetentionPolicyAssignmentsManager:
         :param retention_policy_assignment_id: The ID of the retention policy assignment.
             Example: "1233123"
         :type retention_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def get_retention_policy_assignment_file_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FilesUnderRetention:
+    def get_retention_policy_assignment_file_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FilesUnderRetention:
         """
         Returns a list of files under retention for a retention policy assignment.
         :param retention_policy_assignment_id: The ID of the retention policy assignment.
@@ -168,14 +176,16 @@ class RetentionPolicyAssignmentsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/files_under_retention']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))
-    def get_retention_policy_assignment_file_version_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FilesUnderRetention:
+    def get_retention_policy_assignment_file_version_under_retention(self, retention_policy_assignment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FilesUnderRetention:
         """
         Returns a list of file versions under retention for a retention policy
         
@@ -190,10 +200,12 @@ class RetentionPolicyAssignmentsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policy_assignments/', retention_policy_assignment_id, '/file_versions_under_retention']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FilesUnderRetention.from_dict(json.loads(response.text))

@@ -1,5 +1,10 @@
 # DevicePinnersManager
 
+
+- [Get device pin](#get-device-pin)
+- [Remove device pin](#remove-device-pin)
+- [List enterprise device pins](#list-enterprise-device-pins)
+
 ## Get device pin
 
 Retrieves information about an individual device pin.
@@ -14,10 +19,9 @@ See the endpoint docs at
 ### Arguments
 
 - device_pinner_id `str`
-  - The ID of the device pin
-  - Used as `device_pinner_id` in path `path` of the API call
-- headers `GetDevicePinnerByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the device pin Example: "2324234"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -41,10 +45,9 @@ See the endpoint docs at
 ### Arguments
 
 - device_pinner_id `str`
-  - The ID of the device pin
-  - Used as `device_pinner_id` in path `path` of the API call
-- headers `DeleteDevicePinnerByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the device pin Example: "2324234"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -59,7 +62,7 @@ Returns an empty response when the pin has been deleted.
 Retrieves all the device pins within an enterprise.
 
 The user must have admin privileges, and the application
-needs the &quot;manage enterprise&quot; scope to make this call.
+needs the "manage enterprise" scope to make this call.
 
 This operation is performed by calling function `get_enterprise_device_pinners`.
 
@@ -71,12 +74,15 @@ See the endpoint docs at
 ### Arguments
 
 - enterprise_id `str`
-  - The ID of the enterprise
-  - Used as `enterprise_id` in path `path` of the API call
-- query_params `GetEnterpriseDevicePinnersQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetEnterpriseDevicePinnersHeadersArg`
-  - Used as headers for the API call
+  - The ID of the enterprise Example: "3442311"
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- direction `Optional[GetEnterpriseDevicePinnersDirectionArg]`
+  - The direction to sort results in. This can be either in alphabetical ascending (`ASC`) or descending (`DESC`) order.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

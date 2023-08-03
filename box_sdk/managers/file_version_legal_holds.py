@@ -30,7 +30,7 @@ class FileVersionLegalHoldsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_file_version_legal_hold_by_id(self, file_version_legal_hold_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionLegalHold:
+    def get_file_version_legal_hold_by_id(self, file_version_legal_hold_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersionLegalHold:
         """
         Retrieves information about the legal hold policies
         
@@ -39,13 +39,15 @@ class FileVersionLegalHoldsManager:
         :param file_version_legal_hold_id: The ID of the file version legal hold
             Example: "2348213"
         :type file_version_legal_hold_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds/', file_version_legal_hold_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHold.from_dict(json.loads(response.text))
-    def get_file_version_legal_holds(self, policy_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FileVersionLegalHolds:
+    def get_file_version_legal_holds(self, policy_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersionLegalHolds:
         """
         Get a list of file versions on legal hold for a legal hold
         
@@ -99,10 +101,12 @@ class FileVersionLegalHoldsManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'policy_id': to_string(policy_id), 'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHolds.from_dict(json.loads(response.text))

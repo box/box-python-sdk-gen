@@ -1,5 +1,14 @@
 # MetadataTemplatesManager
 
+
+- [Find metadata template by instance ID](#find-metadata-template-by-instance-id)
+- [Get metadata template by name](#get-metadata-template-by-name)
+- [Remove metadata template](#remove-metadata-template)
+- [Get metadata template by ID](#get-metadata-template-by-id)
+- [List all global metadata templates](#list-all-global-metadata-templates)
+- [List all metadata templates for enterprise](#list-all-metadata-templates-for-enterprise)
+- [Create metadata template](#create-metadata-template)
+
 ## Find metadata template by instance ID
 
 Finds a metadata template by searching for the ID of an instance of the
@@ -14,10 +23,10 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetMetadataTemplatesQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetMetadataTemplatesHeadersArg`
-  - Used as headers for the API call
+- metadata_instance_id `str`
+  - The ID of an instance of the metadata template to find.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -30,9 +39,9 @@ instance ID.
 
 ## Get metadata template by name
 
-Retrieves a metadata template by its &#x60;scope&#x60; and &#x60;templateKey&#x60; values.
+Retrieves a metadata template by its `scope` and `templateKey` values.
 
-To find the &#x60;scope&#x60; and &#x60;templateKey&#x60; for a template, list all templates for
+To find the `scope` and `templateKey` for a template, list all templates for
 an enterprise or globally, or list all templates applied to a file or folder.
 
 This operation is performed by calling function `get_metadata_template_schema`.
@@ -45,21 +54,19 @@ See the endpoint docs at
 ### Arguments
 
 - scope `GetMetadataTemplateSchemaScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `GetMetadataTemplateSchemaHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
 
 This function returns a value of type `MetadataTemplate`.
 
-Returns the metadata template matching the &#x60;scope&#x60;
-and &#x60;template&#x60; name.
+Returns the metadata template matching the `scope`
+and `template` name.
 
 
 ## Remove metadata template
@@ -77,13 +84,11 @@ See the endpoint docs at
 ### Arguments
 
 - scope `DeleteMetadataTemplateSchemaScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `DeleteMetadataTemplateSchemaHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -108,10 +113,9 @@ See the endpoint docs at
 ### Arguments
 
 - template_id `str`
-  - The ID of the template
-  - Used as `template_id` in path `path` of the API call
-- headers `GetMetadataTemplateByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the template Example: "f7a9891f"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -135,10 +139,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetMetadataTemplateGlobalQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetMetadataTemplateGlobalHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -152,7 +158,7 @@ and their corresponding schema.
 ## List all metadata templates for enterprise
 
 Used to retrieve all metadata templates created to be used specifically within
-the user&#x27;s enterprise
+the user's enterprise
 
 This operation is performed by calling function `get_metadata_template_enterprise`.
 
@@ -163,10 +169,12 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetMetadataTemplateEnterpriseQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetMetadataTemplateEnterpriseHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -191,10 +199,20 @@ See the endpoint docs at
 
 ### Arguments
 
-- request_body `CreateMetadataTemplateSchemaRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateMetadataTemplateSchemaHeadersArg`
-  - Used as headers for the API call
+- scope `str`
+  - The scope of the metadata template to create. Applications can only create templates for use within the authenticated user's enterprise.  This value needs to be set to `enterprise`, as `global` scopes can not be created by applications.
+- template_key `Optional[str]`
+  - A unique identifier for the template. This identifier needs to be unique across the enterprise for which the metadata template is being created.  When not provided, the API will create a unique `templateKey` based on the value of the `displayName`.
+- display_name `str`
+  - The display name of the template.
+- hidden `Optional[bool]`
+  - Defines if this template is visible in the Box web app UI, or if it is purely intended for usage through the API.
+- fields `Optional[List]`
+  - An ordered list of template fields which are part of the template. Each field can be a regular text field, date field, number field, as well as a single or multi-select list.
+- copy_instance_on_item_copy `Optional[bool]`
+  - Whether or not to copy any metadata attached to a file or folder when it is copied. By default, metadata is not copied along with a file or folder when it is copied.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

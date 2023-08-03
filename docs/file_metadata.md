@@ -1,5 +1,11 @@
 # FileMetadataManager
 
+
+- [List metadata instances on file](#list-metadata-instances-on-file)
+- [Get metadata instance on file](#get-metadata-instance-on-file)
+- [Create metadata instance on file](#create-metadata-instance-on-file)
+- [Remove metadata instance from file](#remove-metadata-instance-from-file)
+
 ## List metadata instances on file
 
 Retrieves all metadata for a given file.
@@ -14,10 +20,9 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- headers `GetFileMetadataHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -45,16 +50,13 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - scope `GetFileMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `GetFileMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -62,7 +64,7 @@ See the endpoint docs at
 This function returns a value of type `MetadataFull`.
 
 An instance of the metadata template that includes
-additional &quot;key:value&quot; pairs defined by the user or
+additional "key:value" pairs defined by the user or
 an application.
 
 
@@ -71,7 +73,7 @@ an application.
 Applies an instance of a metadata template to a file.
 
 In most cases only values that are present in the metadata template
-will be accepted, except for the &#x60;global.properties&#x60; template which accepts
+will be accepted, except for the `global.properties` template which accepts
 any key-value pair.
 
 This operation is performed by calling function `create_file_metadata_by_id`.
@@ -84,18 +86,13 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - scope `CreateFileMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- request_body `CreateFileMetadataByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateFileMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -120,16 +117,13 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - scope `DeleteFileMetadataByIdScopeArg`
-  - The scope of the metadata template
-  - Used as `scope` in path `path` of the API call
+  - The scope of the metadata template Example: "global"
 - template_key `str`
-  - The name of the metadata template
-  - Used as `template_key` in path `path` of the API call
-- headers `DeleteFileMetadataByIdHeadersArg`
-  - Used as headers for the API call
+  - The name of the metadata template Example: "properties"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

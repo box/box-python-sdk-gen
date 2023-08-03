@@ -1,5 +1,12 @@
 # WebhooksManager
 
+
+- [List all webhooks](#list-all-webhooks)
+- [Create webhook](#create-webhook)
+- [Get webhook](#get-webhook)
+- [Update webhook](#update-webhook)
+- [Remove webhook](#remove-webhook)
+
 ## List all webhooks
 
 Returns all defined webhooks for the requesting application.
@@ -21,10 +28,12 @@ client.webhooks.get_webhooks()
 
 ### Arguments
 
-- query_params `GetWebhooksQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetWebhooksHeadersArg`
-  - Used as headers for the API call
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -45,15 +54,19 @@ See the endpoint docs at
 
 <!-- sample post_webhooks -->
 ```python
-client.webhooks.create_webhook(CreateWebhookRequestBodyArg(target&#x3D;CreateWebhookRequestBodyArgTargetField(id&#x3D;folder.id, type&#x3D;CreateWebhookRequestBodyArgTargetFieldTypeField.FOLDER.value), address&#x3D;&#x27;https://example.com/new-webhook&#x27;, triggers&#x3D;[&#x27;FILE.UPLOADED&#x27;]))
+client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=['FILE.UPLOADED'])
 ```
 
 ### Arguments
 
-- request_body `CreateWebhookRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `CreateWebhookHeadersArg`
-  - Used as headers for the API call
+- target `CreateWebhookTargetArg`
+  - The item that will trigger the webhook
+- address `str`
+  - The URL that is notified by this webhook
+- triggers `List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]`
+  - An array of event names that this webhook is to be triggered for
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -74,16 +87,15 @@ See the endpoint docs at
 
 <!-- sample get_webhooks_id -->
 ```python
-client.webhooks.get_webhook_by_id(webhook.id)
+client.webhooks.get_webhook_by_id(webhook_id=webhook.id)
 ```
 
 ### Arguments
 
 - webhook_id `str`
-  - The ID of the webhook.
-  - Used as `webhook_id` in path `path` of the API call
-- headers `GetWebhookByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the webhook. Example: "3321123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -104,18 +116,21 @@ See the endpoint docs at
 
 <!-- sample put_webhooks_id -->
 ```python
-client.webhooks.update_webhook_by_id(webhook.id, UpdateWebhookByIdRequestBodyArg(address&#x3D;&#x27;https://example.com/updated-webhook&#x27;))
+client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://example.com/updated-webhook')
 ```
 
 ### Arguments
 
 - webhook_id `str`
-  - The ID of the webhook.
-  - Used as `webhook_id` in path `path` of the API call
-- request_body `UpdateWebhookByIdRequestBodyArg`
-  - Used as requestBody for the API call
-- headers `UpdateWebhookByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the webhook. Example: "3321123"
+- target `Optional[UpdateWebhookByIdTargetArg]`
+  - The item that will trigger the webhook
+- address `Optional[str]`
+  - The URL that is notified by this webhook
+- triggers `Optional[List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]]`
+  - An array of event names that this webhook is to be triggered for
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -136,16 +151,15 @@ See the endpoint docs at
 
 <!-- sample delete_webhooks_id -->
 ```python
-client.webhooks.delete_webhook_by_id(webhook.id)
+client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
 ```
 
 ### Arguments
 
 - webhook_id `str`
-  - The ID of the webhook.
-  - Used as `webhook_id` in path `path` of the API call
-- headers `DeleteWebhookByIdHeadersArg`
-  - Used as headers for the API call
+  - The ID of the webhook. Example: "3321123"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns

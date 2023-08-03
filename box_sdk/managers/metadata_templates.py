@@ -46,7 +46,7 @@ class MetadataTemplatesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_metadata_templates(self, metadata_instance_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplates:
+    def get_metadata_templates(self, metadata_instance_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplates:
         """
         Finds a metadata template by searching for the ID of an instance of the
         
@@ -54,14 +54,16 @@ class MetadataTemplatesManager:
 
         :param metadata_instance_id: The ID of an instance of the metadata template to find.
         :type metadata_instance_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'metadata_instance_id': to_string(metadata_instance_id)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def get_metadata_template_schema(self, scope: GetMetadataTemplateSchemaScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplate:
+    def get_metadata_template_schema(self, scope: GetMetadataTemplateSchemaScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplate:
         """
         Retrieves a metadata template by its `scope` and `templateKey` values.
         
@@ -76,13 +78,15 @@ class MetadataTemplatesManager:
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
-    def delete_metadata_template_schema(self, scope: DeleteMetadataTemplateSchemaScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_metadata_template_schema(self, scope: DeleteMetadataTemplateSchemaScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Delete a metadata template and its instances.
         
@@ -94,25 +98,29 @@ class MetadataTemplatesManager:
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def get_metadata_template_by_id(self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplate:
+    def get_metadata_template_by_id(self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplate:
         """
         Retrieves a metadata template by its ID.
         :param template_id: The ID of the template
             Example: "f7a9891f"
         :type template_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', template_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
-    def get_metadata_template_global(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplates:
+    def get_metadata_template_global(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplates:
         """
         Used to retrieve all generic, global metadata templates available to all
         
@@ -124,14 +132,16 @@ class MetadataTemplatesManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/global']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def get_metadata_template_enterprise(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplates:
+    def get_metadata_template_enterprise(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplates:
         """
         Used to retrieve all metadata templates created to be used specifically within
         
@@ -143,14 +153,16 @@ class MetadataTemplatesManager:
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
-    def create_metadata_template_schema(self, scope: str, display_name: str, template_key: Optional[str] = None, hidden: Optional[bool] = None, fields: Optional[List] = None, copy_instance_on_item_copy: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> MetadataTemplate:
+    def create_metadata_template_schema(self, scope: str, display_name: str, template_key: Optional[str] = None, hidden: Optional[bool] = None, fields: Optional[List] = None, copy_instance_on_item_copy: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataTemplate:
         """
         Creates a new metadata template that can be applied to
         
@@ -181,10 +193,12 @@ class MetadataTemplatesManager:
             when it is copied. By default, metadata is not copied along with a
             file or folder when it is copied.
         :type copy_instance_on_item_copy: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(scope=scope, template_key=template_key, display_name=display_name, hidden=hidden, fields=fields, copy_instance_on_item_copy=copy_instance_on_item_copy)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/schema']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))

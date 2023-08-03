@@ -168,7 +168,7 @@ class SharedLinksFoldersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_shared_item_folders(self, boxapi: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def get_shared_item_folders(self, boxapi: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Return the folder represented by a shared link.
         
@@ -203,14 +203,16 @@ class SharedLinksFoldersManager:
             with a `304 Not Modified` if the item has not
             changed since.
         :type if_none_match: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi)}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items#folders']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def get_folder_get_shared_link(self, folder_id: str, fields: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def get_folder_get_shared_link(self, folder_id: str, fields: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Gets the information for a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -226,14 +228,16 @@ class SharedLinksFoldersManager:
         :param fields: Explicitly request the `shared_link` fields
             to be returned for this item.
         :type fields: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#get_shared_link']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_add_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def update_folder_add_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Adds a shared link to a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -253,15 +257,17 @@ class SharedLinksFoldersManager:
             Use an empty object (`{}`) to use the default settings for shared
             links.
         :type shared_link: Optional[UpdateFolderAddSharedLinkSharedLinkArg], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#add_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_update_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def update_folder_update_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Updates a shared link on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -279,15 +285,17 @@ class SharedLinksFoldersManager:
         :type fields: str
         :param shared_link: The settings for the shared link to update.
         :type shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLinkArg], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#update_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_remove_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> FolderFull:
+    def update_folder_remove_shared_link(self, folder_id: str, fields: str, shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Removes a shared link from a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -306,11 +314,13 @@ class SharedLinksFoldersManager:
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the folder.
         :type shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLinkArg], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(shared_link=shared_link)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '#remove_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))

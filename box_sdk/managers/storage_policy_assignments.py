@@ -86,7 +86,7 @@ class StoragePolicyAssignmentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicyAssignments:
+    def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignments:
         """
         Fetches all the storage policy assignment for an enterprise or user.
         :param resolved_for_type: The target type to return assignments for
@@ -97,14 +97,16 @@ class StoragePolicyAssignmentsManager:
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'resolved_for_type': to_string(resolved_for_type), 'resolved_for_id': to_string(resolved_for_id)})
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignments.from_dict(json.loads(response.text))
-    def create_storage_policy_assignment(self, storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg, assigned_to: CreateStoragePolicyAssignmentAssignedToArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicyAssignment:
+    def create_storage_policy_assignment(self, storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg, assigned_to: CreateStoragePolicyAssignmentAssignedToArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
         :param storage_policy: The storage policy to assign to the user or
@@ -113,26 +115,30 @@ class StoragePolicyAssignmentsManager:
         :param assigned_to: The user or enterprise to assign the storage
             policy to.
         :type assigned_to: CreateStoragePolicyAssignmentAssignedToArg
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(storage_policy=storage_policy, assigned_to=assigned_to)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicyAssignment:
+    def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
         Fetches a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def update_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> StoragePolicyAssignment:
+    def update_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
         Updates a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
@@ -141,14 +147,16 @@ class StoragePolicyAssignmentsManager:
         :param storage_policy: The storage policy to assign to the user or
             enterprise
         :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
+        if extra_headers is None:
+            extra_headers = {}
         request_body: BaseObject = BaseObject(storage_policy=storage_policy)
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
-    def delete_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = {}) -> None:
+    def delete_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Delete a storage policy assignment.
         
@@ -169,9 +177,11 @@ class StoragePolicyAssignmentsManager:
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to {}
-        :type extra_headers: Optional[Dict[str, Optional[str]]]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
-        headers_map: Dict[str, str] = prepare_params({**{}, **extra_headers})
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policy_assignments/', storage_policy_assignment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None

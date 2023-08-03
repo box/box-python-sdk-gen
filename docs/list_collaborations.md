@@ -1,5 +1,11 @@
 # ListCollaborationsManager
 
+
+- [List file collaborations](#list-file-collaborations)
+- [List folder collaborations](#list-folder-collaborations)
+- [List pending collaborations](#list-pending-collaborations)
+- [List group collaborations](#list-group-collaborations)
+
 ## List file collaborations
 
 Retrieves a list of pending and active collaborations for a
@@ -16,12 +22,15 @@ See the endpoint docs at
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/files/123&#x60; the &#x60;file_id&#x60; is &#x60;123&#x60;.
-  - Used as `file_id` in path `path` of the API call
-- query_params `GetFileCollaborationsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetFileCollaborationsHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -31,8 +40,8 @@ This function returns a value of type `Collaborations`.
 Returns a collection of collaboration objects. If there are no
 collaborations on this file an empty collection will be returned.
 
-This list includes pending collaborations, for which the &#x60;status&#x60;
-is set to &#x60;pending&#x60;, indicating invitations that have been sent but not
+This list includes pending collaborations, for which the `status`
+is set to `pending`, indicating invitations that have been sent but not
 yet accepted.
 
 
@@ -52,12 +61,11 @@ See the endpoint docs at
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL &#x60;https://*.app.box.com/folder/123&#x60; the &#x60;folder_id&#x60; is &#x60;123&#x60;.
-  - Used as `folder_id` in path `path` of the API call
-- query_params `GetFolderCollaborationsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetFolderCollaborationsHeadersArg`
-  - Used as headers for the API call
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. Example: "12345"
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -67,8 +75,8 @@ This function returns a value of type `Collaborations`.
 Returns a collection of collaboration objects. If there are no
 collaborations on this folder an empty collection will be returned.
 
-This list includes pending collaborations, for which the &#x60;status&#x60;
-is set to &#x60;pending&#x60;, indicating invitations that have been sent but not
+This list includes pending collaborations, for which the `status`
+is set to `pending`, indicating invitations that have been sent but not
 yet accepted.
 
 
@@ -85,10 +93,16 @@ See the endpoint docs at
 
 ### Arguments
 
-- query_params `GetCollaborationsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetCollaborationsHeadersArg`
-  - Used as headers for the API call
+- status `GetCollaborationsStatusArg`
+  - The status of the collaborations to retrieve
+- fields `Optional[str]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
@@ -104,7 +118,7 @@ will be empty.
 ## List group collaborations
 
 Retrieves all the collaborations for a group. The user
-must have admin permissions to inspect enterprise&#x27;s groups.
+must have admin permissions to inspect enterprise's groups.
 
 Each collaboration object has details on which files or
 folders the group has access to and with what role.
@@ -119,12 +133,13 @@ See the endpoint docs at
 ### Arguments
 
 - group_id `str`
-  - The ID of the group.
-  - Used as `group_id` in path `path` of the API call
-- query_params `GetGroupCollaborationsQueryParamsArg`
-  - Used as queryParams for the API call
-- headers `GetGroupCollaborationsHeadersArg`
-  - Used as headers for the API call
+  - The ID of the group. Example: "57645"
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- offset `Optional[int]`
+  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
 
 ### Returns
