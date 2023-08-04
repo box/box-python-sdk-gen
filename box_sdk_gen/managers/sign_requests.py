@@ -40,10 +40,12 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class SignRequestsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def cancel_sign_request(self, sign_request_id: str) -> SignRequest:
         """
         Cancels a sign request.
@@ -53,6 +55,7 @@ class SignRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))
+
     def resend_sign_request(self, sign_request_id: str) -> None:
         """
         Resends a sign request email to all outstanding signers.
@@ -62,6 +65,7 @@ class SignRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']), FetchOptions(method='POST', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_sign_request_by_id(self, sign_request_id: str) -> SignRequest:
         """
         Gets a sign request by ID.
@@ -71,10 +75,11 @@ class SignRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequest.from_dict(json.loads(response.text))
+
     def get_sign_requests(self, marker: Optional[str] = None, limit: Optional[int] = None) -> SignRequests:
         """
         Gets sign requests created by a user. If the `sign_files` and/or
-        
+
         `parent_folder` are deleted, the sign request will not return in the list.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -87,10 +92,11 @@ class SignRequestsManager:
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SignRequests.from_dict(json.loads(response.text))
+
     def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None) -> SignRequest:
         """
         Creates a sign request. This involves preparing a document for signing and
-        
+
         sending the sign request to signers.
 
         :param signers: Array of signers for the sign request. 35 is the

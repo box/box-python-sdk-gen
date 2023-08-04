@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TasksManager](#tasksmanager)
+  - [List tasks on file](#list-tasks-on-file)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create task](#create-task)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get task](#get-task)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update task](#update-task)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Remove task](#remove-task)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TasksManager
 
 ## List tasks on file

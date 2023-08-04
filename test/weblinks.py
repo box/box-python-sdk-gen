@@ -18,6 +18,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_create_get_delete_weblink():
     url: str = 'https://www.box.com'
     parent: FolderFull = client.folders.get_folder_by_id(folder_id='0')

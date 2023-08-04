@@ -30,62 +30,69 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateMetadataTemplateSchemaClassificationScopeArg(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class CreateMetadataTemplateSchemaClassificationTemplateKeyArg(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
+
 class CreateMetadataTemplateSchemaClassificationDisplayNameArg(str, Enum):
     CLASSIFICATION = 'Classification'
+
 
 class ClassificationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_metadata_template_enterprise_security_classification_schema(self) -> ClassificationTemplate:
         """
         Retrieves the classification metadata template and lists all the
-        
+
         classifications available to this enterprise.
 
-        
+
         This API can also be called by including the enterprise ID in the
 
-        
+
         URL explicitly, for example
 
-        
+
         `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return ClassificationTemplate.from_dict(json.loads(response.text))
+
     def delete_metadata_template_enterprise_security_classification_schema(self) -> None:
         """
         Delete all classifications by deleting the classification
-        
+
         metadata template.
 
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema']), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def create_metadata_template_schema_classification(self, scope: CreateMetadataTemplateSchemaClassificationScopeArg, display_name: CreateMetadataTemplateSchemaClassificationDisplayNameArg, template_key: Optional[CreateMetadataTemplateSchemaClassificationTemplateKeyArg] = None, hidden: Optional[bool] = None, copy_instance_on_item_copy: Optional[bool] = None, fields: Optional[List] = None) -> ClassificationTemplate:
         """
         When an enterprise does not yet have any classifications, this API call
-        
+
         initializes the classification template with an initial set of
 
-        
+
         classifications.
 
-        
+
         If an enterprise already has a classification, the template will already
 
-        
+
         exist and instead an API call should be made to add additional
 
-        
+
         classifications.
 
         :param scope: The scope in which to create the classifications. This should

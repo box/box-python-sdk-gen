@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TermsOfServicesManager](#termsofservicesmanager)
+  - [List terms of services](#list-terms-of-services)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create terms of service](#create-terms-of-service)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get terms of service](#get-terms-of-service)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update terms of service](#update-terms-of-service)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TermsOfServicesManager
 
 ## List terms of services

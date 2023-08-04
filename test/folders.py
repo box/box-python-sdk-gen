@@ -24,10 +24,12 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_get_folder_info():
     root_folder: FolderFull = client.folders.get_folder_by_id(folder_id='0')
     assert root_folder.id == '0'
     assert root_folder.name == 'All Files'
+
 
 def test_get_folder_full_info_with_extra_fields():
     root_folder: FolderFull = client.folders.get_folder_by_id(folder_id='0', fields='has_collaborations,tags')
@@ -35,6 +37,7 @@ def test_get_folder_full_info_with_extra_fields():
     assert root_folder.has_collaborations == False
     tags_length: int = len(root_folder.tags)
     assert tags_length == 0
+
 
 def test_create_and_delete_folder():
     new_folder_name: str = get_uuid()
@@ -45,6 +48,7 @@ def test_create_and_delete_folder():
     with pytest.raises(Exception):
         client.folders.get_folder_by_id(folder_id=new_folder.id)
 
+
 def test_update_folder():
     folder_to_update_name: str = get_uuid()
     folder_to_update: FolderFull = client.folders.create_folder(name=folder_to_update_name, parent=CreateFolderParentArg(id='0'))
@@ -53,6 +57,7 @@ def test_update_folder():
     assert updated_folder.name == updated_name
     assert updated_folder.description == 'Updated description'
     client.folders.delete_folder_by_id(folder_id=updated_folder.id)
+
 
 def test_copy_move_folder_and_list_folder_items():
     folder_origin_name: str = get_uuid()

@@ -28,14 +28,17 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetEnterpriseDevicePinnersDirectionArg(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class DevicePinnersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_device_pinner_by_id(self, device_pinner_id: str) -> DevicePinner:
         """
         Retrieves information about an individual device pin.
@@ -45,6 +48,7 @@ class DevicePinnersManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return DevicePinner.from_dict(json.loads(response.text))
+
     def delete_device_pinner_by_id(self, device_pinner_id: str) -> None:
         """
         Deletes an individual device pin.
@@ -54,13 +58,14 @@ class DevicePinnersManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_enterprise_device_pinners(self, enterprise_id: str, marker: Optional[str] = None, limit: Optional[int] = None, direction: Optional[GetEnterpriseDevicePinnersDirectionArg] = None) -> DevicePinners:
         """
         Retrieves all the device pins within an enterprise.
-        
+
         The user must have admin privileges, and the application
 
-        
+
         needs the "manage enterprise" scope to make this call.
 
         :param enterprise_id: The ID of the enterprise

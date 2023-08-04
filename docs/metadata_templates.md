@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MetadataTemplatesManager](#metadatatemplatesmanager)
+  - [Find metadata template by instance ID](#find-metadata-template-by-instance-id)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get metadata template by name](#get-metadata-template-by-name)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Remove metadata template](#remove-metadata-template)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Get metadata template by ID](#get-metadata-template-by-id)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [List all global metadata templates](#list-all-global-metadata-templates)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [List all metadata templates for enterprise](#list-all-metadata-templates-for-enterprise)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+  - [Create metadata template](#create-metadata-template)
+    - [Arguments](#arguments-6)
+    - [Returns](#returns-6)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # MetadataTemplatesManager
 
 ## Find metadata template by instance ID

@@ -16,13 +16,16 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_get_users():
     users: Users = client.users.get_users()
     assert users.total_count >= 0
 
+
 def test_get_user_me():
     current_user: UserFull = client.users.get_user_me()
     assert current_user.type == 'user'
+
 
 def test_create_update_get_delete_user():
     user_name: str = get_uuid()

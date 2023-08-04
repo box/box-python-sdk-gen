@@ -26,38 +26,42 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFolderTrashItemsDirectionArg(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class GetFolderTrashItemsSortArg(str, Enum):
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
+
 class TrashedItemsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_folder_trash_items(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsDirectionArg] = None, sort: Optional[GetFolderTrashItemsSortArg] = None) -> Items:
         """
         Retrieves the files and folders that have been moved
-        
+
         to the trash.
 
-        
+
         Any attribute in the full files or folders objects can be passed
 
-        
+
         in with the `fields` parameter to retrieve those specific
 
-        
+
         attributes that are not returned by default.
 
-        
+
         This endpoint defaults to use offset-based pagination, yet also supports
 
-        
+
         marker-based pagination using the `marker` parameter.
 
         :param fields: A comma-separated list of attributes to include in the

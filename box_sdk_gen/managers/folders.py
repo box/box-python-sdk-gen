@@ -34,20 +34,24 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFolderByIdSortArg(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
+
 class GetFolderByIdDirectionArg(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class UpdateFolderByIdSyncStateArg(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
+
 
 class UpdateFolderByIdParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
@@ -58,10 +62,12 @@ class UpdateFolderByIdParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class UpdateFolderByIdSharedLinkArgAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class UpdateFolderByIdSharedLinkArgPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, **kwargs):
@@ -73,6 +79,7 @@ class UpdateFolderByIdSharedLinkArgPermissionsField(BaseObject):
         """
         super().__init__(**kwargs)
         self.can_download = can_download
+
 
 class UpdateFolderByIdSharedLinkArg(BaseObject):
     def __init__(self, access: Optional[UpdateFolderByIdSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFolderByIdSharedLinkArgPermissionsField] = None, **kwargs):
@@ -112,9 +119,11 @@ class UpdateFolderByIdSharedLinkArg(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class UpdateFolderByIdFolderUploadEmailArgAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
+
 
 class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
     def __init__(self, access: Optional[UpdateFolderByIdFolderUploadEmailArgAccessField] = None, **kwargs):
@@ -134,15 +143,18 @@ class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
         super().__init__(**kwargs)
         self.access = access
 
+
 class GetFolderItemsSortArg(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
+
 class GetFolderItemsDirectionArg(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class CreateFolderParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -153,9 +165,11 @@ class CreateFolderParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class CreateFolderFolderUploadEmailArgAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
+
 
 class CreateFolderFolderUploadEmailArg(BaseObject):
     def __init__(self, access: Optional[CreateFolderFolderUploadEmailArgAccessField] = None, **kwargs):
@@ -175,10 +189,12 @@ class CreateFolderFolderUploadEmailArg(BaseObject):
         super().__init__(**kwargs)
         self.access = access
 
+
 class CreateFolderSyncStateArg(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
+
 
 class CopyFolderParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -189,32 +205,34 @@ class CopyFolderParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class FoldersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_folder_by_id(self, folder_id: str, fields: Optional[str] = None, sort: Optional[GetFolderByIdSortArg] = None, direction: Optional[GetFolderByIdDirectionArg] = None, offset: Optional[int] = None, limit: Optional[int] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None) -> FolderFull:
         """
         Retrieves details for a folder, including the first 100 entries
-        
+
         in the folder.
 
-        
+
         Passing `sort`, `direction`, `offset`, and `limit`
 
-        
+
         parameters in query allows you to manage the
 
-        
+
         list of returned
 
-        
+
         [folder items](r://folder--full#param-item-collection).
 
-        
+
         To fetch more items within the folder, use the
 
-        
+
         [Get items in a folder](#get-folders-id-items) endpoint.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -293,10 +311,11 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
+
     def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None) -> FolderFull:
         """
         Updates a folder. This can be also be used to move the folder,
-        
+
         create shared links, update collaborations, and more.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -374,10 +393,11 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
+
     def delete_folder_by_id(self, folder_id: str, recursive: Optional[bool] = None, if_match: Optional[str] = None) -> None:
         """
         Deletes a folder, either permanently or by moving it to
-        
+
         the trash.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -405,16 +425,17 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='DELETE', params=query_params_map, headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_folder_items(self, folder_id: str, fields: Optional[str] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, sort: Optional[GetFolderItemsSortArg] = None, direction: Optional[GetFolderItemsDirectionArg] = None, boxapi: Optional[str] = None) -> Items:
         """
         Retrieves a page of items in a folder. These items can be files,
-        
+
         folders, and web links.
 
-        
+
         To request more information about the folder itself, like its size,
 
-        
+
         use the [Get a folder](#get-folders-id) endpoint instead.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -498,6 +519,7 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({'boxapi': to_string(boxapi)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Items.from_dict(json.loads(response.text))
+
     def create_folder(self, name: str, parent: CreateFolderParentArg, folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None, sync_state: Optional[CreateFolderSyncStateArg] = None, fields: Optional[str] = None) -> FolderFull:
         """
         Creates a new empty folder within the specified parent folder.
@@ -529,10 +551,11 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
+
     def copy_folder(self, folder_id: str, parent: CopyFolderParentArg, name: Optional[str] = None, fields: Optional[str] = None) -> FolderFull:
         """
         Creates a copy of a folder within a destination folder.
-        
+
         The original folder will not be changed.
 
         :param folder_id: The unique identifier of the folder to copy.

@@ -24,29 +24,32 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetAuthorizeResponseTypeArg(str, Enum):
     CODE = 'code'
+
 
 class AuthorizationManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, redirect_uri: Optional[str] = None, state: Optional[str] = None, scope: Optional[str] = None) -> None:
         """
         Authorize a user by sending them through the [Box](https://box.com)
-        
+
         website and request their permission to act on their behalf.
 
-        
+
         This is the first step when authenticating a user using
 
-        
+
         OAuth 2.0. To request a user's authorization to use the Box APIs
 
-        
+
         on their behalf you will need to send a user to the URL with this
 
-        
+
         format.
 
         :param response_type: The type of response we'd like to receive.

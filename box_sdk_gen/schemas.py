@@ -10,6 +10,7 @@ from typing import Dict
 
 from typing import Union
 
+
 class PostOAuth2TokenGrantTypeField(str, Enum):
     AUTHORIZATION_CODE = 'authorization_code'
     REFRESH_TOKEN = 'refresh_token'
@@ -17,15 +18,19 @@ class PostOAuth2TokenGrantTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE = 'urn:ietf:params:oauth:grant-type:token-exchange'
 
+
 class PostOAuth2TokenSubjectTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
+
 
 class PostOAuth2TokenActorTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ID_TOKEN = 'urn:ietf:params:oauth:token-type:id_token'
 
+
 class PostOAuth2TokenBoxSubjectTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
     USER = 'user'
+
 
 class PostOAuth2Token(BaseObject):
     def __init__(self, grant_type: PostOAuth2TokenGrantTypeField, client_id: Optional[str] = None, client_secret: Optional[str] = None, code: Optional[str] = None, refresh_token: Optional[str] = None, assertion: Optional[str] = None, subject_token: Optional[str] = None, subject_token_type: Optional[PostOAuth2TokenSubjectTokenTypeField] = None, actor_token: Optional[str] = None, actor_token_type: Optional[PostOAuth2TokenActorTokenTypeField] = None, scope: Optional[str] = None, resource: Optional[str] = None, box_subject_type: Optional[PostOAuth2TokenBoxSubjectTypeField] = None, box_subject_id: Optional[str] = None, box_shared_link: Optional[str] = None, **kwargs):
@@ -107,8 +112,10 @@ class PostOAuth2Token(BaseObject):
         self.box_subject_id = box_subject_id
         self.box_shared_link = box_shared_link
 
+
 class PostOAuth2TokenRefreshAccessTokenGrantTypeField(str, Enum):
     REFRESH_TOKEN = 'refresh_token'
+
 
 class PostOAuth2TokenRefreshAccessToken(BaseObject):
     def __init__(self, grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField, client_id: str, client_secret: str, refresh_token: str, **kwargs):
@@ -128,6 +135,7 @@ class PostOAuth2TokenRefreshAccessToken(BaseObject):
         self.client_secret = client_secret
         self.refresh_token = refresh_token
 
+
 class PostOAuth2Revoke(BaseObject):
     def __init__(self, client_id: Optional[str] = None, client_secret: Optional[str] = None, token: Optional[str] = None, **kwargs):
         """
@@ -145,9 +153,11 @@ class PostOAuth2Revoke(BaseObject):
         self.client_secret = client_secret
         self.token = token
 
+
 class ZipDownloadRequestItemsFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER_ = 'folder.'
+
 
 class ZipDownloadRequestItemsField(BaseObject):
     def __init__(self, type: ZipDownloadRequestItemsFieldTypeField, id: str, **kwargs):
@@ -161,6 +171,7 @@ class ZipDownloadRequestItemsField(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
 
 class ZipDownloadRequest(BaseObject):
     def __init__(self, items: List[ZipDownloadRequestItemsField], download_file_name: Optional[str] = None, **kwargs):
@@ -176,13 +187,16 @@ class ZipDownloadRequest(BaseObject):
         self.items = items
         self.download_file_name = download_file_name
 
+
 class MetadataQueryQueryParamsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class MetadataQueryOrderByFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class MetadataQueryOrderByField(BaseObject):
     def __init__(self, field_key: Optional[str] = None, direction: Optional[MetadataQueryOrderByFieldDirectionField] = None, **kwargs):
@@ -200,9 +214,11 @@ class MetadataQueryOrderByField(BaseObject):
         self.field_key = field_key
         self.direction = direction
 
+
 class MetadataQuery(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'from_': 'from', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'from': 'from_', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[MetadataQueryQueryParamsField] = None, order_by: Optional[List[MetadataQueryOrderByField]] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, **kwargs):
         """
         :param from_: Specifies the template used in the query. Must be in the form
@@ -263,9 +279,11 @@ class MetadataQuery(BaseObject):
         self.marker = marker
         self.fields = fields
 
+
 class FileRequestUpdateRequestStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
+
 
 class FileRequestUpdateRequest(BaseObject):
     def __init__(self, title: Optional[str] = None, description: Optional[str] = None, status: Optional[FileRequestUpdateRequestStatusField] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, **kwargs):
@@ -312,8 +330,10 @@ class FileRequestUpdateRequest(BaseObject):
         self.is_description_required = is_description_required
         self.expires_at = expires_at
 
+
 class FileRequestCopyRequestFolderFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class FileRequestCopyRequestFolderField(BaseObject):
     def __init__(self, id: str, type: Optional[FileRequestCopyRequestFolderFieldTypeField] = None, **kwargs):
@@ -327,6 +347,7 @@ class FileRequestCopyRequestFolderField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class FileRequestCopyRequest(FileRequestUpdateRequest):
     def __init__(self, folder: FileRequestCopyRequestFolderField, title: Optional[str] = None, description: Optional[str] = None, status: Optional[FileRequestUpdateRequestStatusField] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, **kwargs):
@@ -370,17 +391,21 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         super().__init__(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at, **kwargs)
         self.folder = folder
 
+
 class IntegrationMappingSlackCreateRequestPartnerItemField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class IntegrationMappingSlackCreateRequestBoxItemField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class IntegrationMappingSlackCreateRequestOptionsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class IntegrationMappingSlackCreateRequest(BaseObject):
     def __init__(self, partner_item: IntegrationMappingSlackCreateRequestPartnerItemField, box_item: IntegrationMappingSlackCreateRequestBoxItemField, options: Optional[IntegrationMappingSlackCreateRequestOptionsField] = None, **kwargs):
@@ -389,8 +414,10 @@ class IntegrationMappingSlackCreateRequest(BaseObject):
         self.box_item = box_item
         self.options = options
 
+
 class ClientErrorTypeField(str, Enum):
     ERROR = 'error'
+
 
 class ClientErrorCodeField(str, Enum):
     CREATED = 'created'
@@ -411,6 +438,7 @@ class ClientErrorCodeField(str, Enum):
     ITEM_NAME_INVALID = 'item_name_invalid'
     INSUFFICIENT_SCOPE = 'insufficient_scope'
 
+
 class ClientErrorContextInfoField(BaseObject):
     def __init__(self, message: Optional[str] = None, **kwargs):
         """
@@ -419,6 +447,7 @@ class ClientErrorContextInfoField(BaseObject):
         """
         super().__init__(**kwargs)
         self.message = message
+
 
 class ClientError(BaseObject):
     def __init__(self, type: Optional[ClientErrorTypeField] = None, status: Optional[int] = None, code: Optional[ClientErrorCodeField] = None, message: Optional[str] = None, context_info: Optional[ClientErrorContextInfoField] = None, help_url: Optional[str] = None, request_id: Optional[str] = None, **kwargs):
@@ -450,6 +479,7 @@ class ClientError(BaseObject):
         self.help_url = help_url
         self.request_id = request_id
 
+
 class OAuth2Error(BaseObject):
     def __init__(self, error: Optional[str] = None, error_description: Optional[str] = None, **kwargs):
         """
@@ -462,12 +492,15 @@ class OAuth2Error(BaseObject):
         self.error = error
         self.error_description = error_description
 
+
 class ClassificationTemplateField(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
+
 
 class Classification(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'box_security_classification_key': 'Box__Security__Classification__Key', 'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', 'type': '$type', 'type_version': '$typeVersion', 'can_edit': '$canEdit', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'Box__Security__Classification__Key': 'box_security_classification_key', '$parent': 'parent', '$template': 'template', '$scope': 'scope', '$version': 'version', '$type': 'type', '$typeVersion': 'type_version', '$canEdit': 'can_edit', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, box_security_classification_key: Optional[str] = None, parent: Optional[str] = None, template: Optional[ClassificationTemplateField] = None, scope: Optional[str] = None, version: Optional[int] = None, type: Optional[str] = None, type_version: Optional[int] = None, can_edit: Optional[bool] = None, **kwargs):
         """
         :param box_security_classification_key: The name of the classification applied to the item.
@@ -505,27 +538,35 @@ class Classification(BaseObject):
         self.type_version = type_version
         self.can_edit = can_edit
 
+
 class ClassificationTemplateTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'
+
 
 class ClassificationTemplateTemplateKeyField(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
+
 class ClassificationTemplateDisplayNameField(str, Enum):
     CLASSIFICATION = 'Classification'
+
 
 class ClassificationTemplateFieldsFieldTypeField(str, Enum):
     ENUM = 'enum'
 
+
 class ClassificationTemplateFieldsFieldKeyField(str, Enum):
     BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
+
 
 class ClassificationTemplateFieldsFieldDisplayNameField(str, Enum):
     CLASSIFICATION = 'Classification'
 
+
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'classification_definition': 'classificationDefinition', 'color_id': 'colorID', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'classificationDefinition': 'classification_definition', 'colorID': 'color_id', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, classification_definition: Optional[str] = None, color_id: Optional[int] = None, **kwargs):
         """
         :param classification_definition: A longer description of the classification.
@@ -549,6 +590,7 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
         self.classification_definition = classification_definition
         self.color_id = color_id
 
+
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject):
     def __init__(self, classification: Optional[ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField] = None, **kwargs):
         """
@@ -563,9 +605,11 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject)
         super().__init__(**kwargs)
         self.classification = classification
 
+
 class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'static_config': 'staticConfig', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'staticConfig': 'static_config', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, id: Optional[str] = None, key: Optional[str] = None, static_config: Optional[ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField] = None, **kwargs):
         """
         :param id: The unique ID of this classification.
@@ -580,9 +624,11 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
         self.key = key
         self.static_config = static_config
 
+
 class ClassificationTemplateFieldsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'display_name': 'displayName', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'displayName': 'display_name', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, id: Optional[str] = None, type: Optional[ClassificationTemplateFieldsFieldTypeField] = None, key: Optional[ClassificationTemplateFieldsFieldKeyField] = None, display_name: Optional[ClassificationTemplateFieldsFieldDisplayNameField] = None, hidden: Optional[bool] = None, options: Optional[List[ClassificationTemplateFieldsFieldOptionsField]] = None, **kwargs):
         """
         :param id: The unique ID of the field.
@@ -606,9 +652,11 @@ class ClassificationTemplateFieldsField(BaseObject):
         self.hidden = hidden
         self.options = options
 
+
 class ClassificationTemplate(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', 'display_name': 'displayName', 'copy_instance_on_item_copy': 'copyInstanceOnItemCopy', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', 'displayName': 'display_name', 'copyInstanceOnItemCopy': 'copy_instance_on_item_copy', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, type: ClassificationTemplateTypeField, id: Optional[str] = None, scope: Optional[str] = None, template_key: Optional[ClassificationTemplateTemplateKeyField] = None, display_name: Optional[ClassificationTemplateDisplayNameField] = None, hidden: Optional[bool] = None, copy_instance_on_item_copy: Optional[bool] = None, fields: Optional[List[ClassificationTemplateFieldsField]] = None, **kwargs):
         """
         :param type: `metadata_template`
@@ -642,16 +690,20 @@ class ClassificationTemplate(BaseObject):
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
         self.fields = fields
 
+
 class CollaborationAllowlistEntryTypeField(str, Enum):
     COLLABORATION_WHITELIST_ENTRY = 'collaboration_whitelist_entry'
+
 
 class CollaborationAllowlistEntryDirectionField(str, Enum):
     INBOUND = 'inbound'
     OUTBOUND = 'outbound'
     BOTH = 'both'
 
+
 class CollaborationAllowlistEntryEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class CollaborationAllowlistEntryEnterpriseField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationAllowlistEntryEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -667,6 +719,7 @@ class CollaborationAllowlistEntryEnterpriseField(BaseObject):
         self.id = id
         self.type = type
         self.name = name
+
 
 class CollaborationAllowlistEntry(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationAllowlistEntryTypeField] = None, domain: Optional[str] = None, direction: Optional[CollaborationAllowlistEntryDirectionField] = None, enterprise: Optional[CollaborationAllowlistEntryEnterpriseField] = None, created_at: Optional[str] = None, **kwargs):
@@ -690,6 +743,7 @@ class CollaborationAllowlistEntry(BaseObject):
         self.enterprise = enterprise
         self.created_at = created_at
 
+
 class CollaborationAllowlistEntries(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[CollaborationAllowlistEntry]] = None, **kwargs):
         """
@@ -710,11 +764,14 @@ class CollaborationAllowlistEntries(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class CollaborationAllowlistExemptTargetTypeField(str, Enum):
     COLLABORATION_WHITELIST = 'collaboration_whitelist'
 
+
 class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -731,8 +788,10 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
         self.type = type
         self.name = name
 
+
 class CollaborationAllowlistExemptTargetUserFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class CollaborationAllowlistExemptTargetUserField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationAllowlistExemptTargetUserFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -748,6 +807,7 @@ class CollaborationAllowlistExemptTargetUserField(BaseObject):
         self.id = id
         self.type = type
         self.name = name
+
 
 class CollaborationAllowlistExemptTarget(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationAllowlistExemptTargetTypeField] = None, enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None, user: Optional[CollaborationAllowlistExemptTargetUserField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
@@ -768,6 +828,7 @@ class CollaborationAllowlistExemptTarget(BaseObject):
         self.user = user
         self.created_at = created_at
         self.modified_at = modified_at
+
 
 class CollaborationAllowlistExemptTargets(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[CollaborationAllowlistExemptTarget]] = None, **kwargs):
@@ -791,14 +852,18 @@ class CollaborationAllowlistExemptTargets(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class CollectionTypeField(str, Enum):
     COLLECTION = 'collection'
+
 
 class CollectionNameField(str, Enum):
     FAVORITES = 'Favorites'
 
+
 class CollectionCollectionTypeField(str, Enum):
     FAVORITES = 'favorites'
+
 
 class Collection(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollectionTypeField] = None, name: Optional[CollectionNameField] = None, collection_type: Optional[CollectionCollectionTypeField] = None, **kwargs):
@@ -820,9 +885,11 @@ class Collection(BaseObject):
         self.name = name
         self.collection_type = collection_type
 
+
 class CollectionsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class CollectionsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[CollectionsOrderFieldDirectionField] = None, **kwargs):
@@ -835,6 +902,7 @@ class CollectionsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Collections(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[CollectionsOrderField]] = None, entries: Optional[List[Collection]] = None, **kwargs):
@@ -868,8 +936,10 @@ class Collections(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class CommentBaseTypeField(str, Enum):
     COMMENT = 'comment'
+
 
 class CommentBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CommentBaseTypeField] = None, **kwargs):
@@ -883,8 +953,10 @@ class CommentBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class EmailAliasTypeField(str, Enum):
     EMAIL_ALIAS = 'email_alias'
+
 
 class EmailAlias(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[EmailAliasTypeField] = None, email: Optional[str] = None, is_confirmed: Optional[bool] = None, **kwargs):
@@ -904,6 +976,7 @@ class EmailAlias(BaseObject):
         self.email = email
         self.is_confirmed = is_confirmed
 
+
 class EmailAliases(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[EmailAlias]] = None, **kwargs):
         """
@@ -916,8 +989,10 @@ class EmailAliases(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class EnterpriseBaseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class EnterpriseBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[EnterpriseBaseTypeField] = None, **kwargs):
@@ -931,8 +1006,10 @@ class EnterpriseBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class FileBaseTypeField(str, Enum):
     FILE = 'file'
+
 
 class FileBase(BaseObject):
     def __init__(self, id: str, type: FileBaseTypeField, etag: Optional[str] = None, **kwargs):
@@ -956,8 +1033,10 @@ class FileBase(BaseObject):
         self.type = type
         self.etag = etag
 
+
 class FileVersionBaseTypeField(str, Enum):
     FILE_VERSION = 'file_version'
+
 
 class FileVersionBase(BaseObject):
     def __init__(self, id: str, type: FileVersionBaseTypeField, **kwargs):
@@ -971,9 +1050,11 @@ class FileVersionBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class FileVersionMini(FileVersionBase):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileVersionBase._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileVersionBase._json_to_fields_mapping}
+
     def __init__(self, id: str, type: FileVersionBaseTypeField, sha_1: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file version.
@@ -986,9 +1067,11 @@ class FileVersionMini(FileVersionBase):
         super().__init__(id=id, type=type, **kwargs)
         self.sha_1 = sha_1
 
+
 class FileMini(FileBase):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **FileBase._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **FileBase._json_to_fields_mapping}
+
     def __init__(self, id: str, type: FileBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file.
@@ -1016,6 +1099,7 @@ class FileMini(FileBase):
         self.sha_1 = sha_1
         self.file_version = file_version
 
+
 class FileScopeScopeField(str, Enum):
     ANNOTATION_EDIT = 'annotation_edit'
     ANNOTATION_VIEW_ALL = 'annotation_view_all'
@@ -1030,6 +1114,7 @@ class FileScopeScopeField(str, Enum):
     ITEM_RENAME = 'item_rename'
     ITEM_SHARE = 'item_share'
 
+
 class FileScope(BaseObject):
     def __init__(self, scope: Optional[FileScopeScopeField] = None, object: Optional[FileMini] = None, **kwargs):
         """
@@ -1040,11 +1125,14 @@ class FileScope(BaseObject):
         self.scope = scope
         self.object = object
 
+
 class AccessTokenTokenTypeField(str, Enum):
     BEARER = 'bearer'
 
+
 class AccessTokenIssuedTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = 'urn:ietf:params:oauth:token-type:access_token'
+
 
 class AccessToken(BaseObject):
     def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[AccessTokenTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, refresh_token: Optional[str] = None, issued_token_type: Optional[AccessTokenIssuedTokenTypeField] = None, **kwargs):
@@ -1074,6 +1162,7 @@ class AccessToken(BaseObject):
         self.refresh_token = refresh_token
         self.issued_token_type = issued_token_type
 
+
 class FilesUnderRetention(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[FileMini]] = None, **kwargs):
         """
@@ -1093,6 +1182,7 @@ class FilesUnderRetention(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class FileConflict(FileMini):
     def __init__(self, id: str, type: FileBaseTypeField, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
@@ -1118,6 +1208,7 @@ class FileConflict(FileMini):
         """
         super().__init__(id=id, type=type, sequence_id=sequence_id, name=name, sha_1=sha_1, file_version=file_version, etag=etag, **kwargs)
 
+
 class ConflictErrorContextInfoField(BaseObject):
     def __init__(self, conflicts: Optional[List[FileConflict]] = None, **kwargs):
         """
@@ -1126,6 +1217,7 @@ class ConflictErrorContextInfoField(BaseObject):
         """
         super().__init__(**kwargs)
         self.conflicts = conflicts
+
 
 class ConflictError(ClientError):
     def __init__(self, type: Optional[ClientErrorTypeField] = None, status: Optional[int] = None, code: Optional[ClientErrorCodeField] = None, message: Optional[str] = None, context_info: Optional[ClientErrorContextInfoField] = None, help_url: Optional[str] = None, request_id: Optional[str] = None, **kwargs):
@@ -1150,8 +1242,10 @@ class ConflictError(ClientError):
         """
         super().__init__(type=type, status=status, code=code, message=message, context_info=context_info, help_url=help_url, request_id=request_id, **kwargs)
 
+
 class FolderBaseTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class FolderBase(BaseObject):
     def __init__(self, id: str, type: FolderBaseTypeField, etag: Optional[str] = None, **kwargs):
@@ -1174,6 +1268,7 @@ class FolderBase(BaseObject):
         self.id = id
         self.type = type
         self.etag = etag
+
 
 class FolderMini(FolderBase):
     def __init__(self, id: str, type: FolderBaseTypeField, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -1210,8 +1305,10 @@ class FolderMini(FolderBase):
         self.name = name
         self.sequence_id = sequence_id
 
+
 class IntegrationMappingBaseIntegrationTypeField(str, Enum):
     SLACK = 'slack'
+
 
 class IntegrationMappingBase(BaseObject):
     def __init__(self, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
@@ -1230,11 +1327,14 @@ class IntegrationMappingBase(BaseObject):
         self.id = id
         self.integration_type = integration_type
 
+
 class IntegrationMappingMiniPartnerItemTypeField(str, Enum):
     CHANNEL = 'channel'
 
+
 class IntegrationMappingMiniBoxItemTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class IntegrationMappingMini(IntegrationMappingBase):
     def __init__(self, partner_item_id: Optional[str] = None, partner_item_type: Optional[IntegrationMappingMiniPartnerItemTypeField] = None, box_item_id: Optional[str] = None, box_item_type: Optional[IntegrationMappingMiniBoxItemTypeField] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
@@ -1263,8 +1363,10 @@ class IntegrationMappingMini(IntegrationMappingBase):
         self.box_item_id = box_item_id
         self.box_item_type = box_item_type
 
+
 class GroupBaseTypeField(str, Enum):
     GROUP = 'group'
+
 
 class GroupBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[GroupBaseTypeField] = None, **kwargs):
@@ -1278,9 +1380,11 @@ class GroupBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class GroupMiniGroupTypeField(str, Enum):
     MANAGED_GROUP = 'managed_group'
     ALL_USERS_GROUP = 'all_users_group'
+
 
 class GroupMini(GroupBase):
     def __init__(self, name: Optional[str] = None, group_type: Optional[GroupMiniGroupTypeField] = None, id: Optional[str] = None, type: Optional[GroupBaseTypeField] = None, **kwargs):
@@ -1298,9 +1402,11 @@ class GroupMini(GroupBase):
         self.name = name
         self.group_type = group_type
 
+
 class GroupsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class GroupsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[GroupsOrderFieldDirectionField] = None, **kwargs):
@@ -1313,6 +1419,7 @@ class GroupsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Groups(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[GroupsOrderField]] = None, entries: Optional[List[GroupMini]] = None, **kwargs):
@@ -1346,6 +1453,7 @@ class Groups(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class Group(GroupMini):
     def __init__(self, created_at: Optional[str] = None, modified_at: Optional[str] = None, name: Optional[str] = None, group_type: Optional[GroupMiniGroupTypeField] = None, id: Optional[str] = None, type: Optional[GroupBaseTypeField] = None, **kwargs):
         """
@@ -1366,15 +1474,18 @@ class Group(GroupMini):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class GroupFullInvitabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
+
 class GroupFullMemberViewabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
+
 
 class GroupFullPermissionsField(BaseObject):
     def __init__(self, can_invite_as_collaborator: Optional[bool] = None, **kwargs):
@@ -1384,6 +1495,7 @@ class GroupFullPermissionsField(BaseObject):
         """
         super().__init__(**kwargs)
         self.can_invite_as_collaborator = can_invite_as_collaborator
+
 
 class GroupFull(Group):
     def __init__(self, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[GroupFullInvitabilityLevelField] = None, member_viewability_level: Optional[GroupFullMemberViewabilityLevelField] = None, permissions: Optional[GroupFullPermissionsField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, name: Optional[str] = None, group_type: Optional[GroupMiniGroupTypeField] = None, id: Optional[str] = None, type: Optional[GroupBaseTypeField] = None, **kwargs):
@@ -1443,8 +1555,10 @@ class GroupFull(Group):
         self.member_viewability_level = member_viewability_level
         self.permissions = permissions
 
+
 class LegalHoldPolicyMiniTypeField(str, Enum):
     LEGAL_HOLD_POLICY = 'legal_hold_policy'
+
 
 class LegalHoldPolicyMini(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[LegalHoldPolicyMiniTypeField] = None, **kwargs):
@@ -1458,8 +1572,10 @@ class LegalHoldPolicyMini(BaseObject):
         self.id = id
         self.type = type
 
+
 class LegalHoldPolicyAssignmentBaseTypeField(str, Enum):
     LEGAL_HOLD_POLICY_ASSIGNMENT = 'legal_hold_policy_assignment'
+
 
 class LegalHoldPolicyAssignmentBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[LegalHoldPolicyAssignmentBaseTypeField] = None, **kwargs):
@@ -1472,6 +1588,7 @@ class LegalHoldPolicyAssignmentBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class LegalHoldPolicyAssignments(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[LegalHoldPolicyAssignmentBase]] = None, **kwargs):
@@ -1494,9 +1611,11 @@ class LegalHoldPolicyAssignments(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class Metadata(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class Metadatas(BaseObject):
     def __init__(self, entries: Optional[List[Metadata]] = None, limit: Optional[int] = None, **kwargs):
@@ -1510,9 +1629,11 @@ class Metadatas(BaseObject):
         self.entries = entries
         self.limit = limit
 
+
 class MetadataFull(Metadata):
     _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'type': '$type', 'type_version': '$typeVersion', **Metadata._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$type': 'type', '$typeVersion': 'type_version', **Metadata._json_to_fields_mapping}
+
     def __init__(self, can_edit: Optional[bool] = None, id: Optional[str] = None, type: Optional[str] = None, type_version: Optional[int] = None, **kwargs):
         """
         :param can_edit: Whether the user can edit this metadata instance.
@@ -1534,9 +1655,11 @@ class MetadataFull(Metadata):
         self.type = type
         self.type_version = type_version
 
+
 class MetadataBase(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'$parent': 'parent', '$template': 'template', '$scope': 'scope', '$version': 'version', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, parent: Optional[str] = None, template: Optional[str] = None, scope: Optional[str] = None, version: Optional[int] = None, **kwargs):
         """
         :param parent: The identifier of the item that this metadata instance
@@ -1560,11 +1683,14 @@ class MetadataBase(BaseObject):
         self.scope = scope
         self.version = version
 
+
 class MetadataCascadePolicyTypeField(str, Enum):
     METADATA_CASCADE_POLICY = 'metadata_cascade_policy'
 
+
 class MetadataCascadePolicyOwnerEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
     def __init__(self, type: Optional[MetadataCascadePolicyOwnerEnterpriseFieldTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -1578,8 +1704,10 @@ class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
         self.type = type
         self.id = id
 
+
 class MetadataCascadePolicyParentFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class MetadataCascadePolicyParentField(BaseObject):
     def __init__(self, type: Optional[MetadataCascadePolicyParentFieldTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -1593,13 +1721,16 @@ class MetadataCascadePolicyParentField(BaseObject):
         self.type = type
         self.id = id
 
+
 class MetadataCascadePolicyScopeField(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE__ = 'enterprise_*'
 
+
 class MetadataCascadePolicy(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, id: Optional[str] = None, type: Optional[MetadataCascadePolicyTypeField] = None, owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField] = None, parent: Optional[MetadataCascadePolicyParentField] = None, scope: Optional[MetadataCascadePolicyScopeField] = None, template_key: Optional[str] = None, **kwargs):
         """
         :param id: The ID of the metadata cascade policy object
@@ -1635,6 +1766,7 @@ class MetadataCascadePolicy(BaseObject):
         self.scope = scope
         self.template_key = template_key
 
+
 class MetadataCascadePolicies(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[MetadataCascadePolicy]] = None, **kwargs):
         """
@@ -1655,14 +1787,17 @@ class MetadataCascadePolicies(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class MetadataQueryIndexStatusField(str, Enum):
     BUILDING = 'building'
     ACTIVE = 'active'
     DISABLED = 'disabled'
 
+
 class MetadataQueryIndexFieldsFieldSortDirectionField(str, Enum):
     ASC = 'asc'
     DESC = 'desc'
+
 
 class MetadataQueryIndexFieldsField(BaseObject):
     def __init__(self, key: Optional[str] = None, sort_direction: Optional[MetadataQueryIndexFieldsFieldSortDirectionField] = None, **kwargs):
@@ -1675,6 +1810,7 @@ class MetadataQueryIndexFieldsField(BaseObject):
         super().__init__(**kwargs)
         self.key = key
         self.sort_direction = sort_direction
+
 
 class MetadataQueryIndex(BaseObject):
     def __init__(self, type: str, status: MetadataQueryIndexStatusField, id: Optional[str] = None, fields: Optional[List[MetadataQueryIndexFieldsField]] = None, **kwargs):
@@ -1694,6 +1830,7 @@ class MetadataQueryIndex(BaseObject):
         self.id = id
         self.fields = fields
 
+
 class MetadataQueryIndices(BaseObject):
     def __init__(self, entries: Optional[List[MetadataQueryIndex]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
         """
@@ -1709,8 +1846,10 @@ class MetadataQueryIndices(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
+
 class MetadataTemplateTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'
+
 
 class MetadataTemplateFieldsFieldTypeField(str, Enum):
     STRING = 'string'
@@ -1718,6 +1857,7 @@ class MetadataTemplateFieldsFieldTypeField(str, Enum):
     DATE = 'date'
     ENUM = 'enum'
     MULTISELECT = 'multiSelect'
+
 
 class MetadataTemplateFieldsFieldOptionsField(BaseObject):
     def __init__(self, key: str, id: Optional[str] = None, **kwargs):
@@ -1732,9 +1872,11 @@ class MetadataTemplateFieldsFieldOptionsField(BaseObject):
         self.key = key
         self.id = id
 
+
 class MetadataTemplateFieldsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'display_name': 'displayName', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'displayName': 'display_name', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, type: MetadataTemplateFieldsFieldTypeField, key: str, display_name: str, description: Optional[str] = None, hidden: Optional[bool] = None, options: Optional[List[MetadataTemplateFieldsFieldOptionsField]] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of field. The basic fields are a `string` field for text, a
@@ -1770,9 +1912,11 @@ class MetadataTemplateFieldsField(BaseObject):
         self.options = options
         self.id = id
 
+
 class MetadataTemplate(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', 'display_name': 'displayName', 'copy_instance_on_item_copy': 'copyInstanceOnItemCopy', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', 'displayName': 'display_name', 'copyInstanceOnItemCopy': 'copy_instance_on_item_copy', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, type: MetadataTemplateTypeField, id: Optional[str] = None, scope: Optional[str] = None, template_key: Optional[str] = None, display_name: Optional[str] = None, hidden: Optional[bool] = None, fields: Optional[List[MetadataTemplateFieldsField]] = None, copy_instance_on_item_copy: Optional[bool] = None, **kwargs):
         """
         :param type: `metadata_template`
@@ -1812,6 +1956,7 @@ class MetadataTemplate(BaseObject):
         self.fields = fields
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
 
+
 class MetadataTemplates(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[MetadataTemplate]] = None, **kwargs):
         """
@@ -1831,6 +1976,7 @@ class MetadataTemplates(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class RealtimeServer(BaseObject):
     def __init__(self, type: Optional[str] = None, url: Optional[str] = None, ttl: Optional[int] = None, max_retries: Optional[int] = None, retry_timeout: Optional[int] = None, **kwargs):
@@ -1859,6 +2005,7 @@ class RealtimeServer(BaseObject):
         self.max_retries = max_retries
         self.retry_timeout = retry_timeout
 
+
 class RealtimeServers(BaseObject):
     def __init__(self, chunk_size: Optional[int] = None, entries: Optional[List[RealtimeServer]] = None, **kwargs):
         """
@@ -1871,8 +2018,10 @@ class RealtimeServers(BaseObject):
         self.chunk_size = chunk_size
         self.entries = entries
 
+
 class RetentionPolicyBaseTypeField(str, Enum):
     RETENTION_POLICY = 'retention_policy'
+
 
 class RetentionPolicyBase(BaseObject):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, **kwargs):
@@ -1886,9 +2035,11 @@ class RetentionPolicyBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class RetentionPolicyMiniDispositionActionField(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
+
 
 class RetentionPolicyMini(RetentionPolicyBase):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, policy_name: Optional[str] = None, retention_length: Optional[str] = None, disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None, **kwargs):
@@ -1920,6 +2071,7 @@ class RetentionPolicyMini(RetentionPolicyBase):
         self.retention_length = retention_length
         self.disposition_action = disposition_action
 
+
 class RetentionPolicies(BaseObject):
     def __init__(self, entries: Optional[List[RetentionPolicyMini]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
         """
@@ -1937,8 +2089,10 @@ class RetentionPolicies(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
+
 class FileVersionRetentionTypeField(str, Enum):
     FILE_VERSION_RETENTION = 'file_version_retention'
+
 
 class FileVersionRetention(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[FileVersionRetentionTypeField] = None, file_version: Optional[FileVersionMini] = None, file: Optional[FileMini] = None, applied_at: Optional[str] = None, disposition_at: Optional[str] = None, winning_retention_policy: Optional[RetentionPolicyMini] = None, **kwargs):
@@ -1963,6 +2117,7 @@ class FileVersionRetention(BaseObject):
         self.disposition_at = disposition_at
         self.winning_retention_policy = winning_retention_policy
 
+
 class FileVersionRetentions(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[FileVersionRetention]] = None, **kwargs):
         """
@@ -1983,8 +2138,10 @@ class FileVersionRetentions(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class RetentionPolicyAssignmentBaseTypeField(str, Enum):
     RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
+
 
 class RetentionPolicyAssignmentBase(BaseObject):
     def __init__(self, id: str, type: RetentionPolicyAssignmentBaseTypeField, **kwargs):
@@ -1997,6 +2154,7 @@ class RetentionPolicyAssignmentBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class RetentionPolicyAssignments(BaseObject):
     def __init__(self, entries: Optional[List[RetentionPolicyAssignmentBase]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
@@ -2015,8 +2173,10 @@ class RetentionPolicyAssignments(BaseObject):
         self.limit = limit
         self.next_marker = next_marker
 
+
 class ShieldInformationBarrierBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
+
 
 class ShieldInformationBarrierBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierBaseTypeField] = None, **kwargs):
@@ -2030,13 +2190,16 @@ class ShieldInformationBarrierBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierReference(BaseObject):
     def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, **kwargs):
         super().__init__(**kwargs)
         self.shield_information_barrier = shield_information_barrier
 
+
 class ShieldInformationBarrierReportBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_REPORT = 'shield_information_barrier_report'
+
 
 class ShieldInformationBarrierReportBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
@@ -2050,8 +2213,10 @@ class ShieldInformationBarrierReportBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierSegmentMemberBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
+
 
 class ShieldInformationBarrierSegmentMemberBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
@@ -2066,8 +2231,10 @@ class ShieldInformationBarrierSegmentMemberBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierSegmentRestrictionBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = 'shield_information_barrier_segment_restriction'
+
 
 class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
     def __init__(self, type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -2082,8 +2249,10 @@ class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
         self.type = type
         self.id = id
 
+
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
 
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
@@ -2098,8 +2267,10 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
 
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField] = None, **kwargs):
@@ -2113,6 +2284,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseO
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class ShieldInformationBarrierSegmentRestrictionMini(ShieldInformationBarrierSegmentRestrictionBase):
     def __init__(self, shield_information_barrier_segment: ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField, restricted_segment: ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField, type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -2133,6 +2305,7 @@ class ShieldInformationBarrierSegmentRestrictionMini(ShieldInformationBarrierSeg
         self.shield_information_barrier_segment = shield_information_barrier_segment
         self.restricted_segment = restricted_segment
 
+
 class SessionTerminationMessage(BaseObject):
     def __init__(self, message: Optional[str] = None, **kwargs):
         """
@@ -2142,8 +2315,10 @@ class SessionTerminationMessage(BaseObject):
         super().__init__(**kwargs)
         self.message = message
 
+
 class StoragePolicyMiniTypeField(str, Enum):
     STORAGE_POLICY = 'storage_policy'
+
 
 class StoragePolicyMini(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[StoragePolicyMiniTypeField] = None, **kwargs):
@@ -2157,6 +2332,7 @@ class StoragePolicyMini(BaseObject):
         self.id = id
         self.type = type
 
+
 class StoragePolicyAssignmentAssignedToField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
@@ -2169,11 +2345,13 @@ class StoragePolicyAssignmentAssignedToField(BaseObject):
         self.id = id
         self.type = type
 
+
 class StoragePolicyAssignment(BaseObject):
     def __init__(self, storage_policy: Optional[StoragePolicyMini] = None, assigned_to: Optional[StoragePolicyAssignmentAssignedToField] = None, **kwargs):
         super().__init__(**kwargs)
         self.storage_policy = storage_policy
         self.assigned_to = assigned_to
+
 
 class StoragePolicyAssignments(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[StoragePolicyAssignment]] = None, **kwargs):
@@ -2195,6 +2373,7 @@ class StoragePolicyAssignments(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class StoragePolicy(StoragePolicyMini):
     def __init__(self, name: Optional[str] = None, id: Optional[str] = None, type: Optional[StoragePolicyMiniTypeField] = None, **kwargs):
         """
@@ -2207,6 +2386,7 @@ class StoragePolicy(StoragePolicyMini):
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
+
 
 class StoragePolicies(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[StoragePolicy]] = None, **kwargs):
@@ -2228,8 +2408,10 @@ class StoragePolicies(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class TermsOfServiceBaseTypeField(str, Enum):
     TERMS_OF_SERVICE = 'terms_of_service'
+
 
 class TermsOfServiceBase(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceBaseTypeField] = None, **kwargs):
@@ -2243,12 +2425,15 @@ class TermsOfServiceBase(BaseObject):
         self.id = id
         self.type = type
 
+
 class TermsOfServiceStatusField(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
+
 class TermsOfServiceEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class TermsOfServiceEnterpriseField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -2265,9 +2450,11 @@ class TermsOfServiceEnterpriseField(BaseObject):
         self.type = type
         self.name = name
 
+
 class TermsOfServiceTosTypeField(str, Enum):
     MANAGED = 'managed'
     EXTERNAL = 'external'
+
 
 class TermsOfService(TermsOfServiceBase):
     def __init__(self, status: Optional[TermsOfServiceStatusField] = None, enterprise: Optional[TermsOfServiceEnterpriseField] = None, tos_type: Optional[TermsOfServiceTosTypeField] = None, text: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, type: Optional[TermsOfServiceBaseTypeField] = None, **kwargs):
@@ -2296,6 +2483,7 @@ class TermsOfService(TermsOfServiceBase):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class TermsOfServices(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[TermsOfService]] = None, **kwargs):
         """
@@ -2307,6 +2495,7 @@ class TermsOfServices(BaseObject):
         super().__init__(**kwargs)
         self.total_count = total_count
         self.entries = entries
+
 
 class SignTemplates(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[str] = None, prev_marker: Optional[str] = None, **kwargs):
@@ -2325,6 +2514,7 @@ class SignTemplates(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
 
+
 class UploadPartMini(BaseObject):
     def __init__(self, part_id: Optional[str] = None, offset: Optional[int] = None, size: Optional[int] = None, **kwargs):
         """
@@ -2342,9 +2532,11 @@ class UploadPartMini(BaseObject):
         self.offset = offset
         self.size = size
 
+
 class UploadPart(UploadPartMini):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **UploadPartMini._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **UploadPartMini._json_to_fields_mapping}
+
     def __init__(self, sha_1: Optional[str] = None, part_id: Optional[str] = None, offset: Optional[int] = None, size: Optional[int] = None, **kwargs):
         """
         :param sha_1: The SHA1 hash of the chunk.
@@ -2361,9 +2553,11 @@ class UploadPart(UploadPartMini):
         super().__init__(part_id=part_id, offset=offset, size=size, **kwargs)
         self.sha_1 = sha_1
 
+
 class UploadPartsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class UploadPartsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[UploadPartsOrderFieldDirectionField] = None, **kwargs):
@@ -2376,6 +2570,7 @@ class UploadPartsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class UploadParts(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[UploadPartsOrderField]] = None, entries: Optional[List[UploadPart]] = None, **kwargs):
@@ -2410,13 +2605,16 @@ class UploadParts(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class UploadedPart(BaseObject):
     def __init__(self, part: Optional[UploadPart] = None, **kwargs):
         super().__init__(**kwargs)
         self.part = part
 
+
 class UploadSessionTypeField(str, Enum):
     UPLOAD_SESSION = 'upload_session'
+
 
 class UploadSessionSessionEndpointsField(BaseObject):
     def __init__(self, upload_part: Optional[str] = None, commit: Optional[str] = None, abort: Optional[str] = None, list_parts: Optional[str] = None, status: Optional[str] = None, log_event: Optional[str] = None, **kwargs):
@@ -2441,6 +2639,7 @@ class UploadSessionSessionEndpointsField(BaseObject):
         self.list_parts = list_parts
         self.status = status
         self.log_event = log_event
+
 
 class UploadSession(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[UploadSessionTypeField] = None, session_expires_at: Optional[str] = None, part_size: Optional[int] = None, total_parts: Optional[int] = None, num_parts_processed: Optional[int] = None, session_endpoints: Optional[UploadSessionSessionEndpointsField] = None, **kwargs):
@@ -2473,6 +2672,7 @@ class UploadSession(BaseObject):
         self.num_parts_processed = num_parts_processed
         self.session_endpoints = session_endpoints
 
+
 class UploadUrl(BaseObject):
     def __init__(self, upload_url: Optional[str] = None, upload_token: Optional[str] = None, **kwargs):
         """
@@ -2485,6 +2685,7 @@ class UploadUrl(BaseObject):
         super().__init__(**kwargs)
         self.upload_url = upload_url
         self.upload_token = upload_token
+
 
 class UserAvatarPicUrlsField(BaseObject):
     def __init__(self, small: Optional[str] = None, large: Optional[str] = None, preview: Optional[str] = None, **kwargs):
@@ -2501,6 +2702,7 @@ class UserAvatarPicUrlsField(BaseObject):
         self.large = large
         self.preview = preview
 
+
 class UserAvatar(BaseObject):
     def __init__(self, pic_urls: Optional[UserAvatarPicUrlsField] = None, **kwargs):
         """
@@ -2510,8 +2712,10 @@ class UserAvatar(BaseObject):
         super().__init__(**kwargs)
         self.pic_urls = pic_urls
 
+
 class UserBaseTypeField(str, Enum):
     USER = 'user'
+
 
 class UserBase(BaseObject):
     def __init__(self, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
@@ -2524,6 +2728,7 @@ class UserBase(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
 
 class UserIntegrationMappings(UserBase):
     def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -2541,6 +2746,7 @@ class UserIntegrationMappings(UserBase):
         self.name = name
         self.login = login
 
+
 class UserCollaborations(UserBase):
     def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
@@ -2556,6 +2762,7 @@ class UserCollaborations(UserBase):
         super().__init__(type=type, id=id, **kwargs)
         self.name = name
         self.login = login
+
 
 class UserMini(UserBase):
     def __init__(self, type: UserBaseTypeField, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -2573,9 +2780,11 @@ class UserMini(UserBase):
         self.name = name
         self.login = login
 
+
 class EventSourceItemTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class EventSourceClassificationField(BaseObject):
     def __init__(self, name: Optional[str] = None, **kwargs):
@@ -2585,6 +2794,7 @@ class EventSourceClassificationField(BaseObject):
         """
         super().__init__(**kwargs)
         self.name = name
+
 
 class EventSource(BaseObject):
     def __init__(self, item_type: EventSourceItemTypeField, item_id: str, item_name: str, classification: Optional[EventSourceClassificationField] = None, parent: Optional[FolderMini] = None, owned_by: Optional[UserMini] = None, **kwargs):
@@ -2610,11 +2820,13 @@ class EventSource(BaseObject):
         self.parent = parent
         self.owned_by = owned_by
 
+
 class UserStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     CANNOT_DELETE_EDIT = 'cannot_delete_edit'
     CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
+
 
 class UserNotificationEmailField(BaseObject):
     def __init__(self, email: Optional[str] = None, is_confirmed: Optional[bool] = None, **kwargs):
@@ -2627,6 +2839,7 @@ class UserNotificationEmailField(BaseObject):
         super().__init__(**kwargs)
         self.email = email
         self.is_confirmed = is_confirmed
+
 
 class User(UserMini):
     def __init__(self, type: UserBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -2685,9 +2898,11 @@ class User(UserMini):
         self.avatar_url = avatar_url
         self.notification_email = notification_email
 
+
 class UsersOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class UsersOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[UsersOrderFieldDirectionField] = None, **kwargs):
@@ -2700,6 +2915,7 @@ class UsersOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Users(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[UsersOrderField]] = None, entries: Optional[List[User]] = None, **kwargs):
@@ -2733,8 +2949,10 @@ class Users(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class TrashWebLinkRestoredTypeField(str, Enum):
     WEB_LINK = 'web_link'
+
 
 class TrashWebLinkRestoredPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
@@ -2748,10 +2966,12 @@ class TrashWebLinkRestoredPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashWebLinkRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class TrashWebLinkRestored(BaseObject):
     def __init__(self, sequence_id: str, path_collection: TrashWebLinkRestoredPathCollectionField, type: Optional[TrashWebLinkRestoredTypeField] = None, id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, url: Optional[str] = None, parent: Optional[FolderMini] = None, description: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, item_status: Optional[TrashWebLinkRestoredItemStatusField] = None, **kwargs):
@@ -2810,8 +3030,10 @@ class TrashWebLinkRestored(BaseObject):
         self.shared_link = shared_link
         self.item_status = item_status
 
+
 class TrashFolderRestoredTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class TrashFolderRestoredPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
@@ -2825,10 +3047,12 @@ class TrashFolderRestoredPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashFolderRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class TrashFolderRestored(BaseObject):
     def __init__(self, id: Optional[str] = None, etag: Optional[str] = None, type: Optional[TrashFolderRestoredTypeField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[TrashFolderRestoredPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, folder_upload_email: Optional[str] = None, parent: Optional[FolderMini] = None, item_status: Optional[TrashFolderRestoredItemStatusField] = None, **kwargs):
@@ -2908,8 +3132,10 @@ class TrashFolderRestored(BaseObject):
         self.parent = parent
         self.item_status = item_status
 
+
 class TrashFileRestoredTypeField(str, Enum):
     FILE = 'file'
+
 
 class TrashFileRestoredPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
@@ -2923,14 +3149,17 @@ class TrashFileRestoredPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashFileRestoredItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
+
 class TrashFileRestored(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, id: str, type: TrashFileRestoredTypeField, sequence_id: str, sha_1: str, description: str, size: int, path_collection: TrashFileRestoredPathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileRestoredItemStatusField, etag: Optional[str] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[str] = None, parent: Optional[FolderMini] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file.
@@ -3006,11 +3235,14 @@ class TrashFileRestored(BaseObject):
         self.shared_link = shared_link
         self.parent = parent
 
+
 class TrashWebLinkTypeField(str, Enum):
     WEB_LINK = 'web_link'
 
+
 class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
@@ -3033,6 +3265,7 @@ class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
         self.etag = etag
         self.name = name
 
+
 class TrashWebLinkPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[TrashWebLinkPathCollectionFieldEntriesField], **kwargs):
         """
@@ -3045,10 +3278,12 @@ class TrashWebLinkPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashWebLinkItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class TrashWebLink(BaseObject):
     def __init__(self, type: Optional[TrashWebLinkTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, url: Optional[str] = None, parent: Optional[FolderMini] = None, description: Optional[str] = None, path_collection: Optional[TrashWebLinkPathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[str] = None, item_status: Optional[TrashWebLinkItemStatusField] = None, **kwargs):
@@ -3105,11 +3340,14 @@ class TrashWebLink(BaseObject):
         self.shared_link = shared_link
         self.item_status = item_status
 
+
 class TrashFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
+
 class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class TrashFolderPathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
@@ -3132,6 +3370,7 @@ class TrashFolderPathCollectionFieldEntriesField(BaseObject):
         self.etag = etag
         self.name = name
 
+
 class TrashFolderPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[TrashFolderPathCollectionFieldEntriesField], **kwargs):
         """
@@ -3144,10 +3383,12 @@ class TrashFolderPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashFolderItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class TrashFolder(BaseObject):
     def __init__(self, id: str, type: TrashFolderTypeField, name: str, description: str, size: int, path_collection: TrashFolderPathCollectionField, created_by: UserMini, modified_by: UserMini, owned_by: UserMini, item_status: TrashFolderItemStatusField, etag: Optional[str] = None, sequence_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, shared_link: Optional[str] = None, folder_upload_email: Optional[str] = None, parent: Optional[FolderMini] = None, **kwargs):
@@ -3226,11 +3467,14 @@ class TrashFolder(BaseObject):
         self.folder_upload_email = folder_upload_email
         self.parent = parent
 
+
 class TrashFileTypeField(str, Enum):
     FILE = 'file'
 
+
 class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class TrashFilePathCollectionFieldEntriesField(BaseObject):
     def __init__(self, type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField] = None, id: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, name: Optional[str] = None, **kwargs):
@@ -3253,6 +3497,7 @@ class TrashFilePathCollectionFieldEntriesField(BaseObject):
         self.etag = etag
         self.name = name
 
+
 class TrashFilePathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[TrashFilePathCollectionFieldEntriesField], **kwargs):
         """
@@ -3265,14 +3510,17 @@ class TrashFilePathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TrashFileItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
 
+
 class TrashFile(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'sha_1': 'sha1', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'sha1': 'sha_1', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, id: str, type: TrashFileTypeField, sequence_id: str, sha_1: str, description: str, size: int, path_collection: TrashFilePathCollectionField, created_at: str, modified_at: str, modified_by: UserMini, owned_by: UserMini, item_status: TrashFileItemStatusField, etag: Optional[str] = None, name: Optional[str] = None, file_version: Optional[FileVersionMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, shared_link: Optional[str] = None, parent: Optional[FolderMini] = None, **kwargs):
         """
         :param id: The unique identifier that represent a file.
@@ -3347,8 +3595,10 @@ class TrashFile(BaseObject):
         self.shared_link = shared_link
         self.parent = parent
 
+
 class TermsOfServiceUserStatusTypeField(str, Enum):
     TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
+
 
 class TermsOfServiceUserStatus(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TermsOfServiceUserStatusTypeField] = None, tos: Optional[TermsOfServiceBase] = None, user: Optional[UserMini] = None, is_accepted: Optional[bool] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
@@ -3373,6 +3623,7 @@ class TermsOfServiceUserStatus(BaseObject):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class TermsOfServiceUserStatuses(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[TermsOfServiceUserStatus]] = None, **kwargs):
         """
@@ -3385,14 +3636,17 @@ class TermsOfServiceUserStatuses(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TaskAssignmentTypeField(str, Enum):
     TASK_ASSIGNMENT = 'task_assignment'
+
 
 class TaskAssignmentResolutionStateField(str, Enum):
     COMPLETED = 'completed'
     INCOMPLETE = 'incomplete'
     APPROVED = 'approved'
     REJECTED = 'rejected'
+
 
 class TaskAssignment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TaskAssignmentTypeField] = None, item: Optional[FileMini] = None, assigned_to: Optional[UserMini] = None, message: Optional[str] = None, completed_at: Optional[str] = None, assigned_at: Optional[str] = None, reminded_at: Optional[str] = None, resolution_state: Optional[TaskAssignmentResolutionStateField] = None, assigned_by: Optional[UserMini] = None, **kwargs):
@@ -3429,6 +3683,7 @@ class TaskAssignment(BaseObject):
         self.resolution_state = resolution_state
         self.assigned_by = assigned_by
 
+
 class TaskAssignments(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[TaskAssignment]] = None, **kwargs):
         """
@@ -3441,16 +3696,20 @@ class TaskAssignments(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class TaskTypeField(str, Enum):
     TASK = 'task'
+
 
 class TaskActionField(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
 
+
 class TaskCompletionRuleField(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
+
 
 class Task(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[TaskTypeField] = None, item: Optional[FileMini] = None, due_at: Optional[str] = None, action: Optional[TaskActionField] = None, message: Optional[str] = None, task_assignment_collection: Optional[TaskAssignments] = None, is_completed: Optional[bool] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, completion_rule: Optional[TaskCompletionRuleField] = None, **kwargs):
@@ -3491,6 +3750,7 @@ class Task(BaseObject):
         self.created_at = created_at
         self.completion_rule = completion_rule
 
+
 class Tasks(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[Task]] = None, **kwargs):
         """
@@ -3505,13 +3765,16 @@ class Tasks(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class RetentionPolicyAssignmentTypeField(str, Enum):
     RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
+
 
 class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
     FOLDER = 'folder'
     ENTERPRISE = 'enterprise'
     METADATA_TEMPLATE = 'metadata_template'
+
 
 class RetentionPolicyAssignmentAssignedToField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField] = None, **kwargs):
@@ -3526,6 +3789,7 @@ class RetentionPolicyAssignmentAssignedToField(BaseObject):
         self.id = id
         self.type = type
 
+
 class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
     def __init__(self, field: Optional[str] = None, value: Optional[str] = None, **kwargs):
         """
@@ -3538,6 +3802,7 @@ class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
         super().__init__(**kwargs)
         self.field = field
         self.value = value
+
 
 class RetentionPolicyAssignment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[RetentionPolicyAssignmentTypeField] = None, retention_policy: Optional[RetentionPolicyMini] = None, assigned_to: Optional[RetentionPolicyAssignmentAssignedToField] = None, filter_fields: Optional[List[RetentionPolicyAssignmentFilterFieldsField]] = None, assigned_by: Optional[UserMini] = None, assigned_at: Optional[str] = None, start_date_field: Optional[str] = None, **kwargs):
@@ -3571,17 +3836,21 @@ class RetentionPolicyAssignment(BaseObject):
         self.assigned_at = assigned_at
         self.start_date_field = start_date_field
 
+
 class RetentionPolicyPolicyTypeField(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
+
 
 class RetentionPolicyRetentionTypeField(str, Enum):
     MODIFIABLE = 'modifiable'
     NON_MODIFIABLE = 'non-modifiable'
 
+
 class RetentionPolicyStatusField(str, Enum):
     ACTIVE = 'active'
     RETIRED = 'retired'
+
 
 class RetentionPolicyAssignmentCountsField(BaseObject):
     def __init__(self, enterprise: Optional[int] = None, folder: Optional[int] = None, metadata_template: Optional[int] = None, **kwargs):
@@ -3597,6 +3866,7 @@ class RetentionPolicyAssignmentCountsField(BaseObject):
         self.enterprise = enterprise
         self.folder = folder
         self.metadata_template = metadata_template
+
 
 class RetentionPolicy(RetentionPolicyMini):
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, description: Optional[str] = None, policy_type: Optional[RetentionPolicyPolicyTypeField] = None, retention_type: Optional[RetentionPolicyRetentionTypeField] = None, status: Optional[RetentionPolicyStatusField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None, assignment_counts: Optional[RetentionPolicyAssignmentCountsField] = None, policy_name: Optional[str] = None, retention_length: Optional[str] = None, disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None, **kwargs):
@@ -3680,11 +3950,13 @@ class RetentionPolicy(RetentionPolicyMini):
         self.custom_notification_recipients = custom_notification_recipients
         self.assignment_counts = assignment_counts
 
+
 class LegalHoldPolicyStatusField(str, Enum):
     ACTIVE = 'active'
     APPLYING = 'applying'
     RELEASING = 'releasing'
     RELEASED = 'released'
+
 
 class LegalHoldPolicyAssignmentCountsField(BaseObject):
     def __init__(self, user: Optional[int] = None, folder: Optional[int] = None, file: Optional[int] = None, file_version: Optional[int] = None, **kwargs):
@@ -3703,6 +3975,7 @@ class LegalHoldPolicyAssignmentCountsField(BaseObject):
         self.folder = folder
         self.file = file
         self.file_version = file_version
+
 
 class LegalHoldPolicy(LegalHoldPolicyMini):
     def __init__(self, policy_name: Optional[str] = None, description: Optional[str] = None, status: Optional[LegalHoldPolicyStatusField] = None, assignment_counts: Optional[LegalHoldPolicyAssignmentCountsField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, deleted_at: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, release_notes: Optional[str] = None, id: Optional[str] = None, type: Optional[LegalHoldPolicyMiniTypeField] = None, **kwargs):
@@ -3757,6 +4030,7 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         self.filter_ended_at = filter_ended_at
         self.release_notes = release_notes
 
+
 class LegalHoldPolicies(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[LegalHoldPolicy]] = None, **kwargs):
         """
@@ -3777,11 +4051,14 @@ class LegalHoldPolicies(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class InviteTypeField(str, Enum):
     INVITE = 'invite'
 
+
 class InviteInvitedToFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class InviteInvitedToField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[InviteInvitedToFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -3797,6 +4074,7 @@ class InviteInvitedToField(BaseObject):
         self.id = id
         self.type = type
         self.name = name
+
 
 class Invite(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[InviteTypeField] = None, invited_to: Optional[InviteInvitedToField] = None, actionable_by: Optional[UserMini] = None, invited_by: Optional[UserMini] = None, status: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
@@ -3824,12 +4102,15 @@ class Invite(BaseObject):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class GroupMembershipTypeField(str, Enum):
     GROUP_MEMBERSHIP = 'group_membership'
+
 
 class GroupMembershipRoleField(str, Enum):
     MEMBER = 'member'
     ADMIN = 'admin'
+
 
 class GroupMembership(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[GroupMembershipTypeField] = None, user: Optional[UserMini] = None, group: Optional[GroupMini] = None, role: Optional[GroupMembershipRoleField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
@@ -3854,9 +4135,11 @@ class GroupMembership(BaseObject):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class GroupMembershipsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class GroupMembershipsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[GroupMembershipsOrderFieldDirectionField] = None, **kwargs):
@@ -3869,6 +4152,7 @@ class GroupMembershipsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class GroupMemberships(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[GroupMembershipsOrderField]] = None, entries: Optional[List[GroupMembership]] = None, **kwargs):
@@ -3901,6 +4185,7 @@ class GroupMemberships(BaseObject):
         self.offset = offset
         self.order = order
         self.entries = entries
+
 
 class FileVersion(FileVersionMini):
     def __init__(self, id: str, type: FileVersionBaseTypeField, name: Optional[str] = None, size: Optional[int] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, trashed_by: Optional[UserMini] = None, restored_at: Optional[str] = None, restored_by: Optional[UserMini] = None, purged_at: Optional[str] = None, uploader_display_name: Optional[str] = None, sha_1: Optional[str] = None, **kwargs):
@@ -3939,9 +4224,11 @@ class FileVersion(FileVersionMini):
         self.purged_at = purged_at
         self.uploader_display_name = uploader_display_name
 
+
 class FileVersionsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class FileVersionsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[FileVersionsOrderFieldDirectionField] = None, **kwargs):
@@ -3954,6 +4241,7 @@ class FileVersionsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class FileVersions(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[FileVersionsOrderField]] = None, entries: Optional[List[FileVersion]] = None, **kwargs):
@@ -3987,6 +4275,7 @@ class FileVersions(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class FileVersionFull(FileVersion):
     def __init__(self, id: str, type: FileVersionBaseTypeField, version_number: Optional[str] = None, name: Optional[str] = None, size: Optional[int] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, trashed_by: Optional[UserMini] = None, restored_at: Optional[str] = None, restored_by: Optional[UserMini] = None, purged_at: Optional[str] = None, uploader_display_name: Optional[str] = None, sha_1: Optional[str] = None, **kwargs):
         """
@@ -4016,12 +4305,15 @@ class FileVersionFull(FileVersion):
         super().__init__(id=id, type=type, name=name, size=size, created_at=created_at, modified_at=modified_at, modified_by=modified_by, trashed_at=trashed_at, trashed_by=trashed_by, restored_at=restored_at, restored_by=restored_by, purged_at=purged_at, uploader_display_name=uploader_display_name, sha_1=sha_1, **kwargs)
         self.version_number = version_number
 
+
 class FileRequestTypeField(str, Enum):
     FILE_REQUEST = 'file_request'
+
 
 class FileRequestStatusField(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
+
 
 class FileRequest(BaseObject):
     def __init__(self, folder: FolderMini, created_at: str, updated_at: str, id: Optional[str] = None, type: Optional[FileRequestTypeField] = None, title: Optional[str] = None, description: Optional[str] = None, status: Optional[FileRequestStatusField] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, url: Optional[str] = None, etag: Optional[str] = None, created_by: Optional[UserMini] = None, updated_by: Optional[UserMini] = None, **kwargs):
@@ -4099,6 +4391,7 @@ class FileRequest(BaseObject):
         self.created_by = created_by
         self.updated_by = updated_by
 
+
 class FilePathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
         """
@@ -4111,21 +4404,25 @@ class FilePathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class FileSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class FileSharedLinkFieldEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
+
 class FileSharedLinkFieldEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
+
 
 class FileSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
@@ -4148,6 +4445,7 @@ class FileSharedLinkFieldPermissionsField(BaseObject):
         self.can_download = can_download
         self.can_preview = can_preview
         self.can_edit = can_edit
+
 
 class FileSharedLinkField(BaseObject):
     def __init__(self, url: str, effective_access: FileSharedLinkFieldEffectiveAccessField, effective_permission: FileSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FileSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FileSharedLinkFieldPermissionsField] = None, **kwargs):
@@ -4214,10 +4512,12 @@ class FileSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class FileItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class File(FileMini):
     def __init__(self, id: str, type: FileBaseTypeField, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
@@ -4283,6 +4583,7 @@ class File(FileMini):
         self.parent = parent
         self.item_status = item_status
 
+
 class FileFullPermissionsField(BaseObject):
     def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_annotate: Optional[bool] = None, can_comment: Optional[bool] = None, can_preview: Optional[bool] = None, can_upload: Optional[bool] = None, can_view_annotations_all: Optional[bool] = None, can_view_annotations_self: Optional[bool] = None, **kwargs):
         """
@@ -4330,14 +4631,17 @@ class FileFullPermissionsField(BaseObject):
         self.can_view_annotations_all = can_view_annotations_all
         self.can_view_annotations_self = can_view_annotations_self
 
+
 class FileFullLockFieldTypeField(str, Enum):
     LOCK = 'lock'
+
 
 class FileFullLockFieldAppTypeField(str, Enum):
     GSUITE = 'gsuite'
     OFFICE_WOPI = 'office_wopi'
     OFFICE_WOPIPLUS = 'office_wopiplus'
     OTHER = 'other'
+
 
 class FileFullLockField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[FileFullLockFieldTypeField] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, expired_at: Optional[str] = None, is_download_prevented: Optional[bool] = None, app_type: Optional[FileFullLockFieldAppTypeField] = None, **kwargs):
@@ -4367,8 +4671,10 @@ class FileFullLockField(BaseObject):
         self.is_download_prevented = is_download_prevented
         self.app_type = app_type
 
+
 class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
     BEARER = 'bearer'
+
 
 class FileFullExpiringEmbedLinkField(BaseObject):
     def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField] = None, restricted_to: Optional[List[FileScope]] = None, url: Optional[str] = None, **kwargs):
@@ -4394,6 +4700,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self.restricted_to = restricted_to
         self.url = url
 
+
 class FileFullWatermarkInfoField(BaseObject):
     def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
         """
@@ -4402,6 +4709,7 @@ class FileFullWatermarkInfoField(BaseObject):
         """
         super().__init__(**kwargs)
         self.is_watermarked = is_watermarked
+
 
 class FileFullAllowedInviteeRolesField(str, Enum):
     EDITOR = 'editor'
@@ -4412,9 +4720,11 @@ class FileFullAllowedInviteeRolesField(str, Enum):
     VIEWER_UPLOADER = 'viewer uploader'
     CO_OWNER = 'co-owner'
 
+
 class FileFullMetadataField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
     def __init__(self, url_template: Optional[str] = None, **kwargs):
@@ -4444,6 +4754,7 @@ class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
         super().__init__(**kwargs)
         self.url_template = url_template
 
+
 class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
     def __init__(self, url: Optional[str] = None, **kwargs):
         """
@@ -4454,6 +4765,7 @@ class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
         """
         super().__init__(**kwargs)
         self.url = url
+
 
 class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
     def __init__(self, dimensions: Optional[str] = None, paged: Optional[bool] = None, thumb: Optional[bool] = None, **kwargs):
@@ -4472,11 +4784,13 @@ class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
         self.paged = paged
         self.thumb = thumb
 
+
 class FileFullRepresentationsFieldEntriesFieldStatusFieldStateField(str, Enum):
     SUCCESS = 'success'
     VIEWABLE = 'viewable'
     PENDING = 'pending'
     NONE = 'none'
+
 
 class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
     def __init__(self, state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField] = None, **kwargs):
@@ -4493,6 +4807,7 @@ class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
         """
         super().__init__(**kwargs)
         self.state = state
+
 
 class FileFullRepresentationsFieldEntriesField(BaseObject):
     def __init__(self, content: Optional[FileFullRepresentationsFieldEntriesFieldContentField] = None, info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField] = None, properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField] = None, representation: Optional[str] = None, status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField] = None, **kwargs):
@@ -4517,6 +4832,7 @@ class FileFullRepresentationsFieldEntriesField(BaseObject):
         self.representation = representation
         self.status = status
 
+
 class FileFullRepresentationsField(BaseObject):
     def __init__(self, entries: Optional[List[FileFullRepresentationsFieldEntriesField]] = None, **kwargs):
         """
@@ -4525,6 +4841,7 @@ class FileFullRepresentationsField(BaseObject):
         """
         super().__init__(**kwargs)
         self.entries = entries
+
 
 class FileFullClassificationField(BaseObject):
     def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
@@ -4543,10 +4860,12 @@ class FileFullClassificationField(BaseObject):
         self.definition = definition
         self.color = color
 
+
 class FileFullSharedLinkPermissionOptionsField(str, Enum):
     CAN_PREVIEW = 'can_preview'
     CAN_DOWNLOAD = 'can_download'
     CAN_EDIT = 'can_edit'
+
 
 class FileFull(File):
     def __init__(self, id: str, type: FileBaseTypeField, version_number: Optional[str] = None, comment_count: Optional[int] = None, permissions: Optional[FileFullPermissionsField] = None, tags: Optional[List[str]] = None, lock: Optional[FileFullLockField] = None, extension: Optional[str] = None, is_package: Optional[bool] = None, expiring_embed_link: Optional[FileFullExpiringEmbedLinkField] = None, watermark_info: Optional[FileFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, allowed_invitee_roles: Optional[List[FileFullAllowedInviteeRolesField]] = None, is_externally_owned: Optional[bool] = None, has_collaborations: Optional[bool] = None, metadata: Optional[FileFullMetadataField] = None, expires_at: Optional[str] = None, representations: Optional[FileFullRepresentationsField] = None, classification: Optional[FileFullClassificationField] = None, uploader_display_name: Optional[str] = None, disposition_at: Optional[str] = None, shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FilePathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FileSharedLinkField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FileItemStatusField] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, sha_1: Optional[str] = None, file_version: Optional[FileVersionMini] = None, etag: Optional[str] = None, **kwargs):
@@ -4646,6 +4965,7 @@ class FileFull(File):
         self.disposition_at = disposition_at
         self.shared_link_permission_options = shared_link_permission_options
 
+
 class Files(BaseObject):
     def __init__(self, total_count: Optional[int] = None, entries: Optional[List[File]] = None, **kwargs):
         """
@@ -4658,8 +4978,10 @@ class Files(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class DevicePinnerTypeField(str, Enum):
     DEVICE_PINNER = 'device_pinner'
+
 
 class DevicePinner(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[DevicePinnerTypeField] = None, owned_by: Optional[UserMini] = None, product_name: Optional[str] = None, **kwargs):
@@ -4677,12 +4999,15 @@ class DevicePinner(BaseObject):
         self.owned_by = owned_by
         self.product_name = product_name
 
+
 class DevicePinnersOrderFieldByField(str, Enum):
     ID = 'id'
+
 
 class DevicePinnersOrderFieldDirectionField(str, Enum):
     ASC = 'asc'
     DESC = 'desc'
+
 
 class DevicePinnersOrderField(BaseObject):
     def __init__(self, by: Optional[DevicePinnersOrderFieldByField] = None, direction: Optional[DevicePinnersOrderFieldDirectionField] = None, **kwargs):
@@ -4695,6 +5020,7 @@ class DevicePinnersOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class DevicePinners(BaseObject):
     def __init__(self, entries: Optional[List[DevicePinner]] = None, limit: Optional[int] = None, next_marker: Optional[int] = None, order: Optional[List[DevicePinnersOrderField]] = None, **kwargs):
@@ -4716,6 +5042,7 @@ class DevicePinners(BaseObject):
         self.next_marker = next_marker
         self.order = order
 
+
 class CommentItemField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
@@ -4727,6 +5054,7 @@ class CommentItemField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class Comment(CommentBase):
     def __init__(self, is_reply_comment: Optional[bool] = None, message: Optional[str] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, item: Optional[CommentItemField] = None, id: Optional[str] = None, type: Optional[CommentBaseTypeField] = None, **kwargs):
@@ -4753,6 +5081,7 @@ class Comment(CommentBase):
         self.modified_at = modified_at
         self.item = item
 
+
 class CommentFull(Comment):
     def __init__(self, tagged_message: Optional[str] = None, is_reply_comment: Optional[bool] = None, message: Optional[str] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, item: Optional[CommentItemField] = None, id: Optional[str] = None, type: Optional[CommentBaseTypeField] = None, **kwargs):
         """
@@ -4778,9 +5107,11 @@ class CommentFull(Comment):
         super().__init__(is_reply_comment=is_reply_comment, message=message, created_by=created_by, created_at=created_at, modified_at=modified_at, item=item, id=id, type=type, **kwargs)
         self.tagged_message = tagged_message
 
+
 class CommentsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class CommentsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[CommentsOrderFieldDirectionField] = None, **kwargs):
@@ -4793,6 +5124,7 @@ class CommentsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Comments(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[CommentsOrderField]] = None, entries: Optional[List[Comment]] = None, **kwargs):
@@ -4826,6 +5158,7 @@ class Comments(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class ShieldInformationBarrierSegmentRestriction(ShieldInformationBarrierSegmentRestrictionMini):
     def __init__(self, shield_information_barrier_segment: ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField, restricted_segment: ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None, id: Optional[str] = None, **kwargs):
         """
@@ -4856,6 +5189,7 @@ class ShieldInformationBarrierSegmentRestriction(ShieldInformationBarrierSegment
         self.updated_at = updated_at
         self.updated_by = updated_by
 
+
 class ShieldInformationBarrierSegmentMemberMini(ShieldInformationBarrierSegmentMemberBase):
     def __init__(self, user: Optional[UserBase] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
         """
@@ -4868,8 +5202,10 @@ class ShieldInformationBarrierSegmentMemberMini(ShieldInformationBarrierSegmentM
         super().__init__(id=id, type=type, **kwargs)
         self.user = user
 
+
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
 
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField] = None, **kwargs):
@@ -4883,6 +5219,7 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMemberMini):
     def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, shield_information_barrier_segment: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, user: Optional[UserBase] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField] = None, **kwargs):
@@ -4910,8 +5247,10 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         self.updated_at = updated_at
         self.updated_by = updated_by
 
+
 class ShieldInformationBarrierSegmentTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
 
 class ShieldInformationBarrierSegment(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierSegmentTypeField] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, name: Optional[str] = None, description: Optional[str] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, **kwargs):
@@ -4942,9 +5281,11 @@ class ShieldInformationBarrierSegment(BaseObject):
         self.updated_at = updated_at
         self.updated_by = updated_by
 
+
 class ShieldInformationBarrierReportShieldInformationBarrierField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class ShieldInformationBarrierReportStatusField(str, Enum):
     PENDING = 'pending'
@@ -4952,9 +5293,11 @@ class ShieldInformationBarrierReportStatusField(str, Enum):
     DONE = 'done'
     CANCELLED = 'cancelled'
 
+
 class ShieldInformationBarrierReportDetailsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
     def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierReportShieldInformationBarrierField] = None, status: Optional[ShieldInformationBarrierReportStatusField] = None, details: Optional[ShieldInformationBarrierReportDetailsField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
@@ -4980,8 +5323,10 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
         self.created_by = created_by
         self.updated_at = updated_at
 
+
 class ShieldInformationBarrierTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
+
 
 class ShieldInformationBarrierStatusField(str, Enum):
     DRAFT = 'draft'
@@ -4989,6 +5334,7 @@ class ShieldInformationBarrierStatusField(str, Enum):
     DISABLED = 'disabled'
     ENABLED = 'enabled'
     INVALID = 'invalid'
+
 
 class ShieldInformationBarrier(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ShieldInformationBarrierTypeField] = None, enterprise: Optional[EnterpriseBase] = None, status: Optional[ShieldInformationBarrierStatusField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, enabled_at: Optional[str] = None, enabled_by: Optional[UserBase] = None, **kwargs):
@@ -5019,6 +5365,7 @@ class ShieldInformationBarrier(BaseObject):
         self.enabled_at = enabled_at
         self.enabled_by = enabled_by
 
+
 class FolderLockLockedOperationsField(BaseObject):
     def __init__(self, move: bool, delete: bool, **kwargs):
         """
@@ -5030,6 +5377,7 @@ class FolderLockLockedOperationsField(BaseObject):
         super().__init__(**kwargs)
         self.move = move
         self.delete = delete
+
 
 class FolderLock(BaseObject):
     def __init__(self, folder: Optional[FolderMini] = None, id: Optional[str] = None, type: Optional[str] = None, created_by: Optional[UserBase] = None, created_at: Optional[str] = None, locked_operations: Optional[FolderLockLockedOperationsField] = None, lock_type: Optional[str] = None, **kwargs):
@@ -5056,6 +5404,7 @@ class FolderLock(BaseObject):
         self.locked_operations = locked_operations
         self.lock_type = lock_type
 
+
 class FolderLocks(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[FolderLock]] = None, **kwargs):
         """
@@ -5076,6 +5425,7 @@ class FolderLocks(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class WatermarkWatermarkField(BaseObject):
     def __init__(self, created_at: Optional[str] = None, modified_at: Optional[str] = None, **kwargs):
         """
@@ -5088,17 +5438,21 @@ class WatermarkWatermarkField(BaseObject):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class Watermark(BaseObject):
     def __init__(self, watermark: Optional[WatermarkWatermarkField] = None, **kwargs):
         super().__init__(**kwargs)
         self.watermark = watermark
 
+
 class WebhookMiniTypeField(str, Enum):
     WEBHOOK = 'webhook'
+
 
 class WebhookMiniTargetFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class WebhookMiniTargetField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WebhookMiniTargetFieldTypeField] = None, **kwargs):
@@ -5111,6 +5465,7 @@ class WebhookMiniTargetField(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
 
 class WebhookMini(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WebhookMiniTypeField] = None, target: Optional[WebhookMiniTargetField] = None, **kwargs):
@@ -5126,6 +5481,7 @@ class WebhookMini(BaseObject):
         self.id = id
         self.type = type
         self.target = target
+
 
 class Webhooks(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[WebhookMini]] = None, **kwargs):
@@ -5146,6 +5502,7 @@ class Webhooks(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class WebhookTriggersField(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
@@ -5189,6 +5546,7 @@ class WebhookTriggersField(str, Enum):
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
     SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
+
 class Webhook(WebhookMini):
     def __init__(self, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, address: Optional[str] = None, triggers: Optional[List[WebhookTriggersField]] = None, id: Optional[str] = None, type: Optional[WebhookMiniTypeField] = None, target: Optional[WebhookMiniTargetField] = None, **kwargs):
         """
@@ -5213,8 +5571,10 @@ class Webhook(WebhookMini):
         self.address = address
         self.triggers = triggers
 
+
 class WebLinkBaseTypeField(str, Enum):
     WEB_LINK = 'web_link'
+
 
 class WebLinkBase(BaseObject):
     def __init__(self, id: str, type: WebLinkBaseTypeField, etag: Optional[str] = None, **kwargs):
@@ -5231,6 +5591,7 @@ class WebLinkBase(BaseObject):
         self.id = id
         self.type = type
         self.etag = etag
+
 
 class WebLinkMini(WebLinkBase):
     def __init__(self, id: str, type: WebLinkBaseTypeField, url: Optional[str] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -5252,6 +5613,7 @@ class WebLinkMini(WebLinkBase):
         self.sequence_id = sequence_id
         self.name = name
 
+
 class WebLinkPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
         """
@@ -5264,21 +5626,25 @@ class WebLinkPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class WebLinkSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class WebLinkSharedLinkFieldEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
+
 class WebLinkSharedLinkFieldEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
+
 
 class WebLinkSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
@@ -5301,6 +5667,7 @@ class WebLinkSharedLinkFieldPermissionsField(BaseObject):
         self.can_download = can_download
         self.can_preview = can_preview
         self.can_edit = can_edit
+
 
 class WebLinkSharedLinkField(BaseObject):
     def __init__(self, url: str, effective_access: WebLinkSharedLinkFieldEffectiveAccessField, effective_permission: WebLinkSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[WebLinkSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[WebLinkSharedLinkFieldPermissionsField] = None, **kwargs):
@@ -5367,10 +5734,12 @@ class WebLinkSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class WebLinkItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class WebLink(WebLinkMini):
     def __init__(self, id: str, type: WebLinkBaseTypeField, parent: Optional[FolderMini] = None, description: Optional[str] = None, path_collection: Optional[WebLinkPathCollectionField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[WebLinkSharedLinkField] = None, item_status: Optional[WebLinkItemStatusField] = None, url: Optional[str] = None, sequence_id: Optional[str] = None, name: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -5417,9 +5786,11 @@ class WebLink(WebLinkMini):
         self.shared_link = shared_link
         self.item_status = item_status
 
+
 class ItemsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class ItemsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[ItemsOrderFieldDirectionField] = None, **kwargs):
@@ -5432,6 +5803,7 @@ class ItemsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Items(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[ItemsOrderField]] = None, entries: Optional[List[Union[FileMini, FolderMini, WebLinkMini]]] = None, **kwargs):
@@ -5465,6 +5837,7 @@ class Items(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class FolderPathCollectionField(BaseObject):
     def __init__(self, total_count: int, entries: List[FolderMini], **kwargs):
         """
@@ -5477,21 +5850,25 @@ class FolderPathCollectionField(BaseObject):
         self.total_count = total_count
         self.entries = entries
 
+
 class FolderSharedLinkFieldAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class FolderSharedLinkFieldEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
+
 class FolderSharedLinkFieldEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
+
 
 class FolderSharedLinkFieldPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
@@ -5514,6 +5891,7 @@ class FolderSharedLinkFieldPermissionsField(BaseObject):
         self.can_download = can_download
         self.can_preview = can_preview
         self.can_edit = can_edit
+
 
 class FolderSharedLinkField(BaseObject):
     def __init__(self, url: str, effective_access: FolderSharedLinkFieldEffectiveAccessField, effective_permission: FolderSharedLinkFieldEffectivePermissionField, is_password_enabled: bool, download_count: int, preview_count: int, download_url: Optional[str] = None, vanity_url: Optional[str] = None, vanity_name: Optional[str] = None, access: Optional[FolderSharedLinkFieldAccessField] = None, unshared_at: Optional[str] = None, permissions: Optional[FolderSharedLinkFieldPermissionsField] = None, **kwargs):
@@ -5580,9 +5958,11 @@ class FolderSharedLinkField(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class FolderFolderUploadEmailFieldAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
+
 
 class FolderFolderUploadEmailField(BaseObject):
     def __init__(self, access: Optional[FolderFolderUploadEmailFieldAccessField] = None, email: Optional[str] = None, **kwargs):
@@ -5605,10 +5985,12 @@ class FolderFolderUploadEmailField(BaseObject):
         self.access = access
         self.email = email
 
+
 class FolderItemStatusField(str, Enum):
     ACTIVE = 'active'
     TRASHED = 'trashed'
     DELETED = 'deleted'
+
 
 class Folder(FolderMini):
     def __init__(self, id: str, type: FolderBaseTypeField, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -5687,6 +6069,7 @@ class Folder(FolderMini):
         self.item_status = item_status
         self.item_collection = item_collection
 
+
 class SearchResultWithSharedLink(BaseObject):
     def __init__(self, accessible_via_shared_link: Optional[str] = None, item: Optional[Union[File, Folder, WebLink]] = None, type: Optional[str] = None, **kwargs):
         """
@@ -5703,8 +6086,10 @@ class SearchResultWithSharedLink(BaseObject):
         self.item = item
         self.type = type
 
+
 class SearchResultsWithSharedLinksTypeField(str, Enum):
     SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
+
 
 class SearchResultsWithSharedLinks(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, type: Optional[SearchResultsWithSharedLinksTypeField] = None, entries: Optional[List[SearchResultWithSharedLink]] = None, **kwargs):
@@ -5734,8 +6119,10 @@ class SearchResultsWithSharedLinks(BaseObject):
         self.type = type
         self.entries = entries
 
+
 class SearchResultsTypeField(str, Enum):
     SEARCH_RESULTS_ITEMS = 'search_results_items'
+
 
 class SearchResults(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, type: Optional[SearchResultsTypeField] = None, entries: Optional[List[Union[File, Folder, WebLink]]] = None, **kwargs):
@@ -5763,12 +6150,14 @@ class SearchResults(BaseObject):
         self.type = type
         self.entries = entries
 
+
 class RecentItemInteractionTypeField(str, Enum):
     ITEM_PREVIEW = 'item_preview'
     ITEM_UPLOAD = 'item_upload'
     ITEM_COMMENT = 'item_comment'
     ITEM_OPEN = 'item_open'
     ITEM_MODIFY = 'item_modify'
+
 
 class RecentItem(BaseObject):
     def __init__(self, type: Optional[str] = None, item: Optional[Union[File, Folder, WebLink]] = None, interaction_type: Optional[RecentItemInteractionTypeField] = None, interacted_at: Optional[str] = None, interaction_shared_link: Optional[str] = None, **kwargs):
@@ -5791,6 +6180,7 @@ class RecentItem(BaseObject):
         self.interacted_at = interacted_at
         self.interaction_shared_link = interaction_shared_link
 
+
 class RecentItems(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[RecentItem]] = None, **kwargs):
         """
@@ -5810,6 +6200,7 @@ class RecentItems(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class MetadataQueryResults(BaseObject):
     def __init__(self, entries: Optional[List[Union[File, Folder]]] = None, limit: Optional[int] = None, next_marker: Optional[str] = None, **kwargs):
@@ -5831,6 +6222,7 @@ class MetadataQueryResults(BaseObject):
         self.entries = entries
         self.limit = limit
         self.next_marker = next_marker
+
 
 class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
     def __init__(self, legal_hold_policy: Optional[LegalHoldPolicyMini] = None, assigned_to: Optional[Union[File, Folder, WebLink]] = None, assigned_by: Optional[UserMini] = None, assigned_at: Optional[str] = None, deleted_at: Optional[str] = None, id: Optional[str] = None, type: Optional[LegalHoldPolicyAssignmentBaseTypeField] = None, **kwargs):
@@ -5856,8 +6248,10 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         self.assigned_at = assigned_at
         self.deleted_at = deleted_at
 
+
 class FileVersionLegalHoldTypeField(str, Enum):
     FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
+
 
 class FileVersionLegalHold(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[FileVersionLegalHoldTypeField] = None, file_version: Optional[FileVersionMini] = None, file: Optional[FileMini] = None, legal_hold_policy_assignments: Optional[List[LegalHoldPolicyAssignment]] = None, deleted_at: Optional[str] = None, **kwargs):
@@ -5880,6 +6274,7 @@ class FileVersionLegalHold(BaseObject):
         self.legal_hold_policy_assignments = legal_hold_policy_assignments
         self.deleted_at = deleted_at
 
+
 class FileVersionLegalHolds(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[FileVersionLegalHold]] = None, **kwargs):
         """
@@ -5900,10 +6295,12 @@ class FileVersionLegalHolds(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class FolderFullSyncStateField(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
+
 
 class FolderFullPermissionsField(BaseObject):
     def __init__(self, can_delete: bool, can_download: bool, can_invite_collaborator: bool, can_rename: bool, can_set_share_access: bool, can_share: bool, can_upload: Optional[bool] = None, **kwargs):
@@ -5936,14 +6333,17 @@ class FolderFullPermissionsField(BaseObject):
         self.can_share = can_share
         self.can_upload = can_upload
 
+
 class FolderFullMetadataField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class FolderFullAllowedInviteeRolesField(str, Enum):
     EDITOR = 'editor'
@@ -5954,6 +6354,7 @@ class FolderFullAllowedInviteeRolesField(str, Enum):
     VIEWER_UPLOADER = 'viewer uploader'
     CO_OWNER = 'co-owner'
 
+
 class FolderFullWatermarkInfoField(BaseObject):
     def __init__(self, is_watermarked: Optional[bool] = None, **kwargs):
         """
@@ -5962,6 +6363,7 @@ class FolderFullWatermarkInfoField(BaseObject):
         """
         super().__init__(**kwargs)
         self.is_watermarked = is_watermarked
+
 
 class FolderFullClassificationField(BaseObject):
     def __init__(self, name: Optional[str] = None, definition: Optional[str] = None, color: Optional[str] = None, **kwargs):
@@ -5979,6 +6381,7 @@ class FolderFullClassificationField(BaseObject):
         self.name = name
         self.definition = definition
         self.color = color
+
 
 class FolderFull(Folder):
     def __init__(self, id: str, type: FolderBaseTypeField, sync_state: Optional[FolderFullSyncStateField] = None, has_collaborations: Optional[bool] = None, permissions: Optional[FolderFullPermissionsField] = None, tags: Optional[List[str]] = None, can_non_owners_invite: Optional[bool] = None, is_externally_owned: Optional[bool] = None, metadata: Optional[FolderFullMetadataField] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, allowed_shared_link_access_levels: Optional[List[FolderFullAllowedSharedLinkAccessLevelsField]] = None, allowed_invitee_roles: Optional[List[FolderFullAllowedInviteeRolesField]] = None, watermark_info: Optional[FolderFullWatermarkInfoField] = None, is_accessible_via_shared_link: Optional[bool] = None, can_non_owners_view_collaborators: Optional[bool] = None, classification: Optional[FolderFullClassificationField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, description: Optional[str] = None, size: Optional[int] = None, path_collection: Optional[FolderPathCollectionField] = None, created_by: Optional[UserMini] = None, modified_by: Optional[UserMini] = None, trashed_at: Optional[str] = None, purged_at: Optional[str] = None, content_created_at: Optional[str] = None, content_modified_at: Optional[str] = None, owned_by: Optional[UserMini] = None, shared_link: Optional[FolderSharedLinkField] = None, folder_upload_email: Optional[FolderFolderUploadEmailField] = None, parent: Optional[FolderMini] = None, item_status: Optional[FolderItemStatusField] = None, item_collection: Optional[Items] = None, name: Optional[str] = None, sequence_id: Optional[str] = None, etag: Optional[str] = None, **kwargs):
@@ -6076,6 +6479,7 @@ class FolderFull(Folder):
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
+
 
 class EventEventTypeField(str, Enum):
     ACCESS_GRANTED = 'ACCESS_GRANTED'
@@ -6212,9 +6616,11 @@ class EventEventTypeField(str, Enum):
     WATERMARK_LABEL_CREATE = 'WATERMARK_LABEL_CREATE'
     WATERMARK_LABEL_DELETE = 'WATERMARK_LABEL_DELETE'
 
+
 class EventAdditionalDetailsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class Event(BaseObject):
     def __init__(self, type: Optional[str] = None, created_at: Optional[str] = None, recorded_at: Optional[str] = None, event_id: Optional[str] = None, created_by: Optional[UserMini] = None, event_type: Optional[EventEventTypeField] = None, session_id: Optional[str] = None, source: Optional[Union[User, EventSource, File, Folder]] = None, additional_details: Optional[EventAdditionalDetailsField] = None, **kwargs):
@@ -6248,6 +6654,7 @@ class Event(BaseObject):
         self.source = source
         self.additional_details = additional_details
 
+
 class Events(BaseObject):
     def __init__(self, chunk_size: Optional[int] = None, next_stream_position: Optional[str] = None, entries: Optional[List[Event]] = None, **kwargs):
         """
@@ -6264,11 +6671,14 @@ class Events(BaseObject):
         self.next_stream_position = next_stream_position
         self.entries = entries
 
+
 class SkillInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
+
 class SkillInvocationSkillFieldTypeField(str, Enum):
     SKILL = 'skill'
+
 
 class SkillInvocationSkillField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationSkillFieldTypeField] = None, name: Optional[str] = None, api_key: Optional[str] = None, **kwargs):
@@ -6288,8 +6698,10 @@ class SkillInvocationSkillField(BaseObject):
         self.name = name
         self.api_key = api_key
 
+
 class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
     BEARER = 'bearer'
+
 
 class SkillInvocationTokenFieldReadField(BaseObject):
     def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
@@ -6311,8 +6723,10 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         self.token_type = token_type
         self.restricted_to = restricted_to
 
+
 class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
     BEARER = 'bearer'
+
 
 class SkillInvocationTokenFieldWriteField(BaseObject):
     def __init__(self, access_token: Optional[str] = None, expires_in: Optional[int] = None, token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField] = None, restricted_to: Optional[str] = None, **kwargs):
@@ -6334,6 +6748,7 @@ class SkillInvocationTokenFieldWriteField(BaseObject):
         self.token_type = token_type
         self.restricted_to = restricted_to
 
+
 class SkillInvocationTokenField(BaseObject):
     def __init__(self, read: Optional[SkillInvocationTokenFieldReadField] = None, write: Optional[SkillInvocationTokenFieldWriteField] = None, **kwargs):
         """
@@ -6346,12 +6761,14 @@ class SkillInvocationTokenField(BaseObject):
         self.read = read
         self.write = write
 
+
 class SkillInvocationStatusFieldStateField(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
     TRANSIENT_FAILURE = 'transient_failure'
     PERMANENT_FAILURE = 'permanent_failure'
+
 
 class SkillInvocationStatusField(BaseObject):
     def __init__(self, state: Optional[SkillInvocationStatusFieldStateField] = None, message: Optional[str] = None, error_code: Optional[str] = None, additional_info: Optional[str] = None, **kwargs):
@@ -6379,8 +6796,10 @@ class SkillInvocationStatusField(BaseObject):
         self.error_code = error_code
         self.additional_info = additional_info
 
+
 class SkillInvocationEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class SkillInvocationEnterpriseField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[SkillInvocationEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -6396,6 +6815,7 @@ class SkillInvocationEnterpriseField(BaseObject):
         self.id = id
         self.type = type
         self.name = name
+
 
 class SkillInvocation(BaseObject):
     def __init__(self, type: Optional[SkillInvocationTypeField] = None, id: Optional[str] = None, skill: Optional[SkillInvocationSkillField] = None, token: Optional[SkillInvocationTokenField] = None, status: Optional[SkillInvocationStatusField] = None, created_at: Optional[str] = None, trigger: Optional[str] = None, enterprise: Optional[SkillInvocationEnterpriseField] = None, source: Optional[Union[File, Folder]] = None, event: Optional[Event] = None, **kwargs):
@@ -6425,8 +6845,10 @@ class SkillInvocation(BaseObject):
         self.source = source
         self.event = event
 
+
 class CollaborationTypeField(str, Enum):
     COLLABORATION = 'collaboration'
+
 
 class CollaborationRoleField(str, Enum):
     EDITOR = 'editor'
@@ -6438,10 +6860,12 @@ class CollaborationRoleField(str, Enum):
     CO_OWNER = 'co-owner'
     OWNER = 'owner'
 
+
 class CollaborationStatusField(str, Enum):
     ACCEPTED = 'accepted'
     PENDING = 'pending'
     REJECTED = 'rejected'
+
 
 class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField(BaseObject):
     def __init__(self, is_accepted: Optional[bool] = None, terms_of_service: Optional[TermsOfServiceBase] = None, **kwargs):
@@ -6453,6 +6877,7 @@ class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementFie
         super().__init__(**kwargs)
         self.is_accepted = is_accepted
         self.terms_of_service = terms_of_service
+
 
 class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField(BaseObject):
     def __init__(self, enterprise_has_strong_password_required_for_external_users: Optional[bool] = None, user_has_strong_password: Optional[bool] = None, **kwargs):
@@ -6468,6 +6893,7 @@ class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementFie
         super().__init__(**kwargs)
         self.enterprise_has_strong_password_required_for_external_users = enterprise_has_strong_password_required_for_external_users
         self.user_has_strong_password = user_has_strong_password
+
 
 class CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField(BaseObject):
     def __init__(self, enterprise_has_two_factor_auth_enabled: Optional[bool] = None, user_has_two_factor_authentication_enabled: Optional[bool] = None, **kwargs):
@@ -6485,12 +6911,14 @@ class CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequi
         self.enterprise_has_two_factor_auth_enabled = enterprise_has_two_factor_auth_enabled
         self.user_has_two_factor_authentication_enabled = user_has_two_factor_authentication_enabled
 
+
 class CollaborationAcceptanceRequirementsStatusField(BaseObject):
     def __init__(self, terms_of_service_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField] = None, strong_password_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField] = None, two_factor_authentication_requirement: Optional[CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField] = None, **kwargs):
         super().__init__(**kwargs)
         self.terms_of_service_requirement = terms_of_service_requirement
         self.strong_password_requirement = strong_password_requirement
         self.two_factor_authentication_requirement = two_factor_authentication_requirement
+
 
 class Collaboration(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CollaborationTypeField] = None, item: Optional[Union[File, Folder, WebLink]] = None, accessible_by: Optional[UserCollaborations] = None, invite_email: Optional[str] = None, role: Optional[CollaborationRoleField] = None, expires_at: Optional[str] = None, status: Optional[CollaborationStatusField] = None, acknowledged_at: Optional[str] = None, created_by: Optional[UserCollaborations] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, acceptance_requirements_status: Optional[CollaborationAcceptanceRequirementsStatusField] = None, **kwargs):
@@ -6533,9 +6961,11 @@ class Collaboration(BaseObject):
         self.modified_at = modified_at
         self.acceptance_requirements_status = acceptance_requirements_status
 
+
 class CollaborationsOrderFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
+
 
 class CollaborationsOrderField(BaseObject):
     def __init__(self, by: Optional[str] = None, direction: Optional[CollaborationsOrderFieldDirectionField] = None, **kwargs):
@@ -6548,6 +6978,7 @@ class CollaborationsOrderField(BaseObject):
         super().__init__(**kwargs)
         self.by = by
         self.direction = direction
+
 
 class Collaborations(BaseObject):
     def __init__(self, total_count: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None, order: Optional[List[CollaborationsOrderField]] = None, entries: Optional[List[Collaboration]] = None, **kwargs):
@@ -6581,8 +7012,10 @@ class Collaborations(BaseObject):
         self.order = order
         self.entries = entries
 
+
 class WebhookInvocationTypeField(str, Enum):
     WEBHOOK_EVENT = 'webhook_event'
+
 
 class WebhookInvocationTriggerField(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
@@ -6626,6 +7059,7 @@ class WebhookInvocationTriggerField(str, Enum):
     SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
     SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
+
 class WebhookInvocation(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WebhookInvocationTypeField] = None, webhook: Optional[Webhook] = None, created_by: Optional[UserMini] = None, created_at: Optional[str] = None, trigger: Optional[WebhookInvocationTriggerField] = None, source: Optional[Union[File, Folder]] = None, **kwargs):
         """
@@ -6646,8 +7080,10 @@ class WebhookInvocation(BaseObject):
         self.trigger = trigger
         self.source = source
 
+
 class WorkflowMiniTypeField(str, Enum):
     WORKFLOW = 'workflow'
+
 
 class WorkflowMini(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
@@ -6670,20 +7106,26 @@ class WorkflowMini(BaseObject):
         self.description = description
         self.is_enabled = is_enabled
 
+
 class WorkflowFlowsFieldTypeField(str, Enum):
     FLOW = 'flow'
+
 
 class WorkflowFlowsFieldTriggerFieldTypeField(str, Enum):
     TRIGGER = 'trigger'
 
+
 class WorkflowFlowsFieldTriggerFieldTriggerTypeField(str, Enum):
     WORKFLOW_MANUAL_START = 'WORKFLOW_MANUAL_START'
+
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldTypeField(str, Enum):
     TRIGGER_SCOPE = 'trigger_scope'
 
+
 class WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
     def __init__(self, type: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -6696,6 +7138,7 @@ class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
 
 class WorkflowFlowsFieldTriggerFieldScopeField(BaseObject):
     def __init__(self, type: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldTypeField] = None, ref: Optional[str] = None, object: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldObjectField] = None, **kwargs):
@@ -6712,6 +7155,7 @@ class WorkflowFlowsFieldTriggerFieldScopeField(BaseObject):
         self.ref = ref
         self.object = object
 
+
 class WorkflowFlowsFieldTriggerField(BaseObject):
     def __init__(self, type: Optional[WorkflowFlowsFieldTriggerFieldTypeField] = None, trigger_type: Optional[WorkflowFlowsFieldTriggerFieldTriggerTypeField] = None, scope: Optional[List[WorkflowFlowsFieldTriggerFieldScopeField]] = None, **kwargs):
         """
@@ -6727,8 +7171,10 @@ class WorkflowFlowsFieldTriggerField(BaseObject):
         self.trigger_type = trigger_type
         self.scope = scope
 
+
 class WorkflowFlowsFieldOutcomesFieldTypeField(str, Enum):
     OUTCOME = 'outcome'
+
 
 class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
@@ -6755,8 +7201,10 @@ class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
     APPLY_FOLDER_CLASSIFICATION = 'apply_folder_classification'
     SEND_NOTIFICATION = 'send_notification'
 
+
 class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField(str, Enum):
     OUTCOME = 'outcome'
+
 
 class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
@@ -6783,6 +7231,7 @@ class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
     APPLY_FOLDER_CLASSIFICATION = 'apply_folder_classification'
     SEND_NOTIFICATION = 'send_notification'
 
+
 class WorkflowFlowsFieldOutcomesFieldIfRejectedField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField] = None, name: Optional[str] = None, action_type: Optional[WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField] = None, **kwargs):
         """
@@ -6798,6 +7247,7 @@ class WorkflowFlowsFieldOutcomesFieldIfRejectedField(BaseObject):
         self.type = type
         self.name = name
         self.action_type = action_type
+
 
 class WorkflowFlowsFieldOutcomesField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WorkflowFlowsFieldOutcomesFieldTypeField] = None, name: Optional[str] = None, action_type: Optional[WorkflowFlowsFieldOutcomesFieldActionTypeField] = None, if_rejected: Optional[List[WorkflowFlowsFieldOutcomesFieldIfRejectedField]] = None, **kwargs):
@@ -6819,6 +7269,7 @@ class WorkflowFlowsFieldOutcomesField(BaseObject):
         self.action_type = action_type
         self.if_rejected = if_rejected
 
+
 class WorkflowFlowsField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[WorkflowFlowsFieldTypeField] = None, trigger: Optional[WorkflowFlowsFieldTriggerField] = None, outcomes: Optional[List[WorkflowFlowsFieldOutcomesField]] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, **kwargs):
         """
@@ -6836,6 +7287,7 @@ class WorkflowFlowsField(BaseObject):
         self.outcomes = outcomes
         self.created_at = created_at
         self.created_by = created_by
+
 
 class Workflow(WorkflowMini):
     def __init__(self, flows: Optional[List[WorkflowFlowsField]] = None, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
@@ -6856,6 +7308,7 @@ class Workflow(WorkflowMini):
         super().__init__(id=id, type=type, name=name, description=description, is_enabled=is_enabled, **kwargs)
         self.flows = flows
 
+
 class Workflows(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[Workflow]] = None, **kwargs):
         """
@@ -6875,6 +7328,7 @@ class Workflows(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class WorkflowFull(Workflow):
     def __init__(self, created_at: Optional[str] = None, modified_at: Optional[str] = None, created_by: Optional[UserBase] = None, modified_by: Optional[UserBase] = None, flows: Optional[List[WorkflowFlowsField]] = None, id: Optional[str] = None, type: Optional[WorkflowMiniTypeField] = None, name: Optional[str] = None, description: Optional[str] = None, is_enabled: Optional[bool] = None, **kwargs):
@@ -6902,9 +7356,11 @@ class WorkflowFull(Workflow):
         self.created_by = created_by
         self.modified_by = modified_by
 
+
 class ZipDownloadNameConflictsFieldTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class ZipDownloadNameConflictsField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[ZipDownloadNameConflictsFieldTypeField] = None, original_name: Optional[str] = None, download_name: Optional[str] = None, **kwargs):
@@ -6924,6 +7380,7 @@ class ZipDownloadNameConflictsField(BaseObject):
         self.type = type
         self.original_name = original_name
         self.download_name = download_name
+
 
 class ZipDownload(BaseObject):
     def __init__(self, download_url: Optional[str] = None, status_url: Optional[str] = None, expires_at: Optional[str] = None, name_conflicts: Optional[List[List[ZipDownloadNameConflictsField]]] = None, **kwargs):
@@ -6968,10 +7425,12 @@ class ZipDownload(BaseObject):
         self.expires_at = expires_at
         self.name_conflicts = name_conflicts
 
+
 class ZipDownloadStatusStateField(str, Enum):
     IN_PROGRESS = 'in_progress'
     FAILED = 'failed'
     SUCCESS = 'success'
+
 
 class ZipDownloadStatus(BaseObject):
     def __init__(self, total_file_count: Optional[int] = None, downloaded_file_count: Optional[int] = None, skipped_file_count: Optional[int] = None, skipped_folder_count: Optional[int] = None, state: Optional[ZipDownloadStatusStateField] = None, **kwargs):
@@ -7000,11 +7459,14 @@ class ZipDownloadStatus(BaseObject):
         self.skipped_folder_count = skipped_folder_count
         self.state = state
 
+
 class KeywordSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
+
 class KeywordSkillCardSkillCardTypeField(str, Enum):
     KEYWORD = 'keyword'
+
 
 class KeywordSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Optional[str] = None, **kwargs):
@@ -7018,8 +7480,10 @@ class KeywordSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
+
 class KeywordSkillCardSkillFieldTypeField(str, Enum):
     SERVICE = 'service'
+
 
 class KeywordSkillCardSkillField(BaseObject):
     def __init__(self, type: KeywordSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7034,8 +7498,10 @@ class KeywordSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
+
 class KeywordSkillCardInvocationFieldTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
+
 
 class KeywordSkillCardInvocationField(BaseObject):
     def __init__(self, type: KeywordSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7053,6 +7519,7 @@ class KeywordSkillCardInvocationField(BaseObject):
         self.type = type
         self.id = id
 
+
 class KeywordSkillCardEntriesField(BaseObject):
     def __init__(self, text: Optional[str] = None, **kwargs):
         """
@@ -7061,6 +7528,7 @@ class KeywordSkillCardEntriesField(BaseObject):
         """
         super().__init__(**kwargs)
         self.text = text
+
 
 class KeywordSkillCard(BaseObject):
     def __init__(self, type: KeywordSkillCardTypeField, skill_card_type: KeywordSkillCardSkillCardTypeField, skill: KeywordSkillCardSkillField, invocation: KeywordSkillCardInvocationField, entries: List[KeywordSkillCardEntriesField], created_at: Optional[str] = None, skill_card_title: Optional[KeywordSkillCardSkillCardTitleField] = None, **kwargs):
@@ -7090,6 +7558,7 @@ class KeywordSkillCard(BaseObject):
         self.created_at = created_at
         self.skill_card_title = skill_card_title
 
+
 class IntegrationMappingSlackOptions(BaseObject):
     def __init__(self, is_access_management_disabled: Optional[bool] = None, **kwargs):
         """
@@ -7103,8 +7572,10 @@ class IntegrationMappingSlackOptions(BaseObject):
         super().__init__(**kwargs)
         self.is_access_management_disabled = is_access_management_disabled
 
+
 class IntegrationMappingPartnerItemSlackTypeField(str, Enum):
     CHANNEL = 'channel'
+
 
 class IntegrationMappingPartnerItemSlack(BaseObject):
     def __init__(self, type: IntegrationMappingPartnerItemSlackTypeField, id: str, slack_workspace_id: Optional[str] = None, slack_org_id: Optional[str] = None, **kwargs):
@@ -7124,24 +7595,30 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
         self.slack_workspace_id = slack_workspace_id
         self.slack_org_id = slack_org_id
 
+
 class IntegrationMappingTypeField(str, Enum):
     INTEGRATION_MAPPING = 'integration_mapping'
+
 
 class IntegrationMappingBoxItemField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class IntegrationMappingOptionsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class IntegrationMappingCreatedByField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class IntegrationMappingModifiedByField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class IntegrationMapping(IntegrationMappingBase):
     def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: IntegrationMappingBoxItemField, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[IntegrationMappingCreatedByField] = None, modified_by: Optional[IntegrationMappingModifiedByField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
@@ -7190,6 +7667,7 @@ class IntegrationMapping(IntegrationMappingBase):
         self.created_at = created_at
         self.modified_at = modified_at
 
+
 class IntegrationMappings(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[IntegrationMapping]] = None, **kwargs):
         """
@@ -7210,8 +7688,10 @@ class IntegrationMappings(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
+
 class IntegrationMappingBoxItemSlackTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class IntegrationMappingBoxItemSlack(BaseObject):
     def __init__(self, type: IntegrationMappingBoxItemSlackTypeField, id: str, **kwargs):
@@ -7225,11 +7705,14 @@ class IntegrationMappingBoxItemSlack(BaseObject):
         self.type = type
         self.id = id
 
+
 class TimelineSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
+
 class TimelineSkillCardSkillCardTypeField(str, Enum):
     TIMELINE = 'timeline'
+
 
 class TimelineSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Optional[str] = None, **kwargs):
@@ -7243,8 +7726,10 @@ class TimelineSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
+
 class TimelineSkillCardSkillFieldTypeField(str, Enum):
     SERVICE = 'service'
+
 
 class TimelineSkillCardSkillField(BaseObject):
     def __init__(self, type: TimelineSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7259,8 +7744,10 @@ class TimelineSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
+
 class TimelineSkillCardInvocationFieldTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
+
 
 class TimelineSkillCardInvocationField(BaseObject):
     def __init__(self, type: TimelineSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7278,6 +7765,7 @@ class TimelineSkillCardInvocationField(BaseObject):
         self.type = type
         self.id = id
 
+
 class TimelineSkillCardEntriesFieldAppearsField(BaseObject):
     def __init__(self, start: Optional[int] = None, end: Optional[int] = None, **kwargs):
         """
@@ -7291,6 +7779,7 @@ class TimelineSkillCardEntriesFieldAppearsField(BaseObject):
         super().__init__(**kwargs)
         self.start = start
         self.end = end
+
 
 class TimelineSkillCardEntriesField(BaseObject):
     def __init__(self, text: Optional[str] = None, appears: Optional[List[TimelineSkillCardEntriesFieldAppearsField]] = None, image_url: Optional[str] = None, **kwargs):
@@ -7314,6 +7803,7 @@ class TimelineSkillCardEntriesField(BaseObject):
         self.text = text
         self.appears = appears
         self.image_url = image_url
+
 
 class TimelineSkillCard(BaseObject):
     def __init__(self, type: TimelineSkillCardTypeField, skill_card_type: TimelineSkillCardSkillCardTypeField, skill: TimelineSkillCardSkillField, invocation: TimelineSkillCardInvocationField, entries: List[TimelineSkillCardEntriesField], created_at: Optional[str] = None, skill_card_title: Optional[TimelineSkillCardSkillCardTitleField] = None, duration: Optional[int] = None, **kwargs):
@@ -7346,11 +7836,14 @@ class TimelineSkillCard(BaseObject):
         self.skill_card_title = skill_card_title
         self.duration = duration
 
+
 class TranscriptSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
+
 class TranscriptSkillCardSkillCardTypeField(str, Enum):
     TRANSCRIPT = 'transcript'
+
 
 class TranscriptSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Optional[str] = None, **kwargs):
@@ -7364,8 +7857,10 @@ class TranscriptSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
+
 class TranscriptSkillCardSkillFieldTypeField(str, Enum):
     SERVICE = 'service'
+
 
 class TranscriptSkillCardSkillField(BaseObject):
     def __init__(self, type: TranscriptSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7380,8 +7875,10 @@ class TranscriptSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
+
 class TranscriptSkillCardInvocationFieldTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
+
 
 class TranscriptSkillCardInvocationField(BaseObject):
     def __init__(self, type: TranscriptSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7399,6 +7896,7 @@ class TranscriptSkillCardInvocationField(BaseObject):
         self.type = type
         self.id = id
 
+
 class TranscriptSkillCardEntriesFieldAppearsField(BaseObject):
     def __init__(self, start: Optional[int] = None, **kwargs):
         """
@@ -7408,6 +7906,7 @@ class TranscriptSkillCardEntriesFieldAppearsField(BaseObject):
         """
         super().__init__(**kwargs)
         self.start = start
+
 
 class TranscriptSkillCardEntriesField(BaseObject):
     def __init__(self, text: Optional[str] = None, appears: Optional[List[TranscriptSkillCardEntriesFieldAppearsField]] = None, **kwargs):
@@ -7422,6 +7921,7 @@ class TranscriptSkillCardEntriesField(BaseObject):
         super().__init__(**kwargs)
         self.text = text
         self.appears = appears
+
 
 class TranscriptSkillCard(BaseObject):
     def __init__(self, type: TranscriptSkillCardTypeField, skill_card_type: TranscriptSkillCardSkillCardTypeField, skill: TranscriptSkillCardSkillField, invocation: TranscriptSkillCardInvocationField, entries: List[TranscriptSkillCardEntriesField], created_at: Optional[str] = None, skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField] = None, duration: Optional[int] = None, **kwargs):
@@ -7457,11 +7957,14 @@ class TranscriptSkillCard(BaseObject):
         self.skill_card_title = skill_card_title
         self.duration = duration
 
+
 class StatusSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
 
+
 class StatusSkillCardSkillCardTypeField(str, Enum):
     STATUS = 'status'
+
 
 class StatusSkillCardSkillCardTitleField(BaseObject):
     def __init__(self, message: str, code: Optional[str] = None, **kwargs):
@@ -7475,12 +7978,14 @@ class StatusSkillCardSkillCardTitleField(BaseObject):
         self.message = message
         self.code = code
 
+
 class StatusSkillCardStatusFieldCodeField(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
     TRANSIENT_FAILURE = 'transient_failure'
     PERMANENT_FAILURE = 'permanent_failure'
+
 
 class StatusSkillCardStatusField(BaseObject):
     def __init__(self, code: StatusSkillCardStatusFieldCodeField, message: Optional[str] = None, **kwargs):
@@ -7498,8 +8003,10 @@ class StatusSkillCardStatusField(BaseObject):
         self.code = code
         self.message = message
 
+
 class StatusSkillCardSkillFieldTypeField(str, Enum):
     SERVICE = 'service'
+
 
 class StatusSkillCardSkillField(BaseObject):
     def __init__(self, type: StatusSkillCardSkillFieldTypeField, id: str, **kwargs):
@@ -7514,8 +8021,10 @@ class StatusSkillCardSkillField(BaseObject):
         self.type = type
         self.id = id
 
+
 class StatusSkillCardInvocationFieldTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
+
 
 class StatusSkillCardInvocationField(BaseObject):
     def __init__(self, type: StatusSkillCardInvocationFieldTypeField, id: str, **kwargs):
@@ -7532,6 +8041,7 @@ class StatusSkillCardInvocationField(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
 
 class StatusSkillCard(BaseObject):
     def __init__(self, type: StatusSkillCardTypeField, skill_card_type: StatusSkillCardSkillCardTypeField, status: StatusSkillCardStatusField, skill: StatusSkillCardSkillField, invocation: StatusSkillCardInvocationField, created_at: Optional[str] = None, skill_card_title: Optional[StatusSkillCardSkillCardTitleField] = None, **kwargs):
@@ -7561,9 +8071,11 @@ class StatusSkillCard(BaseObject):
         self.created_at = created_at
         self.skill_card_title = skill_card_title
 
+
 class SkillCardsMetadata(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'parent': '$parent', 'scope': '$scope', 'template': '$template', 'type': '$type', 'type_version': '$typeVersion', 'version': '$version', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$parent': 'parent', '$scope': 'scope', '$template': 'template', '$type': 'type', '$typeVersion': 'type_version', '$version': 'version', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, can_edit: Optional[bool] = None, id: Optional[str] = None, parent: Optional[str] = None, scope: Optional[str] = None, template: Optional[str] = None, type: Optional[str] = None, type_version: Optional[int] = None, version: Optional[int] = None, cards: Optional[List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
         """
         :param can_edit: Whether the user can edit this metadata
@@ -7600,10 +8112,12 @@ class SkillCardsMetadata(BaseObject):
         self.version = version
         self.cards = cards
 
+
 class SignRequestCreateSignerRoleField(str, Enum):
     SIGNER = 'signer'
     APPROVER = 'approver'
     FINAL_COPY_READER = 'final_copy_reader'
+
 
 class SignRequestCreateSigner(BaseObject):
     def __init__(self, email: str, role: Optional[SignRequestCreateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, embed_url_external_user_id: Optional[str] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, login_required: Optional[bool] = None, verification_phone_number: Optional[str] = None, password: Optional[str] = None, **kwargs):
@@ -7659,6 +8173,7 @@ class SignRequestCreateSigner(BaseObject):
         self.verification_phone_number = verification_phone_number
         self.password = password
 
+
 class SignRequestPrefillTag(BaseObject):
     def __init__(self, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
         """
@@ -7677,11 +8192,13 @@ class SignRequestPrefillTag(BaseObject):
         self.checkbox_value = checkbox_value
         self.date_value = date_value
 
+
 class SignRequestSignerInputTypeField(str, Enum):
     SIGNATURE = 'signature'
     DATE = 'date'
     TEXT = 'text'
     CHECKBOX = 'checkbox'
+
 
 class SignRequestSignerInputContentTypeField(str, Enum):
     INITIAL = 'initial'
@@ -7697,6 +8214,7 @@ class SignRequestSignerInputContentTypeField(str, Enum):
     DATE = 'date'
     CHECKBOX = 'checkbox'
     ATTACHMENT = 'attachment'
+
 
 class SignRequestSignerInput(SignRequestPrefillTag):
     def __init__(self, page_index: int, type: Optional[SignRequestSignerInputTypeField] = None, content_type: Optional[SignRequestSignerInputContentTypeField] = None, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
@@ -7721,9 +8239,11 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         self.type = type
         self.content_type = content_type
 
+
 class SignRequestSignerSignerDecisionFieldTypeField(str, Enum):
     SIGNED = 'signed'
     DECLINED = 'declined'
+
 
 class SignRequestSignerSignerDecisionField(BaseObject):
     def __init__(self, type: Optional[SignRequestSignerSignerDecisionFieldTypeField] = None, finalized_at: Optional[str] = None, **kwargs):
@@ -7736,6 +8256,7 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.finalized_at = finalized_at
+
 
 class SignRequestSigner(SignRequestCreateSigner):
     def __init__(self, email: str, has_viewed_document: Optional[bool] = None, signer_decision: Optional[SignRequestSignerSignerDecisionField] = None, inputs: Optional[List[SignRequestSignerInput]] = None, embed_url: Optional[str] = None, role: Optional[SignRequestCreateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, embed_url_external_user_id: Optional[str] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, login_required: Optional[bool] = None, verification_phone_number: Optional[str] = None, password: Optional[str] = None, **kwargs):
@@ -7791,6 +8312,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         self.inputs = inputs
         self.embed_url = embed_url
 
+
 class SignRequestBase(BaseObject):
     def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
         """
@@ -7837,8 +8359,10 @@ class SignRequestBase(BaseObject):
         self.is_phone_verification_required_to_view = is_phone_verification_required_to_view
         self.template_id = template_id
 
+
 class SignRequestTypeField(str, Enum):
     SIGN_REQUEST = 'sign-request'
+
 
 class SignRequestStatusField(str, Enum):
     CONVERTING = 'converting'
@@ -7854,6 +8378,7 @@ class SignRequestStatusField(str, Enum):
     FINALIZING = 'finalizing'
     ERROR_FINALIZING = 'error_finalizing'
 
+
 class SignRequestSignFilesField(BaseObject):
     def __init__(self, files: Optional[List[FileMini]] = None, is_ready_for_download: Optional[bool] = None, **kwargs):
         """
@@ -7867,6 +8392,7 @@ class SignRequestSignFilesField(BaseObject):
         super().__init__(**kwargs)
         self.files = files
         self.is_ready_for_download = is_ready_for_download
+
 
 class SignRequest(SignRequestBase):
     def __init__(self, parent_folder: FolderMini, type: Optional[SignRequestTypeField] = None, source_files: Optional[List[FileBase]] = None, signers: Optional[List[SignRequestSigner]] = None, signature_color: Optional[str] = None, id: Optional[str] = None, prepare_url: Optional[str] = None, signing_log: Optional[FileMini] = None, status: Optional[SignRequestStatusField] = None, sign_files: Optional[SignRequestSignFilesField] = None, auto_expire_at: Optional[str] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
@@ -7932,6 +8458,7 @@ class SignRequest(SignRequestBase):
         self.sign_files = sign_files
         self.auto_expire_at = auto_expire_at
 
+
 class SignRequests(BaseObject):
     def __init__(self, limit: Optional[int] = None, next_marker: Optional[int] = None, prev_marker: Optional[int] = None, entries: Optional[List[SignRequest]] = None, **kwargs):
         """
@@ -7951,6 +8478,7 @@ class SignRequests(BaseObject):
         self.next_marker = next_marker
         self.prev_marker = prev_marker
         self.entries = entries
+
 
 class SignRequestCreateRequest(SignRequestBase):
     def __init__(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
@@ -7991,6 +8519,7 @@ class SignRequestCreateRequest(SignRequestBase):
         self.signers = signers
         self.source_files = source_files
 
+
 class TemplateSignerInputTypeField(str, Enum):
     SIGNATURE = 'signature'
     DATE = 'date'
@@ -7998,6 +8527,7 @@ class TemplateSignerInputTypeField(str, Enum):
     CHECKBOX = 'checkbox'
     RADIO = 'radio'
     DROPDOWN = 'dropdown'
+
 
 class TemplateSignerInputContentTypeField(str, Enum):
     SIGNATURE = 'signature'
@@ -8016,6 +8546,7 @@ class TemplateSignerInputContentTypeField(str, Enum):
     RADIO = 'radio'
     DROPDOWN = 'dropdown'
 
+
 class TemplateSignerInputCoordinatesField(BaseObject):
     def __init__(self, x: Optional[int] = None, y: Optional[int] = None, **kwargs):
         """
@@ -8028,6 +8559,7 @@ class TemplateSignerInputCoordinatesField(BaseObject):
         self.x = x
         self.y = y
 
+
 class TemplateSignerInputDimensionsField(BaseObject):
     def __init__(self, width: Optional[int] = None, height: Optional[int] = None, **kwargs):
         """
@@ -8039,6 +8571,7 @@ class TemplateSignerInputDimensionsField(BaseObject):
         super().__init__(**kwargs)
         self.width = width
         self.height = height
+
 
 class TemplateSignerInput(SignRequestPrefillTag):
     def __init__(self, page_index: int, type: Optional[TemplateSignerInputTypeField] = None, content_type: Optional[TemplateSignerInputContentTypeField] = None, is_required: Optional[bool] = None, document_id: Optional[str] = None, dropdown_choices: Optional[List[str]] = None, group_id: Optional[str] = None, coordinates: Optional[TemplateSignerInputCoordinatesField] = None, dimensions: Optional[TemplateSignerInputDimensionsField] = None, document_tag_id: Optional[str] = None, text_value: Optional[str] = None, checkbox_value: Optional[bool] = None, date_value: Optional[str] = None, **kwargs):
@@ -8081,10 +8614,12 @@ class TemplateSignerInput(SignRequestPrefillTag):
         self.coordinates = coordinates
         self.dimensions = dimensions
 
+
 class TemplateSignerRoleField(str, Enum):
     SIGNER = 'signer'
     APPROVER = 'approver'
     FINAL_COPY_READER = 'final_copy_reader'
+
 
 class TemplateSigner(BaseObject):
     def __init__(self, inputs: Optional[List[TemplateSignerInput]] = None, email: Optional[str] = None, role: Optional[TemplateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, **kwargs):
@@ -8111,6 +8646,7 @@ class TemplateSigner(BaseObject):
         self.is_in_person = is_in_person
         self.order = order
 
+
 class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
     EMAIL_SUBJECT = 'email_subject'
     EMAIL_MESSAGE = 'email_message'
@@ -8119,8 +8655,10 @@ class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
     SIGNERS = 'signers'
     SOURCE_FILES = 'source_files'
 
+
 class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
     EMAIL = 'email'
+
 
 class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
     def __init__(self, signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]] = None, **kwargs):
@@ -8130,6 +8668,7 @@ class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
         """
         super().__init__(**kwargs)
         self.signers = signers
+
 
 class SignTemplateAdditionalInfoField(BaseObject):
     def __init__(self, non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]] = None, required: Optional[SignTemplateAdditionalInfoFieldRequiredField] = None, **kwargs):
@@ -8142,6 +8681,7 @@ class SignTemplateAdditionalInfoField(BaseObject):
         super().__init__(**kwargs)
         self.non_editable = non_editable
         self.required = required
+
 
 class SignTemplateReadySignLinkField(BaseObject):
     def __init__(self, url: Optional[str] = None, name: Optional[str] = None, instructions: Optional[str] = None, folder_id: Optional[str] = None, is_notification_disabled: Optional[bool] = None, is_active: Optional[bool] = None, **kwargs):
@@ -8172,6 +8712,7 @@ class SignTemplateReadySignLinkField(BaseObject):
         self.is_notification_disabled = is_notification_disabled
         self.is_active = is_active
 
+
 class SignTemplateCustomBrandingField(BaseObject):
     def __init__(self, company_name: Optional[str] = None, logo_uri: Optional[str] = None, branding_color: Optional[str] = None, email_footer_text: Optional[str] = None, **kwargs):
         """
@@ -8189,6 +8730,7 @@ class SignTemplateCustomBrandingField(BaseObject):
         self.logo_uri = logo_uri
         self.branding_color = branding_color
         self.email_footer_text = email_footer_text
+
 
 class SignTemplate(BaseObject):
     def __init__(self, id: Optional[str] = None, name: Optional[str] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, days_valid: Optional[int] = None, parent_folder: Optional[FolderMini] = None, source_files: Optional[List[FileMini]] = None, are_fields_locked: Optional[bool] = None, are_options_locked: Optional[bool] = None, are_recipients_locked: Optional[bool] = None, are_email_settings_locked: Optional[bool] = None, are_files_locked: Optional[bool] = None, signers: Optional[List[TemplateSigner]] = None, additional_info: Optional[SignTemplateAdditionalInfoField] = None, ready_sign_link: Optional[SignTemplateReadySignLinkField] = None, custom_branding: Optional[SignTemplateCustomBrandingField] = None, **kwargs):
@@ -8243,6 +8785,7 @@ class SignTemplate(BaseObject):
         self.ready_sign_link = ready_sign_link
         self.custom_branding = custom_branding
 
+
 class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
     def __init__(self, folder_id: Optional[str] = None, **kwargs):
         """
@@ -8252,13 +8795,16 @@ class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
         super().__init__(**kwargs)
         self.folder_id = folder_id
 
+
 class ShieldInformationBarrierReportDetails(BaseObject):
     def __init__(self, details: Optional[ShieldInformationBarrierReportDetailsDetailsField] = None, **kwargs):
         super().__init__(**kwargs)
         self.details = details
 
+
 class TrackingCodeTypeField(str, Enum):
     TRACKING_CODE = 'tracking_code'
+
 
 class TrackingCode(BaseObject):
     def __init__(self, type: Optional[TrackingCodeTypeField] = None, name: Optional[str] = None, value: Optional[str] = None, **kwargs):
@@ -8276,13 +8822,16 @@ class TrackingCode(BaseObject):
         self.name = name
         self.value = value
 
+
 class UserFullRoleField(str, Enum):
     ADMIN = 'admin'
     COADMIN = 'coadmin'
     USER = 'user'
 
+
 class UserFullEnterpriseFieldTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
+
 
 class UserFullEnterpriseField(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[UserFullEnterpriseFieldTypeField] = None, name: Optional[str] = None, **kwargs):
@@ -8298,6 +8847,7 @@ class UserFullEnterpriseField(BaseObject):
         self.id = id
         self.type = type
         self.name = name
+
 
 class UserFull(User):
     def __init__(self, type: UserBaseTypeField, role: Optional[UserFullRoleField] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, is_sync_enabled: Optional[bool] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, enterprise: Optional[UserFullEnterpriseField] = None, my_tags: Optional[List[str]] = None, hostname: Optional[str] = None, is_platform_access_only: Optional[bool] = None, external_app_user_id: Optional[str] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, language: Optional[str] = None, timezone: Optional[str] = None, space_amount: Optional[int] = None, space_used: Optional[int] = None, max_upload_size: Optional[int] = None, status: Optional[UserStatusField] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, avatar_url: Optional[str] = None, notification_email: Optional[UserNotificationEmailField] = None, name: Optional[str] = None, login: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -8385,18 +8935,22 @@ class UserFull(User):
         self.is_platform_access_only = is_platform_access_only
         self.external_app_user_id = external_app_user_id
 
+
 class MetadataFilterScopeField(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
     ENTERPRISE__ENTERPRISE_ID_ = 'enterprise_{enterprise_id}'
 
+
 class MetadataFilterFiltersField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class MetadataFilter(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'template_key': 'templateKey', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'templateKey': 'template_key', **BaseObject._json_to_fields_mapping}
+
     def __init__(self, scope: Optional[MetadataFilterScopeField] = None, template_key: Optional[str] = None, filters: Optional[MetadataFilterFiltersField] = None, **kwargs):
         """
         :param scope: Specifies the scope of the template to filter search results by.
@@ -8422,21 +8976,26 @@ class MetadataFilter(BaseObject):
         self.template_key = template_key
         self.filters = filters
 
+
 class MetadataFieldFilterString(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class MetadataFieldFilterFloat(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class MetadataFieldFilterMultiSelect(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class MetadataFieldFilterFloatRange(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class MetadataFieldFilterDateRange(BaseObject):
     def __init__(self, **kwargs):

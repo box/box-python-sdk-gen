@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [SkillsManager](#skillsmanager)
+  - [List Box Skill cards on file](#list-box-skill-cards-on-file)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create Box Skill cards on file](#create-box-skill-cards-on-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Remove Box Skill cards from file](#remove-box-skill-cards-from-file)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update all Box Skill cards on file](#update-all-box-skill-cards-on-file)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # SkillsManager
 
 ## List Box Skill cards on file

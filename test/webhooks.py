@@ -24,6 +24,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def testWebhooksCRUD():
     folder: FolderFull = client.folders.create_folder(name=get_uuid(), parent=CreateFolderParentArg(id='0'))
     webhook: Webhook = client.webhooks.create_webhook(CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), 'https://example.com/new-webhook', ['FILE.UPLOADED'])

@@ -20,10 +20,12 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class DownloadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def download_file(self, file_id: str, version: Optional[str] = None, access_token: Optional[str] = None, range: Optional[str] = None, boxapi: Optional[str] = None) -> ByteStream:
         """
         Returns the contents of a file in binary format.

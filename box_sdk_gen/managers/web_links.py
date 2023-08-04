@@ -30,6 +30,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateWebLinkParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -38,6 +39,7 @@ class CreateWebLinkParentArg(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
+
 
 class UpdateWebLinkByIdParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
@@ -48,10 +50,12 @@ class UpdateWebLinkByIdParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class UpdateWebLinkByIdSharedLinkArgAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
+
 
 class UpdateWebLinkByIdSharedLinkArg(BaseObject):
     def __init__(self, access: Optional[UpdateWebLinkByIdSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, **kwargs):
@@ -92,10 +96,12 @@ class UpdateWebLinkByIdSharedLinkArg(BaseObject):
         self.vanity_name = vanity_name
         self.unshared_at = unshared_at
 
+
 class WebLinksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def create_web_link(self, url: str, parent: CreateWebLinkParentArg, name: Optional[str] = None, description: Optional[str] = None) -> WebLink:
         """
         Creates a web link object within a folder.
@@ -112,6 +118,7 @@ class WebLinksManager:
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
+
     def get_web_link_by_id(self, web_link_id: str, boxapi: Optional[str] = None) -> WebLink:
         """
         Retrieve information about a web link.
@@ -130,6 +137,7 @@ class WebLinksManager:
         headers_map: Dict[str, str] = prepare_params({'boxapi': to_string(boxapi)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
+
     def update_web_link_by_id(self, web_link_id: str, url: Optional[str] = None, parent: Optional[UpdateWebLinkByIdParentArg] = None, name: Optional[str] = None, description: Optional[str] = None, shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None) -> WebLink:
         """
         Updates a web link object.
@@ -149,6 +157,7 @@ class WebLinksManager:
         request_body: BaseObject = BaseObject(url=url, parent=parent, name=name, description=description, shared_link=shared_link)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/web_links/', web_link_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return WebLink.from_dict(json.loads(response.text))
+
     def delete_web_link_by_id(self, web_link_id: str) -> None:
         """
         Deletes a web link.

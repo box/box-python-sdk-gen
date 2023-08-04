@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CommentsManager](#commentsmanager)
+  - [List file comments](#list-file-comments)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get comment](#get-comment)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Update comment](#update-comment)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove comment](#remove-comment)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Create comment](#create-comment)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # CommentsManager
 
 ## List file comments

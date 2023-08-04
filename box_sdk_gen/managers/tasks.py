@@ -30,8 +30,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateTaskItemArgTypeField(str, Enum):
     FILE = 'file'
+
 
 class CreateTaskItemArg(BaseObject):
     def __init__(self, id: str, type: CreateTaskItemArgTypeField, **kwargs):
@@ -45,30 +47,36 @@ class CreateTaskItemArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CreateTaskActionArg(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
+
 
 class CreateTaskCompletionRuleArg(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
+
 class UpdateTaskByIdActionArg(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
+
 
 class UpdateTaskByIdCompletionRuleArg(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
+
 class TasksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_tasks(self, file_id: str) -> Tasks:
         """
         Retrieves a list of all the tasks for a file. This
-        
+
         endpoint does not support pagination.
 
         :param file_id: The unique identifier that represents a file.
@@ -82,10 +90,11 @@ class TasksManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return Tasks.from_dict(json.loads(response.text))
+
     def create_task(self, item: CreateTaskItemArg, action: Optional[CreateTaskActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[CreateTaskCompletionRuleArg] = None) -> Task:
         """
         Creates a single task on a file. This task is not assigned to any user and
-        
+
         will need to be assigned separately.
 
         :param item: The file to attach the task to.
@@ -111,6 +120,7 @@ class TasksManager:
         request_body: BaseObject = BaseObject(item=item, action=action, message=message, due_at=due_at, completion_rule=completion_rule)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
+
     def get_task_by_id(self, task_id: str) -> Task:
         """
         Retrieves information about a specific task.
@@ -120,10 +130,11 @@ class TasksManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
+
     def update_task_by_id(self, task_id: str, action: Optional[UpdateTaskByIdActionArg] = None, message: Optional[str] = None, due_at: Optional[str] = None, completion_rule: Optional[UpdateTaskByIdCompletionRuleArg] = None) -> Task:
         """
         Updates a task. This can be used to update a task's configuration, or to
-        
+
         update its completion state.
 
         :param task_id: The ID of the task.
@@ -149,6 +160,7 @@ class TasksManager:
         request_body: BaseObject = BaseObject(action=action, message=message, due_at=due_at, completion_rule=completion_rule)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/tasks/', task_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Task.from_dict(json.loads(response.text))
+
     def delete_task_by_id(self, task_id: str) -> None:
         """
         Removes a task from a file.

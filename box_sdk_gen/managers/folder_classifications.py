@@ -24,23 +24,25 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class FolderClassificationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo(self, folder_id: str) -> Classification:
         """
         Retrieves the classification metadata instance that
-        
+
         has been applied to a folder.
 
-        
+
         This API can also be called by including the enterprise ID in the
 
-        
+
         URL explicitly, for example
 
-        
+
         `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -56,19 +58,20 @@ class FolderClassificationsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return Classification.from_dict(json.loads(response.text))
+
     def create_folder_metadata_enterprise_security_classification(self, folder_id: str, box_security_classification_key: Optional[str] = None) -> Classification:
         """
         Adds a classification to a folder by specifying the label of the
-        
+
         classification to add.
 
-        
+
         This API can also be called by including the enterprise ID in the
 
-        
+
         URL explicitly, for example
 
-        
+
         `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -91,16 +94,17 @@ class FolderClassificationsManager:
         request_body: BaseObject = BaseObject(box_security_classification_key=box_security_classification_key)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/enterprise/securityClassification-6VMVochwUWo']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Classification.from_dict(json.loads(response.text))
+
     def delete_folder_metadata_enterprise_security_classification(self, folder_id: str) -> None:
         """
         Removes any classifications from a folder.
-        
+
         This API can also be called by including the enterprise ID in the
 
-        
+
         URL explicitly, for example
 
-        
+
         `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
         :param folder_id: The unique identifier that represent a folder.

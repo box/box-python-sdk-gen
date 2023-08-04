@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [AvatarsManager](#avatarsmanager)
+  - [Get user avatar](#get-user-avatar)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Add or update user avatar](#add-or-update-user-avatar)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Delete user avatar](#delete-user-avatar)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # AvatarsManager
 
 ## Get user avatar

@@ -24,17 +24,19 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class RecentItemsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_recent_items(self, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> RecentItems:
         """
         Returns information about the recent items accessed
-        
+
         by a user, either in the last 90 days or up to the last
 
-        
+
         1000 items accessed.
 
         :param fields: A comma-separated list of attributes to include in the

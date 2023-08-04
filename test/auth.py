@@ -20,6 +20,7 @@ from box_sdk_gen.oauth import OAuthConfig
 
 from box_sdk_gen.schemas import UserFull
 
+
 def test_ccg_auth():
     user_id: str = get_env_var('USER_ID')
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
@@ -33,6 +34,7 @@ def test_ccg_auth():
     new_user: UserFull = client.users.get_user_me('enterprise')
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
+
 
 def test_jwt_auth():
     user_id: str = get_env_var('USER_ID')
@@ -48,6 +50,7 @@ def test_jwt_auth():
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 
+
 def test_developer_token_auth():
     user_id: str = get_env_var('USER_ID')
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(decode_base_64(get_env_var('JWT_CONFIG_BASE_64')))
@@ -58,6 +61,7 @@ def test_developer_token_auth():
     client: Client = Client(auth=dev_auth)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
+
 
 def test_oauth_auth():
     config: OAuthConfig = OAuthConfig(client_id='OAUTH_CLIENT_ID', client_secret='OAUTH_CLIENT_SECRET')

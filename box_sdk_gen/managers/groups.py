@@ -32,34 +32,40 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateGroupInvitabilityLevelArg(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
+
 
 class CreateGroupMemberViewabilityLevelArg(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
+
 class UpdateGroupByIdInvitabilityLevelArg(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
+
 
 class UpdateGroupByIdMemberViewabilityLevelArg(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
+
 class GroupsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_groups(self, filter_term: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> Groups:
         """
         Retrieves all of the groups for a given enterprise. The user
-        
+
         must have admin permissions to inspect enterprise's groups.
 
         :param filter_term: Limits the results to only groups whose `name` starts
@@ -85,10 +91,11 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'filter_term': to_string(filter_term), 'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Groups.from_dict(json.loads(response.text))
+
     def create_group(self, name: str, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[CreateGroupInvitabilityLevelArg] = None, member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> Group:
         """
         Creates a new group of users in an enterprise. Only users with admin
-        
+
         permissions can create new groups.
 
         :param name: The name of the new group to be created. This name must be unique
@@ -143,13 +150,14 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Group.from_dict(json.loads(response.text))
+
     def get_group_by_id(self, group_id: str, fields: Optional[str] = None) -> GroupFull:
         """
         Retrieves information about a group. Only members of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_id: The ID of the group.
@@ -168,13 +176,14 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
+
     def update_group_by_id(self, group_id: str, name: Optional[str] = None, provenance: Optional[str] = None, external_sync_identifier: Optional[str] = None, description: Optional[str] = None, invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg] = None, member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevelArg] = None, fields: Optional[str] = None) -> GroupFull:
         """
         Updates a specific group. Only admins of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_id: The ID of the group.
@@ -232,10 +241,11 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id]), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupFull.from_dict(json.loads(response.text))
+
     def delete_group_by_id(self, group_id: str) -> None:
         """
         Permanently deletes a group. Only users with
-        
+
         admin-level permissions will be able to use this API.
 
         :param group_id: The ID of the group.

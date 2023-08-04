@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ZipDownloadsManager](#zipdownloadsmanager)
+  - [Create zip download](#create-zip-download)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Download zip archive](#download-zip-archive)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get zip download status](#get-zip-download-status)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ZipDownloadsManager
 
 ## Create zip download

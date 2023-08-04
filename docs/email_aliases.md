@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [EmailAliasesManager](#emailaliasesmanager)
+  - [List user&#x27;s email aliases](#list-userx27s-email-aliases)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create email alias](#create-email-alias)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Remove email alias](#remove-email-alias)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # EmailAliasesManager
 
 ## List user&#x27;s email aliases

@@ -30,9 +30,11 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def upload_file(file_name, file_stream):
     uploaded_files = client.uploads.upload_file(attributes=UploadFileAttributesArg(name=file_name, parent=UploadFileAttributesArgParentField(id='0')), file=file_stream)
     return uploaded_files.entries[0]
+
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
@@ -40,6 +42,7 @@ def testGetFileThumbnail():
     thumbnail_file = upload_file(thumbnail_file_name, thumbnail_content_stream)
     assert not client.files.get_file_thumbnail_by_id(file_id=thumbnail_file.id, extension=GetFileThumbnailByIdExtensionArg.PNG.value) == read_byte_stream(thumbnail_content_stream)
     client.files.delete_file_by_id(file_id=thumbnail_file.id)
+
 
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
@@ -49,6 +52,7 @@ def testGetFileFullExtraFields():
     assert file.is_externally_owned == False
     assert file.has_collaborations == False
     client.files.delete_file_by_id(file_id=file.id)
+
 
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
@@ -60,6 +64,7 @@ def testCreateGetAndDeleteFile():
     trashed_file: TrashFile = client.trashed_files.get_file_trash(file_id=uploaded_file.id)
     assert file.id == trashed_file.id
 
+
 def testUpdateFile():
     file_to_update = upload_new_file()
     updated_name: str = get_uuid()
@@ -67,6 +72,7 @@ def testUpdateFile():
     assert updated_file.name == updated_name
     assert updated_file.description == 'Updated description'
     client.files.delete_file_by_id(file_id=updated_file.id)
+
 
 def testCopyFile():
     file_origin = upload_new_file()

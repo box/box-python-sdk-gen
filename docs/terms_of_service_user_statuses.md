@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TermsOfServiceUserStatusesManager](#termsofserviceuserstatusesmanager)
+  - [List terms of service user statuses](#list-terms-of-service-user-statuses)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create terms of service status for new user](#create-terms-of-service-status-for-new-user)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Update terms of service status for existing user](#update-terms-of-service-status-for-existing-user)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TermsOfServiceUserStatusesManager
 
 ## List terms of service user statuses

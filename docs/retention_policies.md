@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [RetentionPoliciesManager](#retentionpoliciesmanager)
+  - [List retention policies](#list-retention-policies)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create retention policy](#create-retention-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get retention policy](#get-retention-policy)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update retention policy](#update-retention-policy)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Delete retention policy](#delete-retention-policy)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # RetentionPoliciesManager
 
 ## List retention policies

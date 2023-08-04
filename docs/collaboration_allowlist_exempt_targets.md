@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CollaborationAllowlistExemptTargetsManager](#collaborationallowlistexempttargetsmanager)
+  - [List users exempt from collaboration domain restrictions](#list-users-exempt-from-collaboration-domain-restrictions)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create user exemption from collaboration domain restrictions](#create-user-exemption-from-collaboration-domain-restrictions)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get user exempt from collaboration domain restrictions](#get-user-exempt-from-collaboration-domain-restrictions)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove user from list of users exempt from domain restrictions](#remove-user-from-list-of-users-exempt-from-domain-restrictions)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # CollaborationAllowlistExemptTargetsManager
 
 ## List users exempt from collaboration domain restrictions

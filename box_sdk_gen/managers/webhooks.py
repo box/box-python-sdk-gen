@@ -36,9 +36,11 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateWebhookTargetArgTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class CreateWebhookTargetArg(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CreateWebhookTargetArgTypeField] = None, **kwargs):
@@ -52,9 +54,11 @@ class CreateWebhookTargetArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class UpdateWebhookByIdTargetArgTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class UpdateWebhookByIdTargetArg(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[UpdateWebhookByIdTargetArgTypeField] = None, **kwargs):
@@ -68,23 +72,25 @@ class UpdateWebhookByIdTargetArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class WebhooksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_webhooks(self, marker: Optional[str] = None, limit: Optional[int] = None) -> Webhooks:
         """
         Returns all defined webhooks for the requesting application.
-        
+
         This API only returns webhooks that are applied to files or folders that are
 
-        
+
         owned by the authenticated user. This means that an admin can not see webhooks
 
-        
+
         created by a service account unless the admin has access to those folders, and
 
-        
+
         vice versa.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -97,6 +103,7 @@ class WebhooksManager:
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Webhooks.from_dict(json.loads(response.text))
+
     def create_webhook(self, target: CreateWebhookTargetArg, address: str, triggers: List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]) -> Webhook:
         """
         Creates a webhook.
@@ -111,6 +118,7 @@ class WebhooksManager:
         request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
+
     def get_webhook_by_id(self, webhook_id: str) -> Webhook:
         """
         Retrieves a specific webhook
@@ -120,6 +128,7 @@ class WebhooksManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
+
     def update_webhook_by_id(self, webhook_id: str, target: Optional[UpdateWebhookByIdTargetArg] = None, address: Optional[str] = None, triggers: Optional[List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]] = None) -> Webhook:
         """
         Updates a webhook.
@@ -137,6 +146,7 @@ class WebhooksManager:
         request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Webhook.from_dict(json.loads(response.text))
+
     def delete_webhook_by_id(self, webhook_id: str) -> None:
         """
         Deletes a webhook.

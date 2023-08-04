@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TaskAssignmentsManager](#taskassignmentsmanager)
+  - [List task assignments](#list-task-assignments)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Assign task](#assign-task)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get task assignment](#get-task-assignment)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update task assignment](#update-task-assignment)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Unassign task](#unassign-task)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TaskAssignmentsManager
 
 ## List task assignments

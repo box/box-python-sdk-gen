@@ -32,6 +32,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateGroupMembershipUserArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -40,6 +41,7 @@ class CreateGroupMembershipUserArg(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
+
 
 class CreateGroupMembershipGroupArg(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -50,33 +52,39 @@ class CreateGroupMembershipGroupArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class CreateGroupMembershipRoleArg(str, Enum):
     MEMBER = 'member'
     ADMIN = 'admin'
+
 
 class CreateGroupMembershipConfigurablePermissionsArg(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class UpdateGroupMembershipByIdRoleArg(str, Enum):
     MEMBER = 'member'
     ADMIN = 'admin'
+
 
 class UpdateGroupMembershipByIdConfigurablePermissionsArg(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class MembershipsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_user_memberships(self, user_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> GroupMemberships:
         """
         Retrieves all the groups for a user. Only members of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param user_id: The ID of the user.
@@ -93,13 +101,14 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
+
     def get_group_memberships(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> GroupMemberships:
         """
         Retrieves all the members for a group. Only members of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_id: The ID of the group.
@@ -116,10 +125,11 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMemberships.from_dict(json.loads(response.text))
+
     def create_group_membership(self, user: CreateGroupMembershipUserArg, group: CreateGroupMembershipGroupArg, role: Optional[CreateGroupMembershipRoleArg] = None, configurable_permissions: Optional[CreateGroupMembershipConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
         """
         Creates a group membership. Only users with
-        
+
         admin-level permissions will be able to use this API.
 
         :param user: The user to add to the group.
@@ -151,13 +161,14 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
+
     def get_group_membership_by_id(self, group_membership_id: str, fields: Optional[str] = None) -> GroupMembership:
         """
         Retrieves a specific group membership. Only admins of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_membership_id: The ID of the group membership.
@@ -176,13 +187,14 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
+
     def update_group_membership_by_id(self, group_membership_id: str, role: Optional[UpdateGroupMembershipByIdRoleArg] = None, configurable_permissions: Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg] = None, fields: Optional[str] = None) -> GroupMembership:
         """
         Updates a user's group membership. Only admins of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_membership_id: The ID of the group membership.
@@ -213,13 +225,14 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/group_memberships/', group_membership_id]), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return GroupMembership.from_dict(json.loads(response.text))
+
     def delete_group_membership_by_id(self, group_membership_id: str) -> None:
         """
         Deletes a specific group membership. Only admins of this
-        
+
         group or users with admin-level permissions will be able to
 
-        
+
         use this API.
 
         :param group_membership_id: The ID of the group membership.

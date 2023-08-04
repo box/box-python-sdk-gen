@@ -26,10 +26,12 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class StoragePoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_storage_policies(self, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
@@ -52,6 +54,7 @@ class StoragePoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return StoragePolicies.from_dict(json.loads(response.text))
+
     def get_storage_policy_by_id(self, storage_policy_id: str) -> StoragePolicy:
         """
         Fetches a specific storage policy.

@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ShieldInformationBarriersManager](#shieldinformationbarriersmanager)
+  - [Get shield information barrier with specified ID](#get-shield-information-barrier-with-specified-id)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Add changed status of shield information barrier with specified ID](#add-changed-status-of-shield-information-barrier-with-specified-id)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [List shield information barriers](#list-shield-information-barriers)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Create shield information barrier](#create-shield-information-barrier)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ShieldInformationBarriersManager
 
 ## Get shield information barrier with specified ID

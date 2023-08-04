@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [DevicePinnersManager](#devicepinnersmanager)
+  - [Get device pin](#get-device-pin)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Remove device pin](#remove-device-pin)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [List enterprise device pins](#list-enterprise-device-pins)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # DevicePinnersManager
 
 ## Get device pin

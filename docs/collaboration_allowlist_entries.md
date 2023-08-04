@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CollaborationAllowlistEntriesManager](#collaborationallowlistentriesmanager)
+  - [List allowed collaboration domains](#list-allowed-collaboration-domains)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Add domain to list of allowed collaboration domains](#add-domain-to-list-of-allowed-collaboration-domains)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get allowed collaboration domain](#get-allowed-collaboration-domain)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove domain from list of allowed collaboration domains](#remove-domain-from-list-of-allowed-collaboration-domains)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # CollaborationAllowlistEntriesManager
 
 ## List allowed collaboration domains

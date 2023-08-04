@@ -26,17 +26,19 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CollectionsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_collections(self, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Collections:
         """
         Retrieves all collections for a given user.
-        
+
         Currently, only the `favorites` collection
 
-        
+
         is supported.
 
         :param fields: A comma-separated list of attributes to include in the
@@ -59,10 +61,11 @@ class CollectionsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collections']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collections.from_dict(json.loads(response.text))
+
     def get_collection_items(self, collection_id: str, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Items:
         """
         Retrieves the files and/or folders contained within
-        
+
         this collection.
 
         :param collection_id: The ID of the collection.

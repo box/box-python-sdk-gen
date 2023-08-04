@@ -82,7 +82,7 @@ class APIException(Exception):
 def fetch(url: str, options: FetchOptions) -> FetchResponse:
     if options.network_session:
         max_attempts = options.network_session.MAX_ATTEMPTS
-        requests_session= options.network_session.requests_session
+        requests_session = options.network_session.requests_session
     else:
         max_attempts = DEFAULT_MAX_ATTEMPTS
         requests_session = requests.Session()
@@ -108,7 +108,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             if options.response_format == 'binary':
                 return FetchResponse(
                     status=response.status_code,
-                    content=ResponseByteStream(response.network_response.iter_content(chunk_size=1024))
+                    content=ResponseByteStream(
+                        response.network_response.iter_content(chunk_size=1024))
                 )
             else:
                 return FetchResponse(
@@ -120,7 +121,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         if response.reauthentication_needed:
             options.auth.refresh(options.network_session)
         elif response.status_code != 429 and response.status_code < 500:
-            __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
+            __raise_on_unsuccessful_request(
+                network_response=response.network_response, url=url, method=options.method)
 
         time.sleep(__get_retry_after_time(
             attempt_number=attempt_nr,
@@ -140,7 +142,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         )
         attempt_nr += 1
 
-    __raise_on_unsuccessful_request(network_response=response.network_response, url=url, method=options.method)
+    __raise_on_unsuccessful_request(
+        network_response=response.network_response, url=url, method=options.method)
 
 
 def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
@@ -163,7 +166,8 @@ def __make_request(session, method, url, headers, body, content_type, params, mu
                 file_stream = part.file_stream
                 file_stream_position = file_stream.tell()
                 file_stream.seek(file_stream_position)
-                fields[part.part_name] = (part.file_name or '', file_stream, part.content_type)
+                fields[part.part_name] = (
+                    part.file_name or '', file_stream, part.content_type)
 
         multipart_stream = MultipartEncoder(fields)
         body = multipart_stream
@@ -211,8 +215,10 @@ def __raise_on_unsuccessful_request(network_response, url, method) -> None:
     raise APIException(
         status=network_response.status_code,
         headers=network_response.headers,
-        code=response_json.get('code', None) or response_json.get('error', None),
-        message=response_json.get('message', None) or response_json.get('error_description', None),
+        code=response_json.get(
+            'code', None) or response_json.get('error', None),
+        message=response_json.get('message', None) or response_json.get(
+            'error_description', None),
         request_id=response_json.get('request_id', None),
         url=url,
         method=method,
@@ -229,6 +235,7 @@ def __get_retry_after_time(attempt_number: int, retry_after_header: Optional[str
             pass
     min_randomization = 1 - _RETRY_RANDOMIZATION_FACTOR
     max_randomization = 1 + _RETRY_RANDOMIZATION_FACTOR
-    randomization = (random.uniform(0, 1) * (max_randomization - min_randomization)) + min_randomization
+    randomization = (random.uniform(
+        0, 1) * (max_randomization - min_randomization)) + min_randomization
     exponential = math.pow(2, attempt_number)
     return exponential * _RETRY_BASE_INTERVAL * randomization

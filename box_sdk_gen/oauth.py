@@ -83,7 +83,8 @@ class OAuth(Authentication):
         if options.scope is not None:
             params.append(('scope', options.scope))
 
-        params = [(key.encode('utf-8'), value.encode('utf-8')) for (key, value) in params]
+        params = [(key.encode('utf-8'), value.encode('utf-8'))
+                  for (key, value) in params]
         query_string = urlencode(params)
         return urlunsplit(('', '', self.OAUTH2_AUTHORIZE_URL, query_string, ''))
 
@@ -115,7 +116,8 @@ class OAuth(Authentication):
         :return: Valid access token
         """
         if self.token is None:
-            raise Exception("Access and refresh tokens not available. Authenticate before making any API call first.")
+            raise Exception(
+                "Access and refresh tokens not available. Authenticate before making any API call first.")
         return self.token.access_token
 
     def refresh(self, network_session: Optional[NetworkSession] = None) -> str:

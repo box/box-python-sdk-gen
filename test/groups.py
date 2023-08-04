@@ -18,9 +18,11 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_get_groups():
     groups: Groups = client.groups.get_groups()
     assert groups.total_count >= 0
+
 
 def test_create_get_delete_group():
     group_name: str = get_uuid()

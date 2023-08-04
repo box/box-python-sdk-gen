@@ -28,6 +28,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateInviteEnterpriseArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -36,6 +37,7 @@ class CreateInviteEnterpriseArg(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
+
 
 class CreateInviteActionableByArg(BaseObject):
     def __init__(self, login: Optional[str] = None, **kwargs):
@@ -46,29 +48,31 @@ class CreateInviteActionableByArg(BaseObject):
         super().__init__(**kwargs)
         self.login = login
 
+
 class InvitesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def create_invite(self, enterprise: CreateInviteEnterpriseArg, actionable_by: CreateInviteActionableByArg, fields: Optional[str] = None) -> Invite:
         """
         Invites an existing external user to join an enterprise.
-        
+
         The existing user can not be part of another enterprise and
 
-        
+
         must already have a Box account. Once invited, the user will receive an
 
-        
+
         email and are prompted to accept the invitation within the
 
-        
+
         Box web application.
 
-        
+
         This method requires the "Manage An Enterprise" scope enabled for
 
-        
+
         the application, which can be enabled within the developer console.
 
         :param enterprise: The enterprise to invite the user to
@@ -89,6 +93,7 @@ class InvitesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/invites']), FetchOptions(method='POST', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Invite.from_dict(json.loads(response.text))
+
     def get_invite_by_id(self, invite_id: str, fields: Optional[str] = None) -> Invite:
         """
         Returns the status of a user invite.

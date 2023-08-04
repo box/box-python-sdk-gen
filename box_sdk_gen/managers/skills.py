@@ -40,12 +40,14 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateSkillInvocationByIdStatusArg(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
     TRANSIENT_FAILURE = 'transient_failure'
     PERMANENT_FAILURE = 'permanent_failure'
+
 
 class UpdateSkillInvocationByIdMetadataArg(BaseObject):
     def __init__(self, cards: Optional[List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]] = None, **kwargs):
@@ -56,8 +58,10 @@ class UpdateSkillInvocationByIdMetadataArg(BaseObject):
         super().__init__(**kwargs)
         self.cards = cards
 
+
 class UpdateSkillInvocationByIdFileArgTypeField(str, Enum):
     FILE = 'file'
+
 
 class UpdateSkillInvocationByIdFileArg(BaseObject):
     def __init__(self, type: Optional[UpdateSkillInvocationByIdFileArgTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -71,8 +75,10 @@ class UpdateSkillInvocationByIdFileArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class UpdateSkillInvocationByIdFileVersionArgTypeField(str, Enum):
     FILE_VERSION = 'file_version'
+
 
 class UpdateSkillInvocationByIdFileVersionArg(BaseObject):
     def __init__(self, type: Optional[UpdateSkillInvocationByIdFileVersionArgTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -86,6 +92,7 @@ class UpdateSkillInvocationByIdFileVersionArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class UpdateSkillInvocationByIdUsageArg(BaseObject):
     def __init__(self, unit: Optional[str] = None, value: Optional[int] = None, **kwargs):
         """
@@ -98,10 +105,12 @@ class UpdateSkillInvocationByIdUsageArg(BaseObject):
         self.unit = unit
         self.value = value
 
+
 class SkillsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_metadata_global_box_skills_cards(self, file_id: str) -> SkillCardsMetadata:
         """
         List the Box Skills metadata cards that are attached to a file.
@@ -116,6 +125,7 @@ class SkillsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
+
     def create_file_metadata_global_box_skills_card(self, file_id: str, cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]) -> SkillCardsMetadata:
         """
         Applies one or more Box Skills metadata cards to a file.
@@ -133,6 +143,7 @@ class SkillsManager:
         request_body: BaseObject = BaseObject(cards=cards)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
+
     def delete_file_metadata_global_box_skills_card(self, file_id: str) -> None:
         """
         Removes any Box Skills cards metadata from a file.
@@ -147,10 +158,11 @@ class SkillsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def update_skill_invocation_by_id(self, skill_id: str, status: UpdateSkillInvocationByIdStatusArg, metadata: UpdateSkillInvocationByIdMetadataArg, file: UpdateSkillInvocationByIdFileArg, file_version: Optional[UpdateSkillInvocationByIdFileVersionArg] = None, usage: Optional[UpdateSkillInvocationByIdUsageArg] = None) -> None:
         """
         An alternative method that can be used to overwrite and update all Box Skill
-        
+
         metadata cards on a file.
 
         :param skill_id: The ID of the skill to apply this metadata for.

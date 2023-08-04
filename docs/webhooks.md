@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [WebhooksManager](#webhooksmanager)
+  - [List all webhooks](#list-all-webhooks)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create webhook](#create-webhook)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get webhook](#get-webhook)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update webhook](#update-webhook)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Remove webhook](#remove-webhook)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # WebhooksManager
 
 ## List all webhooks

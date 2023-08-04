@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FileRequestsManager](#filerequestsmanager)
+  - [Get file request](#get-file-request)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Update file request](#update-file-request)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Delete file request](#delete-file-request)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Copy file request](#copy-file-request)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FileRequestsManager
 
 ## Get file request

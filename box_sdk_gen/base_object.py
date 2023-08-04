@@ -14,8 +14,10 @@ class BaseObject:
         unpacked_attributes = {}
         for key, value in data.items():
             mapping_field_name = cls._json_to_fields_mapping.get(key, key)
-            annotation = cls.__init__.__annotations__.get(mapping_field_name, None)
-            unpacked_attributes[mapping_field_name] = cls.__deserialize(key, value, annotation)
+            annotation = cls.__init__.__annotations__.get(
+                mapping_field_name, None)
+            unpacked_attributes[mapping_field_name] = cls.__deserialize(
+                key, value, annotation)
         return cls(**unpacked_attributes)
 
     def to_dict(self) -> dict:
@@ -24,7 +26,8 @@ class BaseObject:
             if v is None:
                 continue
             if type(v) is list:
-                value = [item.to_dict() if isinstance(item, BaseObject) else item for item in v]
+                value = [item.to_dict() if isinstance(
+                    item, BaseObject) else item for item in v]
             elif isinstance(v, BaseObject):
                 value = v.to_dict()
             elif isinstance(v, Enum):
@@ -42,7 +45,8 @@ class BaseObject:
         if get_origin(annotation) == Optional:
             return cls.__deserialize(key, value, get_args(annotation))
         if get_origin(annotation) == Union:
-            union_without_none_type = [arg for arg in get_args(annotation) if arg is not type(None)]
+            union_without_none_type = [arg for arg in get_args(
+                annotation) if arg is not type(None)]
             if len(union_without_none_type) == 1:
                 return cls.__deserialize(key, value, union_without_none_type[0])
 
@@ -66,17 +70,19 @@ class BaseObject:
     @classmethod
     def __deserialize_union(cls, key, value, annotation):
         possible_types = get_args(annotation)
-        type_field_value = value.get('type', None) or value.get('skillCardType', None)
+        type_field_value = value.get(
+            'type', None) or value.get('skillCardType', None)
 
         type = None
         for i, possible_type in enumerate(possible_types):
-            #remove special characters
+            # remove special characters
             if type_field_value.replace("_", "") in possible_types[i].__name__.lower():
                 type = possible_types[i]
                 break
 
         if not type:
-            print('Could not deserialize Union: ', annotation, 'of value:', value)
+            print('Could not deserialize Union: ',
+                  annotation, 'of value:', value)
 
         try:
             return cls.__deserialize(key, value, type)

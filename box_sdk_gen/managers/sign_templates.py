@@ -26,10 +26,12 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class SignTemplatesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_sign_templates(self, marker: Optional[str] = None, limit: Optional[int] = None) -> SignTemplates:
         """
         Gets Box Sign templates created by a user.
@@ -43,6 +45,7 @@ class SignTemplatesManager:
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return SignTemplates.from_dict(json.loads(response.text))
+
     def get_sign_template_by_id(self, template_id: str) -> SignTemplate:
         """
         Fetches details of a specific Box Sign template.

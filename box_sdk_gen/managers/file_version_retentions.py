@@ -28,14 +28,17 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFileVersionRetentionsDispositionActionArg(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
+
 
 class FileVersionRetentionsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_version_retentions(self, file_id: Optional[str] = None, file_version_id: Optional[str] = None, policy_id: Optional[str] = None, disposition_action: Optional[GetFileVersionRetentionsDispositionActionArg] = None, disposition_before: Optional[str] = None, disposition_after: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> FileVersionRetentions:
         """
         Retrieves all file version retentions for the given enterprise.
@@ -64,6 +67,7 @@ class FileVersionRetentionsManager:
         query_params_map: Dict[str, str] = prepare_params({'file_id': to_string(file_id), 'file_version_id': to_string(file_version_id), 'policy_id': to_string(policy_id), 'disposition_action': to_string(disposition_action), 'disposition_before': to_string(disposition_before), 'disposition_after': to_string(disposition_after), 'limit': to_string(limit), 'marker': to_string(marker)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_retentions']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionRetentions.from_dict(json.loads(response.text))
+
     def get_file_version_retention_by_id(self, file_version_retention_id: str) -> FileVersionRetention:
         """
         Returns information about a file version retention.

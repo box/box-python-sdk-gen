@@ -34,8 +34,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateWorkflowStartTypeArg(str, Enum):
     WORKFLOW_PARAMETERS = 'workflow_parameters'
+
 
 class CreateWorkflowStartFlowArg(BaseObject):
     def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -49,8 +51,10 @@ class CreateWorkflowStartFlowArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class CreateWorkflowStartFolderArgTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class CreateWorkflowStartFolderArg(BaseObject):
     def __init__(self, type: Optional[CreateWorkflowStartFolderArgTypeField] = None, id: Optional[str] = None, **kwargs):
@@ -64,20 +68,22 @@ class CreateWorkflowStartFolderArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class WorkflowsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_workflows(self, folder_id: str, trigger_type: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> Workflows:
         """
         Returns list of workflows that act on a given `folder ID`, and
-        
+
         have a flow with a trigger type of `WORKFLOW_MANUAL_START`.
 
-        
+
         You application must be authorized to use the `Manage Box Relay` application
 
-        
+
         scope within the developer console in to use this endpoint.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -101,13 +107,14 @@ class WorkflowsManager:
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'trigger_type': to_string(trigger_type), 'limit': to_string(limit), 'marker': to_string(marker)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Workflows.from_dict(json.loads(response.text))
+
     def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List, folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List] = None) -> None:
         """
         Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
-        
+
         You application must be authorized to use the `Manage Box Relay` application
 
-        
+
         scope within the developer console.
 
         :param workflow_id: The ID of the workflow.

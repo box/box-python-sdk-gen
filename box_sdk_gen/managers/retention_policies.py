@@ -34,30 +34,37 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetRetentionPoliciesPolicyTypeArg(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
+
 
 class CreateRetentionPolicyPolicyTypeArg(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
 
+
 class CreateRetentionPolicyDispositionActionArg(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
+
 
 class CreateRetentionPolicyRetentionTypeArg(str, Enum):
     MODIFIABLE = 'modifiable'
     NON_MODIFIABLE = 'non-modifiable'
 
+
 class UpdateRetentionPolicyByIdDispositionActionArg(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
+
 
 class RetentionPoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_retention_policies(self, policy_name: Optional[str] = None, policy_type: Optional[GetRetentionPoliciesPolicyTypeArg] = None, created_by_user_id: Optional[str] = None, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> RetentionPolicies:
         """
         Retrieves all of the retention policies for an enterprise.
@@ -86,6 +93,7 @@ class RetentionPoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'policy_type': to_string(policy_type), 'created_by_user_id': to_string(created_by_user_id), 'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicies.from_dict(json.loads(response.text))
+
     def create_retention_policy(self, policy_name: str, policy_type: CreateRetentionPolicyPolicyTypeArg, disposition_action: CreateRetentionPolicyDispositionActionArg, description: Optional[str] = None, retention_length: Optional[str] = None, retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
         """
         Creates a retention policy.
@@ -140,6 +148,7 @@ class RetentionPoliciesManager:
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, policy_type=policy_type, disposition_action=disposition_action, retention_length=retention_length, retention_type=retention_type, can_owner_extend_retention=can_owner_extend_retention, are_owners_notified=are_owners_notified, custom_notification_recipients=custom_notification_recipients)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
+
     def get_retention_policy_by_id(self, retention_policy_id: str, fields: Optional[str] = None) -> RetentionPolicy:
         """
         Retrieves a retention policy.
@@ -159,6 +168,7 @@ class RetentionPoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
+
     def update_retention_policy_by_id(self, retention_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg] = None, retention_type: Optional[str] = None, retention_length: Optional[str] = None, status: Optional[str] = None, can_owner_extend_retention: Optional[bool] = None, are_owners_notified: Optional[bool] = None, custom_notification_recipients: Optional[List[UserMini]] = None) -> RetentionPolicy:
         """
         Updates a retention policy.
@@ -219,6 +229,7 @@ class RetentionPoliciesManager:
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, disposition_action=disposition_action, retention_type=retention_type, retention_length=retention_length, status=status, can_owner_extend_retention=can_owner_extend_retention, are_owners_notified=are_owners_notified, custom_notification_recipients=custom_notification_recipients)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicy.from_dict(json.loads(response.text))
+
     def delete_retention_policy_by_id(self, retention_policy_id: str) -> None:
         """
         Permanently deletes a retention policy.

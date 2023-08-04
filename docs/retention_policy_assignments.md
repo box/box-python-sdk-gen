@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [RetentionPolicyAssignmentsManager](#retentionpolicyassignmentsmanager)
+  - [List retention policy assignments](#list-retention-policy-assignments)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Assign retention policy](#assign-retention-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get retention policy assignment](#get-retention-policy-assignment)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove retention policy assignment](#remove-retention-policy-assignment)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Get files under retention](#get-files-under-retention)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [Get file versions under retention](#get-file-versions-under-retention)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # RetentionPolicyAssignmentsManager
 
 ## List retention policy assignments

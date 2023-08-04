@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [SessionTerminationManager](#sessionterminationmanager)
+  - [Create jobs to terminate users session](#create-jobs-to-terminate-users-session)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create jobs to terminate user group session](#create-jobs-to-terminate-user-group-session)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # SessionTerminationManager
 
 ## Create jobs to terminate users session

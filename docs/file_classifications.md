@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FileClassificationsManager](#fileclassificationsmanager)
+  - [Get classification on file](#get-classification-on-file)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Add classification to file](#add-classification-to-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Remove classification from file](#remove-classification-from-file)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FileClassificationsManager
 
 ## Get classification on file

@@ -20,6 +20,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def testMemberships():
     user: User = client.users.create_user(name=get_uuid(), login=''.join([get_uuid(), '@boxdemo.com']))
     user_memberships: GroupMemberships = client.memberships.get_user_memberships(user_id=user.id)

@@ -36,10 +36,12 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class ChunkedUploadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def create_file_upload_session(self, folder_id: str, file_size: int, file_name: str) -> UploadSession:
         """
         Creates an upload session for a new file.
@@ -53,6 +55,7 @@ class ChunkedUploadsManager:
         request_body: BaseObject = BaseObject(folder_id=folder_id, file_size=file_size, file_name=file_name)
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
+
     def create_file_upload_session_for_existing_file(self, file_id: str, file_size: int, file_name: Optional[str] = None) -> UploadSession:
         """
         Creates an upload session for an existing file.
@@ -72,6 +75,7 @@ class ChunkedUploadsManager:
         request_body: BaseObject = BaseObject(file_size=file_size, file_name=file_name)
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
+
     def get_file_upload_session_by_id(self, upload_session_id: str) -> UploadSession:
         """
         Return information about an upload session.
@@ -81,6 +85,7 @@ class ChunkedUploadsManager:
         """
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
+
     def upload_file_part(self, upload_session_id: str, digest: str, content_range: str) -> UploadedPart:
         """
         Updates a chunk of an upload session for a file.
@@ -112,10 +117,11 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'content-range': to_string(content_range)})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=headers_map, body=request_body, content_type='application/octet-stream', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadedPart.from_dict(json.loads(response.text))
+
     def delete_file_upload_session_by_id(self, upload_session_id: str) -> None:
         """
         Abort an upload session and discard all data uploaded.
-        
+
         This cannot be reversed.
 
         :param upload_session_id: The ID of the upload session.
@@ -124,10 +130,11 @@ class ChunkedUploadsManager:
         """
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_file_upload_session_parts(self, upload_session_id: str, offset: Optional[int] = None, limit: Optional[int] = None) -> UploadParts:
         """
         Return a list of the chunks uploaded to the upload
-        
+
         session so far.
 
         :param upload_session_id: The ID of the upload session.
@@ -144,10 +151,11 @@ class ChunkedUploadsManager:
         query_params_map: Dict[str, str] = prepare_params({'offset': to_string(offset), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id, '/parts']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadParts.from_dict(json.loads(response.text))
+
     def create_file_upload_session_commit(self, upload_session_id: str, parts: List[UploadPart], digest: str, if_match: Optional[str] = None, if_none_match: Optional[str] = None) -> Files:
         """
         Close an upload session and create a file from the
-        
+
         uploaded chunks.
 
         :param upload_session_id: The ID of the upload session.

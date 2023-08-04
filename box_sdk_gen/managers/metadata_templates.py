@@ -34,22 +34,26 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetMetadataTemplateSchemaScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
+
 
 class DeleteMetadataTemplateSchemaScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
+
 class MetadataTemplatesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_metadata_templates(self, metadata_instance_id: str) -> MetadataTemplates:
         """
         Finds a metadata template by searching for the ID of an instance of the
-        
+
         template.
 
         :param metadata_instance_id: The ID of an instance of the metadata template to find.
@@ -58,13 +62,14 @@ class MetadataTemplatesManager:
         query_params_map: Dict[str, str] = prepare_params({'metadata_instance_id': to_string(metadata_instance_id)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
+
     def get_metadata_template_schema(self, scope: GetMetadataTemplateSchemaScopeArg, template_key: str) -> MetadataTemplate:
         """
         Retrieves a metadata template by its `scope` and `templateKey` values.
-        
+
         To find the `scope` and `templateKey` for a template, list all templates for
 
-        
+
         an enterprise or globally, or list all templates applied to a file or folder.
 
         :param scope: The scope of the metadata template
@@ -76,10 +81,11 @@ class MetadataTemplatesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
+
     def delete_metadata_template_schema(self, scope: DeleteMetadataTemplateSchemaScopeArg, template_key: str) -> None:
         """
         Delete a metadata template and its instances.
-        
+
         This deletion is permanent and can not be reversed.
 
         :param scope: The scope of the metadata template
@@ -91,6 +97,7 @@ class MetadataTemplatesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', scope, '/', template_key, '/schema']), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_metadata_template_by_id(self, template_id: str) -> MetadataTemplate:
         """
         Retrieves a metadata template by its ID.
@@ -100,10 +107,11 @@ class MetadataTemplatesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/', template_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplate.from_dict(json.loads(response.text))
+
     def get_metadata_template_global(self, marker: Optional[str] = None, limit: Optional[int] = None) -> MetadataTemplates:
         """
         Used to retrieve all generic, global metadata templates available to all
-        
+
         enterprises using Box.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -116,10 +124,11 @@ class MetadataTemplatesManager:
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/global']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
+
     def get_metadata_template_enterprise(self, marker: Optional[str] = None, limit: Optional[int] = None) -> MetadataTemplates:
         """
         Used to retrieve all metadata templates created to be used specifically within
-        
+
         the user's enterprise
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -132,10 +141,11 @@ class MetadataTemplatesManager:
         query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_templates/enterprise']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataTemplates.from_dict(json.loads(response.text))
+
     def create_metadata_template_schema(self, scope: str, display_name: str, template_key: Optional[str] = None, hidden: Optional[bool] = None, fields: Optional[List] = None, copy_instance_on_item_copy: Optional[bool] = None) -> MetadataTemplate:
         """
         Creates a new metadata template that can be applied to
-        
+
         files and folders.
 
         :param scope: The scope of the metadata template to create. Applications can

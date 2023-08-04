@@ -26,14 +26,16 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class EmailAliasesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_user_email_aliases(self, user_id: str) -> EmailAliases:
         """
         Retrieves all email aliases for a user. The collection
-        
+
         does not include the primary login for the user.
 
         :param user_id: The ID of the user.
@@ -42,6 +44,7 @@ class EmailAliasesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return EmailAliases.from_dict(json.loads(response.text))
+
     def create_user_email_alias(self, user_id: str, email: str) -> EmailAlias:
         """
         Adds a new email alias to a user account..
@@ -59,6 +62,7 @@ class EmailAliasesManager:
         request_body: BaseObject = BaseObject(email=email)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return EmailAlias.from_dict(json.loads(response.text))
+
     def delete_user_email_alias_by_id(self, user_id: str, email_alias_id: str) -> None:
         """
         Removes an email alias from a user.

@@ -26,14 +26,16 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class FileVersionLegalHoldsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_version_legal_hold_by_id(self, file_version_legal_hold_id: str) -> FileVersionLegalHold:
         """
         Retrieves information about the legal hold policies
-        
+
         assigned to a file version.
 
         :param file_version_legal_hold_id: The ID of the file version legal hold
@@ -42,49 +44,50 @@ class FileVersionLegalHoldsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_version_legal_holds/', file_version_legal_hold_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileVersionLegalHold.from_dict(json.loads(response.text))
+
     def get_file_version_legal_holds(self, policy_id: str, marker: Optional[str] = None, limit: Optional[int] = None) -> FileVersionLegalHolds:
         """
         Get a list of file versions on legal hold for a legal hold
-        
+
         assignment.
 
-        
+
         Due to ongoing re-architecture efforts this API might not return all file
 
-        
+
         versions for this policy ID.
 
-        
+
         Instead, this API will only return file versions held in the legacy
 
-        
+
         architecture. Two new endpoints will available to request any file versions
 
-        
+
         held in the new architecture.
 
-        
+
         For file versions held in the new architecture, the `GET
 
-        
+
         /legal_hold_policy_assignments/:id/file_versions_on_hold` API can be used to
 
-        
+
         return all past file versions available for this policy assignment, and the
 
-        
+
         `GET /legal_hold_policy_assignments/:id/files_on_hold` API can be used to
 
-        
+
         return any current (latest) versions of a file under legal hold.
 
-        
+
         The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
 
-        
+
         find a list of policy assignments for a given policy ID.
 
-        
+
         Once the re-architecture is completed this API will be deprecated.
 
         :param policy_id: The ID of the legal hold policy to get the file version legal

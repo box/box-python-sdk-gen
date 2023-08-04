@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [UsersManager](#usersmanager)
+  - [List enterprise users](#list-enterprise-users)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create user](#create-user)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get current user](#get-current-user)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Get user](#get-user)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Update user](#update-user)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [Delete user](#delete-user)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # UsersManager
 
 ## List enterprise users

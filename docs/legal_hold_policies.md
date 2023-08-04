@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [LegalHoldPoliciesManager](#legalholdpoliciesmanager)
+  - [List all legal hold policies](#list-all-legal-hold-policies)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create legal hold policy](#create-legal-hold-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get legal hold policy](#get-legal-hold-policy)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update legal hold policy](#update-legal-hold-policy)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Remove legal hold policy](#remove-legal-hold-policy)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # LegalHoldPoliciesManager
 
 ## List all legal hold policies

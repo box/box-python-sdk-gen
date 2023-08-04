@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [StoragePoliciesManager](#storagepoliciesmanager)
+  - [List storage policies](#list-storage-policies)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get storage policy](#get-storage-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # StoragePoliciesManager
 
 ## List storage policies

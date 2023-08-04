@@ -32,25 +32,29 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateMetadataCascadePolicyScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
+
 
 class CreateMetadataCascadePolicyApplyConflictResolutionArg(str, Enum):
     NONE = 'none'
     OVERWRITE = 'overwrite'
 
+
 class MetadataCascadePoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_metadata_cascade_policies(self, folder_id: str, owner_enterprise_id: Optional[str] = None, marker: Optional[str] = None, offset: Optional[int] = None) -> MetadataCascadePolicies:
         """
         Retrieves a list of all the metadata cascade policies
-        
+
         that are applied to a given folder. This can not be used on the root
 
-        
+
         folder with ID `0`.
 
         :param folder_id: Specifies which folder to return policies for. This can not be used on the
@@ -73,19 +77,20 @@ class MetadataCascadePoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'owner_enterprise_id': to_string(owner_enterprise_id), 'marker': to_string(marker), 'offset': to_string(offset)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
+
     def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str) -> MetadataCascadePolicy:
         """
         Creates a new metadata cascade policy that applies a given
-        
+
         metadata template to a given folder and automatically
 
-        
+
         cascades it down to any files within that folder.
 
-        
+
         In order for the policy to be applied a metadata instance must first
 
-        
+
         be applied to the folder the policy is to be applied to.
 
         :param folder_id: The ID of the folder to apply the policy to. This folder will
@@ -112,6 +117,7 @@ class MetadataCascadePoliciesManager:
         request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, template_key=template_key)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
+
     def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str) -> MetadataCascadePolicy:
         """
         Retrieve a specific metadata cascade policy assigned to a folder.
@@ -121,6 +127,7 @@ class MetadataCascadePoliciesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
+
     def delete_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str) -> None:
         """
         Deletes a metadata cascade policy.
@@ -130,16 +137,17 @@ class MetadataCascadePoliciesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def create_metadata_cascade_policy_apply(self, metadata_cascade_policy_id: str, conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg) -> None:
         """
         Force the metadata on a folder with a metadata cascade policy to be applied to
-        
+
         all of its children. This can be used after creating a new cascade policy to
 
-        
+
         enforce the metadata to be cascaded down to all existing files within that
 
-        
+
         folder.
 
         :param metadata_cascade_policy_id: The ID of the cascade policy to force-apply.

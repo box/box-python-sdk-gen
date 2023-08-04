@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FolderWatermarksManager](#folderwatermarksmanager)
+  - [Get watermark for folder](#get-watermark-for-folder)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Apply watermark to folder](#apply-watermark-to-folder)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Remove watermark from folder](#remove-watermark-from-folder)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FolderWatermarksManager
 
 ## Get watermark for folder

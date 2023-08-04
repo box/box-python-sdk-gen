@@ -34,11 +34,14 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateShieldInformationBarrierSegmentMemberTypeArg(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
 
+
 class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
+
 
 class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField] = None, **kwargs):
@@ -53,14 +56,16 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierSegmentMembersManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str) -> ShieldInformationBarrierSegmentMember:
         """
         Retrieves a shield information barrier
-        
+
         segment member by its ID.
 
         :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
@@ -69,10 +74,11 @@ class ShieldInformationBarrierSegmentMembersManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members/', shield_information_barrier_segment_member_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return ShieldInformationBarrierSegmentMember.from_dict(json.loads(response.text))
+
     def delete_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str) -> None:
         """
         Deletes a shield information barrier
-        
+
         segment member based on provided ID.
 
         :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
@@ -81,10 +87,11 @@ class ShieldInformationBarrierSegmentMembersManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members/', shield_information_barrier_segment_member_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def get_shield_information_barrier_segment_members(self, shield_information_barrier_segment_id: str, marker: Optional[str] = None, limit: Optional[int] = None) -> None:
         """
         Lists shield information barrier segment members
-        
+
         based on provided segment IDs.
 
         :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
@@ -99,6 +106,7 @@ class ShieldInformationBarrierSegmentMembersManager:
         query_params_map: Dict[str, str] = prepare_params({'shield_information_barrier_segment_id': to_string(shield_information_barrier_segment_id), 'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return None
+
     def create_shield_information_barrier_segment_member(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg, user: UserBase, type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None) -> ShieldInformationBarrierSegmentMember:
         """
         Creates a new shield information barrier segment member.

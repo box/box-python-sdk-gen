@@ -28,14 +28,16 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class LegalHoldPoliciesManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_legal_hold_policies(self, policy_name: Optional[str] = None, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None) -> LegalHoldPolicies:
         """
         Retrieves a list of legal hold policies that belong to
-        
+
         an enterprise.
 
         :param policy_name: Limits results to policies for which the names start with
@@ -60,6 +62,7 @@ class LegalHoldPoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'policy_name': to_string(policy_name), 'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicies.from_dict(json.loads(response.text))
+
     def create_legal_hold_policy(self, policy_name: str, description: Optional[str] = None, filter_started_at: Optional[str] = None, filter_ended_at: Optional[str] = None, is_ongoing: Optional[bool] = None) -> LegalHoldPolicy:
         """
         Create a new legal hold policy.
@@ -97,6 +100,7 @@ class LegalHoldPoliciesManager:
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, filter_started_at=filter_started_at, filter_ended_at=filter_ended_at, is_ongoing=is_ongoing)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
+
     def get_legal_hold_policy_by_id(self, legal_hold_policy_id: str) -> LegalHoldPolicy:
         """
         Retrieve a legal hold policy.
@@ -106,6 +110,7 @@ class LegalHoldPoliciesManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
+
     def update_legal_hold_policy_by_id(self, legal_hold_policy_id: str, policy_name: Optional[str] = None, description: Optional[str] = None, release_notes: Optional[str] = None) -> LegalHoldPolicy:
         """
         Update legal hold policy.
@@ -122,13 +127,14 @@ class LegalHoldPoliciesManager:
         request_body: BaseObject = BaseObject(policy_name=policy_name, description=description, release_notes=release_notes)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return LegalHoldPolicy.from_dict(json.loads(response.text))
+
     def delete_legal_hold_policy_by_id(self, legal_hold_policy_id: str) -> None:
         """
         Delete an existing legal hold policy.
-        
+
         This is an asynchronous process. The policy will not be
 
-        
+
         fully deleted yet when the response returns.
 
         :param legal_hold_policy_id: The ID of the legal hold policy

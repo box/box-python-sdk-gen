@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [SearchManager](#searchmanager)
+  - [Query files/folders by metadata](#query-filesfolders-by-metadata)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [List metadata query indices](#list-metadata-query-indices)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Search for content](#search-for-content)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # SearchManager
 
 ## Query files/folders by metadata

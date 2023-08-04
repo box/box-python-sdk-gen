@@ -34,12 +34,15 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFileRequestByIdStatusArg(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
 
+
 class CreateFileRequestCopyFolderArgTypeField(str, Enum):
     FOLDER = 'folder'
+
 
 class CreateFileRequestCopyFolderArg(BaseObject):
     def __init__(self, id: str, type: Optional[CreateFileRequestCopyFolderArgTypeField] = None, **kwargs):
@@ -54,14 +57,17 @@ class CreateFileRequestCopyFolderArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CreateFileRequestCopyStatusArg(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
+
 
 class FileRequestsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_request_by_id(self, file_request_id: str) -> FileRequest:
         """
         Retrieves the information about a file request.
@@ -76,10 +82,11 @@ class FileRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))
+
     def update_file_request_by_id(self, file_request_id: str, title: Optional[str] = None, description: Optional[str] = None, status: Optional[UpdateFileRequestByIdStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None, if_match: Optional[str] = None) -> FileRequest:
         """
         Updates a file request. This can be used to activate or
-        
+
         deactivate a file request.
 
         :param file_request_id: The unique identifier that represent a file request.
@@ -135,6 +142,7 @@ class FileRequestsManager:
         headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FileRequest.from_dict(json.loads(response.text))
+
     def delete_file_request_by_id(self, file_request_id: str) -> None:
         """
         Deletes a file request permanently.
@@ -149,10 +157,11 @@ class FileRequestsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/file_requests/', file_request_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def create_file_request_copy(self, file_request_id: str, folder: CreateFileRequestCopyFolderArg, title: Optional[str] = None, description: Optional[str] = None, status: Optional[CreateFileRequestCopyStatusArg] = None, is_email_required: Optional[bool] = None, is_description_required: Optional[bool] = None, expires_at: Optional[str] = None) -> FileRequest:
         """
         Copies an existing file request that is already present on one folder,
-        
+
         and applies it to another folder.
 
         :param file_request_id: The unique identifier that represent a file request.

@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [SharedLinksFilesManager](#sharedlinksfilesmanager)
+  - [Find file for shared link](#find-file-for-shared-link)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get shared link for file](#get-shared-link-for-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Add shared link to file](#add-shared-link-to-file)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Update shared link on file](#update-shared-link-on-file)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Remove shared link from file](#remove-shared-link-from-file)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # SharedLinksFilesManager
 
 ## Find file for shared link

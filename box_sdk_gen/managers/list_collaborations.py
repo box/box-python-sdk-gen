@@ -26,20 +26,23 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetCollaborationsStatusArg(str, Enum):
     PENDING = 'pending'
+
 
 class ListCollaborationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_collaborations(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
-        
+
         file. This returns all the users that have access to the file
 
-        
+
         or have been invited to the file.
 
         :param file_id: The unique identifier that represents a file.
@@ -69,13 +72,14 @@ class ListCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
+
     def get_folder_collaborations(self, folder_id: str, fields: Optional[str] = None) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
-        
+
         folder. This returns all the users that have access to the folder
 
-        
+
         or have been invited to the folder.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -99,6 +103,7 @@ class ListCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
+
     def get_collaborations(self, status: GetCollaborationsStatusArg, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None) -> Collaborations:
         """
         Retrieves all pending collaboration invites for this user.
@@ -124,16 +129,17 @@ class ListCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'status': to_string(status), 'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaborations.from_dict(json.loads(response.text))
+
     def get_group_collaborations(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None) -> Collaborations:
         """
         Retrieves all the collaborations for a group. The user
-        
+
         must have admin permissions to inspect enterprise's groups.
 
-        
+
         Each collaboration object has details on which files or
 
-        
+
         folders the group has access to and with what role.
 
         :param group_id: The ID of the group.

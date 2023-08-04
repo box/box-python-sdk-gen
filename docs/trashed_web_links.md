@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TrashedWebLinksManager](#trashedweblinksmanager)
+  - [Restore web link](#restore-web-link)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get trashed web link](#get-trashed-web-link)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Permanently remove web link](#permanently-remove-web-link)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TrashedWebLinksManager
 
 ## Restore web link

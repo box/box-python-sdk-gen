@@ -30,6 +30,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateCollaborationByIdRoleArg(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
@@ -40,14 +41,17 @@ class UpdateCollaborationByIdRoleArg(str, Enum):
     CO_OWNER = 'co-owner'
     OWNER = 'owner'
 
+
 class UpdateCollaborationByIdStatusArg(str, Enum):
     PENDING = 'pending'
     ACCEPTED = 'accepted'
     REJECTED = 'rejected'
 
+
 class CreateCollaborationItemArgTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
+
 
 class CreateCollaborationItemArg(BaseObject):
     def __init__(self, type: CreateCollaborationItemArgTypeField, id: str, **kwargs):
@@ -62,9 +66,11 @@ class CreateCollaborationItemArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class CreateCollaborationAccessibleByArgTypeField(str, Enum):
     USER = 'user'
     GROUP = 'group'
+
 
 class CreateCollaborationAccessibleByArg(BaseObject):
     def __init__(self, type: CreateCollaborationAccessibleByArgTypeField, id: Optional[str] = None, login: Optional[str] = None, **kwargs):
@@ -84,6 +90,7 @@ class CreateCollaborationAccessibleByArg(BaseObject):
         self.id = id
         self.login = login
 
+
 class CreateCollaborationRoleArg(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
@@ -93,10 +100,12 @@ class CreateCollaborationRoleArg(str, Enum):
     VIEWER_UPLOADER = 'viewer uploader'
     CO_OWNER = 'co-owner'
 
+
 class UserCollaborationsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_collaboration_by_id(self, collaboration_id: str, fields: Optional[str] = None) -> Collaboration:
         """
         Retrieves a single collaboration.
@@ -116,13 +125,14 @@ class UserCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))
+
     def update_collaboration_by_id(self, collaboration_id: str, role: UpdateCollaborationByIdRoleArg, status: Optional[UpdateCollaborationByIdStatusArg] = None, expires_at: Optional[str] = None, can_view_path: Optional[bool] = None) -> Collaboration:
         """
         Updates a collaboration.
-        
+
         Can be used to change the owner of an item, or to
 
-        
+
         accept collaboration invites.
 
         :param collaboration_id: The ID of the collaboration
@@ -161,6 +171,7 @@ class UserCollaborationsManager:
         request_body: BaseObject = BaseObject(role=role, status=status, expires_at=expires_at, can_view_path=can_view_path)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Collaboration.from_dict(json.loads(response.text))
+
     def delete_collaboration_by_id(self, collaboration_id: str) -> None:
         """
         Deletes a single collaboration.
@@ -170,37 +181,38 @@ class UserCollaborationsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def create_collaboration(self, item: CreateCollaborationItemArg, accessible_by: CreateCollaborationAccessibleByArg, role: CreateCollaborationRoleArg, can_view_path: Optional[bool] = None, expires_at: Optional[str] = None, fields: Optional[str] = None, notify: Optional[bool] = None) -> Collaboration:
         """
         Adds a collaboration for a single user or a single group to a file
-        
+
         or folder.
 
-        
+
         Collaborations can be created using email address, user IDs, or a
 
-        
+
         group IDs.
 
-        
+
         If a collaboration is being created with a group, access to
 
-        
+
         this endpoint is dependent on the group's ability to be invited.
 
-        
+
         If collaboration is in `pending` status, the following fields
 
-        
+
         are redacted:
 
-        
+
         - `login` and `name` are hidden if a collaboration was created
 
-        
+
         using `user_id`,
 
-        
+
         -  `name` is hidden if a collaboration was created using `login`.
 
         :param item: The item to attach the comment to.

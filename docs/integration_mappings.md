@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [IntegrationMappingsManager](#integrationmappingsmanager)
+  - [List Slack integration mappings](#list-slack-integration-mappings)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create Slack integration mapping](#create-slack-integration-mapping)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Update Slack integration mapping](#update-slack-integration-mapping)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Delete Slack integration mapping](#delete-slack-integration-mapping)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # IntegrationMappingsManager
 
 ## List Slack integration mappings

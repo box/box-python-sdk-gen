@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ShieldInformationBarrierSegmentMembersManager](#shieldinformationbarriersegmentmembersmanager)
+  - [Get shield information barrier segment member by ID](#get-shield-information-barrier-segment-member-by-id)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Delete shield information barrier segment member by ID](#delete-shield-information-barrier-segment-member-by-id)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [List shield information barrier segment members](#list-shield-information-barrier-segment-members)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Create shield information barrier segment member](#create-shield-information-barrier-segment-member)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ShieldInformationBarrierSegmentMembersManager
 
 ## Get shield information barrier segment member by ID

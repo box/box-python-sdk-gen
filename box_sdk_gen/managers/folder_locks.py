@@ -30,6 +30,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateFolderLockLockedOperationsArg(BaseObject):
     def __init__(self, move: bool, delete: bool, **kwargs):
         """
@@ -41,6 +42,7 @@ class CreateFolderLockLockedOperationsArg(BaseObject):
         super().__init__(**kwargs)
         self.move = move
         self.delete = delete
+
 
 class CreateFolderLockFolderArg(BaseObject):
     def __init__(self, type: str, id: str, **kwargs):
@@ -55,17 +57,19 @@ class CreateFolderLockFolderArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class FolderLocksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_folder_locks(self, folder_id: str) -> FolderLocks:
         """
         Retrieves folder lock details for a given folder.
-        
+
         You must be authenticated as the owner or co-owner of the folder to
 
-        
+
         use this endpoint.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -81,16 +85,17 @@ class FolderLocksManager:
         query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderLocks.from_dict(json.loads(response.text))
+
     def create_folder_lock(self, folder: CreateFolderLockFolderArg, locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None) -> FolderLock:
         """
         Creates a folder lock on a folder, preventing it from being moved and/or
-        
+
         deleted.
 
-        
+
         You must be authenticated as the owner or co-owner of the folder to
 
-        
+
         use this endpoint.
 
         :param folder: The folder to apply the lock to.
@@ -103,13 +108,14 @@ class FolderLocksManager:
         request_body: BaseObject = BaseObject(locked_operations=locked_operations, folder=folder)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folder_locks']), FetchOptions(method='POST', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderLock.from_dict(json.loads(response.text))
+
     def delete_folder_lock_by_id(self, folder_lock_id: str) -> None:
         """
         Deletes a folder lock on a given folder.
-        
+
         You must be authenticated as the owner or co-owner of the folder to
 
-        
+
         use this endpoint.
 
         :param folder_lock_id: The ID of the folder lock.

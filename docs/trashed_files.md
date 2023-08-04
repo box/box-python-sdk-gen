@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TrashedFilesManager](#trashedfilesmanager)
+  - [Restore file](#restore-file)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get trashed file](#get-trashed-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Permanently remove file](#permanently-remove-file)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TrashedFilesManager
 
 ## Restore file

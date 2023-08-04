@@ -28,8 +28,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFolderWatermarkWatermarkArgImprintField(str, Enum):
     DEFAULT = 'default'
+
 
 class UpdateFolderWatermarkWatermarkArg(BaseObject):
     def __init__(self, imprint: UpdateFolderWatermarkWatermarkArgImprintField, **kwargs):
@@ -41,10 +43,12 @@ class UpdateFolderWatermarkWatermarkArg(BaseObject):
         super().__init__(**kwargs)
         self.imprint = imprint
 
+
 class FolderWatermarksManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_folder_watermark(self, folder_id: str) -> Watermark:
         """
         Retrieve the watermark for a folder.
@@ -61,6 +65,7 @@ class FolderWatermarksManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='GET', response_format='json', auth=self.auth, network_session=self.network_session))
         return Watermark.from_dict(json.loads(response.text))
+
     def update_folder_watermark(self, folder_id: str, watermark: UpdateFolderWatermarkWatermarkArg) -> Watermark:
         """
         Applies or update a watermark on a folder.
@@ -80,6 +85,7 @@ class FolderWatermarksManager:
         request_body: BaseObject = BaseObject(watermark=watermark)
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return Watermark.from_dict(json.loads(response.text))
+
     def delete_folder_watermark(self, folder_id: str) -> None:
         """
         Removes the watermark from a folder.

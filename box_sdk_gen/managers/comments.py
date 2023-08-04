@@ -34,9 +34,11 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateCommentItemArgTypeField(str, Enum):
     FILE = 'file'
     COMMENT = 'comment'
+
 
 class CreateCommentItemArg(BaseObject):
     def __init__(self, id: str, type: CreateCommentItemArgTypeField, **kwargs):
@@ -50,10 +52,12 @@ class CreateCommentItemArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CommentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
+
     def get_file_comments(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> Comments:
         """
         Retrieves a list of comments for a file.
@@ -85,10 +89,11 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Comments.from_dict(json.loads(response.text))
+
     def get_comment_by_id(self, comment_id: str, fields: Optional[str] = None) -> CommentFull:
         """
         Retrieves the message and metadata for a specific comment, as well
-        
+
         as information on the user who created the comment.
 
         :param comment_id: The ID of the comment.
@@ -107,6 +112,7 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params=query_params_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return CommentFull.from_dict(json.loads(response.text))
+
     def update_comment_by_id(self, comment_id: str, message: Optional[str] = None, fields: Optional[str] = None) -> CommentFull:
         """
         Update the message of a comment.
@@ -129,6 +135,7 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params=query_params_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return CommentFull.from_dict(json.loads(response.text))
+
     def delete_comment_by_id(self, comment_id: str) -> None:
         """
         Permanently deletes a comment.
@@ -138,10 +145,11 @@ class CommentsManager:
         """
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', response_format=None, auth=self.auth, network_session=self.network_session))
         return None
+
     def create_comment(self, message: str, tagged_message: Optional[str] = None, item: Optional[CreateCommentItemArg] = None, fields: Optional[str] = None) -> Comment:
         """
         Adds a comment by the user to a specific file, or
-        
+
         as a reply to an other comment.
 
         :param message: The text of the comment.

@@ -32,6 +32,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_create_get_cancel_and_list_sign_request():
     signer_email: str = ''.join([get_uuid(), '@box.com'])
     file_to_sign = upload_new_file()

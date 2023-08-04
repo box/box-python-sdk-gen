@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FileVersionsManager](#fileversionsmanager)
+  - [List all file versions](#list-all-file-versions)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get file version](#get-file-version)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Restore file version](#restore-file-version)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove file version](#remove-file-version)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Promote file version](#promote-file-version)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FileVersionsManager
 
 ## List all file versions

@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [WebLinksManager](#weblinksmanager)
+  - [Create web link](#create-web-link)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get web link](#get-web-link)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Update web link](#update-web-link)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove web link](#remove-web-link)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # WebLinksManager
 
 ## Create web link

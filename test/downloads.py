@@ -28,6 +28,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_download_file():
     new_file_name: str = get_uuid()
     file_buffer: Buffer = generate_byte_buffer(1048576)

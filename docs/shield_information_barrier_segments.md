@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ShieldInformationBarrierSegmentsManager](#shieldinformationbarriersegmentsmanager)
+  - [Get shield information barrier segment with specified ID](#get-shield-information-barrier-segment-with-specified-id)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Update shield information barrier segment with specified ID](#update-shield-information-barrier-segment-with-specified-id)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Delete shield information barrier segment](#delete-shield-information-barrier-segment)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [List shield information barrier segments](#list-shield-information-barrier-segments)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Create shield information barrier segment](#create-shield-information-barrier-segment)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ShieldInformationBarrierSegmentsManager
 
 ## Get shield information barrier segment with specified ID

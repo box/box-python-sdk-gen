@@ -20,6 +20,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def testAvatars():
     user: UserFull = client.users.get_user_me()
     created_avatar: UserAvatar = client.avatars.create_user_avatar(user.id, decode_base_64_byte_stream('iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=='), 'avatar.png', 'image/png')

@@ -26,6 +26,7 @@ auth: JWTAuth = JWTAuth(config=jwt_config)
 
 client: Client = Client(auth=auth)
 
+
 def test_upload_file_and_file_version():
     new_file_name: str = get_uuid()
     file_content_stream: ByteStream = generate_byte_stream(1048576)

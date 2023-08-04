@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MembershipsManager](#membershipsmanager)
+  - [List user&#x27;s groups](#list-userx27s-groups)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [List members of group](#list-members-of-group)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Add user to group](#add-user-to-group)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Get group membership](#get-group-membership)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Update group membership](#update-group-membership)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [Remove user from group](#remove-user-from-group)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # MembershipsManager
 
 ## List user&#x27;s groups

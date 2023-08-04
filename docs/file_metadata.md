@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [FileMetadataManager](#filemetadatamanager)
+  - [List metadata instances on file](#list-metadata-instances-on-file)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Get metadata instance on file](#get-metadata-instance-on-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Create metadata instance on file](#create-metadata-instance-on-file)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove metadata instance from file](#remove-metadata-instance-from-file)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # FileMetadataManager
 
 ## List metadata instances on file

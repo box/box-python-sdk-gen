@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ChunkedUploadsManager](#chunkeduploadsmanager)
+  - [Create upload session](#create-upload-session)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create upload session for existing file](#create-upload-session-for-existing-file)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get upload session](#get-upload-session)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Upload part of file](#upload-part-of-file)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Remove upload session](#remove-upload-session)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [List parts](#list-parts)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+  - [Commit upload session](#commit-upload-session)
+    - [Arguments](#arguments-6)
+    - [Returns](#returns-6)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ChunkedUploadsManager
 
 This is a manager for chunked uploads (allowed for files at least 20MB).

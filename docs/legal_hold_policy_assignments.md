@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [LegalHoldPolicyAssignmentsManager](#legalholdpolicyassignmentsmanager)
+  - [List legal hold policy assignments](#list-legal-hold-policy-assignments)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Assign legal hold policy](#assign-legal-hold-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get legal hold policy assignment](#get-legal-hold-policy-assignment)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Unassign legal hold policy](#unassign-legal-hold-policy)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [List current file versions for legal hold policy assignment](#list-current-file-versions-for-legal-hold-policy-assignment)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+  - [List previous file versions for legal hold policy assignment](#list-previous-file-versions-for-legal-hold-policy-assignment)
+    - [Arguments](#arguments-5)
+    - [Returns](#returns-5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # LegalHoldPolicyAssignmentsManager
 
 ## List legal hold policy assignments

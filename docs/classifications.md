@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ClassificationsManager](#classificationsmanager)
+  - [List all classifications](#list-all-classifications)
+    - [Returns](#returns)
+  - [Delete all classifications](#delete-all-classifications)
+    - [Returns](#returns-1)
+  - [Add initial classifications](#add-initial-classifications)
+    - [Arguments](#arguments)
+    - [Returns](#returns-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # ClassificationsManager
 
 ## List all classifications

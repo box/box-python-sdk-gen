@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [MetadataCascadePoliciesManager](#metadatacascadepoliciesmanager)
+  - [List metadata cascade policies](#list-metadata-cascade-policies)
+    - [Arguments](#arguments)
+    - [Returns](#returns)
+  - [Create metadata cascade policy](#create-metadata-cascade-policy)
+    - [Arguments](#arguments-1)
+    - [Returns](#returns-1)
+  - [Get metadata cascade policy](#get-metadata-cascade-policy)
+    - [Arguments](#arguments-2)
+    - [Returns](#returns-2)
+  - [Remove metadata cascade policy](#remove-metadata-cascade-policy)
+    - [Arguments](#arguments-3)
+    - [Returns](#returns-3)
+  - [Force-apply metadata cascade policy to folder](#force-apply-metadata-cascade-policy-to-folder)
+    - [Arguments](#arguments-4)
+    - [Returns](#returns-4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # MetadataCascadePoliciesManager
 
 ## List metadata cascade policies
