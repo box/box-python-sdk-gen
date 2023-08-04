@@ -1,26 +1,28 @@
-from box_sdk.managers.uploads import UploadFileAttributesArg
+import pytest
 
-from box_sdk.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
-from box_sdk.managers.files import GetFileThumbnailByIdExtensionArg
+from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk.managers.files import CopyFileParentArg
+from box_sdk_gen.managers.files import GetFileThumbnailByIdExtensionArg
 
-from box_sdk.utils import decode_base_64
+from box_sdk_gen.managers.files import CopyFileParentArg
 
-from box_sdk.utils import get_env_var
+from box_sdk_gen.utils import decode_base_64
 
-from box_sdk.utils import get_uuid
+from box_sdk_gen.utils import get_env_var
 
-from box_sdk.utils import generate_byte_stream
+from box_sdk_gen.utils import get_uuid
 
-from box_sdk.utils import read_byte_stream
+from box_sdk_gen.utils import generate_byte_stream
 
-from box_sdk.client import Client
+from box_sdk_gen.utils import read_byte_stream
 
-from box_sdk.jwt_auth import JWTAuth
+from box_sdk_gen.client import Client
 
-from box_sdk.jwt_auth import JWTConfig
+from box_sdk_gen.jwt_auth import JWTAuth
+
+from box_sdk_gen.jwt_auth import JWTConfig
 
 from test.commons import upload_new_file
 
@@ -55,6 +57,8 @@ def testCreateGetAndDeleteFile():
     updated_content_stream: ByteStream = generate_byte_stream(1048576)
     uploaded_file = upload_file(new_file_name, updated_content_stream)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
+    with pytest.raises(Exception):
+        client.files.get_file_by_id(file_id=uploaded_file.id, fields='name', extra_headers={'if-none-match': file.etag})
     assert file.name == new_file_name
     client.files.delete_file_by_id(file_id=uploaded_file.id)
     trashed_file: TrashFile = client.trashed_files.get_file_trash(file_id=uploaded_file.id)
