@@ -4,6 +4,7 @@ Downloads module is used to download files from Box.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
 - [Download a File](#download-a-file)
 

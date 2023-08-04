@@ -6,6 +6,7 @@ file's contents, upload new versions, and perform other common file operations
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
 - [Get a File's Information](#get-a-files-information)
   - [Getting additional fields](#getting-additional-fields)

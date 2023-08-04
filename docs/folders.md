@@ -5,6 +5,7 @@ iterate through a folder's contents and perform other common folder operations (
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
 - [Get Information About a Folder](#get-information-about-a-folder)
   - [Get the User's Root Folder Information](#get-the-users-root-folder-information)

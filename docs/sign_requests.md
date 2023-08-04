@@ -5,6 +5,7 @@ A Sign Request can refer to one or more Box Files and can be sent to one or more
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
 - [Create Sign Request](#create-sign-request)
 - [Get All Sign Requests](#get-all-sign-requests)
