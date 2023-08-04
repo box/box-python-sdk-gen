@@ -13,8 +13,8 @@ The default maximum number of retries in case of failed API call is 5 (429 and >
 To change this number you can set `client.network.MAX_ATTEMPTS` field.
 
 ```python
-from box_sdk_gen.client import Client
-from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
+from box_sdk.client import Client
+from box_sdk.developer_token_auth import DeveloperTokenAuth
 
 auth = DeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
 client = Client(auth=auth)

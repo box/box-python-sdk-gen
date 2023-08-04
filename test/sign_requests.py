@@ -1,30 +1,30 @@
-from box_sdk_gen.schemas import FileBaseTypeField
+from box_sdk.schemas import FileBaseTypeField
 
-from box_sdk_gen.schemas import FolderBaseTypeField
+from box_sdk.schemas import FolderBaseTypeField
 
-from box_sdk_gen.utils import decode_base_64
+from box_sdk.utils import decode_base_64
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk.utils import get_env_var
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk.utils import get_uuid
 
 from test.commons import upload_new_file
 
 from test.commons import create_new_folder
 
-from box_sdk_gen.schemas import SignRequestCreateRequest
+from box_sdk.schemas import SignRequestCreateRequest
 
-from box_sdk_gen.schemas import SignRequestCreateSigner
+from box_sdk.schemas import SignRequestCreateSigner
 
-from box_sdk_gen.schemas import FolderMini
+from box_sdk.schemas import FolderMini
 
-from box_sdk_gen.schemas import FileBase
+from box_sdk.schemas import FileBase
 
-from box_sdk_gen.client import Client
+from box_sdk.client import Client
 
-from box_sdk_gen.jwt_auth import JWTAuth
+from box_sdk.jwt_auth import JWTAuth
 
-from box_sdk_gen.jwt_auth import JWTConfig
+from box_sdk.jwt_auth import JWTConfig
 
 jwt_config = JWTConfig.from_config_json_string(decode_base_64(get_env_var('JWT_CONFIG_BASE_64')))
 

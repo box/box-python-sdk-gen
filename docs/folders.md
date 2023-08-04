@@ -24,7 +24,7 @@ iterate through a folder's contents and perform other common folder operations (
 To retrieve information about a folder, call:
 
 ```python
-from box_sdk_gen.schemas import FolderFull
+from box_sdk.schemas import FolderFull
 
 folder: FolderFull = client.folders.get_folder_by_id(folder_id='12345')
 print(f'Folder with id {folder.id} has name {folder.name}')
@@ -47,7 +47,7 @@ If you want the response object to contain additional fields that are not return
 such fields in a comma-separated string
 
 ```python
-from box_sdk_gen.schemas import FolderFull
+from box_sdk.schemas import FolderFull
 
 folder: FolderFull = client.folders.get_folder_by_id(folder_id='12345', fields='has_collaborations,tags')
 ```
@@ -62,7 +62,7 @@ To retrieve the items in a folder, call `get_folder_items` method. It returns a 
 that exposes list of items inside a folder with field `entries`.
 
 ```python
-from box_sdk_gen.schemas import Items
+from box_sdk.schemas import Items
 
 items: Items = client.folders.get_folder_items('12345')
 for item in items.entries:
@@ -75,7 +75,7 @@ A folder can be created by calling `create_folder` method with required request 
 This method returns a new `FolderFull` representing the created subfolder.
 
 ```python
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk.managers.folders import CreateFolderParentArg
 
 subfolder = client.folders.create_folder(name='New Folder Name', parent=CreateFolderParentArg(id='0'))
 print(f'Created subfolder with ID {subfolder.id}')
@@ -106,7 +106,7 @@ This method returns a new `FolderFull` object representing the copy of the folde
 <!-- sample post_folders_id_copy -->
 
 ```python
-from box_sdk_gen.managers.folders import CopyFolderParentArg
+from box_sdk.managers.folders import CopyFolderParentArg
 
 folder_id = '22222'
 destination_folder_id = '44444'
@@ -127,7 +127,7 @@ destination folder to move the folder into. You can optionally provide a `name` 
 folder in case of a name conflict in the destination folder. This method returns the updated `FolderFull` object.
 
 ```python
-from box_sdk_gen.managers.folders import CopyFolderParentArg
+from box_sdk.managers.folders import CopyFolderParentArg
 
 folder_id = '11111'
 destination_folder_id = '44444'
