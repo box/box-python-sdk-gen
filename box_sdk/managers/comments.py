@@ -158,7 +158,7 @@ class CommentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
         return None
-    def create_comment(self, message: str, tagged_message: Optional[str] = None, item: Optional[CreateCommentItemArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Comment:
+    def create_comment(self, message: str, item: CreateCommentItemArg, tagged_message: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Comment:
         """
         Adds a comment by the user to a specific file, or
         
@@ -168,6 +168,8 @@ class CommentsManager:
             To mention a user, use the `tagged_message`
             parameter instead.
         :type message: str
+        :param item: The item to attach the comment to.
+        :type item: CreateCommentItemArg
         :param tagged_message: The text of the comment, including `@[user_id:name]`
             somewhere in the message to mention another user, which
             will send them an email notification, letting them know
@@ -178,8 +180,6 @@ class CommentsManager:
             If you are not mentioning another user, use `message`
             instead.
         :type tagged_message: Optional[str], optional
-        :param item: The item to attach the comment to.
-        :type item: Optional[CreateCommentItemArg], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.

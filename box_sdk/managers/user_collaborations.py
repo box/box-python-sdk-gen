@@ -1,8 +1,8 @@
 from enum import Enum
 
-from box_sdk.base_object import BaseObject
-
 from typing import Optional
+
+from box_sdk.base_object import BaseObject
 
 from typing import Dict
 
@@ -50,13 +50,13 @@ class CreateCollaborationItemArgTypeField(str, Enum):
     FOLDER = 'folder'
 
 class CreateCollaborationItemArg(BaseObject):
-    def __init__(self, type: CreateCollaborationItemArgTypeField, id: str, **kwargs):
+    def __init__(self, type: Optional[CreateCollaborationItemArgTypeField] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the item that this collaboration will be
             granted access to
-        :type type: CreateCollaborationItemArgTypeField
+        :type type: Optional[CreateCollaborationItemArgTypeField], optional
         :param id: The ID of the item that will be granted access to
-        :type id: str
+        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type

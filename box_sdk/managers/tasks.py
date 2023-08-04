@@ -1,8 +1,8 @@
 from enum import Enum
 
-from box_sdk.base_object import BaseObject
-
 from typing import Optional
+
+from box_sdk.base_object import BaseObject
 
 from typing import Dict
 
@@ -36,12 +36,12 @@ class CreateTaskItemArgTypeField(str, Enum):
     FILE = 'file'
 
 class CreateTaskItemArg(BaseObject):
-    def __init__(self, id: str, type: CreateTaskItemArgTypeField, **kwargs):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateTaskItemArgTypeField] = None, **kwargs):
         """
         :param id: The ID of the file
-        :type id: str
+        :type id: Optional[str], optional
         :param type: `file`
-        :type type: CreateTaskItemArgTypeField
+        :type type: Optional[CreateTaskItemArgTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
