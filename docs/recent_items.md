@@ -14,7 +14,10 @@ This operation is performed by calling function `get_recent_items`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-recent-items/).
 
-*Currently we don't have an example for calling `get_recent_items` in integration tests*
+<!-- sample get_recent_items -->
+```python
+client.recent_items.get_recent_items()
+```
 
 ### Arguments
 

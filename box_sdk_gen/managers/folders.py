@@ -134,6 +134,18 @@ class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
         super().__init__(**kwargs)
         self.access = access
 
+class UpdateFolderByIdCollectionsArg(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this object
+        :type id: Optional[str], optional
+        :param type: The type for this object
+        :type type: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+
 class GetFolderItemsSortArg(str, Enum):
     ID = 'id'
     NAME = 'name'
@@ -297,7 +309,7 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FolderFull.from_dict(json.loads(response.text))
-    def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
+    def update_folder_by_id(self, folder_id: str, name: Optional[str] = None, description: Optional[str] = None, sync_state: Optional[UpdateFolderByIdSyncStateArg] = None, can_non_owners_invite: Optional[bool] = None, parent: Optional[UpdateFolderByIdParentArg] = None, shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None, folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None, tags: Optional[List[str]] = None, is_collaboration_restricted_to_enterprise: Optional[bool] = None, collections: Optional[List[UpdateFolderByIdCollectionsArg]] = None, can_non_owners_view_collaborators: Optional[bool] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FolderFull:
         """
         Updates a folder. This can be also be used to move the folder,
         
@@ -346,7 +358,7 @@ class FoldersManager:
             Passing an empty array `[]` or `null` will remove
             the folder from all collections.
             [1]: e://get-collections
-        :type collections: Optional[List], optional
+        :type collections: Optional[List[UpdateFolderByIdCollectionsArg]], optional
         :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
             this folder from viewing other collaborations on
             this folder.

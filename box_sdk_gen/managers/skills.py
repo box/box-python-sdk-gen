@@ -2,11 +2,11 @@ from enum import Enum
 
 from typing import Optional
 
-from typing import List
-
 from typing import Union
 
 from box_sdk_gen.base_object import BaseObject
+
+from typing import List
 
 from typing import Dict
 
@@ -41,6 +41,24 @@ from box_sdk_gen.fetch import fetch
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField(str, Enum):
+    REPLACE = 'replace'
+
+class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
+    def __init__(self, op: Optional[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField] = None, path: Optional[str] = None, value: Optional[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]] = None, **kwargs):
+        """
+        :param op: `replace`
+        :type op: Optional[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField], optional
+        :param path: The JSON Path that represents the card to replace. In most cases
+            this will be in the format `/cards/{index}` where `index` is the
+            zero-indexed position of the card in the list of cards.
+        :type path: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.op = op
+        self.path = path
+        self.value = value
 
 class UpdateSkillInvocationByIdStatusArg(str, Enum):
     INVOKED = 'invoked'
@@ -144,6 +162,27 @@ class SkillsManager:
         request_body: BaseObject = BaseObject(cards=cards)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        return SkillCardsMetadata.from_dict(json.loads(response.text))
+    def update_file_metadata_global_box_skills_card(self, file_id: str, request_body: List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SkillCardsMetadata:
+        """
+        Updates one or more Box Skills metadata cards to a file.
+        :param file_id: The unique identifier that represents a file.
+            The ID for any file can be determined
+            by visiting a file in the web application
+            and copying the ID from the URL. For example,
+            for the URL `https://*.app.box.com/files/123`
+            the `file_id` is `123`.
+            Example: "12345"
+        :type file_id: str
+        :param request_body: Request body of updateFileMetadataGlobalBoxSkillsCard method
+        :type request_body: List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg]
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/global/boxSkillsCards']), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json-patch+json', response_format='json', auth=self.auth, network_session=self.network_session))
         return SkillCardsMetadata.from_dict(json.loads(response.text))
     def delete_file_metadata_global_box_skills_card(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """

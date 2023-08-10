@@ -3,6 +3,7 @@
 
 - [Get classification on file](#get-classification-on-file)
 - [Add classification to file](#add-classification-to-file)
+- [Update classification on file](#update-classification-on-file)
 - [Remove classification from file](#remove-classification-from-file)
 
 ## Get classification on file
@@ -71,6 +72,38 @@ This function returns a value of type `Classification`.
 
 Returns the classification template instance
 that was applied to the file.
+
+
+## Update classification on file
+
+Updates a classification on a file.
+
+The classification can only be updated if a classification has already been
+applied to the file before. When editing classifications, only values are
+defined for the enterprise will be accepted.
+
+This operation is performed by calling function `update_file_metadata_enterprise_security_classification`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+*Currently we don't have an example for calling `update_file_metadata_enterprise_security_classification` in integration tests*
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- request_body `List[UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg]`
+  - Request body of updateFileMetadataEnterpriseSecurityClassification method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `Classification`.
+
+Returns the updated classification metadata template instance.
 
 
 ## Remove classification from file

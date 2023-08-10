@@ -60,6 +60,19 @@ class CreateRetentionPolicyAssignmentAssignToArg(BaseObject):
         self.type = type
         self.id = id
 
+class CreateRetentionPolicyAssignmentFilterFieldsArg(BaseObject):
+    def __init__(self, field: Optional[str] = None, value: Optional[str] = None, **kwargs):
+        """
+        :param field: The metadata attribute key id.
+        :type field: Optional[str], optional
+        :param value: The metadata attribute field id. For value, only
+            enum and multiselect types are supported.
+        :type value: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.field = field
+        self.value = value
+
 class RetentionPolicyAssignmentsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
@@ -98,7 +111,7 @@ class RetentionPolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/retention_policies/', retention_policy_id, '/assignments']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return RetentionPolicyAssignments.from_dict(json.loads(response.text))
-    def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List] = None, start_date_field: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicyAssignment:
+    def create_retention_policy_assignment(self, policy_id: str, assign_to: CreateRetentionPolicyAssignmentAssignToArg, filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFieldsArg]] = None, start_date_field: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> RetentionPolicyAssignment:
         """
         Assigns a retention policy to an item.
         :param policy_id: The ID of the retention policy to assign
@@ -109,7 +122,7 @@ class RetentionPolicyAssignmentsManager:
             then optionally add the `filter_fields` parameter which will
             require an array of objects with a field entry and a value entry.
             Currently only one object of `field` and `value` is supported.
-        :type filter_fields: Optional[List], optional
+        :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFieldsArg]], optional
         :param start_date_field: The date the retention policy assignment begins.
             If the `assigned_to` type is `metadata_template`,
             this field can be a date field's metadata attribute key id.

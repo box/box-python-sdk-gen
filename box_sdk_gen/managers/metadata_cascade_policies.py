@@ -118,7 +118,7 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, template_key=template_key)
+        request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, templateKey=template_key)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return MetadataCascadePolicy.from_dict(json.loads(response.text))

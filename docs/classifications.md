@@ -3,6 +3,9 @@
 
 - [List all classifications](#list-all-classifications)
 - [Delete all classifications](#delete-all-classifications)
+- [Add classification](#add-classification)
+- [Update classification](#update-classification)
+- [Delete classification](#delete-classification)
 - [Add initial classifications](#add-initial-classifications)
 
 ## List all classifications
@@ -62,6 +65,105 @@ Returns an empty response when the metadata
 template for classifications is successfully deleted.
 
 
+## Add classification
+
+Adds one or more new classifications to the list of classifications
+available to the enterprise.
+
+This API can also be called by including the enterprise ID in the
+URL explicitly, for example
+`/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
+
+This operation is performed by calling function `update_metadata_template_enterprise_security_classification_schema_add`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-add/).
+
+*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_add` in integration tests*
+
+### Arguments
+
+- request_body `List[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArg]`
+  - Request body of updateMetadataTemplateEnterpriseSecurityClassificationSchemaAdd method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `ClassificationTemplate`.
+
+Returns the updated `securityClassification` metadata template, which
+contains a `Box__Security__Classification__Key` field that lists all
+the classifications available to this enterprise.
+
+
+## Update classification
+
+Updates the labels and descriptions of one or more classifications
+available to the enterprise.
+
+This API can also be called by including the enterprise ID in the
+URL explicitly, for example
+`/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
+
+This operation is performed by calling function `update_metadata_template_enterprise_security_classification_schema_update`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-update/).
+
+*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_update` in integration tests*
+
+### Arguments
+
+- request_body `List[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArg]`
+  - Request body of updateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdate method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `ClassificationTemplate`.
+
+Returns the updated `securityClassification` metadata template, which
+contains a `Box__Security__Classification__Key` field that lists all
+the classifications available to this enterprise.
+
+
+## Delete classification
+
+Removes a classification from the list of classifications
+available to the enterprise.
+
+This API can also be called by including the enterprise ID in the
+URL explicitly, for example
+`/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
+
+This operation is performed by calling function `update_metadata_template_enterprise_security_classification_schema_delete`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-delete/).
+
+*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_delete` in integration tests*
+
+### Arguments
+
+- request_body `List[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg]`
+  - Request body of updateMetadataTemplateEnterpriseSecurityClassificationSchemaDelete method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `ClassificationTemplate`.
+
+Returns the updated `securityClassification` metadata template, which
+contains a `Box__Security__Classification__Key` field that lists all
+the classifications available to this enterprise.
+
+
 ## Add initial classifications
 
 When an enterprise does not yet have any classifications, this API call
@@ -91,7 +193,7 @@ See the endpoint docs at
   - `false`
 - copy_instance_on_item_copy `Optional[bool]`
   - `false`
-- fields `Optional[List]`
+- fields `Optional[List[CreateMetadataTemplateSchemaClassificationFieldsArg]]`
   - The classification template holds one field, which holds all the valid classification values.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

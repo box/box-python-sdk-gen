@@ -111,6 +111,8 @@ See the endpoint docs at
 
 - upload_session_id `str`
   - The ID of the upload session. Example: "D5E3F7A"
+- request_body `ByteStream`
+  - Request body of uploadFilePart method
 - digest `str`
   - The [RFC3230][1] message digest of the chunk uploaded.  Only SHA1 is supported. The SHA1 digest must be base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`.  To get the value for the `SHA` digest, use the openSSL command to encode the file part: `openssl sha1 -binary <FILE_PART_NAME> | base64`  [1]: https://tools.ietf.org/html/rfc3230
 - content_range `str`

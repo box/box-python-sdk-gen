@@ -54,7 +54,7 @@ See the endpoint docs at
 
 <!-- sample post_webhooks -->
 ```python
-client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=['FILE.UPLOADED'])
+client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=[CreateWebhookTriggersArg.FILE_UPLOADED.value])
 ```
 
 ### Arguments
@@ -63,7 +63,7 @@ client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=
   - The item that will trigger the webhook
 - address `str`
   - The URL that is notified by this webhook
-- triggers `List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]`
+- triggers `List[CreateWebhookTriggersArg]`
   - An array of event names that this webhook is to be triggered for
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -127,7 +127,7 @@ client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://exa
   - The item that will trigger the webhook
 - address `Optional[str]`
   - The URL that is notified by this webhook
-- triggers `Optional[List[Union[str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str, str]]]`
+- triggers `Optional[List[UpdateWebhookByIdTriggersArg]]`
   - An array of event names that this webhook is to be triggered for
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

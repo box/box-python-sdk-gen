@@ -17,7 +17,10 @@ This operation is performed by calling function `get_folder_locks`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folder-locks/).
 
-*Currently we don't have an example for calling `get_folder_locks` in integration tests*
+<!-- sample get_folder_locks -->
+```python
+client.folder_locks.get_folder_locks(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -48,7 +51,10 @@ This operation is performed by calling function `create_folder_lock`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-folder-locks/).
 
-*Currently we don't have an example for calling `create_folder_lock` in integration tests*
+<!-- sample post_folder_locks -->
+```python
+client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedOperationsArg(move=True, delete=True), folder=CreateFolderLockFolderArg(id=folder.id, type='folder'))
+```
 
 ### Arguments
 
@@ -80,7 +86,10 @@ This operation is performed by calling function `delete_folder_lock_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folder-locks-id/).
 
-*Currently we don't have an example for calling `delete_folder_lock_by_id` in integration tests*
+<!-- sample delete_folder_locks_id -->
+```python
+client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
+```
 
 ### Arguments
 

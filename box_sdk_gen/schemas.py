@@ -176,10 +176,6 @@ class ZipDownloadRequest(BaseObject):
         self.items = items
         self.download_file_name = download_file_name
 
-class MetadataQueryQueryParamsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 class MetadataQueryOrderByFieldDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
@@ -203,7 +199,7 @@ class MetadataQueryOrderByField(BaseObject):
 class MetadataQuery(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'from_': 'from', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'from': 'from_', **BaseObject._json_to_fields_mapping}
-    def __init__(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[MetadataQueryQueryParamsField] = None, order_by: Optional[List[MetadataQueryOrderByField]] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, **kwargs):
+    def __init__(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[Dict[str, str]] = None, order_by: Optional[List[MetadataQueryOrderByField]] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, **kwargs):
         """
         :param from_: Specifies the template used in the query. Must be in the form
             `scope.templateKey`. Not all templates can be used in this field,
@@ -225,7 +221,7 @@ class MetadataQuery(BaseObject):
         :param query_params: Set of arguments corresponding to the parameters specified in the
             `query`. The type of each parameter used in the `query_params` must match
             the type of the corresponding metadata template field.
-        :type query_params: Optional[MetadataQueryQueryParamsField], optional
+        :type query_params: Optional[Dict[str, str]], optional
         :param order_by: A list of template fields and directions to sort the metadata query
             results by.
             The ordering `direction` must be the same for each item in the array.
@@ -369,25 +365,6 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         """
         super().__init__(title=title, description=description, status=status, is_email_required=is_email_required, is_description_required=is_description_required, expires_at=expires_at, **kwargs)
         self.folder = folder
-
-class IntegrationMappingSlackCreateRequestPartnerItemField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingSlackCreateRequestBoxItemField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingSlackCreateRequestOptionsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingSlackCreateRequest(BaseObject):
-    def __init__(self, partner_item: IntegrationMappingSlackCreateRequestPartnerItemField, box_item: IntegrationMappingSlackCreateRequestBoxItemField, options: Optional[IntegrationMappingSlackCreateRequestOptionsField] = None, **kwargs):
-        super().__init__(**kwargs)
-        self.partner_item = partner_item
-        self.box_item = box_item
-        self.options = options
 
 class ClientErrorTypeField(str, Enum):
     ERROR = 'error'
@@ -1494,46 +1471,6 @@ class LegalHoldPolicyAssignments(BaseObject):
         self.prev_marker = prev_marker
         self.entries = entries
 
-class Metadata(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class Metadatas(BaseObject):
-    def __init__(self, entries: Optional[List[Metadata]] = None, limit: Optional[int] = None, **kwargs):
-        """
-        :param entries: A list of metadata instances, as applied to this file or folder.
-        :type entries: Optional[List[Metadata]], optional
-        :param limit: The limit that was used for this page of results.
-        :type limit: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.entries = entries
-        self.limit = limit
-
-class MetadataFull(Metadata):
-    _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'type': '$type', 'type_version': '$typeVersion', **Metadata._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$type': 'type', '$typeVersion': 'type_version', **Metadata._json_to_fields_mapping}
-    def __init__(self, can_edit: Optional[bool] = None, id: Optional[str] = None, type: Optional[str] = None, type_version: Optional[int] = None, **kwargs):
-        """
-        :param can_edit: Whether the user can edit this metadata instance.
-        :type can_edit: Optional[bool], optional
-        :param id: A UUID to identify the metadata instance.
-        :type id: Optional[str], optional
-        :param type: A unique identifier for the "type" of this instance. This is an
-            internal system property and should not be used by a client
-            application.
-        :type type: Optional[str], optional
-        :param type_version: The last-known version of the template of the object. This is an
-            internal system property and should not be used by a client
-            application.
-        :type type_version: Optional[int], optional
-        """
-        super().__init__(**kwargs)
-        self.can_edit = can_edit
-        self.id = id
-        self.type = type
-        self.type_version = type_version
-
 class MetadataBase(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {'parent': '$parent', 'template': '$template', 'scope': '$scope', 'version': '$version', **BaseObject._fields_to_json_mapping}
     _json_to_fields_mapping: Dict[str, str] = {'$parent': 'parent', '$template': 'template', '$scope': 'scope', '$version': 'version', **BaseObject._json_to_fields_mapping}
@@ -1559,6 +1496,77 @@ class MetadataBase(BaseObject):
         self.template = template
         self.scope = scope
         self.version = version
+
+class Metadata(MetadataBase):
+    def __init__(self, parent: Optional[str] = None, template: Optional[str] = None, scope: Optional[str] = None, version: Optional[int] = None, **kwargs):
+        """
+        :param parent: The identifier of the item that this metadata instance
+            has been attached to. This combines the `type` and the `id`
+            of the parent in the form `{type}_{id}`.
+        :type parent: Optional[str], optional
+        :param template: The name of the template
+        :type template: Optional[str], optional
+        :param scope: An ID for the scope in which this template
+            has been applied. This will be `enterprise_{enterprise_id}` for templates
+            defined for use in this enterprise, and `global` for general templates
+            that are available to all enterprises using Box.
+        :type scope: Optional[str], optional
+        :param version: The version of the metadata instance. This version starts at 0 and
+            increases every time a user-defined property is modified.
+        :type version: Optional[int], optional
+        """
+        super().__init__(parent=parent, template=template, scope=scope, version=version, **kwargs)
+
+class Metadatas(BaseObject):
+    def __init__(self, entries: Optional[List[Metadata]] = None, limit: Optional[int] = None, **kwargs):
+        """
+        :param entries: A list of metadata instances, as applied to this file or folder.
+        :type entries: Optional[List[Metadata]], optional
+        :param limit: The limit that was used for this page of results.
+        :type limit: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.entries = entries
+        self.limit = limit
+
+class MetadataFull(Metadata):
+    _fields_to_json_mapping: Dict[str, str] = {'can_edit': '$canEdit', 'id': '$id', 'type': '$type', 'type_version': '$typeVersion', 'extra_data': 'extraData', **Metadata._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'$canEdit': 'can_edit', '$id': 'id', '$type': 'type', '$typeVersion': 'type_version', 'extraData': 'extra_data', **Metadata._json_to_fields_mapping}
+    def __init__(self, can_edit: Optional[bool] = None, id: Optional[str] = None, type: Optional[str] = None, type_version: Optional[int] = None, extra_data: Optional[Dict[str, str]] = None, parent: Optional[str] = None, template: Optional[str] = None, scope: Optional[str] = None, version: Optional[int] = None, **kwargs):
+        """
+        :param can_edit: Whether the user can edit this metadata instance.
+        :type can_edit: Optional[bool], optional
+        :param id: A UUID to identify the metadata instance.
+        :type id: Optional[str], optional
+        :param type: A unique identifier for the "type" of this instance. This is an
+            internal system property and should not be used by a client
+            application.
+        :type type: Optional[str], optional
+        :param type_version: The last-known version of the template of the object. This is an
+            internal system property and should not be used by a client
+            application.
+        :type type_version: Optional[int], optional
+        :param parent: The identifier of the item that this metadata instance
+            has been attached to. This combines the `type` and the `id`
+            of the parent in the form `{type}_{id}`.
+        :type parent: Optional[str], optional
+        :param template: The name of the template
+        :type template: Optional[str], optional
+        :param scope: An ID for the scope in which this template
+            has been applied. This will be `enterprise_{enterprise_id}` for templates
+            defined for use in this enterprise, and `global` for general templates
+            that are available to all enterprises using Box.
+        :type scope: Optional[str], optional
+        :param version: The version of the metadata instance. This version starts at 0 and
+            increases every time a user-defined property is modified.
+        :type version: Optional[int], optional
+        """
+        super().__init__(parent=parent, template=template, scope=scope, version=version, **kwargs)
+        self.can_edit = can_edit
+        self.id = id
+        self.type = type
+        self.type_version = type_version
+        self.extra_data = extra_data
 
 class MetadataCascadePolicyTypeField(str, Enum):
     METADATA_CASCADE_POLICY = 'metadata_cascade_policy'
@@ -1718,6 +1726,7 @@ class MetadataTemplateFieldsFieldTypeField(str, Enum):
     DATE = 'date'
     ENUM = 'enum'
     MULTISELECT = 'multiSelect'
+    INTEGER = 'integer'
 
 class MetadataTemplateFieldsFieldOptionsField(BaseObject):
     def __init__(self, key: str, id: Optional[str] = None, **kwargs):
@@ -1743,6 +1752,9 @@ class MetadataTemplateFieldsField(BaseObject):
             Additionally, metadata templates support an `enum` field for a basic list
             of items, and ` multiSelect` field for a similar list of items where the
             user can select more than one value.
+            **Note**: The `integer` value is deprecated.
+            It is still present in the response,
+            but cannot be used in the POST request.
         :type type: MetadataTemplateFieldsFieldTypeField
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
@@ -4413,8 +4425,11 @@ class FileFullAllowedInviteeRolesField(str, Enum):
     CO_OWNER = 'co-owner'
 
 class FileFullMetadataField(BaseObject):
-    def __init__(self, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'extra_data': 'extraData', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'extraData': 'extra_data', **BaseObject._json_to_fields_mapping}
+    def __init__(self, extra_data: Optional[Dict[str, Dict[str, Metadata]]] = None, **kwargs):
         super().__init__(**kwargs)
+        self.extra_data = extra_data
 
 class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
     def __init__(self, url_template: Optional[str] = None, **kwargs):
@@ -4941,44 +4956,6 @@ class ShieldInformationBarrierSegment(BaseObject):
         self.created_by = created_by
         self.updated_at = updated_at
         self.updated_by = updated_by
-
-class ShieldInformationBarrierReportShieldInformationBarrierField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class ShieldInformationBarrierReportStatusField(str, Enum):
-    PENDING = 'pending'
-    ERROR = 'error'
-    DONE = 'done'
-    CANCELLED = 'cancelled'
-
-class ShieldInformationBarrierReportDetailsField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
-    def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierReportShieldInformationBarrierField] = None, status: Optional[ShieldInformationBarrierReportStatusField] = None, details: Optional[ShieldInformationBarrierReportDetailsField] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
-        """
-        :param status: Status of the shield information report
-        :type status: Optional[ShieldInformationBarrierReportStatusField], optional
-        :param created_at: ISO date time string when this
-            shield information barrier report object was created.
-        :type created_at: Optional[str], optional
-        :param updated_at: ISO date time string when this
-            shield information barrier report was updated.
-        :type updated_at: Optional[str], optional
-        :param id: The unique identifier for the shield information barrier report
-        :type id: Optional[str], optional
-        :param type: The type of the shield information barrier report
-        :type type: Optional[ShieldInformationBarrierReportBaseTypeField], optional
-        """
-        super().__init__(id=id, type=type, **kwargs)
-        self.shield_information_barrier = shield_information_barrier
-        self.status = status
-        self.details = details
-        self.created_at = created_at
-        self.created_by = created_by
-        self.updated_at = updated_at
 
 class ShieldInformationBarrierTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
@@ -5937,8 +5914,11 @@ class FolderFullPermissionsField(BaseObject):
         self.can_upload = can_upload
 
 class FolderFullMetadataField(BaseObject):
-    def __init__(self, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {'extra_data': 'extraData', **BaseObject._fields_to_json_mapping}
+    _json_to_fields_mapping: Dict[str, str] = {'extraData': 'extra_data', **BaseObject._json_to_fields_mapping}
+    def __init__(self, extra_data: Optional[Dict[str, Dict[str, Metadata]]] = None, **kwargs):
         super().__init__(**kwargs)
+        self.extra_data = extra_data
 
 class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):
     OPEN = 'open'
@@ -7127,24 +7107,12 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
 class IntegrationMappingTypeField(str, Enum):
     INTEGRATION_MAPPING = 'integration_mapping'
 
-class IntegrationMappingBoxItemField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 class IntegrationMappingOptionsField(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class IntegrationMappingCreatedByField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class IntegrationMappingModifiedByField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 class IntegrationMapping(IntegrationMappingBase):
-    def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: IntegrationMappingBoxItemField, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[IntegrationMappingCreatedByField] = None, modified_by: Optional[IntegrationMappingModifiedByField] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
+    def __init__(self, type: IntegrationMappingTypeField, partner_item: Union[IntegrationMappingPartnerItemSlack], box_item: FolderMini, is_manually_created: Optional[bool] = None, options: Optional[IntegrationMappingOptionsField] = None, created_by: Optional[UserIntegrationMappings] = None, modified_by: Optional[UserIntegrationMappings] = None, created_at: Optional[str] = None, modified_at: Optional[str] = None, id: Optional[str] = None, integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None, **kwargs):
         """
         :param type: Mapping type
         :type type: IntegrationMappingTypeField
@@ -7152,7 +7120,7 @@ class IntegrationMapping(IntegrationMappingBase):
         :type partner_item: Union[IntegrationMappingPartnerItemSlack]
         :param box_item: The Box folder, to which the object from the
             partner app domain (referenced in `partner_item_id`) is mapped
-        :type box_item: IntegrationMappingBoxItemField
+        :type box_item: FolderMini
         :param is_manually_created: Identifies whether the mapping has
             been manually set
             (as opposed to being automatically created)
@@ -7161,10 +7129,10 @@ class IntegrationMapping(IntegrationMappingBase):
         :type options: Optional[IntegrationMappingOptionsField], optional
         :param created_by: An object representing the user who
             created the integration mapping
-        :type created_by: Optional[IntegrationMappingCreatedByField], optional
+        :type created_by: Optional[UserIntegrationMappings], optional
         :param modified_by: The user who
             last modified the integration mapping
-        :type modified_by: Optional[IntegrationMappingModifiedByField], optional
+        :type modified_by: Optional[UserIntegrationMappings], optional
         :param created_at: When the integration mapping object was created
         :type created_at: Optional[str], optional
         :param modified_at: When the integration mapping object was last modified
@@ -7224,6 +7192,13 @@ class IntegrationMappingBoxItemSlack(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
+class IntegrationMappingSlackCreateRequest(BaseObject):
+    def __init__(self, partner_item: IntegrationMappingPartnerItemSlack, box_item: IntegrationMappingBoxItemSlack, options: Optional[IntegrationMappingSlackOptions] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.partner_item = partner_item
+        self.box_item = box_item
+        self.options = options
 
 class TimelineSkillCardTypeField(str, Enum):
     SKILL_CARD = 'skill_card'
@@ -8257,6 +8232,36 @@ class ShieldInformationBarrierReportDetails(BaseObject):
         super().__init__(**kwargs)
         self.details = details
 
+class ShieldInformationBarrierReportStatusField(str, Enum):
+    PENDING = 'pending'
+    ERROR = 'error'
+    DONE = 'done'
+    CANCELLED = 'cancelled'
+
+class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
+    def __init__(self, shield_information_barrier: Optional[ShieldInformationBarrierReference] = None, status: Optional[ShieldInformationBarrierReportStatusField] = None, details: Optional[ShieldInformationBarrierReportDetails] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, id: Optional[str] = None, type: Optional[ShieldInformationBarrierReportBaseTypeField] = None, **kwargs):
+        """
+        :param status: Status of the shield information report
+        :type status: Optional[ShieldInformationBarrierReportStatusField], optional
+        :param created_at: ISO date time string when this
+            shield information barrier report object was created.
+        :type created_at: Optional[str], optional
+        :param updated_at: ISO date time string when this
+            shield information barrier report was updated.
+        :type updated_at: Optional[str], optional
+        :param id: The unique identifier for the shield information barrier report
+        :type id: Optional[str], optional
+        :param type: The type of the shield information barrier report
+        :type type: Optional[ShieldInformationBarrierReportBaseTypeField], optional
+        """
+        super().__init__(id=id, type=type, **kwargs)
+        self.shield_information_barrier = shield_information_barrier
+        self.status = status
+        self.details = details
+        self.created_at = created_at
+        self.created_by = created_by
+        self.updated_at = updated_at
+
 class TrackingCodeTypeField(str, Enum):
     TRACKING_CODE = 'tracking_code'
 
@@ -8423,21 +8428,16 @@ class MetadataFilter(BaseObject):
         self.filters = filters
 
 class MetadataFieldFilterString(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    pass
 
 class MetadataFieldFilterFloat(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    pass
 
 class MetadataFieldFilterMultiSelect(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    pass
 
 class MetadataFieldFilterFloatRange(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    pass
 
 class MetadataFieldFilterDateRange(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    pass

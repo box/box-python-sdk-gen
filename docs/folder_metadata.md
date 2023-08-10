@@ -4,6 +4,7 @@
 - [List metadata instances on folder](#list-metadata-instances-on-folder)
 - [Get metadata instance on folder](#get-metadata-instance-on-folder)
 - [Create metadata instance on folder](#create-metadata-instance-on-folder)
+- [Update metadata instance on folder](#update-metadata-instance-on-folder)
 - [Remove metadata instance from folder](#remove-metadata-instance-from-folder)
 
 ## List metadata instances on folder
@@ -96,6 +97,8 @@ See the endpoint docs at
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
+- request_body `CreateFolderMetadataByIdRequestBodyArg`
+  - Request body of createFolderMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -106,6 +109,46 @@ This function returns a value of type `Metadata`.
 
 Returns the instance of the template that was applied to the folder,
 including the data that was applied to the template.
+
+
+## Update metadata instance on folder
+
+Updates a piece of metadata on a folder.
+
+The metadata instance can only be updated if the template has already been
+applied to the folder before. When editing metadata, only values that match
+the metadata template schema will be accepted.
+
+The update is applied atomically. If any errors occur during the
+application of the operations, the metadata instance will not be changed.
+
+This operation is performed by calling function `update_folder_metadata_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-folders-id-metadata-id-id/).
+
+*Currently we don't have an example for calling `update_folder_metadata_by_id` in integration tests*
+
+### Arguments
+
+- folder_id `str`
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+- scope `UpdateFolderMetadataByIdScopeArg`
+  - The scope of the metadata template Example: "global"
+- template_key `str`
+  - The name of the metadata template Example: "properties"
+- request_body `List[UpdateFolderMetadataByIdRequestBodyArg]`
+  - Request body of updateFolderMetadataById method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `Metadata`.
+
+Returns the updated metadata template instance, with the
+custom template data included.
 
 
 ## Remove metadata instance from folder

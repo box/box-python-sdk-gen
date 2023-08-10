@@ -42,7 +42,7 @@ class FetchOptions:
     body: str = None
     multipart_data: List[MultipartItem] = None
     content_type: str = ""
-    response_format: str = None
+    response_format: Optional[str] = None
     auth: Authentication = None
     network_session: NetworkSession = None
 

@@ -3,6 +3,7 @@
 
 - [List Box Skill cards on file](#list-box-skill-cards-on-file)
 - [Create Box Skill cards on file](#create-box-skill-cards-on-file)
+- [Update Box Skill cards on file](#update-box-skill-cards-on-file)
 - [Remove Box Skill cards from file](#remove-box-skill-cards-from-file)
 - [Update all Box Skill cards on file](#update-all-box-skill-cards-on-file)
 
@@ -62,6 +63,35 @@ This function returns a value of type `SkillCardsMetadata`.
 
 Returns the instance of the template that was applied to the file,
 including the data that was applied to the template.
+
+
+## Update Box Skill cards on file
+
+Updates one or more Box Skills metadata cards to a file.
+
+This operation is performed by calling function `update_file_metadata_global_box_skills_card`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-id-metadata-global-box-skills-cards/).
+
+*Currently we don't have an example for calling `update_file_metadata_global_box_skills_card` in integration tests*
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- request_body `List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg]`
+  - Request body of updateFileMetadataGlobalBoxSkillsCard method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `SkillCardsMetadata`.
+
+Returns the updated metadata template, with the
+custom template data included.
 
 
 ## Remove Box Skill cards from file

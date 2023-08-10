@@ -103,7 +103,7 @@ client.memberships.create_group_membership(user=user, group=group)
   - The group to add the user to.
 - role `Optional[CreateGroupMembershipRoleArg]`
   - The role of the user in the group.
-- configurable_permissions `Optional[CreateGroupMembershipConfigurablePermissionsArg]`
+- configurable_permissions `Optional[Dict[str, bool]]`
   - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`.  Setting these permissions overwrites the default access levels of an admin.  Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.
 - fields `Optional[str]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -173,7 +173,7 @@ client.memberships.update_group_membership_by_id(group_membership_id=group_membe
   - The ID of the group membership. Example: "434534"
 - role `Optional[UpdateGroupMembershipByIdRoleArg]`
   - The role of the user in the group.
-- configurable_permissions `Optional[UpdateGroupMembershipByIdConfigurablePermissionsArg]`
+- configurable_permissions `Optional[Dict[str, bool]]`
   - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`.  Setting these permissions overwrites the default access levels of an admin.  Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.
 - fields `Optional[str]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.

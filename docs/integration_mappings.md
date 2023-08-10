@@ -64,11 +64,11 @@ See the endpoint docs at
 
 ### Arguments
 
-- partner_item `CreateIntegrationMappingSlackPartnerItemArg`
+- partner_item `IntegrationMappingPartnerItemSlack`
   - 
-- box_item `CreateIntegrationMappingSlackBoxItemArg`
+- box_item `IntegrationMappingBoxItemSlack`
   - 
-- options `Optional[CreateIntegrationMappingSlackOptionsArg]`
+- options `Optional[IntegrationMappingSlackOptions]`
   - 
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -100,9 +100,9 @@ See the endpoint docs at
 
 - integration_mapping_id `str`
   - An ID of an integration mapping Example: "11235432"
-- box_item `Optional[UpdateIntegrationMappingSlackByIdBoxItemArg]`
+- box_item `Optional[IntegrationMappingBoxItemSlack]`
   - 
-- options `Optional[UpdateIntegrationMappingSlackByIdOptionsArg]`
+- options `Optional[IntegrationMappingSlackOptions]`
   - 
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
