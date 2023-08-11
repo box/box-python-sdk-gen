@@ -7093,9 +7093,9 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
         :type type: IntegrationMappingPartnerItemSlackTypeField
         :param id: ID of the mapped item (of type referenced in `type`)
         :type id: str
-        :param slack_workspace_id: ID of the Slack workspace with which the item is associated
+        :param slack_workspace_id: ID of the Slack workspace with which the item is associated. Use this parameter if Box for Slack is installed at a workspace level. Do not use `slack_org_id` at the same time.
         :type slack_workspace_id: Optional[str], optional
-        :param slack_org_id: ID of the Slack organization with which the item is associated
+        :param slack_org_id: ID of the Slack org with which the item is associated. Use this parameter if Box for Slack is installed at the org level. Do not use `slack_workspace_id` at the same time.
         :type slack_org_id: Optional[str], optional
         """
         super().__init__(**kwargs)
