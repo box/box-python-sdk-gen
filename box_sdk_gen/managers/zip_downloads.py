@@ -1,8 +1,10 @@
+from enum import Enum
+
+from box_sdk_gen.base_object import BaseObject
+
 from typing import Optional
 
 from typing import List
-
-from typing import Union
 
 from typing import Dict
 
@@ -32,11 +34,28 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+class CreateZipDownloadItemsArgTypeField(str, Enum):
+    FILE = 'file'
+    FOLDER_ = 'folder.'
+
+class CreateZipDownloadItemsArg(BaseObject):
+    def __init__(self, type: CreateZipDownloadItemsArgTypeField, id: str, **kwargs):
+        """
+        :param type: The type of the item to add to the archive.
+        :type type: CreateZipDownloadItemsArgTypeField
+        :param id: The identifier of the item to add to the archive. When this item is
+            a folder then this can not be the root folder with ID `0`.
+        :type id: str
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+
 class ZipDownloadsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_zip_download(self, items: List, download_file_name: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ZipDownload:
+    def create_zip_download(self, items: List[CreateZipDownloadItemsArg], download_file_name: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ZipDownload:
         """
         Creates a request to download multiple files and folders as a single `zip`
         
@@ -80,7 +99,7 @@ class ZipDownloadsManager:
 
         :param items: A list of items to add to the `zip` archive. These can
             be folders or files.
-        :type items: List
+        :type items: List[CreateZipDownloadItemsArg]
         :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
             `.zip` file extension, for example `January Financials.zip`.
         :type download_file_name: Optional[str], optional

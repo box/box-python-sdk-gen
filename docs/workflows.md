@@ -62,11 +62,11 @@ See the endpoint docs at
   - The type of the parameters object
 - flow `CreateWorkflowStartFlowArg`
   - The flow that will be triggered
-- files `List`
+- files `List[CreateWorkflowStartFilesArg]`
   - The array of files for which the workflow should start. All files must be in the workflow's configured folder.
 - folder `CreateWorkflowStartFolderArg`
   - The folder object for which the workflow is configured.
-- outcomes `Optional[List]`
+- outcomes `Optional[List[CreateWorkflowStartOutcomesArg]]`
   - A list of outcomes required to be configured at start time.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

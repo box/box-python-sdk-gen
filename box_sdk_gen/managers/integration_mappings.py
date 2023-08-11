@@ -1,12 +1,12 @@
 from enum import Enum
 
-from box_sdk_gen.base_object import BaseObject
-
 from typing import Optional
 
 from typing import Dict
 
 import json
+
+from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -43,26 +43,6 @@ class GetIntegrationMappingSlackPartnerItemTypeArg(str, Enum):
 
 class GetIntegrationMappingSlackBoxItemTypeArg(str, Enum):
     FOLDER = 'folder'
-
-class CreateIntegrationMappingSlackPartnerItemArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class CreateIntegrationMappingSlackBoxItemArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class CreateIntegrationMappingSlackOptionsArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class UpdateIntegrationMappingSlackByIdBoxItemArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-class UpdateIntegrationMappingSlackByIdOptionsArg(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
 class IntegrationMappingsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -102,7 +82,7 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return IntegrationMappings.from_dict(json.loads(response.text))
-    def create_integration_mapping_slack(self, partner_item: CreateIntegrationMappingSlackPartnerItemArg, box_item: CreateIntegrationMappingSlackBoxItemArg, options: Optional[CreateIntegrationMappingSlackOptionsArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> IntegrationMapping:
+    def create_integration_mapping_slack(self, partner_item: IntegrationMappingPartnerItemSlack, box_item: IntegrationMappingBoxItemSlack, options: Optional[IntegrationMappingSlackOptions] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> IntegrationMapping:
         """
         Creates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack)
         
@@ -123,7 +103,7 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/integration_mappings/slack']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
         return IntegrationMapping.from_dict(json.loads(response.text))
-    def update_integration_mapping_slack_by_id(self, integration_mapping_id: str, box_item: Optional[UpdateIntegrationMappingSlackByIdBoxItemArg] = None, options: Optional[UpdateIntegrationMappingSlackByIdOptionsArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> IntegrationMapping:
+    def update_integration_mapping_slack_by_id(self, integration_mapping_id: str, box_item: Optional[IntegrationMappingBoxItemSlack] = None, options: Optional[IntegrationMappingSlackOptions] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> IntegrationMapping:
         """
         Updates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
         

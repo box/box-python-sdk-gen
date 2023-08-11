@@ -33,7 +33,7 @@ See the endpoint docs at
 
 ### Arguments
 
-- items `List`
+- items `List[CreateZipDownloadItemsArg]`
   - A list of items to add to the `zip` archive. These can be folders or files.
 - download_file_name `Optional[str]`
   - The optional name of the `zip` archive. This name will be appended by the `.zip` file extension, for example `January Financials.zip`.

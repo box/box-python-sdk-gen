@@ -63,7 +63,7 @@ class AvatarsManager:
             extra_headers = {}
         request_body: BaseObject = BaseObject(pic=pic, pic_file_name=pic_file_name, pic_content_type=pic_content_type)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='POST', headers=headers_map, multipart_data=[MultipartItem(part_name='pic', file_stream=request_body.pic, content_type=request_body.pic_content_type, file_name=request_body.pic_file_name)], content_type='multipart/form-data', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='POST', headers=headers_map, multipart_data=[MultipartItem(part_name='pic', file_stream=request_body.pic, file_name=request_body.pic_file_name, content_type=request_body.pic_content_type)], content_type='multipart/form-data', response_format='json', auth=self.auth, network_session=self.network_session))
         return UserAvatar.from_dict(json.loads(response.text))
     def delete_user_avatar(self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """

@@ -132,6 +132,18 @@ class UpdateFileByIdPermissionsArg(BaseObject):
         super().__init__(**kwargs)
         self.can_download = can_download
 
+class UpdateFileByIdCollectionsArg(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
+        """
+        :param id: The unique identifier for this object
+        :type id: Optional[str], optional
+        :param type: The type for this object
+        :type type: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+
 class CopyFileParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -211,7 +223,7 @@ class FilesManager:
         headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), 'x-rep-hints': to_string(x_rep_hints), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, collections: Optional[List] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, collections: Optional[List[UpdateFileByIdCollectionsArg]] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,
         
@@ -251,7 +263,7 @@ class FilesManager:
             Passing an empty array `[]` or `null` will remove
             the file from all collections.
             [1]: e://get-collections
-        :type collections: Optional[List], optional
+        :type collections: Optional[List[UpdateFileByIdCollectionsArg]], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,

@@ -3,6 +3,7 @@
 
 - [Get classification on folder](#get-classification-on-folder)
 - [Add classification to folder](#add-classification-to-folder)
+- [Update classification on folder](#update-classification-on-folder)
 - [Remove classification from folder](#remove-classification-from-folder)
 
 ## Get classification on folder
@@ -71,6 +72,38 @@ This function returns a value of type `Classification`.
 
 Returns the classification template instance
 that was applied to the folder.
+
+
+## Update classification on folder
+
+Updates a classification on a folder.
+
+The classification can only be updated if a classification has already been
+applied to the folder before. When editing classifications, only values are
+defined for the enterprise will be accepted.
+
+This operation is performed by calling function `update_folder_metadata_enterprise_security_classification`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+*Currently we don't have an example for calling `update_folder_metadata_enterprise_security_classification` in integration tests*
+
+### Arguments
+
+- folder_id `str`
+  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+- request_body `List[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg]`
+  - Request body of updateFolderMetadataEnterpriseSecurityClassification method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `Classification`.
+
+Returns the updated classification metadata template instance.
 
 
 ## Remove classification from folder

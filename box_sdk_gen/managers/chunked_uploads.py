@@ -96,12 +96,14 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadSession.from_dict(json.loads(response.text))
-    def upload_file_part(self, upload_session_id: str, digest: str, content_range: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadedPart:
+    def upload_file_part(self, upload_session_id: str, request_body: ByteStream, digest: str, content_range: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UploadedPart:
         """
         Updates a chunk of an upload session for a file.
         :param upload_session_id: The ID of the upload session.
             Example: "D5E3F7A"
         :type upload_session_id: str
+        :param request_body: Request body of uploadFilePart method
+        :type request_body: ByteStream
         :param digest: The [RFC3230][1] message digest of the chunk uploaded.
             Only SHA1 is supported. The SHA1 digest must be base64
             encoded. The format of this header is as
@@ -127,7 +129,6 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: ByteStream = ByteStream()
         headers_map: Dict[str, str] = prepare_params({'digest': to_string(digest), 'content-range': to_string(content_range), **extra_headers})
         response: FetchResponse = fetch(''.join(['https://upload.box.com/api/2.0/files/upload_sessions/', upload_session_id]), FetchOptions(method='PUT', headers=headers_map, body=request_body, content_type='application/octet-stream', response_format='json', auth=self.auth, network_session=self.network_session))
         return UploadedPart.from_dict(json.loads(response.text))

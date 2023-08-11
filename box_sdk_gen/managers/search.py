@@ -1,14 +1,12 @@
-from box_sdk_gen.base_object import BaseObject
-
 from enum import Enum
 
 from typing import Optional
 
-from typing import List
-
-from typing import Union
+from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
+
+from typing import List
 
 import json
 
@@ -42,9 +40,25 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-class CreateMetadataQueryExecuteReadQueryParamsArg(BaseObject):
-    def __init__(self, **kwargs):
+class CreateMetadataQueryExecuteReadOrderByArgDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+class CreateMetadataQueryExecuteReadOrderByArg(BaseObject):
+    def __init__(self, field_key: Optional[str] = None, direction: Optional[CreateMetadataQueryExecuteReadOrderByArgDirectionField] = None, **kwargs):
+        """
+        :param field_key: The metadata template field to order by.
+            The `field_key` represents the `key` value of a field from the
+            metadata template being searched for.
+        :type field_key: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending.
+            The `ordering` direction must be the same for each item in the
+            array.
+        :type direction: Optional[CreateMetadataQueryExecuteReadOrderByArgDirectionField], optional
+        """
         super().__init__(**kwargs)
+        self.field_key = field_key
+        self.direction = direction
 
 class GetMetadataQueryIndicesScopeArg(str, Enum):
     GLOBAL = 'global'
@@ -76,7 +90,7 @@ class SearchManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
         self.auth = auth
         self.network_session = network_session
-    def create_metadata_query_execute_read(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg] = None, order_by: Optional[List] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataQueryResults:
+    def create_metadata_query_execute_read(self, from_: str, ancestor_folder_id: str, query: Optional[str] = None, query_params: Optional[Dict[str, str]] = None, order_by: Optional[List[CreateMetadataQueryExecuteReadOrderByArg]] = None, limit: Optional[int] = None, marker: Optional[str] = None, fields: Optional[List[str]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataQueryResults:
         """
         Create a search using SQL-like syntax to return items that match specific
         
@@ -111,11 +125,11 @@ class SearchManager:
         :param query_params: Set of arguments corresponding to the parameters specified in the
             `query`. The type of each parameter used in the `query_params` must match
             the type of the corresponding metadata template field.
-        :type query_params: Optional[CreateMetadataQueryExecuteReadQueryParamsArg], optional
+        :type query_params: Optional[Dict[str, str]], optional
         :param order_by: A list of template fields and directions to sort the metadata query
             results by.
             The ordering `direction` must be the same for each item in the array.
-        :type order_by: Optional[List], optional
+        :type order_by: Optional[List[CreateMetadataQueryExecuteReadOrderByArg]], optional
         :param limit: A value between 0 and 100 that indicates the maximum number of results
             to return for a single request. This only specifies a maximum
             boundary and will not guarantee the minimum number of results

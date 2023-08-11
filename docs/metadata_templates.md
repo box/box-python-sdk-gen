@@ -3,6 +3,7 @@
 
 - [Find metadata template by instance ID](#find-metadata-template-by-instance-id)
 - [Get metadata template by name](#get-metadata-template-by-name)
+- [Update metadata template](#update-metadata-template)
 - [Remove metadata template](#remove-metadata-template)
 - [Get metadata template by ID](#get-metadata-template-by-id)
 - [List all global metadata templates](#list-all-global-metadata-templates)
@@ -67,6 +68,43 @@ This function returns a value of type `MetadataTemplate`.
 
 Returns the metadata template matching the `scope`
 and `template` name.
+
+
+## Update metadata template
+
+Updates a metadata template.
+
+The metadata template can only be updated if the template
+already exists.
+
+The update is applied atomically. If any errors occur during the
+application of the operations, the metadata template will not be changed.
+
+This operation is performed by calling function `update_metadata_template_schema`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-metadata-templates-id-id-schema/).
+
+*Currently we don't have an example for calling `update_metadata_template_schema` in integration tests*
+
+### Arguments
+
+- scope `UpdateMetadataTemplateSchemaScopeArg`
+  - The scope of the metadata template Example: "global"
+- template_key `str`
+  - The name of the metadata template Example: "properties"
+- request_body `List[UpdateMetadataTemplateSchemaRequestBodyArg]`
+  - Request body of updateMetadataTemplateSchema method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `MetadataTemplate`.
+
+Returns the updated metadata template, with the
+custom template data included.
 
 
 ## Remove metadata template
@@ -207,7 +245,7 @@ See the endpoint docs at
   - The display name of the template.
 - hidden `Optional[bool]`
   - Defines if this template is visible in the Box web app UI, or if it is purely intended for usage through the API.
-- fields `Optional[List]`
+- fields `Optional[List[CreateMetadataTemplateSchemaFieldsArg]]`
   - An ordered list of template fields which are part of the template. Each field can be a regular text field, date field, number field, as well as a single or multi-select list.
 - copy_instance_on_item_copy `Optional[bool]`
   - Whether or not to copy any metadata attached to a file or folder when it is copied. By default, metadata is not copied along with a file or folder when it is copied.

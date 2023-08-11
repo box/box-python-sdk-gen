@@ -10,8 +10,6 @@ import json
 
 from typing import List
 
-from typing import Union
-
 from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Workflows
@@ -49,6 +47,21 @@ class CreateWorkflowStartFlowArg(BaseObject):
         self.type = type
         self.id = id
 
+class CreateWorkflowStartFilesArgTypeField(str, Enum):
+    FILE = 'file'
+
+class CreateWorkflowStartFilesArg(BaseObject):
+    def __init__(self, type: Optional[CreateWorkflowStartFilesArgTypeField] = None, id: Optional[str] = None, **kwargs):
+        """
+        :param type: The type of the file object
+        :type type: Optional[CreateWorkflowStartFilesArgTypeField], optional
+        :param id: The id of the file
+        :type id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+
 class CreateWorkflowStartFolderArgTypeField(str, Enum):
     FOLDER = 'folder'
 
@@ -63,6 +76,26 @@ class CreateWorkflowStartFolderArg(BaseObject):
         super().__init__(**kwargs)
         self.type = type
         self.id = id
+
+class CreateWorkflowStartOutcomesArgTypeField(str, Enum):
+    OUTCOME = 'outcome'
+
+class CreateWorkflowStartOutcomesArg(BaseObject):
+    def __init__(self, id: Optional[str] = None, type: Optional[CreateWorkflowStartOutcomesArgTypeField] = None, parameter: Optional[str] = None, **kwargs):
+        """
+        :param id: The id of the outcome
+        :type id: Optional[str], optional
+        :param type: The type of the outcome object
+        :type type: Optional[CreateWorkflowStartOutcomesArgTypeField], optional
+        :param parameter: This is a placeholder example for various objects that
+            can be passed in - refer to the guides section to find
+            out more information.
+        :type parameter: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.parameter = parameter
 
 class WorkflowsManager:
     def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
@@ -106,7 +139,7 @@ class WorkflowsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
         return Workflows.from_dict(json.loads(response.text))
-    def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List, folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+    def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List[CreateWorkflowStartFilesArg], folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List[CreateWorkflowStartOutcomesArg]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
         """
         Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
         
@@ -122,13 +155,13 @@ class WorkflowsManager:
         :type flow: CreateWorkflowStartFlowArg
         :param files: The array of files for which the workflow should start. All files
             must be in the workflow's configured folder.
-        :type files: List
+        :type files: List[CreateWorkflowStartFilesArg]
         :param folder: The folder object for which the workflow is configured.
         :type folder: CreateWorkflowStartFolderArg
         :param type: The type of the parameters object
         :type type: Optional[CreateWorkflowStartTypeArg], optional
         :param outcomes: A list of outcomes required to be configured at start time.
-        :type outcomes: Optional[List], optional
+        :type outcomes: Optional[List[CreateWorkflowStartOutcomesArg]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

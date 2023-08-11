@@ -17,7 +17,10 @@ This operation is performed by calling function `restore_file_from_trash`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id/).
 
-*Currently we don't have an example for calling `restore_file_from_trash` in integration tests*
+<!-- sample post_files_id -->
+```python
+client.trashed_files.restore_file_from_trash(file_id=file.id)
+```
 
 ### Arguments
 
@@ -61,7 +64,7 @@ See the endpoint docs at
 
 <!-- sample get_files_id_trash -->
 ```python
-client.trashed_files.get_file_trash(file_id=uploaded_file.id)
+client.trashed_files.get_file_trash(file_id=file.id)
 ```
 
 ### Arguments
@@ -93,7 +96,10 @@ This operation is performed by calling function `delete_file_trash`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-trash/).
 
-*Currently we don't have an example for calling `delete_file_trash` in integration tests*
+<!-- sample delete_files_id_trash -->
+```python
+client.trashed_files.delete_file_trash(file_id=file.id)
+```
 
 ### Arguments
 

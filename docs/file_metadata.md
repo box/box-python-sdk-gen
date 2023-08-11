@@ -4,6 +4,7 @@
 - [List metadata instances on file](#list-metadata-instances-on-file)
 - [Get metadata instance on file](#get-metadata-instance-on-file)
 - [Create metadata instance on file](#create-metadata-instance-on-file)
+- [Update metadata instance on file](#update-metadata-instance-on-file)
 - [Remove metadata instance from file](#remove-metadata-instance-from-file)
 
 ## List metadata instances on file
@@ -91,6 +92,8 @@ See the endpoint docs at
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
+- request_body `CreateFileMetadataByIdRequestBodyArg`
+  - Request body of createFileMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -101,6 +104,46 @@ This function returns a value of type `Metadata`.
 
 Returns the instance of the template that was applied to the file,
 including the data that was applied to the template.
+
+
+## Update metadata instance on file
+
+Updates a piece of metadata on a file.
+
+The metadata instance can only be updated if the template has already been
+applied to the file before. When editing metadata, only values that match
+the metadata template schema will be accepted.
+
+The update is applied atomically. If any errors occur during the
+application of the operations, the metadata instance will not be changed.
+
+This operation is performed by calling function `update_file_metadata_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-id-metadata-id-id/).
+
+*Currently we don't have an example for calling `update_file_metadata_by_id` in integration tests*
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- scope `UpdateFileMetadataByIdScopeArg`
+  - The scope of the metadata template Example: "global"
+- template_key `str`
+  - The name of the metadata template Example: "properties"
+- request_body `List[UpdateFileMetadataByIdRequestBodyArg]`
+  - Request body of updateFileMetadataById method
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+
+### Returns
+
+This function returns a value of type `Metadata`.
+
+Returns the updated metadata template instance, with the
+custom template data included.
 
 
 ## Remove metadata instance from file
