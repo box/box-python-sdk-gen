@@ -89,6 +89,12 @@ class StoragePolicyAssignmentsManager:
     def get_storage_policy_assignments(self, resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg, resolved_for_id: str, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignments:
         """
         Fetches all the storage policy assignment for an enterprise or user.
+        
+        Only a Primary Admin can access this endpoint. The user
+
+        
+        needs to generate a token for an account to authenticate this request.
+
         :param resolved_for_type: The target type to return assignments for
         :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg
         :param resolved_for_id: The ID of the user or enterprise to return assignments for
@@ -109,6 +115,12 @@ class StoragePolicyAssignmentsManager:
     def create_storage_policy_assignment(self, storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg, assigned_to: CreateStoragePolicyAssignmentAssignedToArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
+        
+        Only a Primary Admin can access this endpoint. The user
+
+        
+        needs to generate a token for an account to authenticate this request.
+
         :param storage_policy: The storage policy to assign to the user or
             enterprise
         :type storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg
@@ -126,7 +138,7 @@ class StoragePolicyAssignmentsManager:
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def get_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
-        Fetches a specific storage policy assignment.
+        Fetches a specific storage policy assignment. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
@@ -140,7 +152,7 @@ class StoragePolicyAssignmentsManager:
         return StoragePolicyAssignment.from_dict(json.loads(response.text))
     def update_storage_policy_assignment_by_id(self, storage_policy_assignment_id: str, storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicyAssignment:
         """
-        Updates a specific storage policy assignment.
+        Updates a specific storage policy assignment. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
@@ -173,6 +185,12 @@ class StoragePolicyAssignmentsManager:
 
         
         twice per user in a 24 hour time frame.
+
+        
+        Only a Primary Admin can access this endpoint. The user
+
+        
+        needs to generate a token for an account to authenticate this request.
 
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"

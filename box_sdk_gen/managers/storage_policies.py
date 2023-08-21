@@ -33,6 +33,12 @@ class StoragePoliciesManager:
     def get_storage_policies(self, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
+        
+        Only a Primary Admin can access this endpoint. The user
+
+        
+        needs to generate a token for an account to authenticate this request.
+
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -59,7 +65,7 @@ class StoragePoliciesManager:
         return StoragePolicies.from_dict(json.loads(response.text))
     def get_storage_policy_by_id(self, storage_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicy:
         """
-        Fetches a specific storage policy.
+        Fetches a specific storage policy. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
         :param storage_policy_id: The ID of the storage policy.
             Example: "34342"
         :type storage_policy_id: str
