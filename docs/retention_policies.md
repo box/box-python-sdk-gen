@@ -16,7 +16,10 @@ This operation is performed by calling function `get_retention_policies`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policies/).
 
-*Currently we don't have an example for calling `get_retention_policies` in integration tests*
+<!-- sample get_retention_policies -->
+```python
+client.retention_policies.get_retention_policies()
+```
 
 ### Arguments
 
@@ -52,7 +55,10 @@ This operation is performed by calling function `create_retention_policy`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-retention-policies/).
 
-*Currently we don't have an example for calling `create_retention_policy` in integration tests*
+<!-- sample post_retention_policies -->
+```python
+client.retention_policies.create_retention_policy(policy_name=retention_policy_name, description=retention_description, policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value, disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value, retention_length='1', retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
+```
 
 ### Arguments
 
@@ -94,7 +100,10 @@ This operation is performed by calling function `get_retention_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policies-id/).
 
-*Currently we don't have an example for calling `get_retention_policy_by_id` in integration tests*
+<!-- sample get_retention_policies_id -->
+```python
+client.retention_policies.get_retention_policy_by_id(retention_policy_id=retention_policy.id)
+```
 
 ### Arguments
 
@@ -122,7 +131,10 @@ This operation is performed by calling function `update_retention_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-retention-policies-id/).
 
-*Currently we don't have an example for calling `update_retention_policy_by_id` in integration tests*
+<!-- sample put_retention_policies_id -->
+```python
+client.retention_policies.update_retention_policy_by_id(retention_policy_id=retention_policy.id, policy_name=updated_retention_policy_name)
+```
 
 ### Arguments
 
@@ -166,7 +178,10 @@ This operation is performed by calling function `delete_retention_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-retention-policies-id/).
 
-*Currently we don't have an example for calling `delete_retention_policy_by_id` in integration tests*
+<!-- sample delete_retention_policies_id -->
+```python
+client.retention_policies.delete_retention_policy_by_id(retention_policy_id=retention_policy.id)
+```
 
 ### Arguments
 
