@@ -50,7 +50,10 @@ This operation is performed by calling function `get_metadata_template_schema`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-id-id-schema/).
 
-*Currently we don't have an example for calling `get_metadata_template_schema` in integration tests*
+<!-- sample get_metadata_templates_id_id_schema -->
+```python
+client.metadata_templates.get_metadata_template_schema(scope=GetMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
+```
 
 ### Arguments
 
@@ -117,7 +120,10 @@ This operation is performed by calling function `delete_metadata_template_schema
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-templates-id-id-schema/).
 
-*Currently we don't have an example for calling `delete_metadata_template_schema` in integration tests*
+<!-- sample delete_metadata_templates_id_id_schema -->
+```python
+client.metadata_templates.delete_metadata_template_schema(scope=DeleteMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
+```
 
 ### Arguments
 
@@ -146,7 +152,10 @@ This operation is performed by calling function `get_metadata_template_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-id/).
 
-*Currently we don't have an example for calling `get_metadata_template_by_id` in integration tests*
+<!-- sample get_metadata_templates_id -->
+```python
+client.metadata_templates.get_metadata_template_by_id(template_id=template.id)
+```
 
 ### Arguments
 
@@ -173,7 +182,10 @@ This operation is performed by calling function `get_metadata_template_global`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-global/).
 
-*Currently we don't have an example for calling `get_metadata_template_global` in integration tests*
+<!-- sample get_metadata_templates_global -->
+```python
+client.metadata_templates.get_metadata_template_global()
+```
 
 ### Arguments
 
@@ -203,7 +215,10 @@ This operation is performed by calling function `get_metadata_template_enterpris
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise/).
 
-*Currently we don't have an example for calling `get_metadata_template_enterprise` in integration tests*
+<!-- sample get_metadata_templates_enterprise -->
+```python
+client.metadata_templates.get_metadata_template_enterprise()
+```
 
 ### Arguments
 
@@ -233,7 +248,10 @@ This operation is performed by calling function `create_metadata_template_schema
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-templates-schema/).
 
-*Currently we don't have an example for calling `create_metadata_template_schema` in integration tests*
+<!-- sample post_metadata_templates_schema -->
+```python
+client.metadata_templates.create_metadata_template_schema(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateSchemaFieldsArg(type=CreateMetadataTemplateSchemaFieldsArgTypeField.STRING.value, key='testName', display_name='testName')])
+```
 
 ### Arguments
 

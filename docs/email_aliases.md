@@ -15,7 +15,10 @@ This operation is performed by calling function `get_user_email_aliases`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-users-id-email-aliases/).
 
-*Currently we don't have an example for calling `get_user_email_aliases` in integration tests*
+<!-- sample get_users_id_email_aliases -->
+```python
+client.email_aliases.get_user_email_aliases(user_id=new_user.id)
+```
 
 ### Arguments
 
@@ -41,7 +44,10 @@ This operation is performed by calling function `create_user_email_alias`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-users-id-email-aliases/).
 
-*Currently we don't have an example for calling `create_user_email_alias` in integration tests*
+<!-- sample post_users_id_email_aliases -->
+```python
+client.email_aliases.create_user_email_alias(user_id=new_user.id, email=new_alias_email)
+```
 
 ### Arguments
 
@@ -69,7 +75,10 @@ This operation is performed by calling function `delete_user_email_alias_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-users-id-email-aliases-id/).
 
-*Currently we don't have an example for calling `delete_user_email_alias_by_id` in integration tests*
+<!-- sample delete_users_id_email_aliases_id -->
+```python
+client.email_aliases.delete_user_email_alias_by_id(user_id=new_user.id, email_alias_id=new_alias.id)
+```
 
 ### Arguments
 

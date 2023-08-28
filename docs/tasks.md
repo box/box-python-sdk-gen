@@ -17,7 +17,10 @@ This operation is performed by calling function `get_file_tasks`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-tasks/).
 
-*Currently we don't have an example for calling `get_file_tasks` in integration tests*
+<!-- sample get_files_id_tasks -->
+```python
+client.tasks.get_file_tasks(file_id=file.id)
+```
 
 ### Arguments
 
@@ -47,7 +50,10 @@ This operation is performed by calling function `create_task`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-tasks/).
 
-*Currently we don't have an example for calling `create_task` in integration tests*
+<!-- sample post_tasks -->
+```python
+client.tasks.create_task(item=CreateTaskItemArg(type=CreateTaskItemArgTypeField.FILE.value, id=file.id), action=CreateTaskActionArg.REVIEW.value, message='test message', due_at='2035-01-01T00:00:00Z', completion_rule=CreateTaskCompletionRuleArg.ALL_ASSIGNEES.value)
+```
 
 ### Arguments
 
@@ -81,7 +87,10 @@ This operation is performed by calling function `get_task_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-tasks-id/).
 
-*Currently we don't have an example for calling `get_task_by_id` in integration tests*
+<!-- sample get_tasks_id -->
+```python
+client.tasks.get_task_by_id(task_id=task.id)
+```
 
 ### Arguments
 
@@ -108,7 +117,10 @@ This operation is performed by calling function `update_task_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-tasks-id/).
 
-*Currently we don't have an example for calling `update_task_by_id` in integration tests*
+<!-- sample put_tasks_id -->
+```python
+client.tasks.update_task_by_id(task_id=task.id, message='updated message')
+```
 
 ### Arguments
 
@@ -142,7 +154,10 @@ This operation is performed by calling function `delete_task_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-tasks-id/).
 
-*Currently we don't have an example for calling `delete_task_by_id` in integration tests*
+<!-- sample delete_tasks_id -->
+```python
+client.tasks.delete_task_by_id(task_id=task.id)
+```
 
 ### Arguments
 

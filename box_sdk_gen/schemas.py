@@ -7713,7 +7713,7 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         self.finalized_at = finalized_at
 
 class SignRequestSigner(SignRequestCreateSigner):
-    def __init__(self, email: str, has_viewed_document: Optional[bool] = None, signer_decision: Optional[SignRequestSignerSignerDecisionField] = None, inputs: Optional[List[SignRequestSignerInput]] = None, embed_url: Optional[str] = None, role: Optional[SignRequestCreateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, embed_url_external_user_id: Optional[str] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, login_required: Optional[bool] = None, verification_phone_number: Optional[str] = None, password: Optional[str] = None, **kwargs):
+    def __init__(self, email: str, has_viewed_document: Optional[bool] = None, signer_decision: Optional[SignRequestSignerSignerDecisionField] = None, inputs: Optional[List[SignRequestSignerInput]] = None, embed_url: Optional[str] = None, iframeable_embed_url: Optional[str] = None, role: Optional[SignRequestCreateSignerRoleField] = None, is_in_person: Optional[bool] = None, order: Optional[int] = None, embed_url_external_user_id: Optional[str] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, login_required: Optional[bool] = None, verification_phone_number: Optional[str] = None, password: Optional[str] = None, **kwargs):
         """
         :param email: Email address of the signer
         :type email: str
@@ -7723,6 +7723,13 @@ class SignRequestSigner(SignRequestCreateSigner):
         :type signer_decision: Optional[SignRequestSignerSignerDecisionField], optional
         :param embed_url: URL to direct a signer to for signing
         :type embed_url: Optional[str], optional
+        :param iframeable_embed_url: This URL is specifically designed for
+            signing documents within an HTML `iframe` tag.
+            It will be returned in the response
+            only if the `embed_url_external_user_id`
+            parameter was passed in the
+            `create sign request` call.
+        :type iframeable_embed_url: Optional[str], optional
         :param role: Defines the role of the signer in the sign request. A `signer`
             must sign the document and an `approver` must approve the document. A
             `final_copy_reader` only receives the final signed document and signing
@@ -7765,6 +7772,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         self.signer_decision = signer_decision
         self.inputs = inputs
         self.embed_url = embed_url
+        self.iframeable_embed_url = iframeable_embed_url
 
 class SignRequestBase(BaseObject):
     def __init__(self, parent_folder: FolderMini, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, **kwargs):
