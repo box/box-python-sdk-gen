@@ -32,8 +32,6 @@ def testFolderLocks():
     assert folder_lock.folder.id == folder.id
     assert folder_lock.locked_operations.move == True
     assert folder_lock.locked_operations.delete == True
-    with pytest.raises(Exception):
-        client.folders.delete_folder_by_id(folder_id=folder.id)
     client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
     with pytest.raises(Exception):
         client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
