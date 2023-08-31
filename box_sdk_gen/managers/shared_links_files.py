@@ -30,13 +30,21 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFileAddSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
+    OPEN = "open"
+    COMPANY = "company"
+    COLLABORATORS = "collaborators"
+
 
 class UpdateFileAddSharedLinkSharedLinkArgPermissionsField(BaseObject):
-    def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
+    def __init__(
+        self,
+        can_download: Optional[bool] = None,
+        can_preview: Optional[bool] = None,
+        can_edit: Optional[bool] = None,
+        **kwargs
+    ):
         """
         :param can_download: If the shared link allows for downloading of files.
             This can only be set when `access` is set to
@@ -58,8 +66,19 @@ class UpdateFileAddSharedLinkSharedLinkArgPermissionsField(BaseObject):
         self.can_preview = can_preview
         self.can_edit = can_edit
 
+
 class UpdateFileAddSharedLinkSharedLinkArg(BaseObject):
-    def __init__(self, access: Optional[UpdateFileAddSharedLinkSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFileAddSharedLinkSharedLinkArgPermissionsField] = None, **kwargs):
+    def __init__(
+        self,
+        access: Optional[UpdateFileAddSharedLinkSharedLinkArgAccessField] = None,
+        password: Optional[str] = None,
+        vanity_name: Optional[str] = None,
+        unshared_at: Optional[str] = None,
+        permissions: Optional[
+            UpdateFileAddSharedLinkSharedLinkArgPermissionsField
+        ] = None,
+        **kwargs
+    ):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -98,13 +117,21 @@ class UpdateFileAddSharedLinkSharedLinkArg(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class UpdateFileUpdateSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
+    OPEN = "open"
+    COMPANY = "company"
+    COLLABORATORS = "collaborators"
+
 
 class UpdateFileUpdateSharedLinkSharedLinkArgPermissionsField(BaseObject):
-    def __init__(self, can_download: Optional[bool] = None, can_preview: Optional[bool] = None, can_edit: Optional[bool] = None, **kwargs):
+    def __init__(
+        self,
+        can_download: Optional[bool] = None,
+        can_preview: Optional[bool] = None,
+        can_edit: Optional[bool] = None,
+        **kwargs
+    ):
         """
         :param can_download: If the shared link allows for downloading of files.
             This can only be set when `access` is set to
@@ -126,8 +153,19 @@ class UpdateFileUpdateSharedLinkSharedLinkArgPermissionsField(BaseObject):
         self.can_preview = can_preview
         self.can_edit = can_edit
 
+
 class UpdateFileUpdateSharedLinkSharedLinkArg(BaseObject):
-    def __init__(self, access: Optional[UpdateFileUpdateSharedLinkSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFileUpdateSharedLinkSharedLinkArgPermissionsField] = None, **kwargs):
+    def __init__(
+        self,
+        access: Optional[UpdateFileUpdateSharedLinkSharedLinkArgAccessField] = None,
+        password: Optional[str] = None,
+        vanity_name: Optional[str] = None,
+        unshared_at: Optional[str] = None,
+        permissions: Optional[
+            UpdateFileUpdateSharedLinkSharedLinkArgPermissionsField
+        ] = None,
+        **kwargs
+    ):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -166,33 +204,46 @@ class UpdateFileUpdateSharedLinkSharedLinkArg(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class UpdateFileRemoveSharedLinkSharedLinkArg(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class SharedLinksFilesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_shared_items(self, boxapi: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def get_shared_items(
+        self,
+        boxapi: str,
+        fields: Optional[str] = None,
+        if_none_match: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Returns the file represented by a shared link.
-        
+
         A shared file can be represented by a shared link,
 
-        
+
         which can originate within the current enterprise or within another.
 
-        
+
         This endpoint allows an application to retrieve information about a
 
-        
+
         shared file when only given a shared link.
 
-        
+
         The `shared_link_permission_options` array field can be returned
 
-        
+
         by requesting it in the `fields` query parameter.
 
         :param boxapi: A header containing the shared link and optional password for the
@@ -220,11 +271,33 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), **extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shared_items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                "if-none-match": to_string(if_none_match),
+                "boxapi": to_string(boxapi),
+                **extra_headers,
+            }
+        )
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/shared_items"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def get_file_get_shared_link(self, file_id: str, fields: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def get_file_get_shared_link(
+        self,
+        file_id: str,
+        fields: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Gets the information for a shared link on a file.
         :param file_id: The unique identifier that represents a file.
@@ -243,11 +316,28 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#get_shared_link']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "#get_shared_link"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_add_shared_link(self, file_id: str, fields: str, shared_link: Optional[UpdateFileAddSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def update_file_add_shared_link(
+        self,
+        file_id: str,
+        fields: str,
+        shared_link: Optional[UpdateFileAddSharedLinkSharedLinkArg] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Adds a shared link to a file.
         :param file_id: The unique identifier that represents a file.
@@ -270,12 +360,31 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(shared_link=shared_link)
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "#add_shared_link"]),
+            FetchOptions(
+                method="PUT",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_update_shared_link(self, file_id: str, fields: str, shared_link: Optional[UpdateFileUpdateSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def update_file_update_shared_link(
+        self,
+        file_id: str,
+        fields: str,
+        shared_link: Optional[UpdateFileUpdateSharedLinkSharedLinkArg] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Updates a shared link on a file.
         :param file_id: The unique identifier that represents a file.
@@ -296,12 +405,31 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(shared_link=shared_link)
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "#update_shared_link"]),
+            FetchOptions(
+                method="PUT",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_remove_shared_link(self, file_id: str, fields: str, shared_link: Optional[UpdateFileRemoveSharedLinkSharedLinkArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def update_file_remove_shared_link(
+        self,
+        file_id: str,
+        fields: str,
+        shared_link: Optional[UpdateFileRemoveSharedLinkSharedLinkArg] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Removes a shared link from a file.
         :param file_id: The unique identifier that represents a file.
@@ -323,8 +451,20 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(shared_link=shared_link)
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "#remove_shared_link"]),
+            FetchOptions(
+                method="PUT",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))

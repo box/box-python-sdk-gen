@@ -26,38 +26,56 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFolderTrashItemsDirectionArg(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
+    ASC = "ASC"
+    DESC = "DESC"
+
 
 class GetFolderTrashItemsSortArg(str, Enum):
-    NAME = 'name'
-    DATE = 'date'
-    SIZE = 'size'
+    NAME = "name"
+    DATE = "date"
+    SIZE = "size"
+
 
 class TrashedItemsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_trash_items(self, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, direction: Optional[GetFolderTrashItemsDirectionArg] = None, sort: Optional[GetFolderTrashItemsSortArg] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Items:
+
+    def get_folder_trash_items(
+        self,
+        fields: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        usemarker: Optional[bool] = None,
+        marker: Optional[str] = None,
+        direction: Optional[GetFolderTrashItemsDirectionArg] = None,
+        sort: Optional[GetFolderTrashItemsSortArg] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Items:
         """
         Retrieves the files and folders that have been moved
-        
+
         to the trash.
 
-        
+
         Any attribute in the full files or folders objects can be passed
 
-        
+
         in with the `fields` parameter to retrieve those specific
 
-        
+
         attributes that are not returned by default.
 
-        
+
         This endpoint defaults to use offset-based pagination, yet also supports
 
-        
+
         marker-based pagination using the `marker` parameter.
 
         :param fields: A comma-separated list of attributes to include in the
@@ -102,7 +120,27 @@ class TrashedItemsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset), 'usemarker': to_string(usemarker), 'marker': to_string(marker), 'direction': to_string(direction), 'sort': to_string(sort)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "fields": to_string(fields),
+                "limit": to_string(limit),
+                "offset": to_string(offset),
+                "usemarker": to_string(usemarker),
+                "marker": to_string(marker),
+                "direction": to_string(direction),
+                "sort": to_string(sort),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/trash/items']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/folders/trash/items"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Items.from_dict(json.loads(response.text))

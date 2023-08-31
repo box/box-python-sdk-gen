@@ -14,23 +14,28 @@ except ImportError:
     jwt, default_backend, serialization = None, None, None
 
 from .auth import Authentication
-from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
+from .auth_schemas import (
+    TokenRequestBoxSubjectType,
+    TokenRequest,
+    TokenRequestGrantType,
+    AccessToken,
+)
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 
 
 class JWTConfig:
     def __init__(
-            self,
-            client_id: str,
-            client_secret: str,
-            jwt_key_id: str,
-            private_key: str,
-            private_key_passphrase: str,
-            enterprise_id: Optional[str] = None,
-            user_id: Optional[str] = None,
-            jwt_algorithm: str = 'RS256',
-            **_kwargs
+        self,
+        client_id: str,
+        client_secret: str,
+        jwt_key_id: str,
+        private_key: str,
+        private_key_passphrase: str,
+        enterprise_id: Optional[str] = None,
+        user_id: Optional[str] = None,
+        jwt_algorithm: str = "RS256",
+        **_kwargs
     ):
         """
         :param client_id:
@@ -78,7 +83,9 @@ class JWTConfig:
         self.jwt_algorithm = jwt_algorithm
 
     @classmethod
-    def from_config_json_string(cls, config_json_string: str, **kwargs: Any) -> 'JWTConfig':
+    def from_config_json_string(
+        cls, config_json_string: str, **kwargs: Any
+    ) -> "JWTConfig":
         """
         Create an auth instance as defined by a string content of JSON file downloaded from the Box Developer Console.
         See https://developer.box.com/en/guides/authentication/jwt/ for more information.
@@ -89,23 +96,26 @@ class JWTConfig:
             Auth instance configured as specified by the config dictionary.
         """
         config_dict: dict = json.loads(config_json_string)
-        if 'boxAppSettings' not in config_dict:
-            raise ValueError('boxAppSettings not present in configuration')
+        if "boxAppSettings" not in config_dict:
+            raise ValueError("boxAppSettings not present in configuration")
         return cls(
-            client_id=config_dict['boxAppSettings']['clientID'],
-            client_secret=config_dict['boxAppSettings']['clientSecret'],
-            enterprise_id=config_dict.get('enterpriseID', None),
-            jwt_key_id=config_dict['boxAppSettings']['appAuth'].get(
-                'publicKeyID', None),
-            private_key=config_dict['boxAppSettings']['appAuth'].get(
-                'privateKey', None),
-            private_key_passphrase=config_dict['boxAppSettings']['appAuth'].get(
-                'passphrase', None),
+            client_id=config_dict["boxAppSettings"]["clientID"],
+            client_secret=config_dict["boxAppSettings"]["clientSecret"],
+            enterprise_id=config_dict.get("enterpriseID", None),
+            jwt_key_id=config_dict["boxAppSettings"]["appAuth"].get(
+                "publicKeyID", None
+            ),
+            private_key=config_dict["boxAppSettings"]["appAuth"].get(
+                "privateKey", None
+            ),
+            private_key_passphrase=config_dict["boxAppSettings"]["appAuth"].get(
+                "passphrase", None
+            ),
             **kwargs
         )
 
     @classmethod
-    def from_config_file(cls, config_file_path: str, **kwargs: Any) -> 'JWTConfig':
+    def from_config_file(cls, config_file_path: str, **kwargs: Any) -> "JWTConfig":
         """
         Create an auth instance as defined by a JSON file downloaded from the Box Developer Console.
         See https://developer.box.com/en/guides/authentication/jwt/ for more information.
@@ -115,7 +125,7 @@ class JWTConfig:
         :return:
             Auth instance configured as specified by the JSON file.
         """
-        with open(config_file_path, encoding='utf-8') as config_file:
+        with open(config_file_path, encoding="utf-8") as config_file:
             return cls.from_config_json_string(config_file.read(), **kwargs)
 
 
@@ -127,8 +137,8 @@ class JWTAuth(Authentication):
         """
         if None in (default_backend, serialization, jwt):
             raise Exception(
-                'Missing dependencies required for JWTAuth. To install them use command: '
-                '`pip install box-sdk-gen[jwt]`'
+                "Missing dependencies required for JWTAuth. To install them use"
+                " command: `pip install box-sdk-gen[jwt]`"
             )
 
         self.config = config
@@ -142,7 +152,8 @@ class JWTAuth(Authentication):
             self.subject_type = TokenRequestBoxSubjectType.USER
 
         self._rsa_private_key = self._get_rsa_private_key(
-            config.private_key, config.private_key_passphrase)
+            config.private_key, config.private_key_passphrase
+        )
 
     def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
         """
@@ -164,23 +175,25 @@ class JWTAuth(Authentication):
         jti_length = system_random.randint(16, 128)
         ascii_alphabet = string.ascii_letters + string.digits
         ascii_len = len(ascii_alphabet)
-        jti = ''.join(ascii_alphabet[int(
-            system_random.random() * ascii_len)] for _ in range(jti_length))
+        jti = "".join(
+            ascii_alphabet[int(system_random.random() * ascii_len)]
+            for _ in range(jti_length)
+        )
         now_time = datetime.utcnow()
         now_plus_30 = now_time + timedelta(seconds=30)
         assertion = jwt.encode(
             {
-                'iss': self.config.client_id,
-                'sub': self.subject_id,
-                'box_sub_type': self.subject_type,
-                'aud': 'https://api.box.com/oauth2/token',
-                'jti': jti,
-                'exp': int((now_plus_30 - datetime(1970, 1, 1)).total_seconds()),
+                "iss": self.config.client_id,
+                "sub": self.subject_id,
+                "box_sub_type": self.subject_type,
+                "aud": "https://api.box.com/oauth2/token",
+                "jti": jti,
+                "exp": int((now_plus_30 - datetime(1970, 1, 1)).total_seconds()),
             },
             self._rsa_private_key,
             algorithm=self.config.jwt_algorithm,
             headers={
-                'kid': self.config.jwt_key_id,
+                "kid": self.config.jwt_key_id,
             },
         )
 
@@ -192,13 +205,13 @@ class JWTAuth(Authentication):
         )
 
         response: FetchResponse = fetch(
-            'https://api.box.com/oauth2/token',
+            "https://api.box.com/oauth2/token",
             FetchOptions(
-                method='POST',
+                method="POST",
                 body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'},
-                network_session=network_session
-            )
+                headers={"content-type": "application/x-www-form-urlencoded"},
+                network_session=network_session,
+            ),
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))
@@ -236,9 +249,9 @@ class JWTAuth(Authentication):
 
     @classmethod
     def _get_rsa_private_key(
-            cls,
-            private_key: str,
-            passphrase: str,
+        cls,
+        private_key: str,
+        passphrase: str,
     ) -> Any:
         encoded_private_key = cls._encode_str_ascii_or_raise(private_key)
         encoded_passphrase = cls._encode_str_ascii_or_raise(passphrase)
@@ -252,8 +265,9 @@ class JWTAuth(Authentication):
     @staticmethod
     def _encode_str_ascii_or_raise(passphrase: str) -> bytes:
         try:
-            return passphrase.encode('ascii')
+            return passphrase.encode("ascii")
         except UnicodeError as unicode_error:
             raise TypeError(
-                "private_key and private_key_passphrase must contain binary data (bytes/str), not a text/unicode string"
+                "private_key and private_key_passphrase must contain binary data"
+                " (bytes/str), not a text/unicode string"
             ) from unicode_error

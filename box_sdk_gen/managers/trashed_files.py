@@ -30,6 +30,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class RestoreFileFromTrashParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
@@ -39,17 +40,30 @@ class RestoreFileFromTrashParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class TrashedFilesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def restore_file_from_trash(self, file_id: str, name: Optional[str] = None, parent: Optional[RestoreFileFromTrashParentArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TrashFileRestored:
+
+    def restore_file_from_trash(
+        self,
+        file_id: str,
+        name: Optional[str] = None,
+        parent: Optional[RestoreFileFromTrashParentArg] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> TrashFileRestored:
         """
         Restores a file that has been moved to the trash.
-        
+
         An optional new parent ID can be provided to restore the file to in case the
 
-        
+
         original folder has been deleted.
 
         :param file_id: The unique identifier that represents a file.
@@ -76,36 +90,54 @@ class TrashedFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(name=name, parent=parent)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(name=name, parent=parent)
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id]),
+            FetchOptions(
+                method="POST",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return TrashFileRestored.from_dict(json.loads(response.text))
-    def get_file_trash(self, file_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TrashFile:
+
+    def get_file_trash(
+        self,
+        file_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> TrashFile:
         """
         Retrieves a file that has been moved to the trash.
-        
+
         Please note that only if the file itself has been moved to the
 
-        
+
         trash can it be retrieved with this API call. If instead one of
 
-        
+
         its parent folders was moved to the trash, only that folder
 
-        
+
         can be inspected using the
 
-        
+
         [`GET /folders/:id/trash`](e://get_folders_id_trash) API.
 
-        
+
         To list all items that have been moved to the trash, please
 
-        
+
         use the [`GET /folders/trash/items`](e://get-folders-trash-items/)
 
-        
+
         API.
 
         :param file_id: The unique identifier that represents a file.
@@ -130,14 +162,27 @@ class TrashedFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/trash"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return TrashFile.from_dict(json.loads(response.text))
-    def delete_file_trash(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_file_trash(
+        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Permanently deletes a file that is in the trash.
-        
+
         This action cannot be undone.
 
         :param file_id: The unique identifier that represents a file.
@@ -154,5 +199,14 @@ class TrashedFilesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/trash']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/trash"]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

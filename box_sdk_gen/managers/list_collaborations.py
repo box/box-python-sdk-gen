@@ -26,20 +26,34 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetCollaborationsStatusArg(str, Enum):
-    PENDING = 'pending'
+    PENDING = "pending"
+
 
 class ListCollaborationsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_collaborations(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaborations:
+
+    def get_file_collaborations(
+        self,
+        file_id: str,
+        fields: Optional[str] = None,
+        limit: Optional[int] = None,
+        marker: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
-        
+
         file. This returns all the users that have access to the file
 
-        
+
         or have been invited to the file.
 
         :param file_id: The unique identifier that represents a file.
@@ -70,17 +84,39 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'marker': to_string(marker)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "fields": to_string(fields),
+                "limit": to_string(limit),
+                "marker": to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/collaborations"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Collaborations.from_dict(json.loads(response.text))
-    def get_folder_collaborations(self, folder_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaborations:
+
+    def get_folder_collaborations(
+        self,
+        folder_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Collaborations:
         """
         Retrieves a list of pending and active collaborations for a
-        
+
         folder. This returns all the users that have access to the folder
 
-        
+
         or have been invited to the folder.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -105,11 +141,29 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/folders/", folder_id, "/collaborations"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Collaborations.from_dict(json.loads(response.text))
-    def get_collaborations(self, status: GetCollaborationsStatusArg, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaborations:
+
+    def get_collaborations(
+        self,
+        status: GetCollaborationsStatusArg,
+        fields: Optional[str] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Collaborations:
         """
         Retrieves all pending collaboration invites for this user.
         :param status: The status of the collaborations to retrieve
@@ -135,20 +189,44 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'status': to_string(status), 'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "status": to_string(status),
+                "fields": to_string(fields),
+                "offset": to_string(offset),
+                "limit": to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/collaborations']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/collaborations"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Collaborations.from_dict(json.loads(response.text))
-    def get_group_collaborations(self, group_id: str, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Collaborations:
+
+    def get_group_collaborations(
+        self,
+        group_id: str,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Collaborations:
         """
         Retrieves all the collaborations for a group. The user
-        
+
         must have admin permissions to inspect enterprise's groups.
 
-        
+
         Each collaboration object has details on which files or
 
-        
+
         folders the group has access to and with what role.
 
         :param group_id: The ID of the group.
@@ -166,7 +244,19 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'limit': to_string(limit), 'offset': to_string(offset)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {"limit": to_string(limit), "offset": to_string(offset)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/groups/", group_id, "/collaborations"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Collaborations.from_dict(json.loads(response.text))

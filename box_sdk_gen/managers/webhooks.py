@@ -34,12 +34,19 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateWebhookTargetArgTypeField(str, Enum):
-    FILE = 'file'
-    FOLDER = 'folder'
+    FILE = "file"
+    FOLDER = "folder"
+
 
 class CreateWebhookTargetArg(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[CreateWebhookTargetArgTypeField] = None, **kwargs):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[CreateWebhookTargetArgTypeField] = None,
+        **kwargs
+    ):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
@@ -50,54 +57,62 @@ class CreateWebhookTargetArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CreateWebhookTriggersArg(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
+    FILE_UPLOADED = "FILE.UPLOADED"
+    FILE_PREVIEWED = "FILE.PREVIEWED"
+    FILE_DOWNLOADED = "FILE.DOWNLOADED"
+    FILE_TRASHED = "FILE.TRASHED"
+    FILE_DELETED = "FILE.DELETED"
+    FILE_RESTORED = "FILE.RESTORED"
+    FILE_COPIED = "FILE.COPIED"
+    FILE_MOVED = "FILE.MOVED"
+    FILE_LOCKED = "FILE.LOCKED"
+    FILE_UNLOCKED = "FILE.UNLOCKED"
+    FILE_RENAMED = "FILE.RENAMED"
+    COMMENT_CREATED = "COMMENT.CREATED"
+    COMMENT_UPDATED = "COMMENT.UPDATED"
+    COMMENT_DELETED = "COMMENT.DELETED"
+    TASK_ASSIGNMENT_CREATED = "TASK_ASSIGNMENT.CREATED"
+    TASK_ASSIGNMENT_UPDATED = "TASK_ASSIGNMENT.UPDATED"
+    METADATA_INSTANCE_CREATED = "METADATA_INSTANCE.CREATED"
+    METADATA_INSTANCE_UPDATED = "METADATA_INSTANCE.UPDATED"
+    METADATA_INSTANCE_DELETED = "METADATA_INSTANCE.DELETED"
+    FOLDER_CREATED = "FOLDER.CREATED"
+    FOLDER_RENAMED = "FOLDER.RENAMED"
+    FOLDER_DOWNLOADED = "FOLDER.DOWNLOADED"
+    FOLDER_RESTORED = "FOLDER.RESTORED"
+    FOLDER_DELETED = "FOLDER.DELETED"
+    FOLDER_COPIED = "FOLDER.COPIED"
+    FOLDER_MOVED = "FOLDER.MOVED"
+    FOLDER_TRASHED = "FOLDER.TRASHED"
+    WEBHOOK_DELETED = "WEBHOOK.DELETED"
+    COLLABORATION_CREATED = "COLLABORATION.CREATED"
+    COLLABORATION_ACCEPTED = "COLLABORATION.ACCEPTED"
+    COLLABORATION_REJECTED = "COLLABORATION.REJECTED"
+    COLLABORATION_REMOVED = "COLLABORATION.REMOVED"
+    COLLABORATION_UPDATED = "COLLABORATION.UPDATED"
+    SHARED_LINK_DELETED = "SHARED_LINK.DELETED"
+    SHARED_LINK_CREATED = "SHARED_LINK.CREATED"
+    SHARED_LINK_UPDATED = "SHARED_LINK.UPDATED"
+    SIGN_REQUEST_COMPLETED = "SIGN_REQUEST.COMPLETED"
+    SIGN_REQUEST_DECLINED = "SIGN_REQUEST.DECLINED"
+    SIGN_REQUEST_EXPIRED = "SIGN_REQUEST.EXPIRED"
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = "SIGN_REQUEST.SIGNER_EMAIL_BOUNCED"
+
 
 class UpdateWebhookByIdTargetArgTypeField(str, Enum):
-    FILE = 'file'
-    FOLDER = 'folder'
+    FILE = "file"
+    FOLDER = "folder"
+
 
 class UpdateWebhookByIdTargetArg(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[UpdateWebhookByIdTargetArgTypeField] = None, **kwargs):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[UpdateWebhookByIdTargetArgTypeField] = None,
+        **kwargs
+    ):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
@@ -108,65 +123,77 @@ class UpdateWebhookByIdTargetArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class UpdateWebhookByIdTriggersArg(str, Enum):
-    FILE_UPLOADED = 'FILE.UPLOADED'
-    FILE_PREVIEWED = 'FILE.PREVIEWED'
-    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
-    FILE_TRASHED = 'FILE.TRASHED'
-    FILE_DELETED = 'FILE.DELETED'
-    FILE_RESTORED = 'FILE.RESTORED'
-    FILE_COPIED = 'FILE.COPIED'
-    FILE_MOVED = 'FILE.MOVED'
-    FILE_LOCKED = 'FILE.LOCKED'
-    FILE_UNLOCKED = 'FILE.UNLOCKED'
-    FILE_RENAMED = 'FILE.RENAMED'
-    COMMENT_CREATED = 'COMMENT.CREATED'
-    COMMENT_UPDATED = 'COMMENT.UPDATED'
-    COMMENT_DELETED = 'COMMENT.DELETED'
-    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
-    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
-    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
-    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
-    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
-    FOLDER_CREATED = 'FOLDER.CREATED'
-    FOLDER_RENAMED = 'FOLDER.RENAMED'
-    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
-    FOLDER_RESTORED = 'FOLDER.RESTORED'
-    FOLDER_DELETED = 'FOLDER.DELETED'
-    FOLDER_COPIED = 'FOLDER.COPIED'
-    FOLDER_MOVED = 'FOLDER.MOVED'
-    FOLDER_TRASHED = 'FOLDER.TRASHED'
-    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
-    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
-    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
-    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
-    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
-    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
-    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
-    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
-    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
-    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
-    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
-    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
+    FILE_UPLOADED = "FILE.UPLOADED"
+    FILE_PREVIEWED = "FILE.PREVIEWED"
+    FILE_DOWNLOADED = "FILE.DOWNLOADED"
+    FILE_TRASHED = "FILE.TRASHED"
+    FILE_DELETED = "FILE.DELETED"
+    FILE_RESTORED = "FILE.RESTORED"
+    FILE_COPIED = "FILE.COPIED"
+    FILE_MOVED = "FILE.MOVED"
+    FILE_LOCKED = "FILE.LOCKED"
+    FILE_UNLOCKED = "FILE.UNLOCKED"
+    FILE_RENAMED = "FILE.RENAMED"
+    COMMENT_CREATED = "COMMENT.CREATED"
+    COMMENT_UPDATED = "COMMENT.UPDATED"
+    COMMENT_DELETED = "COMMENT.DELETED"
+    TASK_ASSIGNMENT_CREATED = "TASK_ASSIGNMENT.CREATED"
+    TASK_ASSIGNMENT_UPDATED = "TASK_ASSIGNMENT.UPDATED"
+    METADATA_INSTANCE_CREATED = "METADATA_INSTANCE.CREATED"
+    METADATA_INSTANCE_UPDATED = "METADATA_INSTANCE.UPDATED"
+    METADATA_INSTANCE_DELETED = "METADATA_INSTANCE.DELETED"
+    FOLDER_CREATED = "FOLDER.CREATED"
+    FOLDER_RENAMED = "FOLDER.RENAMED"
+    FOLDER_DOWNLOADED = "FOLDER.DOWNLOADED"
+    FOLDER_RESTORED = "FOLDER.RESTORED"
+    FOLDER_DELETED = "FOLDER.DELETED"
+    FOLDER_COPIED = "FOLDER.COPIED"
+    FOLDER_MOVED = "FOLDER.MOVED"
+    FOLDER_TRASHED = "FOLDER.TRASHED"
+    WEBHOOK_DELETED = "WEBHOOK.DELETED"
+    COLLABORATION_CREATED = "COLLABORATION.CREATED"
+    COLLABORATION_ACCEPTED = "COLLABORATION.ACCEPTED"
+    COLLABORATION_REJECTED = "COLLABORATION.REJECTED"
+    COLLABORATION_REMOVED = "COLLABORATION.REMOVED"
+    COLLABORATION_UPDATED = "COLLABORATION.UPDATED"
+    SHARED_LINK_DELETED = "SHARED_LINK.DELETED"
+    SHARED_LINK_CREATED = "SHARED_LINK.CREATED"
+    SHARED_LINK_UPDATED = "SHARED_LINK.UPDATED"
+    SIGN_REQUEST_COMPLETED = "SIGN_REQUEST.COMPLETED"
+    SIGN_REQUEST_DECLINED = "SIGN_REQUEST.DECLINED"
+    SIGN_REQUEST_EXPIRED = "SIGN_REQUEST.EXPIRED"
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = "SIGN_REQUEST.SIGNER_EMAIL_BOUNCED"
+
 
 class WebhooksManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_webhooks(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Webhooks:
+
+    def get_webhooks(
+        self,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Webhooks:
         """
         Returns all defined webhooks for the requesting application.
-        
+
         This API only returns webhooks that are applied to files or folders that are
 
-        
+
         owned by the authenticated user. This means that an admin can not see webhooks
 
-        
+
         created by a service account unless the admin has access to those folders, and
 
-        
+
         vice versa.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -180,11 +207,30 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {"marker": to_string(marker), "limit": to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/webhooks"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Webhooks.from_dict(json.loads(response.text))
-    def create_webhook(self, target: CreateWebhookTargetArg, address: str, triggers: List[CreateWebhookTriggersArg], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Webhook:
+
+    def create_webhook(
+        self,
+        target: CreateWebhookTargetArg,
+        address: str,
+        triggers: List[CreateWebhookTriggersArg],
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Webhook:
         """
         Creates a webhook.
         :param target: The item that will trigger the webhook
@@ -199,11 +245,25 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
+        request_body = BaseObject(target=target, address=address, triggers=triggers)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/webhooks"]),
+            FetchOptions(
+                method="POST",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Webhook.from_dict(json.loads(response.text))
-    def get_webhook_by_id(self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Webhook:
+
+    def get_webhook_by_id(
+        self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Webhook:
         """
         Retrieves a specific webhook
         :param webhook_id: The ID of the webhook.
@@ -215,9 +275,26 @@ class WebhooksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/webhooks/", webhook_id]),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Webhook.from_dict(json.loads(response.text))
-    def update_webhook_by_id(self, webhook_id: str, target: Optional[UpdateWebhookByIdTargetArg] = None, address: Optional[str] = None, triggers: Optional[List[UpdateWebhookByIdTriggersArg]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Webhook:
+
+    def update_webhook_by_id(
+        self,
+        webhook_id: str,
+        target: Optional[UpdateWebhookByIdTargetArg] = None,
+        address: Optional[str] = None,
+        triggers: Optional[List[UpdateWebhookByIdTriggersArg]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Webhook:
         """
         Updates a webhook.
         :param webhook_id: The ID of the webhook.
@@ -235,11 +312,25 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(target=target, address=address, triggers=triggers)
+        request_body = BaseObject(target=target, address=address, triggers=triggers)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/webhooks/", webhook_id]),
+            FetchOptions(
+                method="PUT",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Webhook.from_dict(json.loads(response.text))
-    def delete_webhook_by_id(self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_webhook_by_id(
+        self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Deletes a webhook.
         :param webhook_id: The ID of the webhook.
@@ -251,5 +342,14 @@ class WebhooksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/webhooks/', webhook_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/webhooks/", webhook_id]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

@@ -28,11 +28,23 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class ShieldInformationBarrierReportsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_shield_information_barrier_reports(self, shield_information_barrier_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def get_shield_information_barrier_reports(
+        self,
+        shield_information_barrier_id: str,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Lists shield information barrier reports with specific IDs.
         :param shield_information_barrier_id: The ID of the shield information barrier.
@@ -48,11 +60,34 @@ class ShieldInformationBarrierReportsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'shield_information_barrier_id': to_string(shield_information_barrier_id), 'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "shield_information_barrier_id": to_string(
+                    shield_information_barrier_id
+                ),
+                "marker": to_string(marker),
+                "limit": to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/shield_information_barrier_reports"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def create_shield_information_barrier_report(self, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierReport:
+
+    def create_shield_information_barrier_report(
+        self,
+        shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrierReport:
         """
         Creates a shield information barrier report for a given barrier.
         :param extra_headers: Extra headers that will be included in the HTTP request.
@@ -60,11 +95,29 @@ class ShieldInformationBarrierReportsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: ShieldInformationBarrierReference = ShieldInformationBarrierReference(shield_information_barrier=shield_information_barrier)
+        request_body = ShieldInformationBarrierReference(
+            shield_information_barrier=shield_information_barrier
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/shield_information_barrier_reports"]),
+            FetchOptions(
+                method="POST",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
-    def get_shield_information_barrier_report_by_id(self, shield_information_barrier_report_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierReport:
+
+    def get_shield_information_barrier_report_by_id(
+        self,
+        shield_information_barrier_report_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrierReport:
         """
         Retrieves a shield information barrier report by its ID.
         :param shield_information_barrier_report_id: The ID of the shield information barrier Report.
@@ -76,5 +129,19 @@ class ShieldInformationBarrierReportsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_reports/', shield_information_barrier_report_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                [
+                    "https://api.box.com/2.0/shield_information_barrier_reports/",
+                    shield_information_barrier_report_id,
+                ]
+            ),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return ShieldInformationBarrierReport.from_dict(json.loads(response.text))

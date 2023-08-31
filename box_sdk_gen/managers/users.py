@@ -38,30 +38,36 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetUsersUserTypeArg(str, Enum):
-    ALL = 'all'
-    MANAGED = 'managed'
-    EXTERNAL = 'external'
+    ALL = "all"
+    MANAGED = "managed"
+    EXTERNAL = "external"
+
 
 class CreateUserRoleArg(str, Enum):
-    COADMIN = 'coadmin'
-    USER = 'user'
+    COADMIN = "coadmin"
+    USER = "user"
+
 
 class CreateUserStatusArg(str, Enum):
-    ACTIVE = 'active'
-    INACTIVE = 'inactive'
-    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
-    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    CANNOT_DELETE_EDIT = "cannot_delete_edit"
+    CANNOT_DELETE_EDIT_UPLOAD = "cannot_delete_edit_upload"
+
 
 class UpdateUserByIdRoleArg(str, Enum):
-    COADMIN = 'coadmin'
-    USER = 'user'
+    COADMIN = "coadmin"
+    USER = "user"
+
 
 class UpdateUserByIdStatusArg(str, Enum):
-    ACTIVE = 'active'
-    INACTIVE = 'inactive'
-    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
-    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    CANNOT_DELETE_EDIT = "cannot_delete_edit"
+    CANNOT_DELETE_EDIT_UPLOAD = "cannot_delete_edit_upload"
+
 
 class UpdateUserByIdNotificationEmailArg(BaseObject):
     def __init__(self, email: Optional[str] = None, **kwargs):
@@ -72,23 +78,40 @@ class UpdateUserByIdNotificationEmailArg(BaseObject):
         super().__init__(**kwargs)
         self.email = email
 
+
 class UsersManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_users(self, filter_term: Optional[str] = None, user_type: Optional[GetUsersUserTypeArg] = None, external_app_user_id: Optional[str] = None, fields: Optional[str] = None, offset: Optional[int] = None, limit: Optional[int] = None, usemarker: Optional[bool] = None, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Users:
+
+    def get_users(
+        self,
+        filter_term: Optional[str] = None,
+        user_type: Optional[GetUsersUserTypeArg] = None,
+        external_app_user_id: Optional[str] = None,
+        fields: Optional[str] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+        usemarker: Optional[bool] = None,
+        marker: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Users:
         """
         Returns a list of all users for the Enterprise along with their `user_id`,
-        
+
         `public_name`, and `login`.
 
-        
+
         The application and the authenticated user need to
 
-        
+
         have the permission to look up users in the entire
 
-        
+
         enterprise.
 
         :param filter_term: Limits the results to only users who's `name` or
@@ -148,17 +171,61 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'filter_term': to_string(filter_term), 'user_type': to_string(user_type), 'external_app_user_id': to_string(external_app_user_id), 'fields': to_string(fields), 'offset': to_string(offset), 'limit': to_string(limit), 'usemarker': to_string(usemarker), 'marker': to_string(marker)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "filter_term": to_string(filter_term),
+                "user_type": to_string(user_type),
+                "external_app_user_id": to_string(external_app_user_id),
+                "fields": to_string(fields),
+                "offset": to_string(offset),
+                "limit": to_string(limit),
+                "usemarker": to_string(usemarker),
+                "marker": to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Users.from_dict(json.loads(response.text))
-    def create_user(self, name: str, login: Optional[str] = None, is_platform_access_only: Optional[bool] = None, role: Optional[CreateUserRoleArg] = None, language: Optional[str] = None, is_sync_enabled: Optional[bool] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, space_amount: Optional[int] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, timezone: Optional[str] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, status: Optional[CreateUserStatusArg] = None, external_app_user_id: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> User:
+
+    def create_user(
+        self,
+        name: str,
+        login: Optional[str] = None,
+        is_platform_access_only: Optional[bool] = None,
+        role: Optional[CreateUserRoleArg] = None,
+        language: Optional[str] = None,
+        is_sync_enabled: Optional[bool] = None,
+        job_title: Optional[str] = None,
+        phone: Optional[str] = None,
+        address: Optional[str] = None,
+        space_amount: Optional[int] = None,
+        tracking_codes: Optional[List[TrackingCode]] = None,
+        can_see_managed_users: Optional[bool] = None,
+        timezone: Optional[str] = None,
+        is_external_collab_restricted: Optional[bool] = None,
+        is_exempt_from_device_limits: Optional[bool] = None,
+        is_exempt_from_login_verification: Optional[bool] = None,
+        status: Optional[CreateUserStatusArg] = None,
+        external_app_user_id: Optional[str] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> User:
         """
         Creates a new managed user in an enterprise. This endpoint
-        
+
         is only available to users and applications with the right
 
-        
+
         admin permissions.
 
         :param name: The name of the user
@@ -222,30 +289,66 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(name=name, login=login, is_platform_access_only=is_platform_access_only, role=role, language=language, is_sync_enabled=is_sync_enabled, job_title=job_title, phone=phone, address=address, space_amount=space_amount, tracking_codes=tracking_codes, can_see_managed_users=can_see_managed_users, timezone=timezone, is_external_collab_restricted=is_external_collab_restricted, is_exempt_from_device_limits=is_exempt_from_device_limits, is_exempt_from_login_verification=is_exempt_from_login_verification, status=status, external_app_user_id=external_app_user_id)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(
+            name=name,
+            login=login,
+            is_platform_access_only=is_platform_access_only,
+            role=role,
+            language=language,
+            is_sync_enabled=is_sync_enabled,
+            job_title=job_title,
+            phone=phone,
+            address=address,
+            space_amount=space_amount,
+            tracking_codes=tracking_codes,
+            can_see_managed_users=can_see_managed_users,
+            timezone=timezone,
+            is_external_collab_restricted=is_external_collab_restricted,
+            is_exempt_from_device_limits=is_exempt_from_device_limits,
+            is_exempt_from_login_verification=is_exempt_from_login_verification,
+            status=status,
+            external_app_user_id=external_app_user_id,
+        )
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users"]),
+            FetchOptions(
+                method="POST",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return User.from_dict(json.loads(response.text))
-    def get_user_me(self, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UserFull:
+
+    def get_user_me(
+        self,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> UserFull:
         """
         Retrieves information about the user who is currently authenticated.
-        
+
         In the case of a client-side authenticated OAuth 2.0 application
 
-        
+
         this will be the user who authorized the app.
 
-        
+
         In the case of a JWT, server-side authenticated application
 
-        
+
         this will be the service account that belongs to the application
 
-        
+
         by default.
 
-        
+
         Use the `As-User` header to change who this API call is made on behalf of.
 
         :param fields: A comma-separated list of attributes to include in the
@@ -262,35 +365,51 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/me']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/me"]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return UserFull.from_dict(json.loads(response.text))
-    def get_user_by_id(self, user_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UserFull:
+
+    def get_user_by_id(
+        self,
+        user_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> UserFull:
         """
         Retrieves information about a user in the enterprise.
-        
+
         The application and the authenticated user need to
 
-        
+
         have the permission to look up users in the entire
 
-        
+
         enterprise.
 
-        
+
         This endpoint also returns a limited set of information
 
-        
+
         for external users who are collaborated on content
 
-        
+
         owned by the enterprise for authenticated users with the
 
-        
+
         right scopes. In this case, disallowed fields will return
 
-        
+
         null instead.
 
         :param user_id: The ID of the user.
@@ -310,17 +429,54 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return UserFull.from_dict(json.loads(response.text))
-    def update_user_by_id(self, user_id: str, enterprise: Optional[str] = None, notify: Optional[bool] = None, name: Optional[str] = None, login: Optional[str] = None, role: Optional[UpdateUserByIdRoleArg] = None, language: Optional[str] = None, is_sync_enabled: Optional[bool] = None, job_title: Optional[str] = None, phone: Optional[str] = None, address: Optional[str] = None, tracking_codes: Optional[List[TrackingCode]] = None, can_see_managed_users: Optional[bool] = None, timezone: Optional[str] = None, is_external_collab_restricted: Optional[bool] = None, is_exempt_from_device_limits: Optional[bool] = None, is_exempt_from_login_verification: Optional[bool] = None, is_password_reset_required: Optional[bool] = None, status: Optional[UpdateUserByIdStatusArg] = None, space_amount: Optional[int] = None, notification_email: Optional[UpdateUserByIdNotificationEmailArg] = None, external_app_user_id: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UserFull:
+
+    def update_user_by_id(
+        self,
+        user_id: str,
+        enterprise: Optional[str] = None,
+        notify: Optional[bool] = None,
+        name: Optional[str] = None,
+        login: Optional[str] = None,
+        role: Optional[UpdateUserByIdRoleArg] = None,
+        language: Optional[str] = None,
+        is_sync_enabled: Optional[bool] = None,
+        job_title: Optional[str] = None,
+        phone: Optional[str] = None,
+        address: Optional[str] = None,
+        tracking_codes: Optional[List[TrackingCode]] = None,
+        can_see_managed_users: Optional[bool] = None,
+        timezone: Optional[str] = None,
+        is_external_collab_restricted: Optional[bool] = None,
+        is_exempt_from_device_limits: Optional[bool] = None,
+        is_exempt_from_login_verification: Optional[bool] = None,
+        is_password_reset_required: Optional[bool] = None,
+        status: Optional[UpdateUserByIdStatusArg] = None,
+        space_amount: Optional[int] = None,
+        notification_email: Optional[UpdateUserByIdNotificationEmailArg] = None,
+        external_app_user_id: Optional[str] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> UserFull:
         """
         Updates a managed or app user in an enterprise. This endpoint
-        
+
         is only available to users and applications with the right
 
-        
+
         admin permissions.
 
         :param user_id: The ID of the user.
@@ -401,21 +557,62 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(enterprise=enterprise, notify=notify, name=name, login=login, role=role, language=language, is_sync_enabled=is_sync_enabled, job_title=job_title, phone=phone, address=address, tracking_codes=tracking_codes, can_see_managed_users=can_see_managed_users, timezone=timezone, is_external_collab_restricted=is_external_collab_restricted, is_exempt_from_device_limits=is_exempt_from_device_limits, is_exempt_from_login_verification=is_exempt_from_login_verification, is_password_reset_required=is_password_reset_required, status=status, space_amount=space_amount, notification_email=notification_email, external_app_user_id=external_app_user_id)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(
+            enterprise=enterprise,
+            notify=notify,
+            name=name,
+            login=login,
+            role=role,
+            language=language,
+            is_sync_enabled=is_sync_enabled,
+            job_title=job_title,
+            phone=phone,
+            address=address,
+            tracking_codes=tracking_codes,
+            can_see_managed_users=can_see_managed_users,
+            timezone=timezone,
+            is_external_collab_restricted=is_external_collab_restricted,
+            is_exempt_from_device_limits=is_exempt_from_device_limits,
+            is_exempt_from_login_verification=is_exempt_from_login_verification,
+            is_password_reset_required=is_password_reset_required,
+            status=status,
+            space_amount=space_amount,
+            notification_email=notification_email,
+            external_app_user_id=external_app_user_id,
+        )
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id]),
+            FetchOptions(
+                method="PUT",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return UserFull.from_dict(json.loads(response.text))
-    def delete_user_by_id(self, user_id: str, notify: Optional[bool] = None, force: Optional[bool] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_user_by_id(
+        self,
+        user_id: str,
+        notify: Optional[bool] = None,
+        force: Optional[bool] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a user. By default this will fail if the user
-        
+
         still owns any content. Move their owned content first
 
-        
+
         before proceeding, or use the `force` field to delete
 
-        
+
         the user and their files.
 
         :param user_id: The ID of the user.
@@ -432,7 +629,19 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'notify': to_string(notify), 'force': to_string(force)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {"notify": to_string(notify), "force": to_string(force)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id]), FetchOptions(method='DELETE', params=query_params_map, headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id]),
+            FetchOptions(
+                method="DELETE",
+                params=query_params_map,
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

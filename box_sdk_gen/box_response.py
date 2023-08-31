@@ -3,7 +3,9 @@ from requests import Response
 
 
 class APIResponse:
-    def __init__(self, network_response: Response, reauthentication_needed, raised_exception):
+    def __init__(
+        self, network_response: Response, reauthentication_needed, raised_exception
+    ):
         self.network_response = network_response
         self.reauthentication_needed = reauthentication_needed
         self.raised_exception = raised_exception
@@ -24,7 +26,9 @@ class APIResponse:
     def text(self) -> str:
         return self.network_response.text
 
-    def get_header(self, header_name: str, default_value: Optional[str] = None) -> Optional[str]:
+    def get_header(
+        self, header_name: str, default_value: Optional[str] = None
+    ) -> Optional[str]:
         try:
             return self.network_response.headers[header_name]
         except (ValueError, KeyError):

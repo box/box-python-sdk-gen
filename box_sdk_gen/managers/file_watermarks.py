@@ -30,8 +30,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFileWatermarkWatermarkArgImprintField(str, Enum):
-    DEFAULT = 'default'
+    DEFAULT = "default"
+
 
 class UpdateFileWatermarkWatermarkArg(BaseObject):
     def __init__(self, imprint: UpdateFileWatermarkWatermarkArgImprintField, **kwargs):
@@ -43,11 +45,19 @@ class UpdateFileWatermarkWatermarkArg(BaseObject):
         super().__init__(**kwargs)
         self.imprint = imprint
 
+
 class FileWatermarksManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_watermark(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Watermark:
+
+    def get_file_watermark(
+        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Watermark:
         """
         Retrieve the watermark for a file.
         :param file_id: The unique identifier that represents a file.
@@ -64,9 +74,24 @@ class FileWatermarksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Watermark.from_dict(json.loads(response.text))
-    def update_file_watermark(self, file_id: str, watermark: UpdateFileWatermarkWatermarkArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Watermark:
+
+    def update_file_watermark(
+        self,
+        file_id: str,
+        watermark: UpdateFileWatermarkWatermarkArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Watermark:
         """
         Applies or update a watermark on a file.
         :param file_id: The unique identifier that represents a file.
@@ -84,11 +109,25 @@ class FileWatermarksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(watermark=watermark)
+        request_body = BaseObject(watermark=watermark)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            FetchOptions(
+                method="PUT",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Watermark.from_dict(json.loads(response.text))
-    def delete_file_watermark(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_file_watermark(
+        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Removes the watermark from a file.
         :param file_id: The unique identifier that represents a file.
@@ -105,5 +144,14 @@ class FileWatermarksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

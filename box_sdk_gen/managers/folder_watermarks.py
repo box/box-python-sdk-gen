@@ -30,11 +30,15 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFolderWatermarkWatermarkArgImprintField(str, Enum):
-    DEFAULT = 'default'
+    DEFAULT = "default"
+
 
 class UpdateFolderWatermarkWatermarkArg(BaseObject):
-    def __init__(self, imprint: UpdateFolderWatermarkWatermarkArgImprintField, **kwargs):
+    def __init__(
+        self, imprint: UpdateFolderWatermarkWatermarkArgImprintField, **kwargs
+    ):
         """
         :param imprint: The type of watermark to apply.
             Currently only supports one option.
@@ -43,11 +47,19 @@ class UpdateFolderWatermarkWatermarkArg(BaseObject):
         super().__init__(**kwargs)
         self.imprint = imprint
 
+
 class FolderWatermarksManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_watermark(self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Watermark:
+
+    def get_folder_watermark(
+        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Watermark:
         """
         Retrieve the watermark for a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -66,9 +78,24 @@ class FolderWatermarksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/folders/", folder_id, "/watermark"]),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Watermark.from_dict(json.loads(response.text))
-    def update_folder_watermark(self, folder_id: str, watermark: UpdateFolderWatermarkWatermarkArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Watermark:
+
+    def update_folder_watermark(
+        self,
+        folder_id: str,
+        watermark: UpdateFolderWatermarkWatermarkArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Watermark:
         """
         Applies or update a watermark on a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -88,11 +115,25 @@ class FolderWatermarksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(watermark=watermark)
+        request_body = BaseObject(watermark=watermark)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/folders/", folder_id, "/watermark"]),
+            FetchOptions(
+                method="PUT",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Watermark.from_dict(json.loads(response.text))
-    def delete_folder_watermark(self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_folder_watermark(
+        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Removes the watermark from a folder.
         :param folder_id: The unique identifier that represent a folder.
@@ -111,5 +152,14 @@ class FolderWatermarksManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/folders/", folder_id, "/watermark"]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

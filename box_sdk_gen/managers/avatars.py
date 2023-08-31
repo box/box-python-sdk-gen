@@ -28,11 +28,19 @@ from box_sdk_gen.fetch import FetchResponse
 
 from box_sdk_gen.fetch import MultipartItem
 
+
 class AvatarsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_user_avatar(self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ByteStream:
+
+    def get_user_avatar(
+        self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> ByteStream:
         """
         Retrieves an image of a the user's avatar.
         :param user_id: The ID of the user.
@@ -44,9 +52,26 @@ class AvatarsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='GET', headers=headers_map, response_format='binary', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id, "/avatar"]),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="binary",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return response.content
-    def create_user_avatar(self, user_id: str, pic: ByteStream, pic_file_name: Optional[str] = None, pic_content_type: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> UserAvatar:
+
+    def create_user_avatar(
+        self,
+        user_id: str,
+        pic: ByteStream,
+        pic_file_name: Optional[str] = None,
+        pic_content_type: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> UserAvatar:
         """
         Adds or updates a user avatar.
         :param user_id: The ID of the user.
@@ -61,14 +86,37 @@ class AvatarsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(pic=pic, pic_file_name=pic_file_name, pic_content_type=pic_content_type)
+        request_body = BaseObject(
+            pic=pic, pic_file_name=pic_file_name, pic_content_type=pic_content_type
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='POST', headers=headers_map, multipart_data=[MultipartItem(part_name='pic', file_stream=request_body.pic, file_name=request_body.pic_file_name, content_type=request_body.pic_content_type)], content_type='multipart/form-data', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id, "/avatar"]),
+            FetchOptions(
+                method="POST",
+                headers=headers_map,
+                multipart_data=[
+                    MultipartItem(
+                        part_name="pic",
+                        file_stream=request_body.pic,
+                        file_name=request_body.pic_file_name,
+                        content_type=request_body.pic_content_type,
+                    )
+                ],
+                content_type="multipart/form-data",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return UserAvatar.from_dict(json.loads(response.text))
-    def delete_user_avatar(self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_user_avatar(
+        self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Removes an existing user avatar.
-        
+
         You cannot reverse this operation.
 
         :param user_id: The ID of the user.
@@ -80,5 +128,14 @@ class AvatarsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/users/", user_id, "/avatar"]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

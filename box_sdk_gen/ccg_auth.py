@@ -3,18 +3,23 @@ from urllib.parse import urlencode
 from typing import Union, Optional
 
 from .auth import Authentication
-from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
+from .auth_schemas import (
+    TokenRequestBoxSubjectType,
+    TokenRequest,
+    TokenRequestGrantType,
+    AccessToken,
+)
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 
 
 class CCGConfig:
     def __init__(
-            self,
-            client_id: str,
-            client_secret: str,
-            enterprise_id: Union[None, str] = None,
-            user_id: Union[None, str] = None
+        self,
+        client_id: str,
+        client_secret: str,
+        enterprise_id: Union[None, str] = None,
+        user_id: Union[None, str] = None,
     ):
         """
         :param client_id:
@@ -51,7 +56,7 @@ class CCGConfig:
 
 
 class CCGAuth(Authentication):
-    def __init__(self,  config: CCGConfig):
+    def __init__(self, config: CCGConfig):
         """
         :param config:
             Configuration object of Client Credentials Grant auth.
@@ -87,17 +92,17 @@ class CCGAuth(Authentication):
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
             box_subject_id=self.subject_id,
-            box_subject_type=self.subject_type
+            box_subject_type=self.subject_type,
         )
 
         response: FetchResponse = fetch(
-            'https://api.box.com/oauth2/token',
+            "https://api.box.com/oauth2/token",
             FetchOptions(
-                method='POST',
+                method="POST",
                 body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'},
-                network_session=network_session
-            )
+                headers={"content-type": "application/x-www-form-urlencoded"},
+                network_session=network_session,
+            ),
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))

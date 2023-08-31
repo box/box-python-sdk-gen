@@ -32,6 +32,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class UpdateFileByIdParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
@@ -41,10 +42,12 @@ class UpdateFileByIdParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class UpdateFileByIdSharedLinkArgAccessField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
-    COLLABORATORS = 'collaborators'
+    OPEN = "open"
+    COMPANY = "company"
+    COLLABORATORS = "collaborators"
+
 
 class UpdateFileByIdSharedLinkArgPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, **kwargs):
@@ -57,8 +60,17 @@ class UpdateFileByIdSharedLinkArgPermissionsField(BaseObject):
         super().__init__(**kwargs)
         self.can_download = can_download
 
+
 class UpdateFileByIdSharedLinkArg(BaseObject):
-    def __init__(self, access: Optional[UpdateFileByIdSharedLinkArgAccessField] = None, password: Optional[str] = None, vanity_name: Optional[str] = None, unshared_at: Optional[str] = None, permissions: Optional[UpdateFileByIdSharedLinkArgPermissionsField] = None, **kwargs):
+    def __init__(
+        self,
+        access: Optional[UpdateFileByIdSharedLinkArgAccessField] = None,
+        password: Optional[str] = None,
+        vanity_name: Optional[str] = None,
+        unshared_at: Optional[str] = None,
+        permissions: Optional[UpdateFileByIdSharedLinkArgPermissionsField] = None,
+        **kwargs
+    ):
         """
         :param access: The level of access for the shared link. This can be
             restricted to anyone with the link (`open`), only people
@@ -95,11 +107,19 @@ class UpdateFileByIdSharedLinkArg(BaseObject):
         self.unshared_at = unshared_at
         self.permissions = permissions
 
+
 class UpdateFileByIdLockArgAccessField(str, Enum):
-    LOCK = 'lock'
+    LOCK = "lock"
+
 
 class UpdateFileByIdLockArg(BaseObject):
-    def __init__(self, access: Optional[UpdateFileByIdLockArgAccessField] = None, expires_at: Optional[str] = None, is_download_prevented: Optional[bool] = None, **kwargs):
+    def __init__(
+        self,
+        access: Optional[UpdateFileByIdLockArgAccessField] = None,
+        expires_at: Optional[str] = None,
+        is_download_prevented: Optional[bool] = None,
+        **kwargs
+    ):
         """
         :param access: The type of this object.
         :type access: Optional[UpdateFileByIdLockArgAccessField], optional
@@ -113,12 +133,18 @@ class UpdateFileByIdLockArg(BaseObject):
         self.expires_at = expires_at
         self.is_download_prevented = is_download_prevented
 
+
 class UpdateFileByIdPermissionsArgCanDownloadField(str, Enum):
-    OPEN = 'open'
-    COMPANY = 'company'
+    OPEN = "open"
+    COMPANY = "company"
+
 
 class UpdateFileByIdPermissionsArg(BaseObject):
-    def __init__(self, can_download: Optional[UpdateFileByIdPermissionsArgCanDownloadField] = None, **kwargs):
+    def __init__(
+        self,
+        can_download: Optional[UpdateFileByIdPermissionsArgCanDownloadField] = None,
+        **kwargs
+    ):
         """
         :param can_download: Defines who is allowed to download this file. The possible
             values are either `open` for everyone or `company` for
@@ -132,6 +158,7 @@ class UpdateFileByIdPermissionsArg(BaseObject):
         super().__init__(**kwargs)
         self.can_download = can_download
 
+
 class UpdateFileByIdCollectionsArg(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
@@ -144,6 +171,7 @@ class UpdateFileByIdCollectionsArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CopyFileParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -153,15 +181,30 @@ class CopyFileParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class GetFileThumbnailByIdExtensionArg(str, Enum):
-    PNG = 'png'
-    JPG = 'jpg'
+    PNG = "png"
+    JPG = "jpg"
+
 
 class FilesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_by_id(self, file_id: str, fields: Optional[str] = None, if_none_match: Optional[str] = None, boxapi: Optional[str] = None, x_rep_hints: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def get_file_by_id(
+        self,
+        file_id: str,
+        fields: Optional[str] = None,
+        if_none_match: Optional[str] = None,
+        boxapi: Optional[str] = None,
+        x_rep_hints: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Retrieves the details about a file.
         :param file_id: The unique identifier that represents a file.
@@ -219,14 +262,47 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({'if-none-match': to_string(if_none_match), 'boxapi': to_string(boxapi), 'x-rep-hints': to_string(x_rep_hints), **extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                "if-none-match": to_string(if_none_match),
+                "boxapi": to_string(boxapi),
+                "x-rep-hints": to_string(x_rep_hints),
+                **extra_headers,
+            }
+        )
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id]),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def update_file_by_id(self, file_id: str, name: Optional[str] = None, description: Optional[str] = None, parent: Optional[UpdateFileByIdParentArg] = None, shared_link: Optional[UpdateFileByIdSharedLinkArg] = None, lock: Optional[UpdateFileByIdLockArg] = None, disposition_at: Optional[str] = None, permissions: Optional[UpdateFileByIdPermissionsArg] = None, collections: Optional[List[UpdateFileByIdCollectionsArg]] = None, tags: Optional[List[str]] = None, fields: Optional[str] = None, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def update_file_by_id(
+        self,
+        file_id: str,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        parent: Optional[UpdateFileByIdParentArg] = None,
+        shared_link: Optional[UpdateFileByIdSharedLinkArg] = None,
+        lock: Optional[UpdateFileByIdLockArg] = None,
+        disposition_at: Optional[str] = None,
+        permissions: Optional[UpdateFileByIdPermissionsArg] = None,
+        collections: Optional[List[UpdateFileByIdCollectionsArg]] = None,
+        tags: Optional[List[str]] = None,
+        fields: Optional[str] = None,
+        if_match: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Updates a file. This can be used to rename or move a file,
-        
+
         create a shared link, or lock a file.
 
         :param file_id: The unique identifier that represents a file.
@@ -292,21 +368,51 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(name=name, description=description, parent=parent, shared_link=shared_link, lock=lock, disposition_at=disposition_at, permissions=permissions, collections=collections, tags=tags)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        request_body = BaseObject(
+            name=name,
+            description=description,
+            parent=parent,
+            shared_link=shared_link,
+            lock=lock,
+            disposition_at=disposition_at,
+            permissions=permissions,
+            collections=collections,
+            tags=tags,
+        )
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        headers_map: Dict[str, str] = prepare_params(
+            {"if-match": to_string(if_match), **extra_headers}
+        )
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id]),
+            FetchOptions(
+                method="PUT",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def delete_file_by_id(self, file_id: str, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_file_by_id(
+        self,
+        file_id: str,
+        if_match: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a file, either permanently or by moving it to
-        
+
         the trash.
 
-        
+
         The the enterprise settings determine whether the item will
 
-        
+
         be permanently deleted from Box or moved to the trash.
 
         :param file_id: The unique identifier that represents a file.
@@ -329,10 +435,30 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params(
+            {"if-match": to_string(if_match), **extra_headers}
+        )
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id]),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def copy_file(self, file_id: str, parent: CopyFileParentArg, name: Optional[str] = None, version: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileFull:
+
+    def copy_file(
+        self,
+        file_id: str,
+        parent: CopyFileParentArg,
+        name: Optional[str] = None,
+        version: Optional[str] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileFull:
         """
         Creates a copy of a file.
         :param file_id: The unique identifier that represents a file.
@@ -368,30 +494,52 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(name=name, version=version, parent=parent)
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        request_body = BaseObject(name=name, version=version, parent=parent)
+        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/copy']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/copy"]),
+            FetchOptions(
+                method="POST",
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileFull.from_dict(json.loads(response.text))
-    def get_file_thumbnail_by_id(self, file_id: str, extension: GetFileThumbnailByIdExtensionArg, min_height: Optional[int] = None, min_width: Optional[int] = None, max_height: Optional[int] = None, max_width: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ByteStream:
+
+    def get_file_thumbnail_by_id(
+        self,
+        file_id: str,
+        extension: GetFileThumbnailByIdExtensionArg,
+        min_height: Optional[int] = None,
+        min_width: Optional[int] = None,
+        max_height: Optional[int] = None,
+        max_width: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ByteStream:
         """
         Retrieves a thumbnail, or smaller image representation, of a file.
-        
+
         Sizes of `32x32`,`64x64`, `128x128`, and `256x256` can be returned in
 
-        
+
         the `.png` format and sizes of `32x32`, `160x160`, and `320x320`
 
-        
+
         can be returned in the `.jpg` format.
 
-        
+
         Thumbnails can be generated for the image and video file formats listed
 
-        
+
         [found on our community site][1].
 
-        
+
         [1]: https://community.box.com/t5/Migrating-and-Previewing-Content/File-Types-and-Fonts-Supported-in-Box-Content-Preview/ta-p/327
 
         :param file_id: The unique identifier that represents a file.
@@ -418,7 +566,26 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'min_height': to_string(min_height), 'min_width': to_string(min_width), 'max_height': to_string(max_height), 'max_width': to_string(max_width)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                "min_height": to_string(min_height),
+                "min_width": to_string(min_width),
+                "max_height": to_string(max_height),
+                "max_width": to_string(max_width),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='binary', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                ["https://api.box.com/2.0/files/", file_id, "/thumbnail.", extension]
+            ),
+            FetchOptions(
+                method="GET",
+                params=query_params_map,
+                headers=headers_map,
+                response_format="binary",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return response.content

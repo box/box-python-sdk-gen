@@ -34,33 +34,53 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFileMetadataByIdScopeArg(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE = 'enterprise'
+    GLOBAL = "global"
+    ENTERPRISE = "enterprise"
+
 
 class CreateFileMetadataByIdScopeArg(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE = 'enterprise'
+    GLOBAL = "global"
+    ENTERPRISE = "enterprise"
+
 
 class CreateFileMetadataByIdRequestBodyArg(BaseObject):
     pass
 
+
 class UpdateFileMetadataByIdScopeArg(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE = 'enterprise'
+    GLOBAL = "global"
+    ENTERPRISE = "enterprise"
+
 
 class UpdateFileMetadataByIdRequestBodyArgOpField(str, Enum):
-    ADD = 'add'
-    REPLACE = 'replace'
-    REMOVE = 'remove'
-    TEST = 'test'
-    MOVE = 'move'
-    COPY = 'copy'
+    ADD = "add"
+    REPLACE = "replace"
+    REMOVE = "remove"
+    TEST = "test"
+    MOVE = "move"
+    COPY = "copy"
+
 
 class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'from_': 'from', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'from': 'from_', **BaseObject._json_to_fields_mapping}
-    def __init__(self, op: Optional[UpdateFileMetadataByIdRequestBodyArgOpField] = None, path: Optional[str] = None, value: Optional[str] = None, from_: Optional[str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {
+        "from_": "from",
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        "from": "from_",
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        op: Optional[UpdateFileMetadataByIdRequestBodyArgOpField] = None,
+        path: Optional[str] = None,
+        value: Optional[str] = None,
+        from_: Optional[str] = None,
+        **kwargs
+    ):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
@@ -91,15 +111,24 @@ class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
         self.value = value
         self.from_ = from_
 
+
 class DeleteFileMetadataByIdScopeArg(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE = 'enterprise'
+    GLOBAL = "global"
+    ENTERPRISE = "enterprise"
+
 
 class FileMetadataManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_metadata(self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadatas:
+
+    def get_file_metadata(
+        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Metadatas:
         """
         Retrieves all metadata for a given file.
         :param file_id: The unique identifier that represents a file.
@@ -116,12 +145,28 @@ class FileMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(["https://api.box.com/2.0/files/", file_id, "/metadata"]),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadatas.from_dict(json.loads(response.text))
-    def get_file_metadata_by_id(self, file_id: str, scope: GetFileMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataFull:
+
+    def get_file_metadata_by_id(
+        self,
+        file_id: str,
+        scope: GetFileMetadataByIdScopeArg,
+        template_key: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> MetadataFull:
         """
         Retrieves the instance of a metadata template that has been applied to a
-        
+
         file.
 
         :param file_id: The unique identifier that represents a file.
@@ -144,18 +189,44 @@ class FileMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                [
+                    "https://api.box.com/2.0/files/",
+                    file_id,
+                    "/metadata/",
+                    scope,
+                    "/",
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method="GET",
+                headers=headers_map,
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return MetadataFull.from_dict(json.loads(response.text))
-    def create_file_metadata_by_id(self, file_id: str, scope: CreateFileMetadataByIdScopeArg, template_key: str, request_body: CreateFileMetadataByIdRequestBodyArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadata:
+
+    def create_file_metadata_by_id(
+        self,
+        file_id: str,
+        scope: CreateFileMetadataByIdScopeArg,
+        template_key: str,
+        request_body: CreateFileMetadataByIdRequestBodyArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Metadata:
         """
         Applies an instance of a metadata template to a file.
-        
+
         In most cases only values that are present in the metadata template
 
-        
+
         will be accepted, except for the `global.properties` template which accepts
 
-        
+
         any key-value pair.
 
         :param file_id: The unique identifier that represents a file.
@@ -180,24 +251,52 @@ class FileMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                [
+                    "https://api.box.com/2.0/files/",
+                    file_id,
+                    "/metadata/",
+                    scope,
+                    "/",
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method="POST",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadata.from_dict(json.loads(response.text))
-    def update_file_metadata_by_id(self, file_id: str, scope: UpdateFileMetadataByIdScopeArg, template_key: str, request_body: List[UpdateFileMetadataByIdRequestBodyArg], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadata:
+
+    def update_file_metadata_by_id(
+        self,
+        file_id: str,
+        scope: UpdateFileMetadataByIdScopeArg,
+        template_key: str,
+        request_body: List[UpdateFileMetadataByIdRequestBodyArg],
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Metadata:
         """
         Updates a piece of metadata on a file.
-        
+
         The metadata instance can only be updated if the template has already been
 
-        
+
         applied to the file before. When editing metadata, only values that match
 
-        
+
         the metadata template schema will be accepted.
 
-        
+
         The update is applied atomically. If any errors occur during the
 
-        
+
         application of the operations, the metadata instance will not be changed.
 
         :param file_id: The unique identifier that represents a file.
@@ -222,9 +321,36 @@ class FileMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json-patch+json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                [
+                    "https://api.box.com/2.0/files/",
+                    file_id,
+                    "/metadata/",
+                    scope,
+                    "/",
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method="PUT",
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type="application/json-patch+json",
+                response_format="json",
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadata.from_dict(json.loads(response.text))
-    def delete_file_metadata_by_id(self, file_id: str, scope: DeleteFileMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_file_metadata_by_id(
+        self,
+        file_id: str,
+        scope: DeleteFileMetadataByIdScopeArg,
+        template_key: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a piece of file metadata.
         :param file_id: The unique identifier that represents a file.
@@ -247,5 +373,23 @@ class FileMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            "".join(
+                [
+                    "https://api.box.com/2.0/files/",
+                    file_id,
+                    "/metadata/",
+                    scope,
+                    "/",
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method="DELETE",
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
