@@ -36,28 +36,28 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetRetentionPoliciesPolicyTypeArg(str, Enum):
-    FINITE = "finite"
-    INDEFINITE = "indefinite"
+    FINITE = 'finite'
+    INDEFINITE = 'indefinite'
 
 
 class CreateRetentionPolicyPolicyTypeArg(str, Enum):
-    FINITE = "finite"
-    INDEFINITE = "indefinite"
+    FINITE = 'finite'
+    INDEFINITE = 'indefinite'
 
 
 class CreateRetentionPolicyDispositionActionArg(str, Enum):
-    PERMANENTLY_DELETE = "permanently_delete"
-    REMOVE_RETENTION = "remove_retention"
+    PERMANENTLY_DELETE = 'permanently_delete'
+    REMOVE_RETENTION = 'remove_retention'
 
 
 class CreateRetentionPolicyRetentionTypeArg(str, Enum):
-    MODIFIABLE = "modifiable"
-    NON_MODIFIABLE = "non-modifiable"
+    MODIFIABLE = 'modifiable'
+    NON_MODIFIABLE = 'non-modifiable'
 
 
 class UpdateRetentionPolicyByIdDispositionActionArg(str, Enum):
-    PERMANENTLY_DELETE = "permanently_delete"
-    REMOVE_RETENTION = "remove_retention"
+    PERMANENTLY_DELETE = 'permanently_delete'
+    REMOVE_RETENTION = 'remove_retention'
 
 
 class RetentionPoliciesManager:
@@ -109,22 +109,22 @@ class RetentionPoliciesManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "policy_name": to_string(policy_name),
-                "policy_type": to_string(policy_type),
-                "created_by_user_id": to_string(created_by_user_id),
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "marker": to_string(marker),
+                'policy_name': to_string(policy_name),
+                'policy_type': to_string(policy_type),
+                'created_by_user_id': to_string(created_by_user_id),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/retention_policies"]),
+            ''.join(['https://api.box.com/2.0/retention_policies']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -211,13 +211,13 @@ class RetentionPoliciesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/retention_policies"]),
+            ''.join(['https://api.box.com/2.0/retention_policies']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -249,17 +249,17 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/retention_policies/", retention_policy_id]
+            ''.join(
+                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -355,15 +355,15 @@ class RetentionPoliciesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/retention_policies/", retention_policy_id]
+            ''.join(
+                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -387,11 +387,11 @@ class RetentionPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/retention_policies/", retention_policy_id]
+            ''.join(
+                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

@@ -5,20 +5,20 @@ from .base_object import BaseObject
 
 
 class TokenRequestGrantType(str, Enum):
-    AUTHORIZATION_CODE = "authorization_code"
-    REFRESH_TOKEN = "refresh_token"
-    CLIENT_CREDENTIALS = "client_credentials"
+    AUTHORIZATION_CODE = 'authorization_code'
+    REFRESH_TOKEN = 'refresh_token'
+    CLIENT_CREDENTIALS = 'client_credentials'
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER = (
-        "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        'urn:ietf:params:oauth:grant-type:jwt-bearer'
     )
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE = (
-        "urn:ietf:params:oauth:grant-type:token-exchange"
+        'urn:ietf:params:oauth:grant-type:token-exchange'
     )
 
 
 class TokenRequestBoxSubjectType(str, Enum):
-    ENTERPRISE = "enterprise"
-    USER = "user"
+    ENTERPRISE = 'enterprise'
+    USER = 'user'
 
 
 class TokenRequest(BaseObject):
@@ -60,18 +60,18 @@ class TokenRequest(BaseObject):
 
 
 class FileScope(str, Enum):
-    ANNOTATION_EDIT = "annotation_edit"
-    ANNOTATION_VIEW_ALL = "annotation_view_all"
-    ANNOTATION_VIEW_SELF = "annotation_view_self"
-    BASE_EXPLORER = "base_explorer"
-    BASE_PICKER = "base_picker"
-    BASE_PREVIEW = "base_preview"
-    BASE_UPLOAD = "base_upload"
-    ITEM_DELETE = "item_delete"
-    ITEM_DOWNLOAD = "item_download"
-    ITEM_PREVIEW = "item_preview"
-    ITEM_RENAME = "item_rename"
-    ITEM_SHARE = "item_share"
+    ANNOTATION_EDIT = 'annotation_edit'
+    ANNOTATION_VIEW_ALL = 'annotation_view_all'
+    ANNOTATION_VIEW_SELF = 'annotation_view_self'
+    BASE_EXPLORER = 'base_explorer'
+    BASE_PICKER = 'base_picker'
+    BASE_PREVIEW = 'base_preview'
+    BASE_UPLOAD = 'base_upload'
+    ITEM_DELETE = 'item_delete'
+    ITEM_DOWNLOAD = 'item_download'
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_RENAME = 'item_rename'
+    ITEM_SHARE = 'item_share'
 
 
 class AccessToken(BaseObject):

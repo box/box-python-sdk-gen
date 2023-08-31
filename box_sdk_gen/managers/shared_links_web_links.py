@@ -32,9 +32,9 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class UpdateWebLinkAddSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateWebLinkAddSharedLinkSharedLinkArgPermissionsField(BaseObject):
@@ -115,9 +115,9 @@ class UpdateWebLinkAddSharedLinkSharedLinkArg(BaseObject):
 
 
 class UpdateWebLinkUpdateSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateWebLinkUpdateSharedLinkSharedLinkArgPermissionsField(BaseObject):
@@ -257,21 +257,21 @@ class SharedLinksWebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {
-                "if-none-match": to_string(if_none_match),
-                "boxapi": to_string(boxapi),
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/shared_items#web_links"]),
+            ''.join(['https://api.box.com/2.0/shared_items#web_links']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -297,17 +297,17 @@ class SharedLinksWebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/web_links/", web_link_id, "#get_shared_link"]
+            ''.join(
+                ['https://api.box.com/2.0/web_links/', web_link_id, '#get_shared_link']
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -339,19 +339,19 @@ class SharedLinksWebLinksManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/web_links/", web_link_id, "#add_shared_link"]
+            ''.join(
+                ['https://api.box.com/2.0/web_links/', web_link_id, '#add_shared_link']
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -381,23 +381,23 @@ class SharedLinksWebLinksManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/web_links/",
+                    'https://api.box.com/2.0/web_links/',
                     web_link_id,
-                    "#update_shared_link",
+                    '#update_shared_link',
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -428,23 +428,23 @@ class SharedLinksWebLinksManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/web_links/",
+                    'https://api.box.com/2.0/web_links/',
                     web_link_id,
-                    "#remove_shared_link",
+                    '#remove_shared_link',
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

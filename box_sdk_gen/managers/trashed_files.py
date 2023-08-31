@@ -91,17 +91,17 @@ class TrashedFilesManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(name=name, parent=parent)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id]),
+            ''.join(['https://api.box.com/2.0/files/', file_id]),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -162,15 +162,15 @@ class TrashedFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/trash"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/trash']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -200,9 +200,9 @@ class TrashedFilesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/trash"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/trash']),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

@@ -36,13 +36,13 @@ from box_sdk_gen.fetch import FetchResponse
 class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
     str, Enum
 ):
-    REPLACE = "replace"
+    REPLACE = 'replace'
 
 
 class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgPathField(
     str, Enum
 ):
-    _BOX__SECURITY__CLASSIFICATION__KEY = "/Box__Security__Classification__Key"
+    _BOX__SECURITY__CLASSIFICATION__KEY = '/Box__Security__Classification__Key'
 
 
 class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
@@ -116,17 +116,17 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/metadata/enterprise/securityClassification-6VMVochwUWo",
+                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -177,19 +177,19 @@ class FileClassificationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/metadata/enterprise/securityClassification-6VMVochwUWo",
+                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -232,19 +232,19 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/metadata/enterprise/securityClassification-6VMVochwUWo",
+                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -280,15 +280,15 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/metadata/enterprise/securityClassification-6VMVochwUWo",
+                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

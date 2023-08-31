@@ -34,27 +34,27 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateGroupInvitabilityLevelArg(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class CreateGroupMemberViewabilityLevelArg(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class UpdateGroupByIdInvitabilityLevelArg(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class UpdateGroupByIdMemberViewabilityLevelArg(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class GroupsManager:
@@ -105,20 +105,20 @@ class GroupsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "filter_term": to_string(filter_term),
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "offset": to_string(offset),
+                'filter_term': to_string(filter_term),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups"]),
+            ''.join(['https://api.box.com/2.0/groups']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -201,17 +201,17 @@ class GroupsManager:
             invitability_level=invitability_level,
             member_viewability_level=member_viewability_level,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups"]),
+            ''.join(['https://api.box.com/2.0/groups']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -249,15 +249,15 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/", group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', group_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -349,17 +349,17 @@ class GroupsManager:
             invitability_level=invitability_level,
             member_viewability_level=member_viewability_level,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/", group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', group_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -384,9 +384,9 @@ class GroupsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/", group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', group_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

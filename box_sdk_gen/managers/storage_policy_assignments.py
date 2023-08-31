@@ -34,12 +34,12 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetStoragePolicyAssignmentsResolvedForTypeArg(str, Enum):
-    USER = "user"
-    ENTERPRISE = "enterprise"
+    USER = 'user'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateStoragePolicyAssignmentStoragePolicyArgTypeField(str, Enum):
-    STORAGE_POLICY = "storage_policy"
+    STORAGE_POLICY = 'storage_policy'
 
 
 class CreateStoragePolicyAssignmentStoragePolicyArg(BaseObject):
@@ -61,8 +61,8 @@ class CreateStoragePolicyAssignmentStoragePolicyArg(BaseObject):
 
 
 class CreateStoragePolicyAssignmentAssignedToArgTypeField(str, Enum):
-    USER = "user"
-    ENTERPRISE = "enterprise"
+    USER = 'user'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateStoragePolicyAssignmentAssignedToArg(BaseObject):
@@ -84,7 +84,7 @@ class CreateStoragePolicyAssignmentAssignedToArg(BaseObject):
 
 
 class UpdateStoragePolicyAssignmentByIdStoragePolicyArgTypeField(str, Enum):
-    STORAGE_POLICY = "storage_policy"
+    STORAGE_POLICY = 'storage_policy'
 
 
 class UpdateStoragePolicyAssignmentByIdStoragePolicyArg(BaseObject):
@@ -144,19 +144,19 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "marker": to_string(marker),
-                "resolved_for_type": to_string(resolved_for_type),
-                "resolved_for_id": to_string(resolved_for_id),
+                'marker': to_string(marker),
+                'resolved_for_type': to_string(resolved_for_type),
+                'resolved_for_id': to_string(resolved_for_id),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/storage_policy_assignments"]),
+            ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -193,13 +193,13 @@ class StoragePolicyAssignmentsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/storage_policy_assignments"]),
+            ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -223,16 +223,16 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/storage_policy_assignments/",
+                    'https://api.box.com/2.0/storage_policy_assignments/',
                     storage_policy_assignment_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -261,18 +261,18 @@ class StoragePolicyAssignmentsManager:
         request_body = BaseObject(storage_policy=storage_policy)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/storage_policy_assignments/",
+                    'https://api.box.com/2.0/storage_policy_assignments/',
                     storage_policy_assignment_id,
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -317,14 +317,14 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/storage_policy_assignments/",
+                    'https://api.box.com/2.0/storage_policy_assignments/',
                     storage_policy_assignment_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

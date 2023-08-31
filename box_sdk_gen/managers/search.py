@@ -42,8 +42,8 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateMetadataQueryExecuteReadOrderByArgDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class CreateMetadataQueryExecuteReadOrderByArg(BaseObject):
@@ -71,35 +71,35 @@ class CreateMetadataQueryExecuteReadOrderByArg(BaseObject):
 
 
 class GetMetadataQueryIndicesScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class GetSearchScopeArg(str, Enum):
-    USER_CONTENT = "user_content"
-    ENTERPRISE_CONTENT = "enterprise_content"
+    USER_CONTENT = 'user_content'
+    ENTERPRISE_CONTENT = 'enterprise_content'
 
 
 class GetSearchTypeArg(str, Enum):
-    FILE = "file"
-    FOLDER = "folder"
-    WEB_LINK = "web_link"
+    FILE = 'file'
+    FOLDER = 'folder'
+    WEB_LINK = 'web_link'
 
 
 class GetSearchTrashContentArg(str, Enum):
-    NON_TRASHED_ONLY = "non_trashed_only"
-    TRASHED_ONLY = "trashed_only"
-    ALL_ITEMS = "all_items"
+    NON_TRASHED_ONLY = 'non_trashed_only'
+    TRASHED_ONLY = 'trashed_only'
+    ALL_ITEMS = 'all_items'
 
 
 class GetSearchSortArg(str, Enum):
-    MODIFIED_AT = "modified_at"
-    RELEVANCE = "relevance"
+    MODIFIED_AT = 'modified_at'
+    RELEVANCE = 'relevance'
 
 
 class GetSearchDirectionArg(str, Enum):
-    DESC = "DESC"
-    ASC = "ASC"
+    DESC = 'DESC'
+    ASC = 'ASC'
 
 
 class SearchManager:
@@ -201,13 +201,13 @@ class SearchManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_queries/execute_read"]),
+            ''.join(['https://api.box.com/2.0/metadata_queries/execute_read']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -232,16 +232,16 @@ class SearchManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"scope": to_string(scope), "template_key": to_string(template_key)}
+            {'scope': to_string(scope), 'template_key': to_string(template_key)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_query_indices"]),
+            ''.join(['https://api.box.com/2.0/metadata_query_indices']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -485,37 +485,37 @@ class SearchManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "query": to_string(query),
-                "scope": to_string(scope),
-                "file_extensions": to_string(file_extensions),
-                "created_at_range": to_string(created_at_range),
-                "updated_at_range": to_string(updated_at_range),
-                "size_range": to_string(size_range),
-                "owner_user_ids": to_string(owner_user_ids),
-                "recent_updater_user_ids": to_string(recent_updater_user_ids),
-                "ancestor_folder_ids": to_string(ancestor_folder_ids),
-                "content_types": to_string(content_types),
-                "type": to_string(type),
-                "trash_content": to_string(trash_content),
-                "mdfilters": to_string(mdfilters),
-                "sort": to_string(sort),
-                "direction": to_string(direction),
-                "limit": to_string(limit),
-                "include_recent_shared_links": to_string(include_recent_shared_links),
-                "fields": to_string(fields),
-                "offset": to_string(offset),
-                "deleted_user_ids": to_string(deleted_user_ids),
-                "deleted_at_range": to_string(deleted_at_range),
+                'query': to_string(query),
+                'scope': to_string(scope),
+                'file_extensions': to_string(file_extensions),
+                'created_at_range': to_string(created_at_range),
+                'updated_at_range': to_string(updated_at_range),
+                'size_range': to_string(size_range),
+                'owner_user_ids': to_string(owner_user_ids),
+                'recent_updater_user_ids': to_string(recent_updater_user_ids),
+                'ancestor_folder_ids': to_string(ancestor_folder_ids),
+                'content_types': to_string(content_types),
+                'type': to_string(type),
+                'trash_content': to_string(trash_content),
+                'mdfilters': to_string(mdfilters),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
+                'limit': to_string(limit),
+                'include_recent_shared_links': to_string(include_recent_shared_links),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'deleted_user_ids': to_string(deleted_user_ids),
+                'deleted_at_range': to_string(deleted_at_range),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/search"]),
+            ''.join(['https://api.box.com/2.0/search']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

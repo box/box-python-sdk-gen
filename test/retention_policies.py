@@ -25,7 +25,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -35,13 +35,13 @@ client: Client = Client(auth=auth)
 
 def testCreateUpdateGetDeleteRetentionPolicy():
     retention_policy_name: str = get_uuid()
-    retention_description: str = "test description"
+    retention_description: str = 'test description'
     retention_policy: RetentionPolicy = client.retention_policies.create_retention_policy(
         policy_name=retention_policy_name,
         description=retention_description,
         policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value,
         disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value,
-        retention_length="1",
+        retention_length='1',
         retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value,
         can_owner_extend_retention=True,
         are_owners_notified=True,

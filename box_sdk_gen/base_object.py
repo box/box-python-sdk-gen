@@ -75,7 +75,7 @@ class BaseObject:
     @classmethod
     def __deserialize_union(cls, key, value, annotation):
         possible_types = get_args(annotation)
-        type_field_value = value.get("type", None) or value.get("skillCardType", None)
+        type_field_value = value.get('type', None) or value.get('skillCardType', None)
 
         type = None
         for i, possible_type in enumerate(possible_types):
@@ -85,7 +85,7 @@ class BaseObject:
                 break
 
         if not type:
-            print("Could not deserialize Union: ", annotation, "of value:", value)
+            print('Could not deserialize Union: ', annotation, 'of value:', value)
 
         try:
             return cls.__deserialize(key, value, type)
@@ -95,7 +95,7 @@ class BaseObject:
     @classmethod
     def __deserialize_enum(cls, key, value, annotation):
         try:
-            return getattr(annotation, value.upper().replace(" ", "_"))
+            return getattr(annotation, value.upper().replace(' ', '_'))
         except Exception:
             return value
 
@@ -107,4 +107,4 @@ class BaseObject:
             return value
 
     def __repr__(self) -> str:
-        return f"{self.__class__} {self.to_dict()}"
+        return f'{self.__class__} {self.to_dict()}'

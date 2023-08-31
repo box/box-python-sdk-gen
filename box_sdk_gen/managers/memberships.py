@@ -54,13 +54,13 @@ class CreateGroupMembershipGroupArg(BaseObject):
 
 
 class CreateGroupMembershipRoleArg(str, Enum):
-    MEMBER = "member"
-    ADMIN = "admin"
+    MEMBER = 'member'
+    ADMIN = 'admin'
 
 
 class UpdateGroupMembershipByIdRoleArg(str, Enum):
-    MEMBER = "member"
-    ADMIN = "admin"
+    MEMBER = 'member'
+    ADMIN = 'admin'
 
 
 class MembershipsManager:
@@ -103,16 +103,16 @@ class MembershipsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"limit": to_string(limit), "offset": to_string(offset)}
+            {'limit': to_string(limit), 'offset': to_string(offset)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/", user_id, "/memberships"]),
+            ''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -150,16 +150,16 @@ class MembershipsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"limit": to_string(limit), "offset": to_string(offset)}
+            {'limit': to_string(limit), 'offset': to_string(offset)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/", group_id, "/memberships"]),
+            ''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -215,17 +215,17 @@ class MembershipsManager:
             role=role,
             configurable_permissions=configurable_permissions,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/group_memberships"]),
+            ''.join(['https://api.box.com/2.0/group_memberships']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -263,17 +263,17 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/group_memberships/", group_membership_id]
+            ''.join(
+                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -327,19 +327,19 @@ class MembershipsManager:
         request_body = BaseObject(
             role=role, configurable_permissions=configurable_permissions
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/group_memberships/", group_membership_id]
+            ''.join(
+                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -369,11 +369,11 @@ class MembershipsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/group_memberships/", group_membership_id]
+            ''.join(
+                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

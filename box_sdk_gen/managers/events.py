@@ -30,11 +30,11 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetEventsStreamTypeArg(str, Enum):
-    ALL = "all"
-    CHANGES = "changes"
-    SYNC = "sync"
-    ADMIN_LOGS = "admin_logs"
-    ADMIN_LOGS_STREAMING = "admin_logs_streaming"
+    ALL = 'all'
+    CHANGES = 'changes'
+    SYNC = 'sync'
+    ADMIN_LOGS = 'admin_logs'
+    ADMIN_LOGS_STREAMING = 'admin_logs_streaming'
 
 
 class EventsManager:
@@ -130,22 +130,22 @@ class EventsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "stream_type": to_string(stream_type),
-                "stream_position": to_string(stream_position),
-                "limit": to_string(limit),
-                "event_type": to_string(event_type),
-                "created_after": to_string(created_after),
-                "created_before": to_string(created_before),
+                'stream_type': to_string(stream_type),
+                'stream_position': to_string(stream_position),
+                'limit': to_string(limit),
+                'event_type': to_string(event_type),
+                'created_after': to_string(created_after),
+                'created_before': to_string(created_before),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/events"]),
+            ''.join(['https://api.box.com/2.0/events']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -236,11 +236,11 @@ class EventsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/events"]),
+            ''.join(['https://api.box.com/2.0/events']),
             FetchOptions(
-                method="OPTIONS",
+                method='OPTIONS',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

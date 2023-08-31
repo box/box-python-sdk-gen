@@ -50,7 +50,7 @@ class GetAuthorizeUrlOptions:
 
 
 class OAuth(Authentication):
-    OAUTH2_AUTHORIZE_URL = "https://account.box.com/api/oauth2/authorize"
+    OAUTH2_AUTHORIZE_URL = 'https://account.box.com/api/oauth2/authorize'
 
     def __init__(self, config: OAuthConfig):
         """
@@ -73,7 +73,7 @@ class OAuth(Authentication):
 
         params = [
             (
-                "client_id",
+                'client_id',
                 (
                     options.client_id
                     if options.client_id is not None
@@ -81,25 +81,25 @@ class OAuth(Authentication):
                 ),
             ),
             (
-                "response_type",
-                options.response_type if options.response_type is not None else "code",
+                'response_type',
+                options.response_type if options.response_type is not None else 'code',
             ),
         ]
 
         if options.redirect_uri is not None:
-            params.append(("redirect_uri", options.redirect_uri))
+            params.append(('redirect_uri', options.redirect_uri))
 
         if options.state is not None:
-            params.append(("state", options.state))
+            params.append(('state', options.state))
 
         if options.scope is not None:
-            params.append(("scope", options.scope))
+            params.append(('scope', options.scope))
 
         params = [
-            (key.encode("utf-8"), value.encode("utf-8")) for (key, value) in params
+            (key.encode('utf-8'), value.encode('utf-8')) for (key, value) in params
         ]
         query_string = urlencode(params)
-        return urlunsplit(("", "", self.OAUTH2_AUTHORIZE_URL, query_string, ""))
+        return urlunsplit(('', '', self.OAUTH2_AUTHORIZE_URL, query_string, ''))
 
     def get_tokens_authorization_code_grant(
         self, authorization_code: str, network_session: Optional[NetworkSession] = None
@@ -154,11 +154,11 @@ class OAuth(Authentication):
         request_body: TokenRequest, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         response: FetchResponse = fetch(
-            "https://api.box.com/oauth2/token",
+            'https://api.box.com/oauth2/token',
             FetchOptions(
-                method="POST",
+                method='POST',
                 body=urlencode(request_body.to_dict()),
-                headers={"content-type": "application/x-www-form-urlencoded"},
+                headers={'content-type': 'application/x-www-form-urlencoded'},
                 network_session=network_session,
             ),
         )

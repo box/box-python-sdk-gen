@@ -72,18 +72,18 @@ class DownloadsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"version": to_string(version), "access_token": to_string(access_token)}
+            {'version': to_string(version), 'access_token': to_string(access_token)}
         )
         headers_map: Dict[str, str] = prepare_params(
-            {"range": to_string(range), "boxapi": to_string(boxapi), **extra_headers}
+            {'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/content"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/content']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="binary",
+                response_format='binary',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

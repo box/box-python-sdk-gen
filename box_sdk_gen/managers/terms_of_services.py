@@ -34,23 +34,23 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetTermOfServicesTosTypeArg(str, Enum):
-    EXTERNAL = "external"
-    MANAGED = "managed"
+    EXTERNAL = 'external'
+    MANAGED = 'managed'
 
 
 class CreateTermOfServiceStatusArg(str, Enum):
-    ENABLED = "enabled"
-    DISABLED = "disabled"
+    ENABLED = 'enabled'
+    DISABLED = 'disabled'
 
 
 class CreateTermOfServiceTosTypeArg(str, Enum):
-    EXTERNAL = "external"
-    MANAGED = "managed"
+    EXTERNAL = 'external'
+    MANAGED = 'managed'
 
 
 class UpdateTermOfServiceByIdStatusArg(str, Enum):
-    ENABLED = "enabled"
-    DISABLED = "disabled"
+    ENABLED = 'enabled'
+    DISABLED = 'disabled'
 
 
 class TermsOfServicesManager:
@@ -80,16 +80,16 @@ class TermsOfServicesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"tos_type": to_string(tos_type)}
+            {'tos_type': to_string(tos_type)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/terms_of_services"]),
+            ''.join(['https://api.box.com/2.0/terms_of_services']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -124,13 +124,13 @@ class TermsOfServicesManager:
         request_body = BaseObject(status=status, tos_type=tos_type, text=text)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/terms_of_services"]),
+            ''.join(['https://api.box.com/2.0/terms_of_services']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -154,13 +154,13 @@ class TermsOfServicesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/terms_of_services/", terms_of_service_id]
+            ''.join(
+                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -192,15 +192,15 @@ class TermsOfServicesManager:
         request_body = BaseObject(status=status, text=text)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/terms_of_services/", terms_of_service_id]
+            ''.join(
+                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

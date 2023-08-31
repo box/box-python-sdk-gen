@@ -26,7 +26,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetAuthorizeResponseTypeArg(str, Enum):
-    CODE = "code"
+    CODE = 'code'
 
 
 class AuthorizationManager:
@@ -99,18 +99,18 @@ class AuthorizationManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "response_type": to_string(response_type),
-                "client_id": to_string(client_id),
-                "redirect_uri": to_string(redirect_uri),
-                "state": to_string(state),
-                "scope": to_string(scope),
+                'response_type': to_string(response_type),
+                'client_id': to_string(client_id),
+                'redirect_uri': to_string(redirect_uri),
+                'state': to_string(state),
+                'scope': to_string(scope),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://account.box.com/api/oauth2/authorize"]),
+            ''.join(['https://account.box.com/api/oauth2/authorize']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format=None,

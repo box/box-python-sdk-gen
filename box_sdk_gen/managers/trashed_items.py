@@ -28,14 +28,14 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetFolderTrashItemsDirectionArg(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class GetFolderTrashItemsSortArg(str, Enum):
-    NAME = "name"
-    DATE = "date"
-    SIZE = "size"
+    NAME = 'name'
+    DATE = 'date'
+    SIZE = 'size'
 
 
 class TrashedItemsManager:
@@ -122,23 +122,23 @@ class TrashedItemsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "offset": to_string(offset),
-                "usemarker": to_string(usemarker),
-                "marker": to_string(marker),
-                "direction": to_string(direction),
-                "sort": to_string(sort),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
+                'direction': to_string(direction),
+                'sort': to_string(sort),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/trash/items"]),
+            ''.join(['https://api.box.com/2.0/folders/trash/items']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

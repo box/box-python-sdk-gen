@@ -37,13 +37,13 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "classification_definition": "classificationDefinition",
-        "color_id": "colorID",
+        'classification_definition': 'classificationDefinition',
+        'color_id': 'colorID',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "classificationDefinition": "classification_definition",
-        "colorID": "color_id",
+        'classificationDefinition': 'classification_definition',
+        'colorID': 'color_id',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -104,11 +104,11 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "field_key": "fieldKey",
+        'field_key': 'fieldKey',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "fieldKey": "field_key",
+        'fieldKey': 'field_key',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -137,13 +137,13 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "classification_definition": "classificationDefinition",
-        "color_id": "colorID",
+        'classification_definition': 'classificationDefinition',
+        'color_id': 'colorID',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "classificationDefinition": "classification_definition",
-        "colorID": "color_id",
+        'classificationDefinition': 'classification_definition',
+        'colorID': 'color_id',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -203,13 +203,13 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "field_key": "fieldKey",
-        "enum_option_key": "enumOptionKey",
+        'field_key': 'fieldKey',
+        'enum_option_key': 'enumOptionKey',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "fieldKey": "field_key",
-        "enumOptionKey": "enum_option_key",
+        'fieldKey': 'field_key',
+        'enumOptionKey': 'enum_option_key',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -242,13 +242,13 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestB
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "field_key": "fieldKey",
-        "enum_option_key": "enumOptionKey",
+        'field_key': 'fieldKey',
+        'enum_option_key': 'enumOptionKey',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "fieldKey": "field_key",
-        "enumOptionKey": "enum_option_key",
+        'fieldKey': 'field_key',
+        'enumOptionKey': 'enum_option_key',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -268,40 +268,40 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestB
 
 
 class CreateMetadataTemplateSchemaClassificationScopeArg(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class CreateMetadataTemplateSchemaClassificationTemplateKeyArg(str, Enum):
-    SECURITYCLASSIFICATION_6VMVOCHWUWO = "securityClassification-6VMVochwUWo"
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
 
 class CreateMetadataTemplateSchemaClassificationDisplayNameArg(str, Enum):
-    CLASSIFICATION = "Classification"
+    CLASSIFICATION = 'Classification'
 
 
 class CreateMetadataTemplateSchemaClassificationFieldsArgTypeField(str, Enum):
-    ENUM = "enum"
+    ENUM = 'enum'
 
 
 class CreateMetadataTemplateSchemaClassificationFieldsArgKeyField(str, Enum):
-    BOX__SECURITY__CLASSIFICATION__KEY = "Box__Security__Classification__Key"
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
 class CreateMetadataTemplateSchemaClassificationFieldsArgDisplayNameField(str, Enum):
-    CLASSIFICATION = "Classification"
+    CLASSIFICATION = 'Classification'
 
 
 class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfigFieldClassificationField(
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "classification_definition": "classificationDefinition",
-        "color_id": "colorID",
+        'classification_definition': 'classificationDefinition',
+        'color_id': 'colorID',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "classificationDefinition": "classification_definition",
-        "colorID": "color_id",
+        'classificationDefinition': 'classification_definition',
+        'colorID': 'color_id',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -354,11 +354,11 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfi
 
 class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "static_config": "staticConfig",
+        'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "staticConfig": "static_config",
+        'staticConfig': 'static_config',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -384,11 +384,11 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField(BaseObject
 
 class CreateMetadataTemplateSchemaClassificationFieldsArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "display_name": "displayName",
+        'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "displayName": "display_name",
+        'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -463,15 +463,15 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema"
+                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -493,13 +493,13 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema"
+                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -538,17 +538,17 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add"
+                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add'
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -585,17 +585,17 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update"
+                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update'
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -632,17 +632,17 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#delete"
+                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#delete'
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -710,15 +710,15 @@ class ClassificationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/metadata_templates/schema#classifications"]
+            ''.join(
+                ['https://api.box.com/2.0/metadata_templates/schema#classifications']
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

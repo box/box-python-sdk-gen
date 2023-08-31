@@ -96,11 +96,11 @@ class CCGAuth(Authentication):
         )
 
         response: FetchResponse = fetch(
-            "https://api.box.com/oauth2/token",
+            'https://api.box.com/oauth2/token',
             FetchOptions(
-                method="POST",
+                method='POST',
                 body=urlencode(request_body.to_dict()),
-                headers={"content-type": "application/x-www-form-urlencoded"},
+                headers={'content-type': 'application/x-www-form-urlencoded'},
                 network_session=network_session,
             ),
         )

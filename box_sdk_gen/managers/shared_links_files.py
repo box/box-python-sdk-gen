@@ -32,9 +32,9 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class UpdateFileAddSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateFileAddSharedLinkSharedLinkArgPermissionsField(BaseObject):
@@ -119,9 +119,9 @@ class UpdateFileAddSharedLinkSharedLinkArg(BaseObject):
 
 
 class UpdateFileUpdateSharedLinkSharedLinkArgAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateFileUpdateSharedLinkSharedLinkArgPermissionsField(BaseObject):
@@ -271,21 +271,21 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {
-                "if-none-match": to_string(if_none_match),
-                "boxapi": to_string(boxapi),
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/shared_items"]),
+            ''.join(['https://api.box.com/2.0/shared_items']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -316,15 +316,15 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "#get_shared_link"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '#get_shared_link']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -361,17 +361,17 @@ class SharedLinksFilesManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "#add_shared_link"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -406,17 +406,17 @@ class SharedLinksFilesManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "#update_shared_link"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -452,17 +452,17 @@ class SharedLinksFilesManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(shared_link=shared_link)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "#remove_shared_link"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

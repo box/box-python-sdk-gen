@@ -36,8 +36,8 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateCommentItemArgTypeField(str, Enum):
-    FILE = "file"
-    COMMENT = "comment"
+    FILE = 'file'
+    COMMENT = 'comment'
 
 
 class CreateCommentItemArg(BaseObject):
@@ -103,19 +103,19 @@ class CommentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "offset": to_string(offset),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/comments"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/comments']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -150,15 +150,15 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/comments/", comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -194,17 +194,17 @@ class CommentsManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(message=message)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/comments/", comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -226,9 +226,9 @@ class CommentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/comments/", comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -283,17 +283,17 @@ class CommentsManager:
         request_body = BaseObject(
             message=message, tagged_message=tagged_message, item=item
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/comments"]),
+            ''.join(['https://api.box.com/2.0/comments']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

@@ -32,7 +32,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class PromoteFileVersionTypeArg(str, Enum):
-    FILE_VERSION = "file_version"
+    FILE_VERSION = 'file_version'
 
 
 class FileVersionsManager:
@@ -91,19 +91,19 @@ class FileVersionsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "offset": to_string(offset),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/versions"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -147,22 +147,22 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/versions/",
+                    '/versions/',
                     file_version_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -209,20 +209,20 @@ class FileVersionsManager:
         request_body = BaseObject(trashed_at=trashed_at)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/versions/",
+                    '/versions/',
                     file_version_id,
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -265,19 +265,19 @@ class FileVersionsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params(
-            {"if-match": to_string(if_match), **extra_headers}
+            {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/files/",
+                    'https://api.box.com/2.0/files/',
                     file_id,
-                    "/versions/",
+                    '/versions/',
                     file_version_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -356,17 +356,17 @@ class FileVersionsManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(id=id, type=type)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/versions/current"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

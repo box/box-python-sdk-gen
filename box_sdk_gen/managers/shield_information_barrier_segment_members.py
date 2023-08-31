@@ -37,14 +37,14 @@ from box_sdk_gen.fetch import FetchResponse
 
 class CreateShieldInformationBarrierSegmentMemberTypeArg(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = (
-        "shield_information_barrier_segment_member"
+        'shield_information_barrier_segment_member'
     )
 
 
 class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(
@@ -99,16 +99,16 @@ class ShieldInformationBarrierSegmentMembersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_members/",
+                    'https://api.box.com/2.0/shield_information_barrier_segment_members/',
                     shield_information_barrier_segment_member_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -137,14 +137,14 @@ class ShieldInformationBarrierSegmentMembersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_members/",
+                    'https://api.box.com/2.0/shield_information_barrier_segment_members/',
                     shield_information_barrier_segment_member_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -180,23 +180,23 @@ class ShieldInformationBarrierSegmentMembersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "shield_information_barrier_segment_id": to_string(
+                'shield_information_barrier_segment_id': to_string(
                     shield_information_barrier_segment_id
                 ),
-                "marker": to_string(marker),
-                "limit": to_string(limit),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/shield_information_barrier_segment_members"]
+            ''.join(
+                ['https://api.box.com/2.0/shield_information_barrier_segment_members']
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -231,15 +231,15 @@ class ShieldInformationBarrierSegmentMembersManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/shield_information_barrier_segment_members"]
+            ''.join(
+                ['https://api.box.com/2.0/shield_information_barrier_segment_members']
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

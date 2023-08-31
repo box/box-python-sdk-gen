@@ -19,7 +19,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -34,13 +34,13 @@ def test_get_groups():
 
 def test_create_get_delete_group():
     group_name: str = get_uuid()
-    group_description: str = "Group description"
+    group_description: str = 'Group description'
     group: Group = client.groups.create_group(
         name=group_name, description=group_description
     )
     assert group.name == group_name
     group_by_id: GroupFull = client.groups.get_group_by_id(
-        group_id=group.id, fields="id,name,description,group_type"
+        group_id=group.id, fields='id,name,description,group_type'
     )
     assert group_by_id.id == group.id
     assert group_by_id.description == group_description

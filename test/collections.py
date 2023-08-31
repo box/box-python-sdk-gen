@@ -23,7 +23,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -38,7 +38,7 @@ def testCollections():
         collection_id=favourite_collection.id
     )
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id="0")
+        name=get_uuid(), parent=CreateFolderParentArg(id='0')
     )
     client.folders.update_folder_by_id(
         folder_id=folder.id,

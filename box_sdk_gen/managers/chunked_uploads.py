@@ -71,13 +71,13 @@ class ChunkedUploadsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://upload.box.com/api/2.0/files/upload_sessions"]),
+            ''.join(['https://upload.box.com/api/2.0/files/upload_sessions']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -113,15 +113,15 @@ class ChunkedUploadsManager:
         request_body = BaseObject(file_size=file_size, file_name=file_name)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://upload.box.com/api/2.0/files/", file_id, "/upload_sessions"]
+            ''.join(
+                ['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -145,16 +145,16 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://upload.box.com/api/2.0/files/upload_sessions/",
+                    'https://upload.box.com/api/2.0/files/upload_sessions/',
                     upload_session_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -203,24 +203,24 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params(
             {
-                "digest": to_string(digest),
-                "content-range": to_string(content_range),
+                'digest': to_string(digest),
+                'content-range': to_string(content_range),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://upload.box.com/api/2.0/files/upload_sessions/",
+                    'https://upload.box.com/api/2.0/files/upload_sessions/',
                     upload_session_id,
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=request_body,
-                content_type="application/octet-stream",
-                response_format="json",
+                content_type='application/octet-stream',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -247,14 +247,14 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://upload.box.com/api/2.0/files/upload_sessions/",
+                    'https://upload.box.com/api/2.0/files/upload_sessions/',
                     upload_session_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -291,22 +291,22 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"offset": to_string(offset), "limit": to_string(limit)}
+            {'offset': to_string(offset), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://upload.box.com/api/2.0/files/upload_sessions/",
+                    'https://upload.box.com/api/2.0/files/upload_sessions/',
                     upload_session_id,
-                    "/parts",
+                    '/parts',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -359,26 +359,26 @@ class ChunkedUploadsManager:
         request_body = BaseObject(parts=parts)
         headers_map: Dict[str, str] = prepare_params(
             {
-                "digest": to_string(digest),
-                "if-match": to_string(if_match),
-                "if-none-match": to_string(if_none_match),
+                'digest': to_string(digest),
+                'if-match': to_string(if_match),
+                'if-none-match': to_string(if_none_match),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://upload.box.com/api/2.0/files/upload_sessions/",
+                    'https://upload.box.com/api/2.0/files/upload_sessions/',
                     upload_session_id,
-                    "/commit",
+                    '/commit',
                 ]
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

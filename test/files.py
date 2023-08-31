@@ -37,7 +37,7 @@ from box_sdk_gen.jwt_auth import JWTConfig
 from test.commons import upload_new_file
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -48,7 +48,7 @@ client: Client = Client(auth=auth)
 def upload_file(file_name, file_stream) -> File:
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(
-            name=file_name, parent=UploadFileAttributesArgParentField(id="0")
+            name=file_name, parent=UploadFileAttributesArgParentField(id='0')
         ),
         file=file_stream,
     )
@@ -70,7 +70,7 @@ def testGetFileFullExtraFields():
     file_content: ByteStream = generate_byte_stream(1048576)
     uploaded_file: File = upload_file(new_file_name, file_content)
     file: FileFull = client.files.get_file_by_id(
-        file_id=uploaded_file.id, fields="is_externally_owned,has_collaborations"
+        file_id=uploaded_file.id, fields='is_externally_owned,has_collaborations'
     )
     assert file.is_externally_owned == False
     assert file.has_collaborations == False
@@ -85,8 +85,8 @@ def testCreateGetAndDeleteFile():
     with pytest.raises(Exception):
         client.files.get_file_by_id(
             file_id=uploaded_file.id,
-            fields="name",
-            extra_headers={"if-none-match": file.etag},
+            fields='name',
+            extra_headers={'if-none-match': file.etag},
         )
     assert file.name == new_file_name
     client.files.delete_file_by_id(file_id=uploaded_file.id)
@@ -100,10 +100,10 @@ def testUpdateFile():
     file_to_update: File = upload_new_file()
     updated_name: str = get_uuid()
     updated_file: FileFull = client.files.update_file_by_id(
-        file_id=file_to_update.id, name=updated_name, description="Updated description"
+        file_id=file_to_update.id, name=updated_name, description='Updated description'
     )
     assert updated_file.name == updated_name
-    assert updated_file.description == "Updated description"
+    assert updated_file.description == 'Updated description'
     client.files.delete_file_by_id(file_id=updated_file.id)
 
 
@@ -111,9 +111,9 @@ def testCopyFile():
     file_origin: File = upload_new_file()
     copied_file_name: str = get_uuid()
     copied_file: FileFull = client.files.copy_file(
-        file_id=file_origin.id, name=copied_file_name, parent=CopyFileParentArg(id="0")
+        file_id=file_origin.id, name=copied_file_name, parent=CopyFileParentArg(id='0')
     )
-    assert copied_file.parent.id == "0"
+    assert copied_file.parent.id == '0'
     assert copied_file.name == copied_file_name
     client.files.delete_file_by_id(file_id=file_origin.id)
     client.files.delete_file_by_id(file_id=copied_file.id)

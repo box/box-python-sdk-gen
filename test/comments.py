@@ -33,14 +33,14 @@ from box_sdk_gen.jwt_auth import JWTConfig
 
 def comments():
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-        decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+        decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
     auth: JWTAuth = JWTAuth(config=jwt_config)
     client: Client = Client(auth=auth)
     file_size: int = 256
     file_name: str = get_uuid()
     file_byte_stream: ByteStream = generate_byte_stream(file_size)
-    parent_id: str = "0"
+    parent_id: str = '0'
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(
             name=file_name, parent=UploadFileAttributesArgParentField(id=parent_id)
@@ -50,7 +50,7 @@ def comments():
     file_id: str = uploaded_files.entries[0].id
     comments: Comments = client.comments.get_file_comments(file_id=file_id)
     assert comments.total_count == 0
-    message: str = "Hello there!"
+    message: str = 'Hello there!'
     new_comment: Comment = client.comments.create_comment(
         message=message,
         item=CreateCommentItemArg(
@@ -68,7 +68,7 @@ def comments():
     )
     assert new_reply_comment.message == message
     assert new_reply_comment.is_reply_comment == True
-    new_message: str = "Hi!"
+    new_message: str = 'Hi!'
     client.comments.update_comment_by_id(
         comment_id=new_reply_comment.id, message=new_message
     )

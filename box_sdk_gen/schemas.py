@@ -12,32 +12,32 @@ from typing import Union
 
 
 class PostOAuth2TokenGrantTypeField(str, Enum):
-    AUTHORIZATION_CODE = "authorization_code"
-    REFRESH_TOKEN = "refresh_token"
-    CLIENT_CREDENTIALS = "client_credentials"
+    AUTHORIZATION_CODE = 'authorization_code'
+    REFRESH_TOKEN = 'refresh_token'
+    CLIENT_CREDENTIALS = 'client_credentials'
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER = (
-        "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        'urn:ietf:params:oauth:grant-type:jwt-bearer'
     )
     URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE = (
-        "urn:ietf:params:oauth:grant-type:token-exchange"
+        'urn:ietf:params:oauth:grant-type:token-exchange'
     )
 
 
 class PostOAuth2TokenSubjectTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = (
-        "urn:ietf:params:oauth:token-type:access_token"
+        'urn:ietf:params:oauth:token-type:access_token'
     )
 
 
 class PostOAuth2TokenActorTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ID_TOKEN = (
-        "urn:ietf:params:oauth:token-type:id_token"
+        'urn:ietf:params:oauth:token-type:id_token'
     )
 
 
 class PostOAuth2TokenBoxSubjectTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
-    USER = "user"
+    ENTERPRISE = 'enterprise'
+    USER = 'user'
 
 
 class PostOAuth2Token(BaseObject):
@@ -140,7 +140,7 @@ class PostOAuth2Token(BaseObject):
 
 
 class PostOAuth2TokenRefreshAccessTokenGrantTypeField(str, Enum):
-    REFRESH_TOKEN = "refresh_token"
+    REFRESH_TOKEN = 'refresh_token'
 
 
 class PostOAuth2TokenRefreshAccessToken(BaseObject):
@@ -194,8 +194,8 @@ class PostOAuth2Revoke(BaseObject):
 
 
 class ZipDownloadRequestItemsFieldTypeField(str, Enum):
-    FILE = "file"
-    FOLDER_ = "folder."
+    FILE = 'file'
+    FOLDER_ = 'folder.'
 
 
 class ZipDownloadRequestItemsField(BaseObject):
@@ -233,8 +233,8 @@ class ZipDownloadRequest(BaseObject):
 
 
 class MetadataQueryOrderByFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class MetadataQueryOrderByField(BaseObject):
@@ -261,11 +261,11 @@ class MetadataQueryOrderByField(BaseObject):
 
 class MetadataQuery(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "from_": "from",
+        'from_': 'from',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "from": "from_",
+        'from': 'from_',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -342,8 +342,8 @@ class MetadataQuery(BaseObject):
 
 
 class FileRequestUpdateRequestStatusField(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
 
 
 class FileRequestUpdateRequest(BaseObject):
@@ -402,7 +402,7 @@ class FileRequestUpdateRequest(BaseObject):
 
 
 class FileRequestCopyRequestFolderFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class FileRequestCopyRequestFolderField(BaseObject):
@@ -486,27 +486,27 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
 
 
 class ClientErrorTypeField(str, Enum):
-    ERROR = "error"
+    ERROR = 'error'
 
 
 class ClientErrorCodeField(str, Enum):
-    CREATED = "created"
-    ACCEPTED = "accepted"
-    NO_CONTENT = "no_content"
-    REDIRECT = "redirect"
-    NOT_MODIFIED = "not_modified"
-    BAD_REQUEST = "bad_request"
-    UNAUTHORIZED = "unauthorized"
-    FORBIDDEN = "forbidden"
-    NOT_FOUND = "not_found"
-    METHOD_NOT_ALLOWED = "method_not_allowed"
-    CONFLICT = "conflict"
-    PRECONDITION_FAILED = "precondition_failed"
-    TOO_MANY_REQUESTS = "too_many_requests"
-    INTERNAL_SERVER_ERROR = "internal_server_error"
-    UNAVAILABLE = "unavailable"
-    ITEM_NAME_INVALID = "item_name_invalid"
-    INSUFFICIENT_SCOPE = "insufficient_scope"
+    CREATED = 'created'
+    ACCEPTED = 'accepted'
+    NO_CONTENT = 'no_content'
+    REDIRECT = 'redirect'
+    NOT_MODIFIED = 'not_modified'
+    BAD_REQUEST = 'bad_request'
+    UNAUTHORIZED = 'unauthorized'
+    FORBIDDEN = 'forbidden'
+    NOT_FOUND = 'not_found'
+    METHOD_NOT_ALLOWED = 'method_not_allowed'
+    CONFLICT = 'conflict'
+    PRECONDITION_FAILED = 'precondition_failed'
+    TOO_MANY_REQUESTS = 'too_many_requests'
+    INTERNAL_SERVER_ERROR = 'internal_server_error'
+    UNAVAILABLE = 'unavailable'
+    ITEM_NAME_INVALID = 'item_name_invalid'
+    INSUFFICIENT_SCOPE = 'insufficient_scope'
 
 
 class ClientErrorContextInfoField(BaseObject):
@@ -579,30 +579,30 @@ class OAuth2Error(BaseObject):
 
 
 class ClassificationTemplateField(str, Enum):
-    SECURITYCLASSIFICATION_6VMVOCHWUWO = "securityClassification-6VMVochwUWo"
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
 
 class Classification(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "box_security_classification_key": "Box__Security__Classification__Key",
-        "parent": "$parent",
-        "template": "$template",
-        "scope": "$scope",
-        "version": "$version",
-        "type": "$type",
-        "type_version": "$typeVersion",
-        "can_edit": "$canEdit",
+        'box_security_classification_key': 'Box__Security__Classification__Key',
+        'parent': '$parent',
+        'template': '$template',
+        'scope': '$scope',
+        'version': '$version',
+        'type': '$type',
+        'type_version': '$typeVersion',
+        'can_edit': '$canEdit',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "Box__Security__Classification__Key": "box_security_classification_key",
-        "$parent": "parent",
-        "$template": "template",
-        "$scope": "scope",
-        "$version": "version",
-        "$type": "type",
-        "$typeVersion": "type_version",
-        "$canEdit": "can_edit",
+        'Box__Security__Classification__Key': 'box_security_classification_key',
+        '$parent': 'parent',
+        '$template': 'template',
+        '$scope': 'scope',
+        '$version': 'version',
+        '$type': 'type',
+        '$typeVersion': 'type_version',
+        '$canEdit': 'can_edit',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -656,40 +656,40 @@ class Classification(BaseObject):
 
 
 class ClassificationTemplateTypeField(str, Enum):
-    METADATA_TEMPLATE = "metadata_template"
+    METADATA_TEMPLATE = 'metadata_template'
 
 
 class ClassificationTemplateTemplateKeyField(str, Enum):
-    SECURITYCLASSIFICATION_6VMVOCHWUWO = "securityClassification-6VMVochwUWo"
+    SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
 
 class ClassificationTemplateDisplayNameField(str, Enum):
-    CLASSIFICATION = "Classification"
+    CLASSIFICATION = 'Classification'
 
 
 class ClassificationTemplateFieldsFieldTypeField(str, Enum):
-    ENUM = "enum"
+    ENUM = 'enum'
 
 
 class ClassificationTemplateFieldsFieldKeyField(str, Enum):
-    BOX__SECURITY__CLASSIFICATION__KEY = "Box__Security__Classification__Key"
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
 class ClassificationTemplateFieldsFieldDisplayNameField(str, Enum):
-    CLASSIFICATION = "Classification"
+    CLASSIFICATION = 'Classification'
 
 
 class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField(
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
-        "classification_definition": "classificationDefinition",
-        "color_id": "colorID",
+        'classification_definition': 'classificationDefinition',
+        'color_id': 'colorID',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "classificationDefinition": "classification_definition",
-        "colorID": "color_id",
+        'classificationDefinition': 'classification_definition',
+        'colorID': 'color_id',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -745,11 +745,11 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject)
 
 class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "static_config": "staticConfig",
+        'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "staticConfig": "static_config",
+        'staticConfig': 'static_config',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -778,11 +778,11 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
 
 class ClassificationTemplateFieldsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "display_name": "displayName",
+        'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "displayName": "display_name",
+        'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -823,15 +823,15 @@ class ClassificationTemplateFieldsField(BaseObject):
 
 class ClassificationTemplate(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "template_key": "templateKey",
-        "display_name": "displayName",
-        "copy_instance_on_item_copy": "copyInstanceOnItemCopy",
+        'template_key': 'templateKey',
+        'display_name': 'displayName',
+        'copy_instance_on_item_copy': 'copyInstanceOnItemCopy',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "templateKey": "template_key",
-        "displayName": "display_name",
-        "copyInstanceOnItemCopy": "copy_instance_on_item_copy",
+        'templateKey': 'template_key',
+        'displayName': 'display_name',
+        'copyInstanceOnItemCopy': 'copy_instance_on_item_copy',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -881,17 +881,17 @@ class ClassificationTemplate(BaseObject):
 
 
 class CollaborationAllowlistEntryTypeField(str, Enum):
-    COLLABORATION_WHITELIST_ENTRY = "collaboration_whitelist_entry"
+    COLLABORATION_WHITELIST_ENTRY = 'collaboration_whitelist_entry'
 
 
 class CollaborationAllowlistEntryDirectionField(str, Enum):
-    INBOUND = "inbound"
-    OUTBOUND = "outbound"
-    BOTH = "both"
+    INBOUND = 'inbound'
+    OUTBOUND = 'outbound'
+    BOTH = 'both'
 
 
 class CollaborationAllowlistEntryEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class CollaborationAllowlistEntryEnterpriseField(BaseObject):
@@ -977,11 +977,11 @@ class CollaborationAllowlistEntries(BaseObject):
 
 
 class CollaborationAllowlistExemptTargetTypeField(str, Enum):
-    COLLABORATION_WHITELIST = "collaboration_whitelist"
+    COLLABORATION_WHITELIST = 'collaboration_whitelist'
 
 
 class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
@@ -1009,7 +1009,7 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
 
 
 class CollaborationAllowlistExemptTargetUserFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class CollaborationAllowlistExemptTargetUserField(BaseObject):
@@ -1095,15 +1095,15 @@ class CollaborationAllowlistExemptTargets(BaseObject):
 
 
 class CollectionTypeField(str, Enum):
-    COLLECTION = "collection"
+    COLLECTION = 'collection'
 
 
 class CollectionNameField(str, Enum):
-    FAVORITES = "Favorites"
+    FAVORITES = 'Favorites'
 
 
 class CollectionCollectionTypeField(str, Enum):
-    FAVORITES = "favorites"
+    FAVORITES = 'favorites'
 
 
 class Collection(BaseObject):
@@ -1135,8 +1135,8 @@ class Collection(BaseObject):
 
 
 class CollectionsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class CollectionsOrderField(BaseObject):
@@ -1199,7 +1199,7 @@ class Collections(BaseObject):
 
 
 class CommentBaseTypeField(str, Enum):
-    COMMENT = "comment"
+    COMMENT = 'comment'
 
 
 class CommentBase(BaseObject):
@@ -1221,7 +1221,7 @@ class CommentBase(BaseObject):
 
 
 class EmailAliasTypeField(str, Enum):
-    EMAIL_ALIAS = "email_alias"
+    EMAIL_ALIAS = 'email_alias'
 
 
 class EmailAlias(BaseObject):
@@ -1269,7 +1269,7 @@ class EmailAliases(BaseObject):
 
 
 class EnterpriseBaseTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class EnterpriseBase(BaseObject):
@@ -1291,7 +1291,7 @@ class EnterpriseBase(BaseObject):
 
 
 class FileBaseTypeField(str, Enum):
-    FILE = "file"
+    FILE = 'file'
 
 
 class FileBase(BaseObject):
@@ -1320,7 +1320,7 @@ class FileBase(BaseObject):
 
 
 class FileVersionBaseTypeField(str, Enum):
-    FILE_VERSION = "file_version"
+    FILE_VERSION = 'file_version'
 
 
 class FileVersionBase(BaseObject):
@@ -1338,11 +1338,11 @@ class FileVersionBase(BaseObject):
 
 class FileVersionMini(FileVersionBase):
     _fields_to_json_mapping: Dict[str, str] = {
-        "sha_1": "sha1",
+        'sha_1': 'sha1',
         **FileVersionBase._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "sha1": "sha_1",
+        'sha1': 'sha_1',
         **FileVersionBase._json_to_fields_mapping,
     }
 
@@ -1367,11 +1367,11 @@ class FileVersionMini(FileVersionBase):
 
 class FileMini(FileBase):
     _fields_to_json_mapping: Dict[str, str] = {
-        "sha_1": "sha1",
+        'sha_1': 'sha1',
         **FileBase._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "sha1": "sha_1",
+        'sha1': 'sha_1',
         **FileBase._json_to_fields_mapping,
     }
 
@@ -1414,18 +1414,18 @@ class FileMini(FileBase):
 
 
 class FileScopeScopeField(str, Enum):
-    ANNOTATION_EDIT = "annotation_edit"
-    ANNOTATION_VIEW_ALL = "annotation_view_all"
-    ANNOTATION_VIEW_SELF = "annotation_view_self"
-    BASE_EXPLORER = "base_explorer"
-    BASE_PICKER = "base_picker"
-    BASE_PREVIEW = "base_preview"
-    BASE_UPLOAD = "base_upload"
-    ITEM_DELETE = "item_delete"
-    ITEM_DOWNLOAD = "item_download"
-    ITEM_PREVIEW = "item_preview"
-    ITEM_RENAME = "item_rename"
-    ITEM_SHARE = "item_share"
+    ANNOTATION_EDIT = 'annotation_edit'
+    ANNOTATION_VIEW_ALL = 'annotation_view_all'
+    ANNOTATION_VIEW_SELF = 'annotation_view_self'
+    BASE_EXPLORER = 'base_explorer'
+    BASE_PICKER = 'base_picker'
+    BASE_PREVIEW = 'base_preview'
+    BASE_UPLOAD = 'base_upload'
+    ITEM_DELETE = 'item_delete'
+    ITEM_DOWNLOAD = 'item_download'
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_RENAME = 'item_rename'
+    ITEM_SHARE = 'item_share'
 
 
 class FileScope(BaseObject):
@@ -1445,12 +1445,12 @@ class FileScope(BaseObject):
 
 
 class AccessTokenTokenTypeField(str, Enum):
-    BEARER = "bearer"
+    BEARER = 'bearer'
 
 
 class AccessTokenIssuedTokenTypeField(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = (
-        "urn:ietf:params:oauth:token-type:access_token"
+        'urn:ietf:params:oauth:token-type:access_token'
     )
 
 
@@ -1618,7 +1618,7 @@ class ConflictError(ClientError):
 
 
 class FolderBaseTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class FolderBase(BaseObject):
@@ -1691,7 +1691,7 @@ class FolderMini(FolderBase):
 
 
 class IntegrationMappingBaseIntegrationTypeField(str, Enum):
-    SLACK = "slack"
+    SLACK = 'slack'
 
 
 class IntegrationMappingBase(BaseObject):
@@ -1718,11 +1718,11 @@ class IntegrationMappingBase(BaseObject):
 
 
 class IntegrationMappingMiniPartnerItemTypeField(str, Enum):
-    CHANNEL = "channel"
+    CHANNEL = 'channel'
 
 
 class IntegrationMappingMiniBoxItemTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class IntegrationMappingMini(IntegrationMappingBase):
@@ -1763,7 +1763,7 @@ class IntegrationMappingMini(IntegrationMappingBase):
 
 
 class GroupBaseTypeField(str, Enum):
-    GROUP = "group"
+    GROUP = 'group'
 
 
 class GroupBase(BaseObject):
@@ -1785,8 +1785,8 @@ class GroupBase(BaseObject):
 
 
 class GroupMiniGroupTypeField(str, Enum):
-    MANAGED_GROUP = "managed_group"
-    ALL_USERS_GROUP = "all_users_group"
+    MANAGED_GROUP = 'managed_group'
+    ALL_USERS_GROUP = 'all_users_group'
 
 
 class GroupMini(GroupBase):
@@ -1814,8 +1814,8 @@ class GroupMini(GroupBase):
 
 
 class GroupsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class GroupsOrderField(BaseObject):
@@ -1908,15 +1908,15 @@ class Group(GroupMini):
 
 
 class GroupFullInvitabilityLevelField(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class GroupFullMemberViewabilityLevelField(str, Enum):
-    ADMINS_ONLY = "admins_only"
-    ADMINS_AND_MEMBERS = "admins_and_members"
-    ALL_MANAGED_USERS = "all_managed_users"
+    ADMINS_ONLY = 'admins_only'
+    ADMINS_AND_MEMBERS = 'admins_and_members'
+    ALL_MANAGED_USERS = 'all_managed_users'
 
 
 class GroupFullPermissionsField(BaseObject):
@@ -2012,7 +2012,7 @@ class GroupFull(Group):
 
 
 class LegalHoldPolicyMiniTypeField(str, Enum):
-    LEGAL_HOLD_POLICY = "legal_hold_policy"
+    LEGAL_HOLD_POLICY = 'legal_hold_policy'
 
 
 class LegalHoldPolicyMini(BaseObject):
@@ -2034,7 +2034,7 @@ class LegalHoldPolicyMini(BaseObject):
 
 
 class LegalHoldPolicyAssignmentBaseTypeField(str, Enum):
-    LEGAL_HOLD_POLICY_ASSIGNMENT = "legal_hold_policy_assignment"
+    LEGAL_HOLD_POLICY_ASSIGNMENT = 'legal_hold_policy_assignment'
 
 
 class LegalHoldPolicyAssignmentBase(BaseObject):
@@ -2086,17 +2086,17 @@ class LegalHoldPolicyAssignments(BaseObject):
 
 class MetadataBase(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "parent": "$parent",
-        "template": "$template",
-        "scope": "$scope",
-        "version": "$version",
+        'parent': '$parent',
+        'template': '$template',
+        'scope': '$scope',
+        'version': '$version',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "$parent": "parent",
-        "$template": "template",
-        "$scope": "scope",
-        "$version": "version",
+        '$parent': 'parent',
+        '$template': 'template',
+        '$scope': 'scope',
+        '$version': 'version',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -2181,19 +2181,19 @@ class Metadatas(BaseObject):
 
 class MetadataFull(Metadata):
     _fields_to_json_mapping: Dict[str, str] = {
-        "can_edit": "$canEdit",
-        "id": "$id",
-        "type": "$type",
-        "type_version": "$typeVersion",
-        "extra_data": "extraData",
+        'can_edit': '$canEdit',
+        'id': '$id',
+        'type': '$type',
+        'type_version': '$typeVersion',
+        'extra_data': 'extraData',
         **Metadata._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "$canEdit": "can_edit",
-        "$id": "id",
-        "$type": "type",
-        "$typeVersion": "type_version",
-        "extraData": "extra_data",
+        '$canEdit': 'can_edit',
+        '$id': 'id',
+        '$type': 'type',
+        '$typeVersion': 'type_version',
+        'extraData': 'extra_data',
         **Metadata._json_to_fields_mapping,
     }
 
@@ -2249,11 +2249,11 @@ class MetadataFull(Metadata):
 
 
 class MetadataCascadePolicyTypeField(str, Enum):
-    METADATA_CASCADE_POLICY = "metadata_cascade_policy"
+    METADATA_CASCADE_POLICY = 'metadata_cascade_policy'
 
 
 class MetadataCascadePolicyOwnerEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
@@ -2275,7 +2275,7 @@ class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
 
 
 class MetadataCascadePolicyParentFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class MetadataCascadePolicyParentField(BaseObject):
@@ -2297,17 +2297,17 @@ class MetadataCascadePolicyParentField(BaseObject):
 
 
 class MetadataCascadePolicyScopeField(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE__ = "enterprise_*"
+    GLOBAL = 'global'
+    ENTERPRISE__ = 'enterprise_*'
 
 
 class MetadataCascadePolicy(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "template_key": "templateKey",
+        'template_key': 'templateKey',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "templateKey": "template_key",
+        'templateKey': 'template_key',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -2385,14 +2385,14 @@ class MetadataCascadePolicies(BaseObject):
 
 
 class MetadataQueryIndexStatusField(str, Enum):
-    BUILDING = "building"
-    ACTIVE = "active"
-    DISABLED = "disabled"
+    BUILDING = 'building'
+    ACTIVE = 'active'
+    DISABLED = 'disabled'
 
 
 class MetadataQueryIndexFieldsFieldSortDirectionField(str, Enum):
-    ASC = "asc"
-    DESC = "desc"
+    ASC = 'asc'
+    DESC = 'desc'
 
 
 class MetadataQueryIndexFieldsField(BaseObject):
@@ -2464,16 +2464,16 @@ class MetadataQueryIndices(BaseObject):
 
 
 class MetadataTemplateTypeField(str, Enum):
-    METADATA_TEMPLATE = "metadata_template"
+    METADATA_TEMPLATE = 'metadata_template'
 
 
 class MetadataTemplateFieldsFieldTypeField(str, Enum):
-    STRING = "string"
-    FLOAT = "float"
-    DATE = "date"
-    ENUM = "enum"
-    MULTISELECT = "multiSelect"
-    INTEGER = "integer"
+    STRING = 'string'
+    FLOAT = 'float'
+    DATE = 'date'
+    ENUM = 'enum'
+    MULTISELECT = 'multiSelect'
+    INTEGER = 'integer'
 
 
 class MetadataTemplateFieldsFieldOptionsField(BaseObject):
@@ -2492,11 +2492,11 @@ class MetadataTemplateFieldsFieldOptionsField(BaseObject):
 
 class MetadataTemplateFieldsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "display_name": "displayName",
+        'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "displayName": "display_name",
+        'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -2551,15 +2551,15 @@ class MetadataTemplateFieldsField(BaseObject):
 
 class MetadataTemplate(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "template_key": "templateKey",
-        "display_name": "displayName",
-        "copy_instance_on_item_copy": "copyInstanceOnItemCopy",
+        'template_key': 'templateKey',
+        'display_name': 'displayName',
+        'copy_instance_on_item_copy': 'copyInstanceOnItemCopy',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "templateKey": "template_key",
-        "displayName": "display_name",
-        "copyInstanceOnItemCopy": "copy_instance_on_item_copy",
+        'templateKey': 'template_key',
+        'displayName': 'display_name',
+        'copyInstanceOnItemCopy': 'copy_instance_on_item_copy',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -2697,7 +2697,7 @@ class RealtimeServers(BaseObject):
 
 
 class RetentionPolicyBaseTypeField(str, Enum):
-    RETENTION_POLICY = "retention_policy"
+    RETENTION_POLICY = 'retention_policy'
 
 
 class RetentionPolicyBase(BaseObject):
@@ -2714,8 +2714,8 @@ class RetentionPolicyBase(BaseObject):
 
 
 class RetentionPolicyMiniDispositionActionField(str, Enum):
-    PERMANENTLY_DELETE = "permanently_delete"
-    REMOVE_RETENTION = "remove_retention"
+    PERMANENTLY_DELETE = 'permanently_delete'
+    REMOVE_RETENTION = 'remove_retention'
 
 
 class RetentionPolicyMini(RetentionPolicyBase):
@@ -2782,7 +2782,7 @@ class RetentionPolicies(BaseObject):
 
 
 class FileVersionRetentionTypeField(str, Enum):
-    FILE_VERSION_RETENTION = "file_version_retention"
+    FILE_VERSION_RETENTION = 'file_version_retention'
 
 
 class FileVersionRetention(BaseObject):
@@ -2848,7 +2848,7 @@ class FileVersionRetentions(BaseObject):
 
 
 class RetentionPolicyAssignmentBaseTypeField(str, Enum):
-    RETENTION_POLICY_ASSIGNMENT = "retention_policy_assignment"
+    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
 
 
 class RetentionPolicyAssignmentBase(BaseObject):
@@ -2889,7 +2889,7 @@ class RetentionPolicyAssignments(BaseObject):
 
 
 class ShieldInformationBarrierBaseTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER = "shield_information_barrier"
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
 
 class ShieldInformationBarrierBase(BaseObject):
@@ -2921,7 +2921,7 @@ class ShieldInformationBarrierReference(BaseObject):
 
 
 class ShieldInformationBarrierReportBaseTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER_REPORT = "shield_information_barrier_report"
+    SHIELD_INFORMATION_BARRIER_REPORT = 'shield_information_barrier_report'
 
 
 class ShieldInformationBarrierReportBase(BaseObject):
@@ -2944,7 +2944,7 @@ class ShieldInformationBarrierReportBase(BaseObject):
 
 class ShieldInformationBarrierSegmentMemberBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = (
-        "shield_information_barrier_segment_member"
+        'shield_information_barrier_segment_member'
     )
 
 
@@ -2969,7 +2969,7 @@ class ShieldInformationBarrierSegmentMemberBase(BaseObject):
 
 class ShieldInformationBarrierSegmentRestrictionBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = (
-        "shield_information_barrier_segment_restriction"
+        'shield_information_barrier_segment_restriction'
     )
 
 
@@ -2995,7 +2995,7 @@ class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField(
@@ -3024,7 +3024,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseObject):
@@ -3088,7 +3088,7 @@ class SessionTerminationMessage(BaseObject):
 
 
 class StoragePolicyMiniTypeField(str, Enum):
-    STORAGE_POLICY = "storage_policy"
+    STORAGE_POLICY = 'storage_policy'
 
 
 class StoragePolicyMini(BaseObject):
@@ -3211,7 +3211,7 @@ class StoragePolicies(BaseObject):
 
 
 class TermsOfServiceBaseTypeField(str, Enum):
-    TERMS_OF_SERVICE = "terms_of_service"
+    TERMS_OF_SERVICE = 'terms_of_service'
 
 
 class TermsOfServiceBase(BaseObject):
@@ -3233,12 +3233,12 @@ class TermsOfServiceBase(BaseObject):
 
 
 class TermsOfServiceStatusField(str, Enum):
-    ENABLED = "enabled"
-    DISABLED = "disabled"
+    ENABLED = 'enabled'
+    DISABLED = 'disabled'
 
 
 class TermsOfServiceEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class TermsOfServiceEnterpriseField(BaseObject):
@@ -3264,8 +3264,8 @@ class TermsOfServiceEnterpriseField(BaseObject):
 
 
 class TermsOfServiceTosTypeField(str, Enum):
-    MANAGED = "managed"
-    EXTERNAL = "external"
+    MANAGED = 'managed'
+    EXTERNAL = 'external'
 
 
 class TermsOfService(TermsOfServiceBase):
@@ -3375,11 +3375,11 @@ class UploadPartMini(BaseObject):
 
 class UploadPart(UploadPartMini):
     _fields_to_json_mapping: Dict[str, str] = {
-        "sha_1": "sha1",
+        'sha_1': 'sha1',
         **UploadPartMini._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "sha1": "sha_1",
+        'sha1': 'sha_1',
         **UploadPartMini._json_to_fields_mapping,
     }
 
@@ -3408,8 +3408,8 @@ class UploadPart(UploadPartMini):
 
 
 class UploadPartsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class UploadPartsOrderField(BaseObject):
@@ -3479,7 +3479,7 @@ class UploadedPart(BaseObject):
 
 
 class UploadSessionTypeField(str, Enum):
-    UPLOAD_SESSION = "upload_session"
+    UPLOAD_SESSION = 'upload_session'
 
 
 class UploadSessionSessionEndpointsField(BaseObject):
@@ -3610,7 +3610,7 @@ class UserAvatar(BaseObject):
 
 
 class UserBaseTypeField(str, Enum):
-    USER = "user"
+    USER = 'user'
 
 
 class UserBase(BaseObject):
@@ -3699,8 +3699,8 @@ class UserMini(UserBase):
 
 
 class EventSourceItemTypeField(str, Enum):
-    FILE = "file"
-    FOLDER = "folder"
+    FILE = 'file'
+    FOLDER = 'folder'
 
 
 class EventSourceClassificationField(BaseObject):
@@ -3748,10 +3748,10 @@ class EventSource(BaseObject):
 
 
 class UserStatusField(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    CANNOT_DELETE_EDIT = "cannot_delete_edit"
-    CANNOT_DELETE_EDIT_UPLOAD = "cannot_delete_edit_upload"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
+    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
 
 class UserNotificationEmailField(BaseObject):
@@ -3848,8 +3848,8 @@ class User(UserMini):
 
 
 class UsersOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class UsersOrderField(BaseObject):
@@ -3912,7 +3912,7 @@ class Users(BaseObject):
 
 
 class TrashWebLinkRestoredTypeField(str, Enum):
-    WEB_LINK = "web_link"
+    WEB_LINK = 'web_link'
 
 
 class TrashWebLinkRestoredPathCollectionField(BaseObject):
@@ -3929,9 +3929,9 @@ class TrashWebLinkRestoredPathCollectionField(BaseObject):
 
 
 class TrashWebLinkRestoredItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashWebLinkRestored(BaseObject):
@@ -4014,7 +4014,7 @@ class TrashWebLinkRestored(BaseObject):
 
 
 class TrashFolderRestoredTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class TrashFolderRestoredPathCollectionField(BaseObject):
@@ -4031,9 +4031,9 @@ class TrashFolderRestoredPathCollectionField(BaseObject):
 
 
 class TrashFolderRestoredItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashFolderRestored(BaseObject):
@@ -4140,7 +4140,7 @@ class TrashFolderRestored(BaseObject):
 
 
 class TrashFileRestoredTypeField(str, Enum):
-    FILE = "file"
+    FILE = 'file'
 
 
 class TrashFileRestoredPathCollectionField(BaseObject):
@@ -4157,18 +4157,18 @@ class TrashFileRestoredPathCollectionField(BaseObject):
 
 
 class TrashFileRestoredItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashFileRestored(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "sha_1": "sha1",
+        'sha_1': 'sha1',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "sha1": "sha_1",
+        'sha1': 'sha_1',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -4274,11 +4274,11 @@ class TrashFileRestored(BaseObject):
 
 
 class TrashWebLinkTypeField(str, Enum):
-    WEB_LINK = "web_link"
+    WEB_LINK = 'web_link'
 
 
 class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
@@ -4330,9 +4330,9 @@ class TrashWebLinkPathCollectionField(BaseObject):
 
 
 class TrashWebLinkItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashWebLink(BaseObject):
@@ -4413,11 +4413,11 @@ class TrashWebLink(BaseObject):
 
 
 class TrashFolderTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class TrashFolderPathCollectionFieldEntriesField(BaseObject):
@@ -4469,9 +4469,9 @@ class TrashFolderPathCollectionField(BaseObject):
 
 
 class TrashFolderItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashFolder(BaseObject):
@@ -4577,11 +4577,11 @@ class TrashFolder(BaseObject):
 
 
 class TrashFileTypeField(str, Enum):
-    FILE = "file"
+    FILE = 'file'
 
 
 class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class TrashFilePathCollectionFieldEntriesField(BaseObject):
@@ -4633,18 +4633,18 @@ class TrashFilePathCollectionField(BaseObject):
 
 
 class TrashFileItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class TrashFile(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "sha_1": "sha1",
+        'sha_1': 'sha1',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "sha1": "sha_1",
+        'sha1': 'sha_1',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -4749,7 +4749,7 @@ class TrashFile(BaseObject):
 
 
 class TermsOfServiceUserStatusTypeField(str, Enum):
-    TERMS_OF_SERVICE_USER_STATUS = "terms_of_service_user_status"
+    TERMS_OF_SERVICE_USER_STATUS = 'terms_of_service_user_status'
 
 
 class TermsOfServiceUserStatus(BaseObject):
@@ -4805,14 +4805,14 @@ class TermsOfServiceUserStatuses(BaseObject):
 
 
 class TaskAssignmentTypeField(str, Enum):
-    TASK_ASSIGNMENT = "task_assignment"
+    TASK_ASSIGNMENT = 'task_assignment'
 
 
 class TaskAssignmentResolutionStateField(str, Enum):
-    COMPLETED = "completed"
-    INCOMPLETE = "incomplete"
-    APPROVED = "approved"
-    REJECTED = "rejected"
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
 
 
 class TaskAssignment(BaseObject):
@@ -4883,17 +4883,17 @@ class TaskAssignments(BaseObject):
 
 
 class TaskTypeField(str, Enum):
-    TASK = "task"
+    TASK = 'task'
 
 
 class TaskActionField(str, Enum):
-    REVIEW = "review"
-    COMPLETE = "complete"
+    REVIEW = 'review'
+    COMPLETE = 'complete'
 
 
 class TaskCompletionRuleField(str, Enum):
-    ALL_ASSIGNEES = "all_assignees"
-    ANY_ASSIGNEE = "any_assignee"
+    ALL_ASSIGNEES = 'all_assignees'
+    ANY_ASSIGNEE = 'any_assignee'
 
 
 class Task(BaseObject):
@@ -4971,13 +4971,13 @@ class Tasks(BaseObject):
 
 
 class RetentionPolicyAssignmentTypeField(str, Enum):
-    RETENTION_POLICY_ASSIGNMENT = "retention_policy_assignment"
+    RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
 
 
 class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
-    FOLDER = "folder"
-    ENTERPRISE = "enterprise"
-    METADATA_TEMPLATE = "metadata_template"
+    FOLDER = 'folder'
+    ENTERPRISE = 'enterprise'
+    METADATA_TEMPLATE = 'metadata_template'
 
 
 class RetentionPolicyAssignmentAssignedToField(BaseObject):
@@ -5062,18 +5062,18 @@ class RetentionPolicyAssignment(BaseObject):
 
 
 class RetentionPolicyPolicyTypeField(str, Enum):
-    FINITE = "finite"
-    INDEFINITE = "indefinite"
+    FINITE = 'finite'
+    INDEFINITE = 'indefinite'
 
 
 class RetentionPolicyRetentionTypeField(str, Enum):
-    MODIFIABLE = "modifiable"
-    NON_MODIFIABLE = "non-modifiable"
+    MODIFIABLE = 'modifiable'
+    NON_MODIFIABLE = 'non-modifiable'
 
 
 class RetentionPolicyStatusField(str, Enum):
-    ACTIVE = "active"
-    RETIRED = "retired"
+    ACTIVE = 'active'
+    RETIRED = 'retired'
 
 
 class RetentionPolicyAssignmentCountsField(BaseObject):
@@ -5208,10 +5208,10 @@ class RetentionPolicy(RetentionPolicyMini):
 
 
 class LegalHoldPolicyStatusField(str, Enum):
-    ACTIVE = "active"
-    APPLYING = "applying"
-    RELEASING = "releasing"
-    RELEASED = "released"
+    ACTIVE = 'active'
+    APPLYING = 'applying'
+    RELEASING = 'releasing'
+    RELEASED = 'released'
 
 
 class LegalHoldPolicyAssignmentCountsField(BaseObject):
@@ -5339,11 +5339,11 @@ class LegalHoldPolicies(BaseObject):
 
 
 class InviteTypeField(str, Enum):
-    INVITE = "invite"
+    INVITE = 'invite'
 
 
 class InviteInvitedToFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class InviteInvitedToField(BaseObject):
@@ -5407,12 +5407,12 @@ class Invite(BaseObject):
 
 
 class GroupMembershipTypeField(str, Enum):
-    GROUP_MEMBERSHIP = "group_membership"
+    GROUP_MEMBERSHIP = 'group_membership'
 
 
 class GroupMembershipRoleField(str, Enum):
-    MEMBER = "member"
-    ADMIN = "admin"
+    MEMBER = 'member'
+    ADMIN = 'admin'
 
 
 class GroupMembership(BaseObject):
@@ -5450,8 +5450,8 @@ class GroupMembership(BaseObject):
 
 
 class GroupMembershipsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class GroupMembershipsOrderField(BaseObject):
@@ -5569,8 +5569,8 @@ class FileVersion(FileVersionMini):
 
 
 class FileVersionsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class FileVersionsOrderField(BaseObject):
@@ -5697,12 +5697,12 @@ class FileVersionFull(FileVersion):
 
 
 class FileRequestTypeField(str, Enum):
-    FILE_REQUEST = "file_request"
+    FILE_REQUEST = 'file_request'
 
 
 class FileRequestStatusField(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
 
 
 class FileRequest(BaseObject):
@@ -5814,22 +5814,22 @@ class FilePathCollectionField(BaseObject):
 
 
 class FileSharedLinkFieldAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class FileSharedLinkFieldEffectiveAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class FileSharedLinkFieldEffectivePermissionField(str, Enum):
-    CAN_EDIT = "can_edit"
-    CAN_DOWNLOAD = "can_download"
-    CAN_PREVIEW = "can_preview"
-    NO_ACCESS = "no_access"
+    CAN_EDIT = 'can_edit'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_PREVIEW = 'can_preview'
+    NO_ACCESS = 'no_access'
 
 
 class FileSharedLinkFieldPermissionsField(BaseObject):
@@ -5937,9 +5937,9 @@ class FileSharedLinkField(BaseObject):
 
 
 class FileItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class File(FileMini):
@@ -6105,14 +6105,14 @@ class FileFullPermissionsField(BaseObject):
 
 
 class FileFullLockFieldTypeField(str, Enum):
-    LOCK = "lock"
+    LOCK = 'lock'
 
 
 class FileFullLockFieldAppTypeField(str, Enum):
-    GSUITE = "gsuite"
-    OFFICE_WOPI = "office_wopi"
-    OFFICE_WOPIPLUS = "office_wopiplus"
-    OTHER = "other"
+    GSUITE = 'gsuite'
+    OFFICE_WOPI = 'office_wopi'
+    OFFICE_WOPIPLUS = 'office_wopiplus'
+    OTHER = 'other'
 
 
 class FileFullLockField(BaseObject):
@@ -6155,7 +6155,7 @@ class FileFullLockField(BaseObject):
 
 
 class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
-    BEARER = "bearer"
+    BEARER = 'bearer'
 
 
 class FileFullExpiringEmbedLinkField(BaseObject):
@@ -6202,22 +6202,22 @@ class FileFullWatermarkInfoField(BaseObject):
 
 
 class FileFullAllowedInviteeRolesField(str, Enum):
-    EDITOR = "editor"
-    VIEWER = "viewer"
-    PREVIEWER = "previewer"
-    UPLOADER = "uploader"
-    PREVIEWER_UPLOADER = "previewer uploader"
-    VIEWER_UPLOADER = "viewer uploader"
-    CO_OWNER = "co-owner"
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
 
 
 class FileFullMetadataField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "extra_data": "extraData",
+        'extra_data': 'extraData',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "extraData": "extra_data",
+        'extraData': 'extra_data',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -6294,10 +6294,10 @@ class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
 
 
 class FileFullRepresentationsFieldEntriesFieldStatusFieldStateField(str, Enum):
-    SUCCESS = "success"
-    VIEWABLE = "viewable"
-    PENDING = "pending"
-    NONE = "none"
+    SUCCESS = 'success'
+    VIEWABLE = 'viewable'
+    PENDING = 'pending'
+    NONE = 'none'
 
 
 class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
@@ -6396,9 +6396,9 @@ class FileFullClassificationField(BaseObject):
 
 
 class FileFullSharedLinkPermissionOptionsField(str, Enum):
-    CAN_PREVIEW = "can_preview"
-    CAN_DOWNLOAD = "can_download"
-    CAN_EDIT = "can_edit"
+    CAN_PREVIEW = 'can_preview'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_EDIT = 'can_edit'
 
 
 class FileFull(File):
@@ -6590,7 +6590,7 @@ class Files(BaseObject):
 
 
 class DevicePinnerTypeField(str, Enum):
-    DEVICE_PINNER = "device_pinner"
+    DEVICE_PINNER = 'device_pinner'
 
 
 class DevicePinner(BaseObject):
@@ -6618,12 +6618,12 @@ class DevicePinner(BaseObject):
 
 
 class DevicePinnersOrderFieldByField(str, Enum):
-    ID = "id"
+    ID = 'id'
 
 
 class DevicePinnersOrderFieldDirectionField(str, Enum):
-    ASC = "asc"
-    DESC = "desc"
+    ASC = 'asc'
+    DESC = 'desc'
 
 
 class DevicePinnersOrderField(BaseObject):
@@ -6771,8 +6771,8 @@ class CommentFull(Comment):
 
 
 class CommentsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class CommentsOrderField(BaseObject):
@@ -6909,7 +6909,7 @@ class ShieldInformationBarrierSegmentMemberMini(
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
@@ -6977,7 +6977,7 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
 
 
 class ShieldInformationBarrierSegmentTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class ShieldInformationBarrierSegment(BaseObject):
@@ -7023,15 +7023,15 @@ class ShieldInformationBarrierSegment(BaseObject):
 
 
 class ShieldInformationBarrierTypeField(str, Enum):
-    SHIELD_INFORMATION_BARRIER = "shield_information_barrier"
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
 
 class ShieldInformationBarrierStatusField(str, Enum):
-    DRAFT = "draft"
-    PENDING = "pending"
-    DISABLED = "disabled"
-    ENABLED = "enabled"
-    INVALID = "invalid"
+    DRAFT = 'draft'
+    PENDING = 'pending'
+    DISABLED = 'disabled'
+    ENABLED = 'enabled'
+    INVALID = 'invalid'
 
 
 class ShieldInformationBarrier(BaseObject):
@@ -7179,12 +7179,12 @@ class Watermark(BaseObject):
 
 
 class WebhookMiniTypeField(str, Enum):
-    WEBHOOK = "webhook"
+    WEBHOOK = 'webhook'
 
 
 class WebhookMiniTargetFieldTypeField(str, Enum):
-    FILE = "file"
-    FOLDER = "folder"
+    FILE = 'file'
+    FOLDER = 'folder'
 
 
 class WebhookMiniTargetField(BaseObject):
@@ -7256,46 +7256,46 @@ class Webhooks(BaseObject):
 
 
 class WebhookTriggersField(str, Enum):
-    FILE_UPLOADED = "FILE.UPLOADED"
-    FILE_PREVIEWED = "FILE.PREVIEWED"
-    FILE_DOWNLOADED = "FILE.DOWNLOADED"
-    FILE_TRASHED = "FILE.TRASHED"
-    FILE_DELETED = "FILE.DELETED"
-    FILE_RESTORED = "FILE.RESTORED"
-    FILE_COPIED = "FILE.COPIED"
-    FILE_MOVED = "FILE.MOVED"
-    FILE_LOCKED = "FILE.LOCKED"
-    FILE_UNLOCKED = "FILE.UNLOCKED"
-    FILE_RENAMED = "FILE.RENAMED"
-    COMMENT_CREATED = "COMMENT.CREATED"
-    COMMENT_UPDATED = "COMMENT.UPDATED"
-    COMMENT_DELETED = "COMMENT.DELETED"
-    TASK_ASSIGNMENT_CREATED = "TASK_ASSIGNMENT.CREATED"
-    TASK_ASSIGNMENT_UPDATED = "TASK_ASSIGNMENT.UPDATED"
-    METADATA_INSTANCE_CREATED = "METADATA_INSTANCE.CREATED"
-    METADATA_INSTANCE_UPDATED = "METADATA_INSTANCE.UPDATED"
-    METADATA_INSTANCE_DELETED = "METADATA_INSTANCE.DELETED"
-    FOLDER_CREATED = "FOLDER.CREATED"
-    FOLDER_RENAMED = "FOLDER.RENAMED"
-    FOLDER_DOWNLOADED = "FOLDER.DOWNLOADED"
-    FOLDER_RESTORED = "FOLDER.RESTORED"
-    FOLDER_DELETED = "FOLDER.DELETED"
-    FOLDER_COPIED = "FOLDER.COPIED"
-    FOLDER_MOVED = "FOLDER.MOVED"
-    FOLDER_TRASHED = "FOLDER.TRASHED"
-    WEBHOOK_DELETED = "WEBHOOK.DELETED"
-    COLLABORATION_CREATED = "COLLABORATION.CREATED"
-    COLLABORATION_ACCEPTED = "COLLABORATION.ACCEPTED"
-    COLLABORATION_REJECTED = "COLLABORATION.REJECTED"
-    COLLABORATION_REMOVED = "COLLABORATION.REMOVED"
-    COLLABORATION_UPDATED = "COLLABORATION.UPDATED"
-    SHARED_LINK_DELETED = "SHARED_LINK.DELETED"
-    SHARED_LINK_CREATED = "SHARED_LINK.CREATED"
-    SHARED_LINK_UPDATED = "SHARED_LINK.UPDATED"
-    SIGN_REQUEST_COMPLETED = "SIGN_REQUEST.COMPLETED"
-    SIGN_REQUEST_DECLINED = "SIGN_REQUEST.DECLINED"
-    SIGN_REQUEST_EXPIRED = "SIGN_REQUEST.EXPIRED"
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = "SIGN_REQUEST.SIGNER_EMAIL_BOUNCED"
+    FILE_UPLOADED = 'FILE.UPLOADED'
+    FILE_PREVIEWED = 'FILE.PREVIEWED'
+    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
+    FILE_TRASHED = 'FILE.TRASHED'
+    FILE_DELETED = 'FILE.DELETED'
+    FILE_RESTORED = 'FILE.RESTORED'
+    FILE_COPIED = 'FILE.COPIED'
+    FILE_MOVED = 'FILE.MOVED'
+    FILE_LOCKED = 'FILE.LOCKED'
+    FILE_UNLOCKED = 'FILE.UNLOCKED'
+    FILE_RENAMED = 'FILE.RENAMED'
+    COMMENT_CREATED = 'COMMENT.CREATED'
+    COMMENT_UPDATED = 'COMMENT.UPDATED'
+    COMMENT_DELETED = 'COMMENT.DELETED'
+    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
+    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
+    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
+    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
+    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
+    FOLDER_CREATED = 'FOLDER.CREATED'
+    FOLDER_RENAMED = 'FOLDER.RENAMED'
+    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
+    FOLDER_RESTORED = 'FOLDER.RESTORED'
+    FOLDER_DELETED = 'FOLDER.DELETED'
+    FOLDER_COPIED = 'FOLDER.COPIED'
+    FOLDER_MOVED = 'FOLDER.MOVED'
+    FOLDER_TRASHED = 'FOLDER.TRASHED'
+    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
+    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
+    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
+    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
+    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
+    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
+    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
+    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
+    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
+    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
+    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
+    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 
 class Webhook(WebhookMini):
@@ -7334,7 +7334,7 @@ class Webhook(WebhookMini):
 
 
 class WebLinkBaseTypeField(str, Enum):
-    WEB_LINK = "web_link"
+    WEB_LINK = 'web_link'
 
 
 class WebLinkBase(BaseObject):
@@ -7400,22 +7400,22 @@ class WebLinkPathCollectionField(BaseObject):
 
 
 class WebLinkSharedLinkFieldAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class WebLinkSharedLinkFieldEffectiveAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class WebLinkSharedLinkFieldEffectivePermissionField(str, Enum):
-    CAN_EDIT = "can_edit"
-    CAN_DOWNLOAD = "can_download"
-    CAN_PREVIEW = "can_preview"
-    NO_ACCESS = "no_access"
+    CAN_EDIT = 'can_edit'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_PREVIEW = 'can_preview'
+    NO_ACCESS = 'no_access'
 
 
 class WebLinkSharedLinkFieldPermissionsField(BaseObject):
@@ -7523,9 +7523,9 @@ class WebLinkSharedLinkField(BaseObject):
 
 
 class WebLinkItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class WebLink(WebLinkMini):
@@ -7604,8 +7604,8 @@ class WebLink(WebLinkMini):
 
 
 class ItemsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class ItemsOrderField(BaseObject):
@@ -7681,22 +7681,22 @@ class FolderPathCollectionField(BaseObject):
 
 
 class FolderSharedLinkFieldAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class FolderSharedLinkFieldEffectiveAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class FolderSharedLinkFieldEffectivePermissionField(str, Enum):
-    CAN_EDIT = "can_edit"
-    CAN_DOWNLOAD = "can_download"
-    CAN_PREVIEW = "can_preview"
-    NO_ACCESS = "no_access"
+    CAN_EDIT = 'can_edit'
+    CAN_DOWNLOAD = 'can_download'
+    CAN_PREVIEW = 'can_preview'
+    NO_ACCESS = 'no_access'
 
 
 class FolderSharedLinkFieldPermissionsField(BaseObject):
@@ -7804,8 +7804,8 @@ class FolderSharedLinkField(BaseObject):
 
 
 class FolderFolderUploadEmailFieldAccessField(str, Enum):
-    OPEN = "open"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COLLABORATORS = 'collaborators'
 
 
 class FolderFolderUploadEmailField(BaseObject):
@@ -7836,9 +7836,9 @@ class FolderFolderUploadEmailField(BaseObject):
 
 
 class FolderItemStatusField(str, Enum):
-    ACTIVE = "active"
-    TRASHED = "trashed"
-    DELETED = "deleted"
+    ACTIVE = 'active'
+    TRASHED = 'trashed'
+    DELETED = 'deleted'
 
 
 class Folder(FolderMini):
@@ -7970,7 +7970,7 @@ class SearchResultWithSharedLink(BaseObject):
 
 
 class SearchResultsWithSharedLinksTypeField(str, Enum):
-    SEARCH_RESULTS_WITH_SHARED_LINKS = "search_results_with_shared_links"
+    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
 
 
 class SearchResultsWithSharedLinks(BaseObject):
@@ -8011,7 +8011,7 @@ class SearchResultsWithSharedLinks(BaseObject):
 
 
 class SearchResultsTypeField(str, Enum):
-    SEARCH_RESULTS_ITEMS = "search_results_items"
+    SEARCH_RESULTS_ITEMS = 'search_results_items'
 
 
 class SearchResults(BaseObject):
@@ -8050,11 +8050,11 @@ class SearchResults(BaseObject):
 
 
 class RecentItemInteractionTypeField(str, Enum):
-    ITEM_PREVIEW = "item_preview"
-    ITEM_UPLOAD = "item_upload"
-    ITEM_COMMENT = "item_comment"
-    ITEM_OPEN = "item_open"
-    ITEM_MODIFY = "item_modify"
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_UPLOAD = 'item_upload'
+    ITEM_COMMENT = 'item_comment'
+    ITEM_OPEN = 'item_open'
+    ITEM_MODIFY = 'item_modify'
 
 
 class RecentItem(BaseObject):
@@ -8179,7 +8179,7 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
 
 
 class FileVersionLegalHoldTypeField(str, Enum):
-    FILE_VERSION_LEGAL_HOLD = "file_version_legal_hold"
+    FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
 
 
 class FileVersionLegalHold(BaseObject):
@@ -8242,9 +8242,9 @@ class FileVersionLegalHolds(BaseObject):
 
 
 class FolderFullSyncStateField(str, Enum):
-    SYNCED = "synced"
-    NOT_SYNCED = "not_synced"
-    PARTIALLY_SYNCED = "partially_synced"
+    SYNCED = 'synced'
+    NOT_SYNCED = 'not_synced'
+    PARTIALLY_SYNCED = 'partially_synced'
 
 
 class FolderFullPermissionsField(BaseObject):
@@ -8291,11 +8291,11 @@ class FolderFullPermissionsField(BaseObject):
 
 class FolderFullMetadataField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "extra_data": "extraData",
+        'extra_data': 'extraData',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "extraData": "extra_data",
+        'extraData': 'extra_data',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -8307,19 +8307,19 @@ class FolderFullMetadataField(BaseObject):
 
 
 class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class FolderFullAllowedInviteeRolesField(str, Enum):
-    EDITOR = "editor"
-    VIEWER = "viewer"
-    PREVIEWER = "previewer"
-    UPLOADER = "uploader"
-    PREVIEWER_UPLOADER = "previewer uploader"
-    VIEWER_UPLOADER = "viewer uploader"
-    CO_OWNER = "co-owner"
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
 
 
 class FolderFullWatermarkInfoField(BaseObject):
@@ -8524,155 +8524,155 @@ class FolderFull(Folder):
 
 
 class EventEventTypeField(str, Enum):
-    ACCESS_GRANTED = "ACCESS_GRANTED"
-    ACCESS_REVOKED = "ACCESS_REVOKED"
-    ADD_DEVICE_ASSOCIATION = "ADD_DEVICE_ASSOCIATION"
-    ADD_LOGIN_ACTIVITY_DEVICE = "ADD_LOGIN_ACTIVITY_DEVICE"
-    ADMIN_LOGIN = "ADMIN_LOGIN"
-    APPLICATION_CREATED = "APPLICATION_CREATED"
-    APPLICATION_PUBLIC_KEY_ADDED = "APPLICATION_PUBLIC_KEY_ADDED"
-    APPLICATION_PUBLIC_KEY_DELETED = "APPLICATION_PUBLIC_KEY_DELETED"
-    CHANGE_ADMIN_ROLE = "CHANGE_ADMIN_ROLE"
-    CHANGE_FOLDER_PERMISSION = "CHANGE_FOLDER_PERMISSION"
-    COLLABORATION_ACCEPT = "COLLABORATION_ACCEPT"
-    COLLABORATION_EXPIRATION = "COLLABORATION_EXPIRATION"
-    COLLABORATION_INVITE = "COLLABORATION_INVITE"
-    COLLABORATION_REMOVE = "COLLABORATION_REMOVE"
-    COLLABORATION_ROLE_CHANGE = "COLLABORATION_ROLE_CHANGE"
-    COLLAB_ADD_COLLABORATOR = "COLLAB_ADD_COLLABORATOR"
-    COLLAB_INVITE_COLLABORATOR = "COLLAB_INVITE_COLLABORATOR"
-    COLLAB_REMOVE_COLLABORATOR = "COLLAB_REMOVE_COLLABORATOR"
-    COLLAB_ROLE_CHANGE = "COLLAB_ROLE_CHANGE"
-    COMMENT_CREATE = "COMMENT_CREATE"
-    COMMENT_DELETE = "COMMENT_DELETE"
-    CONTENT_ACCESS = "CONTENT_ACCESS"
+    ACCESS_GRANTED = 'ACCESS_GRANTED'
+    ACCESS_REVOKED = 'ACCESS_REVOKED'
+    ADD_DEVICE_ASSOCIATION = 'ADD_DEVICE_ASSOCIATION'
+    ADD_LOGIN_ACTIVITY_DEVICE = 'ADD_LOGIN_ACTIVITY_DEVICE'
+    ADMIN_LOGIN = 'ADMIN_LOGIN'
+    APPLICATION_CREATED = 'APPLICATION_CREATED'
+    APPLICATION_PUBLIC_KEY_ADDED = 'APPLICATION_PUBLIC_KEY_ADDED'
+    APPLICATION_PUBLIC_KEY_DELETED = 'APPLICATION_PUBLIC_KEY_DELETED'
+    CHANGE_ADMIN_ROLE = 'CHANGE_ADMIN_ROLE'
+    CHANGE_FOLDER_PERMISSION = 'CHANGE_FOLDER_PERMISSION'
+    COLLABORATION_ACCEPT = 'COLLABORATION_ACCEPT'
+    COLLABORATION_EXPIRATION = 'COLLABORATION_EXPIRATION'
+    COLLABORATION_INVITE = 'COLLABORATION_INVITE'
+    COLLABORATION_REMOVE = 'COLLABORATION_REMOVE'
+    COLLABORATION_ROLE_CHANGE = 'COLLABORATION_ROLE_CHANGE'
+    COLLAB_ADD_COLLABORATOR = 'COLLAB_ADD_COLLABORATOR'
+    COLLAB_INVITE_COLLABORATOR = 'COLLAB_INVITE_COLLABORATOR'
+    COLLAB_REMOVE_COLLABORATOR = 'COLLAB_REMOVE_COLLABORATOR'
+    COLLAB_ROLE_CHANGE = 'COLLAB_ROLE_CHANGE'
+    COMMENT_CREATE = 'COMMENT_CREATE'
+    COMMENT_DELETE = 'COMMENT_DELETE'
+    CONTENT_ACCESS = 'CONTENT_ACCESS'
     CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY = (
-        "CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY"
+        'CONTENT_WORKFLOW_ABNORMAL_DOWNLOAD_ACTIVITY'
     )
-    CONTENT_WORKFLOW_AUTOMATION_ADD = "CONTENT_WORKFLOW_AUTOMATION_ADD"
-    CONTENT_WORKFLOW_AUTOMATION_DELETE = "CONTENT_WORKFLOW_AUTOMATION_DELETE"
-    CONTENT_WORKFLOW_POLICY_ADD = "CONTENT_WORKFLOW_POLICY_ADD"
+    CONTENT_WORKFLOW_AUTOMATION_ADD = 'CONTENT_WORKFLOW_AUTOMATION_ADD'
+    CONTENT_WORKFLOW_AUTOMATION_DELETE = 'CONTENT_WORKFLOW_AUTOMATION_DELETE'
+    CONTENT_WORKFLOW_POLICY_ADD = 'CONTENT_WORKFLOW_POLICY_ADD'
     CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION = (
-        "CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION"
+        'CONTENT_WORKFLOW_SHARING_POLICY_VIOLATION'
     )
     CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION = (
-        "CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION"
+        'CONTENT_WORKFLOW_UPLOAD_POLICY_VIOLATION'
     )
-    COPY = "COPY"
-    DATA_RETENTION_CREATE_RETENTION = "DATA_RETENTION_CREATE_RETENTION"
-    DATA_RETENTION_REMOVE_RETENTION = "DATA_RETENTION_REMOVE_RETENTION"
-    DELETE = "DELETE"
-    DELETE_USER = "DELETE_USER"
-    DEVICE_TRUST_CHECK_FAILED = "DEVICE_TRUST_CHECK_FAILED"
-    DOWNLOAD = "DOWNLOAD"
-    EDIT = "EDIT"
-    EDIT_USER = "EDIT_USER"
-    EMAIL_ALIAS_CONFIRM = "EMAIL_ALIAS_CONFIRM"
-    EMAIL_ALIAS_REMOVE = "EMAIL_ALIAS_REMOVE"
-    ENABLE_TWO_FACTOR_AUTH = "ENABLE_TWO_FACTOR_AUTH"
-    ENTERPRISE_APP_AUTHORIZATION_UPDATE = "ENTERPRISE_APP_AUTHORIZATION_UPDATE"
-    FAILED_LOGIN = "FAILED_LOGIN"
-    FILE_MARKED_MALICIOUS = "FILE_MARKED_MALICIOUS"
-    FILE_WATERMARKED_DOWNLOAD = "FILE_WATERMARKED_DOWNLOAD"
-    GROUP_ADD_ITEM = "GROUP_ADD_ITEM"
-    GROUP_ADD_USER = "GROUP_ADD_USER"
-    GROUP_CREATION = "GROUP_CREATION"
-    GROUP_DELETION = "GROUP_DELETION"
-    GROUP_EDITED = "GROUP_EDITED"
-    GROUP_REMOVE_ITEM = "GROUP_REMOVE_ITEM"
-    GROUP_REMOVE_USER = "GROUP_REMOVE_USER"
-    ITEM_COPY = "ITEM_COPY"
-    ITEM_CREATE = "ITEM_CREATE"
-    ITEM_DOWNLOAD = "ITEM_DOWNLOAD"
-    ITEM_MAKE_CURRENT_VERSION = "ITEM_MAKE_CURRENT_VERSION"
-    ITEM_MODIFY = "ITEM_MODIFY"
-    ITEM_MOVE = "ITEM_MOVE"
-    ITEM_OPEN = "ITEM_OPEN"
-    ITEM_PREVIEW = "ITEM_PREVIEW"
-    ITEM_RENAME = "ITEM_RENAME"
-    ITEM_SHARED = "ITEM_SHARED"
-    ITEM_SHARED_CREATE = "ITEM_SHARED_CREATE"
-    ITEM_SHARED_UNSHARE = "ITEM_SHARED_UNSHARE"
-    ITEM_SHARED_UPDATE = "ITEM_SHARED_UPDATE"
-    ITEM_SYNC = "ITEM_SYNC"
-    ITEM_TRASH = "ITEM_TRASH"
-    ITEM_UNDELETE_VIA_TRASH = "ITEM_UNDELETE_VIA_TRASH"
-    ITEM_UNSYNC = "ITEM_UNSYNC"
-    ITEM_UPLOAD = "ITEM_UPLOAD"
-    LEGAL_HOLD_ASSIGNMENT_CREATE = "LEGAL_HOLD_ASSIGNMENT_CREATE"
-    LEGAL_HOLD_ASSIGNMENT_DELETE = "LEGAL_HOLD_ASSIGNMENT_DELETE"
-    LEGAL_HOLD_POLICY_CREATE = "LEGAL_HOLD_POLICY_CREATE"
-    LEGAL_HOLD_POLICY_DELETE = "LEGAL_HOLD_POLICY_DELETE"
-    LEGAL_HOLD_POLICY_UPDATE = "LEGAL_HOLD_POLICY_UPDATE"
-    LOCK = "LOCK"
-    LOCK_CREATE = "LOCK_CREATE"
-    LOCK_DESTROY = "LOCK_DESTROY"
-    LOGIN = "LOGIN"
-    MASTER_INVITE_ACCEPT = "MASTER_INVITE_ACCEPT"
-    MASTER_INVITE_REJECT = "MASTER_INVITE_REJECT"
-    METADATA_INSTANCE_CREATE = "METADATA_INSTANCE_CREATE"
-    METADATA_INSTANCE_DELETE = "METADATA_INSTANCE_DELETE"
-    METADATA_INSTANCE_UPDATE = "METADATA_INSTANCE_UPDATE"
-    METADATA_TEMPLATE_CREATE = "METADATA_TEMPLATE_CREATE"
-    METADATA_TEMPLATE_DELETE = "METADATA_TEMPLATE_DELETE"
-    METADATA_TEMPLATE_UPDATE = "METADATA_TEMPLATE_UPDATE"
-    MOVE = "MOVE"
-    NEW_USER = "NEW_USER"
-    PREVIEW = "PREVIEW"
-    REMOVE_DEVICE_ASSOCIATION = "REMOVE_DEVICE_ASSOCIATION"
-    REMOVE_LOGIN_ACTIVITY_DEVICE = "REMOVE_LOGIN_ACTIVITY_DEVICE"
-    RENAME = "RENAME"
-    RETENTION_POLICY_ASSIGNMENT_ADD = "RETENTION_POLICY_ASSIGNMENT_ADD"
-    SHARE = "SHARE"
-    SHARE_EXPIRATION = "SHARE_EXPIRATION"
-    SHIELD_ALERT = "SHIELD_ALERT"
-    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED = "SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED"
+    COPY = 'COPY'
+    DATA_RETENTION_CREATE_RETENTION = 'DATA_RETENTION_CREATE_RETENTION'
+    DATA_RETENTION_REMOVE_RETENTION = 'DATA_RETENTION_REMOVE_RETENTION'
+    DELETE = 'DELETE'
+    DELETE_USER = 'DELETE_USER'
+    DEVICE_TRUST_CHECK_FAILED = 'DEVICE_TRUST_CHECK_FAILED'
+    DOWNLOAD = 'DOWNLOAD'
+    EDIT = 'EDIT'
+    EDIT_USER = 'EDIT_USER'
+    EMAIL_ALIAS_CONFIRM = 'EMAIL_ALIAS_CONFIRM'
+    EMAIL_ALIAS_REMOVE = 'EMAIL_ALIAS_REMOVE'
+    ENABLE_TWO_FACTOR_AUTH = 'ENABLE_TWO_FACTOR_AUTH'
+    ENTERPRISE_APP_AUTHORIZATION_UPDATE = 'ENTERPRISE_APP_AUTHORIZATION_UPDATE'
+    FAILED_LOGIN = 'FAILED_LOGIN'
+    FILE_MARKED_MALICIOUS = 'FILE_MARKED_MALICIOUS'
+    FILE_WATERMARKED_DOWNLOAD = 'FILE_WATERMARKED_DOWNLOAD'
+    GROUP_ADD_ITEM = 'GROUP_ADD_ITEM'
+    GROUP_ADD_USER = 'GROUP_ADD_USER'
+    GROUP_CREATION = 'GROUP_CREATION'
+    GROUP_DELETION = 'GROUP_DELETION'
+    GROUP_EDITED = 'GROUP_EDITED'
+    GROUP_REMOVE_ITEM = 'GROUP_REMOVE_ITEM'
+    GROUP_REMOVE_USER = 'GROUP_REMOVE_USER'
+    ITEM_COPY = 'ITEM_COPY'
+    ITEM_CREATE = 'ITEM_CREATE'
+    ITEM_DOWNLOAD = 'ITEM_DOWNLOAD'
+    ITEM_MAKE_CURRENT_VERSION = 'ITEM_MAKE_CURRENT_VERSION'
+    ITEM_MODIFY = 'ITEM_MODIFY'
+    ITEM_MOVE = 'ITEM_MOVE'
+    ITEM_OPEN = 'ITEM_OPEN'
+    ITEM_PREVIEW = 'ITEM_PREVIEW'
+    ITEM_RENAME = 'ITEM_RENAME'
+    ITEM_SHARED = 'ITEM_SHARED'
+    ITEM_SHARED_CREATE = 'ITEM_SHARED_CREATE'
+    ITEM_SHARED_UNSHARE = 'ITEM_SHARED_UNSHARE'
+    ITEM_SHARED_UPDATE = 'ITEM_SHARED_UPDATE'
+    ITEM_SYNC = 'ITEM_SYNC'
+    ITEM_TRASH = 'ITEM_TRASH'
+    ITEM_UNDELETE_VIA_TRASH = 'ITEM_UNDELETE_VIA_TRASH'
+    ITEM_UNSYNC = 'ITEM_UNSYNC'
+    ITEM_UPLOAD = 'ITEM_UPLOAD'
+    LEGAL_HOLD_ASSIGNMENT_CREATE = 'LEGAL_HOLD_ASSIGNMENT_CREATE'
+    LEGAL_HOLD_ASSIGNMENT_DELETE = 'LEGAL_HOLD_ASSIGNMENT_DELETE'
+    LEGAL_HOLD_POLICY_CREATE = 'LEGAL_HOLD_POLICY_CREATE'
+    LEGAL_HOLD_POLICY_DELETE = 'LEGAL_HOLD_POLICY_DELETE'
+    LEGAL_HOLD_POLICY_UPDATE = 'LEGAL_HOLD_POLICY_UPDATE'
+    LOCK = 'LOCK'
+    LOCK_CREATE = 'LOCK_CREATE'
+    LOCK_DESTROY = 'LOCK_DESTROY'
+    LOGIN = 'LOGIN'
+    MASTER_INVITE_ACCEPT = 'MASTER_INVITE_ACCEPT'
+    MASTER_INVITE_REJECT = 'MASTER_INVITE_REJECT'
+    METADATA_INSTANCE_CREATE = 'METADATA_INSTANCE_CREATE'
+    METADATA_INSTANCE_DELETE = 'METADATA_INSTANCE_DELETE'
+    METADATA_INSTANCE_UPDATE = 'METADATA_INSTANCE_UPDATE'
+    METADATA_TEMPLATE_CREATE = 'METADATA_TEMPLATE_CREATE'
+    METADATA_TEMPLATE_DELETE = 'METADATA_TEMPLATE_DELETE'
+    METADATA_TEMPLATE_UPDATE = 'METADATA_TEMPLATE_UPDATE'
+    MOVE = 'MOVE'
+    NEW_USER = 'NEW_USER'
+    PREVIEW = 'PREVIEW'
+    REMOVE_DEVICE_ASSOCIATION = 'REMOVE_DEVICE_ASSOCIATION'
+    REMOVE_LOGIN_ACTIVITY_DEVICE = 'REMOVE_LOGIN_ACTIVITY_DEVICE'
+    RENAME = 'RENAME'
+    RETENTION_POLICY_ASSIGNMENT_ADD = 'RETENTION_POLICY_ASSIGNMENT_ADD'
+    SHARE = 'SHARE'
+    SHARE_EXPIRATION = 'SHARE_EXPIRATION'
+    SHIELD_ALERT = 'SHIELD_ALERT'
+    SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED'
     SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION = (
-        "SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION"
+        'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED_MISSING_JUSTIFICATION'
     )
-    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED = "SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED"
+    SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED'
     SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION = (
-        "SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION"
+        'SHIELD_EXTERNAL_COLLAB_INVITE_BLOCKED_MISSING_JUSTIFICATION'
     )
-    SHIELD_JUSTIFICATION_APPROVAL = "SHIELD_JUSTIFICATION_APPROVAL"
-    SHIELD_SHARED_LINK_ACCESS_BLOCKED = "SHIELD_SHARED_LINK_ACCESS_BLOCKED"
+    SHIELD_JUSTIFICATION_APPROVAL = 'SHIELD_JUSTIFICATION_APPROVAL'
+    SHIELD_SHARED_LINK_ACCESS_BLOCKED = 'SHIELD_SHARED_LINK_ACCESS_BLOCKED'
     SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE = (
-        "SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE"
+        'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_CREATE'
     )
     SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE = (
-        "SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE"
+        'SHIELD_SHARED_LINK_STATUS_RESTRICTED_ON_UPDATE'
     )
-    SIGN_DOCUMENT_ASSIGNED = "SIGN_DOCUMENT_ASSIGNED"
-    SIGN_DOCUMENT_CANCELLED = "SIGN_DOCUMENT_CANCELLED"
-    SIGN_DOCUMENT_COMPLETED = "SIGN_DOCUMENT_COMPLETED"
-    SIGN_DOCUMENT_CONVERTED = "SIGN_DOCUMENT_CONVERTED"
-    SIGN_DOCUMENT_CREATED = "SIGN_DOCUMENT_CREATED"
-    SIGN_DOCUMENT_DECLINED = "SIGN_DOCUMENT_DECLINED"
-    SIGN_DOCUMENT_EXPIRED = "SIGN_DOCUMENT_EXPIRED"
-    SIGN_DOCUMENT_SIGNED = "SIGN_DOCUMENT_SIGNED"
-    SIGN_DOCUMENT_VIEWED_BY_SIGNED = "SIGN_DOCUMENT_VIEWED_BY_SIGNED"
-    SIGNER_DOWNLOADED = "SIGNER_DOWNLOADED"
-    SIGNER_FORWARDED = "SIGNER_FORWARDED"
-    STORAGE_EXPIRATION = "STORAGE_EXPIRATION"
-    TAG_ITEM_CREATE = "TAG_ITEM_CREATE"
-    TASK_ASSIGNMENT_CREATE = "TASK_ASSIGNMENT_CREATE"
-    TASK_ASSIGNMENT_DELETE = "TASK_ASSIGNMENT_DELETE"
-    TASK_ASSIGNMENT_UPDATE = "TASK_ASSIGNMENT_UPDATE"
-    TASK_CREATE = "TASK_CREATE"
-    TASK_UPDATE = "TASK_UPDATE"
-    TERMS_OF_SERVICE_ACCEPT = "TERMS_OF_SERVICE_ACCEPT"
-    TERMS_OF_SERVICE_REJECT = "TERMS_OF_SERVICE_REJECT"
-    UNDELETE = "UNDELETE"
-    UNLOCK = "UNLOCK"
-    UNSHARE = "UNSHARE"
-    UPDATE_COLLABORATION_EXPIRATION = "UPDATE_COLLABORATION_EXPIRATION"
-    UPDATE_SHARE_EXPIRATION = "UPDATE_SHARE_EXPIRATION"
-    UPLOAD = "UPLOAD"
+    SIGN_DOCUMENT_ASSIGNED = 'SIGN_DOCUMENT_ASSIGNED'
+    SIGN_DOCUMENT_CANCELLED = 'SIGN_DOCUMENT_CANCELLED'
+    SIGN_DOCUMENT_COMPLETED = 'SIGN_DOCUMENT_COMPLETED'
+    SIGN_DOCUMENT_CONVERTED = 'SIGN_DOCUMENT_CONVERTED'
+    SIGN_DOCUMENT_CREATED = 'SIGN_DOCUMENT_CREATED'
+    SIGN_DOCUMENT_DECLINED = 'SIGN_DOCUMENT_DECLINED'
+    SIGN_DOCUMENT_EXPIRED = 'SIGN_DOCUMENT_EXPIRED'
+    SIGN_DOCUMENT_SIGNED = 'SIGN_DOCUMENT_SIGNED'
+    SIGN_DOCUMENT_VIEWED_BY_SIGNED = 'SIGN_DOCUMENT_VIEWED_BY_SIGNED'
+    SIGNER_DOWNLOADED = 'SIGNER_DOWNLOADED'
+    SIGNER_FORWARDED = 'SIGNER_FORWARDED'
+    STORAGE_EXPIRATION = 'STORAGE_EXPIRATION'
+    TAG_ITEM_CREATE = 'TAG_ITEM_CREATE'
+    TASK_ASSIGNMENT_CREATE = 'TASK_ASSIGNMENT_CREATE'
+    TASK_ASSIGNMENT_DELETE = 'TASK_ASSIGNMENT_DELETE'
+    TASK_ASSIGNMENT_UPDATE = 'TASK_ASSIGNMENT_UPDATE'
+    TASK_CREATE = 'TASK_CREATE'
+    TASK_UPDATE = 'TASK_UPDATE'
+    TERMS_OF_SERVICE_ACCEPT = 'TERMS_OF_SERVICE_ACCEPT'
+    TERMS_OF_SERVICE_REJECT = 'TERMS_OF_SERVICE_REJECT'
+    UNDELETE = 'UNDELETE'
+    UNLOCK = 'UNLOCK'
+    UNSHARE = 'UNSHARE'
+    UPDATE_COLLABORATION_EXPIRATION = 'UPDATE_COLLABORATION_EXPIRATION'
+    UPDATE_SHARE_EXPIRATION = 'UPDATE_SHARE_EXPIRATION'
+    UPLOAD = 'UPLOAD'
     USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE = (
-        "USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE"
+        'USER_AUTHENTICATE_OAUTH2_ACCESS_TOKEN_CREATE'
     )
-    WATERMARK_LABEL_CREATE = "WATERMARK_LABEL_CREATE"
-    WATERMARK_LABEL_DELETE = "WATERMARK_LABEL_DELETE"
+    WATERMARK_LABEL_CREATE = 'WATERMARK_LABEL_CREATE'
+    WATERMARK_LABEL_DELETE = 'WATERMARK_LABEL_DELETE'
 
 
 class EventAdditionalDetailsField(BaseObject):
@@ -8749,11 +8749,11 @@ class Events(BaseObject):
 
 
 class SkillInvocationTypeField(str, Enum):
-    SKILL_INVOCATION = "skill_invocation"
+    SKILL_INVOCATION = 'skill_invocation'
 
 
 class SkillInvocationSkillFieldTypeField(str, Enum):
-    SKILL = "skill"
+    SKILL = 'skill'
 
 
 class SkillInvocationSkillField(BaseObject):
@@ -8783,7 +8783,7 @@ class SkillInvocationSkillField(BaseObject):
 
 
 class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
-    BEARER = "bearer"
+    BEARER = 'bearer'
 
 
 class SkillInvocationTokenFieldReadField(BaseObject):
@@ -8815,7 +8815,7 @@ class SkillInvocationTokenFieldReadField(BaseObject):
 
 
 class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
-    BEARER = "bearer"
+    BEARER = 'bearer'
 
 
 class SkillInvocationTokenFieldWriteField(BaseObject):
@@ -8865,11 +8865,11 @@ class SkillInvocationTokenField(BaseObject):
 
 
 class SkillInvocationStatusFieldStateField(str, Enum):
-    INVOKED = "invoked"
-    PROCESSING = "processing"
-    SUCCESS = "success"
-    TRANSIENT_FAILURE = "transient_failure"
-    PERMANENT_FAILURE = "permanent_failure"
+    INVOKED = 'invoked'
+    PROCESSING = 'processing'
+    SUCCESS = 'success'
+    TRANSIENT_FAILURE = 'transient_failure'
+    PERMANENT_FAILURE = 'permanent_failure'
 
 
 class SkillInvocationStatusField(BaseObject):
@@ -8907,7 +8907,7 @@ class SkillInvocationStatusField(BaseObject):
 
 
 class SkillInvocationEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class SkillInvocationEnterpriseField(BaseObject):
@@ -8975,24 +8975,24 @@ class SkillInvocation(BaseObject):
 
 
 class CollaborationTypeField(str, Enum):
-    COLLABORATION = "collaboration"
+    COLLABORATION = 'collaboration'
 
 
 class CollaborationRoleField(str, Enum):
-    EDITOR = "editor"
-    VIEWER = "viewer"
-    PREVIEWER = "previewer"
-    UPLOADER = "uploader"
-    PREVIEWER_UPLOADER = "previewer uploader"
-    VIEWER_UPLOADER = "viewer uploader"
-    CO_OWNER = "co-owner"
-    OWNER = "owner"
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
+    OWNER = 'owner'
 
 
 class CollaborationStatusField(str, Enum):
-    ACCEPTED = "accepted"
-    PENDING = "pending"
-    REJECTED = "rejected"
+    ACCEPTED = 'accepted'
+    PENDING = 'pending'
+    REJECTED = 'rejected'
 
 
 class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField(
@@ -9152,8 +9152,8 @@ class Collaboration(BaseObject):
 
 
 class CollaborationsOrderFieldDirectionField(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class CollaborationsOrderField(BaseObject):
@@ -9216,50 +9216,50 @@ class Collaborations(BaseObject):
 
 
 class WebhookInvocationTypeField(str, Enum):
-    WEBHOOK_EVENT = "webhook_event"
+    WEBHOOK_EVENT = 'webhook_event'
 
 
 class WebhookInvocationTriggerField(str, Enum):
-    FILE_UPLOADED = "FILE.UPLOADED"
-    FILE_PREVIEWED = "FILE.PREVIEWED"
-    FILE_DOWNLOADED = "FILE.DOWNLOADED"
-    FILE_TRASHED = "FILE.TRASHED"
-    FILE_DELETED = "FILE.DELETED"
-    FILE_RESTORED = "FILE.RESTORED"
-    FILE_COPIED = "FILE.COPIED"
-    FILE_MOVED = "FILE.MOVED"
-    FILE_LOCKED = "FILE.LOCKED"
-    FILE_UNLOCKED = "FILE.UNLOCKED"
-    FILE_RENAMED = "FILE.RENAMED"
-    COMMENT_CREATED = "COMMENT.CREATED"
-    COMMENT_UPDATED = "COMMENT.UPDATED"
-    COMMENT_DELETED = "COMMENT.DELETED"
-    TASK_ASSIGNMENT_CREATED = "TASK_ASSIGNMENT.CREATED"
-    TASK_ASSIGNMENT_UPDATED = "TASK_ASSIGNMENT.UPDATED"
-    METADATA_INSTANCE_CREATED = "METADATA_INSTANCE.CREATED"
-    METADATA_INSTANCE_UPDATED = "METADATA_INSTANCE.UPDATED"
-    METADATA_INSTANCE_DELETED = "METADATA_INSTANCE.DELETED"
-    FOLDER_CREATED = "FOLDER.CREATED"
-    FOLDER_RENAMED = "FOLDER.RENAMED"
-    FOLDER_DOWNLOADED = "FOLDER.DOWNLOADED"
-    FOLDER_RESTORED = "FOLDER.RESTORED"
-    FOLDER_DELETED = "FOLDER.DELETED"
-    FOLDER_COPIED = "FOLDER.COPIED"
-    FOLDER_MOVED = "FOLDER.MOVED"
-    FOLDER_TRASHED = "FOLDER.TRASHED"
-    WEBHOOK_DELETED = "WEBHOOK.DELETED"
-    COLLABORATION_CREATED = "COLLABORATION.CREATED"
-    COLLABORATION_ACCEPTED = "COLLABORATION.ACCEPTED"
-    COLLABORATION_REJECTED = "COLLABORATION.REJECTED"
-    COLLABORATION_REMOVED = "COLLABORATION.REMOVED"
-    COLLABORATION_UPDATED = "COLLABORATION.UPDATED"
-    SHARED_LINK_DELETED = "SHARED_LINK.DELETED"
-    SHARED_LINK_CREATED = "SHARED_LINK.CREATED"
-    SHARED_LINK_UPDATED = "SHARED_LINK.UPDATED"
-    SIGN_REQUEST_COMPLETED = "SIGN_REQUEST.COMPLETED"
-    SIGN_REQUEST_DECLINED = "SIGN_REQUEST.DECLINED"
-    SIGN_REQUEST_EXPIRED = "SIGN_REQUEST.EXPIRED"
-    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = "SIGN_REQUEST.SIGNER_EMAIL_BOUNCED"
+    FILE_UPLOADED = 'FILE.UPLOADED'
+    FILE_PREVIEWED = 'FILE.PREVIEWED'
+    FILE_DOWNLOADED = 'FILE.DOWNLOADED'
+    FILE_TRASHED = 'FILE.TRASHED'
+    FILE_DELETED = 'FILE.DELETED'
+    FILE_RESTORED = 'FILE.RESTORED'
+    FILE_COPIED = 'FILE.COPIED'
+    FILE_MOVED = 'FILE.MOVED'
+    FILE_LOCKED = 'FILE.LOCKED'
+    FILE_UNLOCKED = 'FILE.UNLOCKED'
+    FILE_RENAMED = 'FILE.RENAMED'
+    COMMENT_CREATED = 'COMMENT.CREATED'
+    COMMENT_UPDATED = 'COMMENT.UPDATED'
+    COMMENT_DELETED = 'COMMENT.DELETED'
+    TASK_ASSIGNMENT_CREATED = 'TASK_ASSIGNMENT.CREATED'
+    TASK_ASSIGNMENT_UPDATED = 'TASK_ASSIGNMENT.UPDATED'
+    METADATA_INSTANCE_CREATED = 'METADATA_INSTANCE.CREATED'
+    METADATA_INSTANCE_UPDATED = 'METADATA_INSTANCE.UPDATED'
+    METADATA_INSTANCE_DELETED = 'METADATA_INSTANCE.DELETED'
+    FOLDER_CREATED = 'FOLDER.CREATED'
+    FOLDER_RENAMED = 'FOLDER.RENAMED'
+    FOLDER_DOWNLOADED = 'FOLDER.DOWNLOADED'
+    FOLDER_RESTORED = 'FOLDER.RESTORED'
+    FOLDER_DELETED = 'FOLDER.DELETED'
+    FOLDER_COPIED = 'FOLDER.COPIED'
+    FOLDER_MOVED = 'FOLDER.MOVED'
+    FOLDER_TRASHED = 'FOLDER.TRASHED'
+    WEBHOOK_DELETED = 'WEBHOOK.DELETED'
+    COLLABORATION_CREATED = 'COLLABORATION.CREATED'
+    COLLABORATION_ACCEPTED = 'COLLABORATION.ACCEPTED'
+    COLLABORATION_REJECTED = 'COLLABORATION.REJECTED'
+    COLLABORATION_REMOVED = 'COLLABORATION.REMOVED'
+    COLLABORATION_UPDATED = 'COLLABORATION.UPDATED'
+    SHARED_LINK_DELETED = 'SHARED_LINK.DELETED'
+    SHARED_LINK_CREATED = 'SHARED_LINK.CREATED'
+    SHARED_LINK_UPDATED = 'SHARED_LINK.UPDATED'
+    SIGN_REQUEST_COMPLETED = 'SIGN_REQUEST.COMPLETED'
+    SIGN_REQUEST_DECLINED = 'SIGN_REQUEST.DECLINED'
+    SIGN_REQUEST_EXPIRED = 'SIGN_REQUEST.EXPIRED'
+    SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 
 class WebhookInvocation(BaseObject):
@@ -9294,7 +9294,7 @@ class WebhookInvocation(BaseObject):
 
 
 class WorkflowMiniTypeField(str, Enum):
-    WORKFLOW = "workflow"
+    WORKFLOW = 'workflow'
 
 
 class WorkflowMini(BaseObject):
@@ -9328,23 +9328,23 @@ class WorkflowMini(BaseObject):
 
 
 class WorkflowFlowsFieldTypeField(str, Enum):
-    FLOW = "flow"
+    FLOW = 'flow'
 
 
 class WorkflowFlowsFieldTriggerFieldTypeField(str, Enum):
-    TRIGGER = "trigger"
+    TRIGGER = 'trigger'
 
 
 class WorkflowFlowsFieldTriggerFieldTriggerTypeField(str, Enum):
-    WORKFLOW_MANUAL_START = "WORKFLOW_MANUAL_START"
+    WORKFLOW_MANUAL_START = 'WORKFLOW_MANUAL_START'
 
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldTypeField(str, Enum):
-    TRIGGER_SCOPE = "trigger_scope"
+    TRIGGER_SCOPE = 'trigger_scope'
 
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
@@ -9412,63 +9412,63 @@ class WorkflowFlowsFieldTriggerField(BaseObject):
 
 
 class WorkflowFlowsFieldOutcomesFieldTypeField(str, Enum):
-    OUTCOME = "outcome"
+    OUTCOME = 'outcome'
 
 
 class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
-    ADD_METADATA = "add_metadata"
-    ASSIGN_TASK = "assign_task"
-    COPY_FILE = "copy_file"
-    COPY_FOLDER = "copy_folder"
-    CREATE_FOLDER = "create_folder"
-    DELETE_FILE = "delete_file"
-    DELETE_FOLDER = "delete_folder"
-    LOCK_FILE = "lock_file"
-    MOVE_FILE = "move_file"
-    MOVE_FOLDER = "move_folder"
-    REMOVE_WATERMARK_FILE = "remove_watermark_file"
-    RENAME_FOLDER = "rename_folder"
-    RESTORE_FOLDER = "restore_folder"
-    SHARE_FILE = "share_file"
-    SHARE_FOLDER = "share_folder"
-    UNLOCK_FILE = "unlock_file"
-    UPLOAD_FILE = "upload_file"
-    WAIT_FOR_TASK = "wait_for_task"
-    WATERMARK_FILE = "watermark_file"
-    GO_BACK_TO_STEP = "go_back_to_step"
-    APPLY_FILE_CLASSIFICATION = "apply_file_classification"
-    APPLY_FOLDER_CLASSIFICATION = "apply_folder_classification"
-    SEND_NOTIFICATION = "send_notification"
+    ADD_METADATA = 'add_metadata'
+    ASSIGN_TASK = 'assign_task'
+    COPY_FILE = 'copy_file'
+    COPY_FOLDER = 'copy_folder'
+    CREATE_FOLDER = 'create_folder'
+    DELETE_FILE = 'delete_file'
+    DELETE_FOLDER = 'delete_folder'
+    LOCK_FILE = 'lock_file'
+    MOVE_FILE = 'move_file'
+    MOVE_FOLDER = 'move_folder'
+    REMOVE_WATERMARK_FILE = 'remove_watermark_file'
+    RENAME_FOLDER = 'rename_folder'
+    RESTORE_FOLDER = 'restore_folder'
+    SHARE_FILE = 'share_file'
+    SHARE_FOLDER = 'share_folder'
+    UNLOCK_FILE = 'unlock_file'
+    UPLOAD_FILE = 'upload_file'
+    WAIT_FOR_TASK = 'wait_for_task'
+    WATERMARK_FILE = 'watermark_file'
+    GO_BACK_TO_STEP = 'go_back_to_step'
+    APPLY_FILE_CLASSIFICATION = 'apply_file_classification'
+    APPLY_FOLDER_CLASSIFICATION = 'apply_folder_classification'
+    SEND_NOTIFICATION = 'send_notification'
 
 
 class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField(str, Enum):
-    OUTCOME = "outcome"
+    OUTCOME = 'outcome'
 
 
 class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
-    ADD_METADATA = "add_metadata"
-    ASSIGN_TASK = "assign_task"
-    COPY_FILE = "copy_file"
-    COPY_FOLDER = "copy_folder"
-    CREATE_FOLDER = "create_folder"
-    DELETE_FILE = "delete_file"
-    DELETE_FOLDER = "delete_folder"
-    LOCK_FILE = "lock_file"
-    MOVE_FILE = "move_file"
-    MOVE_FOLDER = "move_folder"
-    REMOVE_WATERMARK_FILE = "remove_watermark_file"
-    RENAME_FOLDER = "rename_folder"
-    RESTORE_FOLDER = "restore_folder"
-    SHARE_FILE = "share_file"
-    SHARE_FOLDER = "share_folder"
-    UNLOCK_FILE = "unlock_file"
-    UPLOAD_FILE = "upload_file"
-    WAIT_FOR_TASK = "wait_for_task"
-    WATERMARK_FILE = "watermark_file"
-    GO_BACK_TO_STEP = "go_back_to_step"
-    APPLY_FILE_CLASSIFICATION = "apply_file_classification"
-    APPLY_FOLDER_CLASSIFICATION = "apply_folder_classification"
-    SEND_NOTIFICATION = "send_notification"
+    ADD_METADATA = 'add_metadata'
+    ASSIGN_TASK = 'assign_task'
+    COPY_FILE = 'copy_file'
+    COPY_FOLDER = 'copy_folder'
+    CREATE_FOLDER = 'create_folder'
+    DELETE_FILE = 'delete_file'
+    DELETE_FOLDER = 'delete_folder'
+    LOCK_FILE = 'lock_file'
+    MOVE_FILE = 'move_file'
+    MOVE_FOLDER = 'move_folder'
+    REMOVE_WATERMARK_FILE = 'remove_watermark_file'
+    RENAME_FOLDER = 'rename_folder'
+    RESTORE_FOLDER = 'restore_folder'
+    SHARE_FILE = 'share_file'
+    SHARE_FOLDER = 'share_folder'
+    UNLOCK_FILE = 'unlock_file'
+    UPLOAD_FILE = 'upload_file'
+    WAIT_FOR_TASK = 'wait_for_task'
+    WATERMARK_FILE = 'watermark_file'
+    GO_BACK_TO_STEP = 'go_back_to_step'
+    APPLY_FILE_CLASSIFICATION = 'apply_file_classification'
+    APPLY_FOLDER_CLASSIFICATION = 'apply_folder_classification'
+    SEND_NOTIFICATION = 'send_notification'
 
 
 class WorkflowFlowsFieldOutcomesFieldIfRejectedField(BaseObject):
@@ -9669,8 +9669,8 @@ class WorkflowFull(Workflow):
 
 
 class ZipDownloadNameConflictsFieldTypeField(str, Enum):
-    FILE = "file"
-    FOLDER = "folder"
+    FILE = 'file'
+    FOLDER = 'folder'
 
 
 class ZipDownloadNameConflictsField(BaseObject):
@@ -9752,9 +9752,9 @@ class ZipDownload(BaseObject):
 
 
 class ZipDownloadStatusStateField(str, Enum):
-    IN_PROGRESS = "in_progress"
-    FAILED = "failed"
-    SUCCESS = "success"
+    IN_PROGRESS = 'in_progress'
+    FAILED = 'failed'
+    SUCCESS = 'success'
 
 
 class ZipDownloadStatus(BaseObject):
@@ -9794,11 +9794,11 @@ class ZipDownloadStatus(BaseObject):
 
 
 class KeywordSkillCardTypeField(str, Enum):
-    SKILL_CARD = "skill_card"
+    SKILL_CARD = 'skill_card'
 
 
 class KeywordSkillCardSkillCardTypeField(str, Enum):
-    KEYWORD = "keyword"
+    KEYWORD = 'keyword'
 
 
 class KeywordSkillCardSkillCardTitleField(BaseObject):
@@ -9815,7 +9815,7 @@ class KeywordSkillCardSkillCardTitleField(BaseObject):
 
 
 class KeywordSkillCardSkillFieldTypeField(str, Enum):
-    SERVICE = "service"
+    SERVICE = 'service'
 
 
 class KeywordSkillCardSkillField(BaseObject):
@@ -9833,7 +9833,7 @@ class KeywordSkillCardSkillField(BaseObject):
 
 
 class KeywordSkillCardInvocationFieldTypeField(str, Enum):
-    SKILL_INVOCATION = "skill_invocation"
+    SKILL_INVOCATION = 'skill_invocation'
 
 
 class KeywordSkillCardInvocationField(BaseObject):
@@ -9919,7 +9919,7 @@ class IntegrationMappingSlackOptions(BaseObject):
 
 
 class IntegrationMappingPartnerItemSlackTypeField(str, Enum):
-    CHANNEL = "channel"
+    CHANNEL = 'channel'
 
 
 class IntegrationMappingPartnerItemSlack(BaseObject):
@@ -9949,7 +9949,7 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
 
 
 class IntegrationMappingTypeField(str, Enum):
-    INTEGRATION_MAPPING = "integration_mapping"
+    INTEGRATION_MAPPING = 'integration_mapping'
 
 
 class IntegrationMappingOptionsField(BaseObject):
@@ -10048,7 +10048,7 @@ class IntegrationMappings(BaseObject):
 
 
 class IntegrationMappingBoxItemSlackTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class IntegrationMappingBoxItemSlack(BaseObject):
@@ -10081,11 +10081,11 @@ class IntegrationMappingSlackCreateRequest(BaseObject):
 
 
 class TimelineSkillCardTypeField(str, Enum):
-    SKILL_CARD = "skill_card"
+    SKILL_CARD = 'skill_card'
 
 
 class TimelineSkillCardSkillCardTypeField(str, Enum):
-    TIMELINE = "timeline"
+    TIMELINE = 'timeline'
 
 
 class TimelineSkillCardSkillCardTitleField(BaseObject):
@@ -10102,7 +10102,7 @@ class TimelineSkillCardSkillCardTitleField(BaseObject):
 
 
 class TimelineSkillCardSkillFieldTypeField(str, Enum):
-    SERVICE = "service"
+    SERVICE = 'service'
 
 
 class TimelineSkillCardSkillField(BaseObject):
@@ -10120,7 +10120,7 @@ class TimelineSkillCardSkillField(BaseObject):
 
 
 class TimelineSkillCardInvocationFieldTypeField(str, Enum):
-    SKILL_INVOCATION = "skill_invocation"
+    SKILL_INVOCATION = 'skill_invocation'
 
 
 class TimelineSkillCardInvocationField(BaseObject):
@@ -10233,11 +10233,11 @@ class TimelineSkillCard(BaseObject):
 
 
 class TranscriptSkillCardTypeField(str, Enum):
-    SKILL_CARD = "skill_card"
+    SKILL_CARD = 'skill_card'
 
 
 class TranscriptSkillCardSkillCardTypeField(str, Enum):
-    TRANSCRIPT = "transcript"
+    TRANSCRIPT = 'transcript'
 
 
 class TranscriptSkillCardSkillCardTitleField(BaseObject):
@@ -10254,7 +10254,7 @@ class TranscriptSkillCardSkillCardTitleField(BaseObject):
 
 
 class TranscriptSkillCardSkillFieldTypeField(str, Enum):
-    SERVICE = "service"
+    SERVICE = 'service'
 
 
 class TranscriptSkillCardSkillField(BaseObject):
@@ -10272,7 +10272,7 @@ class TranscriptSkillCardSkillField(BaseObject):
 
 
 class TranscriptSkillCardInvocationFieldTypeField(str, Enum):
-    SKILL_INVOCATION = "skill_invocation"
+    SKILL_INVOCATION = 'skill_invocation'
 
 
 class TranscriptSkillCardInvocationField(BaseObject):
@@ -10372,11 +10372,11 @@ class TranscriptSkillCard(BaseObject):
 
 
 class StatusSkillCardTypeField(str, Enum):
-    SKILL_CARD = "skill_card"
+    SKILL_CARD = 'skill_card'
 
 
 class StatusSkillCardSkillCardTypeField(str, Enum):
-    STATUS = "status"
+    STATUS = 'status'
 
 
 class StatusSkillCardSkillCardTitleField(BaseObject):
@@ -10393,11 +10393,11 @@ class StatusSkillCardSkillCardTitleField(BaseObject):
 
 
 class StatusSkillCardStatusFieldCodeField(str, Enum):
-    INVOKED = "invoked"
-    PROCESSING = "processing"
-    SUCCESS = "success"
-    TRANSIENT_FAILURE = "transient_failure"
-    PERMANENT_FAILURE = "permanent_failure"
+    INVOKED = 'invoked'
+    PROCESSING = 'processing'
+    SUCCESS = 'success'
+    TRANSIENT_FAILURE = 'transient_failure'
+    PERMANENT_FAILURE = 'permanent_failure'
 
 
 class StatusSkillCardStatusField(BaseObject):
@@ -10423,7 +10423,7 @@ class StatusSkillCardStatusField(BaseObject):
 
 
 class StatusSkillCardSkillFieldTypeField(str, Enum):
-    SERVICE = "service"
+    SERVICE = 'service'
 
 
 class StatusSkillCardSkillField(BaseObject):
@@ -10441,7 +10441,7 @@ class StatusSkillCardSkillField(BaseObject):
 
 
 class StatusSkillCardInvocationFieldTypeField(str, Enum):
-    SKILL_INVOCATION = "skill_invocation"
+    SKILL_INVOCATION = 'skill_invocation'
 
 
 class StatusSkillCardInvocationField(BaseObject):
@@ -10504,25 +10504,25 @@ class StatusSkillCard(BaseObject):
 
 class SkillCardsMetadata(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "can_edit": "$canEdit",
-        "id": "$id",
-        "parent": "$parent",
-        "scope": "$scope",
-        "template": "$template",
-        "type": "$type",
-        "type_version": "$typeVersion",
-        "version": "$version",
+        'can_edit': '$canEdit',
+        'id': '$id',
+        'parent': '$parent',
+        'scope': '$scope',
+        'template': '$template',
+        'type': '$type',
+        'type_version': '$typeVersion',
+        'version': '$version',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "$canEdit": "can_edit",
-        "$id": "id",
-        "$parent": "parent",
-        "$scope": "scope",
-        "$template": "template",
-        "$type": "type",
-        "$typeVersion": "type_version",
-        "$version": "version",
+        '$canEdit': 'can_edit',
+        '$id': 'id',
+        '$parent': 'parent',
+        '$scope': 'scope',
+        '$template': 'template',
+        '$type': 'type',
+        '$typeVersion': 'type_version',
+        '$version': 'version',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -10585,9 +10585,9 @@ class SkillCardsMetadata(BaseObject):
 
 
 class SignRequestCreateSignerRoleField(str, Enum):
-    SIGNER = "signer"
-    APPROVER = "approver"
-    FINAL_COPY_READER = "final_copy_reader"
+    SIGNER = 'signer'
+    APPROVER = 'approver'
+    FINAL_COPY_READER = 'final_copy_reader'
 
 
 class SignRequestCreateSigner(BaseObject):
@@ -10685,26 +10685,26 @@ class SignRequestPrefillTag(BaseObject):
 
 
 class SignRequestSignerInputTypeField(str, Enum):
-    SIGNATURE = "signature"
-    DATE = "date"
-    TEXT = "text"
-    CHECKBOX = "checkbox"
+    SIGNATURE = 'signature'
+    DATE = 'date'
+    TEXT = 'text'
+    CHECKBOX = 'checkbox'
 
 
 class SignRequestSignerInputContentTypeField(str, Enum):
-    INITIAL = "initial"
-    STAMP = "stamp"
-    SIGNATURE = "signature"
-    COMPANY = "company"
-    TITLE = "title"
-    EMAIL = "email"
-    FULL_NAME = "full_name"
-    FIRST_NAME = "first_name"
-    LAST_NAME = "last_name"
-    TEXT = "text"
-    DATE = "date"
-    CHECKBOX = "checkbox"
-    ATTACHMENT = "attachment"
+    INITIAL = 'initial'
+    STAMP = 'stamp'
+    SIGNATURE = 'signature'
+    COMPANY = 'company'
+    TITLE = 'title'
+    EMAIL = 'email'
+    FULL_NAME = 'full_name'
+    FIRST_NAME = 'first_name'
+    LAST_NAME = 'last_name'
+    TEXT = 'text'
+    DATE = 'date'
+    CHECKBOX = 'checkbox'
+    ATTACHMENT = 'attachment'
 
 
 class SignRequestSignerInput(SignRequestPrefillTag):
@@ -10748,8 +10748,8 @@ class SignRequestSignerInput(SignRequestPrefillTag):
 
 
 class SignRequestSignerSignerDecisionFieldTypeField(str, Enum):
-    SIGNED = "signed"
-    DECLINED = "declined"
+    SIGNED = 'signed'
+    DECLINED = 'declined'
 
 
 class SignRequestSignerSignerDecisionField(BaseObject):
@@ -10930,22 +10930,22 @@ class SignRequestBase(BaseObject):
 
 
 class SignRequestTypeField(str, Enum):
-    SIGN_REQUEST = "sign-request"
+    SIGN_REQUEST = 'sign-request'
 
 
 class SignRequestStatusField(str, Enum):
-    CONVERTING = "converting"
-    CREATED = "created"
-    SENT = "sent"
-    VIEWED = "viewed"
-    SIGNED = "signed"
-    CANCELLED = "cancelled"
-    DECLINED = "declined"
-    ERROR_CONVERTING = "error_converting"
-    ERROR_SENDING = "error_sending"
-    EXPIRED = "expired"
-    FINALIZING = "finalizing"
-    ERROR_FINALIZING = "error_finalizing"
+    CONVERTING = 'converting'
+    CREATED = 'created'
+    SENT = 'sent'
+    VIEWED = 'viewed'
+    SIGNED = 'signed'
+    CANCELLED = 'cancelled'
+    DECLINED = 'declined'
+    ERROR_CONVERTING = 'error_converting'
+    ERROR_SENDING = 'error_sending'
+    EXPIRED = 'expired'
+    FINALIZING = 'finalizing'
+    ERROR_FINALIZING = 'error_finalizing'
 
 
 class SignRequestSignFilesField(BaseObject):
@@ -11180,30 +11180,30 @@ class SignRequestCreateRequest(SignRequestBase):
 
 
 class TemplateSignerInputTypeField(str, Enum):
-    SIGNATURE = "signature"
-    DATE = "date"
-    TEXT = "text"
-    CHECKBOX = "checkbox"
-    RADIO = "radio"
-    DROPDOWN = "dropdown"
+    SIGNATURE = 'signature'
+    DATE = 'date'
+    TEXT = 'text'
+    CHECKBOX = 'checkbox'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
 
 
 class TemplateSignerInputContentTypeField(str, Enum):
-    SIGNATURE = "signature"
-    INITIAL = "initial"
-    STAMP = "stamp"
-    DATE = "date"
-    CHECKBOX = "checkbox"
-    TEXT = "text"
-    FULL_NAME = "full_name"
-    FIRST_NAME = "first_name"
-    LAST_NAME = "last_name"
-    COMPANY = "company"
-    TITLE = "title"
-    EMAIL = "email"
-    ATTACHMENT = "attachment"
-    RADIO = "radio"
-    DROPDOWN = "dropdown"
+    SIGNATURE = 'signature'
+    INITIAL = 'initial'
+    STAMP = 'stamp'
+    DATE = 'date'
+    CHECKBOX = 'checkbox'
+    TEXT = 'text'
+    FULL_NAME = 'full_name'
+    FIRST_NAME = 'first_name'
+    LAST_NAME = 'last_name'
+    COMPANY = 'company'
+    TITLE = 'title'
+    EMAIL = 'email'
+    ATTACHMENT = 'attachment'
+    RADIO = 'radio'
+    DROPDOWN = 'dropdown'
 
 
 class TemplateSignerInputCoordinatesField(BaseObject):
@@ -11299,9 +11299,9 @@ class TemplateSignerInput(SignRequestPrefillTag):
 
 
 class TemplateSignerRoleField(str, Enum):
-    SIGNER = "signer"
-    APPROVER = "approver"
-    FINAL_COPY_READER = "final_copy_reader"
+    SIGNER = 'signer'
+    APPROVER = 'approver'
+    FINAL_COPY_READER = 'final_copy_reader'
 
 
 class TemplateSigner(BaseObject):
@@ -11339,16 +11339,16 @@ class TemplateSigner(BaseObject):
 
 
 class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
-    EMAIL_SUBJECT = "email_subject"
-    EMAIL_MESSAGE = "email_message"
-    NAME = "name"
-    DAYS_VALID = "days_valid"
-    SIGNERS = "signers"
-    SOURCE_FILES = "source_files"
+    EMAIL_SUBJECT = 'email_subject'
+    EMAIL_MESSAGE = 'email_message'
+    NAME = 'name'
+    DAYS_VALID = 'days_valid'
+    SIGNERS = 'signers'
+    SOURCE_FILES = 'source_files'
 
 
 class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
-    EMAIL = "email"
+    EMAIL = 'email'
 
 
 class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
@@ -11546,10 +11546,10 @@ class ShieldInformationBarrierReportDetails(BaseObject):
 
 
 class ShieldInformationBarrierReportStatusField(str, Enum):
-    PENDING = "pending"
-    ERROR = "error"
-    DONE = "done"
-    CANCELLED = "cancelled"
+    PENDING = 'pending'
+    ERROR = 'error'
+    DONE = 'done'
+    CANCELLED = 'cancelled'
 
 
 class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
@@ -11589,7 +11589,7 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
 
 
 class TrackingCodeTypeField(str, Enum):
-    TRACKING_CODE = "tracking_code"
+    TRACKING_CODE = 'tracking_code'
 
 
 class TrackingCode(BaseObject):
@@ -11616,13 +11616,13 @@ class TrackingCode(BaseObject):
 
 
 class UserFullRoleField(str, Enum):
-    ADMIN = "admin"
-    COADMIN = "coadmin"
-    USER = "user"
+    ADMIN = 'admin'
+    COADMIN = 'coadmin'
+    USER = 'user'
 
 
 class UserFullEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = "enterprise"
+    ENTERPRISE = 'enterprise'
 
 
 class UserFullEnterpriseField(BaseObject):
@@ -11786,9 +11786,9 @@ class UserFull(User):
 
 
 class MetadataFilterScopeField(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
-    ENTERPRISE__ENTERPRISE_ID_ = "enterprise_{enterprise_id}"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
+    ENTERPRISE__ENTERPRISE_ID_ = 'enterprise_{enterprise_id}'
 
 
 class MetadataFilterFiltersField(BaseObject):
@@ -11798,11 +11798,11 @@ class MetadataFilterFiltersField(BaseObject):
 
 class MetadataFilter(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "template_key": "templateKey",
+        'template_key': 'templateKey',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "templateKey": "template_key",
+        'templateKey': 'template_key',
         **BaseObject._json_to_fields_mapping,
     }
 

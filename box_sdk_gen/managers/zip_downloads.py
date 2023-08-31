@@ -36,8 +36,8 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateZipDownloadItemsArgTypeField(str, Enum):
-    FILE = "file"
-    FOLDER_ = "folder."
+    FILE = 'file'
+    FOLDER_ = 'folder.'
 
 
 class CreateZipDownloadItemsArg(BaseObject):
@@ -126,13 +126,13 @@ class ZipDownloadsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/zip_downloads"]),
+            ''.join(['https://api.box.com/2.0/zip_downloads']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -186,17 +186,17 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://dl.boxcloud.com/2.0/zip_downloads/",
+                    'https://dl.boxcloud.com/2.0/zip_downloads/',
                     zip_download_id,
-                    "/content",
+                    '/content',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="binary",
+                response_format='binary',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -247,13 +247,13 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/zip_downloads/", zip_download_id, "/status"]
+            ''.join(
+                ['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

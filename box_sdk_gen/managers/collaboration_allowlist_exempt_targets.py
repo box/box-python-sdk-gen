@@ -73,16 +73,16 @@ class CollaborationAllowlistExemptTargetsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"marker": to_string(marker), "limit": to_string(limit)}
+            {'marker': to_string(marker), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaboration_whitelist_exempt_targets"]),
+            ''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -109,13 +109,13 @@ class CollaborationAllowlistExemptTargetsManager:
         request_body = BaseObject(user=user)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaboration_whitelist_exempt_targets"]),
+            ''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -142,16 +142,16 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/collaboration_whitelist_exempt_targets/",
+                    'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
                     collaboration_whitelist_exempt_target_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -178,14 +178,14 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/collaboration_whitelist_exempt_targets/",
+                    'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
                     collaboration_whitelist_exempt_target_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

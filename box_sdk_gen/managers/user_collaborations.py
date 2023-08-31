@@ -32,25 +32,25 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class UpdateCollaborationByIdRoleArg(str, Enum):
-    EDITOR = "editor"
-    VIEWER = "viewer"
-    PREVIEWER = "previewer"
-    UPLOADER = "uploader"
-    PREVIEWER_UPLOADER = "previewer uploader"
-    VIEWER_UPLOADER = "viewer uploader"
-    CO_OWNER = "co-owner"
-    OWNER = "owner"
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
+    OWNER = 'owner'
 
 
 class UpdateCollaborationByIdStatusArg(str, Enum):
-    PENDING = "pending"
-    ACCEPTED = "accepted"
-    REJECTED = "rejected"
+    PENDING = 'pending'
+    ACCEPTED = 'accepted'
+    REJECTED = 'rejected'
 
 
 class CreateCollaborationItemArgTypeField(str, Enum):
-    FILE = "file"
-    FOLDER = "folder"
+    FILE = 'file'
+    FOLDER = 'folder'
 
 
 class CreateCollaborationItemArg(BaseObject):
@@ -73,8 +73,8 @@ class CreateCollaborationItemArg(BaseObject):
 
 
 class CreateCollaborationAccessibleByArgTypeField(str, Enum):
-    USER = "user"
-    GROUP = "group"
+    USER = 'user'
+    GROUP = 'group'
 
 
 class CreateCollaborationAccessibleByArg(BaseObject):
@@ -103,13 +103,13 @@ class CreateCollaborationAccessibleByArg(BaseObject):
 
 
 class CreateCollaborationRoleArg(str, Enum):
-    EDITOR = "editor"
-    VIEWER = "viewer"
-    PREVIEWER = "previewer"
-    UPLOADER = "uploader"
-    PREVIEWER_UPLOADER = "previewer uploader"
-    VIEWER_UPLOADER = "viewer uploader"
-    CO_OWNER = "co-owner"
+    EDITOR = 'editor'
+    VIEWER = 'viewer'
+    PREVIEWER = 'previewer'
+    UPLOADER = 'uploader'
+    PREVIEWER_UPLOADER = 'previewer uploader'
+    VIEWER_UPLOADER = 'viewer uploader'
+    CO_OWNER = 'co-owner'
 
 
 class UserCollaborationsManager:
@@ -146,15 +146,15 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaborations/", collaboration_id]),
+            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -220,13 +220,13 @@ class UserCollaborationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaborations/", collaboration_id]),
+            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -250,9 +250,9 @@ class UserCollaborationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaborations/", collaboration_id]),
+            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -355,18 +355,18 @@ class UserCollaborationsManager:
             expires_at=expires_at,
         )
         query_params_map: Dict[str, str] = prepare_params(
-            {"fields": to_string(fields), "notify": to_string(notify)}
+            {'fields': to_string(fields), 'notify': to_string(notify)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaborations"]),
+            ''.join(['https://api.box.com/2.0/collaborations']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

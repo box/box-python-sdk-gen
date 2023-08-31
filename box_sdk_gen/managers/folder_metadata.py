@@ -34,13 +34,13 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetFolderMetadataByIdScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateFolderMetadataByIdScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateFolderMetadataByIdRequestBodyArg(BaseObject):
@@ -48,26 +48,26 @@ class CreateFolderMetadataByIdRequestBodyArg(BaseObject):
 
 
 class UpdateFolderMetadataByIdScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class UpdateFolderMetadataByIdRequestBodyArgOpField(str, Enum):
-    ADD = "add"
-    REPLACE = "replace"
-    REMOVE = "remove"
-    TEST = "test"
-    MOVE = "move"
-    COPY = "copy"
+    ADD = 'add'
+    REPLACE = 'replace'
+    REMOVE = 'remove'
+    TEST = 'test'
+    MOVE = 'move'
+    COPY = 'copy'
 
 
 class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "from_": "from",
+        'from_': 'from',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "from": "from_",
+        'from': 'from_',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -111,8 +111,8 @@ class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
 
 
 class DeleteFolderMetadataByIdScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class FolderMetadataManager:
@@ -149,11 +149,11 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id, "/metadata"]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -195,20 +195,20 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/folders/",
+                    'https://api.box.com/2.0/folders/',
                     folder_id,
-                    "/metadata/",
+                    '/metadata/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -268,22 +268,22 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/folders/",
+                    'https://api.box.com/2.0/folders/',
                     folder_id,
-                    "/metadata/",
+                    '/metadata/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
                 ]
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -340,22 +340,22 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/folders/",
+                    'https://api.box.com/2.0/folders/',
                     folder_id,
-                    "/metadata/",
+                    '/metadata/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -394,18 +394,18 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/folders/",
+                    'https://api.box.com/2.0/folders/',
                     folder_id,
-                    "/metadata/",
+                    '/metadata/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

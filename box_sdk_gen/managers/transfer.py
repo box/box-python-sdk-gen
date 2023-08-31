@@ -149,18 +149,18 @@ class TransferManager:
             extra_headers = {}
         request_body = BaseObject(owned_by=owned_by)
         query_params_map: Dict[str, str] = prepare_params(
-            {"fields": to_string(fields), "notify": to_string(notify)}
+            {'fields': to_string(fields), 'notify': to_string(notify)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/", user_id, "/folders/0"]),
+            ''.join(['https://api.box.com/2.0/users/', user_id, '/folders/0']),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

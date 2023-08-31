@@ -36,21 +36,21 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetFolderByIdSortArg(str, Enum):
-    ID = "id"
-    NAME = "name"
-    DATE = "date"
-    SIZE = "size"
+    ID = 'id'
+    NAME = 'name'
+    DATE = 'date'
+    SIZE = 'size'
 
 
 class GetFolderByIdDirectionArg(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class UpdateFolderByIdSyncStateArg(str, Enum):
-    SYNCED = "synced"
-    NOT_SYNCED = "not_synced"
-    PARTIALLY_SYNCED = "partially_synced"
+    SYNCED = 'synced'
+    NOT_SYNCED = 'not_synced'
+    PARTIALLY_SYNCED = 'partially_synced'
 
 
 class UpdateFolderByIdParentArg(BaseObject):
@@ -64,9 +64,9 @@ class UpdateFolderByIdParentArg(BaseObject):
 
 
 class UpdateFolderByIdSharedLinkArgAccessField(str, Enum):
-    OPEN = "open"
-    COMPANY = "company"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COMPANY = 'company'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateFolderByIdSharedLinkArgPermissionsField(BaseObject):
@@ -129,8 +129,8 @@ class UpdateFolderByIdSharedLinkArg(BaseObject):
 
 
 class UpdateFolderByIdFolderUploadEmailArgAccessField(str, Enum):
-    OPEN = "open"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COLLABORATORS = 'collaborators'
 
 
 class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
@@ -170,15 +170,15 @@ class UpdateFolderByIdCollectionsArg(BaseObject):
 
 
 class GetFolderItemsSortArg(str, Enum):
-    ID = "id"
-    NAME = "name"
-    DATE = "date"
-    SIZE = "size"
+    ID = 'id'
+    NAME = 'name'
+    DATE = 'date'
+    SIZE = 'size'
 
 
 class GetFolderItemsDirectionArg(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class CreateFolderParentArg(BaseObject):
@@ -192,8 +192,8 @@ class CreateFolderParentArg(BaseObject):
 
 
 class CreateFolderFolderUploadEmailArgAccessField(str, Enum):
-    OPEN = "open"
-    COLLABORATORS = "collaborators"
+    OPEN = 'open'
+    COLLABORATORS = 'collaborators'
 
 
 class CreateFolderFolderUploadEmailArg(BaseObject):
@@ -220,9 +220,9 @@ class CreateFolderFolderUploadEmailArg(BaseObject):
 
 
 class CreateFolderSyncStateArg(str, Enum):
-    SYNCED = "synced"
-    NOT_SYNCED = "not_synced"
-    PARTIALLY_SYNCED = "partially_synced"
+    SYNCED = 'synced'
+    NOT_SYNCED = 'not_synced'
+    PARTIALLY_SYNCED = 'partially_synced'
 
 
 class CopyFolderParentArg(BaseObject):
@@ -357,27 +357,27 @@ class FoldersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "sort": to_string(sort),
-                "direction": to_string(direction),
-                "offset": to_string(offset),
-                "limit": to_string(limit),
+                'fields': to_string(fields),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
             }
         )
         headers_map: Dict[str, str] = prepare_params(
             {
-                "if-none-match": to_string(if_none_match),
-                "boxapi": to_string(boxapi),
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -494,19 +494,19 @@ class FoldersManager:
             collections=collections,
             can_non_owners_view_collaborators=can_non_owners_view_collaborators,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
-            {"if-match": to_string(if_match), **extra_headers}
+            {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -551,15 +551,15 @@ class FoldersManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"recursive": to_string(recursive)}
+            {'recursive': to_string(recursive)}
         )
         headers_map: Dict[str, str] = prepare_params(
-            {"if-match": to_string(if_match), **extra_headers}
+            {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 params=query_params_map,
                 headers=headers_map,
                 response_format=None,
@@ -676,25 +676,25 @@ class FoldersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "usemarker": to_string(usemarker),
-                "marker": to_string(marker),
-                "offset": to_string(offset),
-                "limit": to_string(limit),
-                "sort": to_string(sort),
-                "direction": to_string(direction),
+                'fields': to_string(fields),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
             }
         )
         headers_map: Dict[str, str] = prepare_params(
-            {"boxapi": to_string(boxapi), **extra_headers}
+            {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id, "/items"]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -746,17 +746,17 @@ class FoldersManager:
             folder_upload_email=folder_upload_email,
             sync_state=sync_state,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders"]),
+            ''.join(['https://api.box.com/2.0/folders']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -810,17 +810,17 @@ class FoldersManager:
         if extra_headers is None:
             extra_headers = {}
         request_body = BaseObject(name=name, parent=parent)
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id, "/copy"]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

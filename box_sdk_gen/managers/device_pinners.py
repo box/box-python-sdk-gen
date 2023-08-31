@@ -30,8 +30,8 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetEnterpriseDevicePinnersDirectionArg(str, Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = 'ASC'
+    DESC = 'DESC'
 
 
 class DevicePinnersManager:
@@ -60,11 +60,11 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/device_pinners/", device_pinner_id]),
+            ''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -88,9 +88,9 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/device_pinners/", device_pinner_id]),
+            ''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -134,25 +134,25 @@ class DevicePinnersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "marker": to_string(marker),
-                "limit": to_string(limit),
-                "direction": to_string(direction),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'direction': to_string(direction),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/enterprises/",
+                    'https://api.box.com/2.0/enterprises/',
                     enterprise_id,
-                    "/device_pinners",
+                    '/device_pinners',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

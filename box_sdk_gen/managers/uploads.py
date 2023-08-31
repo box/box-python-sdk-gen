@@ -196,34 +196,34 @@ class UploadsManager:
             file_file_name=file_file_name,
             file_content_type=file_content_type,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {
-                "if-match": to_string(if_match),
-                "content-md5": to_string(content_md_5),
+                'if-match': to_string(if_match),
+                'content-md5': to_string(content_md_5),
                 **extra_headers,
             }
         )
         response: FetchResponse = fetch(
-            "".join(["https://upload.box.com/api/2.0/files/", file_id, "/content"]),
+            ''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name="attributes",
+                        part_name='attributes',
                         body=json.dumps(request_body.attributes.to_dict()),
                     ),
                     MultipartItem(
-                        part_name="file",
+                        part_name='file',
                         file_stream=request_body.file,
                         file_name=request_body.file_file_name,
                         content_type=request_body.file_content_type,
                     ),
                 ],
-                content_type="multipart/form-data",
-                response_format="json",
+                content_type='multipart/form-data',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -301,30 +301,30 @@ class UploadsManager:
             file_file_name=file_file_name,
             file_content_type=file_content_type,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
-            {"content-md5": to_string(content_md_5), **extra_headers}
+            {'content-md5': to_string(content_md_5), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://upload.box.com/api/2.0/files/content"]),
+            ''.join(['https://upload.box.com/api/2.0/files/content']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name="attributes",
+                        part_name='attributes',
                         body=json.dumps(request_body.attributes.to_dict()),
                     ),
                     MultipartItem(
-                        part_name="file",
+                        part_name='file',
                         file_stream=request_body.file,
                         file_name=request_body.file_file_name,
                         content_type=request_body.file_content_type,
                     ),
                 ],
-                content_type="multipart/form-data",
-                response_format="json",
+                content_type='multipart/form-data',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -355,13 +355,13 @@ class UploadsManager:
         request_body = BaseObject(name=name, size=size, parent=parent)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/content"]),
+            ''.join(['https://api.box.com/2.0/files/content']),
             FetchOptions(
-                method="OPTIONS",
+                method='OPTIONS',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

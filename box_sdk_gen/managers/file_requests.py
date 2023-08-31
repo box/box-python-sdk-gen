@@ -34,12 +34,12 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class UpdateFileRequestByIdStatusArg(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
 
 
 class CreateFileRequestCopyFolderArgTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class CreateFileRequestCopyFolderArg(BaseObject):
@@ -62,8 +62,8 @@ class CreateFileRequestCopyFolderArg(BaseObject):
 
 
 class CreateFileRequestCopyStatusArg(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
 
 
 class FileRequestsManager:
@@ -97,11 +97,11 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/file_requests/", file_request_id]),
+            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -187,16 +187,16 @@ class FileRequestsManager:
             expires_at=expires_at,
         )
         headers_map: Dict[str, str] = prepare_params(
-            {"if-match": to_string(if_match), **extra_headers}
+            {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/file_requests/", file_request_id]),
+            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -225,9 +225,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/file_requests/", file_request_id]),
+            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -312,15 +312,15 @@ class FileRequestsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
-                ["https://api.box.com/2.0/file_requests/", file_request_id, "/copy"]
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

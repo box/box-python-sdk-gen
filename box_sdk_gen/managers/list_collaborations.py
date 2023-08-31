@@ -28,7 +28,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetCollaborationsStatusArg(str, Enum):
-    PENDING = "pending"
+    PENDING = 'pending'
 
 
 class ListCollaborationsManager:
@@ -86,19 +86,19 @@ class ListCollaborationsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "fields": to_string(fields),
-                "limit": to_string(limit),
-                "marker": to_string(marker),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/collaborations"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/collaborations']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -141,15 +141,15 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folders/", folder_id, "/collaborations"]),
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/collaborations']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -191,20 +191,20 @@ class ListCollaborationsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "status": to_string(status),
-                "fields": to_string(fields),
-                "offset": to_string(offset),
-                "limit": to_string(limit),
+                'status': to_string(status),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/collaborations"]),
+            ''.join(['https://api.box.com/2.0/collaborations']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -245,16 +245,16 @@ class ListCollaborationsManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"limit": to_string(limit), "offset": to_string(offset)}
+            {'limit': to_string(limit), 'offset': to_string(offset)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/", group_id, "/collaborations"]),
+            ''.join(['https://api.box.com/2.0/groups/', group_id, '/collaborations']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

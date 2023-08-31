@@ -17,7 +17,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -26,12 +26,12 @@ client: Client = Client(auth=auth)
 
 
 def test_create_get_delete_weblink():
-    url: str = "https://www.box.com"
-    parent: FolderFull = client.folders.get_folder_by_id(folder_id="0")
+    url: str = 'https://www.box.com'
+    parent: FolderFull = client.folders.get_folder_by_id(folder_id='0')
     name: str = get_uuid()
-    description: str = "Weblink description"
-    shared_access: str = "open"
-    password: str = "super-secret-password"
+    description: str = 'Weblink description'
+    shared_access: str = 'open'
+    password: str = 'super-secret-password'
     weblink: WebLink = client.web_links.create_web_link(
         url=url, parent=parent, name=name, description=description
     )
@@ -56,4 +56,4 @@ def test_create_get_delete_weblink():
     deleted_weblink: WebLink = client.web_links.get_web_link_by_id(
         web_link_id=weblink.id
     )
-    assert deleted_weblink.item_status == "trashed"
+    assert deleted_weblink.item_status == 'trashed'

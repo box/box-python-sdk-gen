@@ -35,14 +35,14 @@ from box_sdk_gen.fetch import FetchResponse
 
 class CreateShieldInformationBarrierSegmentRestrictionTypeArg(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = (
-        "shield_information_barrier_segment_restriction"
+        'shield_information_barrier_segment_restriction'
     )
 
 
 class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArgTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg(
@@ -71,7 +71,7 @@ class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSe
 class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArgTypeField(
     str, Enum
 ):
-    SHIELD_INFORMATION_BARRIER_SEGMENT = "shield_information_barrier_segment"
+    SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
 class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg(BaseObject):
@@ -125,16 +125,16 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_restrictions/",
+                    'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
                     shield_information_barrier_segment_restriction_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -163,14 +163,14 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_restrictions/",
+                    'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
                     shield_information_barrier_segment_restriction_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -206,25 +206,25 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "shield_information_barrier_segment_id": to_string(
+                'shield_information_barrier_segment_id': to_string(
                     shield_information_barrier_segment_id
                 ),
-                "marker": to_string(marker),
-                "limit": to_string(limit),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_restrictions"
+                    'https://api.box.com/2.0/shield_information_barrier_segment_restrictions'
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -266,17 +266,17 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/shield_information_barrier_segment_restrictions"
+                    'https://api.box.com/2.0/shield_information_barrier_segment_restrictions'
                 ]
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

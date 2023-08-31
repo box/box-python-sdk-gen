@@ -17,7 +17,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -32,12 +32,12 @@ def test_get_users():
 
 def test_get_user_me():
     current_user: UserFull = client.users.get_user_me()
-    assert current_user.type == "user"
+    assert current_user.type == 'user'
 
 
 def test_create_update_get_delete_user():
     user_name: str = get_uuid()
-    user_login: str = "".join([get_uuid(), "@gmail.com"])
+    user_login: str = ''.join([get_uuid(), '@gmail.com'])
     user: User = client.users.create_user(
         name=user_name, login=user_login, is_platform_access_only=True
     )

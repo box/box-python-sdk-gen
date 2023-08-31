@@ -56,16 +56,16 @@ class FileVersionLegalHoldsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/file_version_legal_holds/",
+                    'https://api.box.com/2.0/file_version_legal_holds/',
                     file_version_legal_hold_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -139,19 +139,19 @@ class FileVersionLegalHoldsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "policy_id": to_string(policy_id),
-                "marker": to_string(marker),
-                "limit": to_string(limit),
+                'policy_id': to_string(policy_id),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/file_version_legal_holds"]),
+            ''.join(['https://api.box.com/2.0/file_version_legal_holds']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

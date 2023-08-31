@@ -93,16 +93,16 @@ class FolderLocksManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"folder_id": to_string(folder_id)}
+            {'folder_id': to_string(folder_id)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folder_locks"]),
+            ''.join(['https://api.box.com/2.0/folder_locks']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -140,13 +140,13 @@ class FolderLocksManager:
         request_body = BaseObject(locked_operations=locked_operations, folder=folder)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folder_locks"]),
+            ''.join(['https://api.box.com/2.0/folder_locks']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -176,9 +176,9 @@ class FolderLocksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/folder_locks/", folder_lock_id]),
+            ''.join(['https://api.box.com/2.0/folder_locks/', folder_lock_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

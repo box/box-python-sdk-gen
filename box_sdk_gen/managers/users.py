@@ -40,33 +40,33 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetUsersUserTypeArg(str, Enum):
-    ALL = "all"
-    MANAGED = "managed"
-    EXTERNAL = "external"
+    ALL = 'all'
+    MANAGED = 'managed'
+    EXTERNAL = 'external'
 
 
 class CreateUserRoleArg(str, Enum):
-    COADMIN = "coadmin"
-    USER = "user"
+    COADMIN = 'coadmin'
+    USER = 'user'
 
 
 class CreateUserStatusArg(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    CANNOT_DELETE_EDIT = "cannot_delete_edit"
-    CANNOT_DELETE_EDIT_UPLOAD = "cannot_delete_edit_upload"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
+    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
 
 class UpdateUserByIdRoleArg(str, Enum):
-    COADMIN = "coadmin"
-    USER = "user"
+    COADMIN = 'coadmin'
+    USER = 'user'
 
 
 class UpdateUserByIdStatusArg(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    CANNOT_DELETE_EDIT = "cannot_delete_edit"
-    CANNOT_DELETE_EDIT_UPLOAD = "cannot_delete_edit_upload"
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    CANNOT_DELETE_EDIT = 'cannot_delete_edit'
+    CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
 
 class UpdateUserByIdNotificationEmailArg(BaseObject):
@@ -173,24 +173,24 @@ class UsersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "filter_term": to_string(filter_term),
-                "user_type": to_string(user_type),
-                "external_app_user_id": to_string(external_app_user_id),
-                "fields": to_string(fields),
-                "offset": to_string(offset),
-                "limit": to_string(limit),
-                "usemarker": to_string(usemarker),
-                "marker": to_string(marker),
+                'filter_term': to_string(filter_term),
+                'user_type': to_string(user_type),
+                'external_app_user_id': to_string(external_app_user_id),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users"]),
+            ''.join(['https://api.box.com/2.0/users']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -309,17 +309,17 @@ class UsersManager:
             status=status,
             external_app_user_id=external_app_user_id,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users"]),
+            ''.join(['https://api.box.com/2.0/users']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -365,15 +365,15 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/me"]),
+            ''.join(['https://api.box.com/2.0/users/me']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -429,15 +429,15 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/", user_id]),
+            ''.join(['https://api.box.com/2.0/users/', user_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -580,17 +580,17 @@ class UsersManager:
             notification_email=notification_email,
             external_app_user_id=external_app_user_id,
         )
-        query_params_map: Dict[str, str] = prepare_params({"fields": to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/", user_id]),
+            ''.join(['https://api.box.com/2.0/users/', user_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 params=query_params_map,
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -630,13 +630,13 @@ class UsersManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"notify": to_string(notify), "force": to_string(force)}
+            {'notify': to_string(notify), 'force': to_string(force)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/", user_id]),
+            ''.join(['https://api.box.com/2.0/users/', user_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 params=query_params_map,
                 headers=headers_map,
                 response_format=None,

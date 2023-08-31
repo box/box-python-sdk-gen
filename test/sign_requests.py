@@ -35,7 +35,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -44,7 +44,7 @@ client: Client = Client(auth=auth)
 
 
 def test_create_get_cancel_and_list_sign_request():
-    signer_email: str = "".join([get_uuid(), "@box.com"])
+    signer_email: str = ''.join([get_uuid(), '@box.com'])
     file_to_sign: File = upload_new_file()
     destination_folder: FolderFull = create_new_folder()
     created_sign_request: SignRequest = client.sign_requests.create_sign_request(
@@ -66,8 +66,8 @@ def test_create_get_cancel_and_list_sign_request():
     cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(
         sign_request_id=created_sign_request.id
     )
-    assert cancelled_sign_request.status == "cancelled"
+    assert cancelled_sign_request.status == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
-    assert sign_requests.entries[0].type == "sign-request"
+    assert sign_requests.entries[0].type == 'sign-request'
     client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
     client.files.delete_file_by_id(file_id=file_to_sign.id)

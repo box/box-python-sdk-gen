@@ -19,7 +19,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -32,10 +32,10 @@ def testAvatars():
     created_avatar: UserAvatar = client.avatars.create_user_avatar(
         user_id=user.id,
         pic=decode_base_64_byte_stream(
-            "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=="
+            'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=='
         ),
-        pic_file_name="avatar.png",
-        pic_content_type="image/png",
+        pic_file_name='avatar.png',
+        pic_content_type='image/png',
     )
     assert not created_avatar.pic_urls.small == None
     assert not created_avatar.pic_urls.large == None

@@ -67,13 +67,13 @@ class SessionTerminationManager:
         request_body = BaseObject(user_ids=user_ids, user_logins=user_logins)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/users/terminate_sessions"]),
+            ''.join(['https://api.box.com/2.0/users/terminate_sessions']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -106,13 +106,13 @@ class SessionTerminationManager:
         request_body = BaseObject(group_ids=group_ids)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/groups/terminate_sessions"]),
+            ''.join(['https://api.box.com/2.0/groups/terminate_sessions']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

@@ -34,7 +34,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateWorkflowStartTypeArg(str, Enum):
-    WORKFLOW_PARAMETERS = "workflow_parameters"
+    WORKFLOW_PARAMETERS = 'workflow_parameters'
 
 
 class CreateWorkflowStartFlowArg(BaseObject):
@@ -51,7 +51,7 @@ class CreateWorkflowStartFlowArg(BaseObject):
 
 
 class CreateWorkflowStartFilesArgTypeField(str, Enum):
-    FILE = "file"
+    FILE = 'file'
 
 
 class CreateWorkflowStartFilesArg(BaseObject):
@@ -73,7 +73,7 @@ class CreateWorkflowStartFilesArg(BaseObject):
 
 
 class CreateWorkflowStartFolderArgTypeField(str, Enum):
-    FOLDER = "folder"
+    FOLDER = 'folder'
 
 
 class CreateWorkflowStartFolderArg(BaseObject):
@@ -95,7 +95,7 @@ class CreateWorkflowStartFolderArg(BaseObject):
 
 
 class CreateWorkflowStartOutcomesArgTypeField(str, Enum):
-    OUTCOME = "outcome"
+    OUTCOME = 'outcome'
 
 
 class CreateWorkflowStartOutcomesArg(BaseObject):
@@ -174,20 +174,20 @@ class WorkflowsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "folder_id": to_string(folder_id),
-                "trigger_type": to_string(trigger_type),
-                "limit": to_string(limit),
-                "marker": to_string(marker),
+                'folder_id': to_string(folder_id),
+                'trigger_type': to_string(trigger_type),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/workflows"]),
+            ''.join(['https://api.box.com/2.0/workflows']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -236,12 +236,12 @@ class WorkflowsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/workflows/", workflow_id, "/start"]),
+            ''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
+                content_type='application/json',
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,

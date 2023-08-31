@@ -32,7 +32,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class UpdateFileWatermarkWatermarkArgImprintField(str, Enum):
-    DEFAULT = "default"
+    DEFAULT = 'default'
 
 
 class UpdateFileWatermarkWatermarkArg(BaseObject):
@@ -75,11 +75,11 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -112,13 +112,13 @@ class FileWatermarksManager:
         request_body = BaseObject(watermark=watermark)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -145,9 +145,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/watermark"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,

@@ -34,13 +34,13 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateMetadataCascadePolicyScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateMetadataCascadePolicyApplyConflictResolutionArg(str, Enum):
-    NONE = "none"
-    OVERWRITE = "overwrite"
+    NONE = 'none'
+    OVERWRITE = 'overwrite'
 
 
 class MetadataCascadePoliciesManager:
@@ -91,20 +91,20 @@ class MetadataCascadePoliciesManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "folder_id": to_string(folder_id),
-                "owner_enterprise_id": to_string(owner_enterprise_id),
-                "marker": to_string(marker),
-                "offset": to_string(offset),
+                'folder_id': to_string(folder_id),
+                'owner_enterprise_id': to_string(owner_enterprise_id),
+                'marker': to_string(marker),
+                'offset': to_string(offset),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_cascade_policies"]),
+            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -162,13 +162,13 @@ class MetadataCascadePoliciesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_cascade_policies"]),
+            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -192,16 +192,16 @@ class MetadataCascadePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_cascade_policies/",
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
                     metadata_cascade_policy_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -225,14 +225,14 @@ class MetadataCascadePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_cascade_policies/",
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
                     metadata_cascade_policy_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -276,18 +276,18 @@ class MetadataCascadePoliciesManager:
         request_body = BaseObject(conflict_resolution=conflict_resolution)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_cascade_policies/",
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
                     metadata_cascade_policy_id,
-                    "/apply",
+                    '/apply',
                 ]
             ),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
+                content_type='application/json',
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,

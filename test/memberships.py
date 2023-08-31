@@ -23,7 +23,7 @@ from box_sdk_gen.jwt_auth import JWTAuth
 from box_sdk_gen.jwt_auth import JWTConfig
 
 jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var("JWT_CONFIG_BASE_64"))
+    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
 auth: JWTAuth = JWTAuth(config=jwt_config)
@@ -33,7 +33,7 @@ client: Client = Client(auth=auth)
 
 def testMemberships():
     user: User = client.users.create_user(
-        name=get_uuid(), login="".join([get_uuid(), "@boxdemo.com"])
+        name=get_uuid(), login=''.join([get_uuid(), '@boxdemo.com'])
     )
     user_memberships: GroupMemberships = client.memberships.get_user_memberships(
         user_id=user.id
@@ -49,7 +49,7 @@ def testMemberships():
     )
     assert group_membership.user.id == user.id
     assert group_membership.group.id == group.id
-    assert group_membership.role == "member"
+    assert group_membership.role == 'member'
     assert client.memberships.get_group_membership_by_id(
         group_membership_id=group_membership.id
     )
@@ -60,7 +60,7 @@ def testMemberships():
         )
     )
     assert updated_group_membership.id == group_membership.id
-    assert updated_group_membership.role == "admin"
+    assert updated_group_membership.role == 'admin'
     client.memberships.delete_group_membership_by_id(
         group_membership_id=group_membership.id
     )

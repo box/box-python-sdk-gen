@@ -36,48 +36,48 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetMetadataTemplateSchemaScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class UpdateMetadataTemplateSchemaScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class UpdateMetadataTemplateSchemaRequestBodyArgOpField(str, Enum):
-    EDITTEMPLATE = "editTemplate"
-    ADDFIELD = "addField"
-    REORDERFIELDS = "reorderFields"
-    ADDENUMOPTION = "addEnumOption"
-    REORDERENUMOPTIONS = "reorderEnumOptions"
-    REORDERMULTISELECTOPTIONS = "reorderMultiSelectOptions"
-    ADDMULTISELECTOPTION = "addMultiSelectOption"
-    EDITFIELD = "editField"
-    REMOVEFIELD = "removeField"
-    EDITENUMOPTION = "editEnumOption"
-    REMOVEENUMOPTION = "removeEnumOption"
-    EDITMULTISELECTOPTION = "editMultiSelectOption"
-    REMOVEMULTISELECTOPTION = "removeMultiSelectOption"
+    EDITTEMPLATE = 'editTemplate'
+    ADDFIELD = 'addField'
+    REORDERFIELDS = 'reorderFields'
+    ADDENUMOPTION = 'addEnumOption'
+    REORDERENUMOPTIONS = 'reorderEnumOptions'
+    REORDERMULTISELECTOPTIONS = 'reorderMultiSelectOptions'
+    ADDMULTISELECTOPTION = 'addMultiSelectOption'
+    EDITFIELD = 'editField'
+    REMOVEFIELD = 'removeField'
+    EDITENUMOPTION = 'editEnumOption'
+    REMOVEENUMOPTION = 'removeEnumOption'
+    EDITMULTISELECTOPTION = 'editMultiSelectOption'
+    REMOVEMULTISELECTOPTION = 'removeMultiSelectOption'
 
 
 class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "field_key": "fieldKey",
-        "field_keys": "fieldKeys",
-        "enum_option_key": "enumOptionKey",
-        "enum_option_keys": "enumOptionKeys",
-        "multi_select_option_key": "multiSelectOptionKey",
-        "multi_select_option_keys": "multiSelectOptionKeys",
+        'field_key': 'fieldKey',
+        'field_keys': 'fieldKeys',
+        'enum_option_key': 'enumOptionKey',
+        'enum_option_keys': 'enumOptionKeys',
+        'multi_select_option_key': 'multiSelectOptionKey',
+        'multi_select_option_keys': 'multiSelectOptionKeys',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "fieldKey": "field_key",
-        "fieldKeys": "field_keys",
-        "enumOptionKey": "enum_option_key",
-        "enumOptionKeys": "enum_option_keys",
-        "multiSelectOptionKey": "multi_select_option_key",
-        "multiSelectOptionKeys": "multi_select_option_keys",
+        'fieldKey': 'field_key',
+        'fieldKeys': 'field_keys',
+        'enumOptionKey': 'enum_option_key',
+        'enumOptionKeys': 'enum_option_keys',
+        'multiSelectOptionKey': 'multi_select_option_key',
+        'multiSelectOptionKeys': 'multi_select_option_keys',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -131,16 +131,16 @@ class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
 
 
 class DeleteMetadataTemplateSchemaScopeArg(str, Enum):
-    GLOBAL = "global"
-    ENTERPRISE = "enterprise"
+    GLOBAL = 'global'
+    ENTERPRISE = 'enterprise'
 
 
 class CreateMetadataTemplateSchemaFieldsArgTypeField(str, Enum):
-    STRING = "string"
-    FLOAT = "float"
-    DATE = "date"
-    ENUM = "enum"
-    MULTISELECT = "multiSelect"
+    STRING = 'string'
+    FLOAT = 'float'
+    DATE = 'date'
+    ENUM = 'enum'
+    MULTISELECT = 'multiSelect'
 
 
 class CreateMetadataTemplateSchemaFieldsArgOptionsField(BaseObject):
@@ -156,11 +156,11 @@ class CreateMetadataTemplateSchemaFieldsArgOptionsField(BaseObject):
 
 class CreateMetadataTemplateSchemaFieldsArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
-        "display_name": "displayName",
+        'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
-        "displayName": "display_name",
+        'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
 
@@ -235,16 +235,16 @@ class MetadataTemplatesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"metadata_instance_id": to_string(metadata_instance_id)}
+            {'metadata_instance_id': to_string(metadata_instance_id)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_templates"]),
+            ''.join(['https://api.box.com/2.0/metadata_templates']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -278,19 +278,19 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/",
+                    'https://api.box.com/2.0/metadata_templates/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
-                    "/schema",
+                    '/schema',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -333,21 +333,21 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/",
+                    'https://api.box.com/2.0/metadata_templates/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
-                    "/schema",
+                    '/schema',
                 ]
             ),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json-patch+json",
-                response_format="json",
+                content_type='application/json-patch+json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -378,17 +378,17 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/metadata_templates/",
+                    'https://api.box.com/2.0/metadata_templates/',
                     scope,
-                    "/",
+                    '/',
                     template_key,
-                    "/schema",
+                    '/schema',
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -412,11 +412,11 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_templates/", template_id]),
+            ''.join(['https://api.box.com/2.0/metadata_templates/', template_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -446,16 +446,16 @@ class MetadataTemplatesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"marker": to_string(marker), "limit": to_string(limit)}
+            {'marker': to_string(marker), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_templates/global"]),
+            ''.join(['https://api.box.com/2.0/metadata_templates/global']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -485,16 +485,16 @@ class MetadataTemplatesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {"marker": to_string(marker), "limit": to_string(limit)}
+            {'marker': to_string(marker), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_templates/enterprise"]),
+            ''.join(['https://api.box.com/2.0/metadata_templates/enterprise']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -556,13 +556,13 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/metadata_templates/schema"]),
+            ''.join(['https://api.box.com/2.0/metadata_templates/schema']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

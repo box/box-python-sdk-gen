@@ -36,17 +36,17 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class GetLegalHoldPolicyAssignmentsAssignToTypeArg(str, Enum):
-    FILE = "file"
-    FILE_VERSION = "file_version"
-    FOLDER = "folder"
-    USER = "user"
+    FILE = 'file'
+    FILE_VERSION = 'file_version'
+    FOLDER = 'folder'
+    USER = 'user'
 
 
 class CreateLegalHoldPolicyAssignmentAssignToArgTypeField(str, Enum):
-    FILE = "file"
-    FILE_VERSION = "file_version"
-    FOLDER = "folder"
-    USER = "user"
+    FILE = 'file'
+    FILE_VERSION = 'file_version'
+    FOLDER = 'folder'
+    USER = 'user'
 
 
 class CreateLegalHoldPolicyAssignmentAssignToArg(BaseObject):
@@ -118,22 +118,22 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "policy_id": to_string(policy_id),
-                "assign_to_type": to_string(assign_to_type),
-                "assign_to_id": to_string(assign_to_id),
-                "marker": to_string(marker),
-                "limit": to_string(limit),
-                "fields": to_string(fields),
+                'policy_id': to_string(policy_id),
+                'assign_to_type': to_string(assign_to_type),
+                'assign_to_id': to_string(assign_to_id),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/legal_hold_policy_assignments"]),
+            ''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -160,13 +160,13 @@ class LegalHoldPolicyAssignmentsManager:
         request_body = BaseObject(policy_id=policy_id, assign_to=assign_to)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/legal_hold_policy_assignments"]),
+            ''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -190,16 +190,16 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/legal_hold_policy_assignments/",
+                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
                     legal_hold_policy_assignment_id,
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -229,14 +229,14 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/legal_hold_policy_assignments/",
+                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
                     legal_hold_policy_assignment_id,
                 ]
             ),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
@@ -316,25 +316,25 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "marker": to_string(marker),
-                "limit": to_string(limit),
-                "fields": to_string(fields),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/legal_hold_policy_assignments/",
+                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
                     legal_hold_policy_assignment_id,
-                    "/files_on_hold",
+                    '/files_on_hold',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -412,25 +412,25 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
             {
-                "marker": to_string(marker),
-                "limit": to_string(limit),
-                "fields": to_string(fields),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(
+            ''.join(
                 [
-                    "https://api.box.com/2.0/legal_hold_policy_assignments/",
+                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
                     legal_hold_policy_assignment_id,
-                    "/file_versions_on_hold",
+                    '/file_versions_on_hold',
                 ]
             ),
             FetchOptions(
-                method="GET",
+                method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),

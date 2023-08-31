@@ -34,7 +34,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 
 class CreateTaskItemArgTypeField(str, Enum):
-    FILE = "file"
+    FILE = 'file'
 
 
 class CreateTaskItemArg(BaseObject):
@@ -56,23 +56,23 @@ class CreateTaskItemArg(BaseObject):
 
 
 class CreateTaskActionArg(str, Enum):
-    REVIEW = "review"
-    COMPLETE = "complete"
+    REVIEW = 'review'
+    COMPLETE = 'complete'
 
 
 class CreateTaskCompletionRuleArg(str, Enum):
-    ALL_ASSIGNEES = "all_assignees"
-    ANY_ASSIGNEE = "any_assignee"
+    ALL_ASSIGNEES = 'all_assignees'
+    ANY_ASSIGNEE = 'any_assignee'
 
 
 class UpdateTaskByIdActionArg(str, Enum):
-    REVIEW = "review"
-    COMPLETE = "complete"
+    REVIEW = 'review'
+    COMPLETE = 'complete'
 
 
 class UpdateTaskByIdCompletionRuleArg(str, Enum):
-    ALL_ASSIGNEES = "all_assignees"
-    ANY_ASSIGNEE = "any_assignee"
+    ALL_ASSIGNEES = 'all_assignees'
+    ANY_ASSIGNEE = 'any_assignee'
 
 
 class TasksManager:
@@ -107,11 +107,11 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/files/", file_id, "/tasks"]),
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -165,13 +165,13 @@ class TasksManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/tasks"]),
+            ''.join(['https://api.box.com/2.0/tasks']),
             FetchOptions(
-                method="POST",
+                method='POST',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -193,11 +193,11 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/tasks/", task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
             FetchOptions(
-                method="GET",
+                method='GET',
                 headers=headers_map,
-                response_format="json",
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -250,13 +250,13 @@ class TasksManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/tasks/", task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
             FetchOptions(
-                method="PUT",
+                method='PUT',
                 headers=headers_map,
                 body=json.dumps(request_body.to_dict()),
-                content_type="application/json",
-                response_format="json",
+                content_type='application/json',
+                response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
@@ -278,9 +278,9 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            "".join(["https://api.box.com/2.0/tasks/", task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
             FetchOptions(
-                method="DELETE",
+                method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
