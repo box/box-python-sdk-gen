@@ -1,6 +1,5 @@
 # SignTemplatesManager
 
-
 - [List Box Sign templates](#list-box-sign-templates)
 - [Get Box Sign template by ID](#get-box-sign-template-by-id)
 
@@ -13,24 +12,22 @@ This operation is performed by calling function `get_sign_templates`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-sign-templates/).
 
-*Currently we don't have an example for calling `get_sign_templates` in integration tests*
+_Currently we don't have an example for calling `get_sign_templates` in integration tests_
 
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `SignTemplates`.
 
 Returns a collection of templates.
-
 
 ## Get Box Sign template by ID
 
@@ -41,7 +38,7 @@ This operation is performed by calling function `get_sign_template_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-sign-templates-id/).
 
-*Currently we don't have an example for calling `get_sign_template_by_id` in integration tests*
+_Currently we don't have an example for calling `get_sign_template_by_id` in integration tests_
 
 ### Arguments
 
@@ -50,11 +47,8 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `SignTemplate`.
 
 Returns details of a template.
-
-

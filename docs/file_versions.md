@@ -1,6 +1,5 @@
 # FileVersionsManager
 
-
 - [List all file versions](#list-all-file-versions)
 - [Get file version](#get-file-version)
 - [Restore file version](#restore-file-version)
@@ -19,28 +18,26 @@ This operation is performed by calling function `get_file_versions`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-versions/).
 
-*Currently we don't have an example for calling `get_file_versions` in integration tests*
+_Currently we don't have an example for calling `get_file_versions` in integration tests_
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - offset `Optional[int]`
-  - The offset of the item at which to begin the response.  Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
+  - The offset of the item at which to begin the response. Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `FileVersions`.
 
 Returns an array of past versions for this file.
-
 
 ## Get file version
 
@@ -53,19 +50,18 @@ This operation is performed by calling function `get_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-versions-id/).
 
-*Currently we don't have an example for calling `get_file_version_by_id` in integration tests*
+_Currently we don't have an example for calling `get_file_version_by_id` in integration tests_
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
   - The ID of the file version Example: "1234"
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -76,7 +72,6 @@ Returns a specific version of a file.
 Not all available fields are returned by default. Use the
 [fields](#param-fields) query parameter to explicitly request
 any specific fields.
-
 
 ## Restore file version
 
@@ -90,12 +85,12 @@ This operation is performed by calling function `update_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-versions-id/).
 
-*Currently we don't have an example for calling `update_file_version_by_id` in integration tests*
+_Currently we don't have an example for calling `update_file_version_by_id` in integration tests_
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
   - The ID of the file version Example: "1234"
 - trashed_at `Optional[str]`
@@ -103,13 +98,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `FileVersionFull`.
 
 Returns a restored file version object.
-
 
 ## Remove file version
 
@@ -122,19 +115,18 @@ This operation is performed by calling function `delete_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-versions-id/).
 
-*Currently we don't have an example for calling `delete_file_version_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_file_version_by_id` in integration tests_
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
   - The ID of the file version Example: "1234"
 - if_match `Optional[str]`
-  - Ensures this item hasn't recently changed before making changes.  Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
+  - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -142,7 +134,6 @@ This function returns a value of type `None`.
 
 Returns an empty response when the file has been successfully
 deleted.
-
 
 ## Promote file version
 
@@ -168,26 +159,23 @@ This operation is performed by calling function `promote_file_version`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-versions-current/).
 
-*Currently we don't have an example for calling `promote_file_version` in integration tests*
+_Currently we don't have an example for calling `promote_file_version` in integration tests_
 
 ### Arguments
 
 - file_id `str`
-  - The unique identifier that represents a file.  The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - id `Optional[str]`
   - The file version ID
 - type `Optional[PromoteFileVersionTypeArg]`
   - The type to promote
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `FileVersionFull`.
 
 Returns a newly created file version object.
-
-

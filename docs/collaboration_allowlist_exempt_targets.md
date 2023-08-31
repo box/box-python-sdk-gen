@@ -1,6 +1,5 @@
 # CollaborationAllowlistExemptTargetsManager
 
-
 - [List users exempt from collaboration domain restrictions](#list-users-exempt-from-collaboration-domain-restrictions)
 - [Create user exemption from collaboration domain restrictions](#create-user-exemption-from-collaboration-domain-restrictions)
 - [Get user exempt from collaboration domain restrictions](#get-user-exempt-from-collaboration-domain-restrictions)
@@ -16,24 +15,22 @@ This operation is performed by calling function `get_collaboration_whitelist_exe
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets/).
 
-*Currently we don't have an example for calling `get_collaboration_whitelist_exempt_targets` in integration tests*
+_Currently we don't have an example for calling `get_collaboration_whitelist_exempt_targets` in integration tests_
 
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistExemptTargets`.
 
 Returns a collection of user exemptions.
-
 
 ## Create user exemption from collaboration domain restrictions
 
@@ -45,7 +42,7 @@ This operation is performed by calling function `create_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-collaboration-whitelist-exempt-targets/).
 
-*Currently we don't have an example for calling `create_collaboration_whitelist_exempt_target` in integration tests*
+_Currently we don't have an example for calling `create_collaboration_whitelist_exempt_target` in integration tests_
 
 ### Arguments
 
@@ -54,13 +51,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistExemptTarget`.
 
 Returns a new exemption entry.
-
 
 ## Get user exempt from collaboration domain restrictions
 
@@ -72,7 +67,7 @@ This operation is performed by calling function `get_collaboration_whitelist_exe
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets-id/).
 
-*Currently we don't have an example for calling `get_collaboration_whitelist_exempt_target_by_id` in integration tests*
+_Currently we don't have an example for calling `get_collaboration_whitelist_exempt_target_by_id` in integration tests_
 
 ### Arguments
 
@@ -81,13 +76,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistExemptTarget`.
 
 Returns the user's exempted from the list of collaboration domains.
-
 
 ## Remove user from list of users exempt from domain restrictions
 
@@ -99,7 +92,7 @@ This operation is performed by calling function `delete_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-exempt-targets-id/).
 
-*Currently we don't have an example for calling `delete_collaboration_whitelist_exempt_target_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_collaboration_whitelist_exempt_target_by_id` in integration tests_
 
 ### Arguments
 
@@ -108,12 +101,9 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 A blank response is returned if the exemption was
 successfully deleted.
-
-

@@ -1,6 +1,5 @@
 # MetadataTemplatesManager
 
-
 - [Find metadata template by instance ID](#find-metadata-template-by-instance-id)
 - [Get metadata template by name](#get-metadata-template-by-name)
 - [Update metadata template](#update-metadata-template)
@@ -20,7 +19,7 @@ This operation is performed by calling function `get_metadata_templates`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates/).
 
-*Currently we don't have an example for calling `get_metadata_templates` in integration tests*
+_Currently we don't have an example for calling `get_metadata_templates` in integration tests_
 
 ### Arguments
 
@@ -29,14 +28,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `MetadataTemplates`.
 
 Returns a list containing the 1 metadata template that matches the
 instance ID.
-
 
 ## Get metadata template by name
 
@@ -51,6 +48,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-id-id-schema/).
 
 <!-- sample get_metadata_templates_id_id_schema -->
+
 ```python
 client.metadata_templates.get_metadata_template_schema(scope=GetMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
 ```
@@ -64,14 +62,12 @@ client.metadata_templates.get_metadata_template_schema(scope=GetMetadataTemplate
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `MetadataTemplate`.
 
 Returns the metadata template matching the `scope`
 and `template` name.
-
 
 ## Update metadata template
 
@@ -88,7 +84,7 @@ This operation is performed by calling function `update_metadata_template_schema
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-metadata-templates-id-id-schema/).
 
-*Currently we don't have an example for calling `update_metadata_template_schema` in integration tests*
+_Currently we don't have an example for calling `update_metadata_template_schema` in integration tests_
 
 ### Arguments
 
@@ -101,14 +97,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `MetadataTemplate`.
 
 Returns the updated metadata template, with the
 custom template data included.
-
 
 ## Remove metadata template
 
@@ -121,6 +115,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-templates-id-id-schema/).
 
 <!-- sample delete_metadata_templates_id_id_schema -->
+
 ```python
 client.metadata_templates.delete_metadata_template_schema(scope=DeleteMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
 ```
@@ -134,14 +129,12 @@ client.metadata_templates.delete_metadata_template_schema(scope=DeleteMetadataTe
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 Returns an empty response when the metadata
 template is successfully deleted.
-
 
 ## Get metadata template by ID
 
@@ -153,6 +146,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-id/).
 
 <!-- sample get_metadata_templates_id -->
+
 ```python
 client.metadata_templates.get_metadata_template_by_id(template_id=template.id)
 ```
@@ -164,13 +158,11 @@ client.metadata_templates.get_metadata_template_by_id(template_id=template.id)
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `MetadataTemplate`.
 
 Returns the metadata template that matches the ID.
-
 
 ## List all global metadata templates
 
@@ -183,6 +175,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-global/).
 
 <!-- sample get_metadata_templates_global -->
+
 ```python
 client.metadata_templates.get_metadata_template_global()
 ```
@@ -190,12 +183,11 @@ client.metadata_templates.get_metadata_template_global()
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -203,7 +195,6 @@ This function returns a value of type `MetadataTemplates`.
 
 Returns all of the metadata templates available to all enterprises
 and their corresponding schema.
-
 
 ## List all metadata templates for enterprise
 
@@ -216,6 +207,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise/).
 
 <!-- sample get_metadata_templates_enterprise -->
+
 ```python
 client.metadata_templates.get_metadata_template_enterprise()
 ```
@@ -223,12 +215,11 @@ client.metadata_templates.get_metadata_template_enterprise()
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -236,7 +227,6 @@ This function returns a value of type `MetadataTemplates`.
 
 Returns all of the metadata templates within an enterprise
 and their corresponding schema.
-
 
 ## Create metadata template
 
@@ -249,6 +239,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-templates-schema/).
 
 <!-- sample post_metadata_templates_schema -->
+
 ```python
 client.metadata_templates.create_metadata_template_schema(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateSchemaFieldsArg(type=CreateMetadataTemplateSchemaFieldsArgTypeField.STRING.value, key='testName', display_name='testName')])
 ```
@@ -256,9 +247,9 @@ client.metadata_templates.create_metadata_template_schema(scope='enterprise', te
 ### Arguments
 
 - scope `str`
-  - The scope of the metadata template to create. Applications can only create templates for use within the authenticated user's enterprise.  This value needs to be set to `enterprise`, as `global` scopes can not be created by applications.
+  - The scope of the metadata template to create. Applications can only create templates for use within the authenticated user's enterprise. This value needs to be set to `enterprise`, as `global` scopes can not be created by applications.
 - template_key `Optional[str]`
-  - A unique identifier for the template. This identifier needs to be unique across the enterprise for which the metadata template is being created.  When not provided, the API will create a unique `templateKey` based on the value of the `displayName`.
+  - A unique identifier for the template. This identifier needs to be unique across the enterprise for which the metadata template is being created. When not provided, the API will create a unique `templateKey` based on the value of the `displayName`.
 - display_name `str`
   - The display name of the template.
 - hidden `Optional[bool]`
@@ -270,11 +261,8 @@ client.metadata_templates.create_metadata_template_schema(scope='enterprise', te
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `MetadataTemplate`.
 
 The schema representing the metadata template created.
-
-

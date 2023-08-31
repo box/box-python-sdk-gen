@@ -1,6 +1,5 @@
 # LegalHoldPoliciesManager
 
-
 - [List all legal hold policies](#list-all-legal-hold-policies)
 - [Create legal hold policy](#create-legal-hold-policy)
 - [Get legal hold policy](#get-legal-hold-policy)
@@ -17,28 +16,26 @@ This operation is performed by calling function `get_legal_hold_policies`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policies/).
 
-*Currently we don't have an example for calling `get_legal_hold_policies` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policies` in integration tests_
 
 ### Arguments
 
 - policy_name `Optional[str]`
   - Limits results to policies for which the names start with this search term. This is a case-insensitive prefix.
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `LegalHoldPolicies`.
 
 Returns a list of legal hold policies.
-
 
 ## Create legal hold policy
 
@@ -49,7 +46,7 @@ This operation is performed by calling function `create_legal_hold_policy`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-legal-hold-policies/).
 
-*Currently we don't have an example for calling `create_legal_hold_policy` in integration tests*
+_Currently we don't have an example for calling `create_legal_hold_policy` in integration tests_
 
 ### Arguments
 
@@ -58,21 +55,19 @@ See the endpoint docs at
 - description `Optional[str]`
   - A description for the policy.
 - filter_started_at `Optional[str]`
-  - The filter start date.  When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter.  Required if `is_ongoing` is set to `false`.
+  - The filter start date. When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter. Required if `is_ongoing` is set to `false`.
 - filter_ended_at `Optional[str]`
-  - The filter end date.  When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter.  Required if `is_ongoing` is set to `false`.
+  - The filter end date. When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter. Required if `is_ongoing` is set to `false`.
 - is_ongoing `Optional[bool]`
-  - Whether new assignments under this policy should continue applying to files even after initialization.  When this policy is applied using a legal hold assignment, it will continue applying the policy to any new file versions even after it has been applied.  For example, if a legal hold assignment is placed on a user today, and that user uploads a file tomorrow, that file will get held. This will continue until the policy is retired.  Required if no filter dates are set.
+  - Whether new assignments under this policy should continue applying to files even after initialization. When this policy is applied using a legal hold assignment, it will continue applying the policy to any new file versions even after it has been applied. For example, if a legal hold assignment is placed on a user today, and that user uploads a file tomorrow, that file will get held. This will continue until the policy is retired. Required if no filter dates are set.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `LegalHoldPolicy`.
 
 Returns a new legal hold policy object.
-
 
 ## Get legal hold policy
 
@@ -83,7 +78,7 @@ This operation is performed by calling function `get_legal_hold_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policies-id/).
 
-*Currently we don't have an example for calling `get_legal_hold_policy_by_id` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policy_by_id` in integration tests_
 
 ### Arguments
 
@@ -92,13 +87,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `LegalHoldPolicy`.
 
 Returns a legal hold policy object.
-
 
 ## Update legal hold policy
 
@@ -109,7 +102,7 @@ This operation is performed by calling function `update_legal_hold_policy_by_id`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-legal-hold-policies-id/).
 
-*Currently we don't have an example for calling `update_legal_hold_policy_by_id` in integration tests*
+_Currently we don't have an example for calling `update_legal_hold_policy_by_id` in integration tests_
 
 ### Arguments
 
@@ -124,13 +117,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `LegalHoldPolicy`.
 
 Returns a new legal hold policy object.
-
 
 ## Remove legal hold policy
 
@@ -144,7 +135,7 @@ This operation is performed by calling function `delete_legal_hold_policy_by_id`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-legal-hold-policies-id/).
 
-*Currently we don't have an example for calling `delete_legal_hold_policy_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_legal_hold_policy_by_id` in integration tests_
 
 ### Arguments
 
@@ -153,12 +144,9 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 A blank response is returned if the policy was
 successfully deleted.
-
-

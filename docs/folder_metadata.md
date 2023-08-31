@@ -1,6 +1,5 @@
 # FolderMetadataManager
 
-
 - [List metadata instances on folder](#list-metadata-instances-on-folder)
 - [Get metadata instance on folder](#get-metadata-instance-on-folder)
 - [Create metadata instance on folder](#create-metadata-instance-on-folder)
@@ -17,15 +16,14 @@ This operation is performed by calling function `get_folder_metadata`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-metadata/).
 
-*Currently we don't have an example for calling `get_folder_metadata` in integration tests*
+_Currently we don't have an example for calling `get_folder_metadata` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -35,7 +33,6 @@ Returns all the metadata associated with a folder.
 
 This API does not support pagination and will therefore always return
 all of the metadata associated to the folder.
-
 
 ## Get metadata instance on folder
 
@@ -47,19 +44,18 @@ This operation is performed by calling function `get_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-metadata-id-id/).
 
-*Currently we don't have an example for calling `get_folder_metadata_by_id` in integration tests*
+_Currently we don't have an example for calling `get_folder_metadata_by_id` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `GetFolderMetadataByIdScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -68,7 +64,6 @@ This function returns a value of type `Metadata`.
 An instance of the metadata template that includes
 additional "key:value" pairs defined by the user or
 an application.
-
 
 ## Create metadata instance on folder
 
@@ -87,12 +82,12 @@ This operation is performed by calling function `create_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-folders-id-metadata-id-id/).
 
-*Currently we don't have an example for calling `create_folder_metadata_by_id` in integration tests*
+_Currently we don't have an example for calling `create_folder_metadata_by_id` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `CreateFolderMetadataByIdScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
@@ -102,14 +97,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `Metadata`.
 
 Returns the instance of the template that was applied to the folder,
 including the data that was applied to the template.
-
 
 ## Update metadata instance on folder
 
@@ -127,12 +120,12 @@ This operation is performed by calling function `update_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-metadata-id-id/).
 
-*Currently we don't have an example for calling `update_folder_metadata_by_id` in integration tests*
+_Currently we don't have an example for calling `update_folder_metadata_by_id` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `UpdateFolderMetadataByIdScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
@@ -142,14 +135,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `Metadata`.
 
 Returns the updated metadata template instance, with the
 custom template data included.
-
 
 ## Remove metadata instance from folder
 
@@ -160,12 +151,12 @@ This operation is performed by calling function `delete_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folders-id-metadata-id-id/).
 
-*Currently we don't have an example for calling `delete_folder_metadata_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_folder_metadata_by_id` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`. Example: "12345"
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - scope `DeleteFolderMetadataByIdScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
@@ -173,12 +164,9 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 Returns an empty response when the metadata is
 successfully deleted.
-
-

@@ -1,6 +1,5 @@
 # FolderLocksManager
 
-
 - [List folder locks](#list-folder-locks)
 - [Create folder lock](#create-folder-lock)
 - [Delete folder lock](#delete-folder-lock)
@@ -18,6 +17,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folder-locks/).
 
 <!-- sample get_folder_locks -->
+
 ```python
 client.folder_locks.get_folder_locks(folder_id=folder.id)
 ```
@@ -25,10 +25,9 @@ client.folder_locks.get_folder_locks(folder_id=folder.id)
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`.
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -36,7 +35,6 @@ This function returns a value of type `FolderLocks`.
 
 Returns details for all folder locks applied to the folder, including the
 lock type and user that applied the lock.
-
 
 ## Create folder lock
 
@@ -52,6 +50,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-folder-locks/).
 
 <!-- sample post_folder_locks -->
+
 ```python
 client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedOperationsArg(move=True, delete=True), folder=CreateFolderLockFolderArg(id=folder.id, type='folder'))
 ```
@@ -65,14 +64,12 @@ client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedO
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `FolderLock`.
 
 Returns the instance of the folder lock that was applied to the folder,
 including the user that applied the lock and the operations set.
-
 
 ## Delete folder lock
 
@@ -87,6 +84,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folder-locks-id/).
 
 <!-- sample delete_folder_locks_id -->
+
 ```python
 client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
 ```
@@ -98,11 +96,8 @@ client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 Returns an empty response when the folder lock is successfully deleted.
-
-

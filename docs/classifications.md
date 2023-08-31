@@ -1,6 +1,5 @@
 # ClassificationsManager
 
-
 - [List all classifications](#list-all-classifications)
 - [Delete all classifications](#delete-all-classifications)
 - [Add classification](#add-classification)
@@ -22,13 +21,12 @@ This operation is performed by calling function `get_metadata_template_enterpris
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema/).
 
-*Currently we don't have an example for calling `get_metadata_template_enterprise_security_classification_schema` in integration tests*
+_Currently we don't have an example for calling `get_metadata_template_enterprise_security_classification_schema` in integration tests_
 
 ### Arguments
 
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -37,7 +35,6 @@ This function returns a value of type `ClassificationTemplate`.
 Returns the `securityClassification` metadata template, which contains
 a `Box__Security__Classification__Key` field that lists all the
 classifications available to this enterprise.
-
 
 ## Delete all classifications
 
@@ -49,13 +46,12 @@ This operation is performed by calling function `delete_metadata_template_enterp
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema/).
 
-*Currently we don't have an example for calling `delete_metadata_template_enterprise_security_classification_schema` in integration tests*
+_Currently we don't have an example for calling `delete_metadata_template_enterprise_security_classification_schema` in integration tests_
 
 ### Arguments
 
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -63,7 +59,6 @@ This function returns a value of type `None`.
 
 Returns an empty response when the metadata
 template for classifications is successfully deleted.
-
 
 ## Add classification
 
@@ -79,7 +74,7 @@ This operation is performed by calling function `update_metadata_template_enterp
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-add/).
 
-*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_add` in integration tests*
+_Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_add` in integration tests_
 
 ### Arguments
 
@@ -88,7 +83,6 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ClassificationTemplate`.
@@ -96,7 +90,6 @@ This function returns a value of type `ClassificationTemplate`.
 Returns the updated `securityClassification` metadata template, which
 contains a `Box__Security__Classification__Key` field that lists all
 the classifications available to this enterprise.
-
 
 ## Update classification
 
@@ -112,7 +105,7 @@ This operation is performed by calling function `update_metadata_template_enterp
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-update/).
 
-*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_update` in integration tests*
+_Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_update` in integration tests_
 
 ### Arguments
 
@@ -121,7 +114,6 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ClassificationTemplate`.
@@ -129,7 +121,6 @@ This function returns a value of type `ClassificationTemplate`.
 Returns the updated `securityClassification` metadata template, which
 contains a `Box__Security__Classification__Key` field that lists all
 the classifications available to this enterprise.
-
 
 ## Delete classification
 
@@ -145,7 +136,7 @@ This operation is performed by calling function `update_metadata_template_enterp
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-delete/).
 
-*Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_delete` in integration tests*
+_Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_delete` in integration tests_
 
 ### Arguments
 
@@ -154,7 +145,6 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ClassificationTemplate`.
@@ -162,7 +152,6 @@ This function returns a value of type `ClassificationTemplate`.
 Returns the updated `securityClassification` metadata template, which
 contains a `Box__Security__Classification__Key` field that lists all
 the classifications available to this enterprise.
-
 
 ## Add initial classifications
 
@@ -179,7 +168,7 @@ This operation is performed by calling function `create_metadata_template_schema
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-templates-schema-classifications/).
 
-*Currently we don't have an example for calling `create_metadata_template_schema_classification` in integration tests*
+_Currently we don't have an example for calling `create_metadata_template_schema_classification` in integration tests_
 
 ### Arguments
 
@@ -198,7 +187,6 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ClassificationTemplate`.
@@ -206,5 +194,3 @@ This function returns a value of type `ClassificationTemplate`.
 Returns a new `securityClassification` metadata template, which
 contains a `Box__Security__Classification__Key` field that lists all
 the classifications available to this enterprise.
-
-

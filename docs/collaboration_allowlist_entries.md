@@ -1,6 +1,5 @@
 # CollaborationAllowlistEntriesManager
 
-
 - [List allowed collaboration domains](#list-allowed-collaboration-domains)
 - [Add domain to list of allowed collaboration domains](#add-domain-to-list-of-allowed-collaboration-domains)
 - [Get allowed collaboration domain](#get-allowed-collaboration-domain)
@@ -16,24 +15,22 @@ This operation is performed by calling function `get_collaboration_whitelist_ent
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries/).
 
-*Currently we don't have an example for calling `get_collaboration_whitelist_entries` in integration tests*
+_Currently we don't have an example for calling `get_collaboration_whitelist_entries` in integration tests_
 
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistEntries`.
 
 Returns a collection of domains that are allowed for collaboration.
-
 
 ## Add domain to list of allowed collaboration domains
 
@@ -45,7 +42,7 @@ This operation is performed by calling function `create_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-collaboration-whitelist-entries/).
 
-*Currently we don't have an example for calling `create_collaboration_whitelist_entry` in integration tests*
+_Currently we don't have an example for calling `create_collaboration_whitelist_entry` in integration tests_
 
 ### Arguments
 
@@ -56,13 +53,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistEntry`.
 
 Returns a new entry on the list of allowed domains.
-
 
 ## Get allowed collaboration domain
 
@@ -74,7 +69,7 @@ This operation is performed by calling function `get_collaboration_whitelist_ent
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries-id/).
 
-*Currently we don't have an example for calling `get_collaboration_whitelist_entry_by_id` in integration tests*
+_Currently we don't have an example for calling `get_collaboration_whitelist_entry_by_id` in integration tests_
 
 ### Arguments
 
@@ -83,13 +78,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `CollaborationAllowlistEntry`.
 
 Returns an entry on the list of allowed domains.
-
 
 ## Remove domain from list of allowed collaboration domains
 
@@ -101,7 +94,7 @@ This operation is performed by calling function `delete_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-entries-id/).
 
-*Currently we don't have an example for calling `delete_collaboration_whitelist_entry_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_collaboration_whitelist_entry_by_id` in integration tests_
 
 ### Arguments
 
@@ -110,12 +103,9 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 A blank response is returned if the entry was
 successfully deleted.
-
-
