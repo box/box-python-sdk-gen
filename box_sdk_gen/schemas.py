@@ -11850,8 +11850,46 @@ class MetadataFieldFilterMultiSelect(BaseObject):
     pass
 
 
+class MetadataFieldFilterFloatRangeMapValue(BaseObject):
+    def __init__(self, lt: Optional[int] = None, gt: Optional[int] = None, **kwargs):
+        """
+        :param lt: Specifies the (inclusive) upper bound for the metadata field
+            value. The value of a field must be lower than (`lt`) or
+            equal to this value for the search query to match this
+            template.
+        :type lt: Optional[int], optional
+        :param gt: Specifies the (inclusive) lower bound for the metadata field
+            value. The value of a field must be greater than (`gt`) or
+            equal to this value for the search query to match this
+            template.
+        :type gt: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.lt = lt
+        self.gt = gt
+
+
 class MetadataFieldFilterFloatRange(BaseObject):
     pass
+
+
+class MetadataFieldFilterDateRangeMapValue(BaseObject):
+    def __init__(self, lt: Optional[str] = None, gt: Optional[str] = None, **kwargs):
+        """
+        :param lt: Specifies the (inclusive) upper bound for the metadata field
+            value. The value of a field must be lower than (`lt`) or
+            equal to this value for the search query to match this
+            template.
+        :type lt: Optional[str], optional
+        :param gt: Specifies the (inclusive) lower bound for the metadata field
+            value. The value of a field must be greater than (`gt`) or
+            equal to this value for the search query to match this
+            template.
+        :type gt: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.lt = lt
+        self.gt = gt
 
 
 class MetadataFieldFilterDateRange(BaseObject):
