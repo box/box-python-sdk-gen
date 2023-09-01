@@ -28,14 +28,22 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class EmailAliasesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_user_email_aliases(self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> EmailAliases:
+
+    def get_user_email_aliases(
+        self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> EmailAliases:
         """
         Retrieves all email aliases for a user. The collection
-        
+
         does not include the primary login for the user.
 
         :param user_id: The ID of the user.
@@ -47,9 +55,24 @@ class EmailAliasesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return EmailAliases.from_dict(json.loads(response.text))
-    def create_user_email_alias(self, user_id: str, email: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> EmailAlias:
+
+    def create_user_email_alias(
+        self,
+        user_id: str,
+        email: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> EmailAlias:
         """
         Adds a new email alias to a user account..
         :param user_id: The ID of the user.
@@ -67,11 +90,28 @@ class EmailAliasesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(email=email)
+        request_body = BaseObject(email=email)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return EmailAlias.from_dict(json.loads(response.text))
-    def delete_user_email_alias_by_id(self, user_id: str, email_alias_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_user_email_alias_by_id(
+        self,
+        user_id: str,
+        email_alias_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Removes an email alias from a user.
         :param user_id: The ID of the user.
@@ -86,5 +126,21 @@ class EmailAliasesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases/', email_alias_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/users/',
+                    user_id,
+                    '/email_aliases/',
+                    email_alias_id,
+                ]
+            ),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

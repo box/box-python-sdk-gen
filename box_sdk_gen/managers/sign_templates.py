@@ -26,11 +26,22 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class SignTemplatesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_sign_templates(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignTemplates:
+
+    def get_sign_templates(
+        self,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SignTemplates:
         """
         Gets Box Sign templates created by a user.
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -44,11 +55,26 @@ class SignTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/sign_templates']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignTemplates.from_dict(json.loads(response.text))
-    def get_sign_template_by_id(self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignTemplate:
+
+    def get_sign_template_by_id(
+        self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> SignTemplate:
         """
         Fetches details of a specific Box Sign template.
         :param template_id: The ID of a Box Sign template.
@@ -60,5 +86,14 @@ class SignTemplatesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_templates/', template_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/sign_templates/', template_id]),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignTemplate.from_dict(json.loads(response.text))

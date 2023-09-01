@@ -3,18 +3,23 @@ from urllib.parse import urlencode
 from typing import Union, Optional
 
 from .auth import Authentication
-from .auth_schemas import TokenRequestBoxSubjectType, TokenRequest, TokenRequestGrantType, AccessToken
+from .auth_schemas import (
+    TokenRequestBoxSubjectType,
+    TokenRequest,
+    TokenRequestGrantType,
+)
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
+from .schemas import AccessToken
 
 
 class CCGConfig:
     def __init__(
-            self,
-            client_id: str,
-            client_secret: str,
-            enterprise_id: Union[None, str] = None,
-            user_id: Union[None, str] = None
+        self,
+        client_id: str,
+        client_secret: str,
+        enterprise_id: Union[None, str] = None,
+        user_id: Union[None, str] = None,
     ):
         """
         :param client_id:
@@ -51,13 +56,13 @@ class CCGConfig:
 
 
 class CCGAuth(Authentication):
-    def __init__(self,  config: CCGConfig):
+    def __init__(self, config: CCGConfig):
         """
         :param config:
             Configuration object of Client Credentials Grant auth.
         """
         self.config = config
-        self.token: Union[None, str] = None
+        self.token: Union[None, AccessToken] = None
 
         if config.user_id:
             self.subject_id = self.config.user_id
@@ -66,17 +71,21 @@ class CCGAuth(Authentication):
             self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
             self.subject_id = self.config.enterprise_id
 
-    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Return a current token or get a new one when not available.
         :return:
             Access token
         """
         if self.token is None:
-            return self.refresh(network_session=network_session)
+            self.refresh_token(network_session=network_session)
         return self.token
 
-    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
+    def refresh_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Fetch a new access token
         :return:
@@ -87,7 +96,7 @@ class CCGAuth(Authentication):
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
             box_subject_id=self.subject_id,
-            box_subject_type=self.subject_type
+            box_subject_type=self.subject_type,
         )
 
         response: FetchResponse = fetch(
@@ -96,13 +105,13 @@ class CCGAuth(Authentication):
                 method='POST',
                 body=urlencode(request_body.to_dict()),
                 headers={'content-type': 'application/x-www-form-urlencoded'},
-                network_session=network_session
-            )
+                network_session=network_session,
+            ),
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))
-        self.token = token_response.access_token
-        return self.token
+        self.token = token_response
+        return token_response
 
     def as_user(self, user_id: str):
         """

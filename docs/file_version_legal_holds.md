@@ -1,6 +1,5 @@
 # FileVersionLegalHoldsManager
 
-
 - [Get file version legal hold](#get-file-version-legal-hold)
 - [List file version legal holds](#list-file-version-legal-holds)
 
@@ -14,7 +13,7 @@ This operation is performed by calling function `get_file_version_legal_hold_by_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-legal-holds-id/).
 
-*Currently we don't have an example for calling `get_file_version_legal_hold_by_id` in integration tests*
+_Currently we don't have an example for calling `get_file_version_legal_hold_by_id` in integration tests_
 
 ### Arguments
 
@@ -23,13 +22,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `FileVersionLegalHold`.
 
 Returns the legal hold policy assignments for the file version.
-
 
 ## List file version legal holds
 
@@ -59,19 +56,18 @@ This operation is performed by calling function `get_file_version_legal_holds`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-legal-holds/).
 
-*Currently we don't have an example for calling `get_file_version_legal_holds` in integration tests*
+_Currently we don't have an example for calling `get_file_version_legal_holds` in integration tests_
 
 ### Arguments
 
 - policy_id `str`
   - The ID of the legal hold policy to get the file version legal holds for.
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -79,5 +75,3 @@ This function returns a value of type `FileVersionLegalHolds`.
 
 Returns the list of file version legal holds for a specific legal
 hold policy.
-
-

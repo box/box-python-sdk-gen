@@ -1,6 +1,5 @@
 # RecentItemsManager
 
-
 - [List recently accessed items](#list-recently-accessed-items)
 
 ## List recently accessed items
@@ -15,6 +14,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-recent-items/).
 
 <!-- sample get_recent_items -->
+
 ```python
 client.recent_items.get_recent_items()
 ```
@@ -22,19 +22,16 @@ client.recent_items.get_recent_items()
 ### Arguments
 
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `RecentItems`.
 
 Returns a list recent items access by a user.
-
-

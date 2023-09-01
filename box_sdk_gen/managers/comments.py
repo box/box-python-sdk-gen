@@ -34,9 +34,11 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateCommentItemArgTypeField(str, Enum):
     FILE = 'file'
     COMMENT = 'comment'
+
 
 class CreateCommentItemArg(BaseObject):
     def __init__(self, id: str, type: CreateCommentItemArgTypeField, **kwargs):
@@ -50,11 +52,24 @@ class CreateCommentItemArg(BaseObject):
         self.id = id
         self.type = type
 
+
 class CommentsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_comments(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Comments:
+
+    def get_file_comments(
+        self,
+        file_id: str,
+        fields: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Comments:
         """
         Retrieves a list of comments for a file.
         :param file_id: The unique identifier that represents a file.
@@ -86,14 +101,36 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/comments']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/comments']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Comments.from_dict(json.loads(response.text))
-    def get_comment_by_id(self, comment_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> CommentFull:
+
+    def get_comment_by_id(
+        self,
+        comment_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> CommentFull:
         """
         Retrieves the message and metadata for a specific comment, as well
-        
+
         as information on the user who created the comment.
 
         :param comment_id: The ID of the comment.
@@ -115,9 +152,26 @@ class CommentsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return CommentFull.from_dict(json.loads(response.text))
-    def update_comment_by_id(self, comment_id: str, message: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> CommentFull:
+
+    def update_comment_by_id(
+        self,
+        comment_id: str,
+        message: Optional[str] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> CommentFull:
         """
         Update the message of a comment.
         :param comment_id: The ID of the comment.
@@ -139,12 +193,27 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(message=message)
+        request_body = BaseObject(message=message)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='PUT', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            FetchOptions(
+                method='PUT',
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return CommentFull.from_dict(json.loads(response.text))
-    def delete_comment_by_id(self, comment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_comment_by_id(
+        self, comment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Permanently deletes a comment.
         :param comment_id: The ID of the comment.
@@ -156,12 +225,29 @@ class CommentsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments/', comment_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def create_comment(self, message: str, item: CreateCommentItemArg, tagged_message: Optional[str] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Comment:
+
+    def create_comment(
+        self,
+        message: str,
+        item: CreateCommentItemArg,
+        tagged_message: Optional[str] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Comment:
         """
         Adds a comment by the user to a specific file, or
-        
+
         as a reply to an other comment.
 
         :param message: The text of the comment.
@@ -194,8 +280,22 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(message=message, tagged_message=tagged_message, item=item)
+        request_body = BaseObject(
+            message=message, tagged_message=tagged_message, item=item
+        )
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/comments']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/comments']),
+            FetchOptions(
+                method='POST',
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Comment.from_dict(json.loads(response.text))

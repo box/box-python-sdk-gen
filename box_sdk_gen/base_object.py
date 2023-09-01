@@ -15,7 +15,9 @@ class BaseObject:
         for key, value in data.items():
             mapping_field_name = cls._json_to_fields_mapping.get(key, key)
             annotation = cls.__init__.__annotations__.get(mapping_field_name, None)
-            unpacked_attributes[mapping_field_name] = cls.__deserialize(key, value, annotation)
+            unpacked_attributes[mapping_field_name] = cls.__deserialize(
+                key, value, annotation
+            )
         return cls(**unpacked_attributes)
 
     def to_dict(self) -> dict:
@@ -24,7 +26,10 @@ class BaseObject:
             if v is None:
                 continue
             if type(v) is list:
-                value = [item.to_dict() if isinstance(item, BaseObject) else item for item in v]
+                value = [
+                    item.to_dict() if isinstance(item, BaseObject) else item
+                    for item in v
+                ]
             elif isinstance(v, BaseObject):
                 value = v.to_dict()
             elif isinstance(v, Enum):
@@ -42,7 +47,9 @@ class BaseObject:
         if get_origin(annotation) == Optional:
             return cls.__deserialize(key, value, get_args(annotation))
         if get_origin(annotation) == Union:
-            union_without_none_type = [arg for arg in get_args(annotation) if arg is not type(None)]
+            union_without_none_type = [
+                arg for arg in get_args(annotation) if arg is not type(None)
+            ]
             if len(union_without_none_type) == 1:
                 return cls.__deserialize(key, value, union_without_none_type[0])
 
@@ -59,7 +66,9 @@ class BaseObject:
     def __deserialize_list(cls, key, value, annotation: list):
         list_type = get_args(annotation)[0]
         try:
-            return [cls.__deserialize(key, list_entry, list_type) for list_entry in value]
+            return [
+                cls.__deserialize(key, list_entry, list_type) for list_entry in value
+            ]
         except Exception:
             return value
 
@@ -70,7 +79,7 @@ class BaseObject:
 
         type = None
         for i, possible_type in enumerate(possible_types):
-            #remove special characters
+            # remove special characters
             if type_field_value.replace("_", "") in possible_types[i].__name__.lower():
                 type = possible_types[i]
                 break

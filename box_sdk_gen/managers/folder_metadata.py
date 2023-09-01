@@ -32,20 +32,25 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
+
 
 class CreateFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
+
 class CreateFolderMetadataByIdRequestBodyArg(BaseObject):
     pass
+
 
 class UpdateFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
+
 
 class UpdateFolderMetadataByIdRequestBodyArgOpField(str, Enum):
     ADD = 'add'
@@ -55,10 +60,25 @@ class UpdateFolderMetadataByIdRequestBodyArgOpField(str, Enum):
     MOVE = 'move'
     COPY = 'copy'
 
+
 class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {'from_': 'from', **BaseObject._fields_to_json_mapping}
-    _json_to_fields_mapping: Dict[str, str] = {'from': 'from_', **BaseObject._json_to_fields_mapping}
-    def __init__(self, op: Optional[UpdateFolderMetadataByIdRequestBodyArgOpField] = None, path: Optional[str] = None, value: Optional[str] = None, from_: Optional[str] = None, **kwargs):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'from_': 'from',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'from': 'from_',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        op: Optional[UpdateFolderMetadataByIdRequestBodyArgOpField] = None,
+        path: Optional[str] = None,
+        value: Optional[str] = None,
+        from_: Optional[str] = None,
+        **kwargs
+    ):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
@@ -89,18 +109,27 @@ class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
         self.value = value
         self.from_ = from_
 
+
 class DeleteFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
+
 class FolderMetadataManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_folder_metadata(self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadatas:
+
+    def get_folder_metadata(
+        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Metadatas:
         """
         Retrieves all metadata for a given folder. This can not be used on the root
-        
+
         folder with ID `0`.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -119,12 +148,28 @@ class FolderMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadatas.from_dict(json.loads(response.text))
-    def get_folder_metadata_by_id(self, folder_id: str, scope: GetFolderMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadata:
+
+    def get_folder_metadata_by_id(
+        self,
+        folder_id: str,
+        scope: GetFolderMetadataByIdScopeArg,
+        template_key: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Metadata:
         """
         Retrieves the instance of a metadata template that has been applied to a
-        
+
         folder. This can not be used on the root folder with ID `0`.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -149,27 +194,53 @@ class FolderMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/folders/',
+                    folder_id,
+                    '/metadata/',
+                    scope,
+                    '/',
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadata.from_dict(json.loads(response.text))
-    def create_folder_metadata_by_id(self, folder_id: str, scope: CreateFolderMetadataByIdScopeArg, template_key: str, request_body: CreateFolderMetadataByIdRequestBodyArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadata:
+
+    def create_folder_metadata_by_id(
+        self,
+        folder_id: str,
+        scope: CreateFolderMetadataByIdScopeArg,
+        template_key: str,
+        request_body: CreateFolderMetadataByIdRequestBodyArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Metadata:
         """
         Applies an instance of a metadata template to a folder.
-        
+
         In most cases only values that are present in the metadata template
 
-        
+
         will be accepted, except for the `global.properties` template which accepts
 
-        
+
         any key-value pair.
 
-        
+
         To display the metadata template in the Box web app the enterprise needs to be
 
-        
+
         configured to enable **Cascading Folder Level Metadata** for the user in the
 
-        
+
         admin console.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -196,24 +267,52 @@ class FolderMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/folders/',
+                    folder_id,
+                    '/metadata/',
+                    scope,
+                    '/',
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadata.from_dict(json.loads(response.text))
-    def update_folder_metadata_by_id(self, folder_id: str, scope: UpdateFolderMetadataByIdScopeArg, template_key: str, request_body: List[UpdateFolderMetadataByIdRequestBodyArg], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Metadata:
+
+    def update_folder_metadata_by_id(
+        self,
+        folder_id: str,
+        scope: UpdateFolderMetadataByIdScopeArg,
+        template_key: str,
+        request_body: List[UpdateFolderMetadataByIdRequestBodyArg],
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Metadata:
         """
         Updates a piece of metadata on a folder.
-        
+
         The metadata instance can only be updated if the template has already been
 
-        
+
         applied to the folder before. When editing metadata, only values that match
 
-        
+
         the metadata template schema will be accepted.
 
-        
+
         The update is applied atomically. If any errors occur during the
 
-        
+
         application of the operations, the metadata instance will not be changed.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -240,9 +339,36 @@ class FolderMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json-patch+json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/folders/',
+                    folder_id,
+                    '/metadata/',
+                    scope,
+                    '/',
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method='PUT',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json-patch+json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Metadata.from_dict(json.loads(response.text))
-    def delete_folder_metadata_by_id(self, folder_id: str, scope: DeleteFolderMetadataByIdScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_folder_metadata_by_id(
+        self,
+        folder_id: str,
+        scope: DeleteFolderMetadataByIdScopeArg,
+        template_key: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a piece of folder metadata.
         :param folder_id: The unique identifier that represent a folder.
@@ -267,5 +393,23 @@ class FolderMetadataManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata/', scope, '/', template_key]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/folders/',
+                    folder_id,
+                    '/metadata/',
+                    scope,
+                    '/',
+                    template_key,
+                ]
+            ),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

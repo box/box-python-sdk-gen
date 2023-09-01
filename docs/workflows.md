@@ -1,6 +1,5 @@
 # WorkflowsManager
 
-
 - [List workflows](#list-workflows)
 - [Starts workflow based on request body](#starts-workflow-based-on-request-body)
 
@@ -17,28 +16,26 @@ This operation is performed by calling function `get_workflows`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-workflows/).
 
-*Currently we don't have an example for calling `get_workflows` in integration tests*
+_Currently we don't have an example for calling `get_workflows` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
-  - The unique identifier that represent a folder.  The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`.  The root folder of a Box account is always represented by the ID `0`.
+  - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`.
 - trigger_type `Optional[str]`
   - Type of trigger to search for.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `Workflows`.
 
 Returns the workflow.
-
 
 ## Starts workflow based on request body
 
@@ -52,7 +49,7 @@ This operation is performed by calling function `create_workflow_start`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-workflows-id-start/).
 
-*Currently we don't have an example for calling `create_workflow_start` in integration tests*
+_Currently we don't have an example for calling `create_workflow_start` in integration tests_
 
 ### Arguments
 
@@ -71,11 +68,8 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 Starts the workflow.
-
-

@@ -24,29 +24,44 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class GetAuthorizeResponseTypeArg(str, Enum):
     CODE = 'code'
 
+
 class AuthorizationManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_authorize(self, response_type: GetAuthorizeResponseTypeArg, client_id: str, redirect_uri: Optional[str] = None, state: Optional[str] = None, scope: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def get_authorize(
+        self,
+        response_type: GetAuthorizeResponseTypeArg,
+        client_id: str,
+        redirect_uri: Optional[str] = None,
+        state: Optional[str] = None,
+        scope: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Authorize a user by sending them through the [Box](https://box.com)
-        
+
         website and request their permission to act on their behalf.
 
-        
+
         This is the first step when authenticating a user using
 
-        
+
         OAuth 2.0. To request a user's authorization to use the Box APIs
 
-        
+
         on their behalf you will need to send a user to the URL with this
 
-        
+
         format.
 
         :param response_type: The type of response we'd like to receive.
@@ -82,7 +97,25 @@ class AuthorizationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'response_type': to_string(response_type), 'client_id': to_string(client_id), 'redirect_uri': to_string(redirect_uri), 'state': to_string(state), 'scope': to_string(scope)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'response_type': to_string(response_type),
+                'client_id': to_string(client_id),
+                'redirect_uri': to_string(redirect_uri),
+                'state': to_string(state),
+                'scope': to_string(scope),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://account.box.com/api/oauth2/authorize']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://account.box.com/api/oauth2/authorize']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

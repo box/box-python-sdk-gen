@@ -32,12 +32,15 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateShieldInformationBarrierChangeStatusStatusArg(str, Enum):
     PENDING = 'pending'
     DISABLED = 'disabled'
 
+
 class CreateShieldInformationBarrierTypeArg(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
+
 
 class CreateShieldInformationBarrierStatusArg(str, Enum):
     DRAFT = 'draft'
@@ -46,11 +49,21 @@ class CreateShieldInformationBarrierStatusArg(str, Enum):
     ENABLED = 'enabled'
     INVALID = 'invalid'
 
+
 class ShieldInformationBarriersManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_shield_information_barrier_by_id(self, shield_information_barrier_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrier:
+
+    def get_shield_information_barrier_by_id(
+        self,
+        shield_information_barrier_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrier:
         """
         Get shield information barrier based on provided ID..
         :param shield_information_barrier_id: The ID of the shield information barrier.
@@ -62,9 +75,29 @@ class ShieldInformationBarriersManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/', shield_information_barrier_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/shield_information_barriers/',
+                    shield_information_barrier_id,
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
-    def create_shield_information_barrier_change_status(self, id: str, status: CreateShieldInformationBarrierChangeStatusStatusArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrier:
+
+    def create_shield_information_barrier_change_status(
+        self,
+        id: str,
+        status: CreateShieldInformationBarrierChangeStatusStatusArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrier:
         """
         Change status of shield information barrier with the specified ID.
         :param id: The ID of the shield information barrier.
@@ -76,14 +109,33 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(id=id, status=status)
+        request_body = BaseObject(id=id, status=status)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers/change_status']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                ['https://api.box.com/2.0/shield_information_barriers/change_status']
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return ShieldInformationBarrier.from_dict(json.loads(response.text))
-    def get_shield_information_barriers(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def get_shield_information_barriers(
+        self,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Retrieves a list of shield information barrier objects
-        
+
         for the enterprise of JWT.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -97,17 +149,43 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/shield_information_barriers']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def create_shield_information_barrier(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierTypeArg] = None, enterprise: Optional[EnterpriseBase] = None, status: Optional[CreateShieldInformationBarrierStatusArg] = None, created_at: Optional[str] = None, created_by: Optional[UserBase] = None, updated_at: Optional[str] = None, updated_by: Optional[UserBase] = None, enabled_at: Optional[str] = None, enabled_by: Optional[UserBase] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrier:
+
+    def create_shield_information_barrier(
+        self,
+        id: Optional[str] = None,
+        type: Optional[CreateShieldInformationBarrierTypeArg] = None,
+        enterprise: Optional[EnterpriseBase] = None,
+        status: Optional[CreateShieldInformationBarrierStatusArg] = None,
+        created_at: Optional[str] = None,
+        created_by: Optional[UserBase] = None,
+        updated_at: Optional[str] = None,
+        updated_by: Optional[UserBase] = None,
+        enabled_at: Optional[str] = None,
+        enabled_by: Optional[UserBase] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrier:
         """
         Creates a shield information barrier to
-        
+
         separate individuals/groups within the same
 
-        
+
         firm and prevents confidential information passing between them.
 
         :param id: The unique identifier for the shield information barrier
@@ -128,7 +206,29 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: ShieldInformationBarrier = ShieldInformationBarrier(id=id, type=type, enterprise=enterprise, status=status, created_at=created_at, created_by=created_by, updated_at=updated_at, updated_by=updated_by, enabled_at=enabled_at, enabled_by=enabled_by)
+        request_body = ShieldInformationBarrier(
+            id=id,
+            type=type,
+            enterprise=enterprise,
+            status=status,
+            created_at=created_at,
+            created_by=created_by,
+            updated_at=updated_at,
+            updated_by=updated_by,
+            enabled_at=enabled_at,
+            enabled_by=enabled_by,
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barriers']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/shield_information_barriers']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return ShieldInformationBarrier.from_dict(json.loads(response.text))

@@ -1,6 +1,5 @@
 # WebhooksManager
 
-
 - [List all webhooks](#list-all-webhooks)
 - [Create webhook](#create-webhook)
 - [Get webhook](#get-webhook)
@@ -22,6 +21,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-webhooks/).
 
 <!-- sample get_webhooks -->
+
 ```python
 client.webhooks.get_webhooks()
 ```
@@ -29,19 +29,17 @@ client.webhooks.get_webhooks()
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `Webhooks`.
 
 Returns a list of webhooks.
-
 
 ## Create webhook
 
@@ -53,6 +51,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-webhooks/).
 
 <!-- sample post_webhooks -->
+
 ```python
 client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=[CreateWebhookTriggersArg.FILE_UPLOADED.value])
 ```
@@ -68,13 +67,11 @@ client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `Webhook`.
 
 Returns the new webhook object.
-
 
 ## Get webhook
 
@@ -86,6 +83,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-webhooks-id/).
 
 <!-- sample get_webhooks_id -->
+
 ```python
 client.webhooks.get_webhook_by_id(webhook_id=webhook.id)
 ```
@@ -97,13 +95,11 @@ client.webhooks.get_webhook_by_id(webhook_id=webhook.id)
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `Webhook`.
 
 Returns a webhook object
-
 
 ## Update webhook
 
@@ -115,6 +111,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-webhooks-id/).
 
 <!-- sample put_webhooks_id -->
+
 ```python
 client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://example.com/updated-webhook')
 ```
@@ -132,13 +129,11 @@ client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://exa
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `Webhook`.
 
 Returns the new webhook object.
-
 
 ## Remove webhook
 
@@ -150,6 +145,7 @@ See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-webhooks-id/).
 
 <!-- sample delete_webhooks_id -->
+
 ```python
 client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
 ```
@@ -161,12 +157,9 @@ client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 An empty response will be returned when the webhook
 was successfully deleted.
-
-

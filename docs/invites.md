@@ -1,6 +1,5 @@
 # InvitesManager
 
-
 - [Create user invite](#create-user-invite)
 - [Get user invite status](#get-user-invite-status)
 
@@ -21,7 +20,7 @@ This operation is performed by calling function `create_invite`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-invites/).
 
-*Currently we don't have an example for calling `create_invite` in integration tests*
+_Currently we don't have an example for calling `create_invite` in integration tests_
 
 ### Arguments
 
@@ -30,17 +29,15 @@ See the endpoint docs at
 - actionable_by `CreateInviteActionableByArg`
   - The user to invite
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `Invite`.
 
 Returns a new invite object.
-
 
 ## Get user invite status
 
@@ -51,22 +48,19 @@ This operation is performed by calling function `get_invite_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-invites-id/).
 
-*Currently we don't have an example for calling `get_invite_by_id` in integration tests*
+_Currently we don't have an example for calling `get_invite_by_id` in integration tests_
 
 ### Arguments
 
 - invite_id `str`
   - The ID of an invite. Example: "213723"
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `Invite`.
 
 Returns an invite object
-
-

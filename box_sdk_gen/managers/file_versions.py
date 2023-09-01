@@ -30,20 +30,34 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class PromoteFileVersionTypeArg(str, Enum):
     FILE_VERSION = 'file_version'
 
+
 class FileVersionsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_file_versions(self, file_id: str, fields: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersions:
+
+    def get_file_versions(
+        self,
+        file_id: str,
+        fields: Optional[str] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileVersions:
         """
         Retrieve a list of the past versions for a file.
-        
+
         Versions are only tracked by Box users with premium accounts. To fetch the ID
 
-        
+
         of the current version of a file, use the `GET /file/:id` API.
 
         :param file_id: The unique identifier that represents a file.
@@ -75,14 +89,37 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'limit': to_string(limit), 'offset': to_string(offset)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileVersions.from_dict(json.loads(response.text))
-    def get_file_version_by_id(self, file_id: str, file_version_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersionFull:
+
+    def get_file_version_by_id(
+        self,
+        file_id: str,
+        file_version_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileVersionFull:
         """
         Retrieve a specific version of a file.
-        
+
         Versions are only tracked for Box users with premium accounts.
 
         :param file_id: The unique identifier that represents a file.
@@ -112,18 +149,42 @@ class FileVersionsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    file_id,
+                    '/versions/',
+                    file_version_id,
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileVersionFull.from_dict(json.loads(response.text))
-    def update_file_version_by_id(self, file_id: str, file_version_id: str, trashed_at: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersionFull:
+
+    def update_file_version_by_id(
+        self,
+        file_id: str,
+        file_version_id: str,
+        trashed_at: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileVersionFull:
         """
         Restores a specific version of a file after it was deleted.
-        
+
         Don't use this endpoint to restore Box Notes,
 
-        
+
         as it works with file formats such as PDF, DOC,
 
-        
+
         PPTX or similar.
 
         :param file_id: The unique identifier that represents a file.
@@ -145,14 +206,39 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(trashed_at=trashed_at)
+        request_body = BaseObject(trashed_at=trashed_at)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='PUT', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    file_id,
+                    '/versions/',
+                    file_version_id,
+                ]
+            ),
+            FetchOptions(
+                method='PUT',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileVersionFull.from_dict(json.loads(response.text))
-    def delete_file_version_by_id(self, file_id: str, file_version_id: str, if_match: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_file_version_by_id(
+        self,
+        file_id: str,
+        file_version_id: str,
+        if_match: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Move a file version to the trash.
-        
+
         Versions are only tracked for Box users with premium accounts.
 
         :param file_id: The unique identifier that represents a file.
@@ -178,43 +264,69 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({'if-match': to_string(if_match), **extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/', file_version_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    file_id,
+                    '/versions/',
+                    file_version_id,
+                ]
+            ),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def promote_file_version(self, file_id: str, id: Optional[str] = None, type: Optional[PromoteFileVersionTypeArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> FileVersionFull:
+
+    def promote_file_version(
+        self,
+        file_id: str,
+        id: Optional[str] = None,
+        type: Optional[PromoteFileVersionTypeArg] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> FileVersionFull:
         """
         Promote a specific version of a file.
-        
+
         If previous versions exist, this method can be used to
 
-        
+
         promote one of the older versions to the top of the version history.
 
-        
+
         This creates a new copy of the old version and puts it at the
 
-        
+
         top of the versions history. The file will have the exact same contents
 
-        
+
         as the older version, with the the same hash digest, `etag`, and
 
-        
+
         name as the original.
 
-        
+
         Other properties such as comments do not get updated to their
 
-        
+
         former values.
 
-        
+
         Don't use this endpoint to restore Box Notes,
 
-        
+
         as it works with file formats such as PDF, DOC,
 
-        
+
         PPTX or similar.
 
         :param file_id: The unique identifier that represents a file.
@@ -243,8 +355,20 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(id=id, type=type)
+        request_body = BaseObject(id=id, type=type)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']),
+            FetchOptions(
+                method='POST',
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return FileVersionFull.from_dict(json.loads(response.text))

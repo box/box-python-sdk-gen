@@ -3,16 +3,17 @@ from urllib.parse import urlencode, urlunsplit
 from typing import Union, Optional
 
 from .auth import Authentication
-from .auth_schemas import TokenRequest, TokenRequestGrantType, AccessToken
+from .auth_schemas import TokenRequest, TokenRequestGrantType
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
+from .schemas import AccessToken
 
 
 class OAuthConfig:
     def __init__(
-            self,
-            client_id: str,
-            client_secret: str,
+        self,
+        client_id: str,
+        client_secret: str,
     ):
         """
         :param client_id:
@@ -26,12 +27,12 @@ class OAuthConfig:
 
 class GetAuthorizeUrlOptions:
     def __init__(
-            self,
-            client_id: Optional[str] = None,
-            redirect_uri: Optional[str] = None,
-            response_type: Optional[str] = None,
-            state: Optional[str] = None,
-            scope: Optional[str] = None
+        self,
+        client_id: Optional[str] = None,
+        redirect_uri: Optional[str] = None,
+        response_type: Optional[str] = None,
+        state: Optional[str] = None,
+        scope: Optional[str] = None,
     ):
         """
         :param client_id: The Client ID of the application that is requesting to authenticate the user.
@@ -52,7 +53,7 @@ class GetAuthorizeUrlOptions:
 class OAuth(Authentication):
     OAUTH2_AUTHORIZE_URL = 'https://account.box.com/api/oauth2/authorize'
 
-    def __init__(self,  config: OAuthConfig):
+    def __init__(self, config: OAuthConfig):
         """
         :param config:
             Configuration object of OAuth.
@@ -60,7 +61,9 @@ class OAuth(Authentication):
         self.config = config
         self.token: Union[None, AccessToken] = None
 
-    def get_authorize_url(self, options: Optional[GetAuthorizeUrlOptions] = None) -> str:
+    def get_authorize_url(
+        self, options: Optional[GetAuthorizeUrlOptions] = None
+    ) -> str:
         """
         Get the authorization URL for the app user.
         :param options: Options class for getting authorization url
@@ -70,8 +73,18 @@ class OAuth(Authentication):
             options = GetAuthorizeUrlOptions()
 
         params = [
-            ('client_id', options.client_id if options.client_id is not None else self.config.client_id),
-            ('response_type', options.response_type if options.response_type is not None else 'code'),
+            (
+                'client_id',
+                (
+                    options.client_id
+                    if options.client_id is not None
+                    else self.config.client_id
+                ),
+            ),
+            (
+                'response_type',
+                options.response_type if options.response_type is not None else 'code',
+            ),
         ]
 
         if options.redirect_uri is not None:
@@ -83,14 +96,14 @@ class OAuth(Authentication):
         if options.scope is not None:
             params.append(('scope', options.scope))
 
-        params = [(key.encode('utf-8'), value.encode('utf-8')) for (key, value) in params]
+        params = [
+            (key.encode('utf-8'), value.encode('utf-8')) for (key, value) in params
+        ]
         query_string = urlencode(params)
         return urlunsplit(('', '', self.OAUTH2_AUTHORIZE_URL, query_string, ''))
 
     def get_tokens_authorization_code_grant(
-            self,
-            authorization_code: str,
-            network_session: Optional[NetworkSession] = None
+        self, authorization_code: str, network_session: Optional[NetworkSession] = None
     ) -> str:
         """
         Send token request and return the access_token
@@ -102,23 +115,32 @@ class OAuth(Authentication):
             grant_type=TokenRequestGrantType.AUTHORIZATION_CODE,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            code=authorization_code
+            code=authorization_code,
         )
 
         self.token = self._send_token_request(request_body, network_session)
         return self.token.access_token
 
-    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
          Return a current token or get a new one when not available.
         :param network_session: An object to keep network session state
         :return: Valid access token
         """
         if self.token is None:
-            raise Exception("Access and refresh tokens not available. Authenticate before making any API call first.")
-        return self.token.access_token
+            raise Exception(
+                "Access and refresh tokens not available. Authenticate before making"
+                " any API call first."
+            )
+        return self.token
 
-    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
+    def refresh_token(
+        self,
+        network_session: Optional[NetworkSession] = None,
+        refresh_token: Optional[str] = None,
+    ) -> AccessToken:
         """
         Refresh outdated access token with refresh token
         :param network_session: An object to keep network session state
@@ -128,16 +150,15 @@ class OAuth(Authentication):
             grant_type=TokenRequestGrantType.REFRESH_TOKEN,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            refresh_token=self.token.refresh_token
+            refresh_token=refresh_token or self.token.refresh_token,
         )
 
         self.token = self._send_token_request(request_body, network_session)
-        return self.token.access_token
+        return self.token
 
     @staticmethod
     def _send_token_request(
-            request_body: TokenRequest,
-            network_session: Optional[NetworkSession] = None
+        request_body: TokenRequest, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         response: FetchResponse = fetch(
             'https://api.box.com/oauth2/token',
@@ -145,8 +166,8 @@ class OAuth(Authentication):
                 method='POST',
                 body=urlencode(request_body.to_dict()),
                 headers={'content-type': 'application/x-www-form-urlencoded'},
-                network_session=network_session
-            )
+                network_session=network_session,
+            ),
         )
 
         return AccessToken.from_dict(json.loads(response.text))

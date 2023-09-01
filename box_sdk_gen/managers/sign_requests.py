@@ -38,11 +38,21 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class SignRequestsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def cancel_sign_request(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignRequest:
+
+    def cancel_sign_request(
+        self,
+        sign_request_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SignRequest:
         """
         Cancels a sign request.
         :param sign_request_id: The ID of the sign request
@@ -54,9 +64,25 @@ class SignRequestsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']), FetchOptions(method='POST', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignRequest.from_dict(json.loads(response.text))
-    def resend_sign_request(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def resend_sign_request(
+        self,
+        sign_request_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Resends a sign request email to all outstanding signers.
         :param sign_request_id: The ID of the sign request
@@ -68,9 +94,25 @@ class SignRequestsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']), FetchOptions(method='POST', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def get_sign_request_by_id(self, sign_request_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignRequest:
+
+    def get_sign_request_by_id(
+        self,
+        sign_request_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SignRequest:
         """
         Gets a sign request by ID.
         :param sign_request_id: The ID of the sign request
@@ -82,12 +124,27 @@ class SignRequestsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignRequest.from_dict(json.loads(response.text))
-    def get_sign_requests(self, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignRequests:
+
+    def get_sign_requests(
+        self,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SignRequests:
         """
         Gets sign requests created by a user. If the `sign_files` and/or
-        
+
         `parent_folder` are deleted, the sign request will not return in the list.
 
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -101,14 +158,46 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/sign_requests']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignRequests.from_dict(json.loads(response.text))
-    def create_sign_request(self, signers: List[SignRequestCreateSigner], parent_folder: FolderMini, source_files: Optional[List[FileBase]] = None, is_document_preparation_needed: Optional[bool] = None, redirect_url: Optional[str] = None, declined_redirect_url: Optional[str] = None, are_text_signatures_enabled: Optional[bool] = None, email_subject: Optional[str] = None, email_message: Optional[str] = None, are_reminders_enabled: Optional[bool] = None, name: Optional[str] = None, prefill_tags: Optional[List[SignRequestPrefillTag]] = None, days_valid: Optional[int] = None, external_id: Optional[str] = None, is_phone_verification_required_to_view: Optional[bool] = None, template_id: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SignRequest:
+
+    def create_sign_request(
+        self,
+        signers: List[SignRequestCreateSigner],
+        parent_folder: FolderMini,
+        source_files: Optional[List[FileBase]] = None,
+        is_document_preparation_needed: Optional[bool] = None,
+        redirect_url: Optional[str] = None,
+        declined_redirect_url: Optional[str] = None,
+        are_text_signatures_enabled: Optional[bool] = None,
+        email_subject: Optional[str] = None,
+        email_message: Optional[str] = None,
+        are_reminders_enabled: Optional[bool] = None,
+        name: Optional[str] = None,
+        prefill_tags: Optional[List[SignRequestPrefillTag]] = None,
+        days_valid: Optional[int] = None,
+        external_id: Optional[str] = None,
+        is_phone_verification_required_to_view: Optional[bool] = None,
+        template_id: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SignRequest:
         """
         Creates a sign request. This involves preparing a document for signing and
-        
+
         sending the sign request to signers.
 
         :param signers: Array of signers for the sign request. 35 is the
@@ -147,7 +236,35 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: SignRequestCreateRequest = SignRequestCreateRequest(source_files=source_files, signers=signers, is_document_preparation_needed=is_document_preparation_needed, redirect_url=redirect_url, declined_redirect_url=declined_redirect_url, are_text_signatures_enabled=are_text_signatures_enabled, email_subject=email_subject, email_message=email_message, are_reminders_enabled=are_reminders_enabled, parent_folder=parent_folder, name=name, prefill_tags=prefill_tags, days_valid=days_valid, external_id=external_id, is_phone_verification_required_to_view=is_phone_verification_required_to_view, template_id=template_id)
+        request_body = SignRequestCreateRequest(
+            source_files=source_files,
+            signers=signers,
+            is_document_preparation_needed=is_document_preparation_needed,
+            redirect_url=redirect_url,
+            declined_redirect_url=declined_redirect_url,
+            are_text_signatures_enabled=are_text_signatures_enabled,
+            email_subject=email_subject,
+            email_message=email_message,
+            are_reminders_enabled=are_reminders_enabled,
+            parent_folder=parent_folder,
+            name=name,
+            prefill_tags=prefill_tags,
+            days_valid=days_valid,
+            external_id=external_id,
+            is_phone_verification_required_to_view=is_phone_verification_required_to_view,
+            template_id=template_id,
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/sign_requests']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/sign_requests']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SignRequest.from_dict(json.loads(response.text))

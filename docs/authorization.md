@@ -1,6 +1,5 @@
 # AuthorizationManager
 
-
 - [Authorize user](#authorize-user)
 
 ## Authorize user
@@ -18,7 +17,7 @@ This operation is performed by calling function `get_authorize`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-authorize/).
 
-*Currently we don't have an example for calling `get_authorize` in integration tests*
+_Currently we don't have an example for calling `get_authorize` in integration tests_
 
 ### Arguments
 
@@ -35,11 +34,8 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 Does not return any data, but rather should be used in the browser.
-
-

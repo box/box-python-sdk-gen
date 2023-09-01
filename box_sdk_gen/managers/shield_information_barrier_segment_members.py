@@ -34,14 +34,30 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-class CreateShieldInformationBarrierSegmentMemberTypeArg(str, Enum):
-    SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = 'shield_information_barrier_segment_member'
 
-class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField(str, Enum):
+class CreateShieldInformationBarrierSegmentMemberTypeArg(str, Enum):
+    SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = (
+        'shield_information_barrier_segment_member'
+    )
+
+
+class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField(
+    str, Enum
+):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
-class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField] = None, **kwargs):
+
+class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(
+    BaseObject
+):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[
+            CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField
+        ] = None,
+        **kwargs
+    ):
         """
         :param id: The ID reference of the
             requesting shield information barrier segment.
@@ -53,14 +69,24 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
         self.id = id
         self.type = type
 
+
 class ShieldInformationBarrierSegmentMembersManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierSegmentMember:
+
+    def get_shield_information_barrier_segment_member_by_id(
+        self,
+        shield_information_barrier_segment_member_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrierSegmentMember:
         """
         Retrieves a shield information barrier
-        
+
         segment member by its ID.
 
         :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
@@ -72,12 +98,33 @@ class ShieldInformationBarrierSegmentMembersManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members/', shield_information_barrier_segment_member_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
-        return ShieldInformationBarrierSegmentMember.from_dict(json.loads(response.text))
-    def delete_shield_information_barrier_segment_member_by_id(self, shield_information_barrier_segment_member_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/shield_information_barrier_segment_members/',
+                    shield_information_barrier_segment_member_id,
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
+        return ShieldInformationBarrierSegmentMember.from_dict(
+            json.loads(response.text)
+        )
+
+    def delete_shield_information_barrier_segment_member_by_id(
+        self,
+        shield_information_barrier_segment_member_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a shield information barrier
-        
+
         segment member based on provided ID.
 
         :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
@@ -89,12 +136,33 @@ class ShieldInformationBarrierSegmentMembersManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members/', shield_information_barrier_segment_member_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/shield_information_barrier_segment_members/',
+                    shield_information_barrier_segment_member_id,
+                ]
+            ),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def get_shield_information_barrier_segment_members(self, shield_information_barrier_segment_id: str, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def get_shield_information_barrier_segment_members(
+        self,
+        shield_information_barrier_segment_id: str,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Lists shield information barrier segment members
-        
+
         based on provided segment IDs.
 
         :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
@@ -110,11 +178,39 @@ class ShieldInformationBarrierSegmentMembersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'shield_information_barrier_segment_id': to_string(shield_information_barrier_segment_id), 'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'shield_information_barrier_segment_id': to_string(
+                    shield_information_barrier_segment_id
+                ),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                ['https://api.box.com/2.0/shield_information_barrier_segment_members']
+            ),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def create_shield_information_barrier_segment_member(self, shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg, user: UserBase, type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None, shield_information_barrier: Optional[ShieldInformationBarrierBase] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> ShieldInformationBarrierSegmentMember:
+
+    def create_shield_information_barrier_segment_member(
+        self,
+        shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg,
+        user: UserBase,
+        type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None,
+        shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ShieldInformationBarrierSegmentMember:
         """
         Creates a new shield information barrier segment member.
         :param shield_information_barrier_segment: The `type` and `id` of the
@@ -127,7 +223,27 @@ class ShieldInformationBarrierSegmentMembersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(type=type, shield_information_barrier=shield_information_barrier, shield_information_barrier_segment=shield_information_barrier_segment, user=user)
+        request_body = BaseObject(
+            type=type,
+            shield_information_barrier=shield_information_barrier,
+            shield_information_barrier_segment=shield_information_barrier_segment,
+            user=user,
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/shield_information_barrier_segment_members']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
-        return ShieldInformationBarrierSegmentMember.from_dict(json.loads(response.text))
+        response: FetchResponse = fetch(
+            ''.join(
+                ['https://api.box.com/2.0/shield_information_barrier_segment_members']
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
+        return ShieldInformationBarrierSegmentMember.from_dict(
+            json.loads(response.text)
+        )

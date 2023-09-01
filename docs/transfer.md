@@ -1,6 +1,5 @@
 # TransferManager
 
-
 - [Transfer owned folders](#transfer-owned-folders)
 
 ## Transfer owned folders
@@ -44,7 +43,7 @@ This operation is performed by calling function `transfer_owned_folder`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-users-id-folders-0/).
 
-*Currently we don't have an example for calling `transfer_owned_folder` in integration tests*
+_Currently we don't have an example for calling `transfer_owned_folder` in integration tests_
 
 ### Arguments
 
@@ -53,12 +52,11 @@ See the endpoint docs at
 - owned_by `TransferOwnedFolderOwnedByArg`
   - The user who the folder will be transferred to
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - notify `Optional[bool]`
   - Determines if users should receive email notification for the action performed.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -66,5 +64,3 @@ This function returns a value of type `FolderFull`.
 
 Returns the information for the newly created
 destination folder.
-
-

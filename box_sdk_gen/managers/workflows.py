@@ -32,8 +32,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateWorkflowStartTypeArg(str, Enum):
     WORKFLOW_PARAMETERS = 'workflow_parameters'
+
 
 class CreateWorkflowStartFlowArg(BaseObject):
     def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
@@ -47,11 +49,18 @@ class CreateWorkflowStartFlowArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class CreateWorkflowStartFilesArgTypeField(str, Enum):
     FILE = 'file'
 
+
 class CreateWorkflowStartFilesArg(BaseObject):
-    def __init__(self, type: Optional[CreateWorkflowStartFilesArgTypeField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(
+        self,
+        type: Optional[CreateWorkflowStartFilesArgTypeField] = None,
+        id: Optional[str] = None,
+        **kwargs
+    ):
         """
         :param type: The type of the file object
         :type type: Optional[CreateWorkflowStartFilesArgTypeField], optional
@@ -62,11 +71,18 @@ class CreateWorkflowStartFilesArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class CreateWorkflowStartFolderArgTypeField(str, Enum):
     FOLDER = 'folder'
 
+
 class CreateWorkflowStartFolderArg(BaseObject):
-    def __init__(self, type: Optional[CreateWorkflowStartFolderArgTypeField] = None, id: Optional[str] = None, **kwargs):
+    def __init__(
+        self,
+        type: Optional[CreateWorkflowStartFolderArgTypeField] = None,
+        id: Optional[str] = None,
+        **kwargs
+    ):
         """
         :param type: The type of the folder object
         :type type: Optional[CreateWorkflowStartFolderArgTypeField], optional
@@ -77,11 +93,19 @@ class CreateWorkflowStartFolderArg(BaseObject):
         self.type = type
         self.id = id
 
+
 class CreateWorkflowStartOutcomesArgTypeField(str, Enum):
     OUTCOME = 'outcome'
 
+
 class CreateWorkflowStartOutcomesArg(BaseObject):
-    def __init__(self, id: Optional[str] = None, type: Optional[CreateWorkflowStartOutcomesArgTypeField] = None, parameter: Optional[str] = None, **kwargs):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[CreateWorkflowStartOutcomesArgTypeField] = None,
+        parameter: Optional[str] = None,
+        **kwargs
+    ):
         """
         :param id: The id of the outcome
         :type id: Optional[str], optional
@@ -97,20 +121,33 @@ class CreateWorkflowStartOutcomesArg(BaseObject):
         self.type = type
         self.parameter = parameter
 
+
 class WorkflowsManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_workflows(self, folder_id: str, trigger_type: Optional[str] = None, limit: Optional[int] = None, marker: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> Workflows:
+
+    def get_workflows(
+        self,
+        folder_id: str,
+        trigger_type: Optional[str] = None,
+        limit: Optional[int] = None,
+        marker: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> Workflows:
         """
         Returns list of workflows that act on a given `folder ID`, and
-        
+
         have a flow with a trigger type of `WORKFLOW_MANUAL_START`.
 
-        
+
         You application must be authorized to use the `Manage Box Relay` application
 
-        
+
         scope within the developer console in to use this endpoint.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -135,17 +172,44 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'trigger_type': to_string(trigger_type), 'limit': to_string(limit), 'marker': to_string(marker)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'folder_id': to_string(folder_id),
+                'trigger_type': to_string(trigger_type),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/workflows']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return Workflows.from_dict(json.loads(response.text))
-    def create_workflow_start(self, workflow_id: str, flow: CreateWorkflowStartFlowArg, files: List[CreateWorkflowStartFilesArg], folder: CreateWorkflowStartFolderArg, type: Optional[CreateWorkflowStartTypeArg] = None, outcomes: Optional[List[CreateWorkflowStartOutcomesArg]] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def create_workflow_start(
+        self,
+        workflow_id: str,
+        flow: CreateWorkflowStartFlowArg,
+        files: List[CreateWorkflowStartFilesArg],
+        folder: CreateWorkflowStartFolderArg,
+        type: Optional[CreateWorkflowStartTypeArg] = None,
+        outcomes: Optional[List[CreateWorkflowStartOutcomesArg]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
-        
+
         You application must be authorized to use the `Manage Box Relay` application
 
-        
+
         scope within the developer console.
 
         :param workflow_id: The ID of the workflow.
@@ -167,7 +231,20 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(type=type, flow=flow, files=files, folder=folder, outcomes=outcomes)
+        request_body = BaseObject(
+            type=type, flow=flow, files=files, folder=folder, outcomes=outcomes
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

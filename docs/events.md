@@ -1,6 +1,5 @@
 # EventsManager
 
-
 - [List user and enterprise events](#list-user-and-enterprise-events)
 - [Get events long poll endpoint](#get-events-long-poll-endpoint)
 
@@ -21,16 +20,16 @@ This operation is performed by calling function `get_events`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-events/).
 
-*Currently we don't have an example for calling `get_events` in integration tests*
+_Currently we don't have an example for calling `get_events` in integration tests_
 
 ### Arguments
 
 - stream_type `Optional[GetEventsStreamTypeArg]`
-  - Defines the type of events that are returned  * `all` returns everything for a user and is the default * `changes` returns events that may cause file tree changes   such as file updates or collaborations. * `sync` is similar to `changes` but only applies to synced folders * `admin_logs` returns all events for an entire enterprise and   requires the user making the API call to have admin permissions. This   stream type is for programmatically pulling from a 1 year history of   events across all users within the enterprise and within a   `created_after` and `created_before` time frame. The complete history   of events will be returned in chronological order based on the event   time, but latency will be much higher than `admin_logs_streaming`. * `admin_logs_streaming` returns all events for an entire enterprise and   requires the user making the API call to have admin permissions. This   stream type is for polling for recent events across all users within   the enterprise. Latency will be much lower than `admin_logs`, but   events will not be returned in chronological order and may   contain duplicates.
+  - Defines the type of events that are returned _ `all` returns everything for a user and is the default _ `changes` returns events that may cause file tree changes such as file updates or collaborations. _ `sync` is similar to `changes` but only applies to synced folders _ `admin_logs` returns all events for an entire enterprise and requires the user making the API call to have admin permissions. This stream type is for programmatically pulling from a 1 year history of events across all users within the enterprise and within a `created_after` and `created_before` time frame. The complete history of events will be returned in chronological order based on the event time, but latency will be much higher than `admin_logs_streaming`. \* `admin_logs_streaming` returns all events for an entire enterprise and requires the user making the API call to have admin permissions. This stream type is for polling for recent events across all users within the enterprise. Latency will be much lower than `admin_logs`, but events will not be returned in chronological order and may contain duplicates.
 - stream_position `Optional[str]`
-  - The location in the event stream to start receiving events from.  * `now` will return an empty list events and the latest stream position for initialization. * `0` or `null` will return all events.
+  - The location in the event stream to start receiving events from. _ `now` will return an empty list events and the latest stream position for initialization. _ `0` or `null` will return all events.
 - limit `Optional[int]`
-  - Limits the number of events returned  Note: Sometimes, the events less than the limit requested can be returned even when there may be more events remaining. This is primarily done in the case where a number of events have already been retrieved and these retrieved events are returned rather than delaying for an unknown amount of time to see if there are any more results.
+  - Limits the number of events returned Note: Sometimes, the events less than the limit requested can be returned even when there may be more events remaining. This is primarily done in the case where a number of events have already been retrieved and these retrieved events are returned rather than delaying for an unknown amount of time to see if there are any more results.
 - event_type `Optional[str]`
   - A comma-separated list of events to filter by. This can only be used when requesting the events with a `stream_type` of `admin_logs` or `adming_logs_streaming`. For any other `stream_type` this value will be ignored.
 - created_after `Optional[str]`
@@ -39,7 +38,6 @@ See the endpoint docs at
   - The upper bound date and time to return events for. This can only be used when requesting the events with a `stream_type` of `admin_logs`. For any other `stream_type` this value will be ignored.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -52,7 +50,6 @@ including a list of event objects. The response includes a
 `chunk_size` parameter indicating how many events were returned in this
 chunk, as well as the next `stream_position` that can be
 queried.
-
 
 ## Get events long poll endpoint
 
@@ -95,13 +92,12 @@ This operation is performed by calling function `get_events_with_long_polling`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/options-events/).
 
-*Currently we don't have an example for calling `get_events_with_long_polling` in integration tests*
+_Currently we don't have an example for calling `get_events_with_long_polling` in integration tests_
 
 ### Arguments
 
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -109,5 +105,3 @@ This function returns a value of type `RealtimeServers`.
 
 Returns a paginated array of servers that can be used
 instead of the regular endpoints for long-polling events.
-
-

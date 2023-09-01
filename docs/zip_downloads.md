@@ -1,6 +1,5 @@
 # ZipDownloadsManager
 
-
 - [Create zip download](#create-zip-download)
 - [Download zip archive](#download-zip-archive)
 - [Get zip download status](#get-zip-download-status)
@@ -29,7 +28,7 @@ This operation is performed by calling function `create_zip_download`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-zip-downloads/).
 
-*Currently we don't have an example for calling `create_zip_download` in integration tests*
+_Currently we don't have an example for calling `create_zip_download` in integration tests_
 
 ### Arguments
 
@@ -40,7 +39,6 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ZipDownload`.
@@ -48,7 +46,6 @@ This function returns a value of type `ZipDownload`.
 If the `zip` archive is ready to be downloaded, the API will return a
 response that will include a `download_url`, a `status_url`, as well as
 any conflicts that might have occurred when creating the request.
-
 
 ## Download zip archive
 
@@ -71,7 +68,7 @@ This operation is performed by calling function `get_zip_download_content`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-zip-downloads-id-content/).
 
-*Currently we don't have an example for calling `get_zip_download_content` in integration tests*
+_Currently we don't have an example for calling `get_zip_download_content` in integration tests_
 
 ### Arguments
 
@@ -80,14 +77,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ByteStream`.
 
 Returns the content of the items requested for this download, formatted as
 a stream of files and folders in a `zip` archive.
-
 
 ## Get zip download status
 
@@ -109,7 +104,7 @@ This operation is performed by calling function `get_zip_download_status`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-zip-downloads-id-status/).
 
-*Currently we don't have an example for calling `get_zip_download_status` in integration tests*
+_Currently we don't have an example for calling `get_zip_download_status` in integration tests_
 
 ### Arguments
 
@@ -118,11 +113,8 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `ZipDownloadStatus`.
 
 Returns the status of the `zip` archive that is being downloaded.
-
-

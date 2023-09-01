@@ -32,25 +32,40 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class CreateMetadataCascadePolicyScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
+
 
 class CreateMetadataCascadePolicyApplyConflictResolutionArg(str, Enum):
     NONE = 'none'
     OVERWRITE = 'overwrite'
 
+
 class MetadataCascadePoliciesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_metadata_cascade_policies(self, folder_id: str, owner_enterprise_id: Optional[str] = None, marker: Optional[str] = None, offset: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicies:
+
+    def get_metadata_cascade_policies(
+        self,
+        folder_id: str,
+        owner_enterprise_id: Optional[str] = None,
+        marker: Optional[str] = None,
+        offset: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> MetadataCascadePolicies:
         """
         Retrieves a list of all the metadata cascade policies
-        
+
         that are applied to a given folder. This can not be used on the root
 
-        
+
         folder with ID `0`.
 
         :param folder_id: Specifies which folder to return policies for. This can not be used on the
@@ -74,23 +89,47 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'folder_id': to_string(folder_id), 'owner_enterprise_id': to_string(owner_enterprise_id), 'marker': to_string(marker), 'offset': to_string(offset)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'folder_id': to_string(folder_id),
+                'owner_enterprise_id': to_string(owner_enterprise_id),
+                'marker': to_string(marker),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return MetadataCascadePolicies.from_dict(json.loads(response.text))
-    def create_metadata_cascade_policy(self, folder_id: str, scope: CreateMetadataCascadePolicyScopeArg, template_key: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicy:
+
+    def create_metadata_cascade_policy(
+        self,
+        folder_id: str,
+        scope: CreateMetadataCascadePolicyScopeArg,
+        template_key: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> MetadataCascadePolicy:
         """
         Creates a new metadata cascade policy that applies a given
-        
+
         metadata template to a given folder and automatically
 
-        
+
         cascades it down to any files within that folder.
 
-        
+
         In order for the policy to be applied a metadata instance must first
 
-        
+
         be applied to the folder the policy is to be applied to.
 
         :param folder_id: The ID of the folder to apply the policy to. This folder will
@@ -118,11 +157,29 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(folder_id=folder_id, scope=scope, templateKey=template_key)
+        request_body = BaseObject(
+            folder_id=folder_id, scope=scope, templateKey=template_key
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def get_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> MetadataCascadePolicy:
+
+    def get_metadata_cascade_policy_by_id(
+        self,
+        metadata_cascade_policy_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> MetadataCascadePolicy:
         """
         Retrieve a specific metadata cascade policy assigned to a folder.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
@@ -134,9 +191,28 @@ class MetadataCascadePoliciesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
+                    metadata_cascade_policy_id,
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return MetadataCascadePolicy.from_dict(json.loads(response.text))
-    def delete_metadata_cascade_policy_by_id(self, metadata_cascade_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_metadata_cascade_policy_by_id(
+        self,
+        metadata_cascade_policy_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Deletes a metadata cascade policy.
         :param metadata_cascade_policy_id: The ID of the metadata cascade policy.
@@ -148,18 +224,38 @@ class MetadataCascadePoliciesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id]), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
+                    metadata_cascade_policy_id,
+                ]
+            ),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None
-    def create_metadata_cascade_policy_apply(self, metadata_cascade_policy_id: str, conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def create_metadata_cascade_policy_apply(
+        self,
+        metadata_cascade_policy_id: str,
+        conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> None:
         """
         Force the metadata on a folder with a metadata cascade policy to be applied to
-        
+
         all of its children. This can be used after creating a new cascade policy to
 
-        
+
         enforce the metadata to be cascaded down to all existing files within that
 
-        
+
         folder.
 
         :param metadata_cascade_policy_id: The ID of the cascade policy to force-apply.
@@ -177,7 +273,24 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(conflict_resolution=conflict_resolution)
+        request_body = BaseObject(conflict_resolution=conflict_resolution)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/metadata_cascade_policies/', metadata_cascade_policy_id, '/apply']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    'https://api.box.com/2.0/metadata_cascade_policies/',
+                    metadata_cascade_policy_id,
+                    '/apply',
+                ]
+            ),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

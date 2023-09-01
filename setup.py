@@ -2,13 +2,60 @@ from setuptools import setup, find_packages
 
 from os.path import dirname, join
 
+
 def main():
     install_requires = ['requests', 'requests_toolbelt', 'urllib3<2']
     tests_require = ['pytest', 'pytest-timeout', 'pytest-cov']
     dev_requires = ['tox']
     jwt_requires = ['pyjwt>=1.7.0', 'cryptography>=3']
-    extras_require = {'test': tests_require + jwt_requires, 'dev': dev_requires, 'jwt': jwt_requires}
-    setup(name='box-sdk-gen', version='0.1.0', description='[Box Platform](https://box.dev) provides functionality to provide access to content stored within [Box](https://box.com). It provides endpoints for basic manipulation of files and folders, management of users within an enterprise, as well as more complex topics such as legal holds and retention policies.', url='https://github.com/box/box-python-sdk-gen.git', licence='Apache-2.0, http://www.apache.org/licenses/LICENSE-2.0', author='Box', long_description_content_type='text/markdown', long_description=open(join(dirname(__file__), 'README.md'), encoding='utf-8').read(), author_email='oss@box.com', classifiers=['Development Status :: 4 - Beta', 'Intended Audience :: Developers', 'License :: OSI Approved :: Apache Software License', 'Programming Language :: Python', 'Programming Language :: Python :: 3.6', 'Programming Language :: Python :: 3.7', 'Programming Language :: Python :: 3.8', 'Programming Language :: Python :: 3.9', 'Programming Language :: Python :: 3.10', 'Programming Language :: Python :: Implementation :: CPython', 'Programming Language :: Python :: Implementation :: PyPy', 'Operating System :: OS Independent', 'Operating System :: POSIX', 'Operating System :: Microsoft :: Windows', 'Operating System :: MacOS :: MacOS X', 'Topic :: Software Development :: Libraries :: Python Modules'], keywords='box, sdk, api, rest, boxsdk', install_requires=install_requires, tests_require=tests_require, extras_require=extras_require, packages=find_packages(exclude=['docs', '*test*']))
+    extras_require = {
+        'test': tests_require + jwt_requires,
+        'dev': dev_requires,
+        'jwt': jwt_requires,
+    }
+    setup(
+        name='box-sdk-gen',
+        version='0.1.0',
+        description=(
+            '[Box Platform](https://box.dev) provides functionality to provide access'
+            ' to content stored within [Box](https://box.com). It provides endpoints'
+            ' for basic manipulation of files and folders, management of users within'
+            ' an enterprise, as well as more complex topics such as legal holds and'
+            ' retention policies.'
+        ),
+        url='https://github.com/box/box-python-sdk-gen.git',
+        licence='Apache-2.0, http://www.apache.org/licenses/LICENSE-2.0',
+        author='Box',
+        long_description_content_type='text/markdown',
+        long_description=open(
+            join(dirname(__file__), 'README.md'), encoding='utf-8'
+        ).read(),
+        author_email='oss@box.com',
+        classifiers=[
+            'Development Status :: 4 - Beta',
+            'Intended Audience :: Developers',
+            'License :: OSI Approved :: Apache Software License',
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
+            'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
+            'Programming Language :: Python :: Implementation :: CPython',
+            'Programming Language :: Python :: Implementation :: PyPy',
+            'Operating System :: OS Independent',
+            'Operating System :: POSIX',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: MacOS :: MacOS X',
+            'Topic :: Software Development :: Libraries :: Python Modules',
+        ],
+        keywords='box, sdk, api, rest, boxsdk',
+        install_requires=install_requires,
+        tests_require=tests_require,
+        extras_require=extras_require,
+        packages=find_packages(exclude=['docs', '*test*']),
+    )
+
 
 if __name__ == '__main__':
     main()

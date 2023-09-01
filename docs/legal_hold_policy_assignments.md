@@ -1,6 +1,5 @@
 # LegalHoldPolicyAssignmentsManager
 
-
 - [List legal hold policy assignments](#list-legal-hold-policy-assignments)
 - [Assign legal hold policy](#assign-legal-hold-policy)
 - [Get legal hold policy assignment](#get-legal-hold-policy-assignment)
@@ -17,7 +16,7 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments/).
 
-*Currently we don't have an example for calling `get_legal_hold_policy_assignments` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policy_assignments` in integration tests_
 
 ### Arguments
 
@@ -28,21 +27,19 @@ See the endpoint docs at
 - assign_to_id `Optional[str]`
   - Filters the results by the ID of item the policy was applied to.
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
 This function returns a value of type `LegalHoldPolicyAssignments`.
 
 Returns a list of legal hold policy assignments.
-
 
 ## Assign legal hold policy
 
@@ -53,7 +50,7 @@ This operation is performed by calling function `create_legal_hold_policy_assign
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-legal-hold-policy-assignments/).
 
-*Currently we don't have an example for calling `create_legal_hold_policy_assignment` in integration tests*
+_Currently we don't have an example for calling `create_legal_hold_policy_assignment` in integration tests_
 
 ### Arguments
 
@@ -64,13 +61,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `LegalHoldPolicyAssignment`.
 
 Returns a new legal hold policy assignment.
-
 
 ## Get legal hold policy assignment
 
@@ -81,7 +76,7 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id/).
 
-*Currently we don't have an example for calling `get_legal_hold_policy_assignment_by_id` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policy_assignment_by_id` in integration tests_
 
 ### Arguments
 
@@ -90,13 +85,11 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `LegalHoldPolicyAssignment`.
 
 Returns a legal hold policy object.
-
 
 ## Unassign legal hold policy
 
@@ -110,7 +103,7 @@ This operation is performed by calling function `delete_legal_hold_policy_assign
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-legal-hold-policy-assignments-id/).
 
-*Currently we don't have an example for calling `delete_legal_hold_policy_assignment_by_id` in integration tests*
+_Currently we don't have an example for calling `delete_legal_hold_policy_assignment_by_id` in integration tests_
 
 ### Arguments
 
@@ -119,14 +112,12 @@ See the endpoint docs at
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
-
 ### Returns
 
 This function returns a value of type `None`.
 
 A blank response is returned if the assignment was
 successfully deleted.
-
 
 ## List current file versions for legal hold policy assignment
 
@@ -152,21 +143,20 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id-files-on-hold/).
 
-*Currently we don't have an example for calling `get_legal_hold_policy_assignment_file_on_hold` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policy_assignment_file_on_hold` in integration tests_
 
 ### Arguments
 
 - legal_hold_policy_assignment_id `str`
   - The ID of the legal hold policy assignment Example: "753465"
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -174,7 +164,6 @@ This function returns a value of type `FileVersionLegalHolds`.
 
 Returns the list of current file versions held under legal hold for a
 specific legal hold policy assignment.
-
 
 ## List previous file versions for legal hold policy assignment
 
@@ -200,21 +189,20 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id-file-versions-on-hold/).
 
-*Currently we don't have an example for calling `get_legal_hold_policy_assignment_file_version_on_hold` in integration tests*
+_Currently we don't have an example for calling `get_legal_hold_policy_assignment_file_version_on_hold` in integration tests_
 
 ### Arguments
 
 - legal_hold_policy_assignment_id `str`
   - The ID of the legal hold policy assignment Example: "753465"
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.  This requires `usemarker` to be set to `true`.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - fields `Optional[str]`
-  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response.  Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
-
 
 ### Returns
 
@@ -222,5 +210,3 @@ This function returns a value of type `FileVersionLegalHolds`.
 
 Returns the list of previous file versions held under legal hold for a
 specific legal hold policy assignment.
-
-

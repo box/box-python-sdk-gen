@@ -28,20 +28,31 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class SessionTerminationManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def create_user_terminate_session(self, user_ids: List[str], user_logins: List[str], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SessionTerminationMessage:
+
+    def create_user_terminate_session(
+        self,
+        user_ids: List[str],
+        user_logins: List[str],
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the user,
-        
+
         and creates asynchronous jobs
 
-        
+
         to terminate the user's sessions.
 
-        
+
         Returns the status for the POST request.
 
         :param user_ids: A list of user IDs
@@ -53,20 +64,36 @@ class SessionTerminationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(user_ids=user_ids, user_logins=user_logins)
+        request_body = BaseObject(user_ids=user_ids, user_logins=user_logins)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/users/terminate_sessions']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/users/terminate_sessions']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SessionTerminationMessage.from_dict(json.loads(response.text))
-    def create_group_terminate_session(self, group_ids: List[str], extra_headers: Optional[Dict[str, Optional[str]]] = None) -> SessionTerminationMessage:
+
+    def create_group_terminate_session(
+        self,
+        group_ids: List[str],
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the group,
-        
+
         and creates asynchronous jobs
 
-        
+
         to terminate the group's sessions.
 
-        
+
         Returns the status for the POST request.
 
         :param group_ids: A list of group IDs
@@ -76,7 +103,18 @@ class SessionTerminationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(group_ids=group_ids)
+        request_body = BaseObject(group_ids=group_ids)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/groups/terminate_sessions']), FetchOptions(method='POST', headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/groups/terminate_sessions']),
+            FetchOptions(
+                method='POST',
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return SessionTerminationMessage.from_dict(json.loads(response.text))

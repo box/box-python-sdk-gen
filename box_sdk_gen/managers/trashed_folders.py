@@ -30,6 +30,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class RestoreFolderFromTrashParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
@@ -39,35 +40,48 @@ class RestoreFolderFromTrashParentArg(BaseObject):
         super().__init__(**kwargs)
         self.id = id
 
+
 class TrashedFoldersManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def restore_folder_from_trash(self, folder_id: str, name: Optional[str] = None, parent: Optional[RestoreFolderFromTrashParentArg] = None, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TrashFolderRestored:
+
+    def restore_folder_from_trash(
+        self,
+        folder_id: str,
+        name: Optional[str] = None,
+        parent: Optional[RestoreFolderFromTrashParentArg] = None,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> TrashFolderRestored:
         """
         Restores a folder that has been moved to the trash.
-        
+
         An optional new parent ID can be provided to restore the folder to in case the
 
-        
+
         original folder has been deleted.
 
-        
+
         # Folder locking
 
-        
+
         During this operation, part of the file tree will be locked, mainly
 
-        
+
         the source folder and all of its descendants, as well as the destination
 
-        
+
         folder.
 
-        
+
         For the duration of the operation, no other move, copy, delete, or restore
 
-        
+
         operation can performed on any of the locked folders.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -96,36 +110,54 @@ class TrashedFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: BaseObject = BaseObject(name=name, parent=parent)
+        request_body = BaseObject(name=name, parent=parent)
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id]), FetchOptions(method='POST', params=query_params_map, headers=headers_map, body=json.dumps(request_body.to_dict()), content_type='application/json', response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
+            FetchOptions(
+                method='POST',
+                params=query_params_map,
+                headers=headers_map,
+                body=json.dumps(request_body.to_dict()),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return TrashFolderRestored.from_dict(json.loads(response.text))
-    def get_folder_trash(self, folder_id: str, fields: Optional[str] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> TrashFolder:
+
+    def get_folder_trash(
+        self,
+        folder_id: str,
+        fields: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> TrashFolder:
         """
         Retrieves a folder that has been moved to the trash.
-        
+
         Please note that only if the folder itself has been moved to the
 
-        
+
         trash can it be retrieved with this API call. If instead one of
 
-        
+
         its parent folders was moved to the trash, only that folder
 
-        
+
         can be inspected using the
 
-        
+
         [`GET /folders/:id/trash`](e://get_folders_id_trash) API.
 
-        
+
         To list all items that have been moved to the trash, please
 
-        
+
         use the [`GET /folders/trash/items`](e://get-folders-trash-items/)
 
-        
+
         API.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -154,12 +186,25 @@ class TrashedFoldersManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return TrashFolder.from_dict(json.loads(response.text))
-    def delete_folder_trash(self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> None:
+
+    def delete_folder_trash(
+        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
         """
         Permanently deletes a folder that is in the trash.
-        
+
         This action cannot be undone.
 
         :param folder_id: The unique identifier that represent a folder.
@@ -178,5 +223,14 @@ class TrashedFoldersManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']), FetchOptions(method='DELETE', headers=headers_map, response_format=None, auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']),
+            FetchOptions(
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return None

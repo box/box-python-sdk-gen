@@ -26,17 +26,29 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+
 class StoragePoliciesManager:
-    def __init__(self, auth: Optional[Authentication] = None, network_session: Optional[NetworkSession] = None):
+    def __init__(
+        self,
+        auth: Optional[Authentication] = None,
+        network_session: Optional[NetworkSession] = None,
+    ):
         self.auth = auth
         self.network_session = network_session
-    def get_storage_policies(self, fields: Optional[str] = None, marker: Optional[str] = None, limit: Optional[int] = None, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicies:
+
+    def get_storage_policies(
+        self,
+        fields: Optional[str] = None,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
-        
+
         Only a Primary Admin can access this endpoint. The user
 
-        
+
         needs to generate a token for an account to authenticate this request.
 
         :param fields: A comma-separated list of attributes to include in the
@@ -59,11 +71,32 @@ class StoragePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields), 'marker': to_string(marker), 'limit': to_string(limit)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies']), FetchOptions(method='GET', params=query_params_map, headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/storage_policies']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return StoragePolicies.from_dict(json.loads(response.text))
-    def get_storage_policy_by_id(self, storage_policy_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None) -> StoragePolicy:
+
+    def get_storage_policy_by_id(
+        self,
+        storage_policy_id: str,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> StoragePolicy:
         """
         Fetches a specific storage policy. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
         :param storage_policy_id: The ID of the storage policy.
@@ -75,5 +108,14 @@ class StoragePoliciesManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]), FetchOptions(method='GET', headers=headers_map, response_format='json', auth=self.auth, network_session=self.network_session))
+        response: FetchResponse = fetch(
+            ''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]),
+            FetchOptions(
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
         return StoragePolicy.from_dict(json.loads(response.text))
