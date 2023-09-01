@@ -7,10 +7,10 @@ from .auth_schemas import (
     TokenRequestBoxSubjectType,
     TokenRequest,
     TokenRequestGrantType,
-    AccessToken,
 )
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
+from .schemas import AccessToken
 
 
 class CCGConfig:
@@ -62,7 +62,7 @@ class CCGAuth(Authentication):
             Configuration object of Client Credentials Grant auth.
         """
         self.config = config
-        self.token: Union[None, str] = None
+        self.token: Union[None, AccessToken] = None
 
         if config.user_id:
             self.subject_id = self.config.user_id
@@ -71,17 +71,21 @@ class CCGAuth(Authentication):
             self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
             self.subject_id = self.config.enterprise_id
 
-    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Return a current token or get a new one when not available.
         :return:
             Access token
         """
         if self.token is None:
-            return self.refresh(network_session=network_session)
+            self.refresh_token(network_session=network_session)
         return self.token
 
-    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
+    def refresh_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Fetch a new access token
         :return:
@@ -106,8 +110,8 @@ class CCGAuth(Authentication):
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))
-        self.token = token_response.access_token
-        return self.token
+        self.token = token_response
+        return token_response
 
     def as_user(self, user_id: str):
         """

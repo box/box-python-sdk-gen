@@ -18,10 +18,10 @@ from .auth_schemas import (
     TokenRequestBoxSubjectType,
     TokenRequest,
     TokenRequestGrantType,
-    AccessToken,
 )
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
+from .schemas import AccessToken
 
 
 class JWTConfig:
@@ -142,7 +142,7 @@ class JWTAuth(Authentication):
             )
 
         self.config = config
-        self.token = None
+        self.token: Union[None, AccessToken] = None
 
         if config.enterprise_id:
             self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
@@ -155,17 +155,21 @@ class JWTAuth(Authentication):
             config.private_key, config.private_key_passphrase
         )
 
-    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Return a current token or get a new one when not available.
         :return:
             Access token
         """
         if self.token is None:
-            return self.refresh(network_session=network_session)
+            self.refresh_token(network_session=network_session)
         return self.token
 
-    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
+    def refresh_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Fetch a new access token
         :return:
@@ -215,7 +219,7 @@ class JWTAuth(Authentication):
         )
 
         token_response = AccessToken.from_dict(json.loads(response.text))
-        self.token = token_response.access_token
+        self.token = token_response
         return self.token
 
     def as_user(self, user_id: str):

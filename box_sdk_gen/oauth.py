@@ -3,9 +3,10 @@ from urllib.parse import urlencode, urlunsplit
 from typing import Union, Optional
 
 from .auth import Authentication
-from .auth_schemas import TokenRequest, TokenRequestGrantType, AccessToken
+from .auth_schemas import TokenRequest, TokenRequestGrantType
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
+from .schemas import AccessToken
 
 
 class OAuthConfig:
@@ -120,7 +121,9 @@ class OAuth(Authentication):
         self.token = self._send_token_request(request_body, network_session)
         return self.token.access_token
 
-    def retrieve_token(self, network_session: Optional[NetworkSession] = None) -> str:
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
          Return a current token or get a new one when not available.
         :param network_session: An object to keep network session state
@@ -131,9 +134,13 @@ class OAuth(Authentication):
                 "Access and refresh tokens not available. Authenticate before making"
                 " any API call first."
             )
-        return self.token.access_token
+        return self.token
 
-    def refresh(self, network_session: Optional[NetworkSession] = None) -> str:
+    def refresh_token(
+        self,
+        network_session: Optional[NetworkSession] = None,
+        refresh_token: Optional[str] = None,
+    ) -> AccessToken:
         """
         Refresh outdated access token with refresh token
         :param network_session: An object to keep network session state
@@ -143,11 +150,11 @@ class OAuth(Authentication):
             grant_type=TokenRequestGrantType.REFRESH_TOKEN,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            refresh_token=self.token.refresh_token,
+            refresh_token=refresh_token or self.token.refresh_token,
         )
 
         self.token = self._send_token_request(request_body, network_session)
-        return self.token.access_token
+        return self.token
 
     @staticmethod
     def _send_token_request(

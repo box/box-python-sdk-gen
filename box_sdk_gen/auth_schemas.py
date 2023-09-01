@@ -72,23 +72,3 @@ class FileScope(str, Enum):
     ITEM_PREVIEW = 'item_preview'
     ITEM_RENAME = 'item_rename'
     ITEM_SHARE = 'item_share'
-
-
-class AccessToken(BaseObject):
-    def __init__(
-        self,
-        access_token: Union[None, str] = None,
-        expires_in: Union[None, int] = None,
-        token_type: Union[None, str] = None,
-        restricted_to: Union[None, List[FileScope]] = None,
-        refresh_token: Union[None, str] = None,
-        issued_token_type: Union[None, str] = None,
-        **kwargs
-    ):
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-        self.refresh_token = refresh_token
-        self.issued_token_type = issued_token_type

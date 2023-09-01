@@ -124,7 +124,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
                 )
 
         if response.reauthentication_needed:
-            options.auth.refresh(options.network_session)
+            options.auth.refresh_token(options.network_session)
         elif response.status_code != 429 and response.status_code < 500:
             __raise_on_unsuccessful_request(
                 network_response=response.network_response,
@@ -161,7 +161,8 @@ def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
     headers = options.headers or {}
     if options.auth:
         headers['Authorization'] = (
-            f'Bearer {options.auth.retrieve_token(options.network_session)}'
+            'Bearer'
+            f' {options.auth.retrieve_token(options.network_session).access_token}'
         )
 
     headers['User-Agent'] = USER_AGENT_HEADER

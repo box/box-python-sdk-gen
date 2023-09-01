@@ -1,3 +1,5 @@
+from box_sdk_gen.schemas import AccessToken
+
 from box_sdk_gen.utils import decode_base_64
 
 from box_sdk_gen.utils import get_env_var
@@ -65,8 +67,8 @@ def test_developer_token_auth():
     )
     auth: JWTAuth = JWTAuth(config=jwt_config)
     auth.as_user(user_id)
-    token: str = auth.retrieve_token()
-    dev_auth: DeveloperTokenAuth = DeveloperTokenAuth(token=token)
+    token: AccessToken = auth.retrieve_token()
+    dev_auth: DeveloperTokenAuth = DeveloperTokenAuth(token=token.access_token)
     client: Client = Client(auth=dev_auth)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
