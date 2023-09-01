@@ -76,8 +76,8 @@ class CCGAuth(Authentication):
     ) -> AccessToken:
         """
         Return a current token or get a new one when not available.
-        :return:
-            Access token
+        :param network_session: An object to keep network session state
+        :return: Access token
         """
         if self.token is None:
             self.refresh_token(network_session=network_session)
@@ -87,9 +87,9 @@ class CCGAuth(Authentication):
         self, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
-        Fetch a new access token
-        :return:
-            New access token
+        Return a current token or get a new one when not available.
+        :param network_session: An object to keep network session state
+        :return: Access token
         """
         request_body = TokenRequest(
             grant_type=TokenRequestGrantType.CLIENT_CREDENTIALS,

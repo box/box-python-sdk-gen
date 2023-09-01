@@ -1,6 +1,6 @@
 import json
 from urllib.parse import urlencode, urlunsplit
-from typing import Union, Optional
+from typing import Optional
 
 from .auth import Authentication
 from .auth_schemas import TokenRequest, TokenRequestGrantType
@@ -59,7 +59,7 @@ class OAuth(Authentication):
             Configuration object of OAuth.
         """
         self.config = config
-        self.token: Union[None, AccessToken] = None
+        self.token: Optional[AccessToken] = None
 
     def get_authorize_url(
         self, options: Optional[GetAuthorizeUrlOptions] = None
@@ -144,6 +144,7 @@ class OAuth(Authentication):
         """
         Refresh outdated access token with refresh token
         :param network_session: An object to keep network session state
+        :param refresh_token: Refresh token, which can be used to obtain a new access token
         :return: Valid access token
         """
         request_body = TokenRequest(

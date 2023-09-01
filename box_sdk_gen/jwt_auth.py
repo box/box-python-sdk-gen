@@ -160,8 +160,8 @@ class JWTAuth(Authentication):
     ) -> AccessToken:
         """
         Return a current token or get a new one when not available.
-        :return:
-            Access token
+        :param network_session: An object to keep network session state
+        :return: Access token
         """
         if self.token is None:
             self.refresh_token(network_session=network_session)
@@ -172,8 +172,8 @@ class JWTAuth(Authentication):
     ) -> AccessToken:
         """
         Fetch a new access token
-        :return:
-            New access token
+        :param network_session: An object to keep network session state
+        :return: New access token
         """
         system_random = random.SystemRandom()
         jti_length = system_random.randint(16, 128)
