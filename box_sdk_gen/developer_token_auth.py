@@ -12,9 +12,16 @@ class DeveloperTokenAuth(Authentication):
     def retrieve_token(
         self, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
+        """
+        Retrieves stored developer token
+        :param network_session: An object to keep network session state
+        :return: Return a current token
+        """
         return self.token
 
-    def refresh_token(
-        self, network_session: Optional[NetworkSession] = None
-    ) -> AccessToken:
+    def refresh_token(self, network_session: Optional[NetworkSession] = None):
+        """
+        Developer token cannot be refreshed
+        :param network_session: An object to keep network session state
+        """
         raise Exception("Developer token has expired. Please provide a new one.")

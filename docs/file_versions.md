@@ -18,7 +18,11 @@ This operation is performed by calling function `get_file_versions`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-versions/).
 
-_Currently we don't have an example for calling `get_file_versions` in integration tests_
+<!-- sample get_files_id_versions -->
+
+```python
+client.file_versions.get_file_versions(file_id=file.id)
+```
 
 ### Arguments
 
@@ -50,7 +54,11 @@ This operation is performed by calling function `get_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-versions-id/).
 
-_Currently we don't have an example for calling `get_file_version_by_id` in integration tests_
+<!-- sample get_files_id_versions_id -->
+
+```python
+client.file_versions.get_file_version_by_id(file_id=file.id, file_version_id=file_versions.entries[0].id)
+```
 
 ### Arguments
 
@@ -115,7 +123,11 @@ This operation is performed by calling function `delete_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-versions-id/).
 
-_Currently we don't have an example for calling `delete_file_version_by_id` in integration tests_
+<!-- sample delete_files_id_versions_id -->
+
+```python
+client.file_versions.delete_file_version_by_id(file_id=file.id, file_version_id=file_versions_restored.entries[0].id)
+```
 
 ### Arguments
 
@@ -159,7 +171,11 @@ This operation is performed by calling function `promote_file_version`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-versions-current/).
 
-_Currently we don't have an example for calling `promote_file_version` in integration tests_
+<!-- sample post_files_id_versions_current -->
+
+```python
+client.file_versions.promote_file_version(file_id=file.id, id=file_versions.entries[0].id, type=PromoteFileVersionTypeArg.FILE_VERSION.value)
+```
 
 ### Arguments
 
