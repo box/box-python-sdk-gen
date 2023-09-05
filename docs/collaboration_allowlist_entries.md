@@ -15,7 +15,11 @@ This operation is performed by calling function `get_collaboration_whitelist_ent
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries/).
 
-_Currently we don't have an example for calling `get_collaboration_whitelist_entries` in integration tests_
+<!-- sample get_collaboration_whitelist_entries -->
+
+```python
+client.collaboration_allowlist_entries.get_collaboration_whitelist_entries()
+```
 
 ### Arguments
 
@@ -42,7 +46,11 @@ This operation is performed by calling function `create_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-collaboration-whitelist-entries/).
 
-_Currently we don't have an example for calling `create_collaboration_whitelist_entry` in integration tests_
+<!-- sample post_collaboration_whitelist_entries -->
+
+```python
+client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(domain=domain, direction=direction)
+```
 
 ### Arguments
 
@@ -69,7 +77,11 @@ This operation is performed by calling function `get_collaboration_whitelist_ent
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries-id/).
 
-_Currently we don't have an example for calling `get_collaboration_whitelist_entry_by_id` in integration tests_
+<!-- sample get_collaboration_whitelist_entries_id -->
+
+```python
+client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(collaboration_whitelist_entry_id=entry.id)
+```
 
 ### Arguments
 
@@ -94,7 +106,11 @@ This operation is performed by calling function `delete_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-entries-id/).
 
-_Currently we don't have an example for calling `delete_collaboration_whitelist_entry_by_id` in integration tests_
+<!-- sample delete_collaboration_whitelist_entries_id -->
+
+```python
+client.collaboration_allowlist_entries.delete_collaboration_whitelist_entry_by_id(collaboration_whitelist_entry_id=entry.id)
+```
 
 ### Arguments
 

@@ -976,124 +976,6 @@ class CollaborationAllowlistEntries(BaseObject):
         self.entries = entries
 
 
-class CollaborationAllowlistExemptTargetTypeField(str, Enum):
-    COLLABORATION_WHITELIST = 'collaboration_whitelist'
-
-
-class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-
-class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[
-            CollaborationAllowlistExemptTargetEnterpriseFieldTypeField
-        ] = None,
-        name: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-
-class CollaborationAllowlistExemptTargetUserFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-
-class CollaborationAllowlistExemptTargetUserField(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationAllowlistExemptTargetUserFieldTypeField] = None,
-        name: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistExemptTargetUserFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-
-class CollaborationAllowlistExemptTarget(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationAllowlistExemptTargetTypeField] = None,
-        enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None,
-        user: Optional[CollaborationAllowlistExemptTargetUserField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this exemption
-        :type id: Optional[str], optional
-        :param type: `collaboration_whitelist`
-        :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
-        :param created_at: The time the entry was created
-        :type created_at: Optional[str], optional
-        :param modified_at: The time the entry was modified
-        :type modified_at: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.enterprise = enterprise
-        self.user = user
-        self.created_at = created_at
-        self.modified_at = modified_at
-
-
-class CollaborationAllowlistExemptTargets(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
-        entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of users exempt from any of the restrictions
-            imposed by the list of allowed collaboration domains
-            for this enterprise.
-        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
-
-
 class CollectionTypeField(str, Enum):
     COLLECTION = 'collection'
 
@@ -6831,6 +6713,98 @@ class Comments(BaseObject):
         self.limit = limit
         self.offset = offset
         self.order = order
+        self.entries = entries
+
+
+class CollaborationAllowlistExemptTargetTypeField(str, Enum):
+    COLLABORATION_WHITELIST_EXEMPT_TARGET = 'collaboration_whitelist_exempt_target'
+
+
+class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
+
+
+class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[
+            CollaborationAllowlistExemptTargetEnterpriseFieldTypeField
+        ] = None,
+        name: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param id: The unique identifier for this enterprise.
+        :type id: Optional[str], optional
+        :param type: `enterprise`
+        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField], optional
+        :param name: The name of the enterprise
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+
+
+class CollaborationAllowlistExemptTarget(BaseObject):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[CollaborationAllowlistExemptTargetTypeField] = None,
+        enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None,
+        user: Optional[UserMini] = None,
+        created_at: Optional[str] = None,
+        modified_at: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param id: The unique identifier for this exemption
+        :type id: Optional[str], optional
+        :param type: `collaboration_whitelist_exempt_target`
+        :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
+        :param created_at: The time the entry was created
+        :type created_at: Optional[str], optional
+        :param modified_at: The time the entry was modified
+        :type modified_at: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.enterprise = enterprise
+        self.user = user
+        self.created_at = created_at
+        self.modified_at = modified_at
+
+
+class CollaborationAllowlistExemptTargets(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[int] = None,
+        prev_marker: Optional[int] = None,
+        entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
+        :param entries: A list of users exempt from any of the restrictions
+            imposed by the list of allowed collaboration domains
+            for this enterprise.
+        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
         self.entries = entries
 
 
