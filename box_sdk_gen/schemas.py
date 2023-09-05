@@ -3496,38 +3496,38 @@ class UserBaseTypeField(str, Enum):
 
 
 class UserBase(BaseObject):
-    def __init__(self, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: UserBaseTypeField, **kwargs):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class UserIntegrationMappings(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3535,23 +3535,23 @@ class UserIntegrationMappings(UserBase):
 class UserCollaborations(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
         :type name: Optional[str], optional
         :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3559,23 +3559,23 @@ class UserCollaborations(UserBase):
 class UserMini(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3654,6 +3654,7 @@ class UserNotificationEmailField(BaseObject):
 class User(UserMini):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         created_at: Optional[str] = None,
         modified_at: Optional[str] = None,
@@ -3670,10 +3671,11 @@ class User(UserMini):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param created_at: When the user object was created
@@ -3710,10 +3712,8 @@ class User(UserMini):
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, name=name, login=login, id=id, **kwargs)
+        super().__init__(id=id, type=type, name=name, login=login, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.language = language
@@ -11624,6 +11624,7 @@ class UserFullEnterpriseField(BaseObject):
 class UserFull(User):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         role: Optional[UserFullRoleField] = None,
         tracking_codes: Optional[List[TrackingCode]] = None,
@@ -11652,10 +11653,11 @@ class UserFull(User):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param role: The user’s enterprise role
@@ -11722,10 +11724,9 @@ class UserFull(User):
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
         super().__init__(
+            id=id,
             type=type,
             created_at=created_at,
             modified_at=modified_at,
@@ -11742,7 +11743,6 @@ class UserFull(User):
             notification_email=notification_email,
             name=name,
             login=login,
-            id=id,
             **kwargs
         )
         self.role = role
