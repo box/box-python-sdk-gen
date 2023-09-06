@@ -14,6 +14,8 @@ from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import SignRequestPrefillTag
 
+from box_sdk_gen.base_object import BaseObject
+
 from box_sdk_gen.schemas import SignRequest
 
 from box_sdk_gen.schemas import ClientError
@@ -236,7 +238,7 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = SignRequestCreateRequest(
+        request_body = BaseObject(
             source_files=source_files,
             signers=signers,
             is_document_preparation_needed=is_document_preparation_needed,

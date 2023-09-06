@@ -1,12 +1,18 @@
+from typing import List
+
 from typing import Optional
 
 from typing import Dict
 
 import json
 
-from typing import List
-
 from box_sdk_gen.base_object import BaseObject
+
+from box_sdk_gen.utils import Buffer
+
+from box_sdk_gen.utils import HashName
+
+from box_sdk_gen.utils import Iterator
 
 from box_sdk_gen.schemas import UploadSession
 
@@ -35,6 +41,38 @@ from box_sdk_gen.fetch import fetch
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.utils import generate_byte_stream_from_buffer
+
+from box_sdk_gen.utils import hex_to_base_64
+
+from box_sdk_gen.utils import iterate_chunks
+
+from box_sdk_gen.utils import read_byte_stream
+
+from box_sdk_gen.utils import reduce_iterator
+
+from box_sdk_gen.utils import Hash
+
+from box_sdk_gen.utils import list_concat
+
+from box_sdk_gen.utils import buffer_length
+
+
+class PartAccumulator:
+    def __init__(
+        self,
+        last_index: int,
+        parts: List[UploadPart],
+        file_size: int,
+        upload_session_id: str,
+        file_hash: Hash,
+    ):
+        self.last_index = last_index
+        self.parts = parts
+        self.file_size = file_size
+        self.upload_session_id = upload_session_id
+        self.file_hash = file_hash
 
 
 class ChunkedUploadsManager:
@@ -384,3 +422,95 @@ class ChunkedUploadsManager:
             ),
         )
         return Files.from_dict(json.loads(response.text))
+
+    def reducer(self, acc: PartAccumulator, chunk: ByteStream):
+        last_index: int = acc.last_index
+        parts: List[UploadPart] = acc.parts
+        chunk_buffer: Buffer = read_byte_stream(chunk)
+        hash: Hash = Hash(algorithm=HashName.SHA1.value)
+        hash.update_hash(chunk_buffer)
+        sha_1: str = hash.digest_hash('base64')
+        digest: str = ''.join(['sha=', sha_1])
+        chunk_size: int = buffer_length(chunk_buffer)
+        bytes_start: int = last_index + 1
+        bytes_end: int = last_index + chunk_size
+        content_range: str = ''.join(
+            [
+                'bytes ',
+                to_string(bytes_start),
+                '-',
+                to_string(bytes_end),
+                '/',
+                to_string(acc.file_size),
+            ]
+        )
+        uploaded_part: UploadedPart = self.upload_file_part(
+            upload_session_id=acc.upload_session_id,
+            request_body=generate_byte_stream_from_buffer(chunk_buffer),
+            digest=digest,
+            content_range=content_range,
+        )
+        part: UploadPart = uploaded_part.part
+        part_sha_1: str = hex_to_base_64(part.sha_1)
+        assert part_sha_1 == sha_1
+        assert part.size == chunk_size
+        assert part.offset == bytes_start
+        acc.file_hash.update_hash(chunk_buffer)
+        return PartAccumulator(
+            last_index=bytes_end,
+            parts=list_concat(parts, [part]),
+            file_size=acc.file_size,
+            upload_session_id=acc.upload_session_id,
+            file_hash=acc.file_hash,
+        )
+
+    def upload_big_file(
+        self, file: ByteStream, file_name: str, file_size: int, parent_folder_id: str
+    ):
+        """
+        Starts the process of chunk uploading a big file. Should return a File object representing uploaded file.
+        :param file: The stream of the file to upload.
+        :type file: ByteStream
+        :param file_name: The name of the file, which will be used for storage in Box.
+        :type file_name: str
+        :param file_size: The total size of the file for the chunked upload in bytes.
+        :type file_size: int
+        :param parent_folder_id: The ID of the folder where the file should be uploaded.
+        :type parent_folder_id: str
+        """
+        upload_session: UploadSession = self.create_file_upload_session(
+            folder_id=parent_folder_id, file_size=file_size, file_name=file_name
+        )
+        upload_session_id: str = upload_session.id
+        part_size: int = upload_session.part_size
+        total_parts: int = upload_session.total_parts
+        assert part_size * total_parts >= file_size
+        assert upload_session.num_parts_processed == 0
+        file_hash: Hash = Hash(algorithm=HashName.SHA1.value)
+        chunks_iterator: Iterator = iterate_chunks(file, part_size)
+        results: PartAccumulator = reduce_iterator(
+            chunks_iterator,
+            self.reducer,
+            PartAccumulator(
+                last_index=-1,
+                parts=[],
+                file_size=file_size,
+                upload_session_id=upload_session_id,
+                file_hash=file_hash,
+            ),
+        )
+        parts: List[UploadPart] = results.parts
+        processed_session_parts: UploadParts = self.get_file_upload_session_parts(
+            upload_session_id=upload_session_id
+        )
+        assert processed_session_parts.total_count == total_parts
+        processed_session: UploadSession = self.get_file_upload_session_by_id(
+            upload_session_id=upload_session_id
+        )
+        assert processed_session.num_parts_processed == total_parts
+        sha_1: str = file_hash.digest_hash('base64')
+        digest: str = ''.join(['sha=', sha_1])
+        committed_session: Files = self.create_file_upload_session_commit(
+            upload_session_id=upload_session_id, parts=parts, digest=digest
+        )
+        return committed_session.entries[0]

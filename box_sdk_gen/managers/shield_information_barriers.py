@@ -206,7 +206,7 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = ShieldInformationBarrier(
+        request_body = BaseObject(
             id=id,
             type=type,
             enterprise=enterprise,
