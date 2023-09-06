@@ -11312,6 +11312,10 @@ class TemplateSigner(BaseObject):
         self.order = order
 
 
+class SignTemplateTypeField(str, Enum):
+    SIGN_TEMPLATE = 'sign-template'
+
+
 class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
     EMAIL_SUBJECT = 'email_subject'
     EMAIL_MESSAGE = 'email_message'
@@ -11429,6 +11433,7 @@ class SignTemplateCustomBrandingField(BaseObject):
 class SignTemplate(BaseObject):
     def __init__(
         self,
+        type: Optional[SignTemplateTypeField] = None,
         id: Optional[str] = None,
         name: Optional[str] = None,
         email_subject: Optional[str] = None,
@@ -11448,6 +11453,8 @@ class SignTemplate(BaseObject):
         **kwargs
     ):
         """
+        :param type: object type
+        :type type: Optional[SignTemplateTypeField], optional
         :param id: Template identifier.
         :type id: Optional[str], optional
         :param name: The name of the template.
@@ -11481,6 +11488,7 @@ class SignTemplate(BaseObject):
         :type custom_branding: Optional[SignTemplateCustomBrandingField], optional
         """
         super().__init__(**kwargs)
+        self.type = type
         self.id = id
         self.name = name
         self.email_subject = email_subject
