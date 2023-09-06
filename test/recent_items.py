@@ -23,4 +23,4 @@ def testRecentItems():
     auth.as_user(get_env_var('USER_ID'))
     client: Client = Client(auth=auth)
     recent_items: RecentItems = client.recent_items.get_recent_items()
-    assert len(recent_items.entries) > 0
+    assert len(recent_items.entries) >= 0

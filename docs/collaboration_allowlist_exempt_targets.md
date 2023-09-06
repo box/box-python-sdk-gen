@@ -15,7 +15,11 @@ This operation is performed by calling function `get_collaboration_whitelist_exe
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets/).
 
-_Currently we don't have an example for calling `get_collaboration_whitelist_exempt_targets` in integration tests_
+<!-- sample get_collaboration_whitelist_exempt_targets -->
+
+```python
+client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_targets()
+```
 
 ### Arguments
 
@@ -42,7 +46,11 @@ This operation is performed by calling function `create_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-collaboration-whitelist-exempt-targets/).
 
-_Currently we don't have an example for calling `create_collaboration_whitelist_exempt_target` in integration tests_
+<!-- sample post_collaboration_whitelist_exempt_targets -->
+
+```python
+client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(user=CreateCollaborationWhitelistExemptTargetUserArg(id=user.id))
+```
 
 ### Arguments
 
@@ -67,7 +75,11 @@ This operation is performed by calling function `get_collaboration_whitelist_exe
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets-id/).
 
-_Currently we don't have an example for calling `get_collaboration_whitelist_exempt_target_by_id` in integration tests_
+<!-- sample get_collaboration_whitelist_exempt_targets_id -->
+
+```python
+client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(collaboration_whitelist_exempt_target_id=exempt_target.id)
+```
 
 ### Arguments
 
@@ -92,7 +104,11 @@ This operation is performed by calling function `delete_collaboration_whitelist_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-exempt-targets-id/).
 
-_Currently we don't have an example for calling `delete_collaboration_whitelist_exempt_target_by_id` in integration tests_
+<!-- sample delete_collaboration_whitelist_exempt_targets_id -->
+
+```python
+client.collaboration_allowlist_exempt_targets.delete_collaboration_whitelist_exempt_target_by_id(collaboration_whitelist_exempt_target_id=exempt_target.id)
+```
 
 ### Arguments
 
