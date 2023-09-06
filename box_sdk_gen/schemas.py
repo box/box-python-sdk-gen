@@ -11158,6 +11158,7 @@ class TemplateSignerInputTypeField(str, Enum):
     DATE = 'date'
     TEXT = 'text'
     CHECKBOX = 'checkbox'
+    ATTACHMENT = 'attachment'
     RADIO = 'radio'
     DROPDOWN = 'dropdown'
 
@@ -11220,6 +11221,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         group_id: Optional[str] = None,
         coordinates: Optional[TemplateSignerInputCoordinatesField] = None,
         dimensions: Optional[TemplateSignerInputDimensionsField] = None,
+        label: Optional[str] = None,
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
@@ -11245,6 +11247,8 @@ class TemplateSignerInput(SignRequestPrefillTag):
         :type coordinates: Optional[TemplateSignerInputCoordinatesField], optional
         :param dimensions: The size of the input.
         :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
+        :param label: The label field is used especially for text, attachment, radio, and checkbox type inputs.
+        :type label: Optional[str], optional
         :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
         :type document_tag_id: Optional[str], optional
         :param text_value: Text prefill value
@@ -11270,6 +11274,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         self.group_id = group_id
         self.coordinates = coordinates
         self.dimensions = dimensions
+        self.label = label
 
 
 class TemplateSignerRoleField(str, Enum):
