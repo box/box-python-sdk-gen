@@ -256,7 +256,7 @@ class ChunkedUploadsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=request_body,
+                file_stream=request_body,
                 content_type='application/octet-stream',
                 response_format='json',
                 auth=self.auth,

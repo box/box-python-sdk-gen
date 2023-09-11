@@ -42,6 +42,7 @@ class FetchOptions:
     params: Dict[str, str] = None
     headers: Dict[str, str] = None
     body: str = None
+    file_stream: ByteStream = None
     multipart_data: List[MultipartItem] = None
     content_type: str = ""
     response_format: Optional[str] = None
@@ -100,7 +101,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         method=options.method,
         url=url,
         headers=headers,
-        body=options.body,
+        body=options.file_stream or options.body,
         content_type=options.content_type,
         params=params,
         multipart_data=options.multipart_data,
