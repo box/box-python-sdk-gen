@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 from typing import Union, Optional
 
 from .auth import Authentication
+from .token_storage import TokenStorage, InMemoryTokenStorage
 from .auth_schemas import (
     TokenRequestBoxSubjectType,
     TokenRequest,
@@ -20,6 +21,7 @@ class CCGConfig:
         client_secret: str,
         enterprise_id: Union[None, str] = None,
         user_id: Union[None, str] = None,
+        token_storage: TokenStorage = None,
     ):
         """
         :param client_id:
@@ -45,7 +47,12 @@ class CCGConfig:
 
             <https://developer.box.com/en/guides/applications/>
             <https://developer.box.com/en/guides/authentication/select/>
+        :param token_storage:
+            Object responsible for storing token. If no custom implementation provided,
+            the token will be stored in memory.
         """
+        if token_storage is None:
+            token_storage = InMemoryTokenStorage()
         if not enterprise_id and not user_id:
             raise Exception("Enterprise ID or User ID is needed")
 
@@ -53,6 +60,7 @@ class CCGConfig:
         self.client_secret = client_secret
         self.enterprise_id = enterprise_id
         self.user_id = user_id
+        self.token_storage = token_storage
 
 
 class CCGAuth(Authentication):
@@ -62,7 +70,7 @@ class CCGAuth(Authentication):
             Configuration object of Client Credentials Grant auth.
         """
         self.config = config
-        self.token: Union[None, AccessToken] = None
+        self.token_storage = config.token_storage
 
         if config.user_id:
             self.subject_id = self.config.user_id
@@ -79,9 +87,10 @@ class CCGAuth(Authentication):
         :param network_session: An object to keep network session state
         :return: Access token
         """
-        if self.token is None:
-            self.refresh_token(network_session=network_session)
-        return self.token
+        token = self.token_storage.get()
+        if token is None:
+            return self.refresh_token(network_session=network_session)
+        return token
 
     def refresh_token(
         self, network_session: Optional[NetworkSession] = None
@@ -109,9 +118,9 @@ class CCGAuth(Authentication):
             ),
         )
 
-        token_response = AccessToken.from_dict(json.loads(response.text))
-        self.token = token_response
-        return token_response
+        new_token = AccessToken.from_dict(json.loads(response.text))
+        self.token_storage.store(new_token)
+        return new_token
 
     def as_user(self, user_id: str):
         """
@@ -129,7 +138,7 @@ class CCGAuth(Authentication):
         """
         self.subject_id = user_id
         self.subject_type = TokenRequestBoxSubjectType.USER
-        self.token = None
+        self.token_storage.clear()
 
     def as_enterprise(self, enterprise_id: str):
         """
@@ -140,4 +149,4 @@ class CCGAuth(Authentication):
         """
         self.subject_id = enterprise_id
         self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-        self.token = None
+        self.token_storage.clear()
