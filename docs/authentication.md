@@ -348,15 +348,15 @@ auth = OAuth(
 
 If you want to keep an up-to-date access token in a file and also maintain a valid access token in in-memory cache,
 allowing you to reuse the token after rerunning your application while maintaining fast access times to the token,
-you can use the `FileWithInMemoryCachingTokenStorage` class. To enable storing the token in a file,
-you need to pass an object of type `FileWithInMemoryCachingTokenStorage` to the AuthConfig class. For example, for OAuth:
+you can use the `FileWithInMemoryCacheTokenStorage` class. To enable storing the token in a file,
+you need to pass an object of type `FileWithInMemoryCacheTokenStorage` to the AuthConfig class. For example, for OAuth:
 
 ```python
 from box_sdk_gen.oauth import OAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCachingTokenStorage
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
 
 auth = OAuth(
-    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileWithInMemoryCachingTokenStorage())
+    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileWithInMemoryCacheTokenStorage())
 )
 ```
 

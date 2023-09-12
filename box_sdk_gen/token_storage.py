@@ -19,7 +19,7 @@ class TokenStorage:
         pass
 
 
-class InMemoryTokenStorage:
+class InMemoryTokenStorage(TokenStorage):
     def __init__(self):
         self.token: Optional[AccessToken] = None
 
@@ -33,34 +33,42 @@ class InMemoryTokenStorage:
         self.token = None
 
 
-class FileTokenStorage:
+class FileTokenStorage(TokenStorage):
     def __init__(self, filename: str = 'token_storage'):
-        self.file = shelve.open(filename)
+        self.filename = filename
 
     def store(self, token: AccessToken) -> None:
-        self.file['token'] = token
+        with shelve.open(self.filename) as file:
+            file['token'] = token
 
     def get(self) -> Optional[AccessToken]:
-        return self.file['token']
+        with shelve.open(self.filename) as file:
+            return file.get('token', None)
 
     def clear(self) -> None:
-        del self.file['token']
+        with shelve.open(self.filename) as file:
+            if 'token' in file:
+                del file['token']
 
 
-class FileWithInMemoryCachingTokenStorage:
+class FileWithInMemoryCacheTokenStorage(TokenStorage):
     def __init__(self, filename: str = 'token_storage'):
-        self.file = shelve.open(filename)
+        self.filename = filename
         self.cached_token: Optional[AccessToken] = None
 
     def store(self, token: AccessToken) -> None:
-        self.file['token'] = token
+        with shelve.open(self.filename) as file:
+            file['token'] = token
         self.cached_token = token
 
     def get(self) -> Optional[AccessToken]:
         if self.cached_token is None:
-            self.cached_token = self.file['token']
+            with shelve.open(self.filename) as file:
+                self.cached_token = file.get('token', None)
         return self.cached_token
 
     def clear(self) -> None:
-        del self.file['token']
+        with shelve.open(self.filename) as file:
+            if 'token' in file:
+                del file['token']
         self.cached_token = None

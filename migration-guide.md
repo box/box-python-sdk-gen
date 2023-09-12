@@ -455,7 +455,7 @@ AuthConfig constructor.
 ```python
 from typing import Optional
 from box_sdk_gen.oauth import OAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCachingTokenStorage, TokenStorage
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage, TokenStorage
 from .schemas import AccessToken
 
 class MyCustomTokenStorage(TokenStorage):
@@ -481,17 +481,17 @@ auth = OAuth(
 )
 ```
 
-or reuse one of the provided implementations: `FileTokenStorage` or `FileWithInMemoryCachingTokenStorage`:
+or reuse one of the provided implementations: `FileTokenStorage` or `FileWithInMemoryCacheTokenStorage`:
 
 ```python
 from box_sdk_gen.oauth import OAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCachingTokenStorage
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
 
 auth = OAuth(
   OAuthConfig(
     client_id='YOUR_CLIENT_ID',
     client_secret='YOUR_CLIENT_SECRET',
-    token_storage=FileWithInMemoryCachingTokenStorage()
+    token_storage=FileWithInMemoryCacheTokenStorage()
   )
 )
 ```
