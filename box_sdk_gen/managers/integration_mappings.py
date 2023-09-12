@@ -146,7 +146,7 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = IntegrationMappingSlackCreateRequest(
+        request_body = BaseObject(
             partner_item=partner_item, box_item=box_item, options=options
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})

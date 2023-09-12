@@ -976,124 +976,6 @@ class CollaborationAllowlistEntries(BaseObject):
         self.entries = entries
 
 
-class CollaborationAllowlistExemptTargetTypeField(str, Enum):
-    COLLABORATION_WHITELIST = 'collaboration_whitelist'
-
-
-class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-
-class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[
-            CollaborationAllowlistExemptTargetEnterpriseFieldTypeField
-        ] = None,
-        name: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-
-class CollaborationAllowlistExemptTargetUserFieldTypeField(str, Enum):
-    ENTERPRISE = 'enterprise'
-
-
-class CollaborationAllowlistExemptTargetUserField(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationAllowlistExemptTargetUserFieldTypeField] = None,
-        name: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this enterprise.
-        :type id: Optional[str], optional
-        :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistExemptTargetUserFieldTypeField], optional
-        :param name: The name of the enterprise
-        :type name: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.name = name
-
-
-class CollaborationAllowlistExemptTarget(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationAllowlistExemptTargetTypeField] = None,
-        enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None,
-        user: Optional[CollaborationAllowlistExemptTargetUserField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param id: The unique identifier for this exemption
-        :type id: Optional[str], optional
-        :param type: `collaboration_whitelist`
-        :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
-        :param created_at: The time the entry was created
-        :type created_at: Optional[str], optional
-        :param modified_at: The time the entry was modified
-        :type modified_at: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
-        self.type = type
-        self.enterprise = enterprise
-        self.user = user
-        self.created_at = created_at
-        self.modified_at = modified_at
-
-
-class CollaborationAllowlistExemptTargets(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
-        entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of users exempt from any of the restrictions
-            imposed by the list of allowed collaboration domains
-            for this enterprise.
-        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
-
-
 class CollectionTypeField(str, Enum):
     COLLECTION = 'collection'
 
@@ -3614,38 +3496,38 @@ class UserBaseTypeField(str, Enum):
 
 
 class UserBase(BaseObject):
-    def __init__(self, type: UserBaseTypeField, id: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, type: UserBaseTypeField, **kwargs):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class UserIntegrationMappings(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3653,23 +3535,23 @@ class UserIntegrationMappings(UserBase):
 class UserCollaborations(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned.
         :type name: Optional[str], optional
         :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned.
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3677,23 +3559,23 @@ class UserCollaborations(UserBase):
 class UserMini(UserBase):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param name: The display name of this user
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, id=id, **kwargs)
+        super().__init__(id=id, type=type, **kwargs)
         self.name = name
         self.login = login
 
@@ -3772,6 +3654,7 @@ class UserNotificationEmailField(BaseObject):
 class User(UserMini):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         created_at: Optional[str] = None,
         modified_at: Optional[str] = None,
@@ -3788,10 +3671,11 @@ class User(UserMini):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param created_at: When the user object was created
@@ -3828,10 +3712,8 @@ class User(UserMini):
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
-        super().__init__(type=type, name=name, login=login, id=id, **kwargs)
+        super().__init__(id=id, type=type, name=name, login=login, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.language = language
@@ -6831,6 +6713,98 @@ class Comments(BaseObject):
         self.limit = limit
         self.offset = offset
         self.order = order
+        self.entries = entries
+
+
+class CollaborationAllowlistExemptTargetTypeField(str, Enum):
+    COLLABORATION_WHITELIST_EXEMPT_TARGET = 'collaboration_whitelist_exempt_target'
+
+
+class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
+    ENTERPRISE = 'enterprise'
+
+
+class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[
+            CollaborationAllowlistExemptTargetEnterpriseFieldTypeField
+        ] = None,
+        name: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param id: The unique identifier for this enterprise.
+        :type id: Optional[str], optional
+        :param type: `enterprise`
+        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField], optional
+        :param name: The name of the enterprise
+        :type name: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.name = name
+
+
+class CollaborationAllowlistExemptTarget(BaseObject):
+    def __init__(
+        self,
+        id: Optional[str] = None,
+        type: Optional[CollaborationAllowlistExemptTargetTypeField] = None,
+        enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None,
+        user: Optional[UserMini] = None,
+        created_at: Optional[str] = None,
+        modified_at: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param id: The unique identifier for this exemption
+        :type id: Optional[str], optional
+        :param type: `collaboration_whitelist_exempt_target`
+        :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
+        :param created_at: The time the entry was created
+        :type created_at: Optional[str], optional
+        :param modified_at: The time the entry was modified
+        :type modified_at: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.enterprise = enterprise
+        self.user = user
+        self.created_at = created_at
+        self.modified_at = modified_at
+
+
+class CollaborationAllowlistExemptTargets(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[int] = None,
+        prev_marker: Optional[int] = None,
+        entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
+        :param entries: A list of users exempt from any of the restrictions
+            imposed by the list of allowed collaboration domains
+            for this enterprise.
+        :type entries: Optional[List[CollaborationAllowlistExemptTarget]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
         self.entries = entries
 
 
@@ -11184,6 +11158,7 @@ class TemplateSignerInputTypeField(str, Enum):
     DATE = 'date'
     TEXT = 'text'
     CHECKBOX = 'checkbox'
+    ATTACHMENT = 'attachment'
     RADIO = 'radio'
     DROPDOWN = 'dropdown'
 
@@ -11246,6 +11221,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         group_id: Optional[str] = None,
         coordinates: Optional[TemplateSignerInputCoordinatesField] = None,
         dimensions: Optional[TemplateSignerInputDimensionsField] = None,
+        label: Optional[str] = None,
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
@@ -11271,6 +11247,8 @@ class TemplateSignerInput(SignRequestPrefillTag):
         :type coordinates: Optional[TemplateSignerInputCoordinatesField], optional
         :param dimensions: The size of the input.
         :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
+        :param label: The label field is used especially for text, attachment, radio, and checkbox type inputs.
+        :type label: Optional[str], optional
         :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
         :type document_tag_id: Optional[str], optional
         :param text_value: Text prefill value
@@ -11296,6 +11274,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         self.group_id = group_id
         self.coordinates = coordinates
         self.dimensions = dimensions
+        self.label = label
 
 
 class TemplateSignerRoleField(str, Enum):
@@ -11336,6 +11315,10 @@ class TemplateSigner(BaseObject):
         self.role = role
         self.is_in_person = is_in_person
         self.order = order
+
+
+class SignTemplateTypeField(str, Enum):
+    SIGN_TEMPLATE = 'sign-template'
 
 
 class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
@@ -11455,6 +11438,7 @@ class SignTemplateCustomBrandingField(BaseObject):
 class SignTemplate(BaseObject):
     def __init__(
         self,
+        type: Optional[SignTemplateTypeField] = None,
         id: Optional[str] = None,
         name: Optional[str] = None,
         email_subject: Optional[str] = None,
@@ -11474,6 +11458,8 @@ class SignTemplate(BaseObject):
         **kwargs
     ):
         """
+        :param type: object type
+        :type type: Optional[SignTemplateTypeField], optional
         :param id: Template identifier.
         :type id: Optional[str], optional
         :param name: The name of the template.
@@ -11507,6 +11493,7 @@ class SignTemplate(BaseObject):
         :type custom_branding: Optional[SignTemplateCustomBrandingField], optional
         """
         super().__init__(**kwargs)
+        self.type = type
         self.id = id
         self.name = name
         self.email_subject = email_subject
@@ -11650,6 +11637,7 @@ class UserFullEnterpriseField(BaseObject):
 class UserFull(User):
     def __init__(
         self,
+        id: str,
         type: UserBaseTypeField,
         role: Optional[UserFullRoleField] = None,
         tracking_codes: Optional[List[TrackingCode]] = None,
@@ -11678,10 +11666,11 @@ class UserFull(User):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        id: Optional[str] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this user
+        :type id: str
         :param type: `user`
         :type type: UserBaseTypeField
         :param role: The user’s enterprise role
@@ -11748,10 +11737,9 @@ class UserFull(User):
         :type name: Optional[str], optional
         :param login: The primary email address of this user
         :type login: Optional[str], optional
-        :param id: The unique identifier for this user
-        :type id: Optional[str], optional
         """
         super().__init__(
+            id=id,
             type=type,
             created_at=created_at,
             modified_at=modified_at,
@@ -11768,7 +11756,6 @@ class UserFull(User):
             notification_email=notification_email,
             name=name,
             login=login,
-            id=id,
             **kwargs
         )
         self.role = role

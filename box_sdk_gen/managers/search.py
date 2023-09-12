@@ -10,6 +10,8 @@ from typing import List
 
 import json
 
+from box_sdk_gen.base_object import BaseObject
+
 from box_sdk_gen.schemas import MetadataQueryResults
 
 from box_sdk_gen.schemas import ClientError
@@ -189,7 +191,7 @@ class SearchManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = MetadataQuery(
+        request_body = BaseObject(
             from_=from_,
             query=query,
             query_params=query_params,

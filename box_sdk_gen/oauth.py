@@ -3,6 +3,7 @@ from urllib.parse import urlencode, urlunsplit
 from typing import Optional
 
 from .auth import Authentication
+from .token_storage import TokenStorage, InMemoryTokenStorage
 from .auth_schemas import TokenRequest, TokenRequestGrantType
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
@@ -11,18 +12,23 @@ from .schemas import AccessToken
 
 class OAuthConfig:
     def __init__(
-        self,
-        client_id: str,
-        client_secret: str,
+        self, client_id: str, client_secret: str, token_storage: TokenStorage = None
     ):
         """
         :param client_id:
             Box API key used for identifying the application the user is authenticating with.
         :param client_secret:
             Box API secret used for making auth requests.
+        :param token_storage:
+            Object responsible for storing token. If no custom implementation provided,
+            the token will be stored in memory.
         """
+
+        if token_storage is None:
+            token_storage = InMemoryTokenStorage()
         self.client_id = client_id
         self.client_secret = client_secret
+        self.token_storage = token_storage
 
 
 class GetAuthorizeUrlOptions:
@@ -59,7 +65,7 @@ class OAuth(Authentication):
             Configuration object of OAuth.
         """
         self.config = config
-        self.token: Optional[AccessToken] = None
+        self.token_storage = config.token_storage
 
     def get_authorize_url(
         self, options: Optional[GetAuthorizeUrlOptions] = None
@@ -104,7 +110,7 @@ class OAuth(Authentication):
 
     def get_tokens_authorization_code_grant(
         self, authorization_code: str, network_session: Optional[NetworkSession] = None
-    ) -> str:
+    ) -> AccessToken:
         """
         Send token request and return the access_token
         :param authorization_code: Short-lived authorization code
@@ -118,8 +124,9 @@ class OAuth(Authentication):
             code=authorization_code,
         )
 
-        self.token = self._send_token_request(request_body, network_session)
-        return self.token.access_token
+        token: AccessToken = self._send_token_request(request_body, network_session)
+        self.token_storage.store(token)
+        return token
 
     def retrieve_token(
         self, network_session: Optional[NetworkSession] = None
@@ -129,12 +136,13 @@ class OAuth(Authentication):
         :param network_session: An object to keep network session state
         :return: Valid access token
         """
-        if self.token is None:
+        token = self.token_storage.get()
+        if token is None:
             raise Exception(
                 "Access and refresh tokens not available. Authenticate before making"
                 " any API call first."
             )
-        return self.token
+        return token
 
     def refresh_token(
         self,
@@ -147,15 +155,24 @@ class OAuth(Authentication):
         :param refresh_token: Refresh token, which can be used to obtain a new access token
         :return: Valid access token
         """
+        old_token: Optional[AccessToken] = self.token_storage.get()
+        token_used_for_refresh = (
+            refresh_token or old_token.refresh_token if old_token else None
+        )
+
+        if token_used_for_refresh is None:
+            raise Exception("No refresh_token is available.")
+
         request_body = TokenRequest(
             grant_type=TokenRequestGrantType.REFRESH_TOKEN,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            refresh_token=refresh_token or self.token.refresh_token,
+            refresh_token=refresh_token or old_token.refresh_token,
         )
 
-        self.token = self._send_token_request(request_body, network_session)
-        return self.token
+        new_token = self._send_token_request(request_body, network_session)
+        self.token_storage.store(new_token)
+        return new_token
 
     @staticmethod
     def _send_token_request(

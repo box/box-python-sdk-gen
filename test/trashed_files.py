@@ -40,7 +40,7 @@ client: Client = Client(auth=auth)
 
 
 def testTrashedFiles():
-    file_size = 1024 * 1024
+    file_size: int = 1024 * 1024
     file_name: str = get_uuid()
     file_byte_stream: ByteStream = generate_byte_stream(file_size)
     files: Files = client.uploads.upload_file(

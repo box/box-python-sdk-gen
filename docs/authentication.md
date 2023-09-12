@@ -311,3 +311,64 @@ def callback():
 if __name__ == '__main__':
     app.run(port=4999)
 ```
+
+# Token storage
+
+## In-memory token storage
+
+By default, the SDK stores the access token in volatile memory. When rerunning your application,
+the access token won't be reused from the previous run; a new token has to be obtained again.
+To use in-memory token storage, you don't need to do anything more than
+create an Auth class using AuthConfig, for example, for OAuth:
+
+```python
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+
+auth = OAuth(
+    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
+)
+```
+
+## File token storage
+
+If you want to keep an up-to-date access token in a file, allowing it to be reused after rerunning your application,
+you can use the `FileTokenStorage` class. To enable storing the token in a file, you need to pass an object of type
+`FileTokenStorage` to the AuthConfig class. For example, for OAuth:
+
+```python
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.token_storage import FileTokenStorage
+
+auth = OAuth(
+    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileTokenStorage())
+)
+```
+
+## File with in-memory token storage
+
+If you want to keep an up-to-date access token in a file and also maintain a valid access token in in-memory cache,
+allowing you to reuse the token after rerunning your application while maintaining fast access times to the token,
+you can use the `FileWithInMemoryCacheTokenStorage` class. To enable storing the token in a file,
+you need to pass an object of type `FileWithInMemoryCacheTokenStorage` to the AuthConfig class. For example, for OAuth:
+
+```python
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
+
+auth = OAuth(
+    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileWithInMemoryCacheTokenStorage())
+)
+```
+
+## Custom storage
+
+You can also provide a custom token storage class. All you need to do is create a class that inherits from `TokenStorage`
+and implements all of its abstract methods. Then, pass an instance of your class to the AuthConfig constructor.
+
+```python
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+
+auth = OAuth(
+    OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=MyCustomTokenStorage())
+)
+```

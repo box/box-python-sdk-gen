@@ -59,7 +59,7 @@ _Currently we don't have an example for calling `get_folder_metadata_by_id` in i
 
 ### Returns
 
-This function returns a value of type `Metadata`.
+This function returns a value of type `MetadataFull`.
 
 An instance of the metadata template that includes
 additional "key:value" pairs defined by the user or

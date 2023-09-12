@@ -9,6 +9,8 @@ This is a manager for chunked uploads (allowed for files at least 20MB).
 - [Remove upload session](#remove-upload-session)
 - [List parts](#list-parts)
 - [Commit upload session](#commit-upload-session)
+- [](#)
+- [](#)
 
 ## Create upload session
 
@@ -212,3 +214,43 @@ Returns the file object in a list.Returns when all chunks have been uploaded but
 Inspect the upload session to get more information about the
 progress of processing the chunks, then retry committing the file
 when all chunks have processed.
+
+##
+
+This operation is performed by calling function `reducer`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference//).
+
+_Currently we don't have an example for calling `reducer` in integration tests_
+
+### Arguments
+
+- acc `PartAccumulator`
+  -
+- chunk `ByteStream`
+  -
+
+##
+
+This operation is performed by calling function `upload_big_file`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference//).
+
+<!-- sample  -->
+
+```python
+client.chunked_uploads.upload_big_file(file_byte_stream, file_name, file_size, parent_folder_id)
+```
+
+### Arguments
+
+- file `ByteStream`
+  - The stream of the file to upload.
+- file_name `str`
+  - The name of the file, which will be used for storage in Box.
+- file_size `int`
+  - The total size of the file for the chunked upload in bytes.
+- parent_folder_id `str`
+  - The ID of the folder where the file should be uploaded.

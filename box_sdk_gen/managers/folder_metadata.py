@@ -14,6 +14,8 @@ from box_sdk_gen.schemas import Metadatas
 
 from box_sdk_gen.schemas import ClientError
 
+from box_sdk_gen.schemas import MetadataFull
+
 from box_sdk_gen.schemas import Metadata
 
 from box_sdk_gen.auth import Authentication
@@ -166,7 +168,7 @@ class FolderMetadataManager:
         scope: GetFolderMetadataByIdScopeArg,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> Metadata:
+    ) -> MetadataFull:
         """
         Retrieves the instance of a metadata template that has been applied to a
 
@@ -213,7 +215,7 @@ class FolderMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return Metadata.from_dict(json.loads(response.text))
+        return MetadataFull.from_dict(json.loads(response.text))
 
     def create_folder_metadata_by_id(
         self,

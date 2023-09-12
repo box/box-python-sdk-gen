@@ -21,6 +21,7 @@
   - [OAuth 2.0 Auth](#oauth-20-auth)
     - [Get Authorization URL](#get-authorization-url)
     - [Authenticate](#authenticate)
+  - [Store token and retrieve token callbacks](#store-token-and-retrieve-token-callbacks)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -409,4 +410,88 @@ from box_sdk_gen.client import Client
 
 access_token = auth.get_tokens_authorization_code_grant('YOUR_AUTH_CODE')
 client = Client(auth)
+```
+
+### Store token and retrieve token callbacks
+
+In old SDK you could provide a `store_tokens` callback method to an authentication class, which was called each time
+an access token was refreshed. It could be used to save your access token to a custom token storage
+and allow to reuse this token later.
+What is more, old SDK allowed also to provide `retrieve_tokens` callback, which is called each time the SDK needs to use
+token to perform an API call. To provide that, it was required to use `CooperativelyManagedOAuth2` and provide
+`retrieve_tokens` callback method to its constructor.
+
+**Old (`boxsdk`)**
+
+```python
+from typing import Tuple
+from boxsdk.auth import CooperativelyManagedOAuth2
+
+def retrieve_tokens() -> Tuple[str, str]:
+    # retrieve access_token and refresh_token
+    return access_token, refresh_token
+
+def store_tokens(access_token: str, refresh_token: str):
+    # store access_token and refresh_token
+    pass
+
+
+auth = CooperativelyManagedOAuth2(
+  client_id='YOUR_CLIENT_ID',
+  client_secret='YOUR_CLIENT_SECRET',
+  retrieve_tokens=retrieve_tokens,
+  store_tokens=store_tokens
+)
+access_token, refresh_token = auth.authenticate('YOUR_AUTH_CODE')
+client = Client(auth)
+```
+
+In the new SDK you can define your own class delegated for storing and retrieving a token. It has to inherit from
+`TokenStorage` and implement all of its abstract methods. Then, pass an instance of this class to the
+AuthConfig constructor.
+
+**New (`box-sdk-gen`)**
+
+```python
+from typing import Optional
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage, TokenStorage
+from .schemas import AccessToken
+
+class MyCustomTokenStorage(TokenStorage):
+  def store(self, token: AccessToken) -> None:
+    # store token
+    pass
+
+  def get(self) -> Optional[AccessToken]:
+    # get token
+    pass
+
+  def clear(self) -> None:
+    # clear token
+    pass
+
+
+auth = OAuth(
+  OAuthConfig(
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
+    token_storage=MyCustomTokenStorage()
+  )
+)
+```
+
+or reuse one of the provided implementations: `FileTokenStorage` or `FileWithInMemoryCacheTokenStorage`:
+
+```python
+from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
+
+auth = OAuth(
+  OAuthConfig(
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
+    token_storage=FileWithInMemoryCacheTokenStorage()
+  )
+)
 ```

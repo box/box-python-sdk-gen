@@ -8,6 +8,8 @@ from typing import Dict
 
 import json
 
+from box_sdk_gen.base_object import BaseObject
+
 from box_sdk_gen.schemas import FileRequest
 
 from box_sdk_gen.schemas import ClientError
@@ -178,7 +180,7 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = FileRequestUpdateRequest(
+        request_body = BaseObject(
             title=title,
             description=description,
             status=status,
@@ -301,7 +303,7 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = FileRequestCopyRequest(
+        request_body = BaseObject(
             folder=folder,
             title=title,
             description=description,
