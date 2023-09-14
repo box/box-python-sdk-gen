@@ -7950,14 +7950,16 @@ class SearchResultsWithSharedLinksTypeField(str, Enum):
 class SearchResultsWithSharedLinks(BaseObject):
     def __init__(
         self,
+        type: SearchResultsWithSharedLinksTypeField,
         total_count: Optional[int] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        type: Optional[SearchResultsWithSharedLinksTypeField] = None,
         entries: Optional[List[SearchResultWithSharedLink]] = None,
         **kwargs
     ):
         """
+        :param type: Specifies the response as search result items with shared links
+        :type type: SearchResultsWithSharedLinksTypeField
         :param total_count: One greater than the offset of the last entry in the search results.
             The total number of entries in the collection may be less than
             `total_count`.
@@ -7969,18 +7971,16 @@ class SearchResultsWithSharedLinks(BaseObject):
         :param offset: The 0-based offset of the first entry in this set. This will be the same
             as the `offset` query parameter used.
         :type offset: Optional[int], optional
-        :param type: Specifies the response as search result items with shared links
-        :type type: Optional[SearchResultsWithSharedLinksTypeField], optional
         :param entries: The search results for the query provided, including the
             additional information about any shared links through
             which the item has been shared with the user.
         :type entries: Optional[List[SearchResultWithSharedLink]], optional
         """
         super().__init__(**kwargs)
+        self.type = type
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
-        self.type = type
         self.entries = entries
 
 
@@ -7991,14 +7991,16 @@ class SearchResultsTypeField(str, Enum):
 class SearchResults(BaseObject):
     def __init__(
         self,
+        type: SearchResultsTypeField,
         total_count: Optional[int] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        type: Optional[SearchResultsTypeField] = None,
         entries: Optional[List[Union[File, Folder, WebLink]]] = None,
         **kwargs
     ):
         """
+        :param type: Specifies the response as search result items without shared links
+        :type type: SearchResultsTypeField
         :param total_count: One greater than the offset of the last entry in the search results.
             The total number of entries in the collection may be less than
             `total_count`.
@@ -8010,16 +8012,14 @@ class SearchResults(BaseObject):
         :param offset: The 0-based offset of the first entry in this set. This will be the same
             as the `offset` query parameter used.
         :type offset: Optional[int], optional
-        :param type: Specifies the response as search result items without shared links
-        :type type: Optional[SearchResultsTypeField], optional
         :param entries: The search results for the query provided.
         :type entries: Optional[List[Union[File, Folder, WebLink]]], optional
         """
         super().__init__(**kwargs)
+        self.type = type
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
-        self.type = type
         self.entries = entries
 
 
