@@ -4,7 +4,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import DevicePinner
 
@@ -69,7 +69,7 @@ class DevicePinnersManager:
                 network_session=self.network_session,
             ),
         )
-        return DevicePinner.from_dict(json.loads(response.text))
+        return deserialize(response.text, DevicePinner)
 
     def delete_device_pinner_by_id(
         self,
@@ -157,4 +157,4 @@ class DevicePinnersManager:
                 network_session=self.network_session,
             ),
         )
-        return DevicePinners.from_dict(json.loads(response.text))
+        return deserialize(response.text, DevicePinners)

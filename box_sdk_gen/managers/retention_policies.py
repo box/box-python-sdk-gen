@@ -4,9 +4,11 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from typing import List
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -129,7 +131,7 @@ class RetentionPoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicies.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicies)
 
     def create_retention_policy(
         self,
@@ -215,14 +217,14 @@ class RetentionPoliciesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicy)
 
     def get_retention_policy_by_id(
         self,
@@ -264,7 +266,7 @@ class RetentionPoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicy)
 
     def update_retention_policy_by_id(
         self,
@@ -361,14 +363,14 @@ class RetentionPoliciesManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicy)
 
     def delete_retention_policy_by_id(
         self,

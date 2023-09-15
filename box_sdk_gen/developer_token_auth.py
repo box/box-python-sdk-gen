@@ -5,7 +5,7 @@ from .network import NetworkSession
 from .schemas import AccessToken
 
 
-class DeveloperTokenAuth(Authentication):
+class BoxDeveloperTokenAuth(Authentication):
     def __init__(self, token: str):
         self.token: AccessToken = AccessToken(access_token=token)
 

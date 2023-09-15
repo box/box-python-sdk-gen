@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -138,7 +140,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return LegalHoldPolicyAssignments.from_dict(json.loads(response.text))
+        return deserialize(response.text, LegalHoldPolicyAssignments)
 
     def create_legal_hold_policy_assignment(
         self,
@@ -164,14 +166,14 @@ class LegalHoldPolicyAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, LegalHoldPolicyAssignment)
 
     def get_legal_hold_policy_assignment_by_id(
         self,
@@ -204,7 +206,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return LegalHoldPolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, LegalHoldPolicyAssignment)
 
     def delete_legal_hold_policy_assignment_by_id(
         self,
@@ -339,7 +341,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionLegalHolds.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionLegalHolds)
 
     def get_legal_hold_policy_assignment_file_version_on_hold(
         self,
@@ -435,4 +437,4 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionLegalHolds.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionLegalHolds)

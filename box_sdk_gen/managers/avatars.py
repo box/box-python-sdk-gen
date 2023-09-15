@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -109,7 +109,7 @@ class AvatarsManager:
                 network_session=self.network_session,
             ),
         )
-        return UserAvatar.from_dict(json.loads(response.text))
+        return deserialize(response.text, UserAvatar)
 
     def delete_user_avatar(
         self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

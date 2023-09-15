@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import SignTemplates
 
@@ -70,7 +70,7 @@ class SignTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return SignTemplates.from_dict(json.loads(response.text))
+        return deserialize(response.text, SignTemplates)
 
     def get_sign_template_by_id(
         self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -96,4 +96,4 @@ class SignTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return SignTemplate.from_dict(json.loads(response.text))
+        return deserialize(response.text, SignTemplate)

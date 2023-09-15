@@ -2067,7 +2067,6 @@ class MetadataFull(Metadata):
         'id': '$id',
         'type': '$type',
         'type_version': '$typeVersion',
-        'extra_data': 'extraData',
         **Metadata._fields_to_json_mapping,
     }
     _json_to_fields_mapping: Dict[str, str] = {
@@ -2075,7 +2074,6 @@ class MetadataFull(Metadata):
         '$id': 'id',
         '$type': 'type',
         '$typeVersion': 'type_version',
-        'extraData': 'extra_data',
         **Metadata._json_to_fields_mapping,
     }
 
@@ -2085,7 +2083,6 @@ class MetadataFull(Metadata):
         id: Optional[str] = None,
         type: Optional[str] = None,
         type_version: Optional[int] = None,
-        extra_data: Optional[Dict[str, str]] = None,
         parent: Optional[str] = None,
         template: Optional[str] = None,
         scope: Optional[str] = None,
@@ -2127,7 +2124,7 @@ class MetadataFull(Metadata):
         self.id = id
         self.type = type
         self.type_version = type_version
-        self.extra_data = extra_data
+        self.extra_data = kwargs
 
 
 class MetadataCascadePolicyTypeField(str, Enum):
@@ -6094,20 +6091,9 @@ class FileFullAllowedInviteeRolesField(str, Enum):
 
 
 class FileFullMetadataField(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {
-        'extra_data': 'extraData',
-        **BaseObject._fields_to_json_mapping,
-    }
-    _json_to_fields_mapping: Dict[str, str] = {
-        'extraData': 'extra_data',
-        **BaseObject._json_to_fields_mapping,
-    }
-
-    def __init__(
-        self, extra_data: Optional[Dict[str, Dict[str, Metadata]]] = None, **kwargs
-    ):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.extra_data = extra_data
+        self.extra_data = kwargs
 
 
 class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
@@ -8264,20 +8250,9 @@ class FolderFullPermissionsField(BaseObject):
 
 
 class FolderFullMetadataField(BaseObject):
-    _fields_to_json_mapping: Dict[str, str] = {
-        'extra_data': 'extraData',
-        **BaseObject._fields_to_json_mapping,
-    }
-    _json_to_fields_mapping: Dict[str, str] = {
-        'extraData': 'extra_data',
-        **BaseObject._json_to_fields_mapping,
-    }
-
-    def __init__(
-        self, extra_data: Optional[Dict[str, Dict[str, Metadata]]] = None, **kwargs
-    ):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.extra_data = extra_data
+        self.extra_data = kwargs
 
 
 class FolderFullAllowedSharedLinkAccessLevelsField(str, Enum):

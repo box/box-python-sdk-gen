@@ -6,7 +6,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from typing import List
 
@@ -131,7 +133,7 @@ class FileClassificationsManager:
                 network_session=self.network_session,
             ),
         )
-        return Classification.from_dict(json.loads(response.text))
+        return deserialize(response.text, Classification)
 
     def create_file_metadata_enterprise_security_classification(
         self,
@@ -187,14 +189,14 @@ class FileClassificationsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Classification.from_dict(json.loads(response.text))
+        return deserialize(response.text, Classification)
 
     def update_file_metadata_enterprise_security_classification(
         self,
@@ -242,14 +244,14 @@ class FileClassificationsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Classification.from_dict(json.loads(response.text))
+        return deserialize(response.text, Classification)
 
     def delete_file_metadata_enterprise_security_classification(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

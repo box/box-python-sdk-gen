@@ -53,20 +53,20 @@ pip install box-sdk-gen[jwt]
 To get started with the SDK, get a Developer Token from the Configuration page of your app in the [Box Developer
 Console](https://app.box.com/developers/console). You can use this token to make test calls for your own Box account.
 
-The SDK provides an `DeveloperTokenAuth` class, which allows you to authenticate using your Developer Token.
-Use instance of `DeveloperTokenAuth` to initialize `Client` object.
-Using `Client` object you can access managers, which allow you to perform some operations on your Box account.
+The SDK provides an `BoxDeveloperTokenAuth` class, which allows you to authenticate using your Developer Token.
+Use instance of `BoxDeveloperTokenAuth` to initialize `BoxClient` object.
+Using `BoxClient` object you can access managers, which allow you to perform some operations on your Box account.
 
 The example below demonstrates how to authenticate with Developer Token and print names of all items inside a root folder.
 
 ```python
-from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
-from box_sdk_gen.client import Client
+from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
+from box_sdk_gen.client import BoxClient
 
 
 def main(token: str):
-    auth: DeveloperTokenAuth = DeveloperTokenAuth(token=token)
-    client: Client = Client(auth=auth)
+    auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(token=token)
+    client: BoxClient = BoxClient(auth=auth)
     for item in client.folders.get_folder_items('0').entries:
         print(item.name)
 

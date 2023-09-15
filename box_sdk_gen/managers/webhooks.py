@@ -6,9 +6,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from typing import List
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -222,7 +224,7 @@ class WebhooksManager:
                 network_session=self.network_session,
             ),
         )
-        return Webhooks.from_dict(json.loads(response.text))
+        return deserialize(response.text, Webhooks)
 
     def create_webhook(
         self,
@@ -252,14 +254,14 @@ class WebhooksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Webhook.from_dict(json.loads(response.text))
+        return deserialize(response.text, Webhook)
 
     def get_webhook_by_id(
         self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -285,7 +287,7 @@ class WebhooksManager:
                 network_session=self.network_session,
             ),
         )
-        return Webhook.from_dict(json.loads(response.text))
+        return deserialize(response.text, Webhook)
 
     def update_webhook_by_id(
         self,
@@ -319,14 +321,14 @@ class WebhooksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Webhook.from_dict(json.loads(response.text))
+        return deserialize(response.text, Webhook)
 
     def delete_webhook_by_id(
         self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

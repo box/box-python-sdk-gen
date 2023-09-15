@@ -2,7 +2,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -65,7 +67,7 @@ class EmailAliasesManager:
                 network_session=self.network_session,
             ),
         )
-        return EmailAliases.from_dict(json.loads(response.text))
+        return deserialize(response.text, EmailAliases)
 
     def create_user_email_alias(
         self,
@@ -97,14 +99,14 @@ class EmailAliasesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return EmailAlias.from_dict(json.loads(response.text))
+        return deserialize(response.text, EmailAlias)
 
     def delete_user_email_alias_by_id(
         self,

@@ -125,7 +125,10 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
                 )
 
         if response.reauthentication_needed:
-            options.auth.refresh_token(options.network_session)
+            headers['Authorization'] = (
+                'Bearer'
+                f' {options.auth.refresh_token(options.network_session).access_token}'
+            )
         elif response.status_code != 429 and response.status_code < 500:
             __raise_on_unsuccessful_request(
                 network_response=response.network_response,
@@ -182,24 +185,27 @@ def __make_request(
     multipart_data,
     attempt_nr,
 ) -> APIResponse:
-    if content_type == 'multipart/form-data':
-        fields = OrderedDict()
-        for part in multipart_data:
-            if part.body:
-                fields[part.part_name] = part.body
-            else:
-                file_stream = part.file_stream
-                file_stream_position = file_stream.tell()
-                file_stream.seek(file_stream_position)
-                fields[part.part_name] = (
-                    part.file_name or '',
-                    file_stream,
-                    part.content_type,
-                )
+    if content_type:
+        if content_type == 'multipart/form-data':
+            fields = OrderedDict()
+            for part in multipart_data:
+                if part.body:
+                    fields[part.part_name] = part.body
+                else:
+                    file_stream = part.file_stream
+                    file_stream_position = file_stream.tell()
+                    file_stream.seek(file_stream_position)
+                    fields[part.part_name] = (
+                        part.file_name or '',
+                        file_stream,
+                        part.content_type,
+                    )
 
-        multipart_stream = MultipartEncoder(fields)
-        body = multipart_stream
-        headers['Content-Type'] = multipart_stream.content_type
+            multipart_stream = MultipartEncoder(fields)
+            body = multipart_stream
+            headers['Content-Type'] = multipart_stream.content_type
+        else:
+            headers['Content-Type'] = content_type
 
     raised_exception = None
     try:

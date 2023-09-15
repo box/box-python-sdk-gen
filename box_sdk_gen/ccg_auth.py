@@ -63,7 +63,7 @@ class CCGConfig:
         self.token_storage = token_storage
 
 
-class CCGAuth(Authentication):
+class BoxCCGAuth(Authentication):
     def __init__(self, config: CCGConfig):
         """
         :param config:

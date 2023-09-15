@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -108,7 +110,7 @@ class FileVersionsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersions.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersions)
 
     def get_file_version_by_id(
         self,
@@ -167,7 +169,7 @@ class FileVersionsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionFull)
 
     def update_file_version_by_id(
         self,
@@ -220,14 +222,14 @@ class FileVersionsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return FileVersionFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionFull)
 
     def delete_file_version_by_id(
         self,
@@ -364,11 +366,11 @@ class FileVersionsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return FileVersionFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionFull)

@@ -22,9 +22,9 @@ from box_sdk_gen.utils import get_env_var
 
 from box_sdk_gen.utils import get_uuid
 
-from box_sdk_gen.client import Client
+from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.jwt_auth import JWTAuth
+from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
 
@@ -32,9 +32,9 @@ jwt_config: JWTConfig = JWTConfig.from_config_json_string(
     decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
-auth: JWTAuth = JWTAuth(config=jwt_config)
+auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
 
-client: Client = Client(auth=auth)
+client: BoxClient = BoxClient(auth=auth)
 
 
 def testMetadataTemplates():
@@ -58,13 +58,17 @@ def testMetadataTemplates():
     assert len(template.fields) == 1
     assert template.fields[0].key == 'testName'
     assert template.fields[0].display_name == 'testName'
-    assert client.metadata_templates.get_metadata_template_by_id(
-        template_id=template.id
+    get_metadata_template: MetadataTemplate = (
+        client.metadata_templates.get_metadata_template_by_id(template_id=template.id)
     )
-    assert client.metadata_templates.get_metadata_template_schema(
-        scope=GetMetadataTemplateSchemaScopeArg.ENTERPRISE.value,
-        template_key=template.template_key,
+    assert get_metadata_template.id == template.id
+    get_metadata_template_schema: MetadataTemplate = (
+        client.metadata_templates.get_metadata_template_schema(
+            scope=GetMetadataTemplateSchemaScopeArg.ENTERPRISE.value,
+            template_key=template.template_key,
+        )
     )
+    assert get_metadata_template_schema.id == template.id
     enterprise_metadata_templates: MetadataTemplates = (
         client.metadata_templates.get_metadata_template_enterprise()
     )

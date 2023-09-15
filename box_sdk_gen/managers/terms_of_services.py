@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -94,7 +96,7 @@ class TermsOfServicesManager:
                 network_session=self.network_session,
             ),
         )
-        return TermsOfServices.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfServices)
 
     def create_term_of_service(
         self,
@@ -128,14 +130,14 @@ class TermsOfServicesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Task.from_dict(json.loads(response.text))
+        return deserialize(response.text, Task)
 
     def get_term_of_service_by_id(
         self,
@@ -165,7 +167,7 @@ class TermsOfServicesManager:
                 network_session=self.network_session,
             ),
         )
-        return TermsOfService.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfService)
 
     def update_term_of_service_by_id(
         self,
@@ -198,11 +200,11 @@ class TermsOfServicesManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TermsOfService.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfService)

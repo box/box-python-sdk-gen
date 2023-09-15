@@ -6,9 +6,11 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from typing import List
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -158,7 +160,7 @@ class RetentionPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicyAssignments.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicyAssignments)
 
     def create_retention_policy_assignment(
         self,
@@ -202,14 +204,14 @@ class RetentionPolicyAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicyAssignment)
 
     def get_retention_policy_assignment_by_id(
         self,
@@ -254,7 +256,7 @@ class RetentionPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return RetentionPolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, RetentionPolicyAssignment)
 
     def delete_retention_policy_assignment_by_id(
         self,
@@ -336,7 +338,7 @@ class RetentionPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return FilesUnderRetention.from_dict(json.loads(response.text))
+        return deserialize(response.text, FilesUnderRetention)
 
     def get_retention_policy_assignment_file_version_under_retention(
         self,
@@ -385,4 +387,4 @@ class RetentionPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return FilesUnderRetention.from_dict(json.loads(response.text))
+        return deserialize(response.text, FilesUnderRetention)

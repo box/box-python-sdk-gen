@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -113,14 +115,14 @@ class ChunkedUploadsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return UploadSession.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadSession)
 
     def create_file_upload_session_for_existing_file(
         self,
@@ -157,14 +159,14 @@ class ChunkedUploadsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return UploadSession.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadSession)
 
     def get_file_upload_session_by_id(
         self,
@@ -197,7 +199,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return UploadSession.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadSession)
 
     def upload_file_part(
         self,
@@ -263,7 +265,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return UploadedPart.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadedPart)
 
     def delete_file_upload_session_by_id(
         self,
@@ -349,7 +351,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return UploadParts.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadParts)
 
     def create_file_upload_session_commit(
         self,
@@ -414,14 +416,14 @@ class ChunkedUploadsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Files.from_dict(json.loads(response.text))
+        return deserialize(response.text, Files)
 
     def reducer(self, acc: PartAccumulator, chunk: ByteStream):
         last_index: int = acc.last_index

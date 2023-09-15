@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -117,7 +119,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return GroupMemberships.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupMemberships)
 
     def get_group_memberships(
         self,
@@ -164,7 +166,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return GroupMemberships.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupMemberships)
 
     def create_group_membership(
         self,
@@ -223,14 +225,14 @@ class MembershipsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return GroupMembership.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupMembership)
 
     def get_group_membership_by_id(
         self,
@@ -278,7 +280,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return GroupMembership.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupMembership)
 
     def update_group_membership_by_id(
         self,
@@ -337,14 +339,14 @@ class MembershipsManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return GroupMembership.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupMembership)
 
     def delete_group_membership_by_id(
         self,

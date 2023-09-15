@@ -6,7 +6,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -290,7 +292,7 @@ class SharedLinksFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return FileFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileFull)
 
     def get_file_get_shared_link(
         self,
@@ -329,7 +331,7 @@ class SharedLinksFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return FileFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileFull)
 
     def update_file_add_shared_link(
         self,
@@ -369,14 +371,14 @@ class SharedLinksFilesManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return FileFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileFull)
 
     def update_file_update_shared_link(
         self,
@@ -414,14 +416,14 @@ class SharedLinksFilesManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return FileFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileFull)
 
     def update_file_remove_shared_link(
         self,
@@ -460,11 +462,11 @@ class SharedLinksFilesManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return FileFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileFull)

@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -109,7 +111,7 @@ class MetadataCascadePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataCascadePolicies.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataCascadePolicies)
 
     def create_metadata_cascade_policy(
         self,
@@ -166,14 +168,14 @@ class MetadataCascadePoliciesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return MetadataCascadePolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataCascadePolicy)
 
     def get_metadata_cascade_policy_by_id(
         self,
@@ -206,7 +208,7 @@ class MetadataCascadePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataCascadePolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataCascadePolicy)
 
     def delete_metadata_cascade_policy_by_id(
         self,
@@ -286,7 +288,7 @@ class MetadataCascadePoliciesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format=None,
                 auth=self.auth,

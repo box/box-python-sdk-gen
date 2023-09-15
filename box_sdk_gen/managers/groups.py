@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -123,7 +125,7 @@ class GroupsManager:
                 network_session=self.network_session,
             ),
         )
-        return Groups.from_dict(json.loads(response.text))
+        return deserialize(response.text, Groups)
 
     def create_group(
         self,
@@ -209,14 +211,14 @@ class GroupsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Group.from_dict(json.loads(response.text))
+        return deserialize(response.text, Group)
 
     def get_group_by_id(
         self,
@@ -262,7 +264,7 @@ class GroupsManager:
                 network_session=self.network_session,
             ),
         )
-        return GroupFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupFull)
 
     def update_group_by_id(
         self,
@@ -357,14 +359,14 @@ class GroupsManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return GroupFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, GroupFull)
 
     def delete_group_by_id(
         self, group_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
