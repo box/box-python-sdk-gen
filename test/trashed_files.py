@@ -24,9 +24,9 @@ from box_sdk_gen.utils import get_uuid
 
 from box_sdk_gen.utils import generate_byte_stream
 
-from box_sdk_gen.client import Client
+from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.jwt_auth import JWTAuth
+from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
 
@@ -34,9 +34,9 @@ jwt_config: JWTConfig = JWTConfig.from_config_json_string(
     decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
 )
 
-auth: JWTAuth = JWTAuth(config=jwt_config)
+auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
 
-client: Client = Client(auth=auth)
+client: BoxClient = BoxClient(auth=auth)
 
 
 def testTrashedFiles():

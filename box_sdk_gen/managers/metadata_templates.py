@@ -8,7 +8,9 @@ from typing import List
 
 from box_sdk_gen.base_object import BaseObject
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -249,7 +251,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplates.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplates)
 
     def get_metadata_template_schema(
         self,
@@ -295,7 +297,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplate.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplate)
 
     def update_metadata_template_schema(
         self,
@@ -345,14 +347,14 @@ class MetadataTemplatesManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplate.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplate)
 
     def delete_metadata_template_schema(
         self,
@@ -421,7 +423,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplate.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplate)
 
     def get_metadata_template_global(
         self,
@@ -460,7 +462,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplates.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplates)
 
     def get_metadata_template_enterprise(
         self,
@@ -499,7 +501,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplates.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplates)
 
     def create_metadata_template_schema(
         self,
@@ -560,11 +562,11 @@ class MetadataTemplatesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return MetadataTemplate.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataTemplate)

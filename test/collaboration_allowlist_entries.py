@@ -10,14 +10,14 @@ from box_sdk_gen.utils import get_env_var
 
 from box_sdk_gen.utils import get_uuid
 
-from box_sdk_gen.client import Client
+from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.jwt_auth import JWTAuth
+from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
 
-client: Client = Client(
-    auth=JWTAuth(
+client: BoxClient = BoxClient(
+    auth=BoxJWTAuth(
         config=JWTConfig.from_config_json_string(
             decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
         )

@@ -6,7 +6,9 @@ from enum import Enum
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -146,14 +148,14 @@ class WebLinksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def get_web_link_by_id(
         self,
@@ -192,7 +194,7 @@ class WebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def update_web_link_by_id(
         self,
@@ -236,14 +238,14 @@ class WebLinksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def delete_web_link_by_id(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

@@ -4,7 +4,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -212,8 +214,7 @@ class UploadsManager:
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes',
-                        body=json.dumps(request_body.attributes.to_dict()),
+                        part_name='attributes', body=serialize(request_body.attributes)
                     ),
                     MultipartItem(
                         part_name='file',
@@ -228,7 +229,7 @@ class UploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return Files.from_dict(json.loads(response.text))
+        return deserialize(response.text, Files)
 
     def upload_file(
         self,
@@ -313,8 +314,7 @@ class UploadsManager:
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes',
-                        body=json.dumps(request_body.attributes.to_dict()),
+                        part_name='attributes', body=serialize(request_body.attributes)
                     ),
                     MultipartItem(
                         part_name='file',
@@ -329,7 +329,7 @@ class UploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return Files.from_dict(json.loads(response.text))
+        return deserialize(response.text, Files)
 
     def preflight_file_upload(
         self,
@@ -359,11 +359,11 @@ class UploadsManager:
             FetchOptions(
                 method='OPTIONS',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return UploadUrl.from_dict(json.loads(response.text))
+        return deserialize(response.text, UploadUrl)

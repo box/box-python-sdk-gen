@@ -6,7 +6,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -116,7 +118,7 @@ class TasksManager:
                 network_session=self.network_session,
             ),
         )
-        return Tasks.from_dict(json.loads(response.text))
+        return deserialize(response.text, Tasks)
 
     def create_task(
         self,
@@ -169,14 +171,14 @@ class TasksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Task.from_dict(json.loads(response.text))
+        return deserialize(response.text, Task)
 
     def get_task_by_id(
         self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -202,7 +204,7 @@ class TasksManager:
                 network_session=self.network_session,
             ),
         )
-        return Task.from_dict(json.loads(response.text))
+        return deserialize(response.text, Task)
 
     def update_task_by_id(
         self,
@@ -254,14 +256,14 @@ class TasksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Task.from_dict(json.loads(response.text))
+        return deserialize(response.text, Task)
 
     def delete_task_by_id(
         self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

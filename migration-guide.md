@@ -77,7 +77,7 @@ updated_user = user.update_info(data={'name': 'New User Name'})
 **New (`box-sdk-gen`)**
 
 In the new SDK the API methods are grouped into dedicated manager classes, e.g. `User` object
-has dedicated `UserManager` class. Each manager class instance is available in `Client` object.
+has dedicated `UserManager` class. Each manager class instance is available in `BoxClient` object.
 So if you want to perform any operation connected with a `User` you need to call a respective method of `UserManager`.
 E.g. to get info about existing user you need to call:
 
@@ -135,7 +135,7 @@ Let's see the differences of their usage:
 
 ### Developer Token
 
-The new SDK provides a convenient `DeveloperTokenAuth`, which allows authenticating
+The new SDK provides a convenient `BoxDeveloperTokenAuth`, which allows authenticating
 using developer token without necessity to provide a Client ID and Client Secret
 
 **Old (`boxsdk`)**
@@ -155,10 +155,10 @@ client = Client(auth)
 
 ```python
 from box_sdk_gen.client import Client
-from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
+from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
 
-auth = DeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
-client = Client(auth=auth)
+auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
+client = BoxClient(auth=auth)
 ```
 
 ### JWT Auth
@@ -179,12 +179,12 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import Client
-from box_sdk_gen.jwt_auth import JWTAuth, JWTConfig
+from box_sdk_gen.client import BoxClient
+from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/config.json')
-auth = JWTAuth(config=jwt_config)
-client = Client(auth=auth)
+auth = BoxJWTAuth(config=jwt_config)
+client = BoxClient(auth=auth)
 ```
 
 #### Providing JWT configuration manually
@@ -211,7 +211,7 @@ auth = JWTAuth(
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.jwt_auth import JWTAuth, JWTConfig
+from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig(
     client_id='YOUR_CLIENT_ID',
@@ -223,7 +223,7 @@ jwt_config = JWTConfig(
     private_key_passphrase='PASSPHRASE',
     jwt_algorithm='RS256',
 )
-auth = JWTAuth(config=jwt_config)
+auth = BoxJWTAuth(config=jwt_config)
 ```
 
 #### Authenticate user
@@ -275,17 +275,16 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import Client
-from box_sdk_gen.ccg_auth import CCGAuth, CCGConfig
-
+from box_sdk_gen.client import BoxClient
+from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
     client_id="YOUR_CLIENT_ID",
     client_secret="YOUR_CLIENT_SECRET",
     enterprise_id="YOUR_ENTERPRISE_ID",
 )
-auth = CCGAuth(config=ccg_config)
-client = Client(auth=auth)
+auth = BoxCCGAuth(config=ccg_config)
+client = BoxClient(auth=auth)
 ```
 
 #### Obtaining User token
@@ -307,14 +306,14 @@ auth = CCGAuth(
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.ccg_auth import CCGAuth, CCGConfig
+from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
   client_id="YOUR_CLIENT_ID",
   client_secret="YOUR_CLIENT_SECRET",
   user_id="YOUR_USER_ID"
 )
-auth = CCGAuth(config=ccg_config)
+auth = BoxCCGAuth(config=ccg_config)
 ```
 
 ### Switching between Service Account and User
@@ -377,9 +376,9 @@ auth_url, csrf_token = auth.get_authorization_url('http://YOUR_REDIRECT_URL')
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.oauth import OAuth, OAuthConfig, GetAuthorizeUrlOptions
+from box_sdk_gen.oauth import BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
 
-auth = OAuth(
+auth = BoxOAuth(
   OAuthConfig(
       client_id='YOUR_CLIENT_ID',
       client_secret='YOUR_CLIENT_SECRET',
@@ -406,10 +405,10 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import Client
+from box_sdk_gen.client import BoxClient
 
 access_token = auth.get_tokens_authorization_code_grant('YOUR_AUTH_CODE')
-client = Client(auth)
+client = BoxClient(auth)
 ```
 
 ### Store token and retrieve token callbacks
@@ -454,7 +453,7 @@ AuthConfig constructor.
 
 ```python
 from typing import Optional
-from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
 from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage, TokenStorage
 from .schemas import AccessToken
 
@@ -472,7 +471,7 @@ class MyCustomTokenStorage(TokenStorage):
     pass
 
 
-auth = OAuth(
+auth = BoxOAuth(
   OAuthConfig(
     client_id='YOUR_CLIENT_ID',
     client_secret='YOUR_CLIENT_SECRET',
@@ -484,10 +483,10 @@ auth = OAuth(
 or reuse one of the provided implementations: `FileTokenStorage` or `FileWithInMemoryCacheTokenStorage`:
 
 ```python
-from box_sdk_gen.oauth import OAuth, OAuthConfig
+from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
 from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
 
-auth = OAuth(
+auth = BoxOAuth(
   OAuthConfig(
     client_id='YOUR_CLIENT_ID',
     client_secret='YOUR_CLIENT_SECRET',

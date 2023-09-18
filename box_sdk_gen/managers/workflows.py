@@ -6,9 +6,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from typing import List
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -192,7 +194,7 @@ class WorkflowsManager:
                 network_session=self.network_session,
             ),
         )
-        return Workflows.from_dict(json.loads(response.text))
+        return deserialize(response.text, Workflows)
 
     def create_workflow_start(
         self,
@@ -240,7 +242,7 @@ class WorkflowsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format=None,
                 auth=self.auth,

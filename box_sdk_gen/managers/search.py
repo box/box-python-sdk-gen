@@ -8,7 +8,9 @@ from typing import Dict
 
 from typing import List
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -207,14 +209,14 @@ class SearchManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return MetadataQueryResults.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataQueryResults)
 
     def get_metadata_query_indices(
         self,
@@ -248,7 +250,7 @@ class SearchManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataQueryIndices.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataQueryIndices)
 
     def get_search(
         self,

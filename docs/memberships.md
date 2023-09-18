@@ -90,7 +90,7 @@ See the endpoint docs at
 <!-- sample post_group_memberships -->
 
 ```python
-client.memberships.create_group_membership(user=user, group=group)
+client.memberships.create_group_membership(user=CreateGroupMembershipUserArg(id=user.id), group=CreateGroupMembershipGroupArg(id=group.id))
 ```
 
 ### Arguments

@@ -4,7 +4,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import Items
 
@@ -143,4 +143,4 @@ class TrashedItemsManager:
                 network_session=self.network_session,
             ),
         )
-        return Items.from_dict(json.loads(response.text))
+        return deserialize(response.text, Items)

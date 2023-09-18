@@ -6,7 +6,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -139,9 +141,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
                 network_session=self.network_session,
             ),
         )
-        return ShieldInformationBarrierSegmentRestriction.from_dict(
-            json.loads(response.text)
-        )
+        return deserialize(response.text, ShieldInformationBarrierSegmentRestriction)
 
     def delete_shield_information_barrier_segment_restriction_by_id(
         self,
@@ -274,13 +274,11 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return ShieldInformationBarrierSegmentRestriction.from_dict(
-            json.loads(response.text)
-        )
+        return deserialize(response.text, ShieldInformationBarrierSegmentRestriction)

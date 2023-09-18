@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -112,14 +114,14 @@ class InvitesManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Invite.from_dict(json.loads(response.text))
+        return deserialize(response.text, Invite)
 
     def get_invite_by_id(
         self,
@@ -159,4 +161,4 @@ class InvitesManager:
                 network_session=self.network_session,
             ),
         )
-        return Invite.from_dict(json.loads(response.text))
+        return deserialize(response.text, Invite)

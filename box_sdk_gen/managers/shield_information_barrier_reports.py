@@ -2,7 +2,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
@@ -104,14 +106,14 @@ class ShieldInformationBarrierReportsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
+        return deserialize(response.text, ShieldInformationBarrierReport)
 
     def get_shield_information_barrier_report_by_id(
         self,
@@ -144,4 +146,4 @@ class ShieldInformationBarrierReportsManager:
                 network_session=self.network_session,
             ),
         )
-        return ShieldInformationBarrierReport.from_dict(json.loads(response.text))
+        return deserialize(response.text, ShieldInformationBarrierReport)

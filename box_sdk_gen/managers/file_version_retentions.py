@@ -4,7 +4,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import FileVersionRetentions
 
@@ -109,7 +109,7 @@ class FileVersionRetentionsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionRetentions.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionRetentions)
 
     def get_file_version_retention_by_id(
         self,
@@ -142,4 +142,4 @@ class FileVersionRetentionsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionRetention.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionRetention)

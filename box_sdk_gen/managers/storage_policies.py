@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import StoragePolicies
 
@@ -90,7 +90,7 @@ class StoragePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicies.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicies)
 
     def get_storage_policy_by_id(
         self,
@@ -118,4 +118,4 @@ class StoragePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicy.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicy)

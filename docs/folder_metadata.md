@@ -16,7 +16,11 @@ This operation is performed by calling function `get_folder_metadata`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-metadata/).
 
-_Currently we don't have an example for calling `get_folder_metadata` in integration tests_
+<!-- sample get_folders_id_metadata -->
+
+```python
+client.folder_metadata.get_folder_metadata(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -44,7 +48,11 @@ This operation is performed by calling function `get_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `get_folder_metadata_by_id` in integration tests_
+<!-- sample get_folders_id_metadata_id_id -->
+
+```python
+client.folder_metadata.get_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template)
+```
 
 ### Arguments
 
@@ -82,7 +90,11 @@ This operation is performed by calling function `create_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-folders-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `create_folder_metadata_by_id` in integration tests_
+<!-- sample post_folders_id_metadata_id_id -->
+
+```python
+client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template, request_body=data)
+```
 
 ### Arguments
 
@@ -92,7 +104,7 @@ _Currently we don't have an example for calling `create_folder_metadata_by_id` i
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `CreateFolderMetadataByIdRequestBodyArg`
+- request_body `Dict[str, str]`
   - Request body of createFolderMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -120,7 +132,11 @@ This operation is performed by calling function `update_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `update_folder_metadata_by_id` in integration tests_
+<!-- sample put_folders_id_metadata_id_id -->
+
+```python
+client.folder_metadata.update_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template, request_body=[UpdateFolderMetadataByIdRequestBodyArg(op=UpdateFolderMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
+```
 
 ### Arguments
 
@@ -151,7 +167,11 @@ This operation is performed by calling function `delete_folder_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folders-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `delete_folder_metadata_by_id` in integration tests_
+<!-- sample delete_folders_id_metadata_id_id -->
+
+```python
+client.folder_metadata.delete_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template)
+```
 
 ### Arguments
 

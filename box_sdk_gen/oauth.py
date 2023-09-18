@@ -56,7 +56,7 @@ class GetAuthorizeUrlOptions:
         self.scope = scope
 
 
-class OAuth(Authentication):
+class BoxOAuth(Authentication):
     OAUTH2_AUTHORIZE_URL = 'https://account.box.com/api/oauth2/authorize'
 
     def __init__(self, config: OAuthConfig):

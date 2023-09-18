@@ -10,7 +10,9 @@ from typing import List
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -210,7 +212,7 @@ class SkillsManager:
                 network_session=self.network_session,
             ),
         )
-        return SkillCardsMetadata.from_dict(json.loads(response.text))
+        return deserialize(response.text, SkillCardsMetadata)
 
     def create_file_metadata_global_box_skills_card(
         self,
@@ -255,14 +257,14 @@ class SkillsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return SkillCardsMetadata.from_dict(json.loads(response.text))
+        return deserialize(response.text, SkillCardsMetadata)
 
     def update_file_metadata_global_box_skills_card(
         self,
@@ -299,14 +301,14 @@ class SkillsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return SkillCardsMetadata.from_dict(json.loads(response.text))
+        return deserialize(response.text, SkillCardsMetadata)
 
     def delete_file_metadata_global_box_skills_card(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -395,7 +397,7 @@ class SkillsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format=None,
                 auth=self.auth,

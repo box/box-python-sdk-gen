@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -83,7 +85,7 @@ class CollaborationAllowlistEntriesManager:
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistEntries.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistEntries)
 
     def create_collaboration_whitelist_entry(
         self,
@@ -112,14 +114,14 @@ class CollaborationAllowlistEntriesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistEntry)
 
     def get_collaboration_whitelist_entry_by_id(
         self,
@@ -155,7 +157,7 @@ class CollaborationAllowlistEntriesManager:
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistEntry.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistEntry)
 
     def delete_collaboration_whitelist_entry_by_id(
         self,

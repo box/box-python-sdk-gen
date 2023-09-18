@@ -1,12 +1,14 @@
 from enum import Enum
 
+from typing import Optional
+
 from typing import Dict
 
 from box_sdk_gen.base_object import BaseObject
 
-from typing import Optional
+from box_sdk_gen.serialization import deserialize
 
-import json
+from box_sdk_gen.serialization import serialize
 
 from typing import List
 
@@ -43,10 +45,6 @@ class GetFileMetadataByIdScopeArg(str, Enum):
 class CreateFileMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
-
-
-class CreateFileMetadataByIdRequestBodyArg(BaseObject):
-    pass
 
 
 class UpdateFileMetadataByIdScopeArg(str, Enum):
@@ -155,7 +153,7 @@ class FileMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return Metadatas.from_dict(json.loads(response.text))
+        return deserialize(response.text, Metadatas)
 
     def get_file_metadata_by_id(
         self,
@@ -208,14 +206,14 @@ class FileMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return MetadataFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, MetadataFull)
 
     def create_file_metadata_by_id(
         self,
         file_id: str,
         scope: CreateFileMetadataByIdScopeArg,
         template_key: str,
-        request_body: CreateFileMetadataByIdRequestBodyArg,
+        request_body: Dict[str, str],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Metadata:
         """
@@ -244,7 +242,7 @@ class FileMetadataManager:
             Example: "properties"
         :type template_key: str
         :param request_body: Request body of createFileMetadataById method
-        :type request_body: CreateFileMetadataByIdRequestBodyArg
+        :type request_body: Dict[str, str]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -265,14 +263,14 @@ class FileMetadataManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Metadata.from_dict(json.loads(response.text))
+        return deserialize(response.text, Metadata)
 
     def update_file_metadata_by_id(
         self,
@@ -335,14 +333,14 @@ class FileMetadataManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Metadata.from_dict(json.loads(response.text))
+        return deserialize(response.text, Metadata)
 
     def delete_file_metadata_by_id(
         self,

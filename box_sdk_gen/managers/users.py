@@ -6,9 +6,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from typing import List
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -195,7 +197,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return Users.from_dict(json.loads(response.text))
+        return deserialize(response.text, Users)
 
     def create_user(
         self,
@@ -317,14 +319,14 @@ class UsersManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return User.from_dict(json.loads(response.text))
+        return deserialize(response.text, User)
 
     def get_user_me(
         self,
@@ -378,7 +380,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return UserFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, UserFull)
 
     def get_user_by_id(
         self,
@@ -442,7 +444,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return UserFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, UserFull)
 
     def update_user_by_id(
         self,
@@ -588,14 +590,14 @@ class UsersManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return UserFull.from_dict(json.loads(response.text))
+        return deserialize(response.text, UserFull)
 
     def delete_user_by_id(
         self,

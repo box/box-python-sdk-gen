@@ -4,7 +4,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -99,14 +101,14 @@ class TrashedFilesManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TrashFileRestored.from_dict(json.loads(response.text))
+        return deserialize(response.text, TrashFileRestored)
 
     def get_file_trash(
         self,
@@ -175,7 +177,7 @@ class TrashedFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return TrashFile.from_dict(json.loads(response.text))
+        return deserialize(response.text, TrashFile)
 
     def delete_file_trash(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

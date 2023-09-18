@@ -4,7 +4,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -94,14 +96,14 @@ class TrashedWebLinksManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TrashWebLinkRestored.from_dict(json.loads(response.text))
+        return deserialize(response.text, TrashWebLinkRestored)
 
     def get_web_link_trash(
         self,
@@ -141,7 +143,7 @@ class TrashedWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return TrashWebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, TrashWebLink)
 
     def delete_web_link_trash(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -87,7 +89,7 @@ class CollaborationAllowlistExemptTargetsManager:
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistExemptTargets.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistExemptTargets)
 
     def create_collaboration_whitelist_exempt_target(
         self,
@@ -113,14 +115,14 @@ class CollaborationAllowlistExemptTargetsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistExemptTarget)
 
     def get_collaboration_whitelist_exempt_target_by_id(
         self,
@@ -156,7 +158,7 @@ class CollaborationAllowlistExemptTargetsManager:
                 network_session=self.network_session,
             ),
         )
-        return CollaborationAllowlistExemptTarget.from_dict(json.loads(response.text))
+        return deserialize(response.text, CollaborationAllowlistExemptTarget)
 
     def delete_collaboration_whitelist_exempt_target_by_id(
         self,

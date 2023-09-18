@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -161,7 +163,7 @@ class StoragePolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicyAssignments.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicyAssignments)
 
     def create_storage_policy_assignment(
         self,
@@ -197,14 +199,14 @@ class StoragePolicyAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicyAssignment)
 
     def get_storage_policy_assignment_by_id(
         self,
@@ -237,7 +239,7 @@ class StoragePolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicyAssignment)
 
     def update_storage_policy_assignment_by_id(
         self,
@@ -270,14 +272,14 @@ class StoragePolicyAssignmentsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return StoragePolicyAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, StoragePolicyAssignment)
 
     def delete_storage_policy_assignment_by_id(
         self,

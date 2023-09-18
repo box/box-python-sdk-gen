@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import FileVersionLegalHold
 
@@ -70,7 +70,7 @@ class FileVersionLegalHoldsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionLegalHold.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionLegalHold)
 
     def get_file_version_legal_holds(
         self,
@@ -156,4 +156,4 @@ class FileVersionLegalHoldsManager:
                 network_session=self.network_session,
             ),
         )
-        return FileVersionLegalHolds.from_dict(json.loads(response.text))
+        return deserialize(response.text, FileVersionLegalHolds)

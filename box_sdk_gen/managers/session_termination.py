@@ -4,7 +4,9 @@ from typing import List
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -71,14 +73,14 @@ class SessionTerminationManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return SessionTerminationMessage.from_dict(json.loads(response.text))
+        return deserialize(response.text, SessionTerminationMessage)
 
     def create_group_terminate_session(
         self,
@@ -110,11 +112,11 @@ class SessionTerminationManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return SessionTerminationMessage.from_dict(json.loads(response.text))
+        return deserialize(response.text, SessionTerminationMessage)

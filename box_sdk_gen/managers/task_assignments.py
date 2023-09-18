@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -107,7 +109,7 @@ class TaskAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return TaskAssignments.from_dict(json.loads(response.text))
+        return deserialize(response.text, TaskAssignments)
 
     def create_task_assignment(
         self,
@@ -139,14 +141,14 @@ class TaskAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TaskAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, TaskAssignment)
 
     def get_task_assignment_by_id(
         self,
@@ -174,7 +176,7 @@ class TaskAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return TaskAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, TaskAssignment)
 
     def update_task_assignment_by_id(
         self,
@@ -211,14 +213,14 @@ class TaskAssignmentsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TaskAssignment.from_dict(json.loads(response.text))
+        return deserialize(response.text, TaskAssignment)
 
     def delete_task_assignment_by_id(
         self,

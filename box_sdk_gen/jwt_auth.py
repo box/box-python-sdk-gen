@@ -148,7 +148,7 @@ class JWTConfig:
             )
 
 
-class JWTAuth(Authentication):
+class BoxJWTAuth(Authentication):
     def __init__(self, config: JWTConfig):
         """
         :param config:

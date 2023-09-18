@@ -4,7 +4,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
 
@@ -121,7 +123,7 @@ class IntegrationMappingsManager:
                 network_session=self.network_session,
             ),
         )
-        return IntegrationMappings.from_dict(json.loads(response.text))
+        return deserialize(response.text, IntegrationMappings)
 
     def create_integration_mapping_slack(
         self,
@@ -155,14 +157,14 @@ class IntegrationMappingsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return IntegrationMapping.from_dict(json.loads(response.text))
+        return deserialize(response.text, IntegrationMapping)
 
     def update_integration_mapping_slack_by_id(
         self,
@@ -202,14 +204,14 @@ class IntegrationMappingsManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return IntegrationMapping.from_dict(json.loads(response.text))
+        return deserialize(response.text, IntegrationMapping)
 
     def delete_integration_mapping_slack_by_id(
         self,

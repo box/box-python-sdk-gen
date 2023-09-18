@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import RecentItems
 
@@ -88,4 +88,4 @@ class RecentItemsManager:
                 network_session=self.network_session,
             ),
         )
-        return RecentItems.from_dict(json.loads(response.text))
+        return deserialize(response.text, RecentItems)

@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -88,7 +90,7 @@ class FolderWatermarksManager:
                 network_session=self.network_session,
             ),
         )
-        return Watermark.from_dict(json.loads(response.text))
+        return deserialize(response.text, Watermark)
 
     def update_folder_watermark(
         self,
@@ -122,14 +124,14 @@ class FolderWatermarksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return Watermark.from_dict(json.loads(response.text))
+        return deserialize(response.text, Watermark)
 
     def delete_folder_watermark(
         self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

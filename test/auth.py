@@ -4,19 +4,19 @@ from box_sdk_gen.utils import decode_base_64
 
 from box_sdk_gen.utils import get_env_var
 
-from box_sdk_gen.client import Client
+from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.jwt_auth import JWTAuth
+from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
 
-from box_sdk_gen.ccg_auth import CCGAuth
+from box_sdk_gen.ccg_auth import BoxCCGAuth
 
 from box_sdk_gen.ccg_auth import CCGConfig
 
-from box_sdk_gen.developer_token_auth import DeveloperTokenAuth
+from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
 
-from box_sdk_gen.oauth import OAuth
+from box_sdk_gen.oauth import BoxOAuth
 
 from box_sdk_gen.oauth import OAuthConfig
 
@@ -32,8 +32,8 @@ def test_ccg_auth():
         enterprise_id=enterprise_id,
         user_id=user_id,
     )
-    auth: CCGAuth = CCGAuth(config=ccg_config)
-    client: Client = Client(auth=auth)
+    auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
+    client: BoxClient = BoxClient(auth=auth)
     auth.as_user(user_id)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
@@ -49,8 +49,8 @@ def test_jwt_auth():
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
-    auth: JWTAuth = JWTAuth(config=jwt_config)
-    client: Client = Client(auth=auth)
+    auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
+    client: BoxClient = BoxClient(auth=auth)
     auth.as_user(user_id)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
@@ -65,11 +65,11 @@ def test_developer_token_auth():
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
-    auth: JWTAuth = JWTAuth(config=jwt_config)
+    auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
     auth.as_user(user_id)
     token: AccessToken = auth.retrieve_token()
-    dev_auth: DeveloperTokenAuth = DeveloperTokenAuth(token=token.access_token)
-    client: Client = Client(auth=dev_auth)
+    dev_auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(token=token.access_token)
+    client: BoxClient = BoxClient(auth=dev_auth)
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
 
@@ -78,7 +78,7 @@ def test_oauth_auth():
     config: OAuthConfig = OAuthConfig(
         client_id='OAUTH_CLIENT_ID', client_secret='OAUTH_CLIENT_SECRET'
     )
-    auth: OAuth = OAuth(config=config)
+    auth: BoxOAuth = BoxOAuth(config=config)
     auth_url: str = auth.get_authorize_url()
     expected_auth_url: str = 'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
     assert auth_url == expected_auth_url

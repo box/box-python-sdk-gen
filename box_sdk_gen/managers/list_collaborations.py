@@ -4,7 +4,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import Collaborations
 
@@ -103,7 +103,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return Collaborations.from_dict(json.loads(response.text))
+        return deserialize(response.text, Collaborations)
 
     def get_folder_collaborations(
         self,
@@ -154,7 +154,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return Collaborations.from_dict(json.loads(response.text))
+        return deserialize(response.text, Collaborations)
 
     def get_collaborations(
         self,
@@ -209,7 +209,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return Collaborations.from_dict(json.loads(response.text))
+        return deserialize(response.text, Collaborations)
 
     def get_group_collaborations(
         self,
@@ -259,4 +259,4 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return Collaborations.from_dict(json.loads(response.text))
+        return deserialize(response.text, Collaborations)

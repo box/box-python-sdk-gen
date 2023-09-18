@@ -165,7 +165,7 @@ from box_sdk_gen.auth import Authentication
 from box_sdk_gen.network import NetworkSession
 
 
-class Client:
+class BoxClient:
     def __init__(
         self, auth: Authentication, network_session: Optional[NetworkSession] = None
     ):

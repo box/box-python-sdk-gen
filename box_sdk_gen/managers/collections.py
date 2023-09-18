@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import Collections
 
@@ -91,7 +91,7 @@ class CollectionsManager:
                 network_session=self.network_session,
             ),
         )
-        return Collections.from_dict(json.loads(response.text))
+        return deserialize(response.text, Collections)
 
     def get_collection_items(
         self,
@@ -149,4 +149,4 @@ class CollectionsManager:
                 network_session=self.network_session,
             ),
         )
-        return Items.from_dict(json.loads(response.text))
+        return deserialize(response.text, Items)

@@ -6,7 +6,9 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -118,7 +120,7 @@ class TermsOfServiceUserStatusesManager:
                 network_session=self.network_session,
             ),
         )
-        return TermsOfServiceUserStatuses.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfServiceUserStatuses)
 
     def create_term_of_service_user_status(
         self,
@@ -147,14 +149,14 @@ class TermsOfServiceUserStatusesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfServiceUserStatus)
 
     def update_term_of_service_user_status_by_id(
         self,
@@ -186,11 +188,11 @@ class TermsOfServiceUserStatusesManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return TermsOfServiceUserStatus.from_dict(json.loads(response.text))
+        return deserialize(response.text, TermsOfServiceUserStatus)

@@ -4,7 +4,7 @@ from typing import Optional
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import Events
 
@@ -150,7 +150,7 @@ class EventsManager:
                 network_session=self.network_session,
             ),
         )
-        return Events.from_dict(json.loads(response.text))
+        return deserialize(response.text, Events)
 
     def get_events_with_long_polling(
         self, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -245,4 +245,4 @@ class EventsManager:
                 network_session=self.network_session,
             ),
         )
-        return RealtimeServers.from_dict(json.loads(response.text))
+        return deserialize(response.text, RealtimeServers)

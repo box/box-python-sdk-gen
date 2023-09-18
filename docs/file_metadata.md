@@ -15,7 +15,11 @@ This operation is performed by calling function `get_file_metadata`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-metadata/).
 
-_Currently we don't have an example for calling `get_file_metadata` in integration tests_
+<!-- sample get_files_id_metadata -->
+
+```python
+client.file_metadata.get_file_metadata(file_id=file_id)
+```
 
 ### Arguments
 
@@ -43,7 +47,11 @@ This operation is performed by calling function `get_file_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `get_file_metadata_by_id` in integration tests_
+<!-- sample get_files_id_metadata_id_id -->
+
+```python
+client.file_metadata.get_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template)
+```
 
 ### Arguments
 
@@ -77,7 +85,11 @@ This operation is performed by calling function `create_file_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `create_file_metadata_by_id` in integration tests_
+<!-- sample post_files_id_metadata_id_id -->
+
+```python
+client.file_metadata.create_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template, request_body=data)
+```
 
 ### Arguments
 
@@ -87,7 +99,7 @@ _Currently we don't have an example for calling `create_file_metadata_by_id` in 
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `CreateFileMetadataByIdRequestBodyArg`
+- request_body `Dict[str, str]`
   - Request body of createFileMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -115,7 +127,11 @@ This operation is performed by calling function `update_file_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `update_file_metadata_by_id` in integration tests_
+<!-- sample put_files_id_metadata_id_id -->
+
+```python
+client.file_metadata.update_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template, request_body=[UpdateFileMetadataByIdRequestBodyArg(op=UpdateFileMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
+```
 
 ### Arguments
 
@@ -146,7 +162,11 @@ This operation is performed by calling function `delete_file_metadata_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-metadata-id-id/).
 
-_Currently we don't have an example for calling `delete_file_metadata_by_id` in integration tests_
+<!-- sample delete_files_id_metadata_id_id -->
+
+```python
+client.file_metadata.delete_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template)
+```
 
 ### Arguments
 

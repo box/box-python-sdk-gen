@@ -6,7 +6,9 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
-import json
+from box_sdk_gen.serialization import deserialize
+
+from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
@@ -276,7 +278,7 @@ class SharedLinksWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def get_web_link_get_shared_link(
         self,
@@ -312,7 +314,7 @@ class SharedLinksWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def update_web_link_add_shared_link(
         self,
@@ -349,14 +351,14 @@ class SharedLinksWebLinksManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def update_web_link_update_shared_link(
         self,
@@ -395,14 +397,14 @@ class SharedLinksWebLinksManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
 
     def update_web_link_remove_shared_link(
         self,
@@ -442,11 +444,11 @@ class SharedLinksWebLinksManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=json.dumps(request_body.to_dict()),
+                body=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return WebLink.from_dict(json.loads(response.text))
+        return deserialize(response.text, WebLink)
