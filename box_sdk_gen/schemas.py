@@ -8051,8 +8051,8 @@ class RecentItems(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[RecentItem]] = None,
         **kwargs
     ):
@@ -8062,9 +8062,9 @@ class RecentItems(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of recent items
         :type entries: Optional[List[RecentItem]], optional
         """
