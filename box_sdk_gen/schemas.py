@@ -1649,17 +1649,12 @@ class GroupBaseTypeField(str, Enum):
 
 
 class GroupBase(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[GroupBaseTypeField] = None,
-        **kwargs
-    ):
+    def __init__(self, id: str, type: GroupBaseTypeField, **kwargs):
         """
         :param id: The unique identifier for this object
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `group`
-        :type type: Optional[GroupBaseTypeField], optional
+        :type type: GroupBaseTypeField
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1674,21 +1669,21 @@ class GroupMiniGroupTypeField(str, Enum):
 class GroupMini(GroupBase):
     def __init__(
         self,
+        id: str,
+        type: GroupBaseTypeField,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
-        id: Optional[str] = None,
-        type: Optional[GroupBaseTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this object
+        :type id: str
+        :param type: `group`
+        :type type: GroupBaseTypeField
         :param name: The name of the group
         :type name: Optional[str], optional
         :param group_type: The type of the group.
         :type group_type: Optional[GroupMiniGroupTypeField], optional
-        :param id: The unique identifier for this object
-        :type id: Optional[str], optional
-        :param type: `group`
-        :type type: Optional[GroupBaseTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -1762,15 +1757,19 @@ class Groups(BaseObject):
 class Group(GroupMini):
     def __init__(
         self,
+        id: str,
+        type: GroupBaseTypeField,
         created_at: Optional[str] = None,
         modified_at: Optional[str] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
-        id: Optional[str] = None,
-        type: Optional[GroupBaseTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this object
+        :type id: str
+        :param type: `group`
+        :type type: GroupBaseTypeField
         :param created_at: When the group object was created
         :type created_at: Optional[str], optional
         :param modified_at: When the group object was last modified
@@ -1779,12 +1778,8 @@ class Group(GroupMini):
         :type name: Optional[str], optional
         :param group_type: The type of the group.
         :type group_type: Optional[GroupMiniGroupTypeField], optional
-        :param id: The unique identifier for this object
-        :type id: Optional[str], optional
-        :param type: `group`
-        :type type: Optional[GroupBaseTypeField], optional
         """
-        super().__init__(name=name, group_type=group_type, id=id, type=type, **kwargs)
+        super().__init__(id=id, type=type, name=name, group_type=group_type, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
 
@@ -1814,6 +1809,8 @@ class GroupFullPermissionsField(BaseObject):
 class GroupFull(Group):
     def __init__(
         self,
+        id: str,
+        type: GroupBaseTypeField,
         provenance: Optional[str] = None,
         external_sync_identifier: Optional[str] = None,
         description: Optional[str] = None,
@@ -1824,11 +1821,13 @@ class GroupFull(Group):
         modified_at: Optional[str] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
-        id: Optional[str] = None,
-        type: Optional[GroupBaseTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this object
+        :type id: str
+        :param type: `group`
+        :type type: GroupBaseTypeField
         :param provenance: Keeps track of which external source this group is
             coming from (e.g. "Active Directory", "Google Groups",
             "Facebook Groups").  Setting this will
@@ -1871,18 +1870,14 @@ class GroupFull(Group):
         :type name: Optional[str], optional
         :param group_type: The type of the group.
         :type group_type: Optional[GroupMiniGroupTypeField], optional
-        :param id: The unique identifier for this object
-        :type id: Optional[str], optional
-        :param type: `group`
-        :type type: Optional[GroupBaseTypeField], optional
         """
         super().__init__(
+            id=id,
+            type=type,
             created_at=created_at,
             modified_at=modified_at,
             name=name,
             group_type=group_type,
-            id=id,
-            type=type,
             **kwargs
         )
         self.provenance = provenance
@@ -9046,7 +9041,7 @@ class Collaboration(BaseObject):
         id: Optional[str] = None,
         type: Optional[CollaborationTypeField] = None,
         item: Optional[Union[File, Folder, WebLink]] = None,
-        accessible_by: Optional[UserCollaborations] = None,
+        accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
         role: Optional[CollaborationRoleField] = None,
         expires_at: Optional[str] = None,
