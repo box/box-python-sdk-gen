@@ -4,11 +4,11 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
-
-from typing import List
 
 from box_sdk_gen.serialization import serialize
 
@@ -249,7 +249,7 @@ class FoldersManager:
     def get_folder_by_id(
         self,
         folder_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         sort: Optional[GetFolderByIdSortArg] = None,
         direction: Optional[GetFolderByIdDirectionArg] = None,
         offset: Optional[int] = None,
@@ -303,7 +303,7 @@ class FoldersManager:
             applied to the file by specifying the `metadata` field as well
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             The folder type affects the way the items
@@ -374,7 +374,7 @@ class FoldersManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -400,7 +400,7 @@ class FoldersManager:
         is_collaboration_restricted_to_enterprise: Optional[bool] = None,
         collections: Optional[List[UpdateFolderByIdCollectionsArg]] = None,
         can_non_owners_view_collaborators: Optional[bool] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
@@ -470,7 +470,7 @@ class FoldersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
@@ -501,7 +501,7 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -559,7 +559,7 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
                 method='DELETE',
                 params=query_params_map,
@@ -574,7 +574,7 @@ class FoldersManager:
     def get_folder_items(
         self,
         folder_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         usemarker: Optional[bool] = None,
         marker: Optional[str] = None,
         offset: Optional[int] = None,
@@ -617,7 +617,7 @@ class FoldersManager:
             applied to the file by specifying the `metadata` field as well
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param usemarker: Specifies whether to use marker-based pagination instead of
             offset-based pagination. Only one pagination method can
             be used at a time.
@@ -691,7 +691,9 @@ class FoldersManager:
             {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/items']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/items']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -709,7 +711,7 @@ class FoldersManager:
         parent: CreateFolderParentArg,
         folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None,
         sync_state: Optional[CreateFolderSyncStateArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
         """
@@ -736,7 +738,7 @@ class FoldersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -770,7 +772,7 @@ class FoldersManager:
         folder_id: str,
         parent: CopyFolderParentArg,
         name: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
         """
@@ -805,7 +807,7 @@ class FoldersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -815,7 +817,9 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/copy']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/copy']
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

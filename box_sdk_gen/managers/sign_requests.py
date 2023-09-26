@@ -70,7 +70,11 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']
+                [
+                    'https://api.box.com/2.0/sign_requests/',
+                    to_string(sign_request_id),
+                    '/cancel',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -100,7 +104,11 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']
+                [
+                    'https://api.box.com/2.0/sign_requests/',
+                    to_string(sign_request_id),
+                    '/resend',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -129,7 +137,9 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/sign_requests/', to_string(sign_request_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

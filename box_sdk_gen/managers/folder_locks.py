@@ -178,7 +178,9 @@ class FolderLocksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folder_locks/', folder_lock_id]),
+            ''.join(
+                ['https://api.box.com/2.0/folder_locks/', to_string(folder_lock_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

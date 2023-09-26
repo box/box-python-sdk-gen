@@ -182,7 +182,7 @@ class TermsOfServiceUserStatusesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/terms_of_service_user_statuses/',
-                    terms_of_service_user_status_id,
+                    to_string(terms_of_service_user_status_id),
                 ]
             ),
             FetchOptions(

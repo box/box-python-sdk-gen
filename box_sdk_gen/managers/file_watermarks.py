@@ -77,7 +77,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -114,7 +116,9 @@ class FileWatermarksManager:
         request_body = BaseObject(watermark=watermark)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -147,7 +151,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

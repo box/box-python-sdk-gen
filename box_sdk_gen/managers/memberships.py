@@ -8,6 +8,8 @@ from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
 
+from typing import List
+
 from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
@@ -109,7 +111,9 @@ class MembershipsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/memberships']),
+            ''.join(
+                ['https://api.box.com/2.0/users/', to_string(user_id), '/memberships']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -156,7 +160,9 @@ class MembershipsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', group_id, '/memberships']),
+            ''.join(
+                ['https://api.box.com/2.0/groups/', to_string(group_id), '/memberships']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -174,7 +180,7 @@ class MembershipsManager:
         group: CreateGroupMembershipGroupArg,
         role: Optional[CreateGroupMembershipRoleArg] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupMembership:
         """
@@ -205,7 +211,7 @@ class MembershipsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -237,7 +243,7 @@ class MembershipsManager:
     def get_group_membership_by_id(
         self,
         group_membership_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupMembership:
         """
@@ -259,7 +265,7 @@ class MembershipsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -269,7 +275,10 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
+                [
+                    'https://api.box.com/2.0/group_memberships/',
+                    to_string(group_membership_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -287,7 +296,7 @@ class MembershipsManager:
         group_membership_id: str,
         role: Optional[UpdateGroupMembershipByIdRoleArg] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupMembership:
         """
@@ -320,7 +329,7 @@ class MembershipsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -333,7 +342,10 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
+                [
+                    'https://api.box.com/2.0/group_memberships/',
+                    to_string(group_membership_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -372,7 +384,10 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/group_memberships/', group_membership_id]
+                [
+                    'https://api.box.com/2.0/group_memberships/',
+                    to_string(group_membership_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',

@@ -53,7 +53,7 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -91,7 +91,7 @@ class AvatarsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -129,7 +129,7 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/avatar']),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

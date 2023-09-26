@@ -4,6 +4,8 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -126,7 +128,7 @@ class UserCollaborationsManager:
     def get_collaboration_by_id(
         self,
         collaboration_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Collaboration:
         """
@@ -142,7 +144,7 @@ class UserCollaborationsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -151,7 +153,9 @@ class UserCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -222,7 +226,9 @@ class UserCollaborationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -252,7 +258,9 @@ class UserCollaborationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -270,7 +278,7 @@ class UserCollaborationsManager:
         role: CreateCollaborationRoleArg,
         can_view_path: Optional[bool] = None,
         expires_at: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Collaboration:
@@ -340,7 +348,7 @@ class UserCollaborationsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param notify: Determines if users should receive email notification
             for the action performed.
         :type notify: Optional[bool], optional

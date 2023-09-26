@@ -81,7 +81,7 @@ class ShieldInformationBarriersManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barriers/',
-                    shield_information_barrier_id,
+                    to_string(shield_information_barrier_id),
                 ]
             ),
             FetchOptions(

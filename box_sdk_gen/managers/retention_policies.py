@@ -2,11 +2,11 @@ from enum import Enum
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
-
-from typing import List
 
 from box_sdk_gen.serialization import serialize
 
@@ -76,7 +76,7 @@ class RetentionPoliciesManager:
         policy_name: Optional[str] = None,
         policy_type: Optional[GetRetentionPoliciesPolicyTypeArg] = None,
         created_by_user_id: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         marker: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -98,7 +98,7 @@ class RetentionPoliciesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -229,7 +229,7 @@ class RetentionPoliciesManager:
     def get_retention_policy_by_id(
         self,
         retention_policy_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> RetentionPolicy:
         """
@@ -245,7 +245,7 @@ class RetentionPoliciesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -255,7 +255,10 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
+                [
+                    'https://api.box.com/2.0/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -358,7 +361,10 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
+                [
+                    'https://api.box.com/2.0/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -390,7 +396,10 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/retention_policies/', retention_policy_id]
+                [
+                    'https://api.box.com/2.0/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',

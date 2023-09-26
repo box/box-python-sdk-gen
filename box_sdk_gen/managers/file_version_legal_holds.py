@@ -59,7 +59,7 @@ class FileVersionLegalHoldsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/file_version_legal_holds/',
-                    file_version_legal_hold_id,
+                    to_string(file_version_legal_hold_id),
                 ]
             ),
             FetchOptions(

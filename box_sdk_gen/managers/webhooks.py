@@ -278,7 +278,7 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -317,7 +317,7 @@ class WebhooksManager:
         request_body = BaseObject(target=target, address=address, triggers=triggers)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -345,7 +345,7 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -4,11 +4,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
-
-from typing import List
 
 from box_sdk_gen.serialization import serialize
 
@@ -100,7 +100,7 @@ class RetentionPolicyAssignmentsManager:
         self,
         retention_policy_id: str,
         type: Optional[GetRetentionPolicyAssignmentsTypeArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -123,7 +123,7 @@ class RetentionPolicyAssignmentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
         :type marker: Optional[str], optional
@@ -147,7 +147,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/retention_policies/',
-                    retention_policy_id,
+                    to_string(retention_policy_id),
                     '/assignments',
                 ]
             ),
@@ -216,7 +216,7 @@ class RetentionPolicyAssignmentsManager:
     def get_retention_policy_assignment_by_id(
         self,
         retention_policy_assignment_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> RetentionPolicyAssignment:
         """
@@ -232,7 +232,7 @@ class RetentionPolicyAssignmentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -244,7 +244,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/retention_policy_assignments/',
-                    retention_policy_assignment_id,
+                    to_string(retention_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -281,7 +281,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/retention_policy_assignments/',
-                    retention_policy_assignment_id,
+                    to_string(retention_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -325,7 +325,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/retention_policy_assignments/',
-                    retention_policy_assignment_id,
+                    to_string(retention_policy_assignment_id),
                     '/files_under_retention',
                 ]
             ),
@@ -374,7 +374,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/retention_policy_assignments/',
-                    retention_policy_assignment_id,
+                    to_string(retention_policy_assignment_id),
                     '/file_versions_under_retention',
                 ]
             ),

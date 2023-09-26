@@ -2,6 +2,8 @@ from enum import Enum
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -49,7 +51,7 @@ class TrashedItemsManager:
 
     def get_folder_trash_items(
         self,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         usemarker: Optional[bool] = None,
@@ -86,7 +88,7 @@ class TrashedItemsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.

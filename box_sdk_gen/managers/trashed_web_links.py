@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import serialize
@@ -57,7 +59,7 @@ class TrashedWebLinksManager:
         web_link_id: str,
         name: Optional[str] = None,
         parent: Optional[CreateWebLinkByIdParentArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashWebLinkRestored:
         """
@@ -81,7 +83,7 @@ class TrashedWebLinksManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -91,7 +93,7 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id]),
+            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -108,7 +110,7 @@ class TrashedWebLinksManager:
     def get_web_link_trash(
         self,
         web_link_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashWebLink:
         """
@@ -124,7 +126,7 @@ class TrashedWebLinksManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -133,7 +135,9 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']),
+            ''.join(
+                ['https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -163,7 +167,9 @@ class TrashedWebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id, '/trash']),
+            ''.join(
+                ['https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash']
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

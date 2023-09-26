@@ -26,7 +26,7 @@ client.groups.get_groups()
 
 - filter_term `Optional[str]`
   - Limits the results to only groups whose `name` starts with the search term.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
@@ -72,7 +72,7 @@ client.groups.create_group(name=get_uuid())
   - Specifies who can invite the group to collaborate on folders. When set to `admins_only` the enterprise admin, co-admins, and the group's admin can invite the group. When set to `admins_and_members` all the admins listed above and group members can invite the group. When set to `all_managed_users` all managed users in the enterprise can invite the group.
 - member_viewability_level `Optional[CreateGroupMemberViewabilityLevelArg]`
   - Specifies who can see the members of the group. _ `admins_only` - the enterprise admin, co-admins, group's group admin _ `admins_and_members` - all admins and group members \* `all_managed_users` - all managed users in the enterprise
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -104,7 +104,7 @@ client.groups.get_group_by_id(group_id=group.id)
 
 - group_id `str`
   - The ID of the group. Example: "57645"
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -148,7 +148,7 @@ client.groups.update_group_by_id(group_id=group.id, name=updated_group_name)
   - Specifies who can invite the group to collaborate on folders. When set to `admins_only` the enterprise admin, co-admins, and the group's admin can invite the group. When set to `admins_and_members` all the admins listed above and group members can invite the group. When set to `all_managed_users` all managed users in the enterprise can invite the group.
 - member_viewability_level `Optional[UpdateGroupByIdMemberViewabilityLevelArg]`
   - Specifies who can see the members of the group. _ `admins_only` - the enterprise admin, co-admins, group's group admin _ `admins_and_members` - all admins and group members \* `all_managed_users` - all managed users in the enterprise
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

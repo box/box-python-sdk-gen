@@ -146,7 +146,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/collaboration_whitelist_entries/',
-                    collaboration_whitelist_entry_id,
+                    to_string(collaboration_whitelist_entry_id),
                 ]
             ),
             FetchOptions(
@@ -182,7 +182,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/collaboration_whitelist_entries/',
-                    collaboration_whitelist_entry_id,
+                    to_string(collaboration_whitelist_entry_id),
                 ]
             ),
             FetchOptions(

@@ -60,7 +60,9 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]),
+            ''.join(
+                ['https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -88,7 +90,9 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/device_pinners/', device_pinner_id]),
+            ''.join(
+                ['https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -144,7 +148,7 @@ class DevicePinnersManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/enterprises/',
-                    enterprise_id,
+                    to_string(enterprise_id),
                     '/device_pinners',
                 ]
             ),

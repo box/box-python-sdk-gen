@@ -157,7 +157,10 @@ class TermsOfServicesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
+                [
+                    'https://api.box.com/2.0/terms_of_services/',
+                    to_string(terms_of_service_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -195,7 +198,10 @@ class TermsOfServicesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
+                [
+                    'https://api.box.com/2.0/terms_of_services/',
+                    to_string(terms_of_service_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',

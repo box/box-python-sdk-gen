@@ -149,7 +149,9 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/metadata']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/metadata']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -198,11 +200,11 @@ class FolderMetadataManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                 ]
             ),
             FetchOptions(
@@ -271,11 +273,11 @@ class FolderMetadataManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                 ]
             ),
             FetchOptions(
@@ -343,11 +345,11 @@ class FolderMetadataManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                 ]
             ),
             FetchOptions(
@@ -397,11 +399,11 @@ class FolderMetadataManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                 ]
             ),
             FetchOptions(

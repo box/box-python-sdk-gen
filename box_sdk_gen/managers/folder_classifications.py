@@ -123,7 +123,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -186,7 +186,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -243,7 +243,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -293,7 +293,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/folders/',
-                    folder_id,
+                    to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),

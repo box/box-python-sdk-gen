@@ -238,7 +238,9 @@ class WorkflowsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']),
+            ''.join(
+                ['https://api.box.com/2.0/workflows/', to_string(workflow_id), '/start']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

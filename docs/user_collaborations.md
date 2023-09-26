@@ -20,7 +20,7 @@ _Currently we don't have an example for calling `get_collaboration_by_id` in int
 
 - collaboration_id `str`
   - The ID of the collaboration Example: "1234"
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -129,7 +129,7 @@ _Currently we don't have an example for calling `create_collaboration` in integr
   - Determines if the invited users can see the entire parent path to the associated folder. The user will not gain privileges in any parent folder and therefore can not see content the user is not collaborated on. Be aware that this meaningfully increases the time required to load the invitee's **All Files** page. We recommend you limit the number of collaborations with `can_view_path` enabled to 1,000 per user. Only owner or co-owners can invite collaborators with a `can_view_path` of `true`. `can_view_path` can only be used for folder collaborations.
 - expires_at `Optional[str]`
   - Set the expiration date for the collaboration. At this date, the collaboration will be automatically removed from the item. This feature will only work if the **Automatically remove invited collaborators: Allow folder owners to extend the expiry date** setting has been enabled in the **Enterprise Settings** of the **Admin Console**. When the setting is not enabled, collaborations can not have an expiry date and a value for this field will be result in an error.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - notify `Optional[bool]`
   - Determines if users should receive email notification for the action performed.

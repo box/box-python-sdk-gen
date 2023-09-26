@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -38,7 +40,7 @@ class StoragePoliciesManager:
 
     def get_storage_policies(
         self,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -59,7 +61,7 @@ class StoragePoliciesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
@@ -109,7 +111,12 @@ class StoragePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/storage_policies/', storage_policy_id]),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/storage_policies/',
+                    to_string(storage_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

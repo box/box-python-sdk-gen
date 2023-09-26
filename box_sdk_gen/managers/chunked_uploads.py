@@ -154,7 +154,11 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://upload.box.com/api/2.0/files/', file_id, '/upload_sessions']
+                [
+                    'https://upload.box.com/api/2.0/files/',
+                    to_string(file_id),
+                    '/upload_sessions',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -188,7 +192,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    upload_session_id,
+                    to_string(upload_session_id),
                 ]
             ),
             FetchOptions(
@@ -252,7 +256,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    upload_session_id,
+                    to_string(upload_session_id),
                 ]
             ),
             FetchOptions(
@@ -290,7 +294,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    upload_session_id,
+                    to_string(upload_session_id),
                 ]
             ),
             FetchOptions(
@@ -338,7 +342,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    upload_session_id,
+                    to_string(upload_session_id),
                     '/parts',
                 ]
             ),
@@ -409,7 +413,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    upload_session_id,
+                    to_string(upload_session_id),
                     '/commit',
                 ]
             ),

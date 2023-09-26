@@ -101,7 +101,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -194,7 +196,9 @@ class FileRequestsManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -229,7 +233,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -317,7 +323,11 @@ class FileRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']
+                [
+                    'https://api.box.com/2.0/file_requests/',
+                    to_string(file_request_id),
+                    '/copy',
+                ]
             ),
             FetchOptions(
                 method='POST',

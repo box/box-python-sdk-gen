@@ -4,7 +4,9 @@ from enum import Enum
 from io import BytesIO, SEEK_SET, SEEK_END, BufferedIOBase
 import os
 import uuid
-from typing import Dict, Optional, Iterable, Callable, TypeVar
+from typing import Dict, Optional, Iterable, Callable, TypeVar, Any
+from .serialization import serialize
+from .base_object import BaseObject
 
 ByteStream = BufferedIOBase
 Buffer = bytes
@@ -93,9 +95,17 @@ def prepare_params(map: Dict[str, Optional[str]]) -> Dict[str, str]:
     return {k: v for k, v in map.items() if v is not None}
 
 
-def to_string(value: any) -> Optional[str]:
+def to_string(value: Any) -> Optional[str]:
     if value is None:
-        return value
+        return None
+    if (
+        isinstance(value, BaseObject)
+        or isinstance(value, list)
+        and isinstance(value[0], BaseObject)
+    ):
+        return ''.join(serialize(value).split())
+    if isinstance(value, list):
+        return ','.join(map(to_string, value))
     return str(value)
 
 

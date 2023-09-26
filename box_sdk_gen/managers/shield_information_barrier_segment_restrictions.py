@@ -130,7 +130,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
-                    shield_information_barrier_segment_restriction_id,
+                    to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
             FetchOptions(
@@ -166,7 +166,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
-                    shield_information_barrier_segment_restriction_id,
+                    to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
             FetchOptions(

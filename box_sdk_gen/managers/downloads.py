@@ -78,7 +78,7 @@ class DownloadsManager:
             {'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/content']),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/content']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

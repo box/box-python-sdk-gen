@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import serialize
@@ -57,7 +59,7 @@ class TrashedFoldersManager:
         folder_id: str,
         name: Optional[str] = None,
         parent: Optional[RestoreFolderFromTrashParentArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashFolderRestored:
         """
@@ -106,7 +108,7 @@ class TrashedFoldersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -116,7 +118,7 @@ class TrashedFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id]),
+            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -133,7 +135,7 @@ class TrashedFoldersManager:
     def get_folder_trash(
         self,
         folder_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashFolder:
         """
@@ -180,7 +182,7 @@ class TrashedFoldersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -189,7 +191,9 @@ class TrashedFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/trash']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -226,7 +230,9 @@ class TrashedFoldersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/trash']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/trash']
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

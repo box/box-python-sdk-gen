@@ -4,11 +4,11 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
-
-from typing import List
 
 from box_sdk_gen.serialization import serialize
 
@@ -95,7 +95,7 @@ class UsersManager:
         filter_term: Optional[str] = None,
         user_type: Optional[GetUsersUserTypeArg] = None,
         external_app_user_id: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         usemarker: Optional[bool] = None,
@@ -149,7 +149,7 @@ class UsersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
@@ -219,7 +219,7 @@ class UsersManager:
         is_exempt_from_login_verification: Optional[bool] = None,
         status: Optional[CreateUserStatusArg] = None,
         external_app_user_id: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> User:
         """
@@ -285,7 +285,7 @@ class UsersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -330,7 +330,7 @@ class UsersManager:
 
     def get_user_me(
         self,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> UserFull:
         """
@@ -361,7 +361,7 @@ class UsersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -385,7 +385,7 @@ class UsersManager:
     def get_user_by_id(
         self,
         user_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> UserFull:
         """
@@ -425,7 +425,7 @@ class UsersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -434,7 +434,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id]),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -470,7 +470,7 @@ class UsersManager:
         space_amount: Optional[int] = None,
         notification_email: Optional[UpdateUserByIdNotificationEmailArg] = None,
         external_app_user_id: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> UserFull:
         """
@@ -553,7 +553,7 @@ class UsersManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -585,7 +585,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id]),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -636,7 +636,7 @@ class UsersManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id]),
+            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
             FetchOptions(
                 method='DELETE',
                 params=query_params_map,

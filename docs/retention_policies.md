@@ -29,7 +29,7 @@ client.retention_policies.get_retention_policies()
   - Filters results by the type of retention policy.
 - created_by_user_id `Optional[str]`
   - Filters results by the ID of the user who created policy.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
@@ -107,7 +107,7 @@ client.retention_policies.get_retention_policy_by_id(retention_policy_id=retenti
 
 - retention_policy_id `str`
   - The ID of the retention policy. Example: "982312"
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

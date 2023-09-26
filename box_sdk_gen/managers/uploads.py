@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import serialize
@@ -117,7 +119,7 @@ class UploadsManager:
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
         content_md_5: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -176,7 +178,7 @@ class UploadsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
@@ -207,7 +209,13 @@ class UploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']),
+            ''.join(
+                [
+                    'https://upload.box.com/api/2.0/files/',
+                    to_string(file_id),
+                    '/content',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -237,7 +245,7 @@ class UploadsManager:
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         content_md_5: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Files:
@@ -287,7 +295,7 @@ class UploadsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
         :type content_md_5: Optional[str], optional

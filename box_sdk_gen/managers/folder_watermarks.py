@@ -81,7 +81,9 @@ class FolderWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -120,7 +122,9 @@ class FolderWatermarksManager:
         request_body = BaseObject(watermark=watermark)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark']
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -155,7 +159,9 @@ class FolderWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', folder_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark']
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

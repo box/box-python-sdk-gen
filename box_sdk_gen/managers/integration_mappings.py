@@ -198,7 +198,7 @@ class IntegrationMappingsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/integration_mappings/slack/',
-                    integration_mapping_id,
+                    to_string(integration_mapping_id),
                 ]
             ),
             FetchOptions(
@@ -239,7 +239,7 @@ class IntegrationMappingsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/integration_mappings/slack/',
-                    integration_mapping_id,
+                    to_string(integration_mapping_id),
                 ]
             ),
             FetchOptions(

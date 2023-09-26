@@ -100,7 +100,9 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', task_id, '/assignments']),
+            ''.join(
+                ['https://api.box.com/2.0/tasks/', to_string(task_id), '/assignments']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -167,7 +169,12 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -209,7 +216,12 @@ class TaskAssignmentsManager:
         request_body = BaseObject(message=message, resolution_state=resolution_state)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -239,7 +251,12 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/task_assignments/', task_assignment_id]),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

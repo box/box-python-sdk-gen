@@ -35,7 +35,7 @@ client.users.get_users()
   - Limits the results to the kind of user specified. _ `all` returns every kind of user for whom the `login` or `name` partially matches the `filter_term`. It will only return an external user if the login matches the `filter_term` completely, and in that case it will only return that user. _ `managed` returns all managed and app users for whom the `login` or `name` partially matches the `filter_term`. \* `external` returns all external users for whom the `login` matches the `filter_term` exactly.
 - external_app_user_id `Optional[str]`
   - Limits the results to app users with the given `external_app_user_id` value. When creating an app user, an `external_app_user_id` value can be set. This value can then be used in this endpoint to find any users that match that `external_app_user_id` value.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - offset `Optional[int]`
   - The offset of the item at which to begin the response. Queries with offset parameter value exceeding 10000 will be rejected with a 400 response.
@@ -109,7 +109,7 @@ client.users.create_user(name=user_name, login=user_login, is_platform_access_on
   - The user's account status
 - external_app_user_id `Optional[str]`
   - An external identifier for an app user, which can be used to look up the user. This can be used to tie user IDs from external identity providers to Box users.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -146,7 +146,7 @@ client.users.get_user_me()
 
 ### Arguments
 
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -186,7 +186,7 @@ client.users.get_user_by_id(user_id=user.id)
 
 - user_id `str`
   - The ID of the user. Example: "12345"
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -265,7 +265,7 @@ client.users.update_user_by_id(user_id=user.id, name=updated_user_name)
   - An alternate notification email address to which email notifications are sent. When it's confirmed, this will be the email address to which notifications are sent instead of to the primary email address. Set this value to `null` to remove the notification email.
 - external_app_user_id `Optional[str]`
   - An external identifier for an app user, which can be used to look up the user. This can be used to tie user IDs from external identity providers to Box users. Note: In order to update this field, you need to request a token using the application that created the app user.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

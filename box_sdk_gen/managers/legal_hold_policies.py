@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -43,7 +45,7 @@ class LegalHoldPoliciesManager:
     def get_legal_hold_policies(
         self,
         policy_name: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -64,7 +66,7 @@ class LegalHoldPoliciesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
             This requires `usemarker` to be set to `true`.
@@ -184,7 +186,10 @@ class LegalHoldPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]
+                [
+                    'https://api.box.com/2.0/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -228,7 +233,10 @@ class LegalHoldPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]
+                [
+                    'https://api.box.com/2.0/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -266,7 +274,10 @@ class LegalHoldPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/legal_hold_policies/', legal_hold_policy_id]
+                [
+                    'https://api.box.com/2.0/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',

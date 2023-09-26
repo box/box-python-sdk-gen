@@ -228,7 +228,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -266,7 +266,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -322,7 +322,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(

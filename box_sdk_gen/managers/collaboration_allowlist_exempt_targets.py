@@ -147,7 +147,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
-                    collaboration_whitelist_exempt_target_id,
+                    to_string(collaboration_whitelist_exempt_target_id),
                 ]
             ),
             FetchOptions(
@@ -183,7 +183,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
-                    collaboration_whitelist_exempt_target_id,
+                    to_string(collaboration_whitelist_exempt_target_id),
                 ]
             ),
             FetchOptions(

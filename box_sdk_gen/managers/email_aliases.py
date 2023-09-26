@@ -58,7 +58,9 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            ''.join(
+                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -95,7 +97,9 @@ class EmailAliasesManager:
         request_body = BaseObject(email=email)
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            ''.join(
+                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -132,9 +136,9 @@ class EmailAliasesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/users/',
-                    user_id,
+                    to_string(user_id),
                     '/email_aliases/',
-                    email_alias_id,
+                    to_string(email_alias_id),
                 ]
             ),
             FetchOptions(

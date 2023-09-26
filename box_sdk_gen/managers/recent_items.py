@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -36,7 +38,7 @@ class RecentItemsManager:
 
     def get_recent_items(
         self,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         marker: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -57,7 +59,7 @@ class RecentItemsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param marker: Defines the position marker at which to begin returning results. This is

@@ -4,11 +4,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from enum import Enum
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
-
-from typing import List
 
 from box_sdk_gen.serialization import serialize
 
@@ -201,7 +201,7 @@ class FilesManager:
     def get_file_by_id(
         self,
         file_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_none_match: Optional[str] = None,
         boxapi: Optional[str] = None,
         x_rep_hints: Optional[str] = None,
@@ -229,7 +229,7 @@ class FilesManager:
             applied to the file by specifying the `metadata` field as well
             as the scope and key of the template to retrieve, for example
             `?field=metadata.enterprise_12345.contractTemplate`.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
@@ -274,7 +274,7 @@ class FilesManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id]),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -298,7 +298,7 @@ class FilesManager:
         permissions: Optional[UpdateFileByIdPermissionsArg] = None,
         collections: Optional[List[UpdateFileByIdCollectionsArg]] = None,
         tags: Optional[List[str]] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
@@ -357,7 +357,7 @@ class FilesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
@@ -386,7 +386,7 @@ class FilesManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id]),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -441,7 +441,7 @@ class FilesManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id]),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -458,7 +458,7 @@ class FilesManager:
         parent: CopyFileParentArg,
         name: Optional[str] = None,
         version: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
         """
@@ -490,7 +490,7 @@ class FilesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -500,7 +500,7 @@ class FilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/copy']),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/copy']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -579,7 +579,12 @@ class FilesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/files/', file_id, '/thumbnail.', extension]
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '/thumbnail.',
+                    to_string(extension),
+                ]
             ),
             FetchOptions(
                 method='GET',

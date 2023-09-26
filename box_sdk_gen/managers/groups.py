@@ -2,6 +2,8 @@ from enum import Enum
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
 
 from box_sdk_gen.serialization import deserialize
@@ -71,7 +73,7 @@ class GroupsManager:
     def get_groups(
         self,
         filter_term: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -92,7 +94,7 @@ class GroupsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
@@ -135,7 +137,7 @@ class GroupsManager:
         description: Optional[str] = None,
         invitability_level: Optional[CreateGroupInvitabilityLevelArg] = None,
         member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Group:
         """
@@ -189,7 +191,7 @@ class GroupsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -223,7 +225,7 @@ class GroupsManager:
     def get_group_by_id(
         self,
         group_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupFull:
         """
@@ -245,7 +247,7 @@ class GroupsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -254,7 +256,7 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -277,7 +279,7 @@ class GroupsManager:
         member_viewability_level: Optional[
             UpdateGroupByIdMemberViewabilityLevelArg
         ] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupFull:
         """
@@ -337,7 +339,7 @@ class GroupsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -354,7 +356,7 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -386,7 +388,7 @@ class GroupsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', group_id]),
+            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

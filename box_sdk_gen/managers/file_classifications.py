@@ -121,7 +121,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -182,7 +182,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -237,7 +237,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -285,7 +285,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),

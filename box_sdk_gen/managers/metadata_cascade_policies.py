@@ -197,7 +197,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                 ]
             ),
             FetchOptions(
@@ -230,7 +230,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                 ]
             ),
             FetchOptions(
@@ -281,7 +281,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                     '/apply',
                 ]
             ),

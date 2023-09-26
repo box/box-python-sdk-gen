@@ -87,7 +87,9 @@ class SignTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/sign_templates/', template_id]),
+            ''.join(
+                ['https://api.box.com/2.0/sign_templates/', to_string(template_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

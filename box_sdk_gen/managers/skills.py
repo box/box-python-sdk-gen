@@ -200,7 +200,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -250,7 +250,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -294,7 +294,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -333,7 +333,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -393,7 +393,9 @@ class SkillsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]),
+            ''.join(
+                ['https://api.box.com/2.0/skill_invocations/', to_string(skill_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
