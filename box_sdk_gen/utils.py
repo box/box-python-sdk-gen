@@ -1,12 +1,13 @@
 import base64
 import hashlib
-from enum import Enum
-from io import BytesIO, SEEK_SET, SEEK_END, BufferedIOBase
 import os
 import uuid
-from typing import Dict, Optional, Iterable, Callable, TypeVar, Any
-from .serialization import serialize
+from enum import Enum
+from io import SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
+from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
+
 from .base_object import BaseObject
+from .serialization import serialize
 
 ByteStream = BufferedIOBase
 Buffer = bytes
@@ -106,6 +107,8 @@ def to_string(value: Any) -> Optional[str]:
         return ''.join(serialize(value).split())
     if isinstance(value, list):
         return ','.join(map(to_string, value))
+    if isinstance(value, Enum):
+        return value.value
     return str(value)
 
 

@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 import pytest
 
 from box_sdk_gen.schemas import CollaborationAllowlistExemptTargets
@@ -44,7 +46,7 @@ def collaborationAllowlistExemptTargets():
     new_exempt_target: CollaborationAllowlistExemptTarget = client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(
         user=CreateCollaborationWhitelistExemptTargetUserArg(id=user.id)
     )
-    assert new_exempt_target.type == 'collaboration_whitelist_exempt_target'
+    assert to_string(new_exempt_target.type) == 'collaboration_whitelist_exempt_target'
     assert new_exempt_target.user.id == user.id
     exempt_target: CollaborationAllowlistExemptTarget = client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(
         collaboration_whitelist_exempt_target_id=new_exempt_target.id

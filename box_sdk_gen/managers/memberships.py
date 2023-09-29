@@ -6,6 +6,8 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from typing import List
@@ -199,7 +201,7 @@ class MembershipsManager:
             on members with a role of `member`.
             Setting these permissions overwrites the default
             access levels of an admin.
-            Specifying a value of "null" for this object will deactivate
+            Specifying a value of "null" for this object will disable
             all configurable permissions. Specifying permissions will set
             them accordingly, omitted permissions will be enabled by default.
         :type configurable_permissions: Optional[Dict[str, bool]], optional
@@ -317,7 +319,7 @@ class MembershipsManager:
             on members with a role of `member`.
             Setting these permissions overwrites the default
             access levels of an admin.
-            Specifying a value of "null" for this object will deactivate
+            Specifying a value of "null" for this object will disable
             all configurable permissions. Specifying permissions will set
             them accordingly, omitted permissions will be enabled by default.
         :type configurable_permissions: Optional[Dict[str, bool]], optional

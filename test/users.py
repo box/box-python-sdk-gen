@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.schemas import Users
 
 from box_sdk_gen.schemas import UserFull
@@ -32,7 +34,7 @@ def test_get_users():
 
 def test_get_user_me():
     current_user: UserFull = client.users.get_user_me()
-    assert current_user.type == 'user'
+    assert to_string(current_user.type) == 'user'
 
 
 def test_create_update_get_delete_user():

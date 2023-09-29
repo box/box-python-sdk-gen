@@ -3,7 +3,7 @@ name: Question
 about: Request for Assistance
 title: ''
 labels: question
-assignees: mwwoda, mhagmajer, antusus, arjankowski, lukaszsocha2, bartlomiejleszczynski
+assignees: mwwoda, mhagmajer, arjankowski, lukaszsocha2, bartlomiejleszczynski, congminh1254
 ---
 
 - [ ] I have checked that the [SDK documentation][sdk-docs] doesn't solve my issue.

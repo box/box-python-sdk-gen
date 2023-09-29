@@ -6,6 +6,8 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
@@ -15,6 +17,8 @@ from box_sdk_gen.base_object import BaseObject
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentMember
 
 from box_sdk_gen.schemas import ClientError
+
+from box_sdk_gen.schemas import ShieldInformationBarrierSegmentMembers
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
@@ -159,7 +163,7 @@ class ShieldInformationBarrierSegmentMembersManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> None:
+    ) -> ShieldInformationBarrierSegmentMembers:
         """
         Lists shield information barrier segment members
 
@@ -201,7 +205,7 @@ class ShieldInformationBarrierSegmentMembersManager:
                 network_session=self.network_session,
             ),
         )
-        return None
+        return deserialize(response.text, ShieldInformationBarrierSegmentMembers)
 
     def create_shield_information_barrier_segment_member(
         self,
@@ -216,6 +220,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         :param shield_information_barrier_segment: The `type` and `id` of the
             requested shield information barrier segment.
         :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg
+        :param user: User to which restriction will be applied.
+        :type user: UserBase
         :param type: -| A type of the shield barrier segment member.
         :type type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.

@@ -69,10 +69,10 @@ client.retention_policies.create_retention_policy(policy_name=retention_policy_n
   - The type of the retention policy. A retention policy type can either be `finite`, where a specific amount of time to retain the content is known upfront, or `indefinite`, where the amount of time to retain the content is still unknown.
 - disposition_action `CreateRetentionPolicyDispositionActionArg`
   - The disposition action of the retention policy. `permanently_delete` deletes the content retained by the policy permanently. `remove_retention` lifts retention policy from the content, allowing it to be deleted by users once the retention policy has expired.
-- retention_length `Optional[str]`
+- retention_length `Optional[Union[str, int]]`
   - The length of the retention policy. This value specifies the duration in days that the retention policy will be active for after being assigned to content. If the policy has a `policy_type` of `indefinite`, the `retention_length` will also be `indefinite`.
 - retention_type `Optional[CreateRetentionPolicyRetentionTypeArg]`
-  - Specifies the retention type: _ `modifiable`: You can modify the retention policy. For example, you can add or remove folders, shorten or lengthen the policy duration, or delete the assignment. Use this type if your retention policy is not related to any regulatory purposes. _ `non-modifiable`: You can modify the retention policy only in a limited way: add a folder, lengthen the duration, retire the policy, change the disposition action or notification settings. You cannot perform other actions, such as deleting the assignment or shortening the policy duration. Use this type to ensure compliance with regulatory retention policies.
+  - Specifies the retention type: _ `modifiable`: You can modify the retention policy. For example, you can add or remove folders, shorten or lengthen the policy duration, or delete the assignment. Use this type if your retention policy is not related to any regulatory purposes. _ `non_modifiable`: You can modify the retention policy only in a limited way: add a folder, lengthen the duration, retire the policy, change the disposition action or notification settings. You cannot perform other actions, such as deleting the assignment or shortening the policy duration. Use this type to ensure compliance with regulatory retention policies.
 - can_owner_extend_retention `Optional[bool]`
   - Whether the owner of a file will be allowed to extend the retention.
 - are_owners_notified `Optional[bool]`
@@ -141,11 +141,11 @@ client.retention_policies.update_retention_policy_by_id(retention_policy_id=rete
   - The name for the retention policy
 - description `Optional[str]`
   - The additional text description of the retention policy.
-- disposition_action `Optional[UpdateRetentionPolicyByIdDispositionActionArg]`
-  - The disposition action of the retention policy. `permanently_delete` deletes the content retained by the policy permanently. `remove_retention` lifts retention policy from the content, allowing it to be deleted by users once the retention policy has expired.
+- disposition_action `Optional[Union[Union[str, str], str]]`
+  - The disposition action of the retention policy. This action can be `permanently_delete`, which will cause the content retained by the policy to be permanently deleted, or `remove_retention`, which will lift the retention policy from the content, allowing it to be deleted by users, once the retention policy has expired. You can use "null" if you don't want to change `disposition_action`.
 - retention_type `Optional[str]`
   - Specifies the retention type: _ `modifiable`: You can modify the retention policy. For example, you can add or remove folders, shorten or lengthen the policy duration, or delete the assignment. Use this type if your retention policy is not related to any regulatory purposes. _ `non-modifiable`: You can modify the retention policy only in a limited way: add a folder, lengthen the duration, retire the policy, change the disposition action or notification settings. You cannot perform other actions, such as deleting the assignment or shortening the policy duration. Use this type to ensure compliance with regulatory retention policies. When updating a retention policy, you can use `non-modifiable` type only. You can convert a `modifiable` policy to `non-modifiable`, but not the other way around.
-- retention_length `Optional[str]`
+- retention_length `Optional[Union[str, int]]`
   - The length of the retention policy. This value specifies the duration in days that the retention policy will be active for after being assigned to content. If the policy has a `policy_type` of `indefinite`, the `retention_length` will also be `indefinite`.
 - status `Optional[str]`
   - Used to retire a retention policy. If not retiring a policy, do not include this parameter or set it to `null`.
@@ -153,7 +153,7 @@ client.retention_policies.update_retention_policy_by_id(retention_policy_id=rete
   - Determines if the owner of items under the policy can extend the retention when the original retention duration is about to end.
 - are_owners_notified `Optional[bool]`
   - Determines if owners and co-owners of items under the policy are notified when the retention duration is about to end.
-- custom_notification_recipients `Optional[List[UserMini]]`
+- custom_notification_recipients `Optional[List[UserBase]]`
   - A list of users notified when the retention duration is about to end.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

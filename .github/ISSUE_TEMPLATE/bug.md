@@ -3,7 +3,7 @@ name: Bug
 about: Report a bug found in the SDK
 title: ''
 labels: bug
-assignees: mwwoda, mhagmajer, antusus, arjankowski, lukaszsocha2, bartlomiejleszczynski
+assignees: mwwoda, mhagmajer, arjankowski, lukaszsocha2, bartlomiejleszczynski, congminh1254
 ---
 
 - [ ] I have checked that the [SDK documentation][sdk-docs] doesn't solve my issue.

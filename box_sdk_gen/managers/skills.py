@@ -10,6 +10,8 @@ from typing import List
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize

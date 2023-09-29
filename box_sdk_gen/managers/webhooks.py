@@ -6,6 +6,8 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from typing import List

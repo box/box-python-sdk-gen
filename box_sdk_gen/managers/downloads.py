@@ -2,6 +2,8 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.schemas import ClientError
 
 from box_sdk_gen.auth import Authentication

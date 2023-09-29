@@ -81,7 +81,7 @@ _Currently we don't have an example for calling `get_shield_information_barrier_
 
 ### Returns
 
-This function returns a value of type `None`.
+This function returns a value of type `ShieldInformationBarrierSegmentMembers`.
 
 Returns a paginated list of
 shield information barrier segment member objects.
@@ -106,7 +106,7 @@ _Currently we don't have an example for calling `create_shield_information_barri
 - shield_information_barrier_segment `CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg`
   - The `type` and `id` of the requested shield information barrier segment.
 - user `UserBase`
-  -
+  - User to which restriction will be applied.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -114,4 +114,4 @@ _Currently we don't have an example for calling `create_shield_information_barri
 
 This function returns a value of type `ShieldInformationBarrierSegmentMember`.
 
-Returns a new shield information barrier segment Member object.
+Returns a new shield information barrier segment member object.

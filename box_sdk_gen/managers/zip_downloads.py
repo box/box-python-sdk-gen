@@ -12,6 +12,8 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import ZipDownload

@@ -6,6 +6,8 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
@@ -15,6 +17,8 @@ from box_sdk_gen.base_object import BaseObject
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestriction
 
 from box_sdk_gen.schemas import ClientError
+
+from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestrictions
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
@@ -185,7 +189,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> None:
+    ) -> ShieldInformationBarrierSegmentRestrictions:
         """
         Lists shield information barrier segment restrictions
 
@@ -229,7 +233,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
                 network_session=self.network_session,
             ),
         )
-        return None
+        return deserialize(response.text, ShieldInformationBarrierSegmentRestrictions)
 
     def create_shield_information_barrier_segment_restriction(
         self,
