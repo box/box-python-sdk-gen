@@ -108,7 +108,7 @@ _Currently we don't have an example for calling `get_shield_information_barrier_
 
 ### Returns
 
-This function returns a value of type `ShieldInformationBarrierSegments`.
+This function returns a value of type `None`.
 
 Returns a paginated list of shield information barrier segment objects.
 

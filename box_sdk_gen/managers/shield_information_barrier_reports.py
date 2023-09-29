@@ -4,19 +4,17 @@ from typing import Dict
 
 from box_sdk_gen.utils import to_string
 
-from box_sdk_gen.serialization import deserialize
-
 from box_sdk_gen.serialization import serialize
+
+from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
 from box_sdk_gen.base_object import BaseObject
 
-from box_sdk_gen.schemas import ShieldInformationBarrierReports
+from box_sdk_gen.schemas import ShieldInformationBarrierReport
 
 from box_sdk_gen.schemas import ClientError
-
-from box_sdk_gen.schemas import ShieldInformationBarrierReport
 
 from box_sdk_gen.schemas import ShieldInformationBarrierReference
 
@@ -52,9 +50,9 @@ class ShieldInformationBarrierReportsManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> ShieldInformationBarrierReports:
+    ) -> None:
         """
-        Lists shield information barrier reports.
+        Lists shield information barrier reports with specific IDs.
         :param shield_information_barrier_id: The ID of the shield information barrier.
         :type shield_information_barrier_id: str
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -89,7 +87,7 @@ class ShieldInformationBarrierReportsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierReports)
+        return None
 
     def create_shield_information_barrier_report(
         self,

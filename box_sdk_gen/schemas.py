@@ -532,7 +532,7 @@ class ClientError(BaseObject):
         **kwargs
     ):
         """
-        :param type: error
+        :param type: `error`
         :type type: Optional[ClientErrorTypeField], optional
         :param status: The HTTP status of the response.
         :type status: Optional[int], optional
@@ -1469,7 +1469,7 @@ class ConflictError(ClientError):
         **kwargs
     ):
         """
-        :param type: error
+        :param type: `error`
         :type type: Optional[ClientErrorTypeField], optional
         :param status: The HTTP status of the response.
         :type status: Optional[int], optional
@@ -1533,8 +1533,8 @@ class FolderMini(FolderBase):
         self,
         id: str,
         type: FolderBaseTypeField,
-        sequence_id: Optional[str] = None,
         name: Optional[str] = None,
+        sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
         **kwargs
     ):
@@ -1550,14 +1550,26 @@ class FolderMini(FolderBase):
         :type type: FolderBaseTypeField
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
         super().__init__(id=id, type=type, etag=etag, **kwargs)
-        self.sequence_id = sequence_id
         self.name = name
+        self.sequence_id = sequence_id
 
 
 class IntegrationMappingBaseIntegrationTypeField(str, Enum):
@@ -2726,6 +2738,30 @@ class RetentionPolicyAssignmentBase(BaseObject):
         self.type = type
 
 
+class RetentionPolicyAssignments(BaseObject):
+    def __init__(
+        self,
+        entries: Optional[List[RetentionPolicyAssignmentBase]] = None,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param entries: A list of retention policy assignments
+        :type entries: Optional[List[RetentionPolicyAssignmentBase]], optional
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.entries = entries
+        self.limit = limit
+        self.next_marker = next_marker
+
+
 class ShieldInformationBarrierBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
@@ -3161,6 +3197,30 @@ class TermsOfServices(BaseObject):
         super().__init__(**kwargs)
         self.total_count = total_count
         self.entries = entries
+
+
+class SignTemplates(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
 
 
 class UploadPartMini(BaseObject):
@@ -4804,7 +4864,6 @@ class RetentionPolicyAssignmentAssignedToField(BaseObject):
         """
         :param id: The ID of the folder, enterprise, or metadata template
             the policy is assigned to.
-            Set to null or omit when type is set to enterprise.
         :type id: Optional[str], optional
         :param type: The type of resource the policy is assigned to.
         :type type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField], optional
@@ -4876,30 +4935,6 @@ class RetentionPolicyAssignment(BaseObject):
         self.start_date_field = start_date_field
 
 
-class RetentionPolicyAssignments(BaseObject):
-    def __init__(
-        self,
-        entries: Optional[List[RetentionPolicyAssignment]] = None,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param entries: A list of retention policy assignments
-        :type entries: Optional[List[RetentionPolicyAssignment]], optional
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.entries = entries
-        self.limit = limit
-        self.next_marker = next_marker
-
-
 class RetentionPolicyPolicyTypeField(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
@@ -4907,7 +4942,7 @@ class RetentionPolicyPolicyTypeField(str, Enum):
 
 class RetentionPolicyRetentionTypeField(str, Enum):
     MODIFIABLE = 'modifiable'
-    NON_MODIFIABLE = 'non_modifiable'
+    NON_MODIFIABLE = 'non-modifiable'
 
 
 class RetentionPolicyStatusField(str, Enum):
@@ -6805,31 +6840,6 @@ class ShieldInformationBarrierSegmentRestriction(
         self.updated_by = updated_by
 
 
-class ShieldInformationBarrierSegmentRestrictions(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        entries: Optional[List[ShieldInformationBarrierSegmentRestriction]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param entries: A list of shield information barrier
-            segment restriction objects
-        :type entries: Optional[List[ShieldInformationBarrierSegmentRestriction]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.entries = entries
-
-
 class ShieldInformationBarrierSegmentMemberMini(
     ShieldInformationBarrierSegmentMemberBase
 ):
@@ -6921,31 +6931,6 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         self.updated_by = updated_by
 
 
-class ShieldInformationBarrierSegmentMembers(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        entries: Optional[List[ShieldInformationBarrierSegmentMember]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param entries: A list of shield information
-            barrier segment members
-        :type entries: Optional[List[ShieldInformationBarrierSegmentMember]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.entries = entries
-
-
 class ShieldInformationBarrierSegmentTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
@@ -6992,31 +6977,6 @@ class ShieldInformationBarrierSegment(BaseObject):
         self.updated_by = updated_by
 
 
-class ShieldInformationBarrierSegments(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        entries: Optional[List[ShieldInformationBarrierSegment]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param entries: A list of shield information barrier
-            segments
-        :type entries: Optional[List[ShieldInformationBarrierSegment]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.entries = entries
-
-
 class ShieldInformationBarrierTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
 
@@ -7049,19 +7009,13 @@ class ShieldInformationBarrier(BaseObject):
         :type id: Optional[str], optional
         :param type: The type of the shield information barrier
         :type type: Optional[ShieldInformationBarrierTypeField], optional
-        :param enterprise: The `type` and `id` of enterprise this barrier is under.
-        :type enterprise: Optional[EnterpriseBase], optional
         :param status: Status of the shield information barrier
         :type status: Optional[ShieldInformationBarrierStatusField], optional
         :param created_at: ISO date time string when this
             shield information barrier object was created.
         :type created_at: Optional[str], optional
-        :param created_by: The user who created this shield information barrier.
-        :type created_by: Optional[UserBase], optional
         :param updated_at: ISO date time string when this shield information barrier was updated.
         :type updated_at: Optional[str], optional
-        :param updated_by: The user that updated this shield information barrier.
-        :type updated_by: Optional[UserBase], optional
         :param enabled_at: ISO date time string when this shield information barrier was enabled.
         :type enabled_at: Optional[str], optional
         """
@@ -7076,30 +7030,6 @@ class ShieldInformationBarrier(BaseObject):
         self.updated_by = updated_by
         self.enabled_at = enabled_at
         self.enabled_by = enabled_by
-
-
-class ShieldInformationBarriers(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        entries: Optional[List[ShieldInformationBarrier]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param entries: A list of shield information barrier objects
-        :type entries: Optional[List[ShieldInformationBarrier]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.entries = entries
 
 
 class FolderLockLockedOperationsField(BaseObject):
@@ -7888,8 +7818,8 @@ class Folder(FolderMini):
         parent: Optional[FolderMini] = None,
         item_status: Optional[FolderItemStatusField] = None,
         item_collection: Optional[Items] = None,
-        sequence_id: Optional[str] = None,
         name: Optional[str] = None,
+        sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
         **kwargs
     ):
@@ -7932,13 +7862,25 @@ class Folder(FolderMini):
         :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
         :type etag: Optional[str], optional
         """
         super().__init__(
-            id=id, type=type, sequence_id=sequence_id, name=name, etag=etag, **kwargs
+            id=id, type=type, name=name, sequence_id=sequence_id, etag=etag, **kwargs
         )
         self.created_at = created_at
         self.modified_at = modified_at
@@ -8398,8 +8340,8 @@ class FolderFull(Folder):
         parent: Optional[FolderMini] = None,
         item_status: Optional[FolderItemStatusField] = None,
         item_collection: Optional[Items] = None,
-        sequence_id: Optional[str] = None,
         name: Optional[str] = None,
+        sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
         **kwargs
     ):
@@ -8465,6 +8407,18 @@ class FolderFull(Folder):
         :type item_status: Optional[FolderItemStatusField], optional
         :param name: The name of the folder.
         :type name: Optional[str], optional
+        :param sequence_id: A numeric identifier that represents the most recent user event
+            that has been applied to this item.
+            This can be used in combination with the `GET /events`-endpoint
+            to filter out user events that would have occurred before this
+            identifier was read.
+            An example would be where a Box Drive-like application
+            would fetch an item via the API, and then listen to incoming
+            user events for changes to the item. The application would
+            ignore any user events where the `sequence_id` in the event
+            is smaller than or equal to the `sequence_id` in the originally
+            fetched resource.
+        :type sequence_id: Optional[str], optional
         :param etag: The HTTP `etag` of this folder. This can be used within some API
             endpoints in the `If-Match` and `If-None-Match` headers to only
             perform changes on the folder if (no) changes have happened.
@@ -8490,8 +8444,8 @@ class FolderFull(Folder):
             parent=parent,
             item_status=item_status,
             item_collection=item_collection,
-            sequence_id=sequence_id,
             name=name,
+            sequence_id=sequence_id,
             etag=etag,
             **kwargs
         )
@@ -10008,7 +9962,8 @@ class IntegrationMappings(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
+        next_marker: Optional[int] = None,
+        prev_marker: Optional[int] = None,
         entries: Optional[List[IntegrationMapping]] = None,
         **kwargs
     ):
@@ -10018,13 +9973,16 @@ class IntegrationMappings(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
         :param entries: A list of integration mappings
         :type entries: Optional[List[IntegrationMapping]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
         self.next_marker = next_marker
+        self.prev_marker = prev_marker
         self.entries = entries
 
 
@@ -10574,7 +10532,7 @@ class SignRequestCreateSignerRoleField(str, Enum):
 class SignRequestCreateSigner(BaseObject):
     def __init__(
         self,
-        email: Optional[str] = None,
+        email: str,
         role: Optional[SignRequestCreateSignerRoleField] = None,
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
@@ -10587,9 +10545,8 @@ class SignRequestCreateSigner(BaseObject):
         **kwargs
     ):
         """
-        :param email: Email address of the signer.
-            The email address of the signer is required when making signature requests, except when using templates that are configured to include emails.
-        :type email: Optional[str], optional
+        :param email: Email address of the signer
+        :type email: str
         :param role: Defines the role of the signer in the sign request. A `signer`
             must sign the document and an `approver` must approve the document. A
             `final_copy_reader` only receives the final signed document and signing
@@ -10671,26 +10628,22 @@ class SignRequestSignerInputTypeField(str, Enum):
     DATE = 'date'
     TEXT = 'text'
     CHECKBOX = 'checkbox'
-    RADIO = 'radio'
-    DROPDOWN = 'dropdown'
 
 
 class SignRequestSignerInputContentTypeField(str, Enum):
-    SIGNATURE = 'signature'
     INITIAL = 'initial'
     STAMP = 'stamp'
-    DATE = 'date'
-    CHECKBOX = 'checkbox'
-    TEXT = 'text'
-    FULL_NAME = 'full_name'
-    FIRST_NAME = 'first_name'
-    LAST_NAME = 'last_name'
+    SIGNATURE = 'signature'
     COMPANY = 'company'
     TITLE = 'title'
     EMAIL = 'email'
+    FULL_NAME = 'full_name'
+    FIRST_NAME = 'first_name'
+    LAST_NAME = 'last_name'
+    TEXT = 'text'
+    DATE = 'date'
+    CHECKBOX = 'checkbox'
     ATTACHMENT = 'attachment'
-    RADIO = 'radio'
-    DROPDOWN = 'dropdown'
 
 
 class SignRequestSignerInput(SignRequestPrefillTag):
@@ -10743,7 +10696,6 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         self,
         type: Optional[SignRequestSignerSignerDecisionFieldTypeField] = None,
         finalized_at: Optional[str] = None,
-        additional_info: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10751,24 +10703,21 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         :type type: Optional[SignRequestSignerSignerDecisionFieldTypeField], optional
         :param finalized_at: Date and Time that the decision was made
         :type finalized_at: Optional[str], optional
-        :param additional_info: Additional info about the decision, such as the decline reason from the signer
-        :type additional_info: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
         self.finalized_at = finalized_at
-        self.additional_info = additional_info
 
 
 class SignRequestSigner(SignRequestCreateSigner):
     def __init__(
         self,
+        email: str,
         has_viewed_document: Optional[bool] = None,
         signer_decision: Optional[SignRequestSignerSignerDecisionField] = None,
         inputs: Optional[List[SignRequestSignerInput]] = None,
         embed_url: Optional[str] = None,
         iframeable_embed_url: Optional[str] = None,
-        email: Optional[str] = None,
         role: Optional[SignRequestCreateSignerRoleField] = None,
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
@@ -10781,6 +10730,8 @@ class SignRequestSigner(SignRequestCreateSigner):
         **kwargs
     ):
         """
+        :param email: Email address of the signer
+        :type email: str
         :param has_viewed_document: Set to `true` if the signer views the document
         :type has_viewed_document: Optional[bool], optional
         :param signer_decision: Final decision made by the signer
@@ -10794,9 +10745,6 @@ class SignRequestSigner(SignRequestCreateSigner):
             parameter was passed in the
             `create sign request` call.
         :type iframeable_embed_url: Optional[str], optional
-        :param email: Email address of the signer.
-            The email address of the signer is required when making signature requests, except when using templates that are configured to include emails.
-        :type email: Optional[str], optional
         :param role: Defines the role of the signer in the sign request. A `signer`
             must sign the document and an `approver` must approve the document. A
             `final_copy_reader` only receives the final signed document and signing
@@ -11071,7 +11019,8 @@ class SignRequests(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
+        next_marker: Optional[int] = None,
+        prev_marker: Optional[int] = None,
         entries: Optional[List[SignRequest]] = None,
         **kwargs
     ):
@@ -11081,20 +11030,17 @@ class SignRequests(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
+        :type next_marker: Optional[int], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[int], optional
         :param entries: A list of sign requests
         :type entries: Optional[List[SignRequest]], optional
         """
         super().__init__(**kwargs)
         self.limit = limit
         self.next_marker = next_marker
+        self.prev_marker = prev_marker
         self.entries = entries
-
-
-class SignRequestCreateRequestSignatureColorField(str, Enum):
-    BLUE = 'blue'
-    BLACK = 'black'
-    RED = 'red'
 
 
 class SignRequestCreateRequest(SignRequestBase):
@@ -11103,7 +11049,6 @@ class SignRequestCreateRequest(SignRequestBase):
         signers: List[SignRequestCreateSigner],
         parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
-        signature_color: Optional[SignRequestCreateRequestSignatureColorField] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -11120,12 +11065,11 @@ class SignRequestCreateRequest(SignRequestBase):
         **kwargs
     ):
         """
-        :param signers: Array of signers for the sign request. 35 is the max number of signers permitted.
+        :param signers: Array of signers for the sign request. 35 is the
+            max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
         :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
         :type source_files: Optional[List[FileBase]], optional
-        :param signature_color: Force a specific color for the signature (blue, black, or red)
-        :type signature_color: Optional[SignRequestCreateRequestSignatureColorField], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -11172,7 +11116,6 @@ class SignRequestCreateRequest(SignRequestBase):
         )
         self.signers = signers
         self.source_files = source_files
-        self.signature_color = signature_color
 
 
 class TemplateSignerInputTypeField(str, Enum):
@@ -11534,34 +11477,6 @@ class SignTemplate(BaseObject):
         self.custom_branding = custom_branding
 
 
-class SignTemplates(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        prev_marker: Optional[str] = None,
-        entries: Optional[List[SignTemplate]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[str], optional
-        :param entries: A list of templates.
-        :type entries: Optional[List[SignTemplate]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
-
-
 class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
     def __init__(self, folder_id: Optional[str] = None, **kwargs):
         """
@@ -11623,31 +11538,6 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
         self.created_at = created_at
         self.created_by = created_by
         self.updated_at = updated_at
-
-
-class ShieldInformationBarrierReports(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        entries: Optional[List[ShieldInformationBarrierReport]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param entries: A list of shield information
-            barrier reports.
-        :type entries: Optional[List[ShieldInformationBarrierReport]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.entries = entries
 
 
 class TrackingCodeTypeField(str, Enum):

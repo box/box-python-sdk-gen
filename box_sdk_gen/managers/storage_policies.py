@@ -49,6 +49,12 @@ class StoragePoliciesManager:
     ) -> StoragePolicies:
         """
         Fetches all the storage policies in the enterprise.
+
+        Only a Primary Admin can access this endpoint. The user
+
+
+        needs to generate a token for an account to authenticate this request.
+
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -96,7 +102,7 @@ class StoragePoliciesManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> StoragePolicy:
         """
-        Fetches a specific storage policy.
+        Fetches a specific storage policy. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
         :param storage_policy_id: The ID of the storage policy.
             Example: "34342"
         :type storage_policy_id: str

@@ -10,8 +10,6 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
-from typing import Union
-
 from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
@@ -23,8 +21,6 @@ from box_sdk_gen.schemas import ClientError
 from box_sdk_gen.schemas import RetentionPolicy
 
 from box_sdk_gen.schemas import UserMini
-
-from box_sdk_gen.schemas import UserBase
 
 from box_sdk_gen.auth import Authentication
 
@@ -60,7 +56,12 @@ class CreateRetentionPolicyDispositionActionArg(str, Enum):
 
 class CreateRetentionPolicyRetentionTypeArg(str, Enum):
     MODIFIABLE = 'modifiable'
-    NON_MODIFIABLE = 'non_modifiable'
+    NON_MODIFIABLE = 'non-modifiable'
+
+
+class UpdateRetentionPolicyByIdDispositionActionArg(str, Enum):
+    PERMANENTLY_DELETE = 'permanently_delete'
+    REMOVE_RETENTION = 'remove_retention'
 
 
 class RetentionPoliciesManager:
@@ -140,7 +141,7 @@ class RetentionPoliciesManager:
         policy_type: CreateRetentionPolicyPolicyTypeArg,
         disposition_action: CreateRetentionPolicyDispositionActionArg,
         description: Optional[str] = None,
-        retention_length: Optional[Union[str, int]] = None,
+        retention_length: Optional[str] = None,
         retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None,
         can_owner_extend_retention: Optional[bool] = None,
         are_owners_notified: Optional[bool] = None,
@@ -172,14 +173,14 @@ class RetentionPoliciesManager:
             content.  If the policy has a `policy_type` of
             `indefinite`, the `retention_length` will also be
             `indefinite`.
-        :type retention_length: Optional[Union[str, int]], optional
+        :type retention_length: Optional[str], optional
         :param retention_type: Specifies the retention type:
             * `modifiable`: You can modify the retention policy. For example,
             you can add or remove folders, shorten or lengthen
             the policy duration, or delete the assignment.
             Use this type if your retention policy
             is not related to any regulatory purposes.
-            * `non_modifiable`: You can modify the retention policy
+            * `non-modifiable`: You can modify the retention policy
             only in a limited way: add a folder, lengthen the duration,
             retire the policy, change the disposition action
             or notification settings. You cannot perform other actions,
@@ -277,13 +278,15 @@ class RetentionPoliciesManager:
         retention_policy_id: str,
         policy_name: Optional[str] = None,
         description: Optional[str] = None,
-        disposition_action: Optional[Union[Union[str, str], str]] = None,
+        disposition_action: Optional[
+            UpdateRetentionPolicyByIdDispositionActionArg
+        ] = None,
         retention_type: Optional[str] = None,
-        retention_length: Optional[Union[str, int]] = None,
+        retention_length: Optional[str] = None,
         status: Optional[str] = None,
         can_owner_extend_retention: Optional[bool] = None,
         are_owners_notified: Optional[bool] = None,
-        custom_notification_recipients: Optional[List[UserBase]] = None,
+        custom_notification_recipients: Optional[List[UserMini]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> RetentionPolicy:
         """
@@ -296,14 +299,12 @@ class RetentionPoliciesManager:
         :param description: The additional text description of the retention policy.
         :type description: Optional[str], optional
         :param disposition_action: The disposition action of the retention policy.
-            This action can be `permanently_delete`, which
-            will cause the content retained by the policy
-            to be permanently deleted, or `remove_retention`,
-            which will lift the retention policy from the content,
-            allowing it to be deleted by users,
-            once the retention policy has expired.
-            You can use "null" if you don't want to change `disposition_action`.
-        :type disposition_action: Optional[Union[Union[str, str], str]], optional
+            `permanently_delete` deletes the content
+            retained by the policy permanently.
+            `remove_retention` lifts retention policy
+            from the content, allowing it to be deleted
+            by users once the retention policy has expired.
+        :type disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg], optional
         :param retention_type: Specifies the retention type:
             * `modifiable`: You can modify the retention policy. For example,
             you can add or remove folders, shorten or lengthen
@@ -328,7 +329,7 @@ class RetentionPoliciesManager:
             content.  If the policy has a `policy_type` of
             `indefinite`, the `retention_length` will also be
             `indefinite`.
-        :type retention_length: Optional[Union[str, int]], optional
+        :type retention_length: Optional[str], optional
         :param status: Used to retire a retention policy.
             If not retiring a policy, do not include this parameter
             or set it to `null`.
@@ -342,7 +343,7 @@ class RetentionPoliciesManager:
             the retention duration is about to end.
         :type are_owners_notified: Optional[bool], optional
         :param custom_notification_recipients: A list of users notified when the retention duration is about to end.
-        :type custom_notification_recipients: Optional[List[UserBase]], optional
+        :type custom_notification_recipients: Optional[List[UserMini]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

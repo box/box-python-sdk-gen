@@ -18,8 +18,6 @@ from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestriction
 
 from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestrictions
-
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
 from box_sdk_gen.auth import Authentication
@@ -189,7 +187,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> ShieldInformationBarrierSegmentRestrictions:
+    ) -> None:
         """
         Lists shield information barrier segment restrictions
 
@@ -233,7 +231,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierSegmentRestrictions)
+        return None
 
     def create_shield_information_barrier_segment_restriction(
         self,

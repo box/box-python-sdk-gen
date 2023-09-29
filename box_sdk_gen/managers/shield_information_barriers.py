@@ -12,13 +12,13 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.base_object import BaseObject
 
+from box_sdk_gen.schemas import EnterpriseBase
+
+from box_sdk_gen.schemas import UserBase
+
 from box_sdk_gen.schemas import ShieldInformationBarrier
 
 from box_sdk_gen.schemas import ClientError
-
-from box_sdk_gen.schemas import ShieldInformationBarriers
-
-from box_sdk_gen.schemas import EnterpriseBase
 
 from box_sdk_gen.auth import Authentication
 
@@ -42,6 +42,18 @@ class CreateShieldInformationBarrierChangeStatusStatusArg(str, Enum):
     DISABLED = 'disabled'
 
 
+class CreateShieldInformationBarrierTypeArg(str, Enum):
+    SHIELD_INFORMATION_BARRIER = 'shield_information_barrier'
+
+
+class CreateShieldInformationBarrierStatusArg(str, Enum):
+    DRAFT = 'draft'
+    PENDING = 'pending'
+    DISABLED = 'disabled'
+    ENABLED = 'enabled'
+    INVALID = 'invalid'
+
+
 class ShieldInformationBarriersManager:
     def __init__(
         self,
@@ -57,7 +69,7 @@ class ShieldInformationBarriersManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ShieldInformationBarrier:
         """
-        Get shield information barrier based on provided ID.
+        Get shield information barrier based on provided ID..
         :param shield_information_barrier_id: The ID of the shield information barrier.
             Example: "1910967"
         :type shield_information_barrier_id: str
@@ -124,7 +136,7 @@ class ShieldInformationBarriersManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> ShieldInformationBarriers:
+    ) -> None:
         """
         Retrieves a list of shield information barrier objects
 
@@ -132,6 +144,7 @@ class ShieldInformationBarriersManager:
 
         :param marker: Defines the position marker at which to begin returning results. This is
             used when paginating using marker-based pagination.
+            This requires `usemarker` to be set to `true`.
         :type marker: Optional[str], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
@@ -155,11 +168,20 @@ class ShieldInformationBarriersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarriers)
+        return None
 
     def create_shield_information_barrier(
         self,
-        enterprise: EnterpriseBase,
+        id: Optional[str] = None,
+        type: Optional[CreateShieldInformationBarrierTypeArg] = None,
+        enterprise: Optional[EnterpriseBase] = None,
+        status: Optional[CreateShieldInformationBarrierStatusArg] = None,
+        created_at: Optional[str] = None,
+        created_by: Optional[UserBase] = None,
+        updated_at: Optional[str] = None,
+        updated_by: Optional[UserBase] = None,
+        enabled_at: Optional[str] = None,
+        enabled_by: Optional[UserBase] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ShieldInformationBarrier:
         """
@@ -170,14 +192,36 @@ class ShieldInformationBarriersManager:
 
         firm and prevents confidential information passing between them.
 
-        :param enterprise: The `type` and `id` of enterprise this barrier is under.
-        :type enterprise: EnterpriseBase
+        :param id: The unique identifier for the shield information barrier
+        :type id: Optional[str], optional
+        :param type: The type of the shield information barrier
+        :type type: Optional[CreateShieldInformationBarrierTypeArg], optional
+        :param status: Status of the shield information barrier
+        :type status: Optional[CreateShieldInformationBarrierStatusArg], optional
+        :param created_at: ISO date time string when this
+            shield information barrier object was created.
+        :type created_at: Optional[str], optional
+        :param updated_at: ISO date time string when this shield information barrier was updated.
+        :type updated_at: Optional[str], optional
+        :param enabled_at: ISO date time string when this shield information barrier was enabled.
+        :type enabled_at: Optional[str], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(enterprise=enterprise)
+        request_body = BaseObject(
+            id=id,
+            type=type,
+            enterprise=enterprise,
+            status=status,
+            created_at=created_at,
+            created_by=created_by,
+            updated_at=updated_at,
+            updated_by=updated_by,
+            enabled_at=enabled_at,
+            enabled_by=enabled_by,
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barriers']),

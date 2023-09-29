@@ -1,8 +1,8 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.base_object import BaseObject
+
+from typing import Optional
 
 from typing import List
 
@@ -57,7 +57,7 @@ class CreateRetentionPolicyAssignmentAssignToArg(BaseObject):
     def __init__(
         self,
         type: CreateRetentionPolicyAssignmentAssignToArgTypeField,
-        id: Optional[str] = None,
+        id: str,
         **kwargs
     ):
         """
@@ -66,7 +66,7 @@ class CreateRetentionPolicyAssignmentAssignToArg(BaseObject):
         :param id: The ID of item to assign the policy to.
             Set to `null` or omit when `type` is set to
             `enterprise`.
-        :type id: Optional[str], optional
+        :type id: str
         """
         super().__init__(**kwargs)
         self.type = type

@@ -7,7 +7,7 @@
 
 ## Get shield information barrier with specified ID
 
-Get shield information barrier based on provided ID.
+Get shield information barrier based on provided ID..
 
 This operation is performed by calling function `get_shield_information_barrier_by_id`.
 
@@ -70,7 +70,7 @@ _Currently we don't have an example for calling `get_shield_information_barriers
 ### Arguments
 
 - marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -78,7 +78,7 @@ _Currently we don't have an example for calling `get_shield_information_barriers
 
 ### Returns
 
-This function returns a value of type `ShieldInformationBarriers`.
+This function returns a value of type `None`.
 
 Returns a paginated list of
 shield information barrier objects,
@@ -99,8 +99,26 @@ _Currently we don't have an example for calling `create_shield_information_barri
 
 ### Arguments
 
-- enterprise `EnterpriseBase`
-  - The `type` and `id` of enterprise this barrier is under.
+- id `Optional[str]`
+  - The unique identifier for the shield information barrier
+- type `Optional[CreateShieldInformationBarrierTypeArg]`
+  - The type of the shield information barrier
+- enterprise `Optional[EnterpriseBase]`
+  -
+- status `Optional[CreateShieldInformationBarrierStatusArg]`
+  - Status of the shield information barrier
+- created_at `Optional[str]`
+  - ISO date time string when this shield information barrier object was created.
+- created_by `Optional[UserBase]`
+  -
+- updated_at `Optional[str]`
+  - ISO date time string when this shield information barrier was updated.
+- updated_by `Optional[UserBase]`
+  -
+- enabled_at `Optional[str]`
+  - ISO date time string when this shield information barrier was enabled.
+- enabled_by `Optional[UserBase]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
