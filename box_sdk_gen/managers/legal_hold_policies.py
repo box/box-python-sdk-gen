@@ -10,8 +10,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import LegalHoldPolicies
 
 from box_sdk_gen.schemas import ClientError
@@ -148,13 +146,13 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            policy_name=policy_name,
-            description=description,
-            filter_started_at=filter_started_at,
-            filter_ended_at=filter_ended_at,
-            is_ongoing=is_ongoing,
-        )
+        request_body = {
+            'policy_name': policy_name,
+            'description': description,
+            'filter_started_at': filter_started_at,
+            'filter_ended_at': filter_ended_at,
+            'is_ongoing': is_ongoing,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/legal_hold_policies']),
@@ -227,11 +225,11 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            policy_name=policy_name,
-            description=description,
-            release_notes=release_notes,
-        )
+        request_body = {
+            'policy_name': policy_name,
+            'description': description,
+            'release_notes': release_notes,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

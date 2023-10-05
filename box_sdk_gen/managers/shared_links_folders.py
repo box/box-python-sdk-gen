@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import ClientError
@@ -364,7 +362,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -417,7 +415,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -471,7 +469,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

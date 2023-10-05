@@ -5,6 +5,8 @@ from .base_object import BaseObject
 
 
 def serialize(obj: Union[BaseObject, dict, list]):
+    if isinstance(obj, dict):
+        obj = BaseObject(**obj).to_dict()
     if isinstance(obj, BaseObject):
         obj = obj.to_dict()
     if isinstance(obj, list):

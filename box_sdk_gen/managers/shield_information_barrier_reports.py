@@ -10,8 +10,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import ShieldInformationBarrierReport
 
 from box_sdk_gen.schemas import ClientError
@@ -101,7 +99,7 @@ class ShieldInformationBarrierReportsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shield_information_barrier=shield_information_barrier)
+        request_body = {'shield_information_barrier': shield_information_barrier}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barrier_reports']),

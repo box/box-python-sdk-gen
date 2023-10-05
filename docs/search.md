@@ -18,7 +18,11 @@ This operation is performed by calling function `create_metadata_query_execute_r
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-queries-execute-read/).
 
-_Currently we don't have an example for calling `create_metadata_query_execute_read` in integration tests_
+<!-- sample post_metadata_queries_execute_read -->
+
+```python
+client.search.create_metadata_query_execute_read(from_=search_from, query='testName >= :value', query_params={'value': '0.0'}, ancestor_folder_id='0')
+```
 
 ### Arguments
 
@@ -56,7 +60,11 @@ This operation is performed by calling function `get_metadata_query_indices`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-query-indices/).
 
-_Currently we don't have an example for calling `get_metadata_query_indices` in integration tests_
+<!-- sample get_metadata_query_indices -->
+
+```python
+client.search.get_metadata_query_indices(scope=GetMetadataQueryIndicesScopeArg.ENTERPRISE.value, template_key=template_key)
+```
 
 ### Arguments
 
@@ -83,7 +91,11 @@ This operation is performed by calling function `get_search`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-search/).
 
-_Currently we don't have an example for calling `get_search` in integration tests_
+<!-- sample get_search -->
+
+```python
+client.search.get_search(query=keyword, ancestor_folder_ids=['0'], trash_content=GetSearchTrashContentArg.NON_TRASHED_ONLY.value, include_recent_shared_links=True)
+```
 
 ### Arguments
 

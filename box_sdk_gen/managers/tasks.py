@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Tasks
 
 from box_sdk_gen.schemas import ClientError
@@ -160,13 +158,13 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            item=item,
-            action=action,
-            message=message,
-            due_at=due_at,
-            completion_rule=completion_rule,
-        )
+        request_body = {
+            'item': item,
+            'action': action,
+            'message': message,
+            'due_at': due_at,
+            'completion_rule': completion_rule,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/tasks']),
@@ -246,12 +244,12 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            action=action,
-            message=message,
-            due_at=due_at,
-            completion_rule=completion_rule,
-        )
+        request_body = {
+            'action': action,
+            'message': message,
+            'due_at': due_at,
+            'completion_rule': completion_rule,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),

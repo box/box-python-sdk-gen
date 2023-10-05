@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import TaskAssignments
 
 from box_sdk_gen.schemas import ClientError
@@ -138,7 +136,7 @@ class TaskAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(task=task, assign_to=assign_to)
+        request_body = {'task': task, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/task_assignments']),
@@ -215,7 +213,7 @@ class TaskAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(message=message, resolution_state=resolution_state)
+        request_body = {'message': message, 'resolution_state': resolution_state}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

@@ -18,8 +18,6 @@ from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import SignRequestPrefillTag
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import SignRequest
 
 from box_sdk_gen.schemas import ClientError
@@ -252,24 +250,26 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            source_files=source_files,
-            signers=signers,
-            is_document_preparation_needed=is_document_preparation_needed,
-            redirect_url=redirect_url,
-            declined_redirect_url=declined_redirect_url,
-            are_text_signatures_enabled=are_text_signatures_enabled,
-            email_subject=email_subject,
-            email_message=email_message,
-            are_reminders_enabled=are_reminders_enabled,
-            parent_folder=parent_folder,
-            name=name,
-            prefill_tags=prefill_tags,
-            days_valid=days_valid,
-            external_id=external_id,
-            is_phone_verification_required_to_view=is_phone_verification_required_to_view,
-            template_id=template_id,
-        )
+        request_body = {
+            'source_files': source_files,
+            'signers': signers,
+            'is_document_preparation_needed': is_document_preparation_needed,
+            'redirect_url': redirect_url,
+            'declined_redirect_url': declined_redirect_url,
+            'are_text_signatures_enabled': are_text_signatures_enabled,
+            'email_subject': email_subject,
+            'email_message': email_message,
+            'are_reminders_enabled': are_reminders_enabled,
+            'parent_folder': parent_folder,
+            'name': name,
+            'prefill_tags': prefill_tags,
+            'days_valid': days_valid,
+            'external_id': external_id,
+            'is_phone_verification_required_to_view': (
+                is_phone_verification_required_to_view
+            ),
+            'template_id': template_id,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/sign_requests']),

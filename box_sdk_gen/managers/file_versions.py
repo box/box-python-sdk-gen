@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FileVersions
 
 from box_sdk_gen.schemas import ClientError
@@ -214,7 +212,7 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(trashed_at=trashed_at)
+        request_body = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -363,7 +361,7 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(id=id, type=type)
+        request_body = {'id': id, 'type': type}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

@@ -14,8 +14,6 @@ from typing import List
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import GroupMemberships
 
 from box_sdk_gen.schemas import ClientError
@@ -219,12 +217,12 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            user=user,
-            group=group,
-            role=role,
-            configurable_permissions=configurable_permissions,
-        )
+        request_body = {
+            'user': user,
+            'group': group,
+            'role': role,
+            'configurable_permissions': configurable_permissions,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -337,9 +335,10 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            role=role, configurable_permissions=configurable_permissions
-        )
+        request_body = {
+            'role': role,
+            'configurable_permissions': configurable_permissions,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

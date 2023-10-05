@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import MetadataTemplates
 
 from box_sdk_gen.schemas import ClientError
@@ -552,14 +550,14 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            scope=scope,
-            templateKey=template_key,
-            displayName=display_name,
-            hidden=hidden,
-            fields=fields,
-            copyInstanceOnItemCopy=copy_instance_on_item_copy,
-        )
+        request_body = {
+            'scope': scope,
+            'templateKey': template_key,
+            'displayName': display_name,
+            'hidden': hidden,
+            'fields': fields,
+            'copyInstanceOnItemCopy': copy_instance_on_item_copy,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_templates/schema']),

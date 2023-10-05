@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import RetentionPolicyAssignments
 
 from box_sdk_gen.schemas import ClientError
@@ -194,12 +192,12 @@ class RetentionPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            policy_id=policy_id,
-            assign_to=assign_to,
-            filter_fields=filter_fields,
-            start_date_field=start_date_field,
-        )
+        request_body = {
+            'policy_id': policy_id,
+            'assign_to': assign_to,
+            'filter_fields': filter_fields,
+            'start_date_field': start_date_field,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/retention_policy_assignments']),

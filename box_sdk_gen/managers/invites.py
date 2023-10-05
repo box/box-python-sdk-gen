@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Invite
 
 from box_sdk_gen.schemas import ClientError
@@ -109,7 +107,7 @@ class InvitesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(enterprise=enterprise, actionable_by=actionable_by)
+        request_body = {'enterprise': enterprise, 'actionable_by': actionable_by}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

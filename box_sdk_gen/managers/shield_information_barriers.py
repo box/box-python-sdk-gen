@@ -10,8 +10,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import EnterpriseBase
 
 from box_sdk_gen.schemas import UserBase
@@ -113,7 +111,7 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(id=id, status=status)
+        request_body = {'id': id, 'status': status}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -210,18 +208,18 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            id=id,
-            type=type,
-            enterprise=enterprise,
-            status=status,
-            created_at=created_at,
-            created_by=created_by,
-            updated_at=updated_at,
-            updated_by=updated_by,
-            enabled_at=enabled_at,
-            enabled_by=enabled_by,
-        )
+        request_body = {
+            'id': id,
+            'type': type,
+            'enterprise': enterprise,
+            'status': status,
+            'created_at': created_at,
+            'created_by': created_by,
+            'updated_at': updated_at,
+            'updated_by': updated_by,
+            'enabled_at': enabled_at,
+            'enabled_by': enabled_by,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barriers']),

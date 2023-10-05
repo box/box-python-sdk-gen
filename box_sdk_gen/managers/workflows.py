@@ -14,8 +14,6 @@ from typing import List
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Workflows
 
 from box_sdk_gen.schemas import ClientError
@@ -235,9 +233,13 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            type=type, flow=flow, files=files, folder=folder, outcomes=outcomes
-        )
+        request_body = {
+            'type': type,
+            'flow': flow,
+            'files': files,
+            'folder': folder,
+            'outcomes': outcomes,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

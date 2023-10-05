@@ -16,8 +16,6 @@ from box_sdk_gen.utils import to_string
 
 from typing import Union
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import MetadataQueryResults
 
 from box_sdk_gen.schemas import ClientError
@@ -205,16 +203,16 @@ class SearchManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            from_=from_,
-            query=query,
-            query_params=query_params,
-            ancestor_folder_id=ancestor_folder_id,
-            order_by=order_by,
-            limit=limit,
-            marker=marker,
-            fields=fields,
-        )
+        request_body = {
+            'from': from_,
+            'query': query,
+            'query_params': query_params,
+            'ancestor_folder_id': ancestor_folder_id,
+            'order_by': order_by,
+            'limit': limit,
+            'marker': marker,
+            'fields': fields,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_queries/execute_read']),

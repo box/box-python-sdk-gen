@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.schemas import ClientError
@@ -196,12 +194,12 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            attributes=attributes,
-            file=file,
-            file_file_name=file_file_name,
-            file_content_type=file_content_type,
-        )
+        request_body = {
+            'attributes': attributes,
+            'file': file,
+            'file_file_name': file_file_name,
+            'file_content_type': file_content_type,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {
@@ -224,13 +222,14 @@ class UploadsManager:
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes', body=serialize(request_body.attributes)
+                        part_name='attributes',
+                        body=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body.file,
-                        file_name=request_body.file_file_name,
-                        content_type=request_body.file_content_type,
+                        file_stream=request_body['file'],
+                        file_name=request_body['file_file_name'],
+                        content_type=request_body['file_content_type'],
                     ),
                 ],
                 content_type='multipart/form-data',
@@ -306,12 +305,12 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            attributes=attributes,
-            file=file,
-            file_file_name=file_file_name,
-            file_content_type=file_content_type,
-        )
+        request_body = {
+            'attributes': attributes,
+            'file': file,
+            'file_file_name': file_file_name,
+            'file_content_type': file_content_type,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {'content-md5': to_string(content_md_5), **extra_headers}
@@ -324,13 +323,14 @@ class UploadsManager:
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes', body=serialize(request_body.attributes)
+                        part_name='attributes',
+                        body=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body.file,
-                        file_name=request_body.file_file_name,
-                        content_type=request_body.file_content_type,
+                        file_stream=request_body['file'],
+                        file_name=request_body['file_file_name'],
+                        content_type=request_body['file_content_type'],
                     ),
                 ],
                 content_type='multipart/form-data',
@@ -362,7 +362,7 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, size=size, parent=parent)
+        request_body = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/content']),

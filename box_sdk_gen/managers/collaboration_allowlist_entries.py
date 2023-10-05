@@ -10,8 +10,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import CollaborationAllowlistEntries
 
 from box_sdk_gen.schemas import ClientError
@@ -109,7 +107,7 @@ class CollaborationAllowlistEntriesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(domain=domain, direction=direction)
+        request_body = {'domain': domain, 'direction': direction}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']),

@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Comments
 
 from box_sdk_gen.schemas import ClientError
@@ -201,7 +199,7 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(message=message)
+        request_body = {'message': message}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -288,9 +286,11 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            message=message, tagged_message=tagged_message, item=item
-        )
+        request_body = {
+            'message': message,
+            'tagged_message': tagged_message,
+            'item': item,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

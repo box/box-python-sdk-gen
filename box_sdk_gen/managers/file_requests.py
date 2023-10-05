@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FileRequest
 
 from box_sdk_gen.schemas import ClientError
@@ -186,14 +184,14 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            title=title,
-            description=description,
-            status=status,
-            is_email_required=is_email_required,
-            is_description_required=is_description_required,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'title': title,
+            'description': description,
+            'status': status,
+            'is_email_required': is_email_required,
+            'is_description_required': is_description_required,
+            'expires_at': expires_at,
+        }
         headers_map: Dict[str, str] = prepare_params(
             {'if-match': to_string(if_match), **extra_headers}
         )
@@ -313,15 +311,15 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            folder=folder,
-            title=title,
-            description=description,
-            status=status,
-            is_email_required=is_email_required,
-            is_description_required=is_description_required,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'folder': folder,
+            'title': title,
+            'description': description,
+            'status': status,
+            'is_email_required': is_email_required,
+            'is_description_required': is_description_required,
+            'expires_at': expires_at,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

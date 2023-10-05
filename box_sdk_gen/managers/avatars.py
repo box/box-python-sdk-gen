@@ -6,8 +6,6 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import ClientError
 
 from box_sdk_gen.schemas import UserAvatar
@@ -88,9 +86,11 @@ class AvatarsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            pic=pic, pic_file_name=pic_file_name, pic_content_type=pic_content_type
-        )
+        request_body = {
+            'pic': pic,
+            'pic_file_name': pic_file_name,
+            'pic_content_type': pic_content_type,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
@@ -100,9 +100,9 @@ class AvatarsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='pic',
-                        file_stream=request_body.pic,
-                        file_name=request_body.pic_file_name,
-                        content_type=request_body.pic_content_type,
+                        file_stream=request_body['pic'],
+                        file_name=request_body['pic_file_name'],
+                        content_type=request_body['pic_content_type'],
                     )
                 ],
                 content_type='multipart/form-data',

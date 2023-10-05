@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Users
 
 from box_sdk_gen.schemas import ClientError
@@ -293,26 +291,26 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            login=login,
-            is_platform_access_only=is_platform_access_only,
-            role=role,
-            language=language,
-            is_sync_enabled=is_sync_enabled,
-            job_title=job_title,
-            phone=phone,
-            address=address,
-            space_amount=space_amount,
-            tracking_codes=tracking_codes,
-            can_see_managed_users=can_see_managed_users,
-            timezone=timezone,
-            is_external_collab_restricted=is_external_collab_restricted,
-            is_exempt_from_device_limits=is_exempt_from_device_limits,
-            is_exempt_from_login_verification=is_exempt_from_login_verification,
-            status=status,
-            external_app_user_id=external_app_user_id,
-        )
+        request_body = {
+            'name': name,
+            'login': login,
+            'is_platform_access_only': is_platform_access_only,
+            'role': role,
+            'language': language,
+            'is_sync_enabled': is_sync_enabled,
+            'job_title': job_title,
+            'phone': phone,
+            'address': address,
+            'space_amount': space_amount,
+            'tracking_codes': tracking_codes,
+            'can_see_managed_users': can_see_managed_users,
+            'timezone': timezone,
+            'is_external_collab_restricted': is_external_collab_restricted,
+            'is_exempt_from_device_limits': is_exempt_from_device_limits,
+            'is_exempt_from_login_verification': is_exempt_from_login_verification,
+            'status': status,
+            'external_app_user_id': external_app_user_id,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -561,29 +559,29 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            enterprise=enterprise,
-            notify=notify,
-            name=name,
-            login=login,
-            role=role,
-            language=language,
-            is_sync_enabled=is_sync_enabled,
-            job_title=job_title,
-            phone=phone,
-            address=address,
-            tracking_codes=tracking_codes,
-            can_see_managed_users=can_see_managed_users,
-            timezone=timezone,
-            is_external_collab_restricted=is_external_collab_restricted,
-            is_exempt_from_device_limits=is_exempt_from_device_limits,
-            is_exempt_from_login_verification=is_exempt_from_login_verification,
-            is_password_reset_required=is_password_reset_required,
-            status=status,
-            space_amount=space_amount,
-            notification_email=notification_email,
-            external_app_user_id=external_app_user_id,
-        )
+        request_body = {
+            'enterprise': enterprise,
+            'notify': notify,
+            'name': name,
+            'login': login,
+            'role': role,
+            'language': language,
+            'is_sync_enabled': is_sync_enabled,
+            'job_title': job_title,
+            'phone': phone,
+            'address': address,
+            'tracking_codes': tracking_codes,
+            'can_see_managed_users': can_see_managed_users,
+            'timezone': timezone,
+            'is_external_collab_restricted': is_external_collab_restricted,
+            'is_exempt_from_device_limits': is_exempt_from_device_limits,
+            'is_exempt_from_login_verification': is_exempt_from_login_verification,
+            'is_password_reset_required': is_password_reset_required,
+            'status': status,
+            'space_amount': space_amount,
+            'notification_email': notification_email,
+            'external_app_user_id': external_app_user_id,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

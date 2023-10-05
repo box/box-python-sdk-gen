@@ -48,7 +48,8 @@ assignees: mwwoda, mhagmajer, arjankowski, lukaszsocha2, bartlomiejleszczynski, 
 Python SDK: <!-- Replace with the version of the Python SDK you're using. -->
 Python: <!-- Replace with the version of Python your application is running on. -->
 
-[sdk-docs]: https://github.com/box/box-python-sdk-generated/tree/main/docs
+
+[sdk-docs]: https://github.com/box/box-python-sdk-gen/tree/main/docs
 [api-docs]: https://developer.box.com/docs
 [dev-forums]: https://community.box.com/t5/Platform-and-Development-Forum/bd-p/DeveloperForum
-[github-repo]: https://github.com/box/box-python-sdk-generated/search?type=Issues
+[github-repo]: https://github.com/box/box-python-sdk-gen/search?type=Issues

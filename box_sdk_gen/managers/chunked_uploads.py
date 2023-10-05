@@ -10,8 +10,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.utils import to_string
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.utils import Buffer
 
 from box_sdk_gen.utils import HashName
@@ -108,9 +106,11 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            folder_id=folder_id, file_size=file_size, file_name=file_name
-        )
+        request_body = {
+            'folder_id': folder_id,
+            'file_size': file_size,
+            'file_name': file_name,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://upload.box.com/api/2.0/files/upload_sessions']),
@@ -152,7 +152,7 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(file_size=file_size, file_name=file_name)
+        request_body = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -402,7 +402,7 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(parts=parts)
+        request_body = {'parts': parts}
         headers_map: Dict[str, str] = prepare_params(
             {
                 'digest': to_string(digest),

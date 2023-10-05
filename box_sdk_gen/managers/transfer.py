@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import ClientError
@@ -153,7 +151,7 @@ class TransferManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(owned_by=owned_by)
+        request_body = {'owned_by': owned_by}
         query_params_map: Dict[str, str] = prepare_params(
             {'fields': to_string(fields), 'notify': to_string(notify)}
         )

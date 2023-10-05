@@ -8,8 +8,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import ShieldInformationBarrierSegment
 
 from box_sdk_gen.schemas import ClientError
@@ -97,7 +95,7 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, description=description)
+        request_body = {'name': name, 'description': description}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -220,11 +218,11 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            shield_information_barrier=shield_information_barrier,
-            name=name,
-            description=description,
-        )
+        request_body = {
+            'shield_information_barrier': shield_information_barrier,
+            'name': name,
+            'description': description,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barrier_segments']),

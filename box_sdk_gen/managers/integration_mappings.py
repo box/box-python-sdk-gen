@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import IntegrationMappings
 
 from box_sdk_gen.schemas import ClientError
@@ -150,9 +148,11 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            partner_item=partner_item, box_item=box_item, options=options
-        )
+        request_body = {
+            'partner_item': partner_item,
+            'box_item': box_item,
+            'options': options,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/integration_mappings/slack']),
@@ -194,7 +194,7 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(box_item=box_item, options=options)
+        request_body = {'box_item': box_item, 'options': options}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

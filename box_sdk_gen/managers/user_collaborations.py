@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Collaboration
 
 from box_sdk_gen.schemas import ClientError
@@ -223,9 +221,12 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            role=role, status=status, expires_at=expires_at, can_view_path=can_view_path
-        )
+        request_body = {
+            'role': role,
+            'status': status,
+            'expires_at': expires_at,
+            'can_view_path': can_view_path,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -359,13 +360,13 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            item=item,
-            accessible_by=accessible_by,
-            role=role,
-            can_view_path=can_view_path,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'item': item,
+            'accessible_by': accessible_by,
+            'role': role,
+            'can_view_path': can_view_path,
+            'expires_at': expires_at,
+        }
         query_params_map: Dict[str, str] = prepare_params(
             {'fields': to_string(fields), 'notify': to_string(notify)}
         )

@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import ClientError
@@ -372,17 +370,17 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            description=description,
-            parent=parent,
-            shared_link=shared_link,
-            lock=lock,
-            disposition_at=disposition_at,
-            permissions=permissions,
-            collections=collections,
-            tags=tags,
-        )
+        request_body = {
+            'name': name,
+            'description': description,
+            'parent': parent,
+            'shared_link': shared_link,
+            'lock': lock,
+            'disposition_at': disposition_at,
+            'permissions': permissions,
+            'collections': collections,
+            'tags': tags,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {'if-match': to_string(if_match), **extra_headers}
@@ -498,7 +496,7 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, version=version, parent=parent)
+        request_body = {'name': name, 'version': version, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

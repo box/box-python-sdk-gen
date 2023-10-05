@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import StoragePolicyAssignments
 
 from box_sdk_gen.schemas import ClientError
@@ -192,9 +190,7 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            storage_policy=storage_policy, assigned_to=assigned_to
-        )
+        request_body = {'storage_policy': storage_policy, 'assigned_to': assigned_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
@@ -262,7 +258,7 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(storage_policy=storage_policy)
+        request_body = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

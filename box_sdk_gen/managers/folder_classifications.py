@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import serialize
 
 from typing import List
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Classification
 
 from box_sdk_gen.schemas import ClientError
@@ -180,9 +178,9 @@ class FolderClassificationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            Box__Security__Classification__Key=box_security_classification_key
-        )
+        request_body = {
+            'Box__Security__Classification__Key': box_security_classification_key
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

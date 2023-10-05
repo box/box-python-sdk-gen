@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import LegalHoldPolicyAssignments
 
 from box_sdk_gen.schemas import ClientError
@@ -163,7 +161,7 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(policy_id=policy_id, assign_to=assign_to)
+        request_body = {'policy_id': policy_id, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']),

@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Groups
 
 from box_sdk_gen.schemas import ClientError
@@ -199,14 +197,14 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            provenance=provenance,
-            external_sync_identifier=external_sync_identifier,
-            description=description,
-            invitability_level=invitability_level,
-            member_viewability_level=member_viewability_level,
-        )
+        request_body = {
+            'name': name,
+            'provenance': provenance,
+            'external_sync_identifier': external_sync_identifier,
+            'description': description,
+            'invitability_level': invitability_level,
+            'member_viewability_level': member_viewability_level,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -347,14 +345,14 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            provenance=provenance,
-            external_sync_identifier=external_sync_identifier,
-            description=description,
-            invitability_level=invitability_level,
-            member_viewability_level=member_viewability_level,
-        )
+        request_body = {
+            'name': name,
+            'provenance': provenance,
+            'external_sync_identifier': external_sync_identifier,
+            'description': description,
+            'invitability_level': invitability_level,
+            'member_viewability_level': member_viewability_level,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

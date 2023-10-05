@@ -14,8 +14,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import ClientError
@@ -485,19 +483,21 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            description=description,
-            sync_state=sync_state,
-            can_non_owners_invite=can_non_owners_invite,
-            parent=parent,
-            shared_link=shared_link,
-            folder_upload_email=folder_upload_email,
-            tags=tags,
-            is_collaboration_restricted_to_enterprise=is_collaboration_restricted_to_enterprise,
-            collections=collections,
-            can_non_owners_view_collaborators=can_non_owners_view_collaborators,
-        )
+        request_body = {
+            'name': name,
+            'description': description,
+            'sync_state': sync_state,
+            'can_non_owners_invite': can_non_owners_invite,
+            'parent': parent,
+            'shared_link': shared_link,
+            'folder_upload_email': folder_upload_email,
+            'tags': tags,
+            'is_collaboration_restricted_to_enterprise': (
+                is_collaboration_restricted_to_enterprise
+            ),
+            'collections': collections,
+            'can_non_owners_view_collaborators': can_non_owners_view_collaborators,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {'if-match': to_string(if_match), **extra_headers}
@@ -746,12 +746,12 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            name=name,
-            parent=parent,
-            folder_upload_email=folder_upload_email,
-            sync_state=sync_state,
-        )
+        request_body = {
+            'name': name,
+            'parent': parent,
+            'folder_upload_email': folder_upload_email,
+            'sync_state': sync_state,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -815,7 +815,7 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, parent=parent)
+        request_body = {'name': name, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

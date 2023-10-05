@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import Watermark
 
 from box_sdk_gen.schemas import ClientError
@@ -115,7 +113,7 @@ class FileWatermarksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(watermark=watermark)
+        request_body = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

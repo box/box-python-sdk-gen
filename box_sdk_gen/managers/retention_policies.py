@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import RetentionPolicies
 
 from box_sdk_gen.schemas import ClientError
@@ -202,17 +200,17 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            policy_name=policy_name,
-            description=description,
-            policy_type=policy_type,
-            disposition_action=disposition_action,
-            retention_length=retention_length,
-            retention_type=retention_type,
-            can_owner_extend_retention=can_owner_extend_retention,
-            are_owners_notified=are_owners_notified,
-            custom_notification_recipients=custom_notification_recipients,
-        )
+        request_body = {
+            'policy_name': policy_name,
+            'description': description,
+            'policy_type': policy_type,
+            'disposition_action': disposition_action,
+            'retention_length': retention_length,
+            'retention_type': retention_type,
+            'can_owner_extend_retention': can_owner_extend_retention,
+            'are_owners_notified': are_owners_notified,
+            'custom_notification_recipients': custom_notification_recipients,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/retention_policies']),
@@ -349,17 +347,17 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            policy_name=policy_name,
-            description=description,
-            disposition_action=disposition_action,
-            retention_type=retention_type,
-            retention_length=retention_length,
-            status=status,
-            can_owner_extend_retention=can_owner_extend_retention,
-            are_owners_notified=are_owners_notified,
-            custom_notification_recipients=custom_notification_recipients,
-        )
+        request_body = {
+            'policy_name': policy_name,
+            'description': description,
+            'disposition_action': disposition_action,
+            'retention_type': retention_type,
+            'retention_length': retention_length,
+            'status': status,
+            'can_owner_extend_retention': can_owner_extend_retention,
+            'are_owners_notified': are_owners_notified,
+            'custom_notification_recipients': custom_notification_recipients,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
