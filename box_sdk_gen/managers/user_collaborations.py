@@ -279,6 +279,7 @@ class UserCollaborationsManager:
         item: CreateCollaborationItemArg,
         accessible_by: CreateCollaborationAccessibleByArg,
         role: CreateCollaborationRoleArg,
+        is_access_only: Optional[bool] = None,
         can_view_path: Optional[bool] = None,
         expires_at: Optional[str] = None,
         fields: Optional[List[str]] = None,
@@ -323,6 +324,12 @@ class UserCollaborationsManager:
         :type accessible_by: CreateCollaborationAccessibleByArg
         :param role: The level of access granted.
         :type role: CreateCollaborationRoleArg
+        :param is_access_only: If set to `true`, collaborators have access to
+            shared items, but such items won't be visible in the
+            All Files list. Additionally, collaborators won't
+            see the the path to the root folder for the
+            shared item.
+        :type is_access_only: Optional[bool], optional
         :param can_view_path: Determines if the invited users can see the entire parent path to
             the associated folder. The user will not gain privileges in any
             parent folder and therefore can not see content the user is not
@@ -364,6 +371,7 @@ class UserCollaborationsManager:
             'item': item,
             'accessible_by': accessible_by,
             'role': role,
+            'is_access_only': is_access_only,
             'can_view_path': can_view_path,
             'expires_at': expires_at,
         }

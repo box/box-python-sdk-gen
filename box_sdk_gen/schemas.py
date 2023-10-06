@@ -9050,6 +9050,7 @@ class Collaboration(BaseObject):
         created_by: Optional[UserCollaborations] = None,
         created_at: Optional[str] = None,
         modified_at: Optional[str] = None,
+        is_access_only: Optional[bool] = None,
         acceptance_requirements_status: Optional[
             CollaborationAcceptanceRequirementsStatusField
         ] = None,
@@ -9078,6 +9079,12 @@ class Collaboration(BaseObject):
         :type created_at: Optional[str], optional
         :param modified_at: When the collaboration object was last modified.
         :type modified_at: Optional[str], optional
+        :param is_access_only: If set to `true`, collaborators have access to
+            shared items, but such items won't be visible in the
+            All Files list. Additionally, collaborators won't
+            see the the path to the root folder for the
+            shared item.
+        :type is_access_only: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -9092,6 +9099,7 @@ class Collaboration(BaseObject):
         self.created_by = created_by
         self.created_at = created_at
         self.modified_at = modified_at
+        self.is_access_only = is_access_only
         self.acceptance_requirements_status = acceptance_requirements_status
 
 
@@ -10696,6 +10704,7 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         self,
         type: Optional[SignRequestSignerSignerDecisionFieldTypeField] = None,
         finalized_at: Optional[str] = None,
+        additional_info: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10703,10 +10712,13 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         :type type: Optional[SignRequestSignerSignerDecisionFieldTypeField], optional
         :param finalized_at: Date and Time that the decision was made
         :type finalized_at: Optional[str], optional
+        :param additional_info: Additional info about the decision, such as the decline reason from the signer
+        :type additional_info: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
         self.finalized_at = finalized_at
+        self.additional_info = additional_info
 
 
 class SignRequestSigner(SignRequestCreateSigner):
