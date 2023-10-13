@@ -57,11 +57,6 @@ class CreateRetentionPolicyRetentionTypeArg(str, Enum):
     NON_MODIFIABLE = 'non-modifiable'
 
 
-class UpdateRetentionPolicyByIdDispositionActionArg(str, Enum):
-    PERMANENTLY_DELETE = 'permanently_delete'
-    REMOVE_RETENTION = 'remove_retention'
-
-
 class RetentionPoliciesManager:
     def __init__(
         self,
@@ -276,9 +271,7 @@ class RetentionPoliciesManager:
         retention_policy_id: str,
         policy_name: Optional[str] = None,
         description: Optional[str] = None,
-        disposition_action: Optional[
-            UpdateRetentionPolicyByIdDispositionActionArg
-        ] = None,
+        disposition_action: Optional[str] = None,
         retention_type: Optional[str] = None,
         retention_length: Optional[str] = None,
         status: Optional[str] = None,
@@ -302,7 +295,7 @@ class RetentionPoliciesManager:
             `remove_retention` lifts retention policy
             from the content, allowing it to be deleted
             by users once the retention policy has expired.
-        :type disposition_action: Optional[UpdateRetentionPolicyByIdDispositionActionArg], optional
+        :type disposition_action: Optional[str], optional
         :param retention_type: Specifies the retention type:
             * `modifiable`: You can modify the retention policy. For example,
             you can add or remove folders, shorten or lengthen
