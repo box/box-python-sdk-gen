@@ -1,3 +1,5 @@
+from enum import Enum
+
 from typing import Optional
 
 from typing import Dict
@@ -41,6 +43,12 @@ from box_sdk_gen.fetch import fetch
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+
+class CreateSignRequestSignatureColorArg(str, Enum):
+    BLUE = 'blue'
+    BLACK = 'black'
+    RED = 'red'
 
 
 class SignRequestsManager:
@@ -194,6 +202,7 @@ class SignRequestsManager:
         signers: List[SignRequestCreateSigner],
         parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
+        signature_color: Optional[CreateSignRequestSignatureColorArg] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -214,11 +223,12 @@ class SignRequestsManager:
 
         sending the sign request to signers.
 
-        :param signers: Array of signers for the sign request. 35 is the
-            max number of signers permitted.
+        :param signers: Array of signers for the sign request. 35 is the max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
         :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
         :type source_files: Optional[List[FileBase]], optional
+        :param signature_color: Force a specific color for the signature (blue, black, or red)
+        :type signature_color: Optional[CreateSignRequestSignatureColorArg], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -252,6 +262,7 @@ class SignRequestsManager:
             extra_headers = {}
         request_body = {
             'source_files': source_files,
+            'signature_color': signature_color,
             'signers': signers,
             'is_document_preparation_needed': is_document_preparation_needed,
             'redirect_url': redirect_url,
