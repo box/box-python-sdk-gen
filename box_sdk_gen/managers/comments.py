@@ -4,13 +4,15 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Comments
 
@@ -67,7 +69,7 @@ class CommentsManager:
     def get_file_comments(
         self,
         file_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -90,7 +92,7 @@ class CommentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
@@ -112,7 +114,9 @@ class CommentsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/comments']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/comments']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -127,7 +131,7 @@ class CommentsManager:
     def get_comment_by_id(
         self,
         comment_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> CommentFull:
         """
@@ -146,7 +150,7 @@ class CommentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -155,7 +159,7 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -171,7 +175,7 @@ class CommentsManager:
         self,
         comment_id: str,
         message: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> CommentFull:
         """
@@ -189,17 +193,17 @@ class CommentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(message=message)
+        request_body = {'message': message}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -228,7 +232,7 @@ class CommentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', comment_id]),
+            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -244,7 +248,7 @@ class CommentsManager:
         message: str,
         item: CreateCommentItemArg,
         tagged_message: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Comment:
         """
@@ -276,15 +280,17 @@ class CommentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            message=message, tagged_message=tagged_message, item=item
-        )
+        request_body = {
+            'message': message,
+            'tagged_message': tagged_message,
+            'item': item,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

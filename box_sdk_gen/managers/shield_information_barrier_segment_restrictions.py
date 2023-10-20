@@ -6,15 +6,17 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestriction
 
 from box_sdk_gen.schemas import ClientError
+
+from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestrictions
 
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
@@ -130,7 +132,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
-                    shield_information_barrier_segment_restriction_id,
+                    to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
             FetchOptions(
@@ -166,7 +168,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
-                    shield_information_barrier_segment_restriction_id,
+                    to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
             FetchOptions(
@@ -185,7 +187,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> None:
+    ) -> ShieldInformationBarrierSegmentRestrictions:
         """
         Lists shield information barrier segment restrictions
 
@@ -229,7 +231,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
                 network_session=self.network_session,
             ),
         )
-        return None
+        return deserialize(response.text, ShieldInformationBarrierSegmentRestrictions)
 
     def create_shield_information_barrier_segment_restriction(
         self,
@@ -258,12 +260,12 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            type=type,
-            shield_information_barrier=shield_information_barrier,
-            shield_information_barrier_segment=shield_information_barrier_segment,
-            restricted_segment=restricted_segment,
-        )
+        request_body = {
+            'type': type,
+            'shield_information_barrier': shield_information_barrier,
+            'shield_information_barrier_segment': shield_information_barrier_segment,
+            'restricted_segment': restricted_segment,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

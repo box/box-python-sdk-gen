@@ -6,11 +6,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Watermark
 
@@ -77,7 +77,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -111,10 +113,12 @@ class FileWatermarksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(watermark=watermark)
+        request_body = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -147,7 +151,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/watermark']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

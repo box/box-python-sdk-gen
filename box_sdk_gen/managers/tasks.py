@@ -6,11 +6,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Tasks
 
@@ -109,7 +109,7 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/tasks']),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/tasks']),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -158,13 +158,13 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            item=item,
-            action=action,
-            message=message,
-            due_at=due_at,
-            completion_rule=completion_rule,
-        )
+        request_body = {
+            'item': item,
+            'action': action,
+            'message': message,
+            'due_at': due_at,
+            'completion_rule': completion_rule,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/tasks']),
@@ -195,7 +195,7 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -244,15 +244,15 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            action=action,
-            message=message,
-            due_at=due_at,
-            completion_rule=completion_rule,
-        )
+        request_body = {
+            'action': action,
+            'message': message,
+            'due_at': due_at,
+            'completion_rule': completion_rule,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -280,7 +280,7 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', task_id]),
+            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 import pytest
 
 from box_sdk_gen.schemas import User
@@ -54,7 +56,7 @@ def testMemberships():
     )
     assert group_membership.user.id == user.id
     assert group_membership.group.id == group.id
-    assert group_membership.role == 'member'
+    assert to_string(group_membership.role) == 'member'
     get_group_membership: GroupMembership = (
         client.memberships.get_group_membership_by_id(
             group_membership_id=group_membership.id
@@ -68,7 +70,7 @@ def testMemberships():
         )
     )
     assert updated_group_membership.id == group_membership.id
-    assert updated_group_membership.role == 'admin'
+    assert to_string(updated_group_membership.role) == 'admin'
     client.memberships.delete_group_membership_by_id(
         group_membership_id=group_membership.id
     )

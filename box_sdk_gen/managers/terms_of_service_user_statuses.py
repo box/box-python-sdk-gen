@@ -6,11 +6,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import TermsOfServiceUserStatuses
 
@@ -142,7 +142,7 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(tos=tos, user=user, is_accepted=is_accepted)
+        request_body = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']),
@@ -176,13 +176,13 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(is_accepted=is_accepted)
+        request_body = {'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/terms_of_service_user_statuses/',
-                    terms_of_service_user_status_id,
+                    to_string(terms_of_service_user_status_id),
                 ]
             ),
             FetchOptions(

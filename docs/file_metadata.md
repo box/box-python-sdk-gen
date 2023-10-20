@@ -88,7 +88,7 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.create_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template, request_body=data)
+client.file_metadata.create_file_metadata_by_id(file_id=file.id, scope=CreateFileMetadataByIdScopeArg.ENTERPRISE.value, template_key=template_key, request_body={'testName': 1})
 ```
 
 ### Arguments

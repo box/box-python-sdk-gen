@@ -6,13 +6,13 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from typing import List
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Webhooks
 
@@ -247,7 +247,7 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(target=target, address=address, triggers=triggers)
+        request_body = {'target': target, 'address': address, 'triggers': triggers}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/webhooks']),
@@ -278,7 +278,7 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -314,10 +314,10 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(target=target, address=address, triggers=triggers)
+        request_body = {'target': target, 'address': address, 'triggers': triggers}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -345,7 +345,7 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', webhook_id]),
+            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

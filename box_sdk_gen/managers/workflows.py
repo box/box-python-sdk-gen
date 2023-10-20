@@ -6,13 +6,13 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from typing import List
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Workflows
 
@@ -233,12 +233,18 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            type=type, flow=flow, files=files, folder=folder, outcomes=outcomes
-        )
+        request_body = {
+            'type': type,
+            'flow': flow,
+            'files': files,
+            'folder': folder,
+            'outcomes': outcomes,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/workflows/', workflow_id, '/start']),
+            ''.join(
+                ['https://api.box.com/2.0/workflows/', to_string(workflow_id), '/start']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

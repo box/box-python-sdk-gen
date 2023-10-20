@@ -1,6 +1,10 @@
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
@@ -38,7 +42,7 @@ class CollectionsManager:
 
     def get_collections(
         self,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -59,7 +63,7 @@ class CollectionsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
@@ -96,7 +100,7 @@ class CollectionsManager:
     def get_collection_items(
         self,
         collection_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -117,7 +121,7 @@ class CollectionsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
@@ -139,7 +143,13 @@ class CollectionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collections/', collection_id, '/items']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/collections/',
+                    to_string(collection_id),
+                    '/items',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

@@ -2,17 +2,19 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.serialization import serialize
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
+from box_sdk_gen.serialization import serialize
+
 from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
-from box_sdk_gen.base_object import BaseObject
-
-from box_sdk_gen.schemas import ShieldInformationBarrierReport
+from box_sdk_gen.schemas import ShieldInformationBarrierReports
 
 from box_sdk_gen.schemas import ClientError
+
+from box_sdk_gen.schemas import ShieldInformationBarrierReport
 
 from box_sdk_gen.schemas import ShieldInformationBarrierReference
 
@@ -48,9 +50,9 @@ class ShieldInformationBarrierReportsManager:
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> None:
+    ) -> ShieldInformationBarrierReports:
         """
-        Lists shield information barrier reports with specific IDs.
+        Lists shield information barrier reports.
         :param shield_information_barrier_id: The ID of the shield information barrier.
         :type shield_information_barrier_id: str
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -85,7 +87,7 @@ class ShieldInformationBarrierReportsManager:
                 network_session=self.network_session,
             ),
         )
-        return None
+        return deserialize(response.text, ShieldInformationBarrierReports)
 
     def create_shield_information_barrier_report(
         self,
@@ -99,7 +101,7 @@ class ShieldInformationBarrierReportsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shield_information_barrier=shield_information_barrier)
+        request_body = {'shield_information_barrier': shield_information_barrier}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barrier_reports']),
@@ -135,7 +137,7 @@ class ShieldInformationBarrierReportsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/shield_information_barrier_reports/',
-                    shield_information_barrier_report_id,
+                    to_string(shield_information_barrier_report_id),
                 ]
             ),
             FetchOptions(

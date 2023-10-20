@@ -6,11 +6,11 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import FileRequest
 
@@ -101,7 +101,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -182,19 +184,21 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            title=title,
-            description=description,
-            status=status,
-            is_email_required=is_email_required,
-            is_description_required=is_description_required,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'title': title,
+            'description': description,
+            'status': status,
+            'is_email_required': is_email_required,
+            'is_description_required': is_description_required,
+            'expires_at': expires_at,
+        }
         headers_map: Dict[str, str] = prepare_params(
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -229,7 +233,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_requests/', file_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -305,19 +311,23 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            folder=folder,
-            title=title,
-            description=description,
-            status=status,
-            is_email_required=is_email_required,
-            is_description_required=is_description_required,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'folder': folder,
+            'title': title,
+            'description': description,
+            'status': status,
+            'is_email_required': is_email_required,
+            'is_description_required': is_description_required,
+            'expires_at': expires_at,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/file_requests/', file_request_id, '/copy']
+                [
+                    'https://api.box.com/2.0/file_requests/',
+                    to_string(file_request_id),
+                    '/copy',
+                ]
             ),
             FetchOptions(
                 method='POST',

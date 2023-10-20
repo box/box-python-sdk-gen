@@ -6,13 +6,13 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
 from typing import List
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Classification
 
@@ -121,7 +121,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -174,15 +174,15 @@ class FileClassificationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            Box__Security__Classification__Key=box_security_classification_key
-        )
+        request_body = {
+            'Box__Security__Classification__Key': box_security_classification_key
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -237,7 +237,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),
@@ -285,7 +285,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
             ),

@@ -8,11 +8,11 @@ from typing import List
 
 from box_sdk_gen.base_object import BaseObject
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import MetadataTemplates
 
@@ -283,9 +283,9 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_templates/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                     '/schema',
                 ]
             ),
@@ -338,9 +338,9 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_templates/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                     '/schema',
                 ]
             ),
@@ -383,9 +383,9 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_templates/',
-                    scope,
+                    to_string(scope),
                     '/',
-                    template_key,
+                    to_string(template_key),
                     '/schema',
                 ]
             ),
@@ -414,7 +414,9 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_templates/', template_id]),
+            ''.join(
+                ['https://api.box.com/2.0/metadata_templates/', to_string(template_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -548,14 +550,14 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            scope=scope,
-            templateKey=template_key,
-            displayName=display_name,
-            hidden=hidden,
-            fields=fields,
-            copyInstanceOnItemCopy=copy_instance_on_item_copy,
-        )
+        request_body = {
+            'scope': scope,
+            'templateKey': template_key,
+            'displayName': display_name,
+            'hidden': hidden,
+            'fields': fields,
+            'copyInstanceOnItemCopy': copy_instance_on_item_copy,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_templates/schema']),

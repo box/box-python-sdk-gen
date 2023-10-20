@@ -10,11 +10,11 @@ from typing import List
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import SkillCardsMetadata
 
@@ -200,7 +200,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -244,13 +244,13 @@ class SkillsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(cards=cards)
+        request_body = {'cards': cards}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -294,7 +294,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -333,7 +333,7 @@ class SkillsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
             ),
@@ -384,16 +384,18 @@ class SkillsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            status=status,
-            metadata=metadata,
-            file=file,
-            file_version=file_version,
-            usage=usage,
-        )
+        request_body = {
+            'status': status,
+            'metadata': metadata,
+            'file': file,
+            'file_version': file_version,
+            'usage': usage,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/skill_invocations/', skill_id]),
+            ''.join(
+                ['https://api.box.com/2.0/skill_invocations/', to_string(skill_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,

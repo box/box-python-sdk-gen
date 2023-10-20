@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 import pytest
 
 from box_sdk_gen.utils import ByteStream
@@ -55,14 +57,14 @@ def testTrashedFiles():
     assert from_trash.id == file.id
     assert from_trash.name == file.name
     from_api_after_trashed: FileFull = client.files.get_file_by_id(file_id=file.id)
-    assert from_api_after_trashed.item_status == 'trashed'
+    assert to_string(from_api_after_trashed.item_status) == 'trashed'
     restored_file: TrashFileRestored = client.trashed_files.restore_file_from_trash(
         file_id=file.id
     )
     from_api_after_restore: FileFull = client.files.get_file_by_id(file_id=file.id)
     assert restored_file.id == from_api_after_restore.id
     assert restored_file.name == from_api_after_restore.name
-    assert from_api_after_restore.item_status == 'active'
+    assert to_string(from_api_after_restore.item_status) == 'active'
     client.files.delete_file_by_id(file_id=file.id)
     client.trashed_files.delete_file_trash(file_id=file.id)
     with pytest.raises(Exception):

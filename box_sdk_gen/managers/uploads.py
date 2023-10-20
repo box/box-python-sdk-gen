@@ -2,13 +2,15 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Files
 
@@ -117,7 +119,7 @@ class UploadsManager:
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
         content_md_5: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -176,7 +178,7 @@ class UploadsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_match: Ensures this item hasn't recently changed before
             making changes.
             Pass in the item's last observed `etag` value
@@ -192,12 +194,12 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            attributes=attributes,
-            file=file,
-            file_file_name=file_file_name,
-            file_content_type=file_content_type,
-        )
+        request_body = {
+            'attributes': attributes,
+            'file': file,
+            'file_file_name': file_file_name,
+            'file_content_type': file_content_type,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {
@@ -207,20 +209,27 @@ class UploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(['https://upload.box.com/api/2.0/files/', file_id, '/content']),
+            ''.join(
+                [
+                    'https://upload.box.com/api/2.0/files/',
+                    to_string(file_id),
+                    '/content',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes', body=serialize(request_body.attributes)
+                        part_name='attributes',
+                        body=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body.file,
-                        file_name=request_body.file_file_name,
-                        content_type=request_body.file_content_type,
+                        file_stream=request_body['file'],
+                        file_name=request_body['file_file_name'],
+                        content_type=request_body['file_content_type'],
                     ),
                 ],
                 content_type='multipart/form-data',
@@ -237,7 +246,7 @@ class UploadsManager:
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         content_md_5: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Files:
@@ -287,7 +296,7 @@ class UploadsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param content_md_5: An optional header containing the SHA1 hash of the file to
             ensure that the file was not corrupted in transit.
         :type content_md_5: Optional[str], optional
@@ -296,12 +305,12 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            attributes=attributes,
-            file=file,
-            file_file_name=file_file_name,
-            file_content_type=file_content_type,
-        )
+        request_body = {
+            'attributes': attributes,
+            'file': file,
+            'file_file_name': file_file_name,
+            'file_content_type': file_content_type,
+        }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params(
             {'content-md5': to_string(content_md_5), **extra_headers}
@@ -314,13 +323,14 @@ class UploadsManager:
                 headers=headers_map,
                 multipart_data=[
                     MultipartItem(
-                        part_name='attributes', body=serialize(request_body.attributes)
+                        part_name='attributes',
+                        body=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body.file,
-                        file_name=request_body.file_file_name,
-                        content_type=request_body.file_content_type,
+                        file_stream=request_body['file'],
+                        file_name=request_body['file_file_name'],
+                        content_type=request_body['file_content_type'],
                     ),
                 ],
                 content_type='multipart/form-data',
@@ -352,7 +362,7 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, size=size, parent=parent)
+        request_body = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/content']),

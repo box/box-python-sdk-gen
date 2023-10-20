@@ -10,7 +10,7 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.schemas import WebLink
 
@@ -139,9 +139,12 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            url=url, parent=parent, name=name, description=description
-        )
+        request_body = {
+            'url': url,
+            'parent': parent,
+            'name': name,
+            'description': description,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/web_links']),
@@ -185,7 +188,7 @@ class WebLinksManager:
             {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id]),
+            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -225,16 +228,16 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            url=url,
-            parent=parent,
-            name=name,
-            description=description,
-            shared_link=shared_link,
-        )
+        request_body = {
+            'url': url,
+            'parent': parent,
+            'name': name,
+            'description': description,
+            'shared_link': shared_link,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id]),
+            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -262,7 +265,7 @@ class WebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', web_link_id]),
+            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -1,6 +1,10 @@
+from enum import Enum
+
 from typing import Optional
 
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
@@ -15,8 +19,6 @@ from box_sdk_gen.schemas import SignRequestCreateSigner
 from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import SignRequestPrefillTag
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import SignRequest
 
@@ -41,6 +43,12 @@ from box_sdk_gen.fetch import fetch
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+
+class CreateSignRequestSignatureColorArg(str, Enum):
+    BLUE = 'blue'
+    BLACK = 'black'
+    RED = 'red'
 
 
 class SignRequestsManager:
@@ -70,7 +78,11 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/cancel']
+                [
+                    'https://api.box.com/2.0/sign_requests/',
+                    to_string(sign_request_id),
+                    '/cancel',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -100,7 +112,11 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/sign_requests/', sign_request_id, '/resend']
+                [
+                    'https://api.box.com/2.0/sign_requests/',
+                    to_string(sign_request_id),
+                    '/resend',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -129,7 +145,9 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/sign_requests/', sign_request_id]),
+            ''.join(
+                ['https://api.box.com/2.0/sign_requests/', to_string(sign_request_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -184,6 +202,7 @@ class SignRequestsManager:
         signers: List[SignRequestCreateSigner],
         parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
+        signature_color: Optional[CreateSignRequestSignatureColorArg] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -204,11 +223,12 @@ class SignRequestsManager:
 
         sending the sign request to signers.
 
-        :param signers: Array of signers for the sign request. 35 is the
-            max number of signers permitted.
+        :param signers: Array of signers for the sign request. 35 is the max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
         :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
         :type source_files: Optional[List[FileBase]], optional
+        :param signature_color: Force a specific color for the signature (blue, black, or red)
+        :type signature_color: Optional[CreateSignRequestSignatureColorArg], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -240,24 +260,27 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            source_files=source_files,
-            signers=signers,
-            is_document_preparation_needed=is_document_preparation_needed,
-            redirect_url=redirect_url,
-            declined_redirect_url=declined_redirect_url,
-            are_text_signatures_enabled=are_text_signatures_enabled,
-            email_subject=email_subject,
-            email_message=email_message,
-            are_reminders_enabled=are_reminders_enabled,
-            parent_folder=parent_folder,
-            name=name,
-            prefill_tags=prefill_tags,
-            days_valid=days_valid,
-            external_id=external_id,
-            is_phone_verification_required_to_view=is_phone_verification_required_to_view,
-            template_id=template_id,
-        )
+        request_body = {
+            'source_files': source_files,
+            'signature_color': signature_color,
+            'signers': signers,
+            'is_document_preparation_needed': is_document_preparation_needed,
+            'redirect_url': redirect_url,
+            'declined_redirect_url': declined_redirect_url,
+            'are_text_signatures_enabled': are_text_signatures_enabled,
+            'email_subject': email_subject,
+            'email_message': email_message,
+            'are_reminders_enabled': are_reminders_enabled,
+            'parent_folder': parent_folder,
+            'name': name,
+            'prefill_tags': prefill_tags,
+            'days_valid': days_valid,
+            'external_id': external_id,
+            'is_phone_verification_required_to_view': (
+                is_phone_verification_required_to_view
+            ),
+            'template_id': template_id,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/sign_requests']),

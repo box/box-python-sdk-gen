@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.schemas import File
 
 from box_sdk_gen.schemas import FolderFull
@@ -66,7 +68,7 @@ def test_create_get_cancel_and_list_sign_request():
     cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(
         sign_request_id=created_sign_request.id
     )
-    assert cancelled_sign_request.status == 'cancelled'
+    assert to_string(cancelled_sign_request.status) == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
     assert sign_requests.entries[0].type == 'sign-request'
     client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)

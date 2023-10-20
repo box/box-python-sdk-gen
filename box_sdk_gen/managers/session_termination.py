@@ -8,8 +8,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import SessionTerminationMessage
 
 from box_sdk_gen.schemas import ClientError
@@ -66,7 +64,7 @@ class SessionTerminationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(user_ids=user_ids, user_logins=user_logins)
+        request_body = {'user_ids': user_ids, 'user_logins': user_logins}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/users/terminate_sessions']),
@@ -105,7 +103,7 @@ class SessionTerminationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(group_ids=group_ids)
+        request_body = {'group_ids': group_ids}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/groups/terminate_sessions']),

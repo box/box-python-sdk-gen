@@ -2,13 +2,15 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Invite
 
@@ -64,7 +66,7 @@ class InvitesManager:
         self,
         enterprise: CreateInviteEnterpriseArg,
         actionable_by: CreateInviteActionableByArg,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Invite:
         """
@@ -99,13 +101,13 @@ class InvitesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(enterprise=enterprise, actionable_by=actionable_by)
+        request_body = {'enterprise': enterprise, 'actionable_by': actionable_by}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -126,7 +128,7 @@ class InvitesManager:
     def get_invite_by_id(
         self,
         invite_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Invite:
         """
@@ -142,7 +144,7 @@ class InvitesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -151,7 +153,7 @@ class InvitesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/invites/', invite_id]),
+            ''.join(['https://api.box.com/2.0/invites/', to_string(invite_id)]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

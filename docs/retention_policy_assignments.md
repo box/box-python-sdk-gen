@@ -25,7 +25,7 @@ _Currently we don't have an example for calling `get_retention_policy_assignment
   - The ID of the retention policy. Example: "982312"
 - type `Optional[GetRetentionPolicyAssignmentsTypeArg]`
   - The type of the retention policy assignment to retrieve.
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination.
@@ -86,7 +86,7 @@ _Currently we don't have an example for calling `get_retention_policy_assignment
 
 - retention_policy_assignment_id `str`
   - The ID of the retention policy assignment. Example: "1233123"
-- fields `Optional[str]`
+- fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

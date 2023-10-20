@@ -6,11 +6,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import StoragePolicyAssignments
 
@@ -125,12 +125,6 @@ class StoragePolicyAssignmentsManager:
     ) -> StoragePolicyAssignments:
         """
         Fetches all the storage policy assignment for an enterprise or user.
-
-        Only a Primary Admin can access this endpoint. The user
-
-
-        needs to generate a token for an account to authenticate this request.
-
         :param resolved_for_type: The target type to return assignments for
         :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg
         :param resolved_for_id: The ID of the user or enterprise to return assignments for
@@ -173,12 +167,6 @@ class StoragePolicyAssignmentsManager:
     ) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
-
-        Only a Primary Admin can access this endpoint. The user
-
-
-        needs to generate a token for an account to authenticate this request.
-
         :param storage_policy: The storage policy to assign to the user or
             enterprise
         :type storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg
@@ -190,9 +178,7 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            storage_policy=storage_policy, assigned_to=assigned_to
-        )
+        request_body = {'storage_policy': storage_policy, 'assigned_to': assigned_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
@@ -214,7 +200,7 @@ class StoragePolicyAssignmentsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> StoragePolicyAssignment:
         """
-        Fetches a specific storage policy assignment. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
+        Fetches a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
@@ -228,7 +214,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -248,7 +234,7 @@ class StoragePolicyAssignmentsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> StoragePolicyAssignment:
         """
-        Updates a specific storage policy assignment. Only a Primary Admin can access this endpoint. The user needs to generate a token for an account to authenticate this request.
+        Updates a specific storage policy assignment.
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
@@ -260,13 +246,13 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(storage_policy=storage_policy)
+        request_body = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -303,12 +289,6 @@ class StoragePolicyAssignmentsManager:
 
         twice per user in a 24 hour time frame.
 
-
-        Only a Primary Admin can access this endpoint. The user
-
-
-        needs to generate a token for an account to authenticate this request.
-
         :param storage_policy_assignment_id: The ID of the storage policy assignment.
             Example: "932483"
         :type storage_policy_assignment_id: str
@@ -322,7 +302,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/storage_policy_assignments/',
-                    storage_policy_assignment_id,
+                    to_string(storage_policy_assignment_id),
                 ]
             ),
             FetchOptions(

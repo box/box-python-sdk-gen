@@ -2,13 +2,15 @@ from enum import Enum
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import FileVersions
 
@@ -49,7 +51,7 @@ class FileVersionsManager:
     def get_file_versions(
         self,
         file_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -78,7 +80,7 @@ class FileVersionsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param offset: The offset of the item at which to begin the response.
@@ -100,7 +102,9 @@ class FileVersionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions']),
+            ''.join(
+                ['https://api.box.com/2.0/files/', to_string(file_id), '/versions']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -116,7 +120,7 @@ class FileVersionsManager:
         self,
         file_id: str,
         file_version_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileVersionFull:
         """
@@ -143,7 +147,7 @@ class FileVersionsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -155,9 +159,9 @@ class FileVersionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/versions/',
-                    file_version_id,
+                    to_string(file_version_id),
                 ]
             ),
             FetchOptions(
@@ -208,15 +212,15 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(trashed_at=trashed_at)
+        request_body = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/versions/',
-                    file_version_id,
+                    to_string(file_version_id),
                 ]
             ),
             FetchOptions(
@@ -273,9 +277,9 @@ class FileVersionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/files/',
-                    file_id,
+                    to_string(file_id),
                     '/versions/',
-                    file_version_id,
+                    to_string(file_version_id),
                 ]
             ),
             FetchOptions(
@@ -293,7 +297,7 @@ class FileVersionsManager:
         file_id: str,
         id: Optional[str] = None,
         type: Optional[PromoteFileVersionTypeArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileVersionFull:
         """
@@ -351,17 +355,23 @@ class FileVersionsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(id=id, type=type)
+        request_body = {'id': id, 'type': type}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/versions/current']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '/versions/current',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

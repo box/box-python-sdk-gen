@@ -81,7 +81,7 @@ def testGetFileFullExtraFields():
     file_content: ByteStream = generate_byte_stream(1048576)
     uploaded_file: File = upload_file(new_file_name, file_content)
     file: FileFull = client.files.get_file_by_id(
-        file_id=uploaded_file.id, fields='is_externally_owned,has_collaborations'
+        file_id=uploaded_file.id, fields=['is_externally_owned', 'has_collaborations']
     )
     assert file.is_externally_owned == False
     assert file.has_collaborations == False
@@ -96,7 +96,7 @@ def testCreateGetAndDeleteFile():
     with pytest.raises(Exception):
         client.files.get_file_by_id(
             file_id=uploaded_file.id,
-            fields='name',
+            fields=['name'],
             extra_headers={'if-none-match': file.etag},
         )
     assert file.name == new_file_name

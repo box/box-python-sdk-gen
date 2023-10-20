@@ -4,6 +4,8 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.schemas import AccessToken
 
 from box_sdk_gen.schemas import OAuth2Error

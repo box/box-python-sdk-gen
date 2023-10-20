@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
 
-from box_sdk_gen.base_object import BaseObject
-
 from box_sdk_gen.schemas import ClassificationTemplate
 
 from box_sdk_gen.schemas import ClientError
@@ -702,14 +700,14 @@ class ClassificationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            scope=scope,
-            templateKey=template_key,
-            displayName=display_name,
-            hidden=hidden,
-            copyInstanceOnItemCopy=copy_instance_on_item_copy,
-            fields=fields,
-        )
+        request_body = {
+            'scope': scope,
+            'templateKey': template_key,
+            'displayName': display_name,
+            'hidden': hidden,
+            'copyInstanceOnItemCopy': copy_instance_on_item_copy,
+            'fields': fields,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

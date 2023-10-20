@@ -4,11 +4,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import TermsOfServices
 
@@ -123,7 +123,7 @@ class TermsOfServicesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(status=status, tos_type=tos_type, text=text)
+        request_body = {'status': status, 'tos_type': tos_type, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_services']),
@@ -157,7 +157,10 @@ class TermsOfServicesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
+                [
+                    'https://api.box.com/2.0/terms_of_services/',
+                    to_string(terms_of_service_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -191,11 +194,14 @@ class TermsOfServicesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(status=status, text=text)
+        request_body = {'status': status, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/terms_of_services/', terms_of_service_id]
+                [
+                    'https://api.box.com/2.0/terms_of_services/',
+                    to_string(terms_of_service_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',

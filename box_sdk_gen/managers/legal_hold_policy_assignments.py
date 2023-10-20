@@ -4,13 +4,15 @@ from box_sdk_gen.base_object import BaseObject
 
 from typing import Optional
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import LegalHoldPolicyAssignments
 
@@ -85,7 +87,7 @@ class LegalHoldPolicyAssignmentsManager:
         assign_to_id: Optional[str] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> LegalHoldPolicyAssignments:
         """
@@ -112,7 +114,7 @@ class LegalHoldPolicyAssignmentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -159,7 +161,7 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(policy_id=policy_id, assign_to=assign_to)
+        request_body = {'policy_id': policy_id, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']),
@@ -195,7 +197,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    legal_hold_policy_assignment_id,
+                    to_string(legal_hold_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -234,7 +236,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    legal_hold_policy_assignment_id,
+                    to_string(legal_hold_policy_assignment_id),
                 ]
             ),
             FetchOptions(
@@ -252,7 +254,7 @@ class LegalHoldPolicyAssignmentsManager:
         legal_hold_policy_assignment_id: str,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileVersionLegalHolds:
         """
@@ -310,7 +312,7 @@ class LegalHoldPolicyAssignmentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -328,7 +330,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    legal_hold_policy_assignment_id,
+                    to_string(legal_hold_policy_assignment_id),
                     '/files_on_hold',
                 ]
             ),
@@ -348,7 +350,7 @@ class LegalHoldPolicyAssignmentsManager:
         legal_hold_policy_assignment_id: str,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileVersionLegalHolds:
         """
@@ -406,7 +408,7 @@ class LegalHoldPolicyAssignmentsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -424,7 +426,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    legal_hold_policy_assignment_id,
+                    to_string(legal_hold_policy_assignment_id),
                     '/file_versions_on_hold',
                 ]
             ),

@@ -12,7 +12,7 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.schemas import ZipDownload
 
@@ -125,7 +125,7 @@ class ZipDownloadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(items=items, download_file_name=download_file_name)
+        request_body = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/zip_downloads']),
@@ -191,7 +191,7 @@ class ZipDownloadsManager:
             ''.join(
                 [
                     'https://dl.boxcloud.com/2.0/zip_downloads/',
-                    zip_download_id,
+                    to_string(zip_download_id),
                     '/content',
                 ]
             ),
@@ -250,7 +250,11 @@ class ZipDownloadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                ['https://api.box.com/2.0/zip_downloads/', zip_download_id, '/status']
+                [
+                    'https://api.box.com/2.0/zip_downloads/',
+                    to_string(zip_download_id),
+                    '/status',
+                ]
             ),
             FetchOptions(
                 method='GET',

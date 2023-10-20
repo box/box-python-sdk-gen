@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 import pytest
 
 from box_sdk_gen.schemas import FolderFull
@@ -47,7 +49,7 @@ def testWebhooksCRUD():
         triggers=[CreateWebhookTriggersArg.FILE_UPLOADED.value],
     )
     assert webhook.target.id == folder.id
-    assert webhook.target.type == 'folder'
+    assert to_string(webhook.target.type) == 'folder'
     assert len(webhook.triggers) == len(['FILE.UPLOADED'])
     assert webhook.address == 'https://example.com/new-webhook'
     webhooks: Webhooks = client.webhooks.get_webhooks()

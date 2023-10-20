@@ -40,7 +40,7 @@ def test_create_get_delete_group():
     )
     assert group.name == group_name
     group_by_id: GroupFull = client.groups.get_group_by_id(
-        group_id=group.id, fields='id,name,description,group_type'
+        group_id=group.id, fields=['id', 'name', 'description', 'group_type']
     )
     assert group_by_id.id == group.id
     assert group_by_id.description == group_description

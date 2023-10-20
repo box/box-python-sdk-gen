@@ -2,13 +2,15 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import TrashFileRestored
 
@@ -57,7 +59,7 @@ class TrashedFilesManager:
         file_id: str,
         name: Optional[str] = None,
         parent: Optional[RestoreFileFromTrashParentArg] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashFileRestored:
         """
@@ -86,17 +88,17 @@ class TrashedFilesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(name=name, parent=parent)
+        request_body = {'name': name, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id]),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -113,7 +115,7 @@ class TrashedFilesManager:
     def get_file_trash(
         self,
         file_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashFile:
         """
@@ -158,7 +160,7 @@ class TrashedFilesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -167,7 +169,7 @@ class TrashedFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/trash']),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/trash']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -202,7 +204,7 @@ class TrashedFilesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '/trash']),
+            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/trash']),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

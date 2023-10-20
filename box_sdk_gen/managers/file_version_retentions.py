@@ -4,6 +4,8 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.schemas import FileVersionRetentions
@@ -131,7 +133,7 @@ class FileVersionRetentionsManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/file_version_retentions/',
-                    file_version_retention_id,
+                    to_string(file_version_retention_id),
                 ]
             ),
             FetchOptions(

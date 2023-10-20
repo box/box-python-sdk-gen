@@ -38,7 +38,7 @@ def test_ccg_auth():
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
-    new_user: UserFull = client.users.get_user_me(fields='enterprise')
+    new_user: UserFull = client.users.get_user_me(fields=['enterprise'])
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 
@@ -55,7 +55,7 @@ def test_jwt_auth():
     current_user: UserFull = client.users.get_user_me()
     assert current_user.id == user_id
     auth.as_enterprise(enterprise_id)
-    new_user: UserFull = client.users.get_user_me(fields='enterprise')
+    new_user: UserFull = client.users.get_user_me(fields=['enterprise'])
     assert not new_user.enterprise == None and new_user.enterprise.id == enterprise_id
     assert not new_user.id == user_id
 

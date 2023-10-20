@@ -4,11 +4,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import MetadataCascadePolicies
 
@@ -159,9 +159,11 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            folder_id=folder_id, scope=scope, templateKey=template_key
-        )
+        request_body = {
+            'folder_id': folder_id,
+            'scope': scope,
+            'templateKey': template_key,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
@@ -197,7 +199,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                 ]
             ),
             FetchOptions(
@@ -230,7 +232,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                 ]
             ),
             FetchOptions(
@@ -275,13 +277,13 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(conflict_resolution=conflict_resolution)
+        request_body = {'conflict_resolution': conflict_resolution}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
                 [
                     'https://api.box.com/2.0/metadata_cascade_policies/',
-                    metadata_cascade_policy_id,
+                    to_string(metadata_cascade_policy_id),
                     '/apply',
                 ]
             ),

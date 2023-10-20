@@ -12,7 +12,9 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.utils import to_string
+
+from typing import Union
 
 from box_sdk_gen.schemas import MetadataQueryResults
 
@@ -82,6 +84,14 @@ class GetMetadataQueryIndicesScopeArg(str, Enum):
 class GetSearchScopeArg(str, Enum):
     USER_CONTENT = 'user_content'
     ENTERPRISE_CONTENT = 'enterprise_content'
+
+
+class GetSearchContentTypesArg(str, Enum):
+    NAME = 'name'
+    DESCRIPTION = 'description'
+    FILE_CONTENT = 'file_content'
+    COMMENTS = 'comments'
+    TAG = 'tag'
 
 
 class GetSearchTypeArg(str, Enum):
@@ -193,16 +203,16 @@ class SearchManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            from_=from_,
-            query=query,
-            query_params=query_params,
-            ancestor_folder_id=ancestor_folder_id,
-            order_by=order_by,
-            limit=limit,
-            marker=marker,
-            fields=fields,
-        )
+        request_body = {
+            'from': from_,
+            'query': query,
+            'query_params': query_params,
+            'ancestor_folder_id': ancestor_folder_id,
+            'order_by': order_by,
+            'limit': limit,
+            'marker': marker,
+            'fields': fields,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_queries/execute_read']),
@@ -256,27 +266,27 @@ class SearchManager:
         self,
         query: Optional[str] = None,
         scope: Optional[GetSearchScopeArg] = None,
-        file_extensions: Optional[str] = None,
-        created_at_range: Optional[str] = None,
-        updated_at_range: Optional[str] = None,
-        size_range: Optional[str] = None,
-        owner_user_ids: Optional[str] = None,
-        recent_updater_user_ids: Optional[str] = None,
-        ancestor_folder_ids: Optional[str] = None,
-        content_types: Optional[str] = None,
+        file_extensions: Optional[List[str]] = None,
+        created_at_range: Optional[List[str]] = None,
+        updated_at_range: Optional[List[str]] = None,
+        size_range: Optional[List[int]] = None,
+        owner_user_ids: Optional[List[str]] = None,
+        recent_updater_user_ids: Optional[List[str]] = None,
+        ancestor_folder_ids: Optional[List[str]] = None,
+        content_types: Optional[List[GetSearchContentTypesArg]] = None,
         type: Optional[GetSearchTypeArg] = None,
         trash_content: Optional[GetSearchTrashContentArg] = None,
-        mdfilters: Optional[str] = None,
+        mdfilters: Optional[List[MetadataFilter]] = None,
         sort: Optional[GetSearchSortArg] = None,
         direction: Optional[GetSearchDirectionArg] = None,
         limit: Optional[int] = None,
         include_recent_shared_links: Optional[bool] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
-        deleted_user_ids: Optional[str] = None,
-        deleted_at_range: Optional[str] = None,
+        deleted_user_ids: Optional[List[str]] = None,
+        deleted_at_range: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> None:
+    ) -> Union[SearchResults, SearchResultsWithSharedLinks]:
         """
         Searches for files, folders, web links, and shared files across the
 
@@ -326,7 +336,7 @@ class SearchManager:
         :param file_extensions: Limits the search results to any files that match any of the provided
             file extensions. This list is a comma-separated list of file extensions
             without the dots.
-        :type file_extensions: Optional[str], optional
+        :type file_extensions: Optional[List[str]], optional
         :param created_at_range: Limits the search results to any items created within
             a given date range.
             Date ranges are defined as comma separated RFC3339
@@ -335,7 +345,7 @@ class SearchManager:
             anything created before the end date will be returned.
             If the end date is omitted (`2014-05-15T13:35:01-07:00,`) the
             current date will be used as the end date instead.
-        :type created_at_range: Optional[str], optional
+        :type created_at_range: Optional[List[str]], optional
         :param updated_at_range: Limits the search results to any items updated within
             a given date range.
             Date ranges are defined as comma separated RFC3339
@@ -344,13 +354,13 @@ class SearchManager:
             anything updated before the end date will be returned.
             If the end date is omitted (`2014-05-15T13:35:01-07:00,`) the
             current date will be used as the end date instead.
-        :type updated_at_range: Optional[str], optional
+        :type updated_at_range: Optional[List[str]], optional
         :param size_range: Limits the search results to any items with a size within
             a given file size range. This applied to files and folders.
             Size ranges are defined as comma separated list of a lower
             and upper byte size limit (inclusive).
             The upper and lower bound can be omitted to create open ranges.
-        :type size_range: Optional[str], optional
+        :type size_range: Optional[List[int]], optional
         :param owner_user_ids: Limits the search results to any items that are owned
             by the given list of owners, defined as a list of comma separated
             user IDs.
@@ -361,7 +371,7 @@ class SearchManager:
             To search across an entire enterprise, we recommend using the
             `enterprise_content` scope parameter which can be requested with our
             support team.
-        :type owner_user_ids: Optional[str], optional
+        :type owner_user_ids: Optional[List[str]], optional
         :param recent_updater_user_ids: Limits the search results to any items that have been updated
             by the given list of users, defined as a list of comma separated
             user IDs.
@@ -370,7 +380,7 @@ class SearchManager:
             results. If the user does not have access to any files owned by any of
             the users an empty result set will be returned.
             This feature only searches back to the last 10 versions of an item.
-        :type recent_updater_user_ids: Optional[str], optional
+        :type recent_updater_user_ids: Optional[List[str]], optional
         :param ancestor_folder_ids: Limits the search results to items within the given
             list of folders, defined as a comma separated lists
             of folder IDs.
@@ -383,7 +393,7 @@ class SearchManager:
             To search across an entire enterprise, we recommend using the
             `enterprise_content` scope parameter which can be requested with our
             support team.
-        :type ancestor_folder_ids: Optional[str], optional
+        :type ancestor_folder_ids: Optional[List[str]], optional
         :param content_types: Limits the search results to any items that match the search query
             for a specific part of the file, for example the file description.
             Content types are defined as a comma separated lists
@@ -396,7 +406,7 @@ class SearchManager:
                folder.
             * `tags` - Any tags that are applied to an item, as defined by its
                `tags` field.
-        :type content_types: Optional[str], optional
+        :type content_types: Optional[List[GetSearchContentTypesArg]], optional
         :param type: Limits the search results to any items of this type. This
             parameter only takes one value. By default the API returns
             items that match any of these types.
@@ -419,7 +429,7 @@ class SearchManager:
             the search results by. This list can currently only
             contain one entry, though this might be expanded in the future.
             This parameter is required unless the `query` parameter is provided.
-        :type mdfilters: Optional[str], optional
+        :type mdfilters: Optional[List[MetadataFilter]], optional
         :param sort: Defines the order in which search results are returned. This API
             defaults to returning items by relevance unless this parameter is
             explicitly specified.
@@ -453,7 +463,7 @@ class SearchManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
@@ -469,7 +479,7 @@ class SearchManager:
             If the user does not have access to any files owned by
             any of the users, an empty result set is returned.
             Data available from 2023-02-01 onwards.
-        :type deleted_user_ids: Optional[str], optional
+        :type deleted_user_ids: Optional[List[str]], optional
         :param deleted_at_range: Limits the search results to any items deleted within a given
             date range.
             Date ranges are defined as comma separated RFC3339 timestamps.
@@ -481,7 +491,7 @@ class SearchManager:
             If searching in trash is not performed, then an empty result
             is returned.
             Data available from 2023-02-01 onwards.
-        :type deleted_at_range: Optional[str], optional
+        :type deleted_at_range: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -524,4 +534,6 @@ class SearchManager:
                 network_session=self.network_session,
             ),
         )
-        return None
+        return deserialize(
+            response.text, Union[SearchResults, SearchResultsWithSharedLinks]
+        )

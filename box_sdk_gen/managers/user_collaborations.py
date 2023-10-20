@@ -4,13 +4,15 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import Collaboration
 
@@ -126,7 +128,7 @@ class UserCollaborationsManager:
     def get_collaboration_by_id(
         self,
         collaboration_id: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Collaboration:
         """
@@ -142,7 +144,7 @@ class UserCollaborationsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -151,7 +153,9 @@ class UserCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -217,12 +221,17 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            role=role, status=status, expires_at=expires_at, can_view_path=can_view_path
-        )
+        request_body = {
+            'role': role,
+            'status': status,
+            'expires_at': expires_at,
+            'can_view_path': can_view_path,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -252,7 +261,9 @@ class UserCollaborationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations/', collaboration_id]),
+            ''.join(
+                ['https://api.box.com/2.0/collaborations/', to_string(collaboration_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -268,9 +279,10 @@ class UserCollaborationsManager:
         item: CreateCollaborationItemArg,
         accessible_by: CreateCollaborationAccessibleByArg,
         role: CreateCollaborationRoleArg,
+        is_access_only: Optional[bool] = None,
         can_view_path: Optional[bool] = None,
         expires_at: Optional[str] = None,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Collaboration:
@@ -312,6 +324,12 @@ class UserCollaborationsManager:
         :type accessible_by: CreateCollaborationAccessibleByArg
         :param role: The level of access granted.
         :type role: CreateCollaborationRoleArg
+        :param is_access_only: If set to `true`, collaborators have access to
+            shared items, but such items won't be visible in the
+            All Files list. Additionally, collaborators won't
+            see the the path to the root folder for the
+            shared item.
+        :type is_access_only: Optional[bool], optional
         :param can_view_path: Determines if the invited users can see the entire parent path to
             the associated folder. The user will not gain privileges in any
             parent folder and therefore can not see content the user is not
@@ -340,7 +358,7 @@ class UserCollaborationsManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param notify: Determines if users should receive email notification
             for the action performed.
         :type notify: Optional[bool], optional
@@ -349,13 +367,14 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(
-            item=item,
-            accessible_by=accessible_by,
-            role=role,
-            can_view_path=can_view_path,
-            expires_at=expires_at,
-        )
+        request_body = {
+            'item': item,
+            'accessible_by': accessible_by,
+            'role': role,
+            'is_access_only': is_access_only,
+            'can_view_path': can_view_path,
+            'expires_at': expires_at,
+        }
         query_params_map: Dict[str, str] = prepare_params(
             {'fields': to_string(fields), 'notify': to_string(notify)}
         )

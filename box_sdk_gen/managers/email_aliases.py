@@ -2,11 +2,11 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.utils import to_string
+
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import EmailAliases
 
@@ -58,7 +58,9 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            ''.join(
+                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -92,10 +94,12 @@ class EmailAliasesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(email=email)
+        request_body = {'email': email}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', user_id, '/email_aliases']),
+            ''.join(
+                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -132,9 +136,9 @@ class EmailAliasesManager:
             ''.join(
                 [
                     'https://api.box.com/2.0/users/',
-                    user_id,
+                    to_string(user_id),
                     '/email_aliases/',
-                    email_alias_id,
+                    to_string(email_alias_id),
                 ]
             ),
             FetchOptions(

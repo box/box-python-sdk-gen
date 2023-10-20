@@ -4,13 +4,15 @@ from typing import Optional
 
 from box_sdk_gen.base_object import BaseObject
 
+from typing import List
+
 from typing import Dict
+
+from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.serialization import deserialize
 
 from box_sdk_gen.serialization import serialize
-
-from box_sdk_gen.base_object import BaseObject
 
 from box_sdk_gen.schemas import FileFull
 
@@ -224,7 +226,7 @@ class SharedLinksFilesManager:
     def get_shared_items(
         self,
         boxapi: str,
-        fields: Optional[str] = None,
+        fields: Optional[List[str]] = None,
         if_none_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
@@ -261,7 +263,7 @@ class SharedLinksFilesManager:
             the response unless explicitly specified, instead only
             fields for the mini representation are returned, additional
             to the fields requested.
-        :type fields: Optional[str], optional
+        :type fields: Optional[List[str]], optional
         :param if_none_match: Ensures an item is only returned if it has changed.
             Pass in the item's last observed `etag` value
             into this header and the endpoint will fail
@@ -321,7 +323,13 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '#get_shared_link']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '#get_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -362,11 +370,17 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '#add_shared_link']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '#add_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -407,11 +421,17 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '#update_shared_link']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '#update_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -453,11 +473,17 @@ class SharedLinksFilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = BaseObject(shared_link=shared_link)
+        request_body = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', file_id, '#remove_shared_link']),
+            ''.join(
+                [
+                    'https://api.box.com/2.0/files/',
+                    to_string(file_id),
+                    '#remove_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
