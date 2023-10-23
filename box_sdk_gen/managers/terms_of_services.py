@@ -123,7 +123,7 @@ class TermsOfServicesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'status': status, 'tos_type': tos_type, 'text': text}
+        request_body: Dict = {'status': status, 'tos_type': tos_type, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_services']),
@@ -194,7 +194,7 @@ class TermsOfServicesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'status': status, 'text': text}
+        request_body: Dict = {'status': status, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

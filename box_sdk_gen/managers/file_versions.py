@@ -212,7 +212,7 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'trashed_at': trashed_at}
+        request_body: Dict = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -361,7 +361,7 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'id': id, 'type': type}
+        request_body: Dict = {'id': id, 'type': type}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

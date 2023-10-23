@@ -184,7 +184,7 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'title': title,
             'description': description,
             'status': status,
@@ -311,7 +311,7 @@ class FileRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'folder': folder,
             'title': title,
             'description': description,

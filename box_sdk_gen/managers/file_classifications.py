@@ -174,7 +174,7 @@ class FileClassificationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'Box__Security__Classification__Key': box_security_classification_key
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})

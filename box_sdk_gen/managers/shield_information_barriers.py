@@ -99,7 +99,7 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'id': id, 'status': status}
+        request_body: Dict = {'id': id, 'status': status}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -175,7 +175,7 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'enterprise': enterprise}
+        request_body: Dict = {'enterprise': enterprise}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barriers']),

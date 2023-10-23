@@ -142,7 +142,7 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
+        request_body: Dict = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']),
@@ -176,7 +176,7 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'is_accepted': is_accepted}
+        request_body: Dict = {'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

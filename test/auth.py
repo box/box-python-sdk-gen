@@ -80,5 +80,7 @@ def test_oauth_auth():
     )
     auth: BoxOAuth = BoxOAuth(config=config)
     auth_url: str = auth.get_authorize_url()
-    expected_auth_url: str = 'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
+    expected_auth_url: str = (
+        'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
+    )
     assert auth_url == expected_auth_url

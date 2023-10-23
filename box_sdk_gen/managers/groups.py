@@ -197,7 +197,7 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'name': name,
             'provenance': provenance,
             'external_sync_identifier': external_sync_identifier,
@@ -345,7 +345,7 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'name': name,
             'provenance': provenance,
             'external_sync_identifier': external_sync_identifier,

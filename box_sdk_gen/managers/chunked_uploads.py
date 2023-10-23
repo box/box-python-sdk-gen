@@ -106,7 +106,7 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'folder_id': folder_id,
             'file_size': file_size,
             'file_name': file_name,
@@ -152,7 +152,7 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'file_size': file_size, 'file_name': file_name}
+        request_body: Dict = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -402,7 +402,7 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'parts': parts}
+        request_body: Dict = {'parts': parts}
         headers_map: Dict[str, str] = prepare_params(
             {
                 'digest': to_string(digest),

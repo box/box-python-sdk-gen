@@ -192,7 +192,7 @@ class RetentionPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'policy_id': policy_id,
             'assign_to': assign_to,
             'filter_fields': filter_fields,

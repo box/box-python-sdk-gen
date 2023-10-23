@@ -247,7 +247,11 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'target': target, 'address': address, 'triggers': triggers}
+        request_body: Dict = {
+            'target': target,
+            'address': address,
+            'triggers': triggers,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/webhooks']),
@@ -314,7 +318,11 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'target': target, 'address': address, 'triggers': triggers}
+        request_body: Dict = {
+            'target': target,
+            'address': address,
+            'triggers': triggers,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),

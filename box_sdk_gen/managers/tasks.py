@@ -158,7 +158,7 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'item': item,
             'action': action,
             'message': message,
@@ -244,7 +244,7 @@ class TasksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'action': action,
             'message': message,
             'due_at': due_at,

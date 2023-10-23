@@ -97,7 +97,7 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'name': name, 'description': description}
+        request_body: Dict = {'name': name, 'description': description}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -220,7 +220,7 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'shield_information_barrier': shield_information_barrier,
             'name': name,
             'description': description,

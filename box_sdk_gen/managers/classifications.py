@@ -50,7 +50,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[float] = None,
         **kwargs
     ):
         """
@@ -69,7 +69,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[int], optional
+        :type color_id: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -150,7 +150,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[float] = None,
         **kwargs
     ):
         """
@@ -169,7 +169,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[int], optional
+        :type color_id: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -308,7 +308,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfi
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[float] = None,
         **kwargs
     ):
         """
@@ -327,7 +327,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfi
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[int], optional
+        :type color_id: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -700,7 +700,7 @@ class ClassificationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'scope': scope,
             'templateKey': template_key,
             'displayName': display_name,

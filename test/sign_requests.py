@@ -1,5 +1,7 @@
 from box_sdk_gen.utils import to_string
 
+from box_sdk_gen.client import BoxClient
+
 from box_sdk_gen.schemas import File
 
 from box_sdk_gen.schemas import FolderFull
@@ -12,15 +14,13 @@ from box_sdk_gen.schemas import FolderBaseTypeField
 
 from box_sdk_gen.schemas import SignRequests
 
-from box_sdk_gen.utils import decode_base_64
-
-from box_sdk_gen.utils import get_env_var
-
 from box_sdk_gen.utils import get_uuid
 
 from test.commons import upload_new_file
 
 from test.commons import create_new_folder
+
+from test.commons import get_default_client
 
 from box_sdk_gen.schemas import SignRequestCreateRequest
 
@@ -30,19 +30,7 @@ from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import FileBase
 
-from box_sdk_gen.client import BoxClient
-
-from box_sdk_gen.jwt_auth import BoxJWTAuth
-
-from box_sdk_gen.jwt_auth import JWTConfig
-
-jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-)
-
-auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-
-client: BoxClient = BoxClient(auth=auth)
+client: BoxClient = get_default_client()
 
 
 def test_create_get_cancel_and_list_sign_request():

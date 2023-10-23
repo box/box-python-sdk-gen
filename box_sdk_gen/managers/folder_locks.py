@@ -139,7 +139,7 @@ class FolderLocksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'locked_operations': locked_operations, 'folder': folder}
+        request_body: Dict = {'locked_operations': locked_operations, 'folder': folder}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folder_locks']),

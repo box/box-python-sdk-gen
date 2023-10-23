@@ -151,7 +151,7 @@ class TransferManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'owned_by': owned_by}
+        request_body: Dict = {'owned_by': owned_by}
         query_params_map: Dict[str, str] = prepare_params(
             {'fields': to_string(fields), 'notify': to_string(notify)}
         )

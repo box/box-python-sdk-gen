@@ -221,7 +221,7 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'role': role,
             'status': status,
             'expires_at': expires_at,
@@ -367,7 +367,7 @@ class UserCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'item': item,
             'accessible_by': accessible_by,
             'role': role,

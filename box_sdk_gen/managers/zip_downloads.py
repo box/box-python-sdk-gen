@@ -125,7 +125,7 @@ class ZipDownloadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'items': items, 'download_file_name': download_file_name}
+        request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/zip_downloads']),

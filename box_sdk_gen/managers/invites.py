@@ -107,7 +107,7 @@ class InvitesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'enterprise': enterprise, 'actionable_by': actionable_by}
+        request_body: Dict = {'enterprise': enterprise, 'actionable_by': actionable_by}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

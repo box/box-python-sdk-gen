@@ -217,7 +217,7 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'user': user,
             'group': group,
             'role': role,
@@ -335,7 +335,7 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'role': role,
             'configurable_permissions': configurable_permissions,
         }

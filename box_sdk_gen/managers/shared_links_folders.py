@@ -362,7 +362,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'shared_link': shared_link}
+        request_body: Dict = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -415,7 +415,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'shared_link': shared_link}
+        request_body: Dict = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -469,7 +469,7 @@ class SharedLinksFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'shared_link': shared_link}
+        request_body: Dict = {'shared_link': shared_link}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

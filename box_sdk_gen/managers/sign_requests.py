@@ -260,7 +260,7 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'source_files': source_files,
             'signature_color': signature_color,
             'signers': signers,

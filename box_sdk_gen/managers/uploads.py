@@ -194,7 +194,7 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'attributes': attributes,
             'file': file,
             'file_file_name': file_file_name,
@@ -305,7 +305,7 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'attributes': attributes,
             'file': file,
             'file_file_name': file_file_name,
@@ -362,7 +362,7 @@ class UploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'name': name, 'size': size, 'parent': parent}
+        request_body: Dict = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/content']),

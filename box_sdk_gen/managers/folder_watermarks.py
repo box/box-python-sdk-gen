@@ -119,7 +119,7 @@ class FolderWatermarksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'watermark': watermark}
+        request_body: Dict = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
