@@ -195,7 +195,7 @@ class PostOAuth2Revoke(BaseObject):
 
 class ZipDownloadRequestItemsFieldTypeField(str, Enum):
     FILE = 'file'
-    FOLDER_ = 'folder.'
+    FOLDER = 'folder'
 
 
 class ZipDownloadRequestItemsField(BaseObject):
@@ -9752,7 +9752,7 @@ class ZipDownload(BaseObject):
 class ZipDownloadStatusStateField(str, Enum):
     IN_PROGRESS = 'in_progress'
     FAILED = 'failed'
-    SUCCESS = 'success'
+    SUCCEEDED = 'succeeded'
 
 
 class ZipDownloadStatus(BaseObject):

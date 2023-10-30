@@ -41,7 +41,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 class CreateZipDownloadItemsArgTypeField(str, Enum):
     FILE = 'file'
-    FOLDER_ = 'folder.'
+    FOLDER = 'folder'
 
 
 class CreateZipDownloadItemsArg(BaseObject):

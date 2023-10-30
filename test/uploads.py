@@ -1,5 +1,3 @@
-from box_sdk_gen.client import BoxClient
-
 from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
@@ -16,16 +14,16 @@ from box_sdk_gen.utils import get_uuid
 
 from box_sdk_gen.utils import generate_byte_stream
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.client import BoxClient
 
 from test.commons import get_default_client
 
 client: BoxClient = get_default_client()
 
 
-def test_upload_file_and_file_version():
+def testUploadFileAndFileVersion():
     new_file_name: str = get_uuid()
-    file_content_stream: ByteStream = generate_byte_stream(1048576)
+    file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(
             name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')
@@ -35,7 +33,7 @@ def test_upload_file_and_file_version():
     uploaded_file: File = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
-    new_file_content_stream: ByteStream = generate_byte_stream(1048576)
+    new_file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files_version: Files = client.uploads.upload_file_version(
         file_id=uploaded_file.id,
         attributes=UploadFileVersionAttributesArg(name=new_file_version_name),
