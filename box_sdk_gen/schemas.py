@@ -5547,11 +5547,11 @@ class FileRequestStatusField(str, Enum):
 class FileRequest(BaseObject):
     def __init__(
         self,
+        id: str,
+        type: FileRequestTypeField,
         folder: FolderMini,
         created_at: str,
         updated_at: str,
-        id: Optional[str] = None,
-        type: Optional[FileRequestTypeField] = None,
         title: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[FileRequestStatusField] = None,
@@ -5565,14 +5565,14 @@ class FileRequest(BaseObject):
         **kwargs
     ):
         """
+        :param id: The unique identifier for this file request.
+        :type id: str
+        :param type: `file_request`
+        :type type: FileRequestTypeField
         :param created_at: The date and time when the file request was created.
         :type created_at: str
         :param updated_at: The date and time when the file request was last updated.
         :type updated_at: str
-        :param id: The unique identifier for this file request.
-        :type id: Optional[str], optional
-        :param type: `file_request`
-        :type type: Optional[FileRequestTypeField], optional
         :param title: The title of file request. This is shown
             in the Box UI to users uploading files.
             This defaults to title of the file request that was
@@ -5622,11 +5622,11 @@ class FileRequest(BaseObject):
         :type etag: Optional[str], optional
         """
         super().__init__(**kwargs)
+        self.id = id
+        self.type = type
         self.folder = folder
         self.created_at = created_at
         self.updated_at = updated_at
-        self.id = id
-        self.type = type
         self.title = title
         self.description = description
         self.status = status
