@@ -12,8 +12,6 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
-from box_sdk_gen.utils import to_string
-
 from box_sdk_gen.schemas import ZipDownload
 
 from box_sdk_gen.schemas import ClientError
@@ -41,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 
 class CreateZipDownloadItemsArgTypeField(str, Enum):
     FILE = 'file'
-    FOLDER_ = 'folder.'
+    FOLDER = 'folder'
 
 
 class CreateZipDownloadItemsArg(BaseObject):
@@ -49,6 +47,25 @@ class CreateZipDownloadItemsArg(BaseObject):
         """
         :param type: The type of the item to add to the archive.
         :type type: CreateZipDownloadItemsArgTypeField
+        :param id: The identifier of the item to add to the archive. When this item is
+            a folder then this can not be the root folder with ID `0`.
+        :type id: str
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.id = id
+
+
+class DownloadZipItemsArgTypeField(str, Enum):
+    FILE = 'file'
+    FOLDER = 'folder'
+
+
+class DownloadZipItemsArg(BaseObject):
+    def __init__(self, type: DownloadZipItemsArgTypeField, id: str, **kwargs):
+        """
+        :param type: The type of the item to add to the archive.
+        :type type: DownloadZipItemsArgTypeField
         :param id: The identifier of the item to add to the archive. When this item is
             a folder then this can not be the root folder with ID `0`.
         :type id: str
@@ -125,7 +142,7 @@ class ZipDownloadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'items': items, 'download_file_name': download_file_name}
+        request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/zip_downloads']),
@@ -143,7 +160,7 @@ class ZipDownloadsManager:
 
     def get_zip_download_content(
         self,
-        zip_download_id: str,
+        download_url: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ByteStream:
         """
@@ -178,9 +195,9 @@ class ZipDownloadsManager:
 
         this endpoint.
 
-        :param zip_download_id: The unique identifier that represent this `zip` archive.
-            Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
-        :type zip_download_id: str
+        :param download_url: The URL that can be used to download created `zip` archive.
+             Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/content`
+        :type download_url: str
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -188,13 +205,7 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://dl.boxcloud.com/2.0/zip_downloads/',
-                    to_string(zip_download_id),
-                    '/content',
-                ]
-            ),
+            download_url,
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -206,9 +217,7 @@ class ZipDownloadsManager:
         return response.content
 
     def get_zip_download_status(
-        self,
-        zip_download_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        self, status_url: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ZipDownloadStatus:
         """
         Returns the download status of a `zip` archive, allowing an application to
@@ -239,9 +248,9 @@ class ZipDownloadsManager:
 
         this endpoint.
 
-        :param zip_download_id: The unique identifier that represent this `zip` archive.
-            Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
-        :type zip_download_id: str
+        :param status_url: The URL that can be used to get the status of the `zip` archive being downloaded.
+             Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/status`
+        :type status_url: str
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -249,13 +258,7 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/zip_downloads/',
-                    to_string(zip_download_id),
-                    '/status',
-                ]
-            ),
+            status_url,
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -265,3 +268,30 @@ class ZipDownloadsManager:
             ),
         )
         return deserialize(response.text, ZipDownloadStatus)
+
+    def download_zip(
+        self,
+        items: List[DownloadZipItemsArg],
+        download_file_name: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+    ) -> ByteStream:
+        """
+        Creates a zip and downloads its content
+        :param items: A list of items to add to the `zip` archive. These can
+            be folders or files.
+        :type items: List[DownloadZipItemsArg]
+        :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
+            `.zip` file extension, for example `January Financials.zip`.
+        :type download_file_name: Optional[str], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'items': items, 'download_file_name': download_file_name}
+        zip_download_session: ZipDownload = self.create_zip_download(
+            request_body['items'], request_body['download_file_name'], extra_headers
+        )
+        return self.get_zip_download_content(
+            zip_download_session.download_url, extra_headers
+        )

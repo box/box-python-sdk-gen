@@ -195,7 +195,7 @@ class PostOAuth2Revoke(BaseObject):
 
 class ZipDownloadRequestItemsFieldTypeField(str, Enum):
     FILE = 'file'
-    FOLDER_ = 'folder.'
+    FOLDER = 'folder'
 
 
 class ZipDownloadRequestItemsField(BaseObject):
@@ -614,7 +614,7 @@ class Classification(BaseObject):
         scope: Optional[str] = None,
         version: Optional[int] = None,
         type: Optional[str] = None,
-        type_version: Optional[int] = None,
+        type_version: Optional[float] = None,
         can_edit: Optional[bool] = None,
         **kwargs
     ):
@@ -640,7 +640,7 @@ class Classification(BaseObject):
         :param type_version: The version of the metadata template. This version starts at 0 and
             increases every time the template is updated. This is mostly for internal
             use.
-        :type type_version: Optional[int], optional
+        :type type_version: Optional[float], optional
         :param can_edit: Whether an end user can change the classification.
         :type can_edit: Optional[bool], optional
         """
@@ -696,7 +696,7 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[float] = None,
         **kwargs
     ):
         """
@@ -715,7 +715,7 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[int], optional
+        :type color_id: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -5547,11 +5547,11 @@ class FileRequestStatusField(str, Enum):
 class FileRequest(BaseObject):
     def __init__(
         self,
+        id: str,
+        type: FileRequestTypeField,
         folder: FolderMini,
         created_at: str,
         updated_at: str,
-        id: Optional[str] = None,
-        type: Optional[FileRequestTypeField] = None,
         title: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[FileRequestStatusField] = None,
@@ -5565,14 +5565,14 @@ class FileRequest(BaseObject):
         **kwargs
     ):
         """
+        :param id: The unique identifier for this file request.
+        :type id: str
+        :param type: `file_request`
+        :type type: FileRequestTypeField
         :param created_at: The date and time when the file request was created.
         :type created_at: str
         :param updated_at: The date and time when the file request was last updated.
         :type updated_at: str
-        :param id: The unique identifier for this file request.
-        :type id: Optional[str], optional
-        :param type: `file_request`
-        :type type: Optional[FileRequestTypeField], optional
         :param title: The title of file request. This is shown
             in the Box UI to users uploading files.
             This defaults to title of the file request that was
@@ -5622,11 +5622,11 @@ class FileRequest(BaseObject):
         :type etag: Optional[str], optional
         """
         super().__init__(**kwargs)
+        self.id = id
+        self.type = type
         self.folder = folder
         self.created_at = created_at
         self.updated_at = updated_at
-        self.id = id
-        self.type = type
         self.title = title
         self.description = description
         self.status = status
@@ -9752,7 +9752,7 @@ class ZipDownload(BaseObject):
 class ZipDownloadStatusStateField(str, Enum):
     IN_PROGRESS = 'in_progress'
     FAILED = 'failed'
-    SUCCESS = 'success'
+    SUCCEEDED = 'succeeded'
 
 
 class ZipDownloadStatus(BaseObject):
@@ -11212,12 +11212,12 @@ class TemplateSignerInputContentTypeField(str, Enum):
 
 
 class TemplateSignerInputCoordinatesField(BaseObject):
-    def __init__(self, x: Optional[int] = None, y: Optional[int] = None, **kwargs):
+    def __init__(self, x: Optional[float] = None, y: Optional[float] = None, **kwargs):
         """
         :param x: Relative x coordinate to the page the input is on, ranging from 0 to 1.
-        :type x: Optional[int], optional
+        :type x: Optional[float], optional
         :param y: Relative y coordinate to the page the input is on, ranging from 0 to 1.
-        :type y: Optional[int], optional
+        :type y: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.x = x
@@ -11226,13 +11226,13 @@ class TemplateSignerInputCoordinatesField(BaseObject):
 
 class TemplateSignerInputDimensionsField(BaseObject):
     def __init__(
-        self, width: Optional[int] = None, height: Optional[int] = None, **kwargs
+        self, width: Optional[float] = None, height: Optional[float] = None, **kwargs
     ):
         """
         :param width: Relative width to the page the input is on, ranging from 0 to 1.
-        :type width: Optional[int], optional
+        :type width: Optional[float], optional
         :param height: Relative height to the page the input is on, ranging from 0 to 1.
-        :type height: Optional[int], optional
+        :type height: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.width = width
@@ -11868,18 +11868,20 @@ class MetadataFieldFilterMultiSelect(BaseObject):
 
 
 class MetadataFieldFilterFloatRangeMapValue(BaseObject):
-    def __init__(self, lt: Optional[int] = None, gt: Optional[int] = None, **kwargs):
+    def __init__(
+        self, lt: Optional[float] = None, gt: Optional[float] = None, **kwargs
+    ):
         """
         :param lt: Specifies the (inclusive) upper bound for the metadata field
             value. The value of a field must be lower than (`lt`) or
             equal to this value for the search query to match this
             template.
-        :type lt: Optional[int], optional
+        :type lt: Optional[float], optional
         :param gt: Specifies the (inclusive) lower bound for the metadata field
             value. The value of a field must be greater than (`gt`) or
             equal to this value for the search query to match this
             template.
-        :type gt: Optional[int], optional
+        :type gt: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.lt = lt

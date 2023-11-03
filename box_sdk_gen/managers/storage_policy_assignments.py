@@ -178,7 +178,10 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'storage_policy': storage_policy, 'assigned_to': assigned_to}
+        request_body: Dict = {
+            'storage_policy': storage_policy,
+            'assigned_to': assigned_to,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
@@ -246,7 +249,7 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'storage_policy': storage_policy}
+        request_body: Dict = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

@@ -146,7 +146,7 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'policy_name': policy_name,
             'description': description,
             'filter_started_at': filter_started_at,
@@ -225,7 +225,7 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'policy_name': policy_name,
             'description': description,
             'release_notes': release_notes,

@@ -108,7 +108,7 @@ class CollaborationAllowlistExemptTargetsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'user': user}
+        request_body: Dict = {'user': user}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']),

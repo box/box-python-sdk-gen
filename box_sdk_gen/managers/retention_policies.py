@@ -197,7 +197,7 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'policy_name': policy_name,
             'description': description,
             'policy_type': policy_type,
@@ -344,7 +344,7 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'policy_name': policy_name,
             'description': description,
             'disposition_action': disposition_action,

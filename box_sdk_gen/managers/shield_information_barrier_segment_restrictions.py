@@ -260,7 +260,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'type': type,
             'shield_information_barrier': shield_information_barrier,
             'shield_information_barrier_segment': shield_information_barrier_segment,

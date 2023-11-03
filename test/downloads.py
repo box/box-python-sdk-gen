@@ -1,3 +1,5 @@
+from box_sdk_gen.client import BoxClient
+
 from box_sdk_gen.utils import Buffer
 
 from box_sdk_gen.utils import ByteStream
@@ -10,10 +12,6 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk_gen.schemas import File
 
-from box_sdk_gen.utils import decode_base_64
-
-from box_sdk_gen.utils import get_env_var
-
 from box_sdk_gen.utils import get_uuid
 
 from box_sdk_gen.utils import generate_byte_buffer
@@ -24,24 +22,14 @@ from box_sdk_gen.utils import buffer_equals
 
 from box_sdk_gen.utils import read_byte_stream
 
-from box_sdk_gen.client import BoxClient
+from test.commons import get_default_client
 
-from box_sdk_gen.jwt_auth import BoxJWTAuth
-
-from box_sdk_gen.jwt_auth import JWTConfig
-
-jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-)
-
-auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-
-client: BoxClient = BoxClient(auth=auth)
+client: BoxClient = get_default_client()
 
 
 def test_download_file():
     new_file_name: str = get_uuid()
-    file_buffer: Buffer = generate_byte_buffer(1048576)
+    file_buffer: Buffer = generate_byte_buffer(1024 * 1024)
     file_content_stream: ByteStream = generate_byte_stream_from_buffer(file_buffer)
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(

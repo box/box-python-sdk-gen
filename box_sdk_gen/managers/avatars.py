@@ -86,7 +86,7 @@ class AvatarsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'pic': pic,
             'pic_file_name': pic_file_name,
             'pic_content_type': pic_content_type,

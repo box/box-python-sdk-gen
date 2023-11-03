@@ -12,7 +12,11 @@ This operation is performed by calling function `get_sign_templates`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-sign-templates/).
 
-_Currently we don't have an example for calling `get_sign_templates` in integration tests_
+<!-- sample get_sign_templates -->
+
+```python
+client.sign_templates.get_sign_templates(limit=2)
+```
 
 ### Arguments
 
@@ -38,7 +42,11 @@ This operation is performed by calling function `get_sign_template_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-sign-templates-id/).
 
-_Currently we don't have an example for calling `get_sign_template_by_id` in integration tests_
+<!-- sample get_sign_templates_id -->
+
+```python
+client.sign_templates.get_sign_template_by_id(template_id=sign_templates.entries[0].id)
+```
 
 ### Arguments
 

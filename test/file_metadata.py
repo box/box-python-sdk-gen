@@ -2,6 +2,8 @@ from typing import Dict
 
 import pytest
 
+from box_sdk_gen.client import BoxClient
+
 from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArg
@@ -20,29 +22,16 @@ from box_sdk_gen.managers.file_metadata import (
     UpdateFileMetadataByIdRequestBodyArgOpField,
 )
 
-from box_sdk_gen.utils import decode_base_64
-
 from box_sdk_gen.utils import generate_byte_stream
-
-from box_sdk_gen.utils import get_env_var
 
 from box_sdk_gen.utils import get_uuid
 
-from box_sdk_gen.client import BoxClient
+from test.commons import get_default_client
 
-from box_sdk_gen.jwt_auth import BoxJWTAuth
-
-from box_sdk_gen.jwt_auth import JWTConfig
+client: BoxClient = get_default_client()
 
 
 def testFileMetadata():
-    client: BoxClient = BoxClient(
-        auth=BoxJWTAuth(
-            config=JWTConfig.from_config_json_string(
-                decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-            )
-        )
-    )
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(
             name=get_uuid(), parent=UploadFileAttributesArgParentField(id='0')

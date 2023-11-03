@@ -233,7 +233,7 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'type': type,
             'flow': flow,
             'files': files,

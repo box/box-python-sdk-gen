@@ -11,12 +11,16 @@ Restores a web link that has been moved to the trash.
 An optional new parent ID can be provided to restore the web link to in case
 the original folder has been deleted.
 
-This operation is performed by calling function `create_web_link_by_id`.
+This operation is performed by calling function `restore_weblink_from_trash`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-web-links-id/).
 
-_Currently we don't have an example for calling `create_web_link_by_id` in integration tests_
+<!-- sample post_web_links_id -->
+
+```python
+client.trashed_web_links.restore_weblink_from_trash(web_link_id=weblink.id)
+```
 
 ### Arguments
 
@@ -24,7 +28,7 @@ _Currently we don't have an example for calling `create_web_link_by_id` in integ
   - The ID of the web link. Example: "12345"
 - name `Optional[str]`
   - An optional new name for the web link.
-- parent `Optional[CreateWebLinkByIdParentArg]`
+- parent `Optional[RestoreWeblinkFromTrashParentArg]`
   -
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -46,7 +50,11 @@ This operation is performed by calling function `get_web_link_trash`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-web-links-id-trash/).
 
-_Currently we don't have an example for calling `get_web_link_trash` in integration tests_
+<!-- sample get_web_links_id_trash -->
+
+```python
+client.trashed_web_links.get_web_link_trash(web_link_id=weblink.id)
+```
 
 ### Arguments
 
@@ -75,7 +83,11 @@ This operation is performed by calling function `delete_web_link_trash`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-web-links-id-trash/).
 
-_Currently we don't have an example for calling `delete_web_link_trash` in integration tests_
+<!-- sample delete_web_links_id_trash -->
+
+```python
+client.trashed_web_links.delete_web_link_trash(web_link_id=weblink.id)
+```
 
 ### Arguments
 

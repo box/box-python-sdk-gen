@@ -203,7 +203,7 @@ class SearchManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'from': from_,
             'query': query,
             'query_params': query_params,

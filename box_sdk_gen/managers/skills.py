@@ -155,13 +155,13 @@ class UpdateSkillInvocationByIdFileVersionArg(BaseObject):
 
 class UpdateSkillInvocationByIdUsageArg(BaseObject):
     def __init__(
-        self, unit: Optional[str] = None, value: Optional[int] = None, **kwargs
+        self, unit: Optional[str] = None, value: Optional[float] = None, **kwargs
     ):
         """
         :param unit: `file`
         :type unit: Optional[str], optional
         :param value: `1`
-        :type value: Optional[int], optional
+        :type value: Optional[float], optional
         """
         super().__init__(**kwargs)
         self.unit = unit
@@ -244,7 +244,7 @@ class SkillsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'cards': cards}
+        request_body: Dict = {'cards': cards}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -384,7 +384,7 @@ class SkillsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'status': status,
             'metadata': metadata,
             'file': file,

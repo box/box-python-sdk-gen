@@ -1,5 +1,7 @@
 import pytest
 
+from box_sdk_gen.client import BoxClient
+
 from box_sdk_gen.schemas import File
 
 from box_sdk_gen.schemas import Files
@@ -16,10 +18,6 @@ from box_sdk_gen.schemas import TrashFile
 
 from box_sdk_gen.managers.files import CopyFileParentArg
 
-from box_sdk_gen.utils import decode_base_64
-
-from box_sdk_gen.utils import get_env_var
-
 from box_sdk_gen.utils import get_uuid
 
 from box_sdk_gen.utils import generate_byte_stream
@@ -28,23 +26,13 @@ from box_sdk_gen.utils import read_byte_stream
 
 from box_sdk_gen.utils import buffer_equals
 
-from box_sdk_gen.client import BoxClient
-
-from box_sdk_gen.jwt_auth import BoxJWTAuth
-
-from box_sdk_gen.jwt_auth import JWTConfig
+from box_sdk_gen.utils import ByteStream
 
 from test.commons import upload_new_file
 
-from box_sdk_gen.utils import ByteStream
+from test.commons import get_default_client
 
-jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-)
-
-auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-
-client: BoxClient = BoxClient(auth=auth)
+client: BoxClient = get_default_client()
 
 
 def upload_file(file_name: str, file_stream: ByteStream) -> File:
@@ -59,7 +47,7 @@ def upload_file(file_name: str, file_stream: ByteStream) -> File:
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
-    thumbnail_content_stream: ByteStream = generate_byte_stream(1048576)
+    thumbnail_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     thumbnail_file: File = upload_file(thumbnail_file_name, thumbnail_content_stream)
     assert (
         not buffer_equals(
@@ -78,8 +66,8 @@ def testGetFileThumbnail():
 
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
-    file_content: ByteStream = generate_byte_stream(1048576)
-    uploaded_file: File = upload_file(new_file_name, file_content)
+    file_stream: ByteStream = generate_byte_stream(1024 * 1024)
+    uploaded_file: File = upload_file(new_file_name, file_stream)
     file: FileFull = client.files.get_file_by_id(
         file_id=uploaded_file.id, fields=['is_externally_owned', 'has_collaborations']
     )
@@ -90,7 +78,7 @@ def testGetFileFullExtraFields():
 
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
-    updated_content_stream: ByteStream = generate_byte_stream(1048576)
+    updated_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_file: File = upload_file(new_file_name, updated_content_stream)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
     with pytest.raises(Exception):

@@ -139,7 +139,7 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'url': url,
             'parent': parent,
             'name': name,
@@ -228,7 +228,7 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'url': url,
             'parent': parent,
             'name': name,

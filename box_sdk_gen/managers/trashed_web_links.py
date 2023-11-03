@@ -35,7 +35,7 @@ from box_sdk_gen.fetch import FetchOptions
 from box_sdk_gen.fetch import FetchResponse
 
 
-class CreateWebLinkByIdParentArg(BaseObject):
+class RestoreWeblinkFromTrashParentArg(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -54,11 +54,11 @@ class TrashedWebLinksManager:
         self.auth = auth
         self.network_session = network_session
 
-    def create_web_link_by_id(
+    def restore_weblink_from_trash(
         self,
         web_link_id: str,
         name: Optional[str] = None,
-        parent: Optional[CreateWebLinkByIdParentArg] = None,
+        parent: Optional[RestoreWeblinkFromTrashParentArg] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashWebLinkRestored:
@@ -89,7 +89,7 @@ class TrashedWebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'name': name, 'parent': parent}
+        request_body: Dict = {'name': name, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

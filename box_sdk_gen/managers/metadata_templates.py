@@ -550,7 +550,7 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'scope': scope,
             'templateKey': template_key,
             'displayName': display_name,

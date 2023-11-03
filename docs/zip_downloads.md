@@ -3,6 +3,7 @@
 - [Create zip download](#create-zip-download)
 - [Download zip archive](#download-zip-archive)
 - [Get zip download status](#get-zip-download-status)
+- [](#)
 
 ## Create zip download
 
@@ -28,7 +29,11 @@ This operation is performed by calling function `create_zip_download`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-zip-downloads/).
 
-_Currently we don't have an example for calling `create_zip_download` in integration tests_
+<!-- sample post_zip_downloads -->
+
+```python
+client.zip_downloads.create_zip_download(items=[CreateZipDownloadItemsArg(id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value), CreateZipDownloadItemsArg(id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value), CreateZipDownloadItemsArg(id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value)], download_file_name='zip')
+```
 
 ### Arguments
 
@@ -68,12 +73,16 @@ This operation is performed by calling function `get_zip_download_content`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-zip-downloads-id-content/).
 
-_Currently we don't have an example for calling `get_zip_download_content` in integration tests_
+<!-- sample get_zip_downloads_id_content -->
+
+```python
+client.zip_downloads.get_zip_download_content(download_url=zip_download.download_url)
+```
 
 ### Arguments
 
-- zip_download_id `str`
-  - The unique identifier that represent this `zip` archive. Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
+- download_url `str`
+  - The URL that can be used to download created `zip` archive. Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/content`
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -104,12 +113,16 @@ This operation is performed by calling function `get_zip_download_status`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-zip-downloads-id-status/).
 
-_Currently we don't have an example for calling `get_zip_download_status` in integration tests_
+<!-- sample get_zip_downloads_id_status -->
+
+```python
+client.zip_downloads.get_zip_download_status(status_url=zip_download.status_url)
+```
 
 ### Arguments
 
-- zip_download_id `str`
-  - The unique identifier that represent this `zip` archive. Example: "Lu6fA9Ob-jyysp3AAvMF4AkLEwZwAYbL=tgj2zIC=eK9RvJnJbjJl9rNh2qBgHDpyOCAOhpM=vajg2mKq8Mdd"
+- status_url `str`
+  - The URL that can be used to get the status of the `zip` archive being downloaded. Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/status`
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -118,3 +131,29 @@ _Currently we don't have an example for calling `get_zip_download_status` in int
 This function returns a value of type `ZipDownloadStatus`.
 
 Returns the status of the `zip` archive that is being downloaded.
+
+##
+
+This operation is performed by calling function `download_zip`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference//).
+
+<!-- sample  -->
+
+```python
+client.zip_downloads.download_zip(items=[DownloadZipItemsArg(id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value), DownloadZipItemsArg(id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value), DownloadZipItemsArg(id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value)], download_file_name='zip')
+```
+
+### Arguments
+
+- items `List[DownloadZipItemsArg]`
+  - A list of items to add to the `zip` archive. These can be folders or files.
+- download_file_name `Optional[str]`
+  - The optional name of the `zip` archive. This name will be appended by the `.zip` file extension, for example `January Financials.zip`.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `ByteStream`.

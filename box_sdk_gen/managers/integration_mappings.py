@@ -148,7 +148,7 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'partner_item': partner_item,
             'box_item': box_item,
             'options': options,
@@ -194,7 +194,7 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'box_item': box_item, 'options': options}
+        request_body: Dict = {'box_item': box_item, 'options': options}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

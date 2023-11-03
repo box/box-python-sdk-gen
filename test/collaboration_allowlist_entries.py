@@ -1,28 +1,14 @@
 import pytest
 
+from box_sdk_gen.client import BoxClient
+
 from box_sdk_gen.schemas import CollaborationAllowlistEntries
 
 from box_sdk_gen.schemas import CollaborationAllowlistEntry
 
-from box_sdk_gen.utils import decode_base_64
+from test.commons import get_default_client
 
-from box_sdk_gen.utils import get_env_var
-
-from box_sdk_gen.utils import get_uuid
-
-from box_sdk_gen.client import BoxClient
-
-from box_sdk_gen.jwt_auth import BoxJWTAuth
-
-from box_sdk_gen.jwt_auth import JWTConfig
-
-client: BoxClient = BoxClient(
-    auth=BoxJWTAuth(
-        config=JWTConfig.from_config_json_string(
-            decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-        )
-    )
-)
+client: BoxClient = get_default_client()
 
 
 def collaborationAllowlistEntries():

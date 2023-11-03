@@ -199,7 +199,7 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'message': message}
+        request_body: Dict = {'message': message}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -286,7 +286,7 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'message': message,
             'tagged_message': tagged_message,
             'item': item,

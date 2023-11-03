@@ -159,7 +159,7 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'folder_id': folder_id,
             'scope': scope,
             'templateKey': template_key,
@@ -277,7 +277,7 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'conflict_resolution': conflict_resolution}
+        request_body: Dict = {'conflict_resolution': conflict_resolution}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

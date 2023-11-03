@@ -370,7 +370,7 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {
+        request_body: Dict = {
             'name': name,
             'description': description,
             'parent': parent,
@@ -496,7 +496,7 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'name': name, 'version': version, 'parent': parent}
+        request_body: Dict = {'name': name, 'version': version, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

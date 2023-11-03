@@ -94,7 +94,7 @@ class EmailAliasesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'email': email}
+        request_body: Dict = {'email': email}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

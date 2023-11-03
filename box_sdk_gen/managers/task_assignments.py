@@ -136,7 +136,7 @@ class TaskAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'task': task, 'assign_to': assign_to}
+        request_body: Dict = {'task': task, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/task_assignments']),
@@ -213,7 +213,7 @@ class TaskAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'message': message, 'resolution_state': resolution_state}
+        request_body: Dict = {'message': message, 'resolution_state': resolution_state}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

@@ -114,7 +114,7 @@ class TrashedFoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'name': name, 'parent': parent}
+        request_body: Dict = {'name': name, 'parent': parent}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

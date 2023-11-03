@@ -107,7 +107,7 @@ class CollaborationAllowlistEntriesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body = {'domain': domain, 'direction': direction}
+        request_body: Dict = {'domain': domain, 'direction': direction}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']),

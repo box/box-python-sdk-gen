@@ -12,39 +12,29 @@ from box_sdk_gen.managers.retention_policies import (
 
 from box_sdk_gen.schemas import RetentionPolicies
 
-from box_sdk_gen.utils import decode_base_64
-
-from box_sdk_gen.utils import get_env_var
-
 from box_sdk_gen.utils import get_uuid
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.jwt_auth import BoxJWTAuth
+from test.commons import get_default_client
 
-from box_sdk_gen.jwt_auth import JWTConfig
-
-jwt_config: JWTConfig = JWTConfig.from_config_json_string(
-    decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
-)
-
-auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-
-client: BoxClient = BoxClient(auth=auth)
+client: BoxClient = get_default_client()
 
 
 def testCreateUpdateGetDeleteRetentionPolicy():
     retention_policy_name: str = get_uuid()
     retention_description: str = 'test description'
-    retention_policy: RetentionPolicy = client.retention_policies.create_retention_policy(
-        policy_name=retention_policy_name,
-        description=retention_description,
-        policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value,
-        disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value,
-        retention_length='1',
-        retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value,
-        can_owner_extend_retention=True,
-        are_owners_notified=True,
+    retention_policy: RetentionPolicy = (
+        client.retention_policies.create_retention_policy(
+            policy_name=retention_policy_name,
+            description=retention_description,
+            policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value,
+            disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value,
+            retention_length='1',
+            retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value,
+            can_owner_extend_retention=True,
+            are_owners_notified=True,
+        )
     )
     assert retention_policy.policy_name == retention_policy_name
     assert retention_policy.description == retention_description
