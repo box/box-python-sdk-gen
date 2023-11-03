@@ -22,26 +22,28 @@ from box_sdk_gen.utils import generate_byte_stream
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.ccg_auth import BoxCCGAuth
-
-from box_sdk_gen.ccg_auth import CCGConfig
-
 from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
 
 
-def get_client_with_jwt_auth() -> BoxClient:
+def get_jwt_auth() -> BoxJWTAuth:
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
     auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-    client: BoxClient = BoxClient(auth=auth)
-    return client
+    return auth
+
+
+def get_default_client_as_user(user_id: str) -> BoxClient:
+    auth: BoxJWTAuth = get_jwt_auth()
+    auth.as_user(user_id)
+    return BoxClient(auth=auth)
 
 
 def get_default_client() -> BoxClient:
-    return get_client_with_jwt_auth()
+    client: BoxClient = BoxClient(auth=get_jwt_auth())
+    return client
 
 
 def create_new_folder() -> FolderFull:
@@ -63,14 +65,3 @@ def upload_new_file() -> File:
         file=file_content_stream,
     )
     return uploaded_files.entries[0]
-
-
-def get_client_with_ccg_auth() -> BoxClient:
-    ccg_config: CCGConfig = CCGConfig(
-        client_id=get_env_var('CLIENT_ID'),
-        client_secret=get_env_var('CLIENT_SECRET'),
-        enterprise_id=get_env_var('ENTERPRISE_ID'),
-    )
-    auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
-    client: BoxClient = BoxClient(auth=auth)
-    return client

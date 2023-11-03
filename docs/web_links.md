@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample post_web_links -->
 
 ```python
-client.web_links.create_web_link(url=url, parent=parent, name=name, description=description)
+client.web_links.create_web_link(url=url, parent=CreateWebLinkParentArg(id=parent.id), name=name, description=description)
 ```
 
 ### Arguments

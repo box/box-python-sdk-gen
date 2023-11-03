@@ -47,7 +47,7 @@ def upload_file(file_name: str, file_stream: ByteStream) -> File:
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
-    thumbnail_content_stream: ByteStream = generate_byte_stream(1048576)
+    thumbnail_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     thumbnail_file: File = upload_file(thumbnail_file_name, thumbnail_content_stream)
     assert (
         not buffer_equals(
@@ -66,8 +66,8 @@ def testGetFileThumbnail():
 
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
-    file_content: ByteStream = generate_byte_stream(1048576)
-    uploaded_file: File = upload_file(new_file_name, file_content)
+    file_stream: ByteStream = generate_byte_stream(1024 * 1024)
+    uploaded_file: File = upload_file(new_file_name, file_stream)
     file: FileFull = client.files.get_file_by_id(
         file_id=uploaded_file.id, fields=['is_externally_owned', 'has_collaborations']
     )
@@ -78,7 +78,7 @@ def testGetFileFullExtraFields():
 
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
-    updated_content_stream: ByteStream = generate_byte_stream(1048576)
+    updated_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_file: File = upload_file(new_file_name, updated_content_stream)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
     with pytest.raises(Exception):

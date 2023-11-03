@@ -29,7 +29,7 @@ client: BoxClient = get_default_client()
 
 def test_download_file():
     new_file_name: str = get_uuid()
-    file_buffer: Buffer = generate_byte_buffer(1048576)
+    file_buffer: Buffer = generate_byte_buffer(1024 * 1024)
     file_content_stream: ByteStream = generate_byte_stream_from_buffer(file_buffer)
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(

@@ -18,6 +18,8 @@ from box_sdk_gen.managers.comments import CreateCommentItemArg
 
 from box_sdk_gen.managers.comments import CreateCommentItemArgTypeField
 
+from box_sdk_gen.schemas import CommentFull
+
 from box_sdk_gen.utils import generate_byte_stream
 
 from box_sdk_gen.utils import get_uuid
@@ -66,7 +68,10 @@ def comments():
     new_comments: Comments = client.comments.get_file_comments(file_id=file_id)
     assert new_comments.total_count == 2
     assert new_comments.entries[1].message == new_message
-    assert not client.comments.get_comment_by_id(comment_id=new_comment.id) == None
+    received_comment: CommentFull = client.comments.get_comment_by_id(
+        comment_id=new_comment.id
+    )
+    assert received_comment.message == new_comment.message
     client.comments.delete_comment_by_id(comment_id=new_comment.id)
     with pytest.raises(Exception):
         client.comments.get_comment_by_id(comment_id=new_comment.id)

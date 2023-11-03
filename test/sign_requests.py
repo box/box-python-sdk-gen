@@ -58,6 +58,6 @@ def test_create_get_cancel_and_list_sign_request():
     )
     assert to_string(cancelled_sign_request.status) == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
-    assert sign_requests.entries[0].type == 'sign-request'
+    assert to_string(sign_requests.entries[0].type) == 'sign-request'
     client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
     client.files.delete_file_by_id(file_id=file_to_sign.id)

@@ -8,6 +8,12 @@ from box_sdk_gen.schemas import UserAvatar
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.utils import decode_base_64
+
+from box_sdk_gen.utils import get_env_var
+
+from box_sdk_gen.utils import get_uuid
+
 from box_sdk_gen.utils import buffer_equals
 
 from box_sdk_gen.utils import read_byte_stream

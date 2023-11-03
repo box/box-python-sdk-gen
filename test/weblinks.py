@@ -4,6 +4,8 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import WebLink
 
+from box_sdk_gen.managers.web_links import CreateWebLinkParentArg
+
 from box_sdk_gen.managers.web_links import UpdateWebLinkByIdSharedLinkArg
 
 from box_sdk_gen.utils import get_uuid
@@ -21,7 +23,10 @@ def test_create_get_delete_weblink():
     shared_access: str = 'open'
     password: str = 'super-secret-password'
     weblink: WebLink = client.web_links.create_web_link(
-        url=url, parent=parent, name=name, description=description
+        url=url,
+        parent=CreateWebLinkParentArg(id=parent.id),
+        name=name,
+        description=description,
     )
     assert weblink.url == url
     assert weblink.parent.id == parent.id
