@@ -30,11 +30,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetMetadataTemplateSchemaScopeArg(str, Enum):
@@ -236,9 +240,9 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'metadata_instance_id': to_string(metadata_instance_id)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'metadata_instance_id': to_string(metadata_instance_id)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_templates']),
@@ -251,7 +255,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplates)
+        return deserialize(response.data, MetadataTemplates)
 
     def get_metadata_template_schema(
         self,
@@ -280,15 +284,13 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+                '/schema',
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -297,7 +299,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplate)
+        return deserialize(response.data, MetadataTemplate)
 
     def update_metadata_template_schema(
         self,
@@ -335,26 +337,24 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+                '/schema',
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplate)
+        return deserialize(response.data, MetadataTemplate)
 
     def delete_metadata_template_schema(
         self,
@@ -380,15 +380,13 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+                '/schema',
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -414,9 +412,9 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/metadata_templates/', to_string(template_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/', to_string(template_id)
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -425,7 +423,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplate)
+        return deserialize(response.data, MetadataTemplate)
 
     def get_metadata_template_global(
         self,
@@ -449,9 +447,9 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_templates/global']),
@@ -464,7 +462,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplates)
+        return deserialize(response.data, MetadataTemplates)
 
     def get_metadata_template_enterprise(
         self,
@@ -488,9 +486,9 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/metadata_templates/enterprise']),
@@ -503,7 +501,7 @@ class MetadataTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplates)
+        return deserialize(response.data, MetadataTemplates)
 
     def create_metadata_template_schema(
         self,
@@ -564,11 +562,11 @@ class MetadataTemplatesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataTemplate)
+        return deserialize(response.data, MetadataTemplate)

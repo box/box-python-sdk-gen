@@ -30,6 +30,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class EmailAliasesManager:
     def __init__(
@@ -58,9 +62,9 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases'
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -69,7 +73,7 @@ class EmailAliasesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, EmailAliases)
+        return deserialize(response.data, EmailAliases)
 
     def create_user_email_alias(
         self,
@@ -97,20 +101,20 @@ class EmailAliasesManager:
         request_body: Dict = {'email': email}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases'
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, EmailAlias)
+        return deserialize(response.data, EmailAlias)
 
     def delete_user_email_alias_by_id(
         self,
@@ -133,14 +137,12 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/users/',
-                    to_string(user_id),
-                    '/email_aliases/',
-                    to_string(email_alias_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/users/',
+                to_string(user_id),
+                '/email_aliases/',
+                to_string(email_alias_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

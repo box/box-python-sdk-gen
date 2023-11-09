@@ -32,6 +32,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import SerializedData
+
+from box_sdk_gen.json import sd_to_json
+
 
 class CreateWebLinkParentArg(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -151,14 +155,14 @@ class WebLinksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def get_web_link_by_id(
         self,
@@ -184,9 +188,9 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'boxapi': to_string(boxapi), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'boxapi': to_string(boxapi), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
             FetchOptions(
@@ -197,7 +201,7 @@ class WebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def update_web_link_by_id(
         self,
@@ -241,14 +245,14 @@ class WebLinksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def delete_web_link_by_id(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

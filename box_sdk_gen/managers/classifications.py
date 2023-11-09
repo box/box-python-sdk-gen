@@ -32,6 +32,8 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import SerializedData
+
 
 class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldClassificationField(
     BaseObject
@@ -463,11 +465,9 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -476,7 +476,7 @@ class ClassificationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ClassificationTemplate)
+        return deserialize(response.data, ClassificationTemplate)
 
     def delete_metadata_template_enterprise_security_classification_schema(
         self, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -493,11 +493,9 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -538,22 +536,20 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add'
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add'
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ClassificationTemplate)
+        return deserialize(response.data, ClassificationTemplate)
 
     def update_metadata_template_enterprise_security_classification_schema_update(
         self,
@@ -585,22 +581,20 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update'
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update'
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ClassificationTemplate)
+        return deserialize(response.data, ClassificationTemplate)
 
     def update_metadata_template_enterprise_security_classification_schema_delete(
         self,
@@ -632,22 +626,20 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#delete'
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#delete'
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ClassificationTemplate)
+        return deserialize(response.data, ClassificationTemplate)
 
     def create_metadata_template_schema_classification(
         self,
@@ -710,17 +702,17 @@ class ClassificationsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/metadata_templates/schema#classifications']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/metadata_templates/schema#classifications'
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ClassificationTemplate)
+        return deserialize(response.data, ClassificationTemplate)

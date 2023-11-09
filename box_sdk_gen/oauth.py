@@ -1,4 +1,3 @@
-import json
 from urllib.parse import urlencode, urlunsplit
 from typing import Optional
 
@@ -8,6 +7,7 @@ from .auth_schemas import TokenRequest, TokenRequestGrantType
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 from .schemas import AccessToken
+from .json import json_to_serialized_data
 
 
 class OAuthConfig:
@@ -182,10 +182,10 @@ class BoxOAuth(Authentication):
             'https://api.box.com/oauth2/token',
             FetchOptions(
                 method='POST',
-                body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'},
+                data=request_body.to_dict(),
+                content_type='application/x-www-form-urlencoded',
                 network_session=network_session,
             ),
         )
 
-        return AccessToken.from_dict(json.loads(response.text))
+        return AccessToken.from_dict(json_to_serialized_data(response.text))

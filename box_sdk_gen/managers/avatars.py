@@ -26,7 +26,11 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import MultipartItem
+
+from box_sdk_gen.json import SerializedData
 
 
 class AvatarsManager:
@@ -111,7 +115,7 @@ class AvatarsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UserAvatar)
+        return deserialize(response.data, UserAvatar)
 
     def delete_user_avatar(
         self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

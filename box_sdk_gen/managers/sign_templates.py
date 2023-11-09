@@ -22,11 +22,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class SignTemplatesManager:
@@ -57,9 +61,9 @@ class SignTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/sign_templates']),
@@ -72,7 +76,7 @@ class SignTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignTemplates)
+        return deserialize(response.data, SignTemplates)
 
     def get_sign_template_by_id(
         self, template_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -89,9 +93,9 @@ class SignTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/sign_templates/', to_string(template_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/sign_templates/', to_string(template_id)
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -100,4 +104,4 @@ class SignTemplatesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignTemplate)
+        return deserialize(response.data, SignTemplate)

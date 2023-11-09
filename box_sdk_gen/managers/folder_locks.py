@@ -26,11 +26,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateFolderLockLockedOperationsArg(BaseObject):
@@ -94,9 +98,9 @@ class FolderLocksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'folder_id': to_string(folder_id)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'folder_id': to_string(folder_id)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folder_locks']),
@@ -109,7 +113,7 @@ class FolderLocksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderLocks)
+        return deserialize(response.data, FolderLocks)
 
     def create_folder_lock(
         self,
@@ -146,14 +150,14 @@ class FolderLocksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderLock)
+        return deserialize(response.data, FolderLock)
 
     def delete_folder_lock_by_id(
         self,
@@ -178,9 +182,9 @@ class FolderLocksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/folder_locks/', to_string(folder_lock_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folder_locks/', to_string(folder_lock_id)
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -34,6 +34,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class CreateTaskAssignmentTaskArgTypeField(str, Enum):
     TASK = 'task'
@@ -100,9 +104,9 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/tasks/', to_string(task_id), '/assignments']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/tasks/', to_string(task_id), '/assignments'
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -111,7 +115,7 @@ class TaskAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TaskAssignments)
+        return deserialize(response.data, TaskAssignments)
 
     def create_task_assignment(
         self,
@@ -143,14 +147,14 @@ class TaskAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TaskAssignment)
+        return deserialize(response.data, TaskAssignment)
 
     def get_task_assignment_by_id(
         self,
@@ -169,12 +173,10 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/task_assignments/',
-                    to_string(task_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/task_assignments/',
+                to_string(task_assignment_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -183,7 +185,7 @@ class TaskAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TaskAssignment)
+        return deserialize(response.data, TaskAssignment)
 
     def update_task_assignment_by_id(
         self,
@@ -216,23 +218,21 @@ class TaskAssignmentsManager:
         request_body: Dict = {'message': message, 'resolution_state': resolution_state}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/task_assignments/',
-                    to_string(task_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/task_assignments/',
+                to_string(task_assignment_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TaskAssignment)
+        return deserialize(response.data, TaskAssignment)
 
     def delete_task_assignment_by_id(
         self,
@@ -251,12 +251,10 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/task_assignments/',
-                    to_string(task_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/task_assignments/',
+                to_string(task_assignment_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

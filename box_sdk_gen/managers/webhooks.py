@@ -30,11 +30,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateWebhookTargetArgTypeField(str, Enum):
@@ -209,9 +213,9 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/webhooks']),
@@ -224,7 +228,7 @@ class WebhooksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Webhooks)
+        return deserialize(response.data, Webhooks)
 
     def create_webhook(
         self,
@@ -258,14 +262,14 @@ class WebhooksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Webhook)
+        return deserialize(response.data, Webhook)
 
     def get_webhook_by_id(
         self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -291,7 +295,7 @@ class WebhooksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Webhook)
+        return deserialize(response.data, Webhook)
 
     def update_webhook_by_id(
         self,
@@ -329,14 +333,14 @@ class WebhooksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Webhook)
+        return deserialize(response.data, Webhook)
 
     def delete_webhook_by_id(
         self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

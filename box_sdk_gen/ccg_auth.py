@@ -112,13 +112,13 @@ class BoxCCGAuth(Authentication):
             'https://api.box.com/oauth2/token',
             FetchOptions(
                 method='POST',
-                body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'},
+                data=request_body.to_dict(),
+                content_type='application/x-www-form-urlencoded',
                 network_session=network_session,
             ),
         )
 
-        new_token = AccessToken.from_dict(json.loads(response.text))
+        new_token = AccessToken.from_dict(response.data)
         self.token_storage.store(new_token)
         return new_token
 

@@ -24,11 +24,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetCollaborationsStatusArg(str, Enum):
@@ -88,22 +92,16 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'marker': to_string(marker),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'marker': to_string(marker),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/collaborations',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/collaborations'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -113,7 +111,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Collaborations)
+        return deserialize(response.data, Collaborations)
 
     def get_folder_collaborations(
         self,
@@ -154,13 +152,11 @@ class ListCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/folders/',
-                    to_string(folder_id),
-                    '/collaborations',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/',
+                to_string(folder_id),
+                '/collaborations',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -170,7 +166,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Collaborations)
+        return deserialize(response.data, Collaborations)
 
     def get_collaborations(
         self,
@@ -205,14 +201,12 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'status': to_string(status),
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'status': to_string(status),
+            'fields': to_string(fields),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/collaborations']),
@@ -225,7 +219,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Collaborations)
+        return deserialize(response.data, Collaborations)
 
     def get_group_collaborations(
         self,
@@ -260,18 +254,16 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'limit': to_string(limit), 'offset': to_string(offset)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'limit': to_string(limit), 'offset': to_string(offset)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/groups/',
-                    to_string(group_id),
-                    '/collaborations',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/groups/',
+                to_string(group_id),
+                '/collaborations',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -281,4 +273,4 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Collaborations)
+        return deserialize(response.data, Collaborations)

@@ -30,6 +30,8 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
@@ -37,6 +39,8 @@ from box_sdk_gen.fetch import FetchOptions
 from box_sdk_gen.fetch import FetchResponse
 
 from box_sdk_gen.fetch import MultipartItem
+
+from box_sdk_gen.json import SerializedData
 
 
 class UploadFileVersionAttributesArg(BaseObject):
@@ -201,21 +205,15 @@ class UploadsManager:
             'file_content_type': file_content_type,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-match': to_string(if_match),
-                'content-md5': to_string(content_md_5),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match),
+            'content-md5': to_string(content_md_5),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/',
-                    to_string(file_id),
-                    '/content',
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/', to_string(file_id), '/content'
+            ]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -223,7 +221,7 @@ class UploadsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='attributes',
-                        body=serialize(request_body['attributes']),
+                        data=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
@@ -238,7 +236,7 @@ class UploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Files)
+        return deserialize(response.data, Files)
 
     def upload_file(
         self,
@@ -312,9 +310,9 @@ class UploadsManager:
             'file_content_type': file_content_type,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'content-md5': to_string(content_md_5), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'content-md5': to_string(content_md_5), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://upload.box.com/api/2.0/files/content']),
             FetchOptions(
@@ -324,7 +322,7 @@ class UploadsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='attributes',
-                        body=serialize(request_body['attributes']),
+                        data=serialize(request_body['attributes']),
                     ),
                     MultipartItem(
                         part_name='file',
@@ -339,7 +337,7 @@ class UploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Files)
+        return deserialize(response.data, Files)
 
     def preflight_file_upload(
         self,
@@ -369,11 +367,11 @@ class UploadsManager:
             FetchOptions(
                 method='OPTIONS',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadUrl)
+        return deserialize(response.data, UploadUrl)

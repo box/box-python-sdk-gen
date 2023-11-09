@@ -36,6 +36,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import SerializedData
+
+from box_sdk_gen.json import sd_to_json
+
 
 class CreateZipDownloadItemsArgTypeField(str, Enum):
     FILE = 'file'
@@ -149,14 +153,14 @@ class ZipDownloadsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ZipDownload)
+        return deserialize(response.data, ZipDownload)
 
     def get_zip_download_content(
         self,
@@ -267,7 +271,7 @@ class ZipDownloadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ZipDownloadStatus)
+        return deserialize(response.data, ZipDownloadStatus)
 
     def download_zip(
         self,

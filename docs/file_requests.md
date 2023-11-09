@@ -14,7 +14,11 @@ This operation is performed by calling function `get_file_request_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-requests-id/).
 
-_Currently we don't have an example for calling `get_file_request_by_id` in integration tests_
+<!-- sample get_file_requests_id -->
+
+```python
+client.file_requests.get_file_request_by_id(file_request_id=updated_file_request.id)
+```
 
 ### Arguments
 
@@ -39,7 +43,11 @@ This operation is performed by calling function `update_file_request_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-file-requests-id/).
 
-_Currently we don't have an example for calling `update_file_request_by_id` in integration tests_
+<!-- sample put_file_requests_id -->
+
+```python
+client.file_requests.update_file_request_by_id(file_request_id=copied_file_request.id, title='updated title', description='updated description')
+```
 
 ### Arguments
 
@@ -77,7 +85,11 @@ This operation is performed by calling function `delete_file_request_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-file-requests-id/).
 
-_Currently we don't have an example for calling `delete_file_request_by_id` in integration tests_
+<!-- sample delete_file_requests_id -->
+
+```python
+client.file_requests.delete_file_request_by_id(file_request_id=updated_file_request.id)
+```
 
 ### Arguments
 
@@ -103,7 +115,11 @@ This operation is performed by calling function `create_file_request_copy`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-file-requests-id-copy/).
 
-_Currently we don't have an example for calling `create_file_request_copy` in integration tests_
+<!-- sample post_file_requests_id_copy -->
+
+```python
+client.file_requests.create_file_request_copy(file_request_id=file_request_id, folder=CreateFileRequestCopyFolderArg(id=file_request.folder.id, type=CreateFileRequestCopyFolderArgTypeField.FOLDER.value))
+```
 
 ### Arguments
 

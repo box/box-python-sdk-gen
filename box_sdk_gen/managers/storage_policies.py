@@ -24,11 +24,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class StoragePoliciesManager:
@@ -69,13 +73,11 @@ class StoragePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/storage_policies']),
@@ -88,7 +90,7 @@ class StoragePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicies)
+        return deserialize(response.data, StoragePolicies)
 
     def get_storage_policy_by_id(
         self,
@@ -107,12 +109,10 @@ class StoragePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/storage_policies/',
-                    to_string(storage_policy_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/storage_policies/',
+                to_string(storage_policy_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -121,4 +121,4 @@ class StoragePoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicy)
+        return deserialize(response.data, StoragePolicy)

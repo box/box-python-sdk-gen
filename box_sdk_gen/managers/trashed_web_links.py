@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class RestoreWeblinkFromTrashParentArg(BaseObject):
@@ -98,14 +102,14 @@ class TrashedWebLinksManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TrashWebLinkRestored)
+        return deserialize(response.data, TrashWebLinkRestored)
 
     def get_web_link_trash(
         self,
@@ -135,9 +139,9 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -147,7 +151,7 @@ class TrashedWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TrashWebLink)
+        return deserialize(response.data, TrashWebLink)
 
     def delete_web_link_trash(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -167,9 +171,9 @@ class TrashedWebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash'
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

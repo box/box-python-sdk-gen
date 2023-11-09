@@ -34,11 +34,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetUsersUserTypeArg(str, Enum):
@@ -173,18 +177,16 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'filter_term': to_string(filter_term),
-                'user_type': to_string(user_type),
-                'external_app_user_id': to_string(external_app_user_id),
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'filter_term': to_string(filter_term),
+            'user_type': to_string(user_type),
+            'external_app_user_id': to_string(external_app_user_id),
+            'fields': to_string(fields),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+            'usemarker': to_string(usemarker),
+            'marker': to_string(marker),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/users']),
@@ -197,7 +199,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Users)
+        return deserialize(response.data, Users)
 
     def create_user(
         self,
@@ -319,14 +321,14 @@ class UsersManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, User)
+        return deserialize(response.data, User)
 
     def get_user_me(
         self,
@@ -380,7 +382,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UserFull)
+        return deserialize(response.data, UserFull)
 
     def get_user_by_id(
         self,
@@ -444,7 +446,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UserFull)
+        return deserialize(response.data, UserFull)
 
     def update_user_by_id(
         self,
@@ -590,14 +592,14 @@ class UsersManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UserFull)
+        return deserialize(response.data, UserFull)
 
     def delete_user_by_id(
         self,
@@ -631,9 +633,9 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'notify': to_string(notify), 'force': to_string(force)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'notify': to_string(notify), 'force': to_string(force)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),

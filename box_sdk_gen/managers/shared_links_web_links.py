@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class UpdateWebLinkAddSharedLinkSharedLinkArgAccessField(str, Enum):
@@ -262,13 +266,11 @@ class SharedLinksWebLinksManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-none-match': to_string(if_none_match),
+            'boxapi': to_string(boxapi),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shared_items#web_links']),
             FetchOptions(
@@ -280,7 +282,7 @@ class SharedLinksWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def get_web_link_get_shared_link(
         self,
@@ -304,13 +306,11 @@ class SharedLinksWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/web_links/',
-                    to_string(web_link_id),
-                    '#get_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/',
+                to_string(web_link_id),
+                '#get_shared_link',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -320,7 +320,7 @@ class SharedLinksWebLinksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def update_web_link_add_shared_link(
         self,
@@ -350,25 +350,23 @@ class SharedLinksWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/web_links/',
-                    to_string(web_link_id),
-                    '#add_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/',
+                to_string(web_link_id),
+                '#add_shared_link',
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def update_web_link_update_shared_link(
         self,
@@ -396,25 +394,23 @@ class SharedLinksWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/web_links/',
-                    to_string(web_link_id),
-                    '#update_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/',
+                to_string(web_link_id),
+                '#update_shared_link',
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)
 
     def update_web_link_remove_shared_link(
         self,
@@ -443,22 +439,20 @@ class SharedLinksWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/web_links/',
-                    to_string(web_link_id),
-                    '#remove_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/web_links/',
+                to_string(web_link_id),
+                '#remove_shared_link',
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, WebLink)
+        return deserialize(response.data, WebLink)

@@ -34,6 +34,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class CreateTaskItemArgTypeField(str, Enum):
     FILE = 'file'
@@ -118,7 +122,7 @@ class TasksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Tasks)
+        return deserialize(response.data, Tasks)
 
     def create_task(
         self,
@@ -171,14 +175,14 @@ class TasksManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Task)
+        return deserialize(response.data, Task)
 
     def get_task_by_id(
         self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -204,7 +208,7 @@ class TasksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Task)
+        return deserialize(response.data, Task)
 
     def update_task_by_id(
         self,
@@ -256,14 +260,14 @@ class TasksManager:
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Task)
+        return deserialize(response.data, Task)
 
     def delete_task_by_id(
         self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

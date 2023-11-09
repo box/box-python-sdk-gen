@@ -24,11 +24,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetFolderTrashItemsDirectionArg(str, Enum):
@@ -124,17 +128,15 @@ class TrashedItemsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'offset': to_string(offset),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-                'direction': to_string(direction),
-                'sort': to_string(sort),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'offset': to_string(offset),
+            'usemarker': to_string(usemarker),
+            'marker': to_string(marker),
+            'direction': to_string(direction),
+            'sort': to_string(sort),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folders/trash/items']),
@@ -147,4 +149,4 @@ class TrashedItemsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Items)
+        return deserialize(response.data, Items)

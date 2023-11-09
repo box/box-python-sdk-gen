@@ -26,11 +26,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class TransferOwnedFolderOwnedByArg(BaseObject):
@@ -152,23 +156,23 @@ class TransferManager:
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {'owned_by': owned_by}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'fields': to_string(fields), 'notify': to_string(notify)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields), 'notify': to_string(notify)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/users/', to_string(user_id), '/folders/0']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/users/', to_string(user_id), '/folders/0'
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderFull)
+        return deserialize(response.data, FolderFull)

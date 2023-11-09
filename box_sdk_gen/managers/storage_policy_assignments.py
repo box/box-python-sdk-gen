@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetStoragePolicyAssignmentsResolvedForTypeArg(str, Enum):
@@ -138,13 +142,11 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'resolved_for_type': to_string(resolved_for_type),
-                'resolved_for_id': to_string(resolved_for_id),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker),
+            'resolved_for_type': to_string(resolved_for_type),
+            'resolved_for_id': to_string(resolved_for_id),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
@@ -157,7 +159,7 @@ class StoragePolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicyAssignments)
+        return deserialize(response.data, StoragePolicyAssignments)
 
     def create_storage_policy_assignment(
         self,
@@ -188,14 +190,14 @@ class StoragePolicyAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicyAssignment)
+        return deserialize(response.data, StoragePolicyAssignment)
 
     def get_storage_policy_assignment_by_id(
         self,
@@ -214,12 +216,10 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/storage_policy_assignments/',
-                    to_string(storage_policy_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/storage_policy_assignments/',
+                to_string(storage_policy_assignment_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -228,7 +228,7 @@ class StoragePolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicyAssignment)
+        return deserialize(response.data, StoragePolicyAssignment)
 
     def update_storage_policy_assignment_by_id(
         self,
@@ -252,23 +252,21 @@ class StoragePolicyAssignmentsManager:
         request_body: Dict = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/storage_policy_assignments/',
-                    to_string(storage_policy_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/storage_policy_assignments/',
+                to_string(storage_policy_assignment_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, StoragePolicyAssignment)
+        return deserialize(response.data, StoragePolicyAssignment)
 
     def delete_storage_policy_assignment_by_id(
         self,
@@ -302,12 +300,10 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/storage_policy_assignments/',
-                    to_string(storage_policy_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/storage_policy_assignments/',
+                to_string(storage_policy_assignment_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

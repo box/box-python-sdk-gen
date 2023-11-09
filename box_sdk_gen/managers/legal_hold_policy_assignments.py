@@ -32,11 +32,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetLegalHoldPolicyAssignmentsAssignToTypeArg(str, Enum):
@@ -120,16 +124,14 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'policy_id': to_string(policy_id),
-                'assign_to_type': to_string(assign_to_type),
-                'assign_to_id': to_string(assign_to_id),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'fields': to_string(fields),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'policy_id': to_string(policy_id),
+            'assign_to_type': to_string(assign_to_type),
+            'assign_to_id': to_string(assign_to_id),
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+            'fields': to_string(fields),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/legal_hold_policy_assignments']),
@@ -142,7 +144,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicyAssignments)
+        return deserialize(response.data, LegalHoldPolicyAssignments)
 
     def create_legal_hold_policy_assignment(
         self,
@@ -168,14 +170,14 @@ class LegalHoldPolicyAssignmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicyAssignment)
+        return deserialize(response.data, LegalHoldPolicyAssignment)
 
     def get_legal_hold_policy_assignment_by_id(
         self,
@@ -194,12 +196,10 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policy_assignments/',
+                to_string(legal_hold_policy_assignment_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -208,7 +208,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicyAssignment)
+        return deserialize(response.data, LegalHoldPolicyAssignment)
 
     def delete_legal_hold_policy_assignment_by_id(
         self,
@@ -233,12 +233,10 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policy_assignments/',
+                to_string(legal_hold_policy_assignment_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -318,22 +316,18 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'fields': to_string(fields),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+            'fields': to_string(fields),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                    '/files_on_hold',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policy_assignments/',
+                to_string(legal_hold_policy_assignment_id),
+                '/files_on_hold',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -343,7 +337,7 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionLegalHolds)
+        return deserialize(response.data, FileVersionLegalHolds)
 
     def get_legal_hold_policy_assignment_file_version_on_hold(
         self,
@@ -414,22 +408,18 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'fields': to_string(fields),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+            'fields': to_string(fields),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                    '/file_versions_on_hold',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policy_assignments/',
+                to_string(legal_hold_policy_assignment_id),
+                '/file_versions_on_hold',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -439,4 +429,4 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionLegalHolds)
+        return deserialize(response.data, FileVersionLegalHolds)

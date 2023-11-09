@@ -44,6 +44,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField(str, Enum):
     REPLACE = 'replace'
@@ -197,13 +201,11 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/global/boxSkillsCards',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/global/boxSkillsCards',
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -212,7 +214,7 @@ class SkillsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SkillCardsMetadata)
+        return deserialize(response.data, SkillCardsMetadata)
 
     def create_file_metadata_global_box_skills_card(
         self,
@@ -247,24 +249,22 @@ class SkillsManager:
         request_body: Dict = {'cards': cards}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/global/boxSkillsCards',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/global/boxSkillsCards',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SkillCardsMetadata)
+        return deserialize(response.data, SkillCardsMetadata)
 
     def update_file_metadata_global_box_skills_card(
         self,
@@ -291,24 +291,22 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/global/boxSkillsCards',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/global/boxSkillsCards',
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SkillCardsMetadata)
+        return deserialize(response.data, SkillCardsMetadata)
 
     def delete_file_metadata_global_box_skills_card(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -330,13 +328,11 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/global/boxSkillsCards',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/global/boxSkillsCards',
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -393,13 +389,13 @@ class SkillsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/skill_invocations/', to_string(skill_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/skill_invocations/', to_string(skill_id)
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format=None,
                 auth=self.auth,

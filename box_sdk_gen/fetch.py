@@ -15,6 +15,7 @@ from .box_response import APIResponse
 from .network import NetworkSession
 from .auth import Authentication
 from .utils import ByteStream, ResponseByteStream
+from .json import SerializedData, sd_to_json, sd_to_url_params, json_to_serialized_data
 
 DEFAULT_MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5
@@ -30,7 +31,7 @@ X_BOX_UA_HEADER = (
 @dataclass
 class MultipartItem:
     part_name: str
-    body: str = None
+    data: SerializedData = None
     file_stream: ByteStream = None
     file_name: str = ''
     content_type: str = None
@@ -41,10 +42,10 @@ class FetchOptions:
     method: str = "GET"
     params: Dict[str, str] = None
     headers: Dict[str, str] = None
-    body: str = None
+    data: SerializedData = None
     file_stream: ByteStream = None
     multipart_data: List[MultipartItem] = None
-    content_type: str = ""
+    content_type: str = "application/json"
     response_format: Optional[str] = None
     auth: Authentication = None
     network_session: NetworkSession = None
@@ -53,7 +54,7 @@ class FetchOptions:
 @dataclass
 class FetchResponse:
     status: int
-    text: Optional[str] = None
+    data: Optional[SerializedData] = None
     content: Optional[ByteStream] = None
 
 
@@ -101,7 +102,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         method=options.method,
         url=url,
         headers=headers,
-        body=options.file_stream or options.body,
+        data=options.file_stream or options.data,
         content_type=options.content_type,
         params=params,
         multipart_data=options.multipart_data,
@@ -120,7 +121,11 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             else:
                 return FetchResponse(
                     status=response.status_code,
-                    text=response.text,
+                    data=(
+                        json_to_serialized_data(response.text)
+                        if response.text
+                        else None
+                    ),
                     content=io.BytesIO(response.content),
                 )
 
@@ -148,7 +153,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             method=options.method,
             url=url,
             headers=headers,
-            body=options.body,
+            data=options.file_stream or options.data,
             content_type=options.content_type,
             params=params,
             multipart_data=options.multipart_data,
@@ -162,7 +167,11 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
 
 def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
-    headers = options.headers or {}
+    headers = {}
+    if options.network_session:
+        headers.update(options.network_session.additional_headers)
+    if options.headers:
+        headers.update(options.headers)
     if options.auth:
         headers['Authorization'] = (
             'Bearer'
@@ -179,7 +188,7 @@ def __make_request(
     method,
     url,
     headers,
-    body,
+    data,
     content_type,
     params,
     multipart_data,
@@ -189,8 +198,8 @@ def __make_request(
         if content_type == 'multipart/form-data':
             fields = OrderedDict()
             for part in multipart_data:
-                if part.body:
-                    fields[part.part_name] = part.body
+                if part.data:
+                    fields[part.part_name] = sd_to_json(part.data)
                 else:
                     file_stream = part.file_stream
                     file_stream_position = file_stream.tell()
@@ -202,10 +211,25 @@ def __make_request(
                     )
 
             multipart_stream = MultipartEncoder(fields)
-            body = multipart_stream
+            data = multipart_stream
             headers['Content-Type'] = multipart_stream.content_type
         else:
             headers['Content-Type'] = content_type
+
+    def get_data():
+        if (
+            content_type == 'application/json'
+            or content_type == 'application/json-patch+json'
+        ):
+            return sd_to_json(data) if data else None
+        if content_type == 'application/x-www-form-urlencoded':
+            return sd_to_url_params(data)
+        if (
+            content_type == 'multipart/form-data'
+            or content_type == 'application/octet-stream'
+        ):
+            return data
+        raise
 
     raised_exception = None
     try:
@@ -213,7 +237,7 @@ def __make_request(
             method=method,
             url=url,
             headers=headers,
-            data=body,
+            data=get_data(),
             params=params,
             stream=True,
         )

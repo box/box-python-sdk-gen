@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateTermOfServiceUserStatusTosArgTypeField(str, Enum):
@@ -105,9 +109,9 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'tos_id': to_string(tos_id), 'user_id': to_string(user_id)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'tos_id': to_string(tos_id), 'user_id': to_string(user_id)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']),
@@ -120,7 +124,7 @@ class TermsOfServiceUserStatusesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfServiceUserStatuses)
+        return deserialize(response.data, TermsOfServiceUserStatuses)
 
     def create_term_of_service_user_status(
         self,
@@ -149,14 +153,14 @@ class TermsOfServiceUserStatusesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfServiceUserStatus)
+        return deserialize(response.data, TermsOfServiceUserStatus)
 
     def update_term_of_service_user_status_by_id(
         self,
@@ -179,20 +183,18 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/terms_of_service_user_statuses/',
-                    to_string(terms_of_service_user_status_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/terms_of_service_user_statuses/',
+                to_string(terms_of_service_user_status_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfServiceUserStatus)
+        return deserialize(response.data, TermsOfServiceUserStatus)

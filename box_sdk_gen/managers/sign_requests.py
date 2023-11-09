@@ -44,6 +44,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class CreateSignRequestSignatureColorArg(str, Enum):
     BLUE = 'blue'
@@ -77,13 +81,11 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/sign_requests/',
-                    to_string(sign_request_id),
-                    '/cancel',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/sign_requests/',
+                to_string(sign_request_id),
+                '/cancel',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -92,7 +94,7 @@ class SignRequestsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignRequest)
+        return deserialize(response.data, SignRequest)
 
     def resend_sign_request(
         self,
@@ -111,13 +113,11 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/sign_requests/',
-                    to_string(sign_request_id),
-                    '/resend',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/sign_requests/',
+                to_string(sign_request_id),
+                '/resend',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -145,9 +145,9 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/sign_requests/', to_string(sign_request_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/sign_requests/', to_string(sign_request_id)
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -156,7 +156,7 @@ class SignRequestsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignRequest)
+        return deserialize(response.data, SignRequest)
 
     def get_sign_requests(
         self,
@@ -180,9 +180,9 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/sign_requests']),
@@ -195,7 +195,7 @@ class SignRequestsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignRequests)
+        return deserialize(response.data, SignRequests)
 
     def create_sign_request(
         self,
@@ -287,11 +287,11 @@ class SignRequestsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SignRequest)
+        return deserialize(response.data, SignRequest)

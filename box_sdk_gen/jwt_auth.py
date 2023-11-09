@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import json
 import random
 import string
 
@@ -23,6 +22,7 @@ from .auth_schemas import (
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 from .schemas import AccessToken
+from .json import json_to_serialized_data
 
 
 class JWTConfig:
@@ -106,7 +106,7 @@ class JWTConfig:
         :return:
             Auth instance configured as specified by the config dictionary.
         """
-        config_dict: dict = json.loads(config_json_string)
+        config_dict: dict = json_to_serialized_data(config_json_string)
         if 'boxAppSettings' not in config_dict:
             raise ValueError('boxAppSettings not present in configuration')
         return cls(
@@ -232,13 +232,13 @@ class BoxJWTAuth(Authentication):
             'https://api.box.com/oauth2/token',
             FetchOptions(
                 method='POST',
-                body=urlencode(request_body.to_dict()),
-                headers={'content-type': 'application/x-www-form-urlencoded'},
+                data=request_body.to_dict(),
+                content_type='application/x-www-form-urlencoded',
                 network_session=network_session,
             ),
         )
 
-        new_token = AccessToken.from_dict(json.loads(response.text))
+        new_token = AccessToken.from_dict(response.data)
         self.token_storage.store(new_token)
         return new_token
 

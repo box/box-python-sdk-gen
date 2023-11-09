@@ -22,11 +22,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class RecentItemsManager:
@@ -73,13 +77,11 @@ class RecentItemsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'marker': to_string(marker),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'marker': to_string(marker),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/recent_items']),
@@ -92,4 +94,4 @@ class RecentItemsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, RecentItems)
+        return deserialize(response.data, RecentItems)

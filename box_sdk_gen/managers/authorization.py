@@ -20,6 +20,8 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
@@ -99,15 +101,13 @@ class AuthorizationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'response_type': to_string(response_type),
-                'client_id': to_string(client_id),
-                'redirect_uri': to_string(redirect_uri),
-                'state': to_string(state),
-                'scope': to_string(scope),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'response_type': to_string(response_type),
+            'client_id': to_string(client_id),
+            'redirect_uri': to_string(redirect_uri),
+            'state': to_string(state),
+            'scope': to_string(scope),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://account.box.com/api/oauth2/authorize']),
