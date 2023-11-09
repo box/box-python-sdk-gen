@@ -32,6 +32,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class UpdateFileWatermarkWatermarkArgImprintField(str, Enum):
     DEFAULT = 'default'
@@ -77,9 +81,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -88,7 +92,7 @@ class FileWatermarksManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Watermark)
+        return deserialize(response.data, Watermark)
 
     def update_file_watermark(
         self,
@@ -116,20 +120,20 @@ class FileWatermarksManager:
         request_body: Dict = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Watermark)
+        return deserialize(response.data, Watermark)
 
     def delete_file_watermark(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -151,9 +155,9 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/files/', to_string(file_id), '/watermark']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -4,8 +4,6 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
-
 from box_sdk_gen.schemas import FolderLocks
 
 from box_sdk_gen.schemas import FolderLock
@@ -18,13 +16,13 @@ from box_sdk_gen.utils import get_uuid
 
 from test.commons import get_default_client
 
+from test.commons import create_new_folder
+
 client: BoxClient = get_default_client()
 
 
 def testFolderLocks():
-    folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
-    )
+    folder: FolderFull = create_new_folder()
     folder_locks: FolderLocks = client.folder_locks.get_folder_locks(
         folder_id=folder.id
     )

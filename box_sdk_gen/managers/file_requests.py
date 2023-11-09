@@ -36,6 +36,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class UpdateFileRequestByIdStatusArg(str, Enum):
     ACTIVE = 'active'
@@ -101,9 +105,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -112,7 +116,7 @@ class FileRequestsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileRequest)
+        return deserialize(response.data, FileRequest)
 
     def update_file_request_by_id(
         self,
@@ -192,24 +196,24 @@ class FileRequestsManager:
             'is_description_required': is_description_required,
             'expires_at': expires_at,
         }
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileRequest)
+        return deserialize(response.data, FileRequest)
 
     def delete_file_request_by_id(
         self,
@@ -233,9 +237,9 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/file_requests/', to_string(file_request_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -322,21 +326,19 @@ class FileRequestsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/file_requests/',
-                    to_string(file_request_id),
-                    '/copy',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_requests/',
+                to_string(file_request_id),
+                '/copy',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileRequest)
+        return deserialize(response.data, FileRequest)

@@ -16,7 +16,11 @@ This operation is performed by calling function `get_legal_hold_policies`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policies/).
 
-_Currently we don't have an example for calling `get_legal_hold_policies` in integration tests_
+<!-- sample get_legal_hold_policies -->
+
+```python
+client.legal_hold_policies.get_legal_hold_policies()
+```
 
 ### Arguments
 
@@ -46,7 +50,11 @@ This operation is performed by calling function `create_legal_hold_policy`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-legal-hold-policies/).
 
-_Currently we don't have an example for calling `create_legal_hold_policy` in integration tests_
+<!-- sample post_legal_hold_policies -->
+
+```python
+client.legal_hold_policies.create_legal_hold_policy(policy_name=legal_hold_policy_name, description=legal_hold_description, is_ongoing=True)
+```
 
 ### Arguments
 
@@ -78,7 +86,11 @@ This operation is performed by calling function `get_legal_hold_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policies-id/).
 
-_Currently we don't have an example for calling `get_legal_hold_policy_by_id` in integration tests_
+<!-- sample get_legal_hold_policies_id -->
+
+```python
+client.legal_hold_policies.get_legal_hold_policy_by_id(legal_hold_policy_id=legal_hold_policy_id)
+```
 
 ### Arguments
 
@@ -102,7 +114,11 @@ This operation is performed by calling function `update_legal_hold_policy_by_id`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-legal-hold-policies-id/).
 
-_Currently we don't have an example for calling `update_legal_hold_policy_by_id` in integration tests_
+<!-- sample put_legal_hold_policies_id -->
+
+```python
+client.legal_hold_policies.update_legal_hold_policy_by_id(legal_hold_policy_id=legal_hold_policy_id, policy_name=updated_legal_hold_policy_name)
+```
 
 ### Arguments
 
@@ -135,7 +151,11 @@ This operation is performed by calling function `delete_legal_hold_policy_by_id`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-legal-hold-policies-id/).
 
-_Currently we don't have an example for calling `delete_legal_hold_policy_by_id` in integration tests_
+<!-- sample delete_legal_hold_policies_id -->
+
+```python
+client.legal_hold_policies.delete_legal_hold_policy_by_id(legal_hold_policy_id=legal_hold_policy_id)
+```
 
 ### Arguments
 

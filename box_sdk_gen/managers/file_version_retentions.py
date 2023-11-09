@@ -24,11 +24,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetFileVersionRetentionsDispositionActionArg(str, Enum):
@@ -87,18 +91,16 @@ class FileVersionRetentionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'file_id': to_string(file_id),
-                'file_version_id': to_string(file_version_id),
-                'policy_id': to_string(policy_id),
-                'disposition_action': to_string(disposition_action),
-                'disposition_before': to_string(disposition_before),
-                'disposition_after': to_string(disposition_after),
-                'limit': to_string(limit),
-                'marker': to_string(marker),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'file_id': to_string(file_id),
+            'file_version_id': to_string(file_version_id),
+            'policy_id': to_string(policy_id),
+            'disposition_action': to_string(disposition_action),
+            'disposition_before': to_string(disposition_before),
+            'disposition_after': to_string(disposition_after),
+            'limit': to_string(limit),
+            'marker': to_string(marker),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/file_version_retentions']),
@@ -111,7 +113,7 @@ class FileVersionRetentionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionRetentions)
+        return deserialize(response.data, FileVersionRetentions)
 
     def get_file_version_retention_by_id(
         self,
@@ -130,12 +132,10 @@ class FileVersionRetentionsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/file_version_retentions/',
-                    to_string(file_version_retention_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_version_retentions/',
+                to_string(file_version_retention_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -144,4 +144,4 @@ class FileVersionRetentionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionRetention)
+        return deserialize(response.data, FileVersionRetention)

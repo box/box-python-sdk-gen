@@ -28,6 +28,8 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import SerializedData
+
 
 class SessionTerminationManager:
     def __init__(
@@ -71,14 +73,14 @@ class SessionTerminationManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SessionTerminationMessage)
+        return deserialize(response.data, SessionTerminationMessage)
 
     def create_group_terminate_session(
         self,
@@ -110,11 +112,11 @@ class SessionTerminationManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, SessionTerminationMessage)
+        return deserialize(response.data, SessionTerminationMessage)

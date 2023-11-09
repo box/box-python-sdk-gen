@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class PromoteFileVersionTypeArg(str, Enum):
@@ -93,18 +97,16 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'offset': to_string(offset),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'offset': to_string(offset),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/files/', to_string(file_id), '/versions']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/versions'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -114,7 +116,7 @@ class FileVersionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersions)
+        return deserialize(response.data, FileVersions)
 
     def get_file_version_by_id(
         self,
@@ -156,14 +158,12 @@ class FileVersionsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/versions/',
+                to_string(file_version_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -173,7 +173,7 @@ class FileVersionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionFull)
+        return deserialize(response.data, FileVersionFull)
 
     def update_file_version_by_id(
         self,
@@ -215,25 +215,23 @@ class FileVersionsManager:
         request_body: Dict = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/versions/',
+                to_string(file_version_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionFull)
+        return deserialize(response.data, FileVersionFull)
 
     def delete_file_version_by_id(
         self,
@@ -270,18 +268,16 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/versions/',
+                to_string(file_version_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -365,22 +361,20 @@ class FileVersionsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/versions/current',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/versions/current',
+            ]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionFull)
+        return deserialize(response.data, FileVersionFull)

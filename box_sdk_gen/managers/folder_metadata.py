@@ -38,6 +38,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class GetFolderMetadataByIdScopeArg(str, Enum):
     GLOBAL = 'global'
@@ -151,9 +155,9 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/metadata']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/', to_string(folder_id), '/metadata'
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -162,7 +166,7 @@ class FolderMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Metadatas)
+        return deserialize(response.data, Metadatas)
 
     def get_folder_metadata_by_id(
         self,
@@ -199,16 +203,14 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/',
+                to_string(folder_id),
+                '/metadata/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -217,7 +219,7 @@ class FolderMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, MetadataFull)
+        return deserialize(response.data, MetadataFull)
 
     def create_folder_metadata_by_id(
         self,
@@ -272,27 +274,25 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/',
+                to_string(folder_id),
+                '/metadata/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Metadata)
+        return deserialize(response.data, Metadata)
 
     def update_folder_metadata_by_id(
         self,
@@ -344,27 +344,25 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/',
+                to_string(folder_id),
+                '/metadata/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Metadata)
+        return deserialize(response.data, Metadata)
 
     def delete_folder_metadata_by_id(
         self,
@@ -398,16 +396,14 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/',
+                to_string(folder_id),
+                '/metadata/',
+                to_string(scope),
+                '/',
+                to_string(template_key),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

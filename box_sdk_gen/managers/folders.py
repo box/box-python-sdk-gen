@@ -30,11 +30,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetFolderByIdSortArg(str, Enum):
@@ -357,22 +361,18 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'sort': to_string(sort),
-                'direction': to_string(direction),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                **extra_headers,
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'sort': to_string(sort),
+            'direction': to_string(direction),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+        })
+        headers_map: Dict[str, str] = prepare_params({
+            'if-none-match': to_string(if_none_match),
+            'boxapi': to_string(boxapi),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
@@ -384,7 +384,7 @@ class FoldersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderFull)
+        return deserialize(response.data, FolderFull)
 
     def update_folder_by_id(
         self,
@@ -499,23 +499,23 @@ class FoldersManager:
             'can_non_owners_view_collaborators': can_non_owners_view_collaborators,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderFull)
+        return deserialize(response.data, FolderFull)
 
     def delete_folder_by_id(
         self,
@@ -554,12 +554,12 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'recursive': to_string(recursive)}
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'recursive': to_string(recursive)
+        })
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
             FetchOptions(
@@ -678,24 +678,22 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'usemarker': to_string(usemarker),
-                'marker': to_string(marker),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-                'sort': to_string(sort),
-                'direction': to_string(direction),
-            }
-        )
-        headers_map: Dict[str, str] = prepare_params(
-            {'boxapi': to_string(boxapi), **extra_headers}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'usemarker': to_string(usemarker),
+            'marker': to_string(marker),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+            'sort': to_string(sort),
+            'direction': to_string(direction),
+        })
+        headers_map: Dict[str, str] = prepare_params({
+            'boxapi': to_string(boxapi), **extra_headers
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/items']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/', to_string(folder_id), '/items'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -705,7 +703,7 @@ class FoldersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Items)
+        return deserialize(response.data, Items)
 
     def create_folder(
         self,
@@ -760,14 +758,14 @@ class FoldersManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderFull)
+        return deserialize(response.data, FolderFull)
 
     def copy_folder(
         self,
@@ -819,18 +817,18 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/folders/', to_string(folder_id), '/copy']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/folders/', to_string(folder_id), '/copy'
+            ]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FolderFull)
+        return deserialize(response.data, FolderFull)

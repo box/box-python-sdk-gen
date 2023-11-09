@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class UpdateFileByIdParentArg(BaseObject):
@@ -265,14 +269,12 @@ class FilesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                'x-rep-hints': to_string(x_rep_hints),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-none-match': to_string(if_none_match),
+            'boxapi': to_string(boxapi),
+            'x-rep-hints': to_string(x_rep_hints),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
@@ -284,7 +286,7 @@ class FilesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def update_file_by_id(
         self,
@@ -382,23 +384,23 @@ class FilesManager:
             'tags': tags,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def delete_file_by_id(
         self,
@@ -437,9 +439,9 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-match': to_string(if_match), **extra_headers
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
             FetchOptions(
@@ -505,14 +507,14 @@ class FilesManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def get_file_thumbnail_by_id(
         self,
@@ -568,24 +570,20 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'min_height': to_string(min_height),
-                'min_width': to_string(min_width),
-                'max_height': to_string(max_height),
-                'max_width': to_string(max_width),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'min_height': to_string(min_height),
+            'min_width': to_string(min_width),
+            'max_height': to_string(max_height),
+            'max_width': to_string(max_width),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/thumbnail.',
-                    to_string(extension),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/thumbnail.',
+                to_string(extension),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

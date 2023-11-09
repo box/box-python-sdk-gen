@@ -7,6 +7,7 @@ from io import SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
 
 from .base_object import BaseObject
+from .json import sd_to_json
 from .serialization import serialize
 
 ByteStream = BufferedIOBase
@@ -104,7 +105,7 @@ def to_string(value: Any) -> Optional[str]:
         or isinstance(value, list)
         and isinstance(value[0], BaseObject)
     ):
-        return ''.join(serialize(value).split())
+        return ''.join(sd_to_json(serialize(value)).split())
     if isinstance(value, list):
         return ','.join(map(to_string, value))
     if isinstance(value, Enum):

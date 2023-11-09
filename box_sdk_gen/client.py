@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Dict
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
@@ -166,9 +166,7 @@ from box_sdk_gen.network import NetworkSession
 
 
 class BoxClient:
-    def __init__(
-        self, auth: Authentication, network_session: Optional[NetworkSession] = None
-    ):
+    def __init__(self, auth: Authentication, network_session: NetworkSession = None):
         if network_session is None:
             network_session = NetworkSession()
         self.auth = auth
@@ -380,4 +378,41 @@ class BoxClient:
         )
         self.integration_mappings = IntegrationMappingsManager(
             auth=self.auth, network_session=self.network_session
+        )
+
+    def with_as_user_header(self, user_id: str) -> 'BoxClient':
+        """
+        Create a new client to impersonate user with the provided ID. All calls made with the new client will be made in context of the impersonated user, leaving the original client unmodified.
+        :param user_id: ID of an user to impersonate
+        :type user_id: str
+        """
+        return BoxClient(
+            auth=self.auth,
+            network_session=self.network_session.with_additional_headers({
+                'As-User': user_id
+            }),
+        )
+
+    def with_suppressed_notifications(self) -> 'BoxClient':
+        """
+        Create a new client with suppressed notifications. Calls made with the new client will not trigger email or webhook notifications
+        """
+        return BoxClient(
+            auth=self.auth,
+            network_session=self.network_session.with_additional_headers({
+                'Box-Notifications': 'off'
+            }),
+        )
+
+    def with_extra_headers(self, extra_headers: Dict[str, str] = None) -> 'BoxClient':
+        """
+        Create a new client with a custom set of headers that will be included in every API call
+        :param extra_headers: Custom set of headers that will be included in every API call
+        :type extra_headers: Dict[str, str], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        return BoxClient(
+            auth=self.auth,
+            network_session=self.network_session.with_additional_headers(extra_headers),
         )

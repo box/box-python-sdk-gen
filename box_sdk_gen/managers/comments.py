@@ -32,11 +32,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateCommentItemArgTypeField(str, Enum):
@@ -105,18 +109,16 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'offset': to_string(offset),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'offset': to_string(offset),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/files/', to_string(file_id), '/comments']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '/comments'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -126,7 +128,7 @@ class CommentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Comments)
+        return deserialize(response.data, Comments)
 
     def get_comment_by_id(
         self,
@@ -169,7 +171,7 @@ class CommentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, CommentFull)
+        return deserialize(response.data, CommentFull)
 
     def update_comment_by_id(
         self,
@@ -208,14 +210,14 @@ class CommentsManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, CommentFull)
+        return deserialize(response.data, CommentFull)
 
     def delete_comment_by_id(
         self, comment_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -299,11 +301,11 @@ class CommentsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Comment)
+        return deserialize(response.data, Comment)

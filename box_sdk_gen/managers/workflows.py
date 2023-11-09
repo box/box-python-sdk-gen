@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateWorkflowStartTypeArg(str, Enum):
@@ -174,14 +178,12 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'folder_id': to_string(folder_id),
-                'trigger_type': to_string(trigger_type),
-                'limit': to_string(limit),
-                'marker': to_string(marker),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'folder_id': to_string(folder_id),
+            'trigger_type': to_string(trigger_type),
+            'limit': to_string(limit),
+            'marker': to_string(marker),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/workflows']),
@@ -194,7 +196,7 @@ class WorkflowsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Workflows)
+        return deserialize(response.data, Workflows)
 
     def create_workflow_start(
         self,
@@ -242,13 +244,13 @@ class WorkflowsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/workflows/', to_string(workflow_id), '/start']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/workflows/', to_string(workflow_id), '/start'
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format=None,
                 auth=self.auth,

@@ -26,11 +26,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class LegalHoldPoliciesManager:
@@ -78,14 +82,12 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'policy_name': to_string(policy_name),
-                'fields': to_string(fields),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'policy_name': to_string(policy_name),
+            'fields': to_string(fields),
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/legal_hold_policies']),
@@ -98,7 +100,7 @@ class LegalHoldPoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicies)
+        return deserialize(response.data, LegalHoldPolicies)
 
     def create_legal_hold_policy(
         self,
@@ -159,14 +161,14 @@ class LegalHoldPoliciesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicy)
+        return deserialize(response.data, LegalHoldPolicy)
 
     def get_legal_hold_policy_by_id(
         self,
@@ -185,12 +187,10 @@ class LegalHoldPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policies/',
-                    to_string(legal_hold_policy_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policies/',
+                to_string(legal_hold_policy_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -199,7 +199,7 @@ class LegalHoldPoliciesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicy)
+        return deserialize(response.data, LegalHoldPolicy)
 
     def update_legal_hold_policy_by_id(
         self,
@@ -232,23 +232,21 @@ class LegalHoldPoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policies/',
-                    to_string(legal_hold_policy_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policies/',
+                to_string(legal_hold_policy_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, LegalHoldPolicy)
+        return deserialize(response.data, LegalHoldPolicy)
 
     def delete_legal_hold_policy_by_id(
         self,
@@ -273,12 +271,10 @@ class LegalHoldPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/legal_hold_policies/',
-                    to_string(legal_hold_policy_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/legal_hold_policies/',
+                to_string(legal_hold_policy_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

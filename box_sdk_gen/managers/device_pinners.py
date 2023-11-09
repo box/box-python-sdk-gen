@@ -30,6 +30,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class GetEnterpriseDevicePinnersDirectionArg(str, Enum):
     ASC = 'ASC'
@@ -62,9 +66,9 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -73,7 +77,7 @@ class DevicePinnersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, DevicePinner)
+        return deserialize(response.data, DevicePinner)
 
     def delete_device_pinner_by_id(
         self,
@@ -92,9 +96,9 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -138,22 +142,18 @@ class DevicePinnersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'direction': to_string(direction),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+            'direction': to_string(direction),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/enterprises/',
-                    to_string(enterprise_id),
-                    '/device_pinners',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/enterprises/',
+                to_string(enterprise_id),
+                '/device_pinners',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -163,4 +163,4 @@ class DevicePinnersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, DevicePinners)
+        return deserialize(response.data, DevicePinners)

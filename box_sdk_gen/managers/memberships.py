@@ -30,11 +30,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateGroupMembershipUserArg(BaseObject):
@@ -106,14 +110,14 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'limit': to_string(limit), 'offset': to_string(offset)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'limit': to_string(limit), 'offset': to_string(offset)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/users/', to_string(user_id), '/memberships']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/users/', to_string(user_id), '/memberships'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -123,7 +127,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupMemberships)
+        return deserialize(response.data, GroupMemberships)
 
     def get_group_memberships(
         self,
@@ -155,14 +159,14 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'limit': to_string(limit), 'offset': to_string(offset)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'limit': to_string(limit), 'offset': to_string(offset)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/groups/', to_string(group_id), '/memberships']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/groups/', to_string(group_id), '/memberships'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -172,7 +176,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupMemberships)
+        return deserialize(response.data, GroupMemberships)
 
     def create_group_membership(
         self,
@@ -231,14 +235,14 @@ class MembershipsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupMembership)
+        return deserialize(response.data, GroupMembership)
 
     def get_group_membership_by_id(
         self,
@@ -274,12 +278,10 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/group_memberships/',
-                    to_string(group_membership_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/group_memberships/',
+                to_string(group_membership_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -289,7 +291,7 @@ class MembershipsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupMembership)
+        return deserialize(response.data, GroupMembership)
 
     def update_group_membership_by_id(
         self,
@@ -342,24 +344,22 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/group_memberships/',
-                    to_string(group_membership_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/group_memberships/',
+                to_string(group_membership_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupMembership)
+        return deserialize(response.data, GroupMembership)
 
     def delete_group_membership_by_id(
         self,
@@ -384,12 +384,10 @@ class MembershipsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/group_memberships/',
-                    to_string(group_membership_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/group_memberships/',
+                to_string(group_membership_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -81,7 +81,8 @@ if __name__ == '__main__':
 
 ### Create Custom Application
 
-To run integration tests locally you will need a `Custom App` created at https://cloud.app.box.com/developers/console
+To run integration tests locally you will need a `Custom App` created in the [Box Developer
+Console](https://app.box.com/developers/console)
 with `Server Authentication (with JWT)` selected as authentication method.
 Once created you can edit properties of the application:
 
@@ -96,6 +97,7 @@ Now select `Authorization` and submit application to be reviewed by account admi
    download your app configuration settings as JSON.
 2. Encode configuration file to Base64, e.g. using command: `base64 -i path_to_json_file`
 3. Set environment variable: `JWT_CONFIG_BASE_64` with base64 encoded jwt configuration file
+4. Set environment variable: `BOX_FILE_REQUEST_ID` with ID of file request already created in the user account.
 
 ### Running tests
 

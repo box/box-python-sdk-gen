@@ -34,6 +34,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
     str, Enum
@@ -118,13 +122,11 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/enterprise/securityClassification-6VMVochwUWo',
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -133,7 +135,7 @@ class FileClassificationsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Classification)
+        return deserialize(response.data, Classification)
 
     def create_file_metadata_enterprise_security_classification(
         self,
@@ -179,24 +181,22 @@ class FileClassificationsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/enterprise/securityClassification-6VMVochwUWo',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Classification)
+        return deserialize(response.data, Classification)
 
     def update_file_metadata_enterprise_security_classification(
         self,
@@ -234,24 +234,22 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/enterprise/securityClassification-6VMVochwUWo',
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json-patch+json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Classification)
+        return deserialize(response.data, Classification)
 
     def delete_file_metadata_enterprise_security_classification(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -282,13 +280,11 @@ class FileClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '/metadata/enterprise/securityClassification-6VMVochwUWo',
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

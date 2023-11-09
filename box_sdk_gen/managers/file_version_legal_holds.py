@@ -28,6 +28,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class FileVersionLegalHoldsManager:
     def __init__(
@@ -58,12 +62,10 @@ class FileVersionLegalHoldsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/file_version_legal_holds/',
-                    to_string(file_version_legal_hold_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/file_version_legal_holds/',
+                to_string(file_version_legal_hold_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -72,7 +74,7 @@ class FileVersionLegalHoldsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionLegalHold)
+        return deserialize(response.data, FileVersionLegalHold)
 
     def get_file_version_legal_holds(
         self,
@@ -139,13 +141,11 @@ class FileVersionLegalHoldsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'policy_id': to_string(policy_id),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'policy_id': to_string(policy_id),
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/file_version_legal_holds']),
@@ -158,4 +158,4 @@ class FileVersionLegalHoldsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileVersionLegalHolds)
+        return deserialize(response.data, FileVersionLegalHolds)

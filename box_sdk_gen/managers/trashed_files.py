@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class RestoreFileFromTrashParentArg(BaseObject):
@@ -103,14 +107,14 @@ class TrashedFilesManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TrashFileRestored)
+        return deserialize(response.data, TrashFileRestored)
 
     def get_file_trash(
         self,
@@ -179,7 +183,7 @@ class TrashedFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TrashFile)
+        return deserialize(response.data, TrashFile)
 
     def delete_file_trash(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

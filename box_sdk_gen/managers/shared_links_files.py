@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class UpdateFileAddSharedLinkSharedLinkArgAccessField(str, Enum):
@@ -276,13 +280,11 @@ class SharedLinksFilesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'if-none-match': to_string(if_none_match),
-                'boxapi': to_string(boxapi),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'if-none-match': to_string(if_none_match),
+            'boxapi': to_string(boxapi),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shared_items']),
             FetchOptions(
@@ -294,7 +296,7 @@ class SharedLinksFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def get_file_get_shared_link(
         self,
@@ -323,13 +325,9 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '#get_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '#get_shared_link'
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -339,7 +337,7 @@ class SharedLinksFilesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def update_file_add_shared_link(
         self,
@@ -374,25 +372,21 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '#add_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/', to_string(file_id), '#add_shared_link'
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def update_file_update_shared_link(
         self,
@@ -425,25 +419,23 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '#update_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '#update_shared_link',
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)
 
     def update_file_remove_shared_link(
         self,
@@ -477,22 +469,20 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/files/',
-                    to_string(file_id),
-                    '#remove_shared_link',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/files/',
+                to_string(file_id),
+                '#remove_shared_link',
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, FileFull)
+        return deserialize(response.data, FileFull)

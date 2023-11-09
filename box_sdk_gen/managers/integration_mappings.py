@@ -34,11 +34,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetIntegrationMappingSlackPartnerItemTypeArg(str, Enum):
@@ -100,17 +104,15 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-                'partner_item_type': to_string(partner_item_type),
-                'partner_item_id': to_string(partner_item_id),
-                'box_item_id': to_string(box_item_id),
-                'box_item_type': to_string(box_item_type),
-                'is_manually_created': to_string(is_manually_created),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+            'partner_item_type': to_string(partner_item_type),
+            'partner_item_id': to_string(partner_item_id),
+            'box_item_id': to_string(box_item_id),
+            'box_item_type': to_string(box_item_type),
+            'is_manually_created': to_string(is_manually_created),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/integration_mappings/slack']),
@@ -123,7 +125,7 @@ class IntegrationMappingsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, IntegrationMappings)
+        return deserialize(response.data, IntegrationMappings)
 
     def create_integration_mapping_slack(
         self,
@@ -159,14 +161,14 @@ class IntegrationMappingsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, IntegrationMapping)
+        return deserialize(response.data, IntegrationMapping)
 
     def update_integration_mapping_slack_by_id(
         self,
@@ -197,23 +199,21 @@ class IntegrationMappingsManager:
         request_body: Dict = {'box_item': box_item, 'options': options}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/integration_mappings/slack/',
-                    to_string(integration_mapping_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/integration_mappings/slack/',
+                to_string(integration_mapping_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, IntegrationMapping)
+        return deserialize(response.data, IntegrationMapping)
 
     def delete_integration_mapping_slack_by_id(
         self,
@@ -238,12 +238,10 @@ class IntegrationMappingsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/integration_mappings/slack/',
-                    to_string(integration_mapping_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/integration_mappings/slack/',
+                to_string(integration_mapping_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

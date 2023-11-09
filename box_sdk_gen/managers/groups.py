@@ -30,11 +30,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CreateGroupInvitabilityLevelArg(str, Enum):
@@ -107,14 +111,12 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'filter_term': to_string(filter_term),
-                'fields': to_string(fields),
-                'limit': to_string(limit),
-                'offset': to_string(offset),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'filter_term': to_string(filter_term),
+            'fields': to_string(fields),
+            'limit': to_string(limit),
+            'offset': to_string(offset),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/groups']),
@@ -127,7 +129,7 @@ class GroupsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Groups)
+        return deserialize(response.data, Groups)
 
     def create_group(
         self,
@@ -213,14 +215,14 @@ class GroupsManager:
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Group)
+        return deserialize(response.data, Group)
 
     def get_group_by_id(
         self,
@@ -266,7 +268,7 @@ class GroupsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupFull)
+        return deserialize(response.data, GroupFull)
 
     def update_group_by_id(
         self,
@@ -361,14 +363,14 @@ class GroupsManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, GroupFull)
+        return deserialize(response.data, GroupFull)
 
     def delete_group_by_id(
         self, group_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None

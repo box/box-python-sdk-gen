@@ -32,6 +32,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class ShieldInformationBarrierSegmentsManager:
     def __init__(
@@ -59,12 +63,10 @@ class ShieldInformationBarrierSegmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/shield_information_barrier_segments/',
-                    to_string(shield_information_barrier_segment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/shield_information_barrier_segments/',
+                to_string(shield_information_barrier_segment_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -73,7 +75,7 @@ class ShieldInformationBarrierSegmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierSegment)
+        return deserialize(response.data, ShieldInformationBarrierSegment)
 
     def update_shield_information_barrier_segment_by_id(
         self,
@@ -100,23 +102,21 @@ class ShieldInformationBarrierSegmentsManager:
         request_body: Dict = {'name': name, 'description': description}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/shield_information_barrier_segments/',
-                    to_string(shield_information_barrier_segment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/shield_information_barrier_segments/',
+                to_string(shield_information_barrier_segment_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierSegment)
+        return deserialize(response.data, ShieldInformationBarrierSegment)
 
     def delete_shield_information_barrier_segment_by_id(
         self,
@@ -138,12 +138,10 @@ class ShieldInformationBarrierSegmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/shield_information_barrier_segments/',
-                    to_string(shield_information_barrier_segment_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/shield_information_barrier_segments/',
+                to_string(shield_information_barrier_segment_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -179,15 +177,11 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'shield_information_barrier_id': to_string(
-                    shield_information_barrier_id
-                ),
-                'marker': to_string(marker),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'shield_information_barrier_id': to_string(shield_information_barrier_id),
+            'marker': to_string(marker),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barrier_segments']),
@@ -200,7 +194,7 @@ class ShieldInformationBarrierSegmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierSegments)
+        return deserialize(response.data, ShieldInformationBarrierSegments)
 
     def create_shield_information_barrier_segment(
         self,
@@ -231,11 +225,11 @@ class ShieldInformationBarrierSegmentsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrierSegment)
+        return deserialize(response.data, ShieldInformationBarrierSegment)

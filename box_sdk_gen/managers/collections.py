@@ -24,11 +24,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class CollectionsManager:
@@ -76,13 +80,11 @@ class CollectionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/collections']),
@@ -95,7 +97,7 @@ class CollectionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Collections)
+        return deserialize(response.data, Collections)
 
     def get_collection_items(
         self,
@@ -134,22 +136,18 @@ class CollectionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'fields': to_string(fields),
-                'offset': to_string(offset),
-                'limit': to_string(limit),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'fields': to_string(fields),
+            'offset': to_string(offset),
+            'limit': to_string(limit),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/collections/',
-                    to_string(collection_id),
-                    '/items',
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/collections/',
+                to_string(collection_id),
+                '/items',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -159,4 +157,4 @@ class CollectionsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Items)
+        return deserialize(response.data, Items)

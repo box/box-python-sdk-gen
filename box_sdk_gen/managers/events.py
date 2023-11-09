@@ -26,11 +26,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetEventsStreamTypeArg(str, Enum):
@@ -262,16 +266,14 @@ class EventsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {
-                'stream_type': to_string(stream_type),
-                'stream_position': to_string(stream_position),
-                'limit': to_string(limit),
-                'event_type': to_string(event_type),
-                'created_after': to_string(created_after),
-                'created_before': to_string(created_before),
-            }
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'stream_type': to_string(stream_type),
+            'stream_position': to_string(stream_position),
+            'limit': to_string(limit),
+            'event_type': to_string(event_type),
+            'created_after': to_string(created_after),
+            'created_before': to_string(created_before),
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/events']),
@@ -284,7 +286,7 @@ class EventsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Events)
+        return deserialize(response.data, Events)
 
     def get_events_with_long_polling(
         self, extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -379,4 +381,4 @@ class EventsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, RealtimeServers)
+        return deserialize(response.data, RealtimeServers)

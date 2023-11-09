@@ -34,6 +34,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import sd_to_json
+
+from box_sdk_gen.json import SerializedData
+
 
 class CreateShieldInformationBarrierChangeStatusStatusArg(str, Enum):
     PENDING = 'pending'
@@ -66,12 +70,10 @@ class ShieldInformationBarriersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/shield_information_barriers/',
-                    to_string(shield_information_barrier_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/shield_information_barriers/',
+                to_string(shield_information_barrier_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -80,7 +82,7 @@ class ShieldInformationBarriersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrier)
+        return deserialize(response.data, ShieldInformationBarrier)
 
     def create_shield_information_barrier_change_status(
         self,
@@ -102,20 +104,20 @@ class ShieldInformationBarriersManager:
         request_body: Dict = {'id': id, 'status': status}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                ['https://api.box.com/2.0/shield_information_barriers/change_status']
-            ),
+            ''.join([
+                'https://api.box.com/2.0/shield_information_barriers/change_status'
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrier)
+        return deserialize(response.data, ShieldInformationBarrier)
 
     def get_shield_information_barriers(
         self,
@@ -138,9 +140,9 @@ class ShieldInformationBarriersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'marker': to_string(marker), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/shield_information_barriers']),
@@ -153,7 +155,7 @@ class ShieldInformationBarriersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarriers)
+        return deserialize(response.data, ShieldInformationBarriers)
 
     def create_shield_information_barrier(
         self,
@@ -182,11 +184,11 @@ class ShieldInformationBarriersManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, ShieldInformationBarrier)
+        return deserialize(response.data, ShieldInformationBarrier)

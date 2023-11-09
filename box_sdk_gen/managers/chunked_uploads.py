@@ -44,6 +44,10 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
+from box_sdk_gen.json import SerializedData
+
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.utils import generate_byte_stream_from_buffer
 
 from box_sdk_gen.utils import hex_to_base_64
@@ -117,14 +121,14 @@ class ChunkedUploadsManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadSession)
+        return deserialize(response.data, UploadSession)
 
     def create_file_upload_session_for_existing_file(
         self,
@@ -155,24 +159,22 @@ class ChunkedUploadsManager:
         request_body: Dict = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/',
-                    to_string(file_id),
-                    '/upload_sessions',
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/',
+                to_string(file_id),
+                '/upload_sessions',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadSession)
+        return deserialize(response.data, UploadSession)
 
     def get_file_upload_session_by_id(
         self,
@@ -191,12 +193,10 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                to_string(upload_session_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -205,7 +205,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadSession)
+        return deserialize(response.data, UploadSession)
 
     def upload_file_part(
         self,
@@ -247,20 +247,16 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'content-range': to_string(content_range),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'digest': to_string(digest),
+            'content-range': to_string(content_range),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                to_string(upload_session_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -271,7 +267,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadedPart)
+        return deserialize(response.data, UploadedPart)
 
     def delete_file_upload_session_by_id(
         self,
@@ -293,12 +289,10 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                to_string(upload_session_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -336,18 +330,16 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'offset': to_string(offset), 'limit': to_string(limit)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'offset': to_string(offset), 'limit': to_string(limit)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                    '/parts',
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                to_string(upload_session_id),
+                '/parts',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -357,7 +349,7 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, UploadParts)
+        return deserialize(response.data, UploadParts)
 
     def create_file_upload_session_commit(
         self,
@@ -403,33 +395,29 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {'parts': parts}
-        headers_map: Dict[str, str] = prepare_params(
-            {
-                'digest': to_string(digest),
-                'if-match': to_string(if_match),
-                'if-none-match': to_string(if_none_match),
-                **extra_headers,
-            }
-        )
+        headers_map: Dict[str, str] = prepare_params({
+            'digest': to_string(digest),
+            'if-match': to_string(if_match),
+            'if-none-match': to_string(if_none_match),
+            **extra_headers,
+        })
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://upload.box.com/api/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                    '/commit',
-                ]
-            ),
+            ''.join([
+                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                to_string(upload_session_id),
+                '/commit',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Files)
+        return deserialize(response.data, Files)
 
     def reducer(self, acc: PartAccumulator, chunk: ByteStream):
         last_index: int = acc.last_index
@@ -442,16 +430,14 @@ class ChunkedUploadsManager:
         chunk_size: int = buffer_length(chunk_buffer)
         bytes_start: int = last_index + 1
         bytes_end: int = last_index + chunk_size
-        content_range: str = ''.join(
-            [
-                'bytes ',
-                to_string(bytes_start),
-                '-',
-                to_string(bytes_end),
-                '/',
-                to_string(acc.file_size),
-            ]
-        )
+        content_range: str = ''.join([
+            'bytes ',
+            to_string(bytes_start),
+            '-',
+            to_string(bytes_end),
+            '/',
+            to_string(acc.file_size),
+        ])
         uploaded_part: UploadedPart = self.upload_file_part(
             upload_session_id=acc.upload_session_id,
             request_body=generate_byte_stream_from_buffer(chunk_buffer),

@@ -28,11 +28,15 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
+from box_sdk_gen.json import sd_to_json
+
 from box_sdk_gen.fetch import fetch
 
 from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
+
+from box_sdk_gen.json import SerializedData
 
 
 class GetTermOfServicesTosTypeArg(str, Enum):
@@ -81,9 +85,9 @@ class TermsOfServicesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'tos_type': to_string(tos_type)}
-        )
+        query_params_map: Dict[str, str] = prepare_params({
+            'tos_type': to_string(tos_type)
+        })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(['https://api.box.com/2.0/terms_of_services']),
@@ -96,7 +100,7 @@ class TermsOfServicesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfServices)
+        return deserialize(response.data, TermsOfServices)
 
     def create_term_of_service(
         self,
@@ -130,14 +134,14 @@ class TermsOfServicesManager:
             FetchOptions(
                 method='POST',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, Task)
+        return deserialize(response.data, Task)
 
     def get_term_of_service_by_id(
         self,
@@ -156,12 +160,10 @@ class TermsOfServicesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/terms_of_services/',
-                    to_string(terms_of_service_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/terms_of_services/',
+                to_string(terms_of_service_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -170,7 +172,7 @@ class TermsOfServicesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfService)
+        return deserialize(response.data, TermsOfService)
 
     def update_term_of_service_by_id(
         self,
@@ -197,20 +199,18 @@ class TermsOfServicesManager:
         request_body: Dict = {'status': status, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    'https://api.box.com/2.0/terms_of_services/',
-                    to_string(terms_of_service_id),
-                ]
-            ),
+            ''.join([
+                'https://api.box.com/2.0/terms_of_services/',
+                to_string(terms_of_service_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
-                body=serialize(request_body),
+                data=serialize(request_body),
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.text, TermsOfService)
+        return deserialize(response.data, TermsOfService)
