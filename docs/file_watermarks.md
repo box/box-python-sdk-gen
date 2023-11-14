@@ -13,7 +13,11 @@ This operation is performed by calling function `get_file_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-watermark/).
 
-_Currently we don't have an example for calling `get_file_watermark` in integration tests_
+<!-- sample get_files_id_watermark -->
+
+```python
+client.file_watermarks.get_file_watermark(file_id=file.id)
+```
 
 ### Arguments
 
@@ -38,7 +42,11 @@ This operation is performed by calling function `update_file_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-watermark/).
 
-_Currently we don't have an example for calling `update_file_watermark` in integration tests_
+<!-- sample put_files_id_watermark -->
+
+```python
+client.file_watermarks.update_file_watermark(file_id=file.id, watermark=UpdateFileWatermarkWatermarkArg(imprint=UpdateFileWatermarkWatermarkArgImprintField.DEFAULT.value))
+```
 
 ### Arguments
 
@@ -66,7 +74,11 @@ This operation is performed by calling function `delete_file_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-watermark/).
 
-_Currently we don't have an example for calling `delete_file_watermark` in integration tests_
+<!-- sample delete_files_id_watermark -->
+
+```python
+client.file_watermarks.delete_file_watermark(file_id=file.id)
+```
 
 ### Arguments
 

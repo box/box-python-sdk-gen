@@ -13,7 +13,11 @@ This operation is performed by calling function `get_folder_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-watermark/).
 
-_Currently we don't have an example for calling `get_folder_watermark` in integration tests_
+<!-- sample get_folders_id_watermark -->
+
+```python
+client.folder_watermarks.get_folder_watermark(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -38,7 +42,11 @@ This operation is performed by calling function `update_folder_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-watermark/).
 
-_Currently we don't have an example for calling `update_folder_watermark` in integration tests_
+<!-- sample put_folders_id_watermark -->
+
+```python
+client.folder_watermarks.update_folder_watermark(folder_id=folder.id, watermark=UpdateFolderWatermarkWatermarkArg(imprint=UpdateFolderWatermarkWatermarkArgImprintField.DEFAULT.value))
+```
 
 ### Arguments
 
@@ -66,7 +74,11 @@ This operation is performed by calling function `delete_folder_watermark`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folders-id-watermark/).
 
-_Currently we don't have an example for calling `delete_folder_watermark` in integration tests_
+<!-- sample delete_folders_id_watermark -->
+
+```python
+client.folder_watermarks.delete_folder_watermark(folder_id=folder.id)
+```
 
 ### Arguments
 
