@@ -7,7 +7,7 @@ from .auth_schemas import TokenRequest, TokenRequestGrantType
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 from .schemas import AccessToken
-from .json import json_to_serialized_data
+from .json_data import json_to_serialized_data
 
 
 class OAuthConfig:

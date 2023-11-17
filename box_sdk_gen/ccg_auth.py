@@ -1,5 +1,3 @@
-import json
-from urllib.parse import urlencode
 from typing import Union, Optional
 
 from .auth import Authentication

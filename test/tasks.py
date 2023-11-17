@@ -6,7 +6,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import Task
 
@@ -36,7 +36,7 @@ def testCreateUpdateGetDeleteTask():
         ),
         file=generate_byte_stream(10),
     )
-    file: File = files.entries[0]
+    file: FileFull = files.entries[0]
     task: Task = client.tasks.create_task(
         item=CreateTaskItemArg(type=CreateTaskItemArgTypeField.FILE.value, id=file.id),
         action=CreateTaskActionArg.REVIEW.value,

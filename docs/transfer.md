@@ -43,7 +43,11 @@ This operation is performed by calling function `transfer_owned_folder`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-users-id-folders-0/).
 
-_Currently we don't have an example for calling `transfer_owned_folder` in integration tests_
+<!-- sample put_users_id_folders_0 -->
+
+```python
+client.transfer.transfer_owned_folder(user_id=new_user.id, owned_by=TransferOwnedFolderOwnedByArg(id=current_user.id), notify=False)
+```
 
 ### Arguments
 

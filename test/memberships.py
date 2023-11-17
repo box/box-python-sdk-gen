@@ -4,11 +4,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import User
+from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import GroupMemberships
 
-from box_sdk_gen.schemas import Group
+from box_sdk_gen.schemas import GroupFull
 
 from box_sdk_gen.schemas import GroupMembership
 
@@ -26,14 +26,14 @@ client: BoxClient = get_default_client()
 
 
 def testMemberships():
-    user: User = client.users.create_user(
+    user: UserFull = client.users.create_user(
         name=get_uuid(), login=''.join([get_uuid(), '@boxdemo.com'])
     )
     user_memberships: GroupMemberships = client.memberships.get_user_memberships(
         user_id=user.id
     )
     assert user_memberships.total_count == 0
-    group: Group = client.groups.create_group(name=get_uuid())
+    group: GroupFull = client.groups.create_group(name=get_uuid())
     group_memberships: GroupMemberships = client.memberships.get_group_memberships(
         group_id=group.id
     )

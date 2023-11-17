@@ -1,8 +1,7 @@
-import json
 from typing import get_origin, Union, Type
 
 from .base_object import BaseObject
-from .json import SerializedData
+from .json_data import SerializedData
 
 
 def serialize(obj: Union[BaseObject, dict, list]) -> SerializedData:
@@ -18,7 +17,7 @@ def serialize(obj: Union[BaseObject, dict, list]) -> SerializedData:
     return obj
 
 
-def deserialize(value: SerializedData, type: Type[BaseObject]) -> str:
+def deserialize(value: SerializedData, type: Type[BaseObject]):
     if get_origin(type) == Union:
         type = BaseObject._deserialize_union('', value, type)
 

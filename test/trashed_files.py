@@ -12,11 +12,9 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import TrashFile
-
-from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import TrashFileRestored
 
@@ -39,7 +37,7 @@ def testTrashedFiles():
         ),
         file=file_byte_stream,
     )
-    file: File = files.entries[0]
+    file: FileFull = files.entries[0]
     client.files.delete_file_by_id(file_id=file.id)
     from_trash: TrashFile = client.trashed_files.get_file_trash(file_id=file.id)
     assert from_trash.id == file.id

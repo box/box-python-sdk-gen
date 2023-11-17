@@ -2,7 +2,7 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParentArg
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.utils import ByteStream
 
@@ -54,7 +54,7 @@ def create_new_folder() -> FolderFull:
     )
 
 
-def upload_new_file() -> File:
+def upload_new_file() -> FileFull:
     client: BoxClient = get_default_client()
     new_file_name: str = ''.join([get_uuid(), '.pdf'])
     file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)

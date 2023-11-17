@@ -8,7 +8,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import Watermark
 
@@ -35,7 +35,7 @@ def testCreateGetDeleteFileWatermark():
         ),
         file=generate_byte_stream(10),
     )
-    file: File = uploaded_files.entries[0]
+    file: FileFull = uploaded_files.entries[0]
     created_watermark: Watermark = client.file_watermarks.update_file_watermark(
         file_id=file.id,
         watermark=UpdateFileWatermarkWatermarkArg(

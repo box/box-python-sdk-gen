@@ -79,7 +79,7 @@ client.groups.create_group(name=get_uuid())
 
 ### Returns
 
-This function returns a value of type `Group`.
+This function returns a value of type `GroupFull`.
 
 Returns the new group object.
 

@@ -6,7 +6,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.managers.uploads import UploadFileVersionAttributesArg
 
@@ -30,7 +30,7 @@ def testUploadFileAndFileVersion():
         ),
         file=file_content_stream,
     )
-    uploaded_file: File = uploaded_files.entries[0]
+    uploaded_file: FileFull = uploaded_files.entries[0]
     assert uploaded_file.name == new_file_name
     new_file_version_name: str = get_uuid()
     new_file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
@@ -39,6 +39,6 @@ def testUploadFileAndFileVersion():
         attributes=UploadFileVersionAttributesArg(name=new_file_version_name),
         file=new_file_content_stream,
     )
-    new_file_version: File = uploaded_files_version.entries[0]
+    new_file_version: FileFull = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name
     client.files.delete_file_by_id(file_id=new_file_version.id)

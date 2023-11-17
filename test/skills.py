@@ -1,6 +1,6 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import SkillCardsMetadata
 
@@ -40,7 +40,7 @@ client: BoxClient = get_default_client()
 
 
 def test_skills_cards_CRUD():
-    file: File = upload_new_file()
+    file: FileFull = upload_new_file()
     skill_id: str = get_uuid()
     invocation_id: str = get_uuid()
     title_message: str = 'License Plates'

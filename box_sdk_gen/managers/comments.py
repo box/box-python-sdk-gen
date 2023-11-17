@@ -20,8 +20,6 @@ from box_sdk_gen.schemas import ClientError
 
 from box_sdk_gen.schemas import CommentFull
 
-from box_sdk_gen.schemas import Comment
-
 from box_sdk_gen.auth import Authentication
 
 from box_sdk_gen.network import NetworkSession
@@ -32,7 +30,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
 from box_sdk_gen.fetch import fetch
 
@@ -40,7 +38,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
 class CreateCommentItemArgTypeField(str, Enum):
@@ -252,7 +250,7 @@ class CommentsManager:
         tagged_message: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> Comment:
+    ) -> CommentFull:
         """
         Adds a comment by the user to a specific file, or
 
@@ -308,4 +306,4 @@ class CommentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, Comment)
+        return deserialize(response.data, CommentFull)

@@ -34,9 +34,9 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
 class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
@@ -48,7 +48,7 @@ class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
 class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgPathField(
     str, Enum
 ):
-    _BOX__SECURITY__CLASSIFICATION__KEY = '/Box__Security__Classification__Key'
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
 class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
@@ -66,7 +66,8 @@ class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObj
         """
         :param op: `replace`
         :type op: Optional[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField], optional
-        :param path: `/Box__Security__Classification__Key`
+        :param path: Defines classifications
+            available in the enterprise.
         :type path: Optional[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgPathField], optional
         :param value: The name of the classification to apply to this folder.
             To list the available classifications in an enterprise,

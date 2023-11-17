@@ -12,13 +12,11 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk_gen.schemas import Comments
 
-from box_sdk_gen.schemas import Comment
+from box_sdk_gen.schemas import CommentFull
 
 from box_sdk_gen.managers.comments import CreateCommentItemArg
 
 from box_sdk_gen.managers.comments import CreateCommentItemArgTypeField
-
-from box_sdk_gen.schemas import CommentFull
 
 from box_sdk_gen.utils import generate_byte_stream
 
@@ -44,7 +42,7 @@ def comments():
     comments: Comments = client.comments.get_file_comments(file_id=file_id)
     assert comments.total_count == 0
     message: str = 'Hello there!'
-    new_comment: Comment = client.comments.create_comment(
+    new_comment: CommentFull = client.comments.create_comment(
         message=message,
         item=CreateCommentItemArg(
             id=file_id, type=CreateCommentItemArgTypeField.FILE.value
@@ -53,7 +51,7 @@ def comments():
     assert new_comment.message == message
     assert new_comment.is_reply_comment == False
     assert new_comment.item.id == file_id
-    new_reply_comment: Comment = client.comments.create_comment(
+    new_reply_comment: CommentFull = client.comments.create_comment(
         message=message,
         item=CreateCommentItemArg(
             id=new_comment.id, type=CreateCommentItemArgTypeField.COMMENT.value

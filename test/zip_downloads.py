@@ -2,7 +2,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import FolderFull
 
@@ -34,8 +34,8 @@ client: BoxClient = get_default_client()
 
 
 def testZipDownload():
-    file_1: File = upload_new_file()
-    file_2: File = upload_new_file()
+    file_1: FileFull = upload_new_file()
+    file_2: FileFull = upload_new_file()
     folder_1: FolderFull = create_new_folder()
     zip_stream: ByteStream = client.zip_downloads.download_zip(
         items=[
@@ -60,8 +60,8 @@ def testZipDownload():
 
 
 def testManualZipDownloadAndCheckStatus():
-    file_1: File = upload_new_file()
-    file_2: File = upload_new_file()
+    file_1: FileFull = upload_new_file()
+    file_2: FileFull = upload_new_file()
     folder_1: FolderFull = create_new_folder()
     zip_download: ZipDownload = client.zip_downloads.create_zip_download(
         items=[

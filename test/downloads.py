@@ -10,7 +10,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.utils import get_uuid
 
@@ -37,7 +37,7 @@ def test_download_file():
         ),
         file=file_content_stream,
     )
-    uploaded_file: File = uploaded_files.entries[0]
+    uploaded_file: FileFull = uploaded_files.entries[0]
     downloaded_file_content: ByteStream = client.downloads.download_file(
         file_id=uploaded_file.id
     )

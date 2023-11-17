@@ -20,7 +20,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
 from box_sdk_gen.fetch import fetch
 

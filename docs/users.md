@@ -116,7 +116,7 @@ client.users.create_user(name=user_name, login=user_login, is_platform_access_on
 
 ### Returns
 
-This function returns a value of type `User`.
+This function returns a value of type `UserFull`.
 
 Returns a user object for the newly created user.
 

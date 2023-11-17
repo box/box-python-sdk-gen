@@ -6,7 +6,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.managers.uploads import UploadFileVersionAttributesArg
 
@@ -15,8 +15,6 @@ from box_sdk_gen.schemas import FileVersions
 from box_sdk_gen.schemas import FileVersionFull
 
 from box_sdk_gen.managers.file_versions import PromoteFileVersionTypeArg
-
-from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.utils import get_uuid
 
@@ -36,7 +34,7 @@ def testCreateListGetRestoreDeleteFileVersion():
         ),
         file=generate_byte_stream(10),
     )
-    file: File = files.entries[0]
+    file: FileFull = files.entries[0]
     assert file.name == old_name
     assert file.size == 10
     new_files: Files = client.uploads.upload_file_version(
@@ -44,7 +42,7 @@ def testCreateListGetRestoreDeleteFileVersion():
         attributes=UploadFileVersionAttributesArg(name=new_name),
         file=generate_byte_stream(20),
     )
-    new_file: File = new_files.entries[0]
+    new_file: FileFull = new_files.entries[0]
     assert new_file.name == new_name
     assert new_file.size == 20
     file_versions: FileVersions = client.file_versions.get_file_versions(

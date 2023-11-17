@@ -1,6 +1,6 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import User
+from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import EmailAliases
 
@@ -16,7 +16,9 @@ client: BoxClient = get_default_client()
 def testEmailAliases():
     new_user_name: str = get_uuid()
     new_user_login: str = ''.join([get_uuid(), '@boxdemo.com'])
-    new_user: User = client.users.create_user(name=new_user_name, login=new_user_login)
+    new_user: UserFull = client.users.create_user(
+        name=new_user_name, login=new_user_login
+    )
     aliases: EmailAliases = client.email_aliases.get_user_email_aliases(
         user_id=new_user.id
     )

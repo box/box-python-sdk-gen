@@ -174,16 +174,16 @@ _Currently we don't have an example for calling `create_metadata_template_schema
 
 - scope `CreateMetadataTemplateSchemaClassificationScopeArg`
   - The scope in which to create the classifications. This should be `enterprise` or `enterprise_{id}` where `id` is the unique ID of the enterprise.
-- template_key `Optional[CreateMetadataTemplateSchemaClassificationTemplateKeyArg]`
-  - `securityClassification-6VMVochwUWo`
+- template_key `CreateMetadataTemplateSchemaClassificationTemplateKeyArg`
+  - Defines the list of metadata templates.
 - display_name `CreateMetadataTemplateSchemaClassificationDisplayNameArg`
-  - `Classification`
+  - The name of the template as shown in web and mobile interfaces.
 - hidden `Optional[bool]`
-  - `false`
+  - Determines if the classification template is hidden or available on web and mobile devices.
 - copy_instance_on_item_copy `Optional[bool]`
-  - `false`
-- fields `Optional[List[CreateMetadataTemplateSchemaClassificationFieldsArg]]`
-  - The classification template holds one field, which holds all the valid classification values.
+  - Determines if classifications are copied along when the file or folder is copied.
+- fields `List[CreateMetadataTemplateSchemaClassificationFieldsArg]`
+  - The classification template requires exactly one field, which holds all the valid classification values.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

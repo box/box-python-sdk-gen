@@ -1,10 +1,10 @@
+from enum import Enum
+
 from typing import Optional
 
 from typing import Dict
 
 from box_sdk_gen.base_object import BaseObject
-
-from enum import Enum
 
 from typing import List
 
@@ -32,10 +32,22 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldClassificationField(
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgOpField(
+    str, Enum
+):
+    ADDENUMOPTION = 'addEnumOption'
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgFieldKeyField(
+    str, Enum
+):
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigFieldClassificationField(
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
@@ -52,7 +64,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[float] = None,
+        color_id: Optional[int] = None,
         **kwargs
     ):
         """
@@ -71,21 +83,48 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[float], optional
+        :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
         self.color_id = color_id
 
 
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataField(
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigField(
     BaseObject
 ):
     def __init__(
         self,
-        key: str,
         classification: Optional[
-            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldClassificationField
+            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigFieldClassificationField
+        ] = None,
+        **kwargs
+    ):
+        """
+        :param classification: Additional details for the classification.
+        :type classification: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigFieldClassificationField], optional
+        """
+        super().__init__(**kwargs)
+        self.classification = classification
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataField(
+    BaseObject
+):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'static_config': 'staticConfig',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'staticConfig': 'static_config',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        key: str,
+        static_config: Optional[
+            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -94,12 +133,12 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
             mobile interfaces. This is the only field required to
             add a classification.
         :type key: str
-        :param classification: Additional details for the classification.
-        :type classification: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldClassificationField], optional
+        :param static_config: A static configuration for the classification.
+        :type static_config: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataFieldStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
-        self.classification = classification
+        self.static_config = static_config
 
 
 class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArg(
@@ -116,16 +155,18 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
 
     def __init__(
         self,
-        op: str,
-        field_key: str,
+        op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgOpField,
+        field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgFieldKeyField,
         data: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataField,
         **kwargs
     ):
         """
-        :param op: `addEnumOption`
-        :type op: str
-        :param field_key: `Box__Security__Classification__Key`
-        :type field_key: str
+        :param op: The type of change to perform on the classification
+            object.
+        :type op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgOpField
+        :param field_key: Defines classifications
+            available in the enterprise.
+        :type field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgFieldKeyField
         :param data: The details of the classification to add.
         :type data: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBodyArgDataField
         """
@@ -135,7 +176,19 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaAddRequestBody
         self.data = data
 
 
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldClassificationField(
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgOpField(
+    str, Enum
+):
+    EDITENUMOPTION = 'editEnumOption'
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgFieldKeyField(
+    str, Enum
+):
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigFieldClassificationField(
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
@@ -152,7 +205,7 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[float] = None,
+        color_id: Optional[int] = None,
         **kwargs
     ):
         """
@@ -171,21 +224,48 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[float], optional
+        :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
         self.color_id = color_id
 
 
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataField(
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigField(
     BaseObject
 ):
     def __init__(
         self,
-        key: str,
         classification: Optional[
-            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldClassificationField
+            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigFieldClassificationField
+        ] = None,
+        **kwargs
+    ):
+        """
+        :param classification: Additional details for the classification.
+        :type classification: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigFieldClassificationField], optional
+        """
+        super().__init__(**kwargs)
+        self.classification = classification
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataField(
+    BaseObject
+):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'static_config': 'staticConfig',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'staticConfig': 'static_config',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        key: str,
+        static_config: Optional[
+            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -193,12 +273,12 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
         :param key: A new label for the classification, as it will be
             shown in the web and mobile interfaces.
         :type key: str
-        :param classification: Additional details for the classification.
-        :type classification: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldClassificationField], optional
+        :param static_config: A static configuration for the classification.
+        :type static_config: Optional[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataFieldStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
-        self.classification = classification
+        self.static_config = static_config
 
 
 class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArg(
@@ -217,17 +297,19 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
 
     def __init__(
         self,
-        op: str,
-        field_key: str,
+        op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgOpField,
+        field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgFieldKeyField,
         enum_option_key: str,
         data: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgDataField,
         **kwargs
     ):
         """
-        :param op: `editEnumOption`
-        :type op: str
-        :param field_key: `Box__Security__Classification__Key`
-        :type field_key: str
+        :param op: The type of change to perform on the classification
+            object.
+        :type op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgOpField
+        :param field_key: Defines classifications
+            available in the enterprise.
+        :type field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestBodyArgFieldKeyField
         :param enum_option_key: The original label of the classification to change.
         :type enum_option_key: str
         :param data: The details of the updated classification.
@@ -238,6 +320,18 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaUpdateRequestB
         self.field_key = field_key
         self.enum_option_key = enum_option_key
         self.data = data
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField(
+    str, Enum
+):
+    REMOVEENUMOPTION = 'removeEnumOption'
+
+
+class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField(
+    str, Enum
+):
+    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
 class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg(
@@ -254,12 +348,20 @@ class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestB
         **BaseObject._json_to_fields_mapping,
     }
 
-    def __init__(self, op: str, field_key: str, enum_option_key: str, **kwargs):
+    def __init__(
+        self,
+        op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField,
+        field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField,
+        enum_option_key: str,
+        **kwargs
+    ):
         """
-        :param op: `removeEnumOption`
-        :type op: str
-        :param field_key: `Box__Security__Classification__Key`
-        :type field_key: str
+        :param op: The type of change to perform on the classification
+            object.
+        :type op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField
+        :param field_key: Defines classifications
+            available in the enterprise.
+        :type field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField
         :param enum_option_key: The label of the classification to remove.
         :type enum_option_key: str
         """
@@ -310,7 +412,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfi
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[float] = None,
+        color_id: Optional[int] = None,
         **kwargs
     ):
         """
@@ -329,7 +431,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfi
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[float], optional
+        :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -366,7 +468,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField(BaseObject
 
     def __init__(
         self,
-        key: Optional[str] = None,
+        key: str,
         static_config: Optional[
             CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfigField
         ] = None,
@@ -375,7 +477,7 @@ class CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField(BaseObject
         """
         :param key: The display name and key this classification. This
             will be show in the Box UI.
-        :type key: Optional[str], optional
+        :type key: str
         :param static_config: Additional information about the classification.
         :type static_config: Optional[CreateMetadataTemplateSchemaClassificationFieldsArgOptionsFieldStaticConfigField], optional
         """
@@ -396,40 +498,38 @@ class CreateMetadataTemplateSchemaClassificationFieldsArg(BaseObject):
 
     def __init__(
         self,
-        type: Optional[
-            CreateMetadataTemplateSchemaClassificationFieldsArgTypeField
-        ] = None,
-        key: Optional[
-            CreateMetadataTemplateSchemaClassificationFieldsArgKeyField
-        ] = None,
-        display_name: Optional[
-            CreateMetadataTemplateSchemaClassificationFieldsArgDisplayNameField
-        ] = None,
+        type: CreateMetadataTemplateSchemaClassificationFieldsArgTypeField,
+        key: CreateMetadataTemplateSchemaClassificationFieldsArgKeyField,
+        display_name: CreateMetadataTemplateSchemaClassificationFieldsArgDisplayNameField,
+        options: List[CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField],
         hidden: Optional[bool] = None,
-        options: Optional[
-            List[CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField]
-        ] = None,
         **kwargs
     ):
         """
-        :param type: `enum`
-        :type type: Optional[CreateMetadataTemplateSchemaClassificationFieldsArgTypeField], optional
-        :param key: `Box__Security__Classification__Key`
-        :type key: Optional[CreateMetadataTemplateSchemaClassificationFieldsArgKeyField], optional
-        :param display_name: `Classification`
-        :type display_name: Optional[CreateMetadataTemplateSchemaClassificationFieldsArgDisplayNameField], optional
-        :param hidden: `false`
-        :type hidden: Optional[bool], optional
+        :param type: The type of the field
+            that is always enum.
+        :type type: CreateMetadataTemplateSchemaClassificationFieldsArgTypeField
+        :param key: Defines classifications
+            available in the enterprise.
+        :type key: CreateMetadataTemplateSchemaClassificationFieldsArgKeyField
+        :param display_name: A display name for the classification.
+        :type display_name: CreateMetadataTemplateSchemaClassificationFieldsArgDisplayNameField
         :param options: The actual list of classifications that are present on
             this template.
-        :type options: Optional[List[CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField]], optional
+        :type options: List[CreateMetadataTemplateSchemaClassificationFieldsArgOptionsField]
+        :param hidden: Determines if the classification
+            template is
+            hidden or available on
+            web and mobile
+            devices.
+        :type hidden: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.type = type
         self.key = key
         self.display_name = display_name
-        self.hidden = hidden
         self.options = options
+        self.hidden = hidden
 
 
 class ClassificationsManager:
@@ -543,7 +643,7 @@ class ClassificationsManager:
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
-                content_type='application/json-patch+json',
+                content_type='application/json',
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
@@ -644,15 +744,11 @@ class ClassificationsManager:
     def create_metadata_template_schema_classification(
         self,
         scope: CreateMetadataTemplateSchemaClassificationScopeArg,
+        template_key: CreateMetadataTemplateSchemaClassificationTemplateKeyArg,
         display_name: CreateMetadataTemplateSchemaClassificationDisplayNameArg,
-        template_key: Optional[
-            CreateMetadataTemplateSchemaClassificationTemplateKeyArg
-        ] = None,
+        fields: List[CreateMetadataTemplateSchemaClassificationFieldsArg],
         hidden: Optional[bool] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
-        fields: Optional[
-            List[CreateMetadataTemplateSchemaClassificationFieldsArg]
-        ] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ClassificationTemplate:
         """
@@ -676,17 +772,23 @@ class ClassificationsManager:
             be `enterprise` or `enterprise_{id}` where `id` is the unique
             ID of the enterprise.
         :type scope: CreateMetadataTemplateSchemaClassificationScopeArg
-        :param display_name: `Classification`
+        :param template_key: Defines the list of metadata templates.
+        :type template_key: CreateMetadataTemplateSchemaClassificationTemplateKeyArg
+        :param display_name: The name of the
+            template as shown in web and mobile interfaces.
         :type display_name: CreateMetadataTemplateSchemaClassificationDisplayNameArg
-        :param template_key: `securityClassification-6VMVochwUWo`
-        :type template_key: Optional[CreateMetadataTemplateSchemaClassificationTemplateKeyArg], optional
-        :param hidden: `false`
-        :type hidden: Optional[bool], optional
-        :param copy_instance_on_item_copy: `false`
-        :type copy_instance_on_item_copy: Optional[bool], optional
-        :param fields: The classification template holds one field, which holds
+        :param fields: The classification template requires exactly
+            one field, which holds
             all the valid classification values.
-        :type fields: Optional[List[CreateMetadataTemplateSchemaClassificationFieldsArg]], optional
+        :type fields: List[CreateMetadataTemplateSchemaClassificationFieldsArg]
+        :param hidden: Determines if the classification template is
+            hidden or available on web and mobile
+            devices.
+        :type hidden: Optional[bool], optional
+        :param copy_instance_on_item_copy: Determines if classifications are
+            copied along when the file or folder is
+            copied.
+        :type copy_instance_on_item_copy: Optional[bool], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

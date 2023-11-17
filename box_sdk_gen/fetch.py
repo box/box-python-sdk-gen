@@ -15,7 +15,12 @@ from .box_response import APIResponse
 from .network import NetworkSession
 from .auth import Authentication
 from .utils import ByteStream, ResponseByteStream
-from .json import SerializedData, sd_to_json, sd_to_url_params, json_to_serialized_data
+from .json_data import (
+    SerializedData,
+    sd_to_json,
+    sd_to_url_params,
+    json_to_serialized_data,
+)
 
 DEFAULT_MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5

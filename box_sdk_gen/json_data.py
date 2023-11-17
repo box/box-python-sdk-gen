@@ -1,9 +1,8 @@
 import json
+from typing import Dict
 from urllib.parse import urlencode
 
-
-class SerializedData:
-    pass
+SerializedData = Dict
 
 
 def json_to_serialized_data(data: str) -> SerializedData:
