@@ -21,7 +21,11 @@ This operation is performed by calling function `get_shared_item_web_links`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shared-items-web-links/).
 
-_Currently we don't have an example for calling `get_shared_item_web_links` in integration tests_
+<!-- sample get_shared_items#web_links -->
+
+```python
+user_client.shared_links_web_links.get_shared_item_web_links(boxapi=''.join(['shared_link=', web_link_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+```
 
 ### Arguments
 
@@ -50,7 +54,11 @@ This operation is performed by calling function `get_web_link_get_shared_link`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-web-links-id-get-shared-link/).
 
-_Currently we don't have an example for calling `get_web_link_get_shared_link` in integration tests_
+<!-- sample get_web_links_id#get_shared_link -->
+
+```python
+client.shared_links_web_links.get_web_link_get_shared_link(web_link_id=web_link_id, fields='shared_link')
+```
 
 ### Arguments
 
@@ -77,7 +85,11 @@ This operation is performed by calling function `update_web_link_add_shared_link
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-web-links-id-add-shared-link/).
 
-_Currently we don't have an example for calling `update_web_link_add_shared_link` in integration tests_
+<!-- sample put_web_links_id#add_shared_link -->
+
+```python
+client.shared_links_web_links.update_web_link_add_shared_link(web_link_id=web_link_id, shared_link=UpdateWebLinkAddSharedLinkSharedLinkArg(access=UpdateWebLinkAddSharedLinkSharedLinkArgAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+```
 
 ### Arguments
 
@@ -106,7 +118,11 @@ This operation is performed by calling function `update_web_link_update_shared_l
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-web-links-id-update-shared-link/).
 
-_Currently we don't have an example for calling `update_web_link_update_shared_link` in integration tests_
+<!-- sample put_web_links_id#update_shared_link -->
+
+```python
+client.shared_links_web_links.update_web_link_update_shared_link(web_link_id=web_link_id, shared_link=UpdateWebLinkUpdateSharedLinkSharedLinkArg(access=UpdateWebLinkUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value), fields='shared_link')
+```
 
 ### Arguments
 

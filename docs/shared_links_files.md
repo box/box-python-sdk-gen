@@ -24,7 +24,11 @@ This operation is performed by calling function `get_shared_items`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shared-items/).
 
-_Currently we don't have an example for calling `get_shared_items` in integration tests_
+<!-- sample get_shared_items -->
+
+```python
+user_client.shared_links_files.get_shared_items(boxapi=''.join(['shared_link=', file_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+```
 
 ### Arguments
 
@@ -53,7 +57,11 @@ This operation is performed by calling function `get_file_get_shared_link`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-get-shared-link/).
 
-_Currently we don't have an example for calling `get_file_get_shared_link` in integration tests_
+<!-- sample get_files_id#get_shared_link -->
+
+```python
+client.shared_links_files.get_file_get_shared_link(file_id=file_id, fields='shared_link')
+```
 
 ### Arguments
 
@@ -80,7 +88,11 @@ This operation is performed by calling function `update_file_add_shared_link`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-add-shared-link/).
 
-_Currently we don't have an example for calling `update_file_add_shared_link` in integration tests_
+<!-- sample put_files_id#add_shared_link -->
+
+```python
+client.shared_links_files.update_file_add_shared_link(file_id=file_id, shared_link=UpdateFileAddSharedLinkSharedLinkArg(access=UpdateFileAddSharedLinkSharedLinkArgAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+```
 
 ### Arguments
 
@@ -109,7 +121,11 @@ This operation is performed by calling function `update_file_update_shared_link`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-update-shared-link/).
 
-_Currently we don't have an example for calling `update_file_update_shared_link` in integration tests_
+<!-- sample put_files_id#update_shared_link -->
+
+```python
+client.shared_links_files.update_file_update_shared_link(file_id=file_id, shared_link=UpdateFileUpdateSharedLinkSharedLinkArg(access=UpdateFileUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value), fields='shared_link')
+```
 
 ### Arguments
 
