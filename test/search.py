@@ -22,7 +22,7 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas import Metadata
+from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import CreateFileMetadataByIdScopeArg
 
@@ -69,7 +69,7 @@ def testCreateMetaDataQueryExecuteRead():
         file=generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
-    metadata: Metadata = client.file_metadata.create_file_metadata_by_id(
+    metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file_id=file.id,
         scope=CreateFileMetadataByIdScopeArg.ENTERPRISE.value,
         template_key=template_key,

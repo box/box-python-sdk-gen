@@ -2395,8 +2395,8 @@ class MetadataTemplate(BaseObject):
 
     def __init__(
         self,
+        id: str,
         type: MetadataTemplateTypeField,
-        id: Optional[str] = None,
         scope: Optional[str] = None,
         template_key: Optional[str] = None,
         display_name: Optional[str] = None,
@@ -2406,10 +2406,10 @@ class MetadataTemplate(BaseObject):
         **kwargs
     ):
         """
+        :param id: The ID of the metadata template.
+        :type id: str
         :param type: `metadata_template`
         :type type: MetadataTemplateTypeField
-        :param id: The ID of the metadata template.
-        :type id: Optional[str], optional
         :param scope: The scope of the metadata template can either be `global` or
             `enterprise_*`. The `global` scope is used for templates that are
             available to any Box enterprise. The `enterprise_*` scope represents
@@ -2434,8 +2434,8 @@ class MetadataTemplate(BaseObject):
         :type copy_instance_on_item_copy: Optional[bool], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
         self.scope = scope
         self.template_key = template_key
         self.display_name = display_name
@@ -7562,7 +7562,7 @@ class Items(BaseObject):
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         order: Optional[List[ItemsOrderField]] = None,
-        entries: Optional[List[Union[FileMini, FolderMini, WebLink]]] = None,
+        entries: Optional[List[Union[FileFull, FolderMini, WebLink]]] = None,
         **kwargs
     ):
         """
@@ -7586,7 +7586,7 @@ class Items(BaseObject):
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[ItemsOrderField]], optional
         :param entries: The items in this collection.
-        :type entries: Optional[List[Union[FileMini, FolderMini, WebLink]]], optional
+        :type entries: Optional[List[Union[FileFull, FolderMini, WebLink]]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -7861,175 +7861,6 @@ class Folder(FolderMini):
         self.parent = parent
         self.item_status = item_status
         self.item_collection = item_collection
-
-
-class SearchResultWithSharedLink(BaseObject):
-    def __init__(
-        self,
-        accessible_via_shared_link: Optional[str] = None,
-        item: Optional[Union[File, Folder, WebLink]] = None,
-        type: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param accessible_via_shared_link: The optional shared link through which the user has access to this
-            item. This value is only returned for items for which the user has
-            recently accessed the file through a shared link. For all other
-            items this value will return `null`.
-        :type accessible_via_shared_link: Optional[str], optional
-        :param type: The result type. The value is always `search_result`.
-        :type type: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.accessible_via_shared_link = accessible_via_shared_link
-        self.item = item
-        self.type = type
-
-
-class SearchResultsWithSharedLinksTypeField(str, Enum):
-    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
-
-
-class SearchResultsWithSharedLinks(BaseObject):
-    def __init__(
-        self,
-        type: SearchResultsWithSharedLinksTypeField,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        entries: Optional[List[SearchResultWithSharedLink]] = None,
-        **kwargs
-    ):
-        """
-        :param type: Specifies the response as search result items with shared links
-        :type type: SearchResultsWithSharedLinksTypeField
-        :param total_count: One greater than the offset of the last entry in the search results.
-            The total number of entries in the collection may be less than
-            `total_count`.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for this search. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter used.
-        :type offset: Optional[int], optional
-        :param entries: The search results for the query provided, including the
-            additional information about any shared links through
-            which the item has been shared with the user.
-        :type entries: Optional[List[SearchResultWithSharedLink]], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.entries = entries
-
-
-class SearchResultsTypeField(str, Enum):
-    SEARCH_RESULTS_ITEMS = 'search_results_items'
-
-
-class SearchResults(BaseObject):
-    def __init__(
-        self,
-        type: SearchResultsTypeField,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        entries: Optional[List[Union[File, Folder, WebLink]]] = None,
-        **kwargs
-    ):
-        """
-        :param type: Specifies the response as search result items without shared links
-        :type type: SearchResultsTypeField
-        :param total_count: One greater than the offset of the last entry in the search results.
-            The total number of entries in the collection may be less than
-            `total_count`.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for this search. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter used.
-        :type offset: Optional[int], optional
-        :param entries: The search results for the query provided.
-        :type entries: Optional[List[Union[File, Folder, WebLink]]], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.entries = entries
-
-
-class RecentItemInteractionTypeField(str, Enum):
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_UPLOAD = 'item_upload'
-    ITEM_COMMENT = 'item_comment'
-    ITEM_OPEN = 'item_open'
-    ITEM_MODIFY = 'item_modify'
-
-
-class RecentItem(BaseObject):
-    def __init__(
-        self,
-        type: Optional[str] = None,
-        item: Optional[Union[File, Folder, WebLink]] = None,
-        interaction_type: Optional[RecentItemInteractionTypeField] = None,
-        interacted_at: Optional[str] = None,
-        interaction_shared_link: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param type: `recent_item`
-        :type type: Optional[str], optional
-        :param interaction_type: The most recent type of access the user performed on
-            the item.
-        :type interaction_type: Optional[RecentItemInteractionTypeField], optional
-        :param interacted_at: The time of the most recent interaction.
-        :type interacted_at: Optional[str], optional
-        :param interaction_shared_link: If the item was accessed through a shared link it will appear here,
-            otherwise this will be null.
-        :type interaction_shared_link: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.item = item
-        self.interaction_type = interaction_type
-        self.interacted_at = interacted_at
-        self.interaction_shared_link = interaction_shared_link
-
-
-class RecentItems(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        prev_marker: Optional[str] = None,
-        entries: Optional[List[RecentItem]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[str], optional
-        :param entries: A list of recent items
-        :type entries: Optional[List[RecentItem]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
 
 
 class MetadataQueryResults(BaseObject):
@@ -8444,6 +8275,175 @@ class FolderFull(Folder):
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
+
+
+class SearchResultWithSharedLink(BaseObject):
+    def __init__(
+        self,
+        accessible_via_shared_link: Optional[str] = None,
+        item: Optional[Union[FileFull, FolderFull, WebLink]] = None,
+        type: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param accessible_via_shared_link: The optional shared link through which the user has access to this
+            item. This value is only returned for items for which the user has
+            recently accessed the file through a shared link. For all other
+            items this value will return `null`.
+        :type accessible_via_shared_link: Optional[str], optional
+        :param type: The result type. The value is always `search_result`.
+        :type type: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.accessible_via_shared_link = accessible_via_shared_link
+        self.item = item
+        self.type = type
+
+
+class SearchResultsWithSharedLinksTypeField(str, Enum):
+    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
+
+
+class SearchResultsWithSharedLinks(BaseObject):
+    def __init__(
+        self,
+        type: SearchResultsWithSharedLinksTypeField,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        entries: Optional[List[SearchResultWithSharedLink]] = None,
+        **kwargs
+    ):
+        """
+        :param type: Specifies the response as search result items with shared links
+        :type type: SearchResultsWithSharedLinksTypeField
+        :param total_count: One greater than the offset of the last entry in the search results.
+            The total number of entries in the collection may be less than
+            `total_count`.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for this search. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter used.
+        :type offset: Optional[int], optional
+        :param entries: The search results for the query provided, including the
+            additional information about any shared links through
+            which the item has been shared with the user.
+        :type entries: Optional[List[SearchResultWithSharedLink]], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.entries = entries
+
+
+class SearchResultsTypeField(str, Enum):
+    SEARCH_RESULTS_ITEMS = 'search_results_items'
+
+
+class SearchResults(BaseObject):
+    def __init__(
+        self,
+        type: SearchResultsTypeField,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        entries: Optional[List[Union[FileFull, FolderFull, WebLink]]] = None,
+        **kwargs
+    ):
+        """
+        :param type: Specifies the response as search result items without shared links
+        :type type: SearchResultsTypeField
+        :param total_count: One greater than the offset of the last entry in the search results.
+            The total number of entries in the collection may be less than
+            `total_count`.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for this search. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter used.
+        :type offset: Optional[int], optional
+        :param entries: The search results for the query provided.
+        :type entries: Optional[List[Union[FileFull, FolderFull, WebLink]]], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.entries = entries
+
+
+class RecentItemInteractionTypeField(str, Enum):
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_UPLOAD = 'item_upload'
+    ITEM_COMMENT = 'item_comment'
+    ITEM_OPEN = 'item_open'
+    ITEM_MODIFY = 'item_modify'
+
+
+class RecentItem(BaseObject):
+    def __init__(
+        self,
+        type: Optional[str] = None,
+        item: Optional[Union[FileFull, FolderFull, WebLink]] = None,
+        interaction_type: Optional[RecentItemInteractionTypeField] = None,
+        interacted_at: Optional[str] = None,
+        interaction_shared_link: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param type: `recent_item`
+        :type type: Optional[str], optional
+        :param interaction_type: The most recent type of access the user performed on
+            the item.
+        :type interaction_type: Optional[RecentItemInteractionTypeField], optional
+        :param interacted_at: The time of the most recent interaction.
+        :type interacted_at: Optional[str], optional
+        :param interaction_shared_link: If the item was accessed through a shared link it will appear here,
+            otherwise this will be null.
+        :type interaction_shared_link: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.item = item
+        self.interaction_type = interaction_type
+        self.interacted_at = interacted_at
+        self.interaction_shared_link = interaction_shared_link
+
+
+class RecentItems(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
+        entries: Optional[List[RecentItem]] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[str], optional
+        :param entries: A list of recent items
+        :type entries: Optional[List[RecentItem]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
 
 
 class EventEventTypeField(str, Enum):
@@ -9017,8 +9017,8 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
 class Collaboration(BaseObject):
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationTypeField] = None,
+        id: str,
+        type: CollaborationTypeField,
         item: Optional[Union[File, Folder, WebLink]] = None,
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
@@ -9037,9 +9037,9 @@ class Collaboration(BaseObject):
     ):
         """
         :param id: The unique identifier for this collaboration.
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `collaboration`
-        :type type: Optional[CollaborationTypeField], optional
+        :type type: CollaborationTypeField
         :param invite_email: The email address used to invite an unregistered collaborator, if
             they are not a registered user.
         :type invite_email: Optional[str], optional

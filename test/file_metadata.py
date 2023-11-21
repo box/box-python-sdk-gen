@@ -12,8 +12,6 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk_gen.schemas import Metadatas
 
-from box_sdk_gen.schemas import Metadata
-
 from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import UpdateFileMetadataByIdRequestBodyArg
@@ -44,7 +42,7 @@ def testFileMetadata():
     scope: str = 'global'
     template: str = 'properties'
     data: Dict[str, str] = {'abc': 'xyz'}
-    created_metadata: Metadata = client.file_metadata.create_file_metadata_by_id(
+    created_metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file_id=file_id, scope=scope, template_key=template, request_body=data
     )
     assert created_metadata.template == template
@@ -55,7 +53,7 @@ def testFileMetadata():
     )
     assert received_metadata.extra_data['abc'] == data['abc']
     new_value: str = 'bar'
-    updated_metadata: Metadata = client.file_metadata.update_file_metadata_by_id(
+    updated_metadata: MetadataFull = client.file_metadata.update_file_metadata_by_id(
         file_id=file_id,
         scope=scope,
         template_key=template,

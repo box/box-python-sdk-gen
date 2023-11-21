@@ -106,7 +106,7 @@ client.file_metadata.create_file_metadata_by_id(file_id=file.id, scope=CreateFil
 
 ### Returns
 
-This function returns a value of type `Metadata`.
+This function returns a value of type `MetadataFull`.
 
 Returns the instance of the template that was applied to the file,
 including the data that was applied to the template.
@@ -148,7 +148,7 @@ client.file_metadata.update_file_metadata_by_id(file_id=file_id, scope=scope, te
 
 ### Returns
 
-This function returns a value of type `Metadata`.
+This function returns a value of type `MetadataFull`.
 
 Returns the updated metadata template instance, with the
 custom template data included.

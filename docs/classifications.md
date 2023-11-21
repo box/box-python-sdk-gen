@@ -1,10 +1,8 @@
 # ClassificationsManager
 
 - [List all classifications](#list-all-classifications)
-- [Delete all classifications](#delete-all-classifications)
 - [Add classification](#add-classification)
 - [Update classification](#update-classification)
-- [Delete classification](#delete-classification)
 - [Add initial classifications](#add-initial-classifications)
 
 ## List all classifications
@@ -39,30 +37,6 @@ This function returns a value of type `ClassificationTemplate`.
 Returns the `securityClassification` metadata template, which contains
 a `Box__Security__Classification__Key` field that lists all the
 classifications available to this enterprise.
-
-## Delete all classifications
-
-Delete all classifications by deleting the classification
-metadata template.
-
-This operation is performed by calling function `delete_metadata_template_enterprise_security_classification_schema`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema/).
-
-_Currently we don't have an example for calling `delete_metadata_template_enterprise_security_classification_schema` in integration tests_
-
-### Arguments
-
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `None`.
-
-Returns an empty response when the metadata
-template for classifications is successfully deleted.
 
 ## Add classification
 
@@ -123,37 +97,6 @@ client.classifications.update_classification(request_body=[UpdateClassificationR
 
 - request_body `List[UpdateClassificationRequestBodyArg]`
   - Request body of updateClassification method
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `ClassificationTemplate`.
-
-Returns the updated `securityClassification` metadata template, which
-contains a `Box__Security__Classification__Key` field that lists all
-the classifications available to this enterprise.
-
-## Delete classification
-
-Removes a classification from the list of classifications
-available to the enterprise.
-
-This API can also be called by including the enterprise ID in the
-URL explicitly, for example
-`/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
-
-This operation is performed by calling function `update_metadata_template_enterprise_security_classification_schema_delete`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-delete/).
-
-_Currently we don't have an example for calling `update_metadata_template_enterprise_security_classification_schema_delete` in integration tests_
-
-### Arguments
-
-- request_body `List[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg]`
-  - Request body of updateMetadataTemplateEnterpriseSecurityClassificationSchemaDelete method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

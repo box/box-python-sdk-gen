@@ -10,8 +10,6 @@ from box_sdk_gen.managers.folders import CreateFolderParentArg
 
 from box_sdk_gen.schemas import Metadatas
 
-from box_sdk_gen.schemas import Metadata
-
 from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.folder_metadata import UpdateFolderMetadataByIdRequestBodyArg
@@ -38,8 +36,10 @@ def testFolderMetadata():
     scope: str = 'global'
     template: str = 'properties'
     data: Dict[str, str] = {'abc': 'xyz'}
-    created_metadata: Metadata = client.folder_metadata.create_folder_metadata_by_id(
-        folder_id=folder.id, scope=scope, template_key=template, request_body=data
+    created_metadata: MetadataFull = (
+        client.folder_metadata.create_folder_metadata_by_id(
+            folder_id=folder.id, scope=scope, template_key=template, request_body=data
+        )
     )
     assert created_metadata.template == template
     assert created_metadata.scope == scope
@@ -49,17 +49,19 @@ def testFolderMetadata():
     )
     assert received_metadata.extra_data['abc'] == data['abc']
     new_value: str = 'bar'
-    updated_metadata: Metadata = client.folder_metadata.update_folder_metadata_by_id(
-        folder_id=folder.id,
-        scope=scope,
-        template_key=template,
-        request_body=[
-            UpdateFolderMetadataByIdRequestBodyArg(
-                op=UpdateFolderMetadataByIdRequestBodyArgOpField.REPLACE.value,
-                path='/abc',
-                value=new_value,
-            )
-        ],
+    updated_metadata: MetadataFull = (
+        client.folder_metadata.update_folder_metadata_by_id(
+            folder_id=folder.id,
+            scope=scope,
+            template_key=template,
+            request_body=[
+                UpdateFolderMetadataByIdRequestBodyArg(
+                    op=UpdateFolderMetadataByIdRequestBodyArgOpField.REPLACE.value,
+                    path='/abc',
+                    value=new_value,
+                )
+            ],
+        )
     )
     received_updated_metadata: MetadataFull = (
         client.folder_metadata.get_folder_metadata_by_id(

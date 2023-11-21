@@ -302,55 +302,6 @@ class UpdateClassificationRequestBodyArg(BaseObject):
         self.data = data
 
 
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField(
-    str, Enum
-):
-    REMOVEENUMOPTION = 'removeEnumOption'
-
-
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField(
-    str, Enum
-):
-    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
-
-
-class UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg(
-    BaseObject
-):
-    _fields_to_json_mapping: Dict[str, str] = {
-        'field_key': 'fieldKey',
-        'enum_option_key': 'enumOptionKey',
-        **BaseObject._fields_to_json_mapping,
-    }
-    _json_to_fields_mapping: Dict[str, str] = {
-        'fieldKey': 'field_key',
-        'enumOptionKey': 'enum_option_key',
-        **BaseObject._json_to_fields_mapping,
-    }
-
-    def __init__(
-        self,
-        op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField,
-        field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField,
-        enum_option_key: str,
-        **kwargs
-    ):
-        """
-        :param op: The type of change to perform on the classification
-            object.
-        :type op: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgOpField
-        :param field_key: Defines classifications
-            available in the enterprise.
-        :type field_key: UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArgFieldKeyField
-        :param enum_option_key: The label of the classification to remove.
-        :type enum_option_key: str
-        """
-        super().__init__(**kwargs)
-        self.op = op
-        self.field_key = field_key
-        self.enum_option_key = enum_option_key
-
-
 class CreateClassificationTemplateScopeArg(str, Enum):
     ENTERPRISE = 'enterprise'
 
@@ -556,34 +507,6 @@ class ClassificationsManager:
         )
         return deserialize(response.data, ClassificationTemplate)
 
-    def delete_metadata_template_enterprise_security_classification_schema(
-        self, extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> None:
-        """
-        Delete all classifications by deleting the classification
-
-        metadata template.
-
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            ''.join([
-                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
-            ]),
-            FetchOptions(
-                method='DELETE',
-                headers=headers_map,
-                response_format=None,
-                auth=self.auth,
-                network_session=self.network_session,
-            ),
-        )
-        return None
-
     def add_classification(
         self,
         request_body: List[AddClassificationRequestBodyArg],
@@ -657,51 +580,6 @@ class ClassificationsManager:
         response: FetchResponse = fetch(
             ''.join([
                 'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update'
-            ]),
-            FetchOptions(
-                method='PUT',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json-patch+json',
-                response_format='json',
-                auth=self.auth,
-                network_session=self.network_session,
-            ),
-        )
-        return deserialize(response.data, ClassificationTemplate)
-
-    def update_metadata_template_enterprise_security_classification_schema_delete(
-        self,
-        request_body: List[
-            UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg
-        ],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> ClassificationTemplate:
-        """
-        Removes a classification from the list of classifications
-
-        available to the enterprise.
-
-
-        This API can also be called by including the enterprise ID in the
-
-
-        URL explicitly, for example
-
-
-        `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
-
-        :param request_body: Request body of updateMetadataTemplateEnterpriseSecurityClassificationSchemaDelete method
-        :type request_body: List[UpdateMetadataTemplateEnterpriseSecurityClassificationSchemaDeleteRequestBodyArg]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            ''.join([
-                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#delete'
             ]),
             FetchOptions(
                 method='PUT',
