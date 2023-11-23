@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata -->
 
 ```python
-client.file_metadata.get_file_metadata(file_id=file_id)
+client.file_metadata.get_file_metadata(file_id=file.id)
 ```
 
 ### Arguments
@@ -50,7 +50,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.get_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template)
+client.file_metadata.get_file_metadata_by_id(file_id=file.id, scope=GetFileMetadataByIdScopeArg.GLOBAL.value, template_key='properties')
 ```
 
 ### Arguments
@@ -130,7 +130,7 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.update_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template, request_body=[UpdateFileMetadataByIdRequestBodyArg(op=UpdateFileMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
+client.file_metadata.update_file_metadata_by_id(file_id=file.id, scope=UpdateFileMetadataByIdScopeArg.GLOBAL.value, template_key='properties', request_body=[UpdateFileMetadataByIdRequestBodyArg(op=UpdateFileMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
 ```
 
 ### Arguments
@@ -165,7 +165,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.delete_file_metadata_by_id(file_id=file_id, scope=scope, template_key=template)
+client.file_metadata.delete_file_metadata_by_id(file_id=file.id, scope=DeleteFileMetadataByIdScopeArg.ENTERPRISE.value, template_key=template_key)
 ```
 
 ### Arguments

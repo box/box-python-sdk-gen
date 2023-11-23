@@ -2126,11 +2126,6 @@ class MetadataCascadePolicyParentField(BaseObject):
         self.id = id
 
 
-class MetadataCascadePolicyScopeField(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE__ = 'enterprise_*'
-
-
 class MetadataCascadePolicy(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'template_key': 'templateKey',
@@ -2143,26 +2138,29 @@ class MetadataCascadePolicy(BaseObject):
 
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[MetadataCascadePolicyTypeField] = None,
+        id: str,
+        type: MetadataCascadePolicyTypeField,
         owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField] = None,
         parent: Optional[MetadataCascadePolicyParentField] = None,
-        scope: Optional[MetadataCascadePolicyScopeField] = None,
+        scope: Optional[str] = None,
         template_key: Optional[str] = None,
         **kwargs
     ):
         """
         :param id: The ID of the metadata cascade policy object
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `metadata_cascade_policy`
-        :type type: Optional[MetadataCascadePolicyTypeField], optional
+        :type type: MetadataCascadePolicyTypeField
         :param owner_enterprise: The enterprise that owns this policy.
         :type owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField], optional
         :param parent: Represent the folder the policy is applied to.
         :type parent: Optional[MetadataCascadePolicyParentField], optional
-        :param scope: The scope of the of the template that is cascaded down to the folder's
-            children.
-        :type scope: Optional[MetadataCascadePolicyScopeField], optional
+        :param scope: The scope of the metadata cascade policy can either be `global` or
+            `enterprise_*`. The `global` scope is used for policies that are
+            available to any Box enterprise. The `enterprise_*` scope represents
+            policies that have been created within a specific enterprise, where `*`
+            will be the ID of that enterprise.
+        :type scope: Optional[str], optional
         :param template_key: The key of the template that is cascaded down to the folder's
             children.
             In many cases the template key is automatically derived

@@ -20,7 +20,11 @@ This operation is performed by calling function `create_invite`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-invites/).
 
-_Currently we don't have an example for calling `create_invite` in integration tests_
+<!-- sample post_invites -->
+
+```python
+client.invites.create_invite(enterprise=CreateInviteEnterpriseArg(id=current_user.enterprise.id), actionable_by=CreateInviteActionableByArg(login=email))
+```
 
 ### Arguments
 
@@ -48,7 +52,11 @@ This operation is performed by calling function `get_invite_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-invites-id/).
 
-_Currently we don't have an example for calling `get_invite_by_id` in integration tests_
+<!-- sample get_invites_id -->
+
+```python
+client.invites.get_invite_by_id(invite_id=invitation.id)
+```
 
 ### Arguments
 

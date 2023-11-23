@@ -14,12 +14,16 @@
 Finds a metadata template by searching for the ID of an instance of the
 template.
 
-This operation is performed by calling function `get_metadata_templates`.
+This operation is performed by calling function `get_metadata_templates_by_instance_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates/).
 
-_Currently we don't have an example for calling `get_metadata_templates` in integration tests_
+<!-- sample get_metadata_templates -->
+
+```python
+client.metadata_templates.get_metadata_templates_by_instance_id(metadata_instance_id=created_metadata_instance.id)
+```
 
 ### Arguments
 
@@ -42,7 +46,7 @@ Retrieves a metadata template by its `scope` and `templateKey` values.
 To find the `scope` and `templateKey` for a template, list all templates for
 an enterprise or globally, or list all templates applied to a file or folder.
 
-This operation is performed by calling function `get_metadata_template_schema`.
+This operation is performed by calling function `get_metadata_template`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-id-id-schema/).
@@ -50,12 +54,12 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.get_metadata_template_schema(scope=GetMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.get_metadata_template(scope=GetMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template.template_key)
 ```
 
 ### Arguments
 
-- scope `GetMetadataTemplateSchemaScopeArg`
+- scope `GetMetadataTemplateScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -79,21 +83,25 @@ already exists.
 The update is applied atomically. If any errors occur during the
 application of the operations, the metadata template will not be changed.
 
-This operation is performed by calling function `update_metadata_template_schema`.
+This operation is performed by calling function `update_metadata_template`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-metadata-templates-id-id-schema/).
 
-_Currently we don't have an example for calling `update_metadata_template_schema` in integration tests_
+<!-- sample put_metadata_templates_id_id_schema -->
+
+```python
+client.metadata_templates.update_metadata_template(scope=UpdateMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template_key, request_body=[UpdateMetadataTemplateRequestBodyArg(op=UpdateMetadataTemplateRequestBodyArgOpField.ADDFIELD.value, field_key='newfieldname', data={'type': 'string', 'displayName': 'newFieldName'})])
+```
 
 ### Arguments
 
-- scope `UpdateMetadataTemplateSchemaScopeArg`
+- scope `UpdateMetadataTemplateScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `List[UpdateMetadataTemplateSchemaRequestBodyArg]`
-  - Request body of updateMetadataTemplateSchema method
+- request_body `List[UpdateMetadataTemplateRequestBodyArg]`
+  - Request body of updateMetadataTemplate method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -109,7 +117,7 @@ custom template data included.
 Delete a metadata template and its instances.
 This deletion is permanent and can not be reversed.
 
-This operation is performed by calling function `delete_metadata_template_schema`.
+This operation is performed by calling function `delete_metadata_template`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-templates-id-id-schema/).
@@ -117,12 +125,12 @@ See the endpoint docs at
 <!-- sample delete_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.delete_metadata_template_schema(scope=DeleteMetadataTemplateSchemaScopeArg.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.delete_metadata_template(scope=DeleteMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template.template_key)
 ```
 
 ### Arguments
 
-- scope `DeleteMetadataTemplateSchemaScopeArg`
+- scope `DeleteMetadataTemplateScopeArg`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -169,7 +177,7 @@ Returns the metadata template that matches the ID.
 Used to retrieve all generic, global metadata templates available to all
 enterprises using Box.
 
-This operation is performed by calling function `get_metadata_template_global`.
+This operation is performed by calling function `get_global_metadata_templates`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-global/).
@@ -177,7 +185,7 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_global -->
 
 ```python
-client.metadata_templates.get_metadata_template_global()
+client.metadata_templates.get_global_metadata_templates()
 ```
 
 ### Arguments
@@ -201,7 +209,7 @@ and their corresponding schema.
 Used to retrieve all metadata templates created to be used specifically within
 the user's enterprise
 
-This operation is performed by calling function `get_metadata_template_enterprise`.
+This operation is performed by calling function `get_enterprise_metadata_templates`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise/).
@@ -209,7 +217,7 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_enterprise -->
 
 ```python
-client.metadata_templates.get_metadata_template_enterprise()
+client.metadata_templates.get_enterprise_metadata_templates()
 ```
 
 ### Arguments
@@ -233,7 +241,7 @@ and their corresponding schema.
 Creates a new metadata template that can be applied to
 files and folders.
 
-This operation is performed by calling function `create_metadata_template_schema`.
+This operation is performed by calling function `create_metadata_template`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-templates-schema/).
@@ -241,7 +249,7 @@ See the endpoint docs at
 <!-- sample post_metadata_templates_schema -->
 
 ```python
-client.metadata_templates.create_metadata_template_schema(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateSchemaFieldsArg(type=CreateMetadataTemplateSchemaFieldsArgTypeField.STRING.value, key='testName', display_name='testName')])
+client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFieldsArg(type=CreateMetadataTemplateFieldsArgTypeField.STRING.value, key='testName', display_name='testName')])
 ```
 
 ### Arguments
@@ -254,7 +262,7 @@ client.metadata_templates.create_metadata_template_schema(scope='enterprise', te
   - The display name of the template.
 - hidden `Optional[bool]`
   - Defines if this template is visible in the Box web app UI, or if it is purely intended for usage through the API.
-- fields `Optional[List[CreateMetadataTemplateSchemaFieldsArg]]`
+- fields `Optional[List[CreateMetadataTemplateFieldsArg]]`
   - An ordered list of template fields which are part of the template. Each field can be a regular text field, date field, number field, as well as a single or multi-select list.
 - copy_instance_on_item_copy `Optional[bool]`
   - Whether or not to copy any metadata attached to a file or folder when it is copied. By default, metadata is not copied along with a file or folder when it is copied.

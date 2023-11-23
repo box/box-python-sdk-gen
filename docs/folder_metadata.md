@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.get_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template)
+client.folder_metadata.get_folder_metadata_by_id(folder_id=folder.id, scope=GetFolderMetadataByIdScopeArg.GLOBAL.value, template_key='properties')
 ```
 
 ### Arguments
@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template, request_body=data)
+client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=CreateFolderMetadataByIdScopeArg.GLOBAL.value, template_key='properties', request_body={'abc': 'xyz'})
 ```
 
 ### Arguments
@@ -135,7 +135,7 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.update_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template, request_body=[UpdateFolderMetadataByIdRequestBodyArg(op=UpdateFolderMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
+client.folder_metadata.update_folder_metadata_by_id(folder_id=folder.id, scope=UpdateFolderMetadataByIdScopeArg.GLOBAL.value, template_key='properties', request_body=[UpdateFolderMetadataByIdRequestBodyArg(op=UpdateFolderMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
 ```
 
 ### Arguments
@@ -170,7 +170,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.delete_folder_metadata_by_id(folder_id=folder.id, scope=scope, template_key=template)
+client.folder_metadata.delete_folder_metadata_by_id(folder_id=folder.id, scope=DeleteFolderMetadataByIdScopeArg.GLOBAL.value, template_key='properties')
 ```
 
 ### Arguments
