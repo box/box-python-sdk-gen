@@ -15,7 +15,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segments-id/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segment_by_id` in integration tests_
+<!-- sample get_shield_information_barrier_segments_id -->
+
+```python
+client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id)
+```
 
 ### Arguments
 
@@ -39,7 +43,11 @@ This operation is performed by calling function `update_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-shield-information-barrier-segments-id/).
 
-_Currently we don't have an example for calling `update_shield_information_barrier_segment_by_id` in integration tests_
+<!-- sample put_shield_information_barrier_segments_id -->
+
+```python
+client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id, description=updated_segment_description)
+```
 
 ### Arguments
 
@@ -68,7 +76,11 @@ This operation is performed by calling function `delete_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segments-id/).
 
-_Currently we don't have an example for calling `delete_shield_information_barrier_segment_by_id` in integration tests_
+<!-- sample delete_shield_information_barrier_segments_id -->
+
+```python
+client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id)
+```
 
 ### Arguments
 
@@ -93,7 +105,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segments/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segments` in integration tests_
+<!-- sample get_shield_information_barrier_segments -->
+
+```python
+client.shield_information_barrier_segments.get_shield_information_barrier_segments(shield_information_barrier_id=barrier_id)
+```
 
 ### Arguments
 
@@ -121,7 +137,11 @@ This operation is performed by calling function `create_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-shield-information-barrier-segments/).
 
-_Currently we don't have an example for calling `create_shield_information_barrier_segment` in integration tests_
+<!-- sample post_shield_information_barrier_segments -->
+
+```python
+client.shield_information_barrier_segments.create_shield_information_barrier_segment(shield_information_barrier=ShieldInformationBarrierBase(id=barrier_id, type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value), name=segment_name, description=segment_description)
+```
 
 ### Arguments
 

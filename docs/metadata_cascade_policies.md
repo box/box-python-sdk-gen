@@ -17,7 +17,11 @@ This operation is performed by calling function `get_metadata_cascade_policies`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-cascade-policies/).
 
-_Currently we don't have an example for calling `get_metadata_cascade_policies` in integration tests_
+<!-- sample get_metadata_cascade_policies -->
+
+```python
+client.metadata_cascade_policies.get_metadata_cascade_policies(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -52,7 +56,11 @@ This operation is performed by calling function `create_metadata_cascade_policy`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-cascade-policies/).
 
-_Currently we don't have an example for calling `create_metadata_cascade_policy` in integration tests_
+<!-- sample post_metadata_cascade_policies -->
+
+```python
+client.metadata_cascade_policies.create_metadata_cascade_policy(folder_id=folder.id, scope=CreateMetadataCascadePolicyScopeArg.ENTERPRISE.value, template_key=template_key)
+```
 
 ### Arguments
 
@@ -80,7 +88,11 @@ This operation is performed by calling function `get_metadata_cascade_policy_by_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-metadata-cascade-policies-id/).
 
-_Currently we don't have an example for calling `get_metadata_cascade_policy_by_id` in integration tests_
+<!-- sample get_metadata_cascade_policies_id -->
+
+```python
+client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(metadata_cascade_policy_id=cascade_policy_id)
+```
 
 ### Arguments
 
@@ -104,7 +116,11 @@ This operation is performed by calling function `delete_metadata_cascade_policy_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-metadata-cascade-policies-id/).
 
-_Currently we don't have an example for calling `delete_metadata_cascade_policy_by_id` in integration tests_
+<!-- sample delete_metadata_cascade_policies_id -->
+
+```python
+client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(metadata_cascade_policy_id=cascade_policy_id)
+```
 
 ### Arguments
 
@@ -132,7 +148,11 @@ This operation is performed by calling function `create_metadata_cascade_policy_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-cascade-policies-id-apply/).
 
-_Currently we don't have an example for calling `create_metadata_cascade_policy_apply` in integration tests_
+<!-- sample post_metadata_cascade_policies_id_apply -->
+
+```python
+client.metadata_cascade_policies.create_metadata_cascade_policy_apply(metadata_cascade_policy_id=cascade_policy_id, conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolutionArg.OVERWRITE.value)
+```
 
 ### Arguments
 

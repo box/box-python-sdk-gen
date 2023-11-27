@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=CreateFolderMetadataByIdScopeArg.GLOBAL.value, template_key='properties', request_body={'abc': 'xyz'})
+client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=CreateFolderMetadataByIdScopeArg.ENTERPRISE.value, template_key=template_key, request_body=data)
 ```
 
 ### Arguments

@@ -12,6 +12,14 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
+from box_sdk_gen.schemas import ShieldInformationBarrier
+
+from box_sdk_gen.schemas import ShieldInformationBarriers
+
+from box_sdk_gen.schemas import EnterpriseBase
+
+from box_sdk_gen.schemas import EnterpriseBaseTypeField
+
 from box_sdk_gen.utils import decode_base_64
 
 from box_sdk_gen.utils import get_env_var
@@ -65,3 +73,19 @@ def upload_new_file() -> FileFull:
         file=file_content_stream,
     )
     return uploaded_files.entries[0]
+
+
+def get_or_create_shield_information_barrier(
+    client: BoxClient, enterprise_id: str
+) -> ShieldInformationBarrier:
+    barriers: ShieldInformationBarriers = (
+        client.shield_information_barriers.get_shield_information_barriers()
+    )
+    number_of_barriers: int = len(barriers.entries)
+    if number_of_barriers == 0:
+        return client.shield_information_barriers.create_shield_information_barrier(
+            enterprise=EnterpriseBase(
+                id=enterprise_id, type=EnterpriseBaseTypeField.ENTERPRISE.value
+            )
+        )
+    return barriers.entries[number_of_barriers - 1]
