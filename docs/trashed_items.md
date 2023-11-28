@@ -19,7 +19,11 @@ This operation is performed by calling function `get_folder_trash_items`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-trash-items/).
 
-_Currently we don't have an example for calling `get_folder_trash_items` in integration tests_
+<!-- sample get_folders_trash_items -->
+
+```python
+client.trashed_items.get_folder_trash_items()
+```
 
 ### Arguments
 

@@ -954,8 +954,8 @@ class CollaborationAllowlistEntries(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[CollaborationAllowlistEntry]] = None,
         **kwargs
     ):
@@ -965,9 +965,9 @@ class CollaborationAllowlistEntries(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of allowed collaboration domains
         :type entries: Optional[List[CollaborationAllowlistEntry]], optional
         """
@@ -1380,8 +1380,8 @@ class FilesUnderRetention(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileMini]] = None,
         **kwargs
     ):
@@ -1391,9 +1391,9 @@ class FilesUnderRetention(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of files
         :type entries: Optional[List[FileMini]], optional
         """
@@ -2188,8 +2188,8 @@ class MetadataCascadePolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[MetadataCascadePolicy]] = None,
         **kwargs
     ):
@@ -2199,9 +2199,9 @@ class MetadataCascadePolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of metadata cascade policies
         :type entries: Optional[List[MetadataCascadePolicy]], optional
         """
@@ -2446,8 +2446,8 @@ class MetadataTemplates(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[MetadataTemplate]] = None,
         **kwargs
     ):
@@ -2457,9 +2457,9 @@ class MetadataTemplates(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of metadata templates
         :type entries: Optional[List[MetadataTemplate]], optional
         """
@@ -2627,8 +2627,8 @@ class FileVersionRetentions(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileVersionRetention]] = None,
         **kwargs
     ):
@@ -2638,9 +2638,9 @@ class FileVersionRetentions(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of file version retentions
         :type entries: Optional[List[FileVersionRetention]], optional
         """
@@ -2918,8 +2918,8 @@ class StoragePolicyAssignments(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[StoragePolicyAssignment]] = None,
         **kwargs
     ):
@@ -2929,9 +2929,9 @@ class StoragePolicyAssignments(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of storage policy assignments
         :type entries: Optional[List[StoragePolicyAssignment]], optional
         """
@@ -2966,8 +2966,8 @@ class StoragePolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[StoragePolicy]] = None,
         **kwargs
     ):
@@ -2977,9 +2977,9 @@ class StoragePolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of storage policies
         :type entries: Optional[List[StoragePolicy]], optional
         """
@@ -5055,8 +5055,8 @@ class LegalHoldPolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[LegalHoldPolicy]] = None,
         **kwargs
     ):
@@ -5066,9 +5066,9 @@ class LegalHoldPolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of legal hold policies
         :type entries: Optional[List[LegalHoldPolicy]], optional
         """
@@ -6630,8 +6630,8 @@ class CollaborationAllowlistExemptTargets(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
         **kwargs
     ):
@@ -6641,9 +6641,9 @@ class CollaborationAllowlistExemptTargets(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of users exempt from any of the restrictions
             imposed by the list of allowed collaboration domains
             for this enterprise.
@@ -7056,29 +7056,25 @@ class FolderLock(BaseObject):
 class FolderLocks(BaseObject):
     def __init__(
         self,
-        limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
         entries: Optional[List[FolderLock]] = None,
+        limit: Optional[str] = None,
+        next_marker: Optional[str] = None,
         **kwargs
     ):
         """
+        :param entries: A list of folder locks
+        :type entries: Optional[List[FolderLock]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
+        :type limit: Optional[str], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of folder locks
-        :type entries: Optional[List[FolderLock]], optional
+        :type next_marker: Optional[str], optional
         """
         super().__init__(**kwargs)
+        self.entries = entries
         self.limit = limit
         self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
 
 
 class WatermarkWatermarkField(BaseObject):
@@ -7158,8 +7154,8 @@ class Webhooks(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[WebhookMini]] = None,
         **kwargs
     ):
@@ -7169,9 +7165,9 @@ class Webhooks(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of webhooks
         :type entries: Optional[List[WebhookMini]], optional
         """
@@ -7928,8 +7924,8 @@ class LegalHoldPolicyAssignments(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[LegalHoldPolicyAssignment]] = None,
         **kwargs
     ):
@@ -7939,9 +7935,9 @@ class LegalHoldPolicyAssignments(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of legal hold
             policy assignments
         :type entries: Optional[List[LegalHoldPolicyAssignment]], optional
@@ -7992,8 +7988,8 @@ class FileVersionLegalHolds(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileVersionLegalHold]] = None,
         **kwargs
     ):
@@ -8003,9 +7999,9 @@ class FileVersionLegalHolds(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of file version legal holds
         :type entries: Optional[List[FileVersionLegalHold]], optional
         """
@@ -9525,8 +9521,8 @@ class Workflows(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[Workflow]] = None,
         **kwargs
     ):
@@ -9536,9 +9532,9 @@ class Workflows(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of workflows
         :type entries: Optional[List[Workflow]], optional
         """
@@ -10523,6 +10519,7 @@ class SignRequestCreateSigner(BaseObject):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10565,6 +10562,10 @@ class SignRequestCreateSigner(BaseObject):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.email = email
@@ -10577,6 +10578,7 @@ class SignRequestCreateSigner(BaseObject):
         self.login_required = login_required
         self.verification_phone_number = verification_phone_number
         self.password = password
+        self.signer_group_id = signer_group_id
 
 
 class SignRequestPrefillTag(BaseObject):
@@ -10717,6 +10719,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10772,6 +10775,10 @@ class SignRequestSigner(SignRequestCreateSigner):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(
             email=email,
@@ -10784,6 +10791,7 @@ class SignRequestSigner(SignRequestCreateSigner):
             login_required=login_required,
             verification_phone_number=verification_phone_number,
             password=password,
+            signer_group_id=signer_group_id,
             **kwargs
         )
         self.has_viewed_document = has_viewed_document
@@ -11252,6 +11260,7 @@ class TemplateSigner(BaseObject):
         role: Optional[TemplateSignerRoleField] = None,
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -11269,6 +11278,10 @@ class TemplateSigner(BaseObject):
         :type is_in_person: Optional[bool], optional
         :param order: Order of the signer
         :type order: Optional[int], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.inputs = inputs
@@ -11276,6 +11289,7 @@ class TemplateSigner(BaseObject):
         self.role = role
         self.is_in_person = is_in_person
         self.order = order
+        self.signer_group_id = signer_group_id
 
 
 class SignTemplateTypeField(str, Enum):
