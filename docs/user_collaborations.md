@@ -130,7 +130,7 @@ See the endpoint docs at
 <!-- sample post_collaborations -->
 
 ```python
-client.user_collaborations.create_collaboration(item=CreateCollaborationItemArg(type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleByArg(type=CreateCollaborationAccessibleByArgTypeField.USER.value, id=user.id), role=CreateCollaborationRoleArg.EDITOR.value)
+client.user_collaborations.create_collaboration(item=CreateCollaborationItemArg(type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleByArg(type=CreateCollaborationAccessibleByArgTypeField.USER.value, login=user_login), role=CreateCollaborationRoleArg.EDITOR.value)
 ```
 
 ### Arguments

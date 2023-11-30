@@ -10519,7 +10519,6 @@ class SignRequestCreateSigner(BaseObject):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
-        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10562,10 +10561,6 @@ class SignRequestCreateSigner(BaseObject):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
-        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.email = email
@@ -10578,7 +10573,6 @@ class SignRequestCreateSigner(BaseObject):
         self.login_required = login_required
         self.verification_phone_number = verification_phone_number
         self.password = password
-        self.signer_group_id = signer_group_id
 
 
 class SignRequestPrefillTag(BaseObject):
@@ -10719,7 +10713,6 @@ class SignRequestSigner(SignRequestCreateSigner):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
-        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10775,10 +10768,6 @@ class SignRequestSigner(SignRequestCreateSigner):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
-        :type signer_group_id: Optional[str], optional
         """
         super().__init__(
             email=email,
@@ -10791,7 +10780,6 @@ class SignRequestSigner(SignRequestCreateSigner):
             login_required=login_required,
             verification_phone_number=verification_phone_number,
             password=password,
-            signer_group_id=signer_group_id,
             **kwargs
         )
         self.has_viewed_document = has_viewed_document
@@ -11260,7 +11248,6 @@ class TemplateSigner(BaseObject):
         role: Optional[TemplateSignerRoleField] = None,
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
-        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -11278,10 +11265,6 @@ class TemplateSigner(BaseObject):
         :type is_in_person: Optional[bool], optional
         :param order: Order of the signer
         :type order: Optional[int], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
-        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.inputs = inputs
@@ -11289,7 +11272,6 @@ class TemplateSigner(BaseObject):
         self.role = role
         self.is_in_person = is_in_person
         self.order = order
-        self.signer_group_id = signer_group_id
 
 
 class SignTemplateTypeField(str, Enum):
