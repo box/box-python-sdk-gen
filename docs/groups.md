@@ -55,7 +55,7 @@ See the endpoint docs at
 <!-- sample post_groups -->
 
 ```python
-client.groups.create_group(name=get_uuid())
+client.groups.create_group(name=group_name)
 ```
 
 ### Arguments
@@ -79,7 +79,7 @@ client.groups.create_group(name=get_uuid())
 
 ### Returns
 
-This function returns a value of type `Group`.
+This function returns a value of type `GroupFull`.
 
 Returns the new group object.
 

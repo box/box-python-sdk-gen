@@ -15,7 +15,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-members-id/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segment_member_by_id` in integration tests_
+<!-- sample get_shield_information_barrier_segment_members_id -->
+
+```python
+client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_member_by_id(shield_information_barrier_segment_member_id=segment_member.id)
+```
 
 ### Arguments
 
@@ -40,7 +44,11 @@ This operation is performed by calling function `delete_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segment-members-id/).
 
-_Currently we don't have an example for calling `delete_shield_information_barrier_segment_member_by_id` in integration tests_
+<!-- sample delete_shield_information_barrier_segment_members_id -->
+
+```python
+client.shield_information_barrier_segment_members.delete_shield_information_barrier_segment_member_by_id(shield_information_barrier_segment_member_id=segment_member.id)
+```
 
 ### Arguments
 
@@ -66,7 +74,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-members/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segment_members` in integration tests_
+<!-- sample get_shield_information_barrier_segment_members -->
+
+```python
+client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_members(shield_information_barrier_segment_id=segment.id)
+```
 
 ### Arguments
 
@@ -95,7 +107,11 @@ This operation is performed by calling function `create_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-shield-information-barrier-segment-members/).
 
-_Currently we don't have an example for calling `create_shield_information_barrier_segment_member` in integration tests_
+<!-- sample post_shield_information_barrier_segment_members -->
+
+```python
+client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), user=UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
+```
 
 ### Arguments
 

@@ -18,11 +18,9 @@ from box_sdk_gen.schemas import Users
 
 from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas import User
+from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import TrackingCode
-
-from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.auth import Authentication
 
@@ -34,7 +32,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
 from box_sdk_gen.fetch import fetch
 
@@ -42,7 +40,7 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
 class GetUsersUserTypeArg(str, Enum):
@@ -223,7 +221,7 @@ class UsersManager:
         external_app_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> User:
+    ) -> UserFull:
         """
         Creates a new managed user in an enterprise. This endpoint
 
@@ -328,7 +326,7 @@ class UsersManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, User)
+        return deserialize(response.data, UserFull)
 
     def get_user_me(
         self,

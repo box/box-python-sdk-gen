@@ -2,7 +2,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import FolderFull
 
@@ -35,7 +35,7 @@ client: BoxClient = get_default_client()
 
 def test_create_get_cancel_and_list_sign_request():
     signer_email: str = ''.join([get_uuid(), '@box.com'])
-    file_to_sign: File = upload_new_file()
+    file_to_sign: FileFull = upload_new_file()
     destination_folder: FolderFull = create_new_folder()
     created_sign_request: SignRequest = client.sign_requests.create_sign_request(
         source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],

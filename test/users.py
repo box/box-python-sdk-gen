@@ -6,8 +6,6 @@ from box_sdk_gen.schemas import Users
 
 from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas import User
-
 from box_sdk_gen.utils import get_uuid
 
 from test.commons import get_default_client
@@ -28,7 +26,7 @@ def test_get_user_me():
 def test_create_update_get_delete_user():
     user_name: str = get_uuid()
     user_login: str = ''.join([get_uuid(), '@gmail.com'])
-    user: User = client.users.create_user(
+    user: UserFull = client.users.create_user(
         name=user_name, login=user_login, is_platform_access_only=True
     )
     assert user.name == user_name

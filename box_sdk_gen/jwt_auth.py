@@ -3,7 +3,6 @@ import random
 import string
 
 from typing import Optional, Any
-from urllib.parse import urlencode
 
 try:
     import jwt
@@ -22,7 +21,7 @@ from .auth_schemas import (
 from .fetch import fetch, FetchResponse, FetchOptions
 from .network import NetworkSession
 from .schemas import AccessToken
-from .json import json_to_serialized_data
+from .json_data import json_to_serialized_data
 
 
 class JWTConfig:

@@ -75,13 +75,17 @@ class BaseObject:
     @classmethod
     def _deserialize_union(cls, key, value, annotation):
         possible_types = get_args(annotation)
+        if value is None:
+            if type(None) not in possible_types:
+                print('Value: ', value, 'should not be allowed in Union:', annotation)
+            return value
         if 'type' in value:
             type_field = 'type'
         else:
             type_field = 'skillCardType'
         type_field_value = value.get(type_field, None)
 
-        type = None
+        curr_type = None
         for i, possible_type in enumerate(possible_types):
             try:
                 if (
@@ -91,16 +95,16 @@ class BaseObject:
                         type_field_value.upper()
                     ]
                 ):
-                    type = possible_types[i]
+                    curr_type = possible_types[i]
                     break
             except Exception:
                 continue
 
-        if not type:
+        if not curr_type:
             print('Could not deserialize Union: ', annotation, 'of value:', value)
 
         try:
-            return cls._deserialize(key, value, type)
+            return cls._deserialize(key, value, curr_type)
         except Exception:
             return value
 

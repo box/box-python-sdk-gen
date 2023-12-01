@@ -696,7 +696,7 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
     def __init__(
         self,
         classification_definition: Optional[str] = None,
-        color_id: Optional[float] = None,
+        color_id: Optional[int] = None,
         **kwargs
     ):
         """
@@ -715,7 +715,7 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
             * `5`: Dark blue
             * `6`: Light green
             * `7`: Gray
-        :type color_id: Optional[float], optional
+        :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
         self.classification_definition = classification_definition
@@ -755,8 +755,8 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
 
     def __init__(
         self,
-        id: Optional[str] = None,
-        key: Optional[str] = None,
+        id: str,
+        key: str,
         static_config: Optional[
             ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField
         ] = None,
@@ -764,9 +764,9 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
     ):
         """
         :param id: The unique ID of this classification.
-        :type id: Optional[str], optional
+        :type id: str
         :param key: The display name and key for this classification.
-        :type key: Optional[str], optional
+        :type key: str
         :param static_config: Additional information about the classification.
         :type static_config: Optional[ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField], optional
         """
@@ -788,37 +788,36 @@ class ClassificationTemplateFieldsField(BaseObject):
 
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[ClassificationTemplateFieldsFieldTypeField] = None,
-        key: Optional[ClassificationTemplateFieldsFieldKeyField] = None,
-        display_name: Optional[
-            ClassificationTemplateFieldsFieldDisplayNameField
-        ] = None,
+        id: str,
+        type: ClassificationTemplateFieldsFieldTypeField,
+        key: ClassificationTemplateFieldsFieldKeyField,
+        display_name: ClassificationTemplateFieldsFieldDisplayNameField,
+        options: List[ClassificationTemplateFieldsFieldOptionsField],
         hidden: Optional[bool] = None,
-        options: Optional[List[ClassificationTemplateFieldsFieldOptionsField]] = None,
         **kwargs
     ):
         """
         :param id: The unique ID of the field.
-        :type id: Optional[str], optional
-        :param type: `enum`
-        :type type: Optional[ClassificationTemplateFieldsFieldTypeField], optional
-        :param key: `Box__Security__Classification__Key`
-        :type key: Optional[ClassificationTemplateFieldsFieldKeyField], optional
+        :type id: str
+        :param type: The array item type.
+        :type type: ClassificationTemplateFieldsFieldTypeField
+        :param key: Defines classifications
+            available in the enterprise.
+        :type key: ClassificationTemplateFieldsFieldKeyField
         :param display_name: `Classification`
-        :type display_name: Optional[ClassificationTemplateFieldsFieldDisplayNameField], optional
+        :type display_name: ClassificationTemplateFieldsFieldDisplayNameField
+        :param options: A list of classifications available in this enterprise.
+        :type options: List[ClassificationTemplateFieldsFieldOptionsField]
         :param hidden: Classifications are always visible to web and mobile users.
         :type hidden: Optional[bool], optional
-        :param options: A list of classifications available in this enterprise.
-        :type options: Optional[List[ClassificationTemplateFieldsFieldOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
         self.key = key
         self.display_name = display_name
-        self.hidden = hidden
         self.options = options
+        self.hidden = hidden
 
 
 class ClassificationTemplate(BaseObject):
@@ -837,47 +836,50 @@ class ClassificationTemplate(BaseObject):
 
     def __init__(
         self,
+        id: str,
         type: ClassificationTemplateTypeField,
-        id: Optional[str] = None,
-        scope: Optional[str] = None,
-        template_key: Optional[ClassificationTemplateTemplateKeyField] = None,
-        display_name: Optional[ClassificationTemplateDisplayNameField] = None,
+        scope: str,
+        template_key: ClassificationTemplateTemplateKeyField,
+        display_name: ClassificationTemplateDisplayNameField,
+        fields: List[ClassificationTemplateFieldsField],
         hidden: Optional[bool] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
-        fields: Optional[List[ClassificationTemplateFieldsField]] = None,
         **kwargs
     ):
         """
+        :param id: The ID of the classification template.
+        :type id: str
         :param type: `metadata_template`
         :type type: ClassificationTemplateTypeField
-        :param id: The ID of the classification template.
-        :type id: Optional[str], optional
         :param scope: The scope of the classification template. This is in the format
             `enterprise_{id}` where the `id` is the enterprise ID.
-        :type scope: Optional[str], optional
+        :type scope: str
         :param template_key: `securityClassification-6VMVochwUWo`
-        :type template_key: Optional[ClassificationTemplateTemplateKeyField], optional
+        :type template_key: ClassificationTemplateTemplateKeyField
         :param display_name: The name of this template as shown in web and mobile interfaces.
-        :type display_name: Optional[ClassificationTemplateDisplayNameField], optional
-        :param hidden: This template is always available in web and mobile interfaces.
-        :type hidden: Optional[bool], optional
-        :param copy_instance_on_item_copy: Classifications are always copied along when the file or folder is
-            copied.
-        :type copy_instance_on_item_copy: Optional[bool], optional
+        :type display_name: ClassificationTemplateDisplayNameField
         :param fields: A list of fields for this classification template. This includes
             only one field, the `Box__Security__Classification__Key`, which defines
             the different classifications available in this enterprise.
-        :type fields: Optional[List[ClassificationTemplateFieldsField]], optional
+        :type fields: List[ClassificationTemplateFieldsField]
+        :param hidden: Determines if the
+            template is always available in web and mobile interfaces.
+        :type hidden: Optional[bool], optional
+        :param copy_instance_on_item_copy: Determines if
+            classifications are
+            copied along when the file or folder is
+            copied.
+        :type copy_instance_on_item_copy: Optional[bool], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
         self.scope = scope
         self.template_key = template_key
         self.display_name = display_name
+        self.fields = fields
         self.hidden = hidden
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
-        self.fields = fields
 
 
 class CollaborationAllowlistEntryTypeField(str, Enum):
@@ -952,8 +954,8 @@ class CollaborationAllowlistEntries(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[CollaborationAllowlistEntry]] = None,
         **kwargs
     ):
@@ -963,9 +965,9 @@ class CollaborationAllowlistEntries(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of allowed collaboration domains
         :type entries: Optional[List[CollaborationAllowlistEntry]], optional
         """
@@ -1378,8 +1380,8 @@ class FilesUnderRetention(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileMini]] = None,
         **kwargs
     ):
@@ -1389,9 +1391,9 @@ class FilesUnderRetention(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of files
         :type entries: Optional[List[FileMini]], optional
         """
@@ -1678,70 +1680,6 @@ class GroupMini(GroupBase):
         self.group_type = group_type
 
 
-class GroupsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-
-class GroupsOrderField(BaseObject):
-    def __init__(
-        self,
-        by: Optional[str] = None,
-        direction: Optional[GroupsOrderFieldDirectionField] = None,
-        **kwargs
-    ):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[GroupsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-
-class Groups(BaseObject):
-    def __init__(
-        self,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        order: Optional[List[GroupsOrderField]] = None,
-        entries: Optional[List[GroupMini]] = None,
-        **kwargs
-    ):
-        """
-        :param total_count: One greater than the offset of the last entry in the entire collection.
-            The total number of entries in the collection may be less than
-            `total_count`.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type offset: Optional[int], optional
-        :param order: The order by which items are returned.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type order: Optional[List[GroupsOrderField]], optional
-        :param entries: A list of groups
-        :type entries: Optional[List[GroupMini]], optional
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.order = order
-        self.entries = entries
-
-
 class Group(GroupMini):
     def __init__(
         self,
@@ -1876,22 +1814,81 @@ class GroupFull(Group):
         self.permissions = permissions
 
 
+class GroupsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+
+class GroupsOrderField(BaseObject):
+    def __init__(
+        self,
+        by: Optional[str] = None,
+        direction: Optional[GroupsOrderFieldDirectionField] = None,
+        **kwargs
+    ):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[GroupsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
+
+class Groups(BaseObject):
+    def __init__(
+        self,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        order: Optional[List[GroupsOrderField]] = None,
+        entries: Optional[List[GroupFull]] = None,
+        **kwargs
+    ):
+        """
+        :param total_count: One greater than the offset of the last entry in the entire collection.
+            The total number of entries in the collection may be less than
+            `total_count`.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type offset: Optional[int], optional
+        :param order: The order by which items are returned.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type order: Optional[List[GroupsOrderField]], optional
+        :param entries: A list of groups
+        :type entries: Optional[List[GroupFull]], optional
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.order = order
+        self.entries = entries
+
+
 class LegalHoldPolicyMiniTypeField(str, Enum):
     LEGAL_HOLD_POLICY = 'legal_hold_policy'
 
 
 class LegalHoldPolicyMini(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[LegalHoldPolicyMiniTypeField] = None,
-        **kwargs
-    ):
+    def __init__(self, id: str, type: LegalHoldPolicyMiniTypeField, **kwargs):
         """
         :param id: The unique identifier for this legal hold policy
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `legal_hold_policy`
-        :type type: Optional[LegalHoldPolicyMiniTypeField], optional
+        :type type: LegalHoldPolicyMiniTypeField
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1918,35 +1915,6 @@ class LegalHoldPolicyAssignmentBase(BaseObject):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
-
-
-class LegalHoldPolicyAssignments(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
-        entries: Optional[List[LegalHoldPolicyAssignmentBase]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of legal hold
-            policy assignments
-        :type entries: Optional[List[LegalHoldPolicyAssignmentBase]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
 
 
 class MetadataBase(BaseObject):
@@ -2158,11 +2126,6 @@ class MetadataCascadePolicyParentField(BaseObject):
         self.id = id
 
 
-class MetadataCascadePolicyScopeField(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE__ = 'enterprise_*'
-
-
 class MetadataCascadePolicy(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'template_key': 'templateKey',
@@ -2175,26 +2138,29 @@ class MetadataCascadePolicy(BaseObject):
 
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[MetadataCascadePolicyTypeField] = None,
+        id: str,
+        type: MetadataCascadePolicyTypeField,
         owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField] = None,
         parent: Optional[MetadataCascadePolicyParentField] = None,
-        scope: Optional[MetadataCascadePolicyScopeField] = None,
+        scope: Optional[str] = None,
         template_key: Optional[str] = None,
         **kwargs
     ):
         """
         :param id: The ID of the metadata cascade policy object
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `metadata_cascade_policy`
-        :type type: Optional[MetadataCascadePolicyTypeField], optional
+        :type type: MetadataCascadePolicyTypeField
         :param owner_enterprise: The enterprise that owns this policy.
         :type owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField], optional
         :param parent: Represent the folder the policy is applied to.
         :type parent: Optional[MetadataCascadePolicyParentField], optional
-        :param scope: The scope of the of the template that is cascaded down to the folder's
-            children.
-        :type scope: Optional[MetadataCascadePolicyScopeField], optional
+        :param scope: The scope of the metadata cascade policy can either be `global` or
+            `enterprise_*`. The `global` scope is used for policies that are
+            available to any Box enterprise. The `enterprise_*` scope represents
+            policies that have been created within a specific enterprise, where `*`
+            will be the ID of that enterprise.
+        :type scope: Optional[str], optional
         :param template_key: The key of the template that is cascaded down to the folder's
             children.
             In many cases the template key is automatically derived
@@ -2222,8 +2188,8 @@ class MetadataCascadePolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[MetadataCascadePolicy]] = None,
         **kwargs
     ):
@@ -2233,9 +2199,9 @@ class MetadataCascadePolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of metadata cascade policies
         :type entries: Optional[List[MetadataCascadePolicy]], optional
         """
@@ -2427,8 +2393,8 @@ class MetadataTemplate(BaseObject):
 
     def __init__(
         self,
+        id: str,
         type: MetadataTemplateTypeField,
-        id: Optional[str] = None,
         scope: Optional[str] = None,
         template_key: Optional[str] = None,
         display_name: Optional[str] = None,
@@ -2438,10 +2404,10 @@ class MetadataTemplate(BaseObject):
         **kwargs
     ):
         """
+        :param id: The ID of the metadata template.
+        :type id: str
         :param type: `metadata_template`
         :type type: MetadataTemplateTypeField
-        :param id: The ID of the metadata template.
-        :type id: Optional[str], optional
         :param scope: The scope of the metadata template can either be `global` or
             `enterprise_*`. The `global` scope is used for templates that are
             available to any Box enterprise. The `enterprise_*` scope represents
@@ -2466,8 +2432,8 @@ class MetadataTemplate(BaseObject):
         :type copy_instance_on_item_copy: Optional[bool], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
         self.scope = scope
         self.template_key = template_key
         self.display_name = display_name
@@ -2480,8 +2446,8 @@ class MetadataTemplates(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[MetadataTemplate]] = None,
         **kwargs
     ):
@@ -2491,9 +2457,9 @@ class MetadataTemplates(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of metadata templates
         :type entries: Optional[List[MetadataTemplate]], optional
         """
@@ -2619,30 +2585,6 @@ class RetentionPolicyMini(RetentionPolicyBase):
         self.disposition_action = disposition_action
 
 
-class RetentionPolicies(BaseObject):
-    def __init__(
-        self,
-        entries: Optional[List[RetentionPolicyMini]] = None,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param entries: A list in which each entry represents a retention policy object.
-        :type entries: Optional[List[RetentionPolicyMini]], optional
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.entries = entries
-        self.limit = limit
-        self.next_marker = next_marker
-
-
 class FileVersionRetentionTypeField(str, Enum):
     FILE_VERSION_RETENTION = 'file_version_retention'
 
@@ -2685,8 +2627,8 @@ class FileVersionRetentions(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileVersionRetention]] = None,
         **kwargs
     ):
@@ -2696,9 +2638,9 @@ class FileVersionRetentions(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of file version retentions
         :type entries: Optional[List[FileVersionRetention]], optional
         """
@@ -2976,8 +2918,8 @@ class StoragePolicyAssignments(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[StoragePolicyAssignment]] = None,
         **kwargs
     ):
@@ -2987,9 +2929,9 @@ class StoragePolicyAssignments(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of storage policy assignments
         :type entries: Optional[List[StoragePolicyAssignment]], optional
         """
@@ -3024,8 +2966,8 @@ class StoragePolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[StoragePolicy]] = None,
         **kwargs
     ):
@@ -3035,9 +2977,9 @@ class StoragePolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of storage policies
         :type entries: Optional[List[StoragePolicy]], optional
         """
@@ -3659,70 +3601,6 @@ class User(UserMini):
         self.address = address
         self.avatar_url = avatar_url
         self.notification_email = notification_email
-
-
-class UsersOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-
-class UsersOrderField(BaseObject):
-    def __init__(
-        self,
-        by: Optional[str] = None,
-        direction: Optional[UsersOrderFieldDirectionField] = None,
-        **kwargs
-    ):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[UsersOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-
-class Users(BaseObject):
-    def __init__(
-        self,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        order: Optional[List[UsersOrderField]] = None,
-        entries: Optional[List[User]] = None,
-        **kwargs
-    ):
-        """
-        :param total_count: One greater than the offset of the last entry in the entire collection.
-            The total number of entries in the collection may be less than
-            `total_count`.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type offset: Optional[int], optional
-        :param order: The order by which items are returned.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type order: Optional[List[UsersOrderField]], optional
-        :param entries: A list of users
-        :type entries: Optional[List[User]], optional
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.order = order
-        self.entries = entries
 
 
 class TrashWebLinkRestoredTypeField(str, Enum):
@@ -5046,6 +4924,30 @@ class RetentionPolicy(RetentionPolicyMini):
         self.assignment_counts = assignment_counts
 
 
+class RetentionPolicies(BaseObject):
+    def __init__(
+        self,
+        entries: Optional[List[RetentionPolicy]] = None,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param entries: A list in which each entry represents a retention policy object.
+        :type entries: Optional[List[RetentionPolicy]], optional
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.entries = entries
+        self.limit = limit
+        self.next_marker = next_marker
+
+
 class LegalHoldPolicyStatusField(str, Enum):
     ACTIVE = 'active'
     APPLYING = 'applying'
@@ -5082,6 +4984,8 @@ class LegalHoldPolicyAssignmentCountsField(BaseObject):
 class LegalHoldPolicy(LegalHoldPolicyMini):
     def __init__(
         self,
+        id: str,
+        type: LegalHoldPolicyMiniTypeField,
         policy_name: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[LegalHoldPolicyStatusField] = None,
@@ -5093,11 +4997,13 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         filter_started_at: Optional[str] = None,
         filter_ended_at: Optional[str] = None,
         release_notes: Optional[str] = None,
-        id: Optional[str] = None,
-        type: Optional[LegalHoldPolicyMiniTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this legal hold policy
+        :type id: str
+        :param type: `legal_hold_policy`
+        :type type: LegalHoldPolicyMiniTypeField
         :param policy_name: Name of the legal hold policy.
         :type policy_name: Optional[str], optional
         :param description: Description of the legal hold policy. Optional
@@ -5130,10 +5036,6 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         :type filter_ended_at: Optional[str], optional
         :param release_notes: Optional notes about why the policy was created.
         :type release_notes: Optional[str], optional
-        :param id: The unique identifier for this legal hold policy
-        :type id: Optional[str], optional
-        :param type: `legal_hold_policy`
-        :type type: Optional[LegalHoldPolicyMiniTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.policy_name = policy_name
@@ -5153,8 +5055,8 @@ class LegalHoldPolicies(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[LegalHoldPolicy]] = None,
         **kwargs
     ):
@@ -5164,9 +5066,9 @@ class LegalHoldPolicies(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of legal hold policies
         :type entries: Optional[List[LegalHoldPolicy]], optional
         """
@@ -5210,8 +5112,8 @@ class InviteInvitedToField(BaseObject):
 class Invite(BaseObject):
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[InviteTypeField] = None,
+        id: str,
+        type: InviteTypeField,
         invited_to: Optional[InviteInvitedToField] = None,
         actionable_by: Optional[UserMini] = None,
         invited_by: Optional[UserMini] = None,
@@ -5222,9 +5124,9 @@ class Invite(BaseObject):
     ):
         """
         :param id: The unique identifier for this invite
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `invite`
-        :type type: Optional[InviteTypeField], optional
+        :type type: InviteTypeField
         :param invited_to: A representation of a Box enterprise
         :type invited_to: Optional[InviteInvitedToField], optional
         :param status: The status of the invite
@@ -5407,70 +5309,6 @@ class FileVersion(FileVersionMini):
         self.uploader_display_name = uploader_display_name
 
 
-class FileVersionsOrderFieldDirectionField(str, Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
-
-
-class FileVersionsOrderField(BaseObject):
-    def __init__(
-        self,
-        by: Optional[str] = None,
-        direction: Optional[FileVersionsOrderFieldDirectionField] = None,
-        **kwargs
-    ):
-        """
-        :param by: The field to order by
-        :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[FileVersionsOrderFieldDirectionField], optional
-        """
-        super().__init__(**kwargs)
-        self.by = by
-        self.direction = direction
-
-
-class FileVersions(BaseObject):
-    def __init__(
-        self,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        order: Optional[List[FileVersionsOrderField]] = None,
-        entries: Optional[List[FileVersion]] = None,
-        **kwargs
-    ):
-        """
-        :param total_count: One greater than the offset of the last entry in the entire collection.
-            The total number of entries in the collection may be less than
-            `total_count`.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type offset: Optional[int], optional
-        :param order: The order by which items are returned.
-            This field is only returned for calls that use offset-based pagination.
-            For marker-based paginated APIs, this field will be omitted.
-        :type order: Optional[List[FileVersionsOrderField]], optional
-        :param entries: A list of file versions
-        :type entries: Optional[List[FileVersion]], optional
-        """
-        super().__init__(**kwargs)
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.order = order
-        self.entries = entries
-
-
 class FileVersionFull(FileVersion):
     def __init__(
         self,
@@ -5533,6 +5371,70 @@ class FileVersionFull(FileVersion):
             **kwargs
         )
         self.version_number = version_number
+
+
+class FileVersionsOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+
+class FileVersionsOrderField(BaseObject):
+    def __init__(
+        self,
+        by: Optional[str] = None,
+        direction: Optional[FileVersionsOrderFieldDirectionField] = None,
+        **kwargs
+    ):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[FileVersionsOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
+
+class FileVersions(BaseObject):
+    def __init__(
+        self,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        order: Optional[List[FileVersionsOrderField]] = None,
+        entries: Optional[List[FileVersionFull]] = None,
+        **kwargs
+    ):
+        """
+        :param total_count: One greater than the offset of the last entry in the entire collection.
+            The total number of entries in the collection may be less than
+            `total_count`.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type offset: Optional[int], optional
+        :param order: The order by which items are returned.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type order: Optional[List[FileVersionsOrderField]], optional
+        :param entries: A list of file versions
+        :type entries: Optional[List[FileVersionFull]], optional
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.order = order
+        self.entries = entries
 
 
 class FileRequestTypeField(str, Enum):
@@ -6403,14 +6305,14 @@ class Files(BaseObject):
     def __init__(
         self,
         total_count: Optional[int] = None,
-        entries: Optional[List[File]] = None,
+        entries: Optional[List[FileFull]] = None,
         **kwargs
     ):
         """
         :param total_count: The number of files.
         :type total_count: Optional[int], optional
         :param entries: A list of files
-        :type entries: Optional[List[File]], optional
+        :type entries: Optional[List[FileFull]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -6628,7 +6530,7 @@ class Comments(BaseObject):
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         order: Optional[List[CommentsOrderField]] = None,
-        entries: Optional[List[Comment]] = None,
+        entries: Optional[List[CommentFull]] = None,
         **kwargs
     ):
         """
@@ -6652,7 +6554,7 @@ class Comments(BaseObject):
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[CommentsOrderField]], optional
         :param entries: A list of comments
-        :type entries: Optional[List[Comment]], optional
+        :type entries: Optional[List[CommentFull]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -6728,8 +6630,8 @@ class CollaborationAllowlistExemptTargets(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[CollaborationAllowlistExemptTarget]] = None,
         **kwargs
     ):
@@ -6739,9 +6641,9 @@ class CollaborationAllowlistExemptTargets(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of users exempt from any of the restrictions
             imposed by the list of allowed collaboration domains
             for this enterprise.
@@ -7154,29 +7056,25 @@ class FolderLock(BaseObject):
 class FolderLocks(BaseObject):
     def __init__(
         self,
-        limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
         entries: Optional[List[FolderLock]] = None,
+        limit: Optional[str] = None,
+        next_marker: Optional[str] = None,
         **kwargs
     ):
         """
+        :param entries: A list of folder locks
+        :type entries: Optional[List[FolderLock]], optional
         :param limit: The limit that was used for these entries. This will be the same as the
             `limit` query parameter unless that value exceeded the maximum value
             allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
+        :type limit: Optional[str], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
-        :param entries: A list of folder locks
-        :type entries: Optional[List[FolderLock]], optional
+        :type next_marker: Optional[str], optional
         """
         super().__init__(**kwargs)
+        self.entries = entries
         self.limit = limit
         self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
 
 
 class WatermarkWatermarkField(BaseObject):
@@ -7256,8 +7154,8 @@ class Webhooks(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[WebhookMini]] = None,
         **kwargs
     ):
@@ -7267,9 +7165,9 @@ class Webhooks(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of webhooks
         :type entries: Optional[List[WebhookMini]], optional
         """
@@ -7658,7 +7556,7 @@ class Items(BaseObject):
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         order: Optional[List[ItemsOrderField]] = None,
-        entries: Optional[List[Union[FileMini, FolderMini, WebLinkMini]]] = None,
+        entries: Optional[List[Union[FileFull, FolderMini, WebLink]]] = None,
         **kwargs
     ):
         """
@@ -7682,7 +7580,7 @@ class Items(BaseObject):
             For marker-based paginated APIs, this field will be omitted.
         :type order: Optional[List[ItemsOrderField]], optional
         :param entries: The items in this collection.
-        :type entries: Optional[List[Union[FileMini, FolderMini, WebLinkMini]]], optional
+        :type entries: Optional[List[Union[FileFull, FolderMini, WebLink]]], optional
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -7959,175 +7857,6 @@ class Folder(FolderMini):
         self.item_collection = item_collection
 
 
-class SearchResultWithSharedLink(BaseObject):
-    def __init__(
-        self,
-        accessible_via_shared_link: Optional[str] = None,
-        item: Optional[Union[File, Folder, WebLink]] = None,
-        type: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param accessible_via_shared_link: The optional shared link through which the user has access to this
-            item. This value is only returned for items for which the user has
-            recently accessed the file through a shared link. For all other
-            items this value will return `null`.
-        :type accessible_via_shared_link: Optional[str], optional
-        :param type: The result type. The value is always `search_result`.
-        :type type: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.accessible_via_shared_link = accessible_via_shared_link
-        self.item = item
-        self.type = type
-
-
-class SearchResultsWithSharedLinksTypeField(str, Enum):
-    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
-
-
-class SearchResultsWithSharedLinks(BaseObject):
-    def __init__(
-        self,
-        type: SearchResultsWithSharedLinksTypeField,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        entries: Optional[List[SearchResultWithSharedLink]] = None,
-        **kwargs
-    ):
-        """
-        :param type: Specifies the response as search result items with shared links
-        :type type: SearchResultsWithSharedLinksTypeField
-        :param total_count: One greater than the offset of the last entry in the search results.
-            The total number of entries in the collection may be less than
-            `total_count`.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for this search. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter used.
-        :type offset: Optional[int], optional
-        :param entries: The search results for the query provided, including the
-            additional information about any shared links through
-            which the item has been shared with the user.
-        :type entries: Optional[List[SearchResultWithSharedLink]], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.entries = entries
-
-
-class SearchResultsTypeField(str, Enum):
-    SEARCH_RESULTS_ITEMS = 'search_results_items'
-
-
-class SearchResults(BaseObject):
-    def __init__(
-        self,
-        type: SearchResultsTypeField,
-        total_count: Optional[int] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        entries: Optional[List[Union[File, Folder, WebLink]]] = None,
-        **kwargs
-    ):
-        """
-        :param type: Specifies the response as search result items without shared links
-        :type type: SearchResultsTypeField
-        :param total_count: One greater than the offset of the last entry in the search results.
-            The total number of entries in the collection may be less than
-            `total_count`.
-        :type total_count: Optional[int], optional
-        :param limit: The limit that was used for this search. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed.
-        :type limit: Optional[int], optional
-        :param offset: The 0-based offset of the first entry in this set. This will be the same
-            as the `offset` query parameter used.
-        :type offset: Optional[int], optional
-        :param entries: The search results for the query provided.
-        :type entries: Optional[List[Union[File, Folder, WebLink]]], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.total_count = total_count
-        self.limit = limit
-        self.offset = offset
-        self.entries = entries
-
-
-class RecentItemInteractionTypeField(str, Enum):
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_UPLOAD = 'item_upload'
-    ITEM_COMMENT = 'item_comment'
-    ITEM_OPEN = 'item_open'
-    ITEM_MODIFY = 'item_modify'
-
-
-class RecentItem(BaseObject):
-    def __init__(
-        self,
-        type: Optional[str] = None,
-        item: Optional[Union[File, Folder, WebLink]] = None,
-        interaction_type: Optional[RecentItemInteractionTypeField] = None,
-        interacted_at: Optional[str] = None,
-        interaction_shared_link: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param type: `recent_item`
-        :type type: Optional[str], optional
-        :param interaction_type: The most recent type of access the user performed on
-            the item.
-        :type interaction_type: Optional[RecentItemInteractionTypeField], optional
-        :param interacted_at: The time of the most recent interaction.
-        :type interacted_at: Optional[str], optional
-        :param interaction_shared_link: If the item was accessed through a shared link it will appear here,
-            otherwise this will be null.
-        :type interaction_shared_link: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.item = item
-        self.interaction_type = interaction_type
-        self.interacted_at = interacted_at
-        self.interaction_shared_link = interaction_shared_link
-
-
-class RecentItems(BaseObject):
-    def __init__(
-        self,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        prev_marker: Optional[str] = None,
-        entries: Optional[List[RecentItem]] = None,
-        **kwargs
-    ):
-        """
-        :param limit: The limit that was used for these entries. This will be the same as the
-            `limit` query parameter unless that value exceeded the maximum value
-            allowed. The maximum value varies by API.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[str], optional
-        :param entries: A list of recent items
-        :type entries: Optional[List[RecentItem]], optional
-        """
-        super().__init__(**kwargs)
-        self.limit = limit
-        self.next_marker = next_marker
-        self.prev_marker = prev_marker
-        self.entries = entries
-
-
 class MetadataQueryResults(BaseObject):
     def __init__(
         self,
@@ -8191,6 +7920,35 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         self.deleted_at = deleted_at
 
 
+class LegalHoldPolicyAssignments(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
+        entries: Optional[List[LegalHoldPolicyAssignment]] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[str], optional
+        :param entries: A list of legal hold
+            policy assignments
+        :type entries: Optional[List[LegalHoldPolicyAssignment]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
+
+
 class FileVersionLegalHoldTypeField(str, Enum):
     FILE_VERSION_LEGAL_HOLD = 'file_version_legal_hold'
 
@@ -8230,8 +7988,8 @@ class FileVersionLegalHolds(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[FileVersionLegalHold]] = None,
         **kwargs
     ):
@@ -8241,9 +7999,9 @@ class FileVersionLegalHolds(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of file version legal holds
         :type entries: Optional[List[FileVersionLegalHold]], optional
         """
@@ -8511,6 +8269,175 @@ class FolderFull(Folder):
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
+
+
+class SearchResultWithSharedLink(BaseObject):
+    def __init__(
+        self,
+        accessible_via_shared_link: Optional[str] = None,
+        item: Optional[Union[FileFull, FolderFull, WebLink]] = None,
+        type: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param accessible_via_shared_link: The optional shared link through which the user has access to this
+            item. This value is only returned for items for which the user has
+            recently accessed the file through a shared link. For all other
+            items this value will return `null`.
+        :type accessible_via_shared_link: Optional[str], optional
+        :param type: The result type. The value is always `search_result`.
+        :type type: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.accessible_via_shared_link = accessible_via_shared_link
+        self.item = item
+        self.type = type
+
+
+class SearchResultsWithSharedLinksTypeField(str, Enum):
+    SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'
+
+
+class SearchResultsWithSharedLinks(BaseObject):
+    def __init__(
+        self,
+        type: SearchResultsWithSharedLinksTypeField,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        entries: Optional[List[SearchResultWithSharedLink]] = None,
+        **kwargs
+    ):
+        """
+        :param type: Specifies the response as search result items with shared links
+        :type type: SearchResultsWithSharedLinksTypeField
+        :param total_count: One greater than the offset of the last entry in the search results.
+            The total number of entries in the collection may be less than
+            `total_count`.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for this search. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter used.
+        :type offset: Optional[int], optional
+        :param entries: The search results for the query provided, including the
+            additional information about any shared links through
+            which the item has been shared with the user.
+        :type entries: Optional[List[SearchResultWithSharedLink]], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.entries = entries
+
+
+class SearchResultsTypeField(str, Enum):
+    SEARCH_RESULTS_ITEMS = 'search_results_items'
+
+
+class SearchResults(BaseObject):
+    def __init__(
+        self,
+        type: SearchResultsTypeField,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        entries: Optional[List[Union[FileFull, FolderFull, WebLink]]] = None,
+        **kwargs
+    ):
+        """
+        :param type: Specifies the response as search result items without shared links
+        :type type: SearchResultsTypeField
+        :param total_count: One greater than the offset of the last entry in the search results.
+            The total number of entries in the collection may be less than
+            `total_count`.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for this search. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter used.
+        :type offset: Optional[int], optional
+        :param entries: The search results for the query provided.
+        :type entries: Optional[List[Union[FileFull, FolderFull, WebLink]]], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.entries = entries
+
+
+class RecentItemInteractionTypeField(str, Enum):
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_UPLOAD = 'item_upload'
+    ITEM_COMMENT = 'item_comment'
+    ITEM_OPEN = 'item_open'
+    ITEM_MODIFY = 'item_modify'
+
+
+class RecentItem(BaseObject):
+    def __init__(
+        self,
+        type: Optional[str] = None,
+        item: Optional[Union[FileFull, FolderFull, WebLink]] = None,
+        interaction_type: Optional[RecentItemInteractionTypeField] = None,
+        interacted_at: Optional[str] = None,
+        interaction_shared_link: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param type: `recent_item`
+        :type type: Optional[str], optional
+        :param interaction_type: The most recent type of access the user performed on
+            the item.
+        :type interaction_type: Optional[RecentItemInteractionTypeField], optional
+        :param interacted_at: The time of the most recent interaction.
+        :type interacted_at: Optional[str], optional
+        :param interaction_shared_link: If the item was accessed through a shared link it will appear here,
+            otherwise this will be null.
+        :type interaction_shared_link: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.type = type
+        self.item = item
+        self.interaction_type = interaction_type
+        self.interacted_at = interacted_at
+        self.interaction_shared_link = interaction_shared_link
+
+
+class RecentItems(BaseObject):
+    def __init__(
+        self,
+        limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
+        entries: Optional[List[RecentItem]] = None,
+        **kwargs
+    ):
+        """
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param next_marker: The marker for the start of the next page of results.
+        :type next_marker: Optional[str], optional
+        :param prev_marker: The marker for the start of the previous page of results.
+        :type prev_marker: Optional[str], optional
+        :param entries: A list of recent items
+        :type entries: Optional[List[RecentItem]], optional
+        """
+        super().__init__(**kwargs)
+        self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.entries = entries
 
 
 class EventEventTypeField(str, Enum):
@@ -9084,8 +9011,8 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
 class Collaboration(BaseObject):
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[CollaborationTypeField] = None,
+        id: str,
+        type: CollaborationTypeField,
         item: Optional[Union[File, Folder, WebLink]] = None,
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
@@ -9104,9 +9031,9 @@ class Collaboration(BaseObject):
     ):
         """
         :param id: The unique identifier for this collaboration.
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `collaboration`
-        :type type: Optional[CollaborationTypeField], optional
+        :type type: CollaborationTypeField
         :param invite_email: The email address used to invite an unregistered collaborator, if
             they are not a registered user.
         :type invite_email: Optional[str], optional
@@ -9594,8 +9521,8 @@ class Workflows(BaseObject):
     def __init__(
         self,
         limit: Optional[int] = None,
-        next_marker: Optional[int] = None,
-        prev_marker: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
         entries: Optional[List[Workflow]] = None,
         **kwargs
     ):
@@ -9605,9 +9532,9 @@ class Workflows(BaseObject):
             allowed. The maximum value varies by API.
         :type limit: Optional[int], optional
         :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[int], optional
+        :type next_marker: Optional[str], optional
         :param prev_marker: The marker for the start of the previous page of results.
-        :type prev_marker: Optional[int], optional
+        :type prev_marker: Optional[str], optional
         :param entries: A list of workflows
         :type entries: Optional[List[Workflow]], optional
         """
@@ -11853,6 +11780,70 @@ class UserFull(User):
         self.hostname = hostname
         self.is_platform_access_only = is_platform_access_only
         self.external_app_user_id = external_app_user_id
+
+
+class UsersOrderFieldDirectionField(str, Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+
+class UsersOrderField(BaseObject):
+    def __init__(
+        self,
+        by: Optional[str] = None,
+        direction: Optional[UsersOrderFieldDirectionField] = None,
+        **kwargs
+    ):
+        """
+        :param by: The field to order by
+        :type by: Optional[str], optional
+        :param direction: The direction to order by, either ascending or descending
+        :type direction: Optional[UsersOrderFieldDirectionField], optional
+        """
+        super().__init__(**kwargs)
+        self.by = by
+        self.direction = direction
+
+
+class Users(BaseObject):
+    def __init__(
+        self,
+        total_count: Optional[int] = None,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        order: Optional[List[UsersOrderField]] = None,
+        entries: Optional[List[UserFull]] = None,
+        **kwargs
+    ):
+        """
+        :param total_count: One greater than the offset of the last entry in the entire collection.
+            The total number of entries in the collection may be less than
+            `total_count`.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type total_count: Optional[int], optional
+        :param limit: The limit that was used for these entries. This will be the same as the
+            `limit` query parameter unless that value exceeded the maximum value
+            allowed. The maximum value varies by API.
+        :type limit: Optional[int], optional
+        :param offset: The 0-based offset of the first entry in this set. This will be the same
+            as the `offset` query parameter.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type offset: Optional[int], optional
+        :param order: The order by which items are returned.
+            This field is only returned for calls that use offset-based pagination.
+            For marker-based paginated APIs, this field will be omitted.
+        :type order: Optional[List[UsersOrderField]], optional
+        :param entries: A list of users
+        :type entries: Optional[List[UserFull]], optional
+        """
+        super().__init__(**kwargs)
+        self.total_count = total_count
+        self.limit = limit
+        self.offset = offset
+        self.order = order
+        self.entries = entries
 
 
 class MetadataFieldFilterString(BaseObject):

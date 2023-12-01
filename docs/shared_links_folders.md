@@ -21,7 +21,11 @@ This operation is performed by calling function `get_shared_item_folders`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shared-items-folders/).
 
-_Currently we don't have an example for calling `get_shared_item_folders` in integration tests_
+<!-- sample get_shared_items#folders -->
+
+```python
+user_client.shared_links_folders.get_shared_item_folders(boxapi=''.join(['shared_link=', folder_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+```
 
 ### Arguments
 
@@ -50,7 +54,11 @@ This operation is performed by calling function `get_folder_get_shared_link`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-get-shared-link/).
 
-_Currently we don't have an example for calling `get_folder_get_shared_link` in integration tests_
+<!-- sample get_folders_id#get_shared_link -->
+
+```python
+client.shared_links_folders.get_folder_get_shared_link(folder_id=folder.id, fields='shared_link')
+```
 
 ### Arguments
 
@@ -77,7 +85,11 @@ This operation is performed by calling function `update_folder_add_shared_link`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-add-shared-link/).
 
-_Currently we don't have an example for calling `update_folder_add_shared_link` in integration tests_
+<!-- sample put_folders_id#add_shared_link -->
+
+```python
+client.shared_links_folders.update_folder_add_shared_link(folder_id=folder.id, shared_link=UpdateFolderAddSharedLinkSharedLinkArg(access=UpdateFolderAddSharedLinkSharedLinkArgAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+```
 
 ### Arguments
 
@@ -106,7 +118,11 @@ This operation is performed by calling function `update_folder_update_shared_lin
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-update-shared-link/).
 
-_Currently we don't have an example for calling `update_folder_update_shared_link` in integration tests_
+<!-- sample put_folders_id#update_shared_link -->
+
+```python
+client.shared_links_folders.update_folder_update_shared_link(folder_id=folder.id, shared_link=UpdateFolderUpdateSharedLinkSharedLinkArg(access=UpdateFolderUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value), fields='shared_link')
+```
 
 ### Arguments
 

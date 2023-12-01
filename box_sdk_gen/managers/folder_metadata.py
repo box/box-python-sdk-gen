@@ -20,8 +20,6 @@ from box_sdk_gen.schemas import ClientError
 
 from box_sdk_gen.schemas import MetadataFull
 
-from box_sdk_gen.schemas import Metadata
-
 from box_sdk_gen.auth import Authentication
 
 from box_sdk_gen.network import NetworkSession
@@ -38,9 +36,9 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
 class GetFolderMetadataByIdScopeArg(str, Enum):
@@ -228,7 +226,7 @@ class FolderMetadataManager:
         template_key: str,
         request_body: Dict[str, str],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> Metadata:
+    ) -> MetadataFull:
         """
         Applies an instance of a metadata template to a folder.
 
@@ -292,7 +290,7 @@ class FolderMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, Metadata)
+        return deserialize(response.data, MetadataFull)
 
     def update_folder_metadata_by_id(
         self,
@@ -301,7 +299,7 @@ class FolderMetadataManager:
         template_key: str,
         request_body: List[UpdateFolderMetadataByIdRequestBodyArg],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> Metadata:
+    ) -> MetadataFull:
         """
         Updates a piece of metadata on a folder.
 
@@ -362,7 +360,7 @@ class FolderMetadataManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, Metadata)
+        return deserialize(response.data, MetadataFull)
 
     def delete_folder_metadata_by_id(
         self,

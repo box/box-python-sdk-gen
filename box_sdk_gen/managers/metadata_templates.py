@@ -30,7 +30,7 @@ from box_sdk_gen.utils import to_string
 
 from box_sdk_gen.utils import ByteStream
 
-from box_sdk_gen.json import sd_to_json
+from box_sdk_gen.json_data import sd_to_json
 
 from box_sdk_gen.fetch import fetch
 
@@ -38,20 +38,20 @@ from box_sdk_gen.fetch import FetchOptions
 
 from box_sdk_gen.fetch import FetchResponse
 
-from box_sdk_gen.json import SerializedData
+from box_sdk_gen.json_data import SerializedData
 
 
-class GetMetadataTemplateSchemaScopeArg(str, Enum):
+class GetMetadataTemplateScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateMetadataTemplateSchemaScopeArg(str, Enum):
+class UpdateMetadataTemplateScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateMetadataTemplateSchemaRequestBodyArgOpField(str, Enum):
+class UpdateMetadataTemplateRequestBodyArgOpField(str, Enum):
     EDITTEMPLATE = 'editTemplate'
     ADDFIELD = 'addField'
     REORDERFIELDS = 'reorderFields'
@@ -67,7 +67,7 @@ class UpdateMetadataTemplateSchemaRequestBodyArgOpField(str, Enum):
     REMOVEMULTISELECTOPTION = 'removeMultiSelectOption'
 
 
-class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
+class UpdateMetadataTemplateRequestBodyArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'field_key': 'fieldKey',
         'field_keys': 'fieldKeys',
@@ -89,7 +89,7 @@ class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: UpdateMetadataTemplateSchemaRequestBodyArgOpField,
+        op: UpdateMetadataTemplateRequestBodyArgOpField,
         data: Optional[Dict[str, str]] = None,
         field_key: Optional[str] = None,
         field_keys: Optional[List[str]] = None,
@@ -102,7 +102,7 @@ class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
-        :type op: UpdateMetadataTemplateSchemaRequestBodyArgOpField
+        :type op: UpdateMetadataTemplateRequestBodyArgOpField
         :param data: The data for the operation. This will vary depending on the
             operation being performed.
         :type data: Optional[Dict[str, str]], optional
@@ -136,12 +136,12 @@ class UpdateMetadataTemplateSchemaRequestBodyArg(BaseObject):
         self.multi_select_option_keys = multi_select_option_keys
 
 
-class DeleteMetadataTemplateSchemaScopeArg(str, Enum):
+class DeleteMetadataTemplateScopeArg(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class CreateMetadataTemplateSchemaFieldsArgTypeField(str, Enum):
+class CreateMetadataTemplateFieldsArgTypeField(str, Enum):
     STRING = 'string'
     FLOAT = 'float'
     DATE = 'date'
@@ -149,7 +149,7 @@ class CreateMetadataTemplateSchemaFieldsArgTypeField(str, Enum):
     MULTISELECT = 'multiSelect'
 
 
-class CreateMetadataTemplateSchemaFieldsArgOptionsField(BaseObject):
+class CreateMetadataTemplateFieldsArgOptionsField(BaseObject):
     def __init__(self, key: str, **kwargs):
         """
         :param key: The text value of the option. This represents both the display name of the
@@ -160,7 +160,7 @@ class CreateMetadataTemplateSchemaFieldsArgOptionsField(BaseObject):
         self.key = key
 
 
-class CreateMetadataTemplateSchemaFieldsArg(BaseObject):
+class CreateMetadataTemplateFieldsArg(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
@@ -172,14 +172,12 @@ class CreateMetadataTemplateSchemaFieldsArg(BaseObject):
 
     def __init__(
         self,
-        type: CreateMetadataTemplateSchemaFieldsArgTypeField,
+        type: CreateMetadataTemplateFieldsArgTypeField,
         key: str,
         display_name: str,
         description: Optional[str] = None,
         hidden: Optional[bool] = None,
-        options: Optional[
-            List[CreateMetadataTemplateSchemaFieldsArgOptionsField]
-        ] = None,
+        options: Optional[List[CreateMetadataTemplateFieldsArgOptionsField]] = None,
         **kwargs
     ):
         """
@@ -189,7 +187,7 @@ class CreateMetadataTemplateSchemaFieldsArg(BaseObject):
             Additionally, metadata templates support an `enum` field for a basic list
             of items, and ` multiSelect` field for a similar list of items where the
             user can select more than one value.
-        :type type: CreateMetadataTemplateSchemaFieldsArgTypeField
+        :type type: CreateMetadataTemplateFieldsArgTypeField
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
         :type key: str
@@ -203,7 +201,7 @@ class CreateMetadataTemplateSchemaFieldsArg(BaseObject):
         :type hidden: Optional[bool], optional
         :param options: A list of options for this field. This is used in combination with the
             `enum` and `multiSelect` field types.
-        :type options: Optional[List[CreateMetadataTemplateSchemaFieldsArgOptionsField]], optional
+        :type options: Optional[List[CreateMetadataTemplateFieldsArgOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -223,7 +221,7 @@ class MetadataTemplatesManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_metadata_templates(
+    def get_metadata_templates_by_instance_id(
         self,
         metadata_instance_id: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -257,9 +255,9 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplates)
 
-    def get_metadata_template_schema(
+    def get_metadata_template(
         self,
-        scope: GetMetadataTemplateSchemaScopeArg,
+        scope: GetMetadataTemplateScopeArg,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
@@ -273,7 +271,7 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetMetadataTemplateSchemaScopeArg
+        :type scope: GetMetadataTemplateScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -301,11 +299,11 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplate)
 
-    def update_metadata_template_schema(
+    def update_metadata_template(
         self,
-        scope: UpdateMetadataTemplateSchemaScopeArg,
+        scope: UpdateMetadataTemplateScopeArg,
         template_key: str,
-        request_body: List[UpdateMetadataTemplateSchemaRequestBodyArg],
+        request_body: List[UpdateMetadataTemplateRequestBodyArg],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
         """
@@ -324,12 +322,12 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: UpdateMetadataTemplateSchemaScopeArg
+        :type scope: UpdateMetadataTemplateScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
-        :param request_body: Request body of updateMetadataTemplateSchema method
-        :type request_body: List[UpdateMetadataTemplateSchemaRequestBodyArg]
+        :param request_body: Request body of updateMetadataTemplate method
+        :type request_body: List[UpdateMetadataTemplateRequestBodyArg]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -356,9 +354,9 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplate)
 
-    def delete_metadata_template_schema(
+    def delete_metadata_template(
         self,
-        scope: DeleteMetadataTemplateSchemaScopeArg,
+        scope: DeleteMetadataTemplateScopeArg,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
@@ -369,7 +367,7 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteMetadataTemplateSchemaScopeArg
+        :type scope: DeleteMetadataTemplateScopeArg
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -425,7 +423,7 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplate)
 
-    def get_metadata_template_global(
+    def get_global_metadata_templates(
         self,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
@@ -464,7 +462,7 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplates)
 
-    def get_metadata_template_enterprise(
+    def get_enterprise_metadata_templates(
         self,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
@@ -503,13 +501,13 @@ class MetadataTemplatesManager:
         )
         return deserialize(response.data, MetadataTemplates)
 
-    def create_metadata_template_schema(
+    def create_metadata_template(
         self,
         scope: str,
         display_name: str,
         template_key: Optional[str] = None,
         hidden: Optional[bool] = None,
-        fields: Optional[List[CreateMetadataTemplateSchemaFieldsArg]] = None,
+        fields: Optional[List[CreateMetadataTemplateFieldsArg]] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
@@ -538,7 +536,7 @@ class MetadataTemplatesManager:
         :param fields: An ordered list of template fields which are part of the template.
             Each field can be a regular text field, date field, number field,
             as well as a single or multi-select list.
-        :type fields: Optional[List[CreateMetadataTemplateSchemaFieldsArg]], optional
+        :type fields: Optional[List[CreateMetadataTemplateFieldsArg]], optional
         :param copy_instance_on_item_copy: Whether or not to copy any metadata attached to a file or folder
             when it is copied. By default, metadata is not copied along with a
             file or folder when it is copied.

@@ -15,7 +15,11 @@ This operation is performed by calling function `create_user_terminate_session`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-users-terminate-sessions/).
 
-_Currently we don't have an example for calling `create_user_terminate_session` in integration tests_
+<!-- sample post_users_terminate_sessions -->
+
+```python
+client.session_termination.create_user_terminate_session(user_ids=[get_env_var('USER_ID')], user_logins=[user.login])
+```
 
 ### Arguments
 
@@ -44,7 +48,11 @@ This operation is performed by calling function `create_group_terminate_session`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-groups-terminate-sessions/).
 
-_Currently we don't have an example for calling `create_group_terminate_session` in integration tests_
+<!-- sample post_groups_terminate_sessions -->
+
+```python
+client.session_termination.create_group_terminate_session(group_ids=[group.id])
+```
 
 ### Arguments
 

@@ -6,12 +6,10 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import MetadataTemplate
 
-from box_sdk_gen.managers.metadata_templates import (
-    CreateMetadataTemplateSchemaFieldsArg,
-)
+from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFieldsArg
 
 from box_sdk_gen.managers.metadata_templates import (
-    CreateMetadataTemplateSchemaFieldsArgTypeField,
+    CreateMetadataTemplateFieldsArgTypeField,
 )
 
 from box_sdk_gen.schemas import Files
@@ -20,15 +18,15 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas import Metadata
+from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import CreateFileMetadataByIdScopeArg
 
 from box_sdk_gen.schemas import MetadataQueryResults
 
-from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateSchemaScopeArg
+from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScopeArg
 
 from box_sdk_gen.schemas import MetadataQueryIndices
 
@@ -47,19 +45,17 @@ client: BoxClient = get_default_client()
 
 def testCreateMetaDataQueryExecuteRead():
     template_key: str = ''.join(['key', get_uuid()])
-    template: MetadataTemplate = (
-        client.metadata_templates.create_metadata_template_schema(
-            scope='enterprise',
-            template_key=template_key,
-            display_name=template_key,
-            fields=[
-                CreateMetadataTemplateSchemaFieldsArg(
-                    type=CreateMetadataTemplateSchemaFieldsArgTypeField.FLOAT.value,
-                    key='testName',
-                    display_name='testName',
-                )
-            ],
-        )
+    template: MetadataTemplate = client.metadata_templates.create_metadata_template(
+        scope='enterprise',
+        template_key=template_key,
+        display_name=template_key,
+        fields=[
+            CreateMetadataTemplateFieldsArg(
+                type=CreateMetadataTemplateFieldsArgTypeField.FLOAT.value,
+                key='testName',
+                display_name='testName',
+            )
+        ],
     )
     assert template.template_key == template_key
     files: Files = client.uploads.upload_file(
@@ -68,8 +64,8 @@ def testCreateMetaDataQueryExecuteRead():
         ),
         file=generate_byte_stream(10),
     )
-    file: File = files.entries[0]
-    metadata: Metadata = client.file_metadata.create_file_metadata_by_id(
+    file: FileFull = files.entries[0]
+    metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file_id=file.id,
         scope=CreateFileMetadataByIdScopeArg.ENTERPRISE.value,
         template_key=template_key,
@@ -85,8 +81,8 @@ def testCreateMetaDataQueryExecuteRead():
         ancestor_folder_id='0',
     )
     assert len(query.entries) >= 0
-    client.metadata_templates.delete_metadata_template_schema(
-        scope=DeleteMetadataTemplateSchemaScopeArg.ENTERPRISE.value,
+    client.metadata_templates.delete_metadata_template(
+        scope=DeleteMetadataTemplateScopeArg.ENTERPRISE.value,
         template_key=template.template_key,
     )
     client.files.delete_file_by_id(file_id=file.id)
@@ -94,19 +90,17 @@ def testCreateMetaDataQueryExecuteRead():
 
 def testGetMetadataQueryIndices():
     template_key: str = ''.join(['key', get_uuid()])
-    template: MetadataTemplate = (
-        client.metadata_templates.create_metadata_template_schema(
-            scope='enterprise',
-            template_key=template_key,
-            display_name=template_key,
-            fields=[
-                CreateMetadataTemplateSchemaFieldsArg(
-                    type=CreateMetadataTemplateSchemaFieldsArgTypeField.STRING.value,
-                    key='testName',
-                    display_name='testName',
-                )
-            ],
-        )
+    template: MetadataTemplate = client.metadata_templates.create_metadata_template(
+        scope='enterprise',
+        template_key=template_key,
+        display_name=template_key,
+        fields=[
+            CreateMetadataTemplateFieldsArg(
+                type=CreateMetadataTemplateFieldsArgTypeField.STRING.value,
+                key='testName',
+                display_name='testName',
+            )
+        ],
     )
     assert template.template_key == template_key
     indices: MetadataQueryIndices = client.search.get_metadata_query_indices(
@@ -114,8 +108,8 @@ def testGetMetadataQueryIndices():
         template_key=template_key,
     )
     assert len(indices.entries) >= 0
-    client.metadata_templates.delete_metadata_template_schema(
-        scope=DeleteMetadataTemplateSchemaScopeArg.ENTERPRISE.value,
+    client.metadata_templates.delete_metadata_template(
+        scope=DeleteMetadataTemplateScopeArg.ENTERPRISE.value,
         template_key=template.template_key,
     )
 

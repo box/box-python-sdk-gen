@@ -14,7 +14,11 @@ This operation is performed by calling function `get_collaboration_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaborations-id/).
 
-_Currently we don't have an example for calling `get_collaboration_by_id` in integration tests_
+<!-- sample get_collaborations_id -->
+
+```python
+client.user_collaborations.get_collaboration_by_id(collaboration_id=collaboration_id)
+```
 
 ### Arguments
 
@@ -42,7 +46,11 @@ This operation is performed by calling function `update_collaboration_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-collaborations-id/).
 
-_Currently we don't have an example for calling `update_collaboration_by_id` in integration tests_
+<!-- sample put_collaborations_id -->
+
+```python
+client.user_collaborations.update_collaboration_by_id(collaboration_id=collaboration_id, role=UpdateCollaborationByIdRoleArg.VIEWER.value)
+```
 
 ### Arguments
 
@@ -76,7 +84,11 @@ This operation is performed by calling function `delete_collaboration_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-collaborations-id/).
 
-_Currently we don't have an example for calling `delete_collaboration_by_id` in integration tests_
+<!-- sample delete_collaborations_id -->
+
+```python
+client.user_collaborations.delete_collaboration_by_id(collaboration_id=collaboration_id)
+```
 
 ### Arguments
 
@@ -115,7 +127,11 @@ This operation is performed by calling function `create_collaboration`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-collaborations/).
 
-_Currently we don't have an example for calling `create_collaboration` in integration tests_
+<!-- sample post_collaborations -->
+
+```python
+client.user_collaborations.create_collaboration(item=CreateCollaborationItemArg(type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleByArg(type=CreateCollaborationAccessibleByArgTypeField.USER.value, login=user_login), role=CreateCollaborationRoleArg.EDITOR.value)
+```
 
 ### Arguments
 

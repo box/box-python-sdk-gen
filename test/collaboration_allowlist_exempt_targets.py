@@ -6,7 +6,7 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import CollaborationAllowlistExemptTargets
 
-from box_sdk_gen.schemas import User
+from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import CollaborationAllowlistExemptTarget
 
@@ -26,7 +26,7 @@ def collaborationAllowlistExemptTargets():
         client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_targets()
     )
     assert len(exempt_targets.entries) >= 0
-    user: User = client.users.create_user(
+    user: UserFull = client.users.create_user(
         name=get_uuid(),
         login=''.join([get_uuid(), '@boxdemo.com']),
         is_platform_access_only=True,

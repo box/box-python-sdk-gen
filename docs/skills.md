@@ -15,7 +15,11 @@ This operation is performed by calling function `get_file_metadata_global_box_sk
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-metadata-global-box-skills-cards/).
 
-_Currently we don't have an example for calling `get_file_metadata_global_box_skills_cards` in integration tests_
+<!-- sample get_files_id_metadata_global_boxSkillsCards -->
+
+```python
+client.skills.get_file_metadata_global_box_skills_cards(file_id=file.id)
+```
 
 ### Arguments
 
@@ -42,7 +46,11 @@ This operation is performed by calling function `create_file_metadata_global_box
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-metadata-global-box-skills-cards/).
 
-_Currently we don't have an example for calling `create_file_metadata_global_box_skills_card` in integration tests_
+<!-- sample post_files_id_metadata_global_boxSkillsCards -->
+
+```python
+client.skills.create_file_metadata_global_box_skills_card(file_id=file.id, cards=[KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillFieldTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')])])
+```
 
 ### Arguments
 
@@ -69,7 +77,11 @@ This operation is performed by calling function `update_file_metadata_global_box
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-metadata-global-box-skills-cards/).
 
-_Currently we don't have an example for calling `update_file_metadata_global_box_skills_card` in integration tests_
+<!-- sample put_files_id_metadata_global_boxSkillsCards -->
+
+```python
+client.skills.update_file_metadata_global_box_skills_card(file_id=file.id, request_body=[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(op=UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField.REPLACE.value, path='/cards/0', value=KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=updated_title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillFieldTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')]))])
+```
 
 ### Arguments
 
@@ -96,7 +108,11 @@ This operation is performed by calling function `delete_file_metadata_global_box
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-metadata-global-box-skills-cards/).
 
-_Currently we don't have an example for calling `delete_file_metadata_global_box_skills_card` in integration tests_
+<!-- sample delete_files_id_metadata_global_boxSkillsCards -->
+
+```python
+client.skills.delete_file_metadata_global_box_skills_card(file_id=file.id)
+```
 
 ### Arguments
 

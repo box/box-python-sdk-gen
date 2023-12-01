@@ -2,7 +2,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import Files
 
@@ -11,8 +11,6 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesArg
 from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
 
 from box_sdk_gen.managers.files import GetFileThumbnailByIdExtensionArg
-
-from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import TrashFile
 
@@ -35,7 +33,7 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def upload_file(file_name: str, file_stream: ByteStream) -> File:
+def upload_file(file_name: str, file_stream: ByteStream) -> FileFull:
     uploaded_files: Files = client.uploads.upload_file(
         attributes=UploadFileAttributesArg(
             name=file_name, parent=UploadFileAttributesArgParentField(id='0')
@@ -48,7 +46,9 @@ def upload_file(file_name: str, file_stream: ByteStream) -> File:
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
     thumbnail_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
-    thumbnail_file: File = upload_file(thumbnail_file_name, thumbnail_content_stream)
+    thumbnail_file: FileFull = upload_file(
+        thumbnail_file_name, thumbnail_content_stream
+    )
     assert (
         not buffer_equals(
             read_byte_stream(
@@ -67,7 +67,7 @@ def testGetFileThumbnail():
 def testGetFileFullExtraFields():
     new_file_name: str = get_uuid()
     file_stream: ByteStream = generate_byte_stream(1024 * 1024)
-    uploaded_file: File = upload_file(new_file_name, file_stream)
+    uploaded_file: FileFull = upload_file(new_file_name, file_stream)
     file: FileFull = client.files.get_file_by_id(
         file_id=uploaded_file.id, fields=['is_externally_owned', 'has_collaborations']
     )
@@ -79,7 +79,7 @@ def testGetFileFullExtraFields():
 def testCreateGetAndDeleteFile():
     new_file_name: str = get_uuid()
     updated_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
-    uploaded_file: File = upload_file(new_file_name, updated_content_stream)
+    uploaded_file: FileFull = upload_file(new_file_name, updated_content_stream)
     file: FileFull = client.files.get_file_by_id(file_id=uploaded_file.id)
     with pytest.raises(Exception):
         client.files.get_file_by_id(
@@ -96,7 +96,7 @@ def testCreateGetAndDeleteFile():
 
 
 def testUpdateFile():
-    file_to_update: File = upload_new_file()
+    file_to_update: FileFull = upload_new_file()
     updated_name: str = get_uuid()
     updated_file: FileFull = client.files.update_file_by_id(
         file_id=file_to_update.id, name=updated_name, description='Updated description'
@@ -107,7 +107,7 @@ def testUpdateFile():
 
 
 def testCopyFile():
-    file_origin: File = upload_new_file()
+    file_origin: FileFull = upload_new_file()
     copied_file_name: str = get_uuid()
     copied_file: FileFull = client.files.copy_file(
         file_id=file_origin.id, name=copied_file_name, parent=CopyFileParentArg(id='0')

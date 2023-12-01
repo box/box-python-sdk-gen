@@ -97,7 +97,7 @@ Now select `Authorization` and submit application to be reviewed by account admi
    download your app configuration settings as JSON.
 2. Encode configuration file to Base64, e.g. using command: `base64 -i path_to_json_file`
 3. Set environment variable: `JWT_CONFIG_BASE_64` with base64 encoded jwt configuration file
-4. Set environment variable: `BOX_FILE_REQUEST_ID` with ID of file request already created in the user account.
+4. Set environment variable: `BOX_FILE_REQUEST_ID` with ID of file request already created in the user account, `BOX_EXTERNAL_USER_EMAIL` with email of free external user which not belongs to any enterprise.
 
 ### Running tests
 

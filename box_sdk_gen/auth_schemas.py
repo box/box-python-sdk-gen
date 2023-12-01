@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union, List
+from typing import Union
 
 from .base_object import BaseObject
 

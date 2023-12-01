@@ -7,7 +7,7 @@ from io import SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
 
 from .base_object import BaseObject
-from .json import sd_to_json
+from .json_data import sd_to_json
 from .serialization import serialize
 
 ByteStream = BufferedIOBase

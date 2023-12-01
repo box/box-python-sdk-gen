@@ -4,8 +4,6 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import Groups
 
-from box_sdk_gen.schemas import Group
-
 from box_sdk_gen.schemas import GroupFull
 
 from box_sdk_gen.utils import get_uuid
@@ -23,7 +21,7 @@ def test_get_groups():
 def test_create_get_delete_group():
     group_name: str = get_uuid()
     group_description: str = 'Group description'
-    group: Group = client.groups.create_group(
+    group: GroupFull = client.groups.create_group(
         name=group_name, description=group_description
     )
     assert group.name == group_name

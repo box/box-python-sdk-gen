@@ -15,7 +15,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-restrictions-id/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segment_restriction_by_id` in integration tests_
+<!-- sample get_shield_information_barrier_segment_restrictions_id -->
+
+```python
+client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restriction_by_id(shield_information_barrier_segment_restriction_id=segment_restriction_id)
+```
 
 ### Arguments
 
@@ -41,7 +45,11 @@ This operation is performed by calling function `delete_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segment-restrictions-id/).
 
-_Currently we don't have an example for calling `delete_shield_information_barrier_segment_restriction_by_id` in integration tests_
+<!-- sample delete_shield_information_barrier_segment_restrictions_id -->
+
+```python
+client.shield_information_barrier_segment_restrictions.delete_shield_information_barrier_segment_restriction_by_id(shield_information_barrier_segment_restriction_id=segment_restriction_id)
+```
 
 ### Arguments
 
@@ -66,7 +74,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-restrictions/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_segment_restrictions` in integration tests_
+<!-- sample get_shield_information_barrier_segment_restrictions -->
+
+```python
+client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restrictions(shield_information_barrier_segment_id=segment_id)
+```
 
 ### Arguments
 
@@ -96,7 +108,11 @@ This operation is performed by calling function `create_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-shield-information-barrier-segment-restrictions/).
 
-_Currently we don't have an example for calling `create_shield_information_barrier_segment_restriction` in integration tests_
+<!-- sample post_shield_information_barrier_segment_restrictions -->
+
+```python
+client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(type=CreateShieldInformationBarrierSegmentRestrictionTypeArg.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value, shield_information_barrier_segment=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg(id=segment_id, type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArgTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), restricted_segment=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg(id=segment_to_restrict_id, type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArgTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value))
+```
 
 ### Arguments
 
