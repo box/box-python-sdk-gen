@@ -164,11 +164,13 @@ from box_sdk_gen.auth import Authentication
 
 from box_sdk_gen.network import NetworkSession
 
+from box_sdk_gen.base_urls import BaseUrls
+
 
 class BoxClient:
     def __init__(self, auth: Authentication, network_session: NetworkSession = None):
         if network_session is None:
-            network_session = NetworkSession()
+            network_session = NetworkSession(base_urls=BaseUrls())
         self.auth = auth
         self.network_session = network_session
         self.authorization = AuthorizationManager(
@@ -388,9 +390,9 @@ class BoxClient:
         """
         return BoxClient(
             auth=self.auth,
-            network_session=self.network_session.with_additional_headers({
-                'As-User': user_id
-            }),
+            network_session=self.network_session.with_additional_headers(
+                {'As-User': user_id}
+            ),
         )
 
     def with_suppressed_notifications(self) -> 'BoxClient':
@@ -399,9 +401,9 @@ class BoxClient:
         """
         return BoxClient(
             auth=self.auth,
-            network_session=self.network_session.with_additional_headers({
-                'Box-Notifications': 'off'
-            }),
+            network_session=self.network_session.with_additional_headers(
+                {'Box-Notifications': 'off'}
+            ),
         )
 
     def with_extra_headers(self, extra_headers: Dict[str, str] = None) -> 'BoxClient':
@@ -415,4 +417,15 @@ class BoxClient:
         return BoxClient(
             auth=self.auth,
             network_session=self.network_session.with_additional_headers(extra_headers),
+        )
+
+    def with_custom_base_urls(self, base_urls: BaseUrls) -> 'BoxClient':
+        """
+        Create a new client with a custom set of base urls that will be used for every API call
+        :param base_urls: Custom set of base urls that will be used for every API call
+        :type base_urls: BaseUrls
+        """
+        return BoxClient(
+            auth=self.auth,
+            network_session=self.network_session.with_custom_base_urls(base_urls),
         )

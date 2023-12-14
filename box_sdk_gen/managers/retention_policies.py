@@ -43,22 +43,22 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetRetentionPoliciesPolicyTypeArg(str, Enum):
+class GetRetentionPoliciesPolicyType(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
 
 
-class CreateRetentionPolicyPolicyTypeArg(str, Enum):
+class CreateRetentionPolicyPolicyType(str, Enum):
     FINITE = 'finite'
     INDEFINITE = 'indefinite'
 
 
-class CreateRetentionPolicyDispositionActionArg(str, Enum):
+class CreateRetentionPolicyDispositionAction(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
 
 
-class CreateRetentionPolicyRetentionTypeArg(str, Enum):
+class CreateRetentionPolicyRetentionType(str, Enum):
     MODIFIABLE = 'modifiable'
     NON_MODIFIABLE = 'non_modifiable'
 
@@ -67,15 +67,17 @@ class RetentionPoliciesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def get_retention_policies(
         self,
         policy_name: Optional[str] = None,
-        policy_type: Optional[GetRetentionPoliciesPolicyTypeArg] = None,
+        policy_type: Optional[GetRetentionPoliciesPolicyType] = None,
         created_by_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
@@ -88,7 +90,7 @@ class RetentionPoliciesManager:
             retention policies.
         :type policy_name: Optional[str], optional
         :param policy_type: Filters results by the type of retention policy.
-        :type policy_type: Optional[GetRetentionPoliciesPolicyTypeArg], optional
+        :type policy_type: Optional[GetRetentionPoliciesPolicyType], optional
         :param created_by_user_id: Filters results by the ID of the user who created policy.
         :type created_by_user_id: Optional[str], optional
         :param fields: A comma-separated list of attributes to include in the
@@ -120,7 +122,7 @@ class RetentionPoliciesManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/retention_policies']),
+            ''.join([self.network_session.base_urls.base_url, '/retention_policies']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -135,11 +137,11 @@ class RetentionPoliciesManager:
     def create_retention_policy(
         self,
         policy_name: str,
-        policy_type: CreateRetentionPolicyPolicyTypeArg,
-        disposition_action: CreateRetentionPolicyDispositionActionArg,
+        policy_type: CreateRetentionPolicyPolicyType,
+        disposition_action: CreateRetentionPolicyDispositionAction,
         description: Optional[str] = None,
         retention_length: Optional[str] = None,
-        retention_type: Optional[CreateRetentionPolicyRetentionTypeArg] = None,
+        retention_type: Optional[CreateRetentionPolicyRetentionType] = None,
         can_owner_extend_retention: Optional[bool] = None,
         are_owners_notified: Optional[bool] = None,
         custom_notification_recipients: Optional[List[UserMini]] = None,
@@ -154,14 +156,14 @@ class RetentionPoliciesManager:
             specific amount of time to retain the content is known
             upfront, or `indefinite`, where the amount of time
             to retain the content is still unknown.
-        :type policy_type: CreateRetentionPolicyPolicyTypeArg
+        :type policy_type: CreateRetentionPolicyPolicyType
         :param disposition_action: The disposition action of the retention policy.
             `permanently_delete` deletes the content
             retained by the policy permanently.
             `remove_retention` lifts retention policy
             from the content, allowing it to be deleted
             by users once the retention policy has expired.
-        :type disposition_action: CreateRetentionPolicyDispositionActionArg
+        :type disposition_action: CreateRetentionPolicyDispositionAction
         :param description: The additional text description of the retention policy.
         :type description: Optional[str], optional
         :param retention_length: The length of the retention policy. This value
@@ -184,7 +186,7 @@ class RetentionPoliciesManager:
             such as deleting the assignment or shortening the
             policy duration. Use this type to ensure
             compliance with regulatory retention policies.
-        :type retention_type: Optional[CreateRetentionPolicyRetentionTypeArg], optional
+        :type retention_type: Optional[CreateRetentionPolicyRetentionType], optional
         :param can_owner_extend_retention: Whether the owner of a file will be allowed to
             extend the retention.
         :type can_owner_extend_retention: Optional[bool], optional
@@ -212,7 +214,7 @@ class RetentionPoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/retention_policies']),
+            ''.join([self.network_session.base_urls.base_url, '/retention_policies']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -254,7 +256,8 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policies/',
+                self.network_session.base_urls.base_url,
+                '/retention_policies/',
                 to_string(retention_policy_id),
             ]),
             FetchOptions(
@@ -358,7 +361,8 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policies/',
+                self.network_session.base_urls.base_url,
+                '/retention_policies/',
                 to_string(retention_policy_id),
             ]),
             FetchOptions(
@@ -391,7 +395,8 @@ class RetentionPoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policies/',
+                self.network_session.base_urls.base_url,
+                '/retention_policies/',
                 to_string(retention_policy_id),
             ]),
             FetchOptions(

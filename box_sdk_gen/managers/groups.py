@@ -39,25 +39,25 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateGroupInvitabilityLevelArg(str, Enum):
+class CreateGroupInvitabilityLevel(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
 
-class CreateGroupMemberViewabilityLevelArg(str, Enum):
+class CreateGroupMemberViewabilityLevel(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
 
-class UpdateGroupByIdInvitabilityLevelArg(str, Enum):
+class UpdateGroupByIdInvitabilityLevel(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
 
 
-class UpdateGroupByIdMemberViewabilityLevelArg(str, Enum):
+class UpdateGroupByIdMemberViewabilityLevel(str, Enum):
     ADMINS_ONLY = 'admins_only'
     ADMINS_AND_MEMBERS = 'admins_and_members'
     ALL_MANAGED_USERS = 'all_managed_users'
@@ -67,8 +67,10 @@ class GroupsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -117,7 +119,7 @@ class GroupsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups']),
+            ''.join([self.network_session.base_urls.base_url, '/groups']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -135,8 +137,8 @@ class GroupsManager:
         provenance: Optional[str] = None,
         external_sync_identifier: Optional[str] = None,
         description: Optional[str] = None,
-        invitability_level: Optional[CreateGroupInvitabilityLevelArg] = None,
-        member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg] = None,
+        invitability_level: Optional[CreateGroupInvitabilityLevel] = None,
+        member_viewability_level: Optional[CreateGroupMemberViewabilityLevel] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> GroupFull:
@@ -175,14 +177,14 @@ class GroupsManager:
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Optional[CreateGroupInvitabilityLevelArg], optional
+        :type invitability_level: Optional[CreateGroupInvitabilityLevel], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Optional[CreateGroupMemberViewabilityLevelArg], optional
+        :type member_viewability_level: Optional[CreateGroupMemberViewabilityLevel], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -208,7 +210,7 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups']),
+            ''.join([self.network_session.base_urls.base_url, '/groups']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -256,7 +258,11 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/groups/',
+                to_string(group_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -275,9 +281,9 @@ class GroupsManager:
         provenance: Optional[str] = None,
         external_sync_identifier: Optional[str] = None,
         description: Optional[str] = None,
-        invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg] = None,
+        invitability_level: Optional[UpdateGroupByIdInvitabilityLevel] = None,
         member_viewability_level: Optional[
-            UpdateGroupByIdMemberViewabilityLevelArg
+            UpdateGroupByIdMemberViewabilityLevel
         ] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -323,14 +329,14 @@ class GroupsManager:
             above and group members can invite the group.
             When set to `all_managed_users` all managed users in the
             enterprise can invite the group.
-        :type invitability_level: Optional[UpdateGroupByIdInvitabilityLevelArg], optional
+        :type invitability_level: Optional[UpdateGroupByIdInvitabilityLevel], optional
         :param member_viewability_level: Specifies who can see the members of the group.
             * `admins_only` - the enterprise admin, co-admins, group's
               group admin
             * `admins_and_members` - all admins and group members
             * `all_managed_users` - all managed users in the
               enterprise
-        :type member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevelArg], optional
+        :type member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevel], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -356,7 +362,11 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/groups/',
+                to_string(group_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -388,7 +398,11 @@ class GroupsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/', to_string(group_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/groups/',
+                to_string(group_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

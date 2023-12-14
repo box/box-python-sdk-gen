@@ -8,9 +8,9 @@ from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
@@ -32,8 +32,8 @@ def testTrashedFiles():
     file_name: str = get_uuid()
     file_byte_stream: ByteStream = generate_byte_stream(file_size)
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=file_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=file_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=file_byte_stream,
     )

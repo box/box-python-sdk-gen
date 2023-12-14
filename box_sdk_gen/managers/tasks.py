@@ -39,44 +39,44 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateTaskItemArgTypeField(str, Enum):
+class CreateTaskItemTypeField(str, Enum):
     FILE = 'file'
 
 
-class CreateTaskItemArg(BaseObject):
+class CreateTaskItem(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[CreateTaskItemArgTypeField] = None,
+        type: Optional[CreateTaskItemTypeField] = None,
         **kwargs
     ):
         """
         :param id: The ID of the file
         :type id: Optional[str], optional
         :param type: `file`
-        :type type: Optional[CreateTaskItemArgTypeField], optional
+        :type type: Optional[CreateTaskItemTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class CreateTaskActionArg(str, Enum):
+class CreateTaskAction(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
 
 
-class CreateTaskCompletionRuleArg(str, Enum):
+class CreateTaskCompletionRule(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
 
-class UpdateTaskByIdActionArg(str, Enum):
+class UpdateTaskByIdAction(str, Enum):
     REVIEW = 'review'
     COMPLETE = 'complete'
 
 
-class UpdateTaskByIdCompletionRuleArg(str, Enum):
+class UpdateTaskByIdCompletionRule(str, Enum):
     ALL_ASSIGNEES = 'all_assignees'
     ANY_ASSIGNEE = 'any_assignee'
 
@@ -85,8 +85,10 @@ class TasksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -113,7 +115,12 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/tasks']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/tasks',
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -126,11 +133,11 @@ class TasksManager:
 
     def create_task(
         self,
-        item: CreateTaskItemArg,
-        action: Optional[CreateTaskActionArg] = None,
+        item: CreateTaskItem,
+        action: Optional[CreateTaskAction] = None,
         message: Optional[str] = None,
         due_at: Optional[str] = None,
-        completion_rule: Optional[CreateTaskCompletionRuleArg] = None,
+        completion_rule: Optional[CreateTaskCompletionRule] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Task:
         """
@@ -139,12 +146,12 @@ class TasksManager:
         will need to be assigned separately.
 
         :param item: The file to attach the task to.
-        :type item: CreateTaskItemArg
+        :type item: CreateTaskItem
         :param action: The action the task assignee will be prompted to do. Must be
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Optional[CreateTaskActionArg], optional
+        :type action: Optional[CreateTaskAction], optional
         :param message: An optional message to include with the task.
         :type message: Optional[str], optional
         :param due_at: Defines when the task is due. Defaults to `null` if not
@@ -156,7 +163,7 @@ class TasksManager:
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Optional[CreateTaskCompletionRuleArg], optional
+        :type completion_rule: Optional[CreateTaskCompletionRule], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -171,7 +178,7 @@ class TasksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks']),
+            ''.join([self.network_session.base_urls.base_url, '/tasks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -199,7 +206,9 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -213,10 +222,10 @@ class TasksManager:
     def update_task_by_id(
         self,
         task_id: str,
-        action: Optional[UpdateTaskByIdActionArg] = None,
+        action: Optional[UpdateTaskByIdAction] = None,
         message: Optional[str] = None,
         due_at: Optional[str] = None,
-        completion_rule: Optional[UpdateTaskByIdCompletionRuleArg] = None,
+        completion_rule: Optional[UpdateTaskByIdCompletionRule] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Task:
         """
@@ -231,7 +240,7 @@ class TasksManager:
             * `review` defines an approval task that can be approved or
             rejected
             * `complete` defines a general task which can be completed
-        :type action: Optional[UpdateTaskByIdActionArg], optional
+        :type action: Optional[UpdateTaskByIdAction], optional
         :param message: The message included with the task.
         :type message: Optional[str], optional
         :param due_at: When the task is due at.
@@ -242,7 +251,7 @@ class TasksManager:
             approve the the task in order for it to be considered completed.
             * `any_assignee` accepts any one assignee to review or
             approve the the task in order for it to be considered completed.
-        :type completion_rule: Optional[UpdateTaskByIdCompletionRuleArg], optional
+        :type completion_rule: Optional[UpdateTaskByIdCompletionRule], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -256,7 +265,9 @@ class TasksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -284,7 +295,9 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/tasks/', to_string(task_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

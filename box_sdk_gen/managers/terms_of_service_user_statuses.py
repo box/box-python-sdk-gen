@@ -39,17 +39,17 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateTermOfServiceUserStatusTosArgTypeField(str, Enum):
+class CreateTermOfServiceUserStatusTosTypeField(str, Enum):
     TERMS_OF_SERVICE = 'terms_of_service'
 
 
-class CreateTermOfServiceUserStatusTosArg(BaseObject):
+class CreateTermOfServiceUserStatusTos(BaseObject):
     def __init__(
-        self, type: CreateTermOfServiceUserStatusTosArgTypeField, id: str, **kwargs
+        self, type: CreateTermOfServiceUserStatusTosTypeField, id: str, **kwargs
     ):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusTosArgTypeField
+        :type type: CreateTermOfServiceUserStatusTosTypeField
         :param id: The ID of terms of service
         :type id: str
         """
@@ -58,17 +58,17 @@ class CreateTermOfServiceUserStatusTosArg(BaseObject):
         self.id = id
 
 
-class CreateTermOfServiceUserStatusUserArgTypeField(str, Enum):
+class CreateTermOfServiceUserStatusUserTypeField(str, Enum):
     USER = 'user'
 
 
-class CreateTermOfServiceUserStatusUserArg(BaseObject):
+class CreateTermOfServiceUserStatusUser(BaseObject):
     def __init__(
-        self, type: CreateTermOfServiceUserStatusUserArgTypeField, id: str, **kwargs
+        self, type: CreateTermOfServiceUserStatusUserTypeField, id: str, **kwargs
     ):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusUserArgTypeField
+        :type type: CreateTermOfServiceUserStatusUserTypeField
         :param id: The ID of user
         :type id: str
         """
@@ -81,8 +81,10 @@ class TermsOfServiceUserStatusesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -109,12 +111,15 @@ class TermsOfServiceUserStatusesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'tos_id': to_string(tos_id), 'user_id': to_string(user_id)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'tos_id': to_string(tos_id), 'user_id': to_string(user_id)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/terms_of_service_user_statuses',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -128,17 +133,17 @@ class TermsOfServiceUserStatusesManager:
 
     def create_term_of_service_user_status(
         self,
-        tos: CreateTermOfServiceUserStatusTosArg,
-        user: CreateTermOfServiceUserStatusUserArg,
+        tos: CreateTermOfServiceUserStatusTos,
+        user: CreateTermOfServiceUserStatusUser,
         is_accepted: bool,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
         :param tos: The terms of service to set the status for.
-        :type tos: CreateTermOfServiceUserStatusTosArg
+        :type tos: CreateTermOfServiceUserStatusTos
         :param user: The user to set the status for.
-        :type user: CreateTermOfServiceUserStatusUserArg
+        :type user: CreateTermOfServiceUserStatusUser
         :param is_accepted: Whether the user has accepted the terms.
         :type is_accepted: bool
         :param extra_headers: Extra headers that will be included in the HTTP request.
@@ -149,7 +154,10 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/terms_of_service_user_statuses']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/terms_of_service_user_statuses',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -184,7 +192,8 @@ class TermsOfServiceUserStatusesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/terms_of_service_user_statuses/',
+                self.network_session.base_urls.base_url,
+                '/terms_of_service_user_statuses/',
                 to_string(terms_of_service_user_status_id),
             ]),
             FetchOptions(

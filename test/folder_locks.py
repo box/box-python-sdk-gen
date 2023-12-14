@@ -8,9 +8,9 @@ from box_sdk_gen.schemas import FolderLocks
 
 from box_sdk_gen.schemas import FolderLock
 
-from box_sdk_gen.managers.folder_locks import CreateFolderLockLockedOperationsArg
+from box_sdk_gen.managers.folder_locks import CreateFolderLockLockedOperations
 
-from box_sdk_gen.managers.folder_locks import CreateFolderLockFolderArg
+from box_sdk_gen.managers.folder_locks import CreateFolderLockFolder
 
 from box_sdk_gen.utils import get_uuid
 
@@ -28,8 +28,8 @@ def testFolderLocks():
     )
     assert len(folder_locks.entries) == 0
     folder_lock: FolderLock = client.folder_locks.create_folder_lock(
-        locked_operations=CreateFolderLockLockedOperationsArg(move=True, delete=True),
-        folder=CreateFolderLockFolderArg(id=folder.id, type='folder'),
+        locked_operations=CreateFolderLockLockedOperations(move=True, delete=True),
+        folder=CreateFolderLockFolder(id=folder.id, type='folder'),
     )
     assert folder_lock.folder.id == folder.id
     assert folder_lock.locked_operations.move == True

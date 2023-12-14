@@ -37,8 +37,10 @@ class FileVersionLegalHoldsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -63,7 +65,8 @@ class FileVersionLegalHoldsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_version_legal_holds/',
+                self.network_session.base_urls.base_url,
+                '/file_version_legal_holds/',
                 to_string(file_version_legal_hold_id),
             ]),
             FetchOptions(
@@ -148,7 +151,9 @@ class FileVersionLegalHoldsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_version_legal_holds']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/file_version_legal_holds']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

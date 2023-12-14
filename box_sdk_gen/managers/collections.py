@@ -39,8 +39,10 @@ class CollectionsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -87,7 +89,7 @@ class CollectionsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collections']),
+            ''.join([self.network_session.base_urls.base_url, '/collections']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -144,7 +146,8 @@ class CollectionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collections/',
+                self.network_session.base_urls.base_url,
+                '/collections/',
                 to_string(collection_id),
                 '/items',
             ]),

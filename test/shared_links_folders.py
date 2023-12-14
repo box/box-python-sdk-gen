@@ -6,22 +6,22 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderAddSharedLinkSharedLinkArg,
+    UpdateFolderAddSharedLinkSharedLink,
 )
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderAddSharedLinkSharedLinkArgAccessField,
+    UpdateFolderAddSharedLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderUpdateSharedLinkSharedLinkArg,
+    UpdateFolderUpdateSharedLinkSharedLink,
 )
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderUpdateSharedLinkSharedLinkArgAccessField,
+    UpdateFolderUpdateSharedLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -39,12 +39,12 @@ client: BoxClient = get_default_client()
 
 def testSharedLinksFolders():
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
+        name=get_uuid(), parent=CreateFolderParent(id='0')
     )
     client.shared_links_folders.update_folder_add_shared_link(
         folder_id=folder.id,
-        shared_link=UpdateFolderAddSharedLinkSharedLinkArg(
-            access=UpdateFolderAddSharedLinkSharedLinkArgAccessField.OPEN.value,
+        shared_link=UpdateFolderAddSharedLinkSharedLink(
+            access=UpdateFolderAddSharedLinkSharedLinkAccessField.OPEN.value,
             password='Secret123@',
         ),
         fields='shared_link',
@@ -78,8 +78,8 @@ def testSharedLinksFolders():
     updated_folder: FolderFull = (
         client.shared_links_folders.update_folder_update_shared_link(
             folder_id=folder.id,
-            shared_link=UpdateFolderUpdateSharedLinkSharedLinkArg(
-                access=UpdateFolderUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value
+            shared_link=UpdateFolderUpdateSharedLinkSharedLink(
+                access=UpdateFolderUpdateSharedLinkSharedLinkAccessField.COLLABORATORS.value
             ),
             fields='shared_link',
         )

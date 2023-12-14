@@ -13,11 +13,11 @@ from box_sdk_gen.schemas import ShieldInformationBarrierBaseTypeField
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentMember
 
 from box_sdk_gen.managers.shield_information_barrier_segment_members import (
-    CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg,
+    CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment,
 )
 
 from box_sdk_gen.managers.shield_information_barrier_segment_members import (
-    CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField,
+    CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField,
 )
 
 from box_sdk_gen.schemas import UserBase
@@ -55,9 +55,9 @@ def testShieldInformationBarrierSegmentMembers():
     assert segment.name == segment_name
     segment_member: ShieldInformationBarrierSegmentMember = (
         client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(
-            shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(
+            shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(
                 id=segment.id,
-                type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
+                type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
             ),
             user=UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value),
         )

@@ -37,16 +37,16 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileWatermarkWatermarkArgImprintField(str, Enum):
+class UpdateFileWatermarkWatermarkImprintField(str, Enum):
     DEFAULT = 'default'
 
 
-class UpdateFileWatermarkWatermarkArg(BaseObject):
-    def __init__(self, imprint: UpdateFileWatermarkWatermarkArgImprintField, **kwargs):
+class UpdateFileWatermarkWatermark(BaseObject):
+    def __init__(self, imprint: UpdateFileWatermarkWatermarkImprintField, **kwargs):
         """
         :param imprint: The type of watermark to apply.
             Currently only supports one option.
-        :type imprint: UpdateFileWatermarkWatermarkArgImprintField
+        :type imprint: UpdateFileWatermarkWatermarkImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
@@ -56,8 +56,10 @@ class FileWatermarksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -82,7 +84,10 @@ class FileWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='GET',
@@ -97,7 +102,7 @@ class FileWatermarksManager:
     def update_file_watermark(
         self,
         file_id: str,
-        watermark: UpdateFileWatermarkWatermarkArg,
+        watermark: UpdateFileWatermarkWatermark,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Watermark:
         """
@@ -111,7 +116,7 @@ class FileWatermarksManager:
             Example: "12345"
         :type file_id: str
         :param watermark: The watermark to imprint on the file
-        :type watermark: UpdateFileWatermarkWatermarkArg
+        :type watermark: UpdateFileWatermarkWatermark
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -121,7 +126,10 @@ class FileWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='PUT',
@@ -156,7 +164,10 @@ class FileWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='DELETE',

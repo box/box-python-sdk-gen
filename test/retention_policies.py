@@ -1,14 +1,12 @@
 from box_sdk_gen.schemas import RetentionPolicy
 
-from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyPolicyTypeArg
+from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyPolicyType
 
 from box_sdk_gen.managers.retention_policies import (
-    CreateRetentionPolicyDispositionActionArg,
+    CreateRetentionPolicyDispositionAction,
 )
 
-from box_sdk_gen.managers.retention_policies import (
-    CreateRetentionPolicyRetentionTypeArg,
-)
+from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyRetentionType
 
 from box_sdk_gen.schemas import RetentionPolicies
 
@@ -28,10 +26,10 @@ def testCreateUpdateGetDeleteRetentionPolicy():
         client.retention_policies.create_retention_policy(
             policy_name=retention_policy_name,
             description=retention_description,
-            policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value,
-            disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value,
+            policy_type=CreateRetentionPolicyPolicyType.FINITE.value,
+            disposition_action=CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value,
             retention_length='1',
-            retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value,
+            retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value,
             can_owner_extend_retention=True,
             are_owners_notified=True,
         )

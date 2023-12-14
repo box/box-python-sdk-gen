@@ -8,7 +8,7 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import WebLink
 
-from box_sdk_gen.managers.web_links import CreateWebLinkParentArg
+from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
 from box_sdk_gen.schemas import TrashWebLink
 
@@ -28,7 +28,7 @@ def testTrashedWebLinks():
     description: str = 'Weblink description'
     weblink: WebLink = client.web_links.create_web_link(
         url=url,
-        parent=CreateWebLinkParentArg(id=parent.id),
+        parent=CreateWebLinkParent(id=parent.id),
         name=name,
         description=description,
     )

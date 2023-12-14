@@ -11,7 +11,7 @@ from box_sdk_gen.schemas import UserFull
 from box_sdk_gen.schemas import CollaborationAllowlistExemptTarget
 
 from box_sdk_gen.managers.collaboration_allowlist_exempt_targets import (
-    CreateCollaborationWhitelistExemptTargetUserArg,
+    CreateCollaborationWhitelistExemptTargetUser,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -33,7 +33,7 @@ def collaborationAllowlistExemptTargets():
     )
     new_exempt_target: CollaborationAllowlistExemptTarget = (
         client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(
-            user=CreateCollaborationWhitelistExemptTargetUserArg(id=user.id)
+            user=CreateCollaborationWhitelistExemptTargetUser(id=user.id)
         )
     )
     assert to_string(new_exempt_target.type) == 'collaboration_whitelist_exempt_target'

@@ -2,21 +2,21 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import Task
 
-from box_sdk_gen.managers.tasks import CreateTaskItemArg
+from box_sdk_gen.managers.tasks import CreateTaskItem
 
-from box_sdk_gen.managers.tasks import CreateTaskItemArgTypeField
+from box_sdk_gen.managers.tasks import CreateTaskItemTypeField
 
-from box_sdk_gen.managers.tasks import CreateTaskActionArg
+from box_sdk_gen.managers.tasks import CreateTaskAction
 
-from box_sdk_gen.managers.tasks import CreateTaskCompletionRuleArg
+from box_sdk_gen.managers.tasks import CreateTaskCompletionRule
 
 from box_sdk_gen.schemas import Tasks
 
@@ -31,18 +31,18 @@ client: BoxClient = get_default_client()
 
 def testCreateUpdateGetDeleteTask():
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=get_uuid(), parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
         ),
         file=generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
     task: Task = client.tasks.create_task(
-        item=CreateTaskItemArg(type=CreateTaskItemArgTypeField.FILE.value, id=file.id),
-        action=CreateTaskActionArg.REVIEW.value,
+        item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
+        action=CreateTaskAction.REVIEW.value,
         message='test message',
         due_at='2035-01-01T00:00:00Z',
-        completion_rule=CreateTaskCompletionRuleArg.ALL_ASSIGNEES.value,
+        completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
     )
     assert task.message == 'test message'
     assert task.item.id == file.id

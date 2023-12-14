@@ -41,16 +41,16 @@ from box_sdk_gen.json_data import SerializedData
 from box_sdk_gen.json_data import sd_to_json
 
 
-class CreateZipDownloadItemsArgTypeField(str, Enum):
+class CreateZipDownloadItemsTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
-class CreateZipDownloadItemsArg(BaseObject):
-    def __init__(self, type: CreateZipDownloadItemsArgTypeField, id: str, **kwargs):
+class CreateZipDownloadItems(BaseObject):
+    def __init__(self, type: CreateZipDownloadItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.
-        :type type: CreateZipDownloadItemsArgTypeField
+        :type type: CreateZipDownloadItemsTypeField
         :param id: The identifier of the item to add to the archive. When this item is
             a folder then this can not be the root folder with ID `0`.
         :type id: str
@@ -60,16 +60,16 @@ class CreateZipDownloadItemsArg(BaseObject):
         self.id = id
 
 
-class DownloadZipItemsArgTypeField(str, Enum):
+class DownloadZipItemsTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
-class DownloadZipItemsArg(BaseObject):
-    def __init__(self, type: DownloadZipItemsArgTypeField, id: str, **kwargs):
+class DownloadZipItems(BaseObject):
+    def __init__(self, type: DownloadZipItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.
-        :type type: DownloadZipItemsArgTypeField
+        :type type: DownloadZipItemsTypeField
         :param id: The identifier of the item to add to the archive. When this item is
             a folder then this can not be the root folder with ID `0`.
         :type id: str
@@ -83,14 +83,16 @@ class ZipDownloadsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def create_zip_download(
         self,
-        items: List[CreateZipDownloadItemsArg],
+        items: List[CreateZipDownloadItems],
         download_file_name: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ZipDownload:
@@ -137,7 +139,7 @@ class ZipDownloadsManager:
 
         :param items: A list of items to add to the `zip` archive. These can
             be folders or files.
-        :type items: List[CreateZipDownloadItemsArg]
+        :type items: List[CreateZipDownloadItems]
         :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
             `.zip` file extension, for example `January Financials.zip`.
         :type download_file_name: Optional[str], optional
@@ -149,7 +151,7 @@ class ZipDownloadsManager:
         request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/zip_downloads']),
+            ''.join([self.network_session.base_urls.base_url, '/zip_downloads']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -275,7 +277,7 @@ class ZipDownloadsManager:
 
     def download_zip(
         self,
-        items: List[DownloadZipItemsArg],
+        items: List[DownloadZipItems],
         download_file_name: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ByteStream:
@@ -283,7 +285,7 @@ class ZipDownloadsManager:
         Creates a zip and downloads its content
         :param items: A list of items to add to the `zip` archive. These can
             be folders or files.
-        :type items: List[DownloadZipItemsArg]
+        :type items: List[DownloadZipItems]
         :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
             `.zip` file extension, for example `January Financials.zip`.
         :type download_file_name: Optional[str], optional

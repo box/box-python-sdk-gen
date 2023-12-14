@@ -35,12 +35,12 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFolderTrashItemsDirectionArg(str, Enum):
+class GetFolderTrashItemsDirection(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
 
-class GetFolderTrashItemsSortArg(str, Enum):
+class GetFolderTrashItemsSort(str, Enum):
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
@@ -50,8 +50,10 @@ class TrashedItemsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -62,8 +64,8 @@ class TrashedItemsManager:
         offset: Optional[int] = None,
         usemarker: Optional[bool] = None,
         marker: Optional[str] = None,
-        direction: Optional[GetFolderTrashItemsDirectionArg] = None,
-        sort: Optional[GetFolderTrashItemsSortArg] = None,
+        direction: Optional[GetFolderTrashItemsDirection] = None,
+        sort: Optional[GetFolderTrashItemsSort] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Items:
         """
@@ -115,14 +117,14 @@ class TrashedItemsManager:
         :type marker: Optional[str], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetFolderTrashItemsDirectionArg], optional
+        :type direction: Optional[GetFolderTrashItemsDirection], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
             folders listed before files, and files listed
             before web links.
             This parameter is not supported when using marker-based pagination.
-        :type sort: Optional[GetFolderTrashItemsSortArg], optional
+        :type sort: Optional[GetFolderTrashItemsSort], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -139,7 +141,7 @@ class TrashedItemsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/trash/items']),
+            ''.join([self.network_session.base_urls.base_url, '/folders/trash/items']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

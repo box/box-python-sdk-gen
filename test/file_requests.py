@@ -6,9 +6,9 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FileRequest
 
-from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolderArg
+from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolder
 
-from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolderArgTypeField
+from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolderTypeField
 
 from box_sdk_gen.utils import get_env_var
 
@@ -26,9 +26,9 @@ def testGetCopyUpdateDeleteFileRequest():
     assert to_string(file_request.type) == 'file_request'
     copied_file_request: FileRequest = client.file_requests.create_file_request_copy(
         file_request_id=file_request_id,
-        folder=CreateFileRequestCopyFolderArg(
+        folder=CreateFileRequestCopyFolder(
             id=file_request.folder.id,
-            type=CreateFileRequestCopyFolderArgTypeField.FOLDER.value,
+            type=CreateFileRequestCopyFolderTypeField.FOLDER.value,
         ),
     )
     assert not copied_file_request.id == file_request_id

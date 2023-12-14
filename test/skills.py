@@ -12,20 +12,18 @@ from box_sdk_gen.schemas import KeywordSkillCardSkillCardTitleField
 
 from box_sdk_gen.schemas import KeywordSkillCardSkillField
 
-from box_sdk_gen.schemas import KeywordSkillCardSkillFieldTypeField
+from box_sdk_gen.schemas import KeywordSkillCardSkillTypeField
 
 from box_sdk_gen.schemas import KeywordSkillCardInvocationField
 
-from box_sdk_gen.schemas import KeywordSkillCardInvocationFieldTypeField
+from box_sdk_gen.schemas import KeywordSkillCardInvocationTypeField
 
 from box_sdk_gen.schemas import KeywordSkillCardEntriesField
 
-from box_sdk_gen.managers.skills import (
-    UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg,
-)
+from box_sdk_gen.managers.skills import UpdateFileMetadataGlobalBoxSkillsCardRequestBody
 
 from box_sdk_gen.managers.skills import (
-    UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField,
+    UpdateFileMetadataGlobalBoxSkillsCardRequestBodyOpField,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -55,12 +53,11 @@ def test_skills_cards_CRUD():
                         code='license-plates', message=title_message
                     ),
                     skill=KeywordSkillCardSkillField(
-                        id=skill_id,
-                        type=KeywordSkillCardSkillFieldTypeField.SERVICE.value,
+                        id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value
                     ),
                     invocation=KeywordSkillCardInvocationField(
                         id=invocation_id,
-                        type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value,
+                        type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
                     ),
                     entries=[KeywordSkillCardEntriesField(text='DN86 BOX')],
                 )
@@ -75,8 +72,8 @@ def test_skills_cards_CRUD():
         client.skills.update_file_metadata_global_box_skills_card(
             file_id=file.id,
             request_body=[
-                UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(
-                    op=UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField.REPLACE.value,
+                UpdateFileMetadataGlobalBoxSkillsCardRequestBody(
+                    op=UpdateFileMetadataGlobalBoxSkillsCardRequestBodyOpField.REPLACE.value,
                     path='/cards/0',
                     value=KeywordSkillCard(
                         type=KeywordSkillCardTypeField.SKILL_CARD.value,
@@ -86,11 +83,11 @@ def test_skills_cards_CRUD():
                         ),
                         skill=KeywordSkillCardSkillField(
                             id=skill_id,
-                            type=KeywordSkillCardSkillFieldTypeField.SERVICE.value,
+                            type=KeywordSkillCardSkillTypeField.SERVICE.value,
                         ),
                         invocation=KeywordSkillCardInvocationField(
                             id=invocation_id,
-                            type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value,
+                            type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
                         ),
                         entries=[KeywordSkillCardEntriesField(text='DN86 BOX')],
                     ),

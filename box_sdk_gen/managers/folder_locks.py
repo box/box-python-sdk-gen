@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateFolderLockLockedOperationsArg(BaseObject):
+class CreateFolderLockLockedOperations(BaseObject):
     def __init__(self, move: bool, delete: bool, **kwargs):
         """
         :param move: Whether moving the folder should be locked.
@@ -50,7 +50,7 @@ class CreateFolderLockLockedOperationsArg(BaseObject):
         self.delete = delete
 
 
-class CreateFolderLockFolderArg(BaseObject):
+class CreateFolderLockFolder(BaseObject):
     def __init__(self, type: str, id: str, **kwargs):
         """
         :param type: The content type the lock is being applied to. Only `folder`
@@ -68,8 +68,10 @@ class FolderLocksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -98,12 +100,12 @@ class FolderLocksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'folder_id': to_string(folder_id)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'folder_id': to_string(folder_id)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folder_locks']),
+            ''.join([self.network_session.base_urls.base_url, '/folder_locks']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -117,8 +119,8 @@ class FolderLocksManager:
 
     def create_folder_lock(
         self,
-        folder: CreateFolderLockFolderArg,
-        locked_operations: Optional[CreateFolderLockLockedOperationsArg] = None,
+        folder: CreateFolderLockFolder,
+        locked_operations: Optional[CreateFolderLockLockedOperations] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderLock:
         """
@@ -133,11 +135,11 @@ class FolderLocksManager:
         use this endpoint.
 
         :param folder: The folder to apply the lock to.
-        :type folder: CreateFolderLockFolderArg
+        :type folder: CreateFolderLockFolder
         :param locked_operations: The operations to lock for the folder. If `locked_operations` is
             included in the request, both `move` and `delete` must also be
             included and both set to `true`.
-        :type locked_operations: Optional[CreateFolderLockLockedOperationsArg], optional
+        :type locked_operations: Optional[CreateFolderLockLockedOperations], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -146,7 +148,7 @@ class FolderLocksManager:
         request_body: Dict = {'locked_operations': locked_operations, 'folder': folder}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folder_locks']),
+            ''.join([self.network_session.base_urls.base_url, '/folder_locks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -183,7 +185,9 @@ class FolderLocksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folder_locks/', to_string(folder_lock_id)
+                self.network_session.base_urls.base_url,
+                '/folder_locks/',
+                to_string(folder_lock_id),
             ]),
             FetchOptions(
                 method='DELETE',

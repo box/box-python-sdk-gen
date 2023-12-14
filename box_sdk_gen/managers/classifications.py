@@ -35,17 +35,15 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class AddClassificationRequestBodyArgOpField(str, Enum):
+class AddClassificationRequestBodyOpField(str, Enum):
     ADDENUMOPTION = 'addEnumOption'
 
 
-class AddClassificationRequestBodyArgFieldKeyField(str, Enum):
+class AddClassificationRequestBodyFieldKeyField(str, Enum):
     BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
-class AddClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField(
-    BaseObject
-):
+class AddClassificationRequestBodyDataStaticConfigClassificationField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'classification_definition': 'classificationDefinition',
         'color_id': 'colorID',
@@ -86,23 +84,23 @@ class AddClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationFie
         self.color_id = color_id
 
 
-class AddClassificationRequestBodyArgDataFieldStaticConfigField(BaseObject):
+class AddClassificationRequestBodyDataStaticConfigField(BaseObject):
     def __init__(
         self,
         classification: Optional[
-            AddClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField
+            AddClassificationRequestBodyDataStaticConfigClassificationField
         ] = None,
         **kwargs
     ):
         """
         :param classification: Additional details for the classification.
-        :type classification: Optional[AddClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField], optional
+        :type classification: Optional[AddClassificationRequestBodyDataStaticConfigClassificationField], optional
         """
         super().__init__(**kwargs)
         self.classification = classification
 
 
-class AddClassificationRequestBodyArgDataField(BaseObject):
+class AddClassificationRequestBodyDataField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
@@ -116,7 +114,7 @@ class AddClassificationRequestBodyArgDataField(BaseObject):
         self,
         key: str,
         static_config: Optional[
-            AddClassificationRequestBodyArgDataFieldStaticConfigField
+            AddClassificationRequestBodyDataStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -126,14 +124,14 @@ class AddClassificationRequestBodyArgDataField(BaseObject):
             add a classification.
         :type key: str
         :param static_config: A static configuration for the classification.
-        :type static_config: Optional[AddClassificationRequestBodyArgDataFieldStaticConfigField], optional
+        :type static_config: Optional[AddClassificationRequestBodyDataStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
         self.static_config = static_config
 
 
-class AddClassificationRequestBodyArg(BaseObject):
+class AddClassificationRequestBody(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'field_key': 'fieldKey',
         **BaseObject._fields_to_json_mapping,
@@ -145,20 +143,20 @@ class AddClassificationRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: AddClassificationRequestBodyArgOpField,
-        field_key: AddClassificationRequestBodyArgFieldKeyField,
-        data: AddClassificationRequestBodyArgDataField,
+        op: AddClassificationRequestBodyOpField,
+        field_key: AddClassificationRequestBodyFieldKeyField,
+        data: AddClassificationRequestBodyDataField,
         **kwargs
     ):
         """
         :param op: The type of change to perform on the classification
             object.
-        :type op: AddClassificationRequestBodyArgOpField
+        :type op: AddClassificationRequestBodyOpField
         :param field_key: Defines classifications
             available in the enterprise.
-        :type field_key: AddClassificationRequestBodyArgFieldKeyField
+        :type field_key: AddClassificationRequestBodyFieldKeyField
         :param data: The details of the classification to add.
-        :type data: AddClassificationRequestBodyArgDataField
+        :type data: AddClassificationRequestBodyDataField
         """
         super().__init__(**kwargs)
         self.op = op
@@ -166,17 +164,15 @@ class AddClassificationRequestBodyArg(BaseObject):
         self.data = data
 
 
-class UpdateClassificationRequestBodyArgOpField(str, Enum):
+class UpdateClassificationRequestBodyOpField(str, Enum):
     EDITENUMOPTION = 'editEnumOption'
 
 
-class UpdateClassificationRequestBodyArgFieldKeyField(str, Enum):
+class UpdateClassificationRequestBodyFieldKeyField(str, Enum):
     BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
-class UpdateClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField(
-    BaseObject
-):
+class UpdateClassificationRequestBodyDataStaticConfigClassificationField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'classification_definition': 'classificationDefinition',
         'color_id': 'colorID',
@@ -217,23 +213,23 @@ class UpdateClassificationRequestBodyArgDataFieldStaticConfigFieldClassification
         self.color_id = color_id
 
 
-class UpdateClassificationRequestBodyArgDataFieldStaticConfigField(BaseObject):
+class UpdateClassificationRequestBodyDataStaticConfigField(BaseObject):
     def __init__(
         self,
         classification: Optional[
-            UpdateClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField
+            UpdateClassificationRequestBodyDataStaticConfigClassificationField
         ] = None,
         **kwargs
     ):
         """
         :param classification: Additional details for the classification.
-        :type classification: Optional[UpdateClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField], optional
+        :type classification: Optional[UpdateClassificationRequestBodyDataStaticConfigClassificationField], optional
         """
         super().__init__(**kwargs)
         self.classification = classification
 
 
-class UpdateClassificationRequestBodyArgDataField(BaseObject):
+class UpdateClassificationRequestBodyDataField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
@@ -247,7 +243,7 @@ class UpdateClassificationRequestBodyArgDataField(BaseObject):
         self,
         key: str,
         static_config: Optional[
-            UpdateClassificationRequestBodyArgDataFieldStaticConfigField
+            UpdateClassificationRequestBodyDataStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -256,14 +252,14 @@ class UpdateClassificationRequestBodyArgDataField(BaseObject):
             shown in the web and mobile interfaces.
         :type key: str
         :param static_config: A static configuration for the classification.
-        :type static_config: Optional[UpdateClassificationRequestBodyArgDataFieldStaticConfigField], optional
+        :type static_config: Optional[UpdateClassificationRequestBodyDataStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
         self.static_config = static_config
 
 
-class UpdateClassificationRequestBodyArg(BaseObject):
+class UpdateClassificationRequestBody(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'field_key': 'fieldKey',
         'enum_option_key': 'enumOptionKey',
@@ -277,23 +273,23 @@ class UpdateClassificationRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: UpdateClassificationRequestBodyArgOpField,
-        field_key: UpdateClassificationRequestBodyArgFieldKeyField,
+        op: UpdateClassificationRequestBodyOpField,
+        field_key: UpdateClassificationRequestBodyFieldKeyField,
         enum_option_key: str,
-        data: UpdateClassificationRequestBodyArgDataField,
+        data: UpdateClassificationRequestBodyDataField,
         **kwargs
     ):
         """
         :param op: The type of change to perform on the classification
             object.
-        :type op: UpdateClassificationRequestBodyArgOpField
+        :type op: UpdateClassificationRequestBodyOpField
         :param field_key: Defines classifications
             available in the enterprise.
-        :type field_key: UpdateClassificationRequestBodyArgFieldKeyField
+        :type field_key: UpdateClassificationRequestBodyFieldKeyField
         :param enum_option_key: The original label of the classification to change.
         :type enum_option_key: str
         :param data: The details of the updated classification.
-        :type data: UpdateClassificationRequestBodyArgDataField
+        :type data: UpdateClassificationRequestBodyDataField
         """
         super().__init__(**kwargs)
         self.op = op
@@ -302,31 +298,31 @@ class UpdateClassificationRequestBodyArg(BaseObject):
         self.data = data
 
 
-class CreateClassificationTemplateScopeArg(str, Enum):
+class CreateClassificationTemplateScope(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
-class CreateClassificationTemplateTemplateKeyArg(str, Enum):
+class CreateClassificationTemplateTemplateKey(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'
 
 
-class CreateClassificationTemplateDisplayNameArg(str, Enum):
+class CreateClassificationTemplateDisplayName(str, Enum):
     CLASSIFICATION = 'Classification'
 
 
-class CreateClassificationTemplateFieldsArgTypeField(str, Enum):
+class CreateClassificationTemplateFieldsTypeField(str, Enum):
     ENUM = 'enum'
 
 
-class CreateClassificationTemplateFieldsArgKeyField(str, Enum):
+class CreateClassificationTemplateFieldsKeyField(str, Enum):
     BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
-class CreateClassificationTemplateFieldsArgDisplayNameField(str, Enum):
+class CreateClassificationTemplateFieldsDisplayNameField(str, Enum):
     CLASSIFICATION = 'Classification'
 
 
-class CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigFieldClassificationField(
+class CreateClassificationTemplateFieldsOptionsStaticConfigClassificationField(
     BaseObject
 ):
     _fields_to_json_mapping: Dict[str, str] = {
@@ -369,23 +365,23 @@ class CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigFieldClassifi
         self.color_id = color_id
 
 
-class CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigField(BaseObject):
+class CreateClassificationTemplateFieldsOptionsStaticConfigField(BaseObject):
     def __init__(
         self,
         classification: Optional[
-            CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigFieldClassificationField
+            CreateClassificationTemplateFieldsOptionsStaticConfigClassificationField
         ] = None,
         **kwargs
     ):
         """
         :param classification: Additional information about the classification.
-        :type classification: Optional[CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigFieldClassificationField], optional
+        :type classification: Optional[CreateClassificationTemplateFieldsOptionsStaticConfigClassificationField], optional
         """
         super().__init__(**kwargs)
         self.classification = classification
 
 
-class CreateClassificationTemplateFieldsArgOptionsField(BaseObject):
+class CreateClassificationTemplateFieldsOptionsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
@@ -399,7 +395,7 @@ class CreateClassificationTemplateFieldsArgOptionsField(BaseObject):
         self,
         key: str,
         static_config: Optional[
-            CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigField
+            CreateClassificationTemplateFieldsOptionsStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -408,14 +404,14 @@ class CreateClassificationTemplateFieldsArgOptionsField(BaseObject):
             will be show in the Box UI.
         :type key: str
         :param static_config: Additional information about the classification.
-        :type static_config: Optional[CreateClassificationTemplateFieldsArgOptionsFieldStaticConfigField], optional
+        :type static_config: Optional[CreateClassificationTemplateFieldsOptionsStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.key = key
         self.static_config = static_config
 
 
-class CreateClassificationTemplateFieldsArg(BaseObject):
+class CreateClassificationTemplateFields(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
@@ -427,25 +423,25 @@ class CreateClassificationTemplateFieldsArg(BaseObject):
 
     def __init__(
         self,
-        type: CreateClassificationTemplateFieldsArgTypeField,
-        key: CreateClassificationTemplateFieldsArgKeyField,
-        display_name: CreateClassificationTemplateFieldsArgDisplayNameField,
-        options: List[CreateClassificationTemplateFieldsArgOptionsField],
+        type: CreateClassificationTemplateFieldsTypeField,
+        key: CreateClassificationTemplateFieldsKeyField,
+        display_name: CreateClassificationTemplateFieldsDisplayNameField,
+        options: List[CreateClassificationTemplateFieldsOptionsField],
         hidden: Optional[bool] = None,
         **kwargs
     ):
         """
         :param type: The type of the field
             that is always enum.
-        :type type: CreateClassificationTemplateFieldsArgTypeField
+        :type type: CreateClassificationTemplateFieldsTypeField
         :param key: Defines classifications
             available in the enterprise.
-        :type key: CreateClassificationTemplateFieldsArgKeyField
+        :type key: CreateClassificationTemplateFieldsKeyField
         :param display_name: A display name for the classification.
-        :type display_name: CreateClassificationTemplateFieldsArgDisplayNameField
+        :type display_name: CreateClassificationTemplateFieldsDisplayNameField
         :param options: The actual list of classifications that are present on
             this template.
-        :type options: List[CreateClassificationTemplateFieldsArgOptionsField]
+        :type options: List[CreateClassificationTemplateFieldsOptionsField]
         :param hidden: Determines if the classification
             template is
             hidden or available on
@@ -465,8 +461,10 @@ class ClassificationsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -495,7 +493,8 @@ class ClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema'
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema',
             ]),
             FetchOptions(
                 method='GET',
@@ -509,7 +508,7 @@ class ClassificationsManager:
 
     def add_classification(
         self,
-        request_body: List[AddClassificationRequestBodyArg],
+        request_body: List[AddClassificationRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ClassificationTemplate:
         """
@@ -527,7 +526,7 @@ class ClassificationsManager:
         `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
         :param request_body: Request body of addClassification method
-        :type request_body: List[AddClassificationRequestBodyArg]
+        :type request_body: List[AddClassificationRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -536,7 +535,8 @@ class ClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add'
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add',
             ]),
             FetchOptions(
                 method='PUT',
@@ -552,7 +552,7 @@ class ClassificationsManager:
 
     def update_classification(
         self,
-        request_body: List[UpdateClassificationRequestBodyArg],
+        request_body: List[UpdateClassificationRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ClassificationTemplate:
         """
@@ -570,7 +570,7 @@ class ClassificationsManager:
         `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
         :param request_body: Request body of updateClassification method
-        :type request_body: List[UpdateClassificationRequestBodyArg]
+        :type request_body: List[UpdateClassificationRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -579,7 +579,8 @@ class ClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update'
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update',
             ]),
             FetchOptions(
                 method='PUT',
@@ -595,10 +596,10 @@ class ClassificationsManager:
 
     def create_classification_template(
         self,
-        scope: CreateClassificationTemplateScopeArg,
-        template_key: CreateClassificationTemplateTemplateKeyArg,
-        display_name: CreateClassificationTemplateDisplayNameArg,
-        fields: List[CreateClassificationTemplateFieldsArg],
+        scope: CreateClassificationTemplateScope,
+        template_key: CreateClassificationTemplateTemplateKey,
+        display_name: CreateClassificationTemplateDisplayName,
+        fields: List[CreateClassificationTemplateFields],
         hidden: Optional[bool] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -623,16 +624,16 @@ class ClassificationsManager:
         :param scope: The scope in which to create the classifications. This should
             be `enterprise` or `enterprise_{id}` where `id` is the unique
             ID of the enterprise.
-        :type scope: CreateClassificationTemplateScopeArg
+        :type scope: CreateClassificationTemplateScope
         :param template_key: Defines the list of metadata templates.
-        :type template_key: CreateClassificationTemplateTemplateKeyArg
+        :type template_key: CreateClassificationTemplateTemplateKey
         :param display_name: The name of the
             template as shown in web and mobile interfaces.
-        :type display_name: CreateClassificationTemplateDisplayNameArg
+        :type display_name: CreateClassificationTemplateDisplayName
         :param fields: The classification template requires exactly
             one field, which holds
             all the valid classification values.
-        :type fields: List[CreateClassificationTemplateFieldsArg]
+        :type fields: List[CreateClassificationTemplateFields]
         :param hidden: Determines if the classification template is
             hidden or available on web and mobile
             devices.
@@ -657,7 +658,8 @@ class ClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/schema#classifications'
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/schema#classifications',
             ]),
             FetchOptions(
                 method='POST',

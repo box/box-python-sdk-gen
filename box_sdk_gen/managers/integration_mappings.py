@@ -45,11 +45,11 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetIntegrationMappingSlackPartnerItemTypeArg(str, Enum):
+class GetIntegrationMappingSlackPartnerItemType(str, Enum):
     CHANNEL = 'channel'
 
 
-class GetIntegrationMappingSlackBoxItemTypeArg(str, Enum):
+class GetIntegrationMappingSlackBoxItemType(str, Enum):
     FOLDER = 'folder'
 
 
@@ -57,8 +57,10 @@ class IntegrationMappingsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -66,12 +68,10 @@ class IntegrationMappingsManager:
         self,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        partner_item_type: Optional[
-            GetIntegrationMappingSlackPartnerItemTypeArg
-        ] = None,
+        partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemType] = None,
         partner_item_id: Optional[str] = None,
         box_item_id: Optional[str] = None,
-        box_item_type: Optional[GetIntegrationMappingSlackBoxItemTypeArg] = None,
+        box_item_type: Optional[GetIntegrationMappingSlackBoxItemType] = None,
         is_manually_created: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> IntegrationMappings:
@@ -90,13 +90,13 @@ class IntegrationMappingsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param partner_item_type: Mapped item type, for which the mapping should be returned
-        :type partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemTypeArg], optional
+        :type partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemType], optional
         :param partner_item_id: ID of the mapped item, for which the mapping should be returned
         :type partner_item_id: Optional[str], optional
         :param box_item_id: Box item ID, for which the mappings should be returned
         :type box_item_id: Optional[str], optional
         :param box_item_type: Box item type, for which the mappings should be returned
-        :type box_item_type: Optional[GetIntegrationMappingSlackBoxItemTypeArg], optional
+        :type box_item_type: Optional[GetIntegrationMappingSlackBoxItemType], optional
         :param is_manually_created: Whether the mapping has been manually created
         :type is_manually_created: Optional[bool], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
@@ -115,7 +115,9 @@ class IntegrationMappingsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/integration_mappings/slack']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/integration_mappings/slack']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -157,7 +159,9 @@ class IntegrationMappingsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/integration_mappings/slack']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/integration_mappings/slack']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -200,7 +204,8 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/integration_mappings/slack/',
+                self.network_session.base_urls.base_url,
+                '/integration_mappings/slack/',
                 to_string(integration_mapping_id),
             ]),
             FetchOptions(
@@ -239,7 +244,8 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/integration_mappings/slack/',
+                self.network_session.base_urls.base_url,
+                '/integration_mappings/slack/',
                 to_string(integration_mapping_id),
             ]),
             FetchOptions(

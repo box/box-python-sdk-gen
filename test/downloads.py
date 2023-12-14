@@ -6,9 +6,9 @@ from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
@@ -32,8 +32,8 @@ def test_download_file():
     file_buffer: Buffer = generate_byte_buffer(1024 * 1024)
     file_content_stream: ByteStream = generate_byte_stream_from_buffer(file_buffer)
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=new_file_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=file_content_stream,
     )

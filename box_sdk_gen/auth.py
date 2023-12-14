@@ -18,7 +18,5 @@ class Authentication:
         pass
 
     @abstractmethod
-    def refresh_token(
-        self, network_session: Optional[NetworkSession] = None
-    ) -> AccessToken:
+    def refresh_token(self, network_session: NetworkSession) -> AccessToken:
         pass

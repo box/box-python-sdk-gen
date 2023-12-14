@@ -35,7 +35,7 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetEnterpriseDevicePinnersDirectionArg(str, Enum):
+class GetEnterpriseDevicePinnersDirection(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -44,8 +44,10 @@ class DevicePinnersManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -67,7 +69,9 @@ class DevicePinnersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)
+                self.network_session.base_urls.base_url,
+                '/device_pinners/',
+                to_string(device_pinner_id),
             ]),
             FetchOptions(
                 method='GET',
@@ -97,7 +101,9 @@ class DevicePinnersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/device_pinners/', to_string(device_pinner_id)
+                self.network_session.base_urls.base_url,
+                '/device_pinners/',
+                to_string(device_pinner_id),
             ]),
             FetchOptions(
                 method='DELETE',
@@ -114,7 +120,7 @@ class DevicePinnersManager:
         enterprise_id: str,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        direction: Optional[GetEnterpriseDevicePinnersDirectionArg] = None,
+        direction: Optional[GetEnterpriseDevicePinnersDirection] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> DevicePinners:
         """
@@ -136,7 +142,7 @@ class DevicePinnersManager:
         :type limit: Optional[int], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetEnterpriseDevicePinnersDirectionArg], optional
+        :type direction: Optional[GetEnterpriseDevicePinnersDirection], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -150,7 +156,8 @@ class DevicePinnersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/enterprises/',
+                self.network_session.base_urls.base_url,
+                '/enterprises/',
                 to_string(enterprise_id),
                 '/device_pinners',
             ]),

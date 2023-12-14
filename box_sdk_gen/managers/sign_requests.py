@@ -49,7 +49,7 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateSignRequestSignatureColorArg(str, Enum):
+class CreateSignRequestSignatureColor(str, Enum):
     BLUE = 'blue'
     BLACK = 'black'
     RED = 'red'
@@ -59,8 +59,10 @@ class SignRequestsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -82,7 +84,8 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/sign_requests/',
+                self.network_session.base_urls.base_url,
+                '/sign_requests/',
                 to_string(sign_request_id),
                 '/cancel',
             ]),
@@ -114,7 +117,8 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/sign_requests/',
+                self.network_session.base_urls.base_url,
+                '/sign_requests/',
                 to_string(sign_request_id),
                 '/resend',
             ]),
@@ -146,7 +150,9 @@ class SignRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/sign_requests/', to_string(sign_request_id)
+                self.network_session.base_urls.base_url,
+                '/sign_requests/',
+                to_string(sign_request_id),
             ]),
             FetchOptions(
                 method='GET',
@@ -180,12 +186,12 @@ class SignRequestsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/sign_requests']),
+            ''.join([self.network_session.base_urls.base_url, '/sign_requests']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -202,7 +208,7 @@ class SignRequestsManager:
         signers: List[SignRequestCreateSigner],
         parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
-        signature_color: Optional[CreateSignRequestSignatureColorArg] = None,
+        signature_color: Optional[CreateSignRequestSignatureColor] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -228,7 +234,7 @@ class SignRequestsManager:
         :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
         :type source_files: Optional[List[FileBase]], optional
         :param signature_color: Force a specific color for the signature (blue, black, or red)
-        :type signature_color: Optional[CreateSignRequestSignatureColorArg], optional
+        :type signature_color: Optional[CreateSignRequestSignatureColor], optional
         :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
         :type is_document_preparation_needed: Optional[bool], optional
         :param redirect_url: When specified, signature request will be redirected to this url when a document is signed.
@@ -283,7 +289,7 @@ class SignRequestsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/sign_requests']),
+            ''.join([self.network_session.base_urls.base_url, '/sign_requests']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

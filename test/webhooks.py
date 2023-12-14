@@ -6,15 +6,15 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.schemas import Webhook
 
-from box_sdk_gen.managers.webhooks import CreateWebhookTargetArg
+from box_sdk_gen.managers.webhooks import CreateWebhookTarget
 
-from box_sdk_gen.managers.webhooks import CreateWebhookTargetArgTypeField
+from box_sdk_gen.managers.webhooks import CreateWebhookTargetTypeField
 
-from box_sdk_gen.managers.webhooks import CreateWebhookTriggersArg
+from box_sdk_gen.managers.webhooks import CreateWebhookTriggers
 
 from box_sdk_gen.schemas import Webhooks
 
@@ -27,14 +27,14 @@ client: BoxClient = get_default_client()
 
 def testWebhooksCRUD():
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
+        name=get_uuid(), parent=CreateFolderParent(id='0')
     )
     webhook: Webhook = client.webhooks.create_webhook(
-        target=CreateWebhookTargetArg(
-            id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value
+        target=CreateWebhookTarget(
+            id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value
         ),
         address='https://example.com/new-webhook',
-        triggers=[CreateWebhookTriggersArg.FILE_UPLOADED.value],
+        triggers=[CreateWebhookTriggers.FILE_UPLOADED.value],
     )
     assert webhook.target.id == folder.id
     assert to_string(webhook.target.type) == 'folder'

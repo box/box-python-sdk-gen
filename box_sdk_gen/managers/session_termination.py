@@ -35,8 +35,10 @@ class SessionTerminationManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -69,7 +71,9 @@ class SessionTerminationManager:
         request_body: Dict = {'user_ids': user_ids, 'user_logins': user_logins}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/terminate_sessions']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/users/terminate_sessions']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -108,7 +112,9 @@ class SessionTerminationManager:
         request_body: Dict = {'group_ids': group_ids}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/groups/terminate_sessions']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/groups/terminate_sessions']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

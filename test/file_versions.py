@@ -2,19 +2,19 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.managers.uploads import UploadFileVersionAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileVersionAttributes
 
 from box_sdk_gen.schemas import FileVersions
 
 from box_sdk_gen.schemas import FileVersionFull
 
-from box_sdk_gen.managers.file_versions import PromoteFileVersionTypeArg
+from box_sdk_gen.managers.file_versions import PromoteFileVersionType
 
 from box_sdk_gen.utils import get_uuid
 
@@ -29,8 +29,8 @@ def testCreateListGetRestoreDeleteFileVersion():
     old_name: str = get_uuid()
     new_name: str = get_uuid()
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=old_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=old_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=generate_byte_stream(10),
     )
@@ -39,7 +39,7 @@ def testCreateListGetRestoreDeleteFileVersion():
     assert file.size == 10
     new_files: Files = client.uploads.upload_file_version(
         file_id=file.id,
-        attributes=UploadFileVersionAttributesArg(name=new_name),
+        attributes=UploadFileVersionAttributes(name=new_name),
         file=generate_byte_stream(20),
     )
     new_file: FileFull = new_files.entries[0]
@@ -56,7 +56,7 @@ def testCreateListGetRestoreDeleteFileVersion():
     client.file_versions.promote_file_version(
         file_id=file.id,
         id=file_versions.entries[0].id,
-        type=PromoteFileVersionTypeArg.FILE_VERSION.value,
+        type=PromoteFileVersionType.FILE_VERSION.value,
     )
     file_restored: FileFull = client.files.get_file_by_id(file_id=file.id)
     assert file_restored.name == old_name

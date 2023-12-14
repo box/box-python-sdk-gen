@@ -41,22 +41,22 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFolderMetadataByIdScopeArg(str, Enum):
+class GetFolderMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class CreateFolderMetadataByIdScopeArg(str, Enum):
+class CreateFolderMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateFolderMetadataByIdScopeArg(str, Enum):
+class UpdateFolderMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateFolderMetadataByIdRequestBodyArgOpField(str, Enum):
+class UpdateFolderMetadataByIdRequestBodyOpField(str, Enum):
     ADD = 'add'
     REPLACE = 'replace'
     REMOVE = 'remove'
@@ -65,7 +65,7 @@ class UpdateFolderMetadataByIdRequestBodyArgOpField(str, Enum):
     COPY = 'copy'
 
 
-class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
+class UpdateFolderMetadataByIdRequestBody(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'from_': 'from',
         **BaseObject._fields_to_json_mapping,
@@ -77,7 +77,7 @@ class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: Optional[UpdateFolderMetadataByIdRequestBodyArgOpField] = None,
+        op: Optional[UpdateFolderMetadataByIdRequestBodyOpField] = None,
         path: Optional[str] = None,
         value: Optional[str] = None,
         from_: Optional[str] = None,
@@ -86,7 +86,7 @@ class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
-        :type op: Optional[UpdateFolderMetadataByIdRequestBodyArgOpField], optional
+        :type op: Optional[UpdateFolderMetadataByIdRequestBodyOpField], optional
         :param path: The location in the metadata JSON object
             to apply the changes to, in the format of a
             [JSON-Pointer](https://tools.ietf.org/html/rfc6901).
@@ -114,7 +114,7 @@ class UpdateFolderMetadataByIdRequestBodyArg(BaseObject):
         self.from_ = from_
 
 
-class DeleteFolderMetadataByIdScopeArg(str, Enum):
+class DeleteFolderMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
@@ -123,8 +123,10 @@ class FolderMetadataManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -154,7 +156,10 @@ class FolderMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/metadata'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/metadata',
             ]),
             FetchOptions(
                 method='GET',
@@ -169,7 +174,7 @@ class FolderMetadataManager:
     def get_folder_metadata_by_id(
         self,
         folder_id: str,
-        scope: GetFolderMetadataByIdScopeArg,
+        scope: GetFolderMetadataByIdScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataFull:
@@ -190,7 +195,7 @@ class FolderMetadataManager:
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetFolderMetadataByIdScopeArg
+        :type scope: GetFolderMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -202,7 +207,8 @@ class FolderMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/',
                 to_string(scope),
@@ -222,7 +228,7 @@ class FolderMetadataManager:
     def create_folder_metadata_by_id(
         self,
         folder_id: str,
-        scope: CreateFolderMetadataByIdScopeArg,
+        scope: CreateFolderMetadataByIdScope,
         template_key: str,
         request_body: Dict[str, str],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -259,7 +265,7 @@ class FolderMetadataManager:
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: CreateFolderMetadataByIdScopeArg
+        :type scope: CreateFolderMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -273,7 +279,8 @@ class FolderMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/',
                 to_string(scope),
@@ -295,9 +302,9 @@ class FolderMetadataManager:
     def update_folder_metadata_by_id(
         self,
         folder_id: str,
-        scope: UpdateFolderMetadataByIdScopeArg,
+        scope: UpdateFolderMetadataByIdScope,
         template_key: str,
-        request_body: List[UpdateFolderMetadataByIdRequestBodyArg],
+        request_body: List[UpdateFolderMetadataByIdRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataFull:
         """
@@ -329,12 +336,12 @@ class FolderMetadataManager:
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: UpdateFolderMetadataByIdScopeArg
+        :type scope: UpdateFolderMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         :param request_body: Request body of updateFolderMetadataById method
-        :type request_body: List[UpdateFolderMetadataByIdRequestBodyArg]
+        :type request_body: List[UpdateFolderMetadataByIdRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -343,7 +350,8 @@ class FolderMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/',
                 to_string(scope),
@@ -365,7 +373,7 @@ class FolderMetadataManager:
     def delete_folder_metadata_by_id(
         self,
         folder_id: str,
-        scope: DeleteFolderMetadataByIdScopeArg,
+        scope: DeleteFolderMetadataByIdScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
@@ -383,7 +391,7 @@ class FolderMetadataManager:
         :type folder_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteFolderMetadataByIdScopeArg
+        :type scope: DeleteFolderMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -395,7 +403,8 @@ class FolderMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/',
                 to_string(scope),

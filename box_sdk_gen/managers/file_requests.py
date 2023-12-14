@@ -41,20 +41,20 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileRequestByIdStatusArg(str, Enum):
+class UpdateFileRequestByIdStatus(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
 
 
-class CreateFileRequestCopyFolderArgTypeField(str, Enum):
+class CreateFileRequestCopyFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class CreateFileRequestCopyFolderArg(BaseObject):
+class CreateFileRequestCopyFolder(BaseObject):
     def __init__(
         self,
         id: str,
-        type: Optional[CreateFileRequestCopyFolderArgTypeField] = None,
+        type: Optional[CreateFileRequestCopyFolderTypeField] = None,
         **kwargs
     ):
         """
@@ -62,14 +62,14 @@ class CreateFileRequestCopyFolderArg(BaseObject):
             file request to.
         :type id: str
         :param type: `folder`
-        :type type: Optional[CreateFileRequestCopyFolderArgTypeField], optional
+        :type type: Optional[CreateFileRequestCopyFolderTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class CreateFileRequestCopyStatusArg(str, Enum):
+class CreateFileRequestCopyStatus(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
 
@@ -78,8 +78,10 @@ class FileRequestsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -106,7 +108,9 @@ class FileRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+                self.network_session.base_urls.base_url,
+                '/file_requests/',
+                to_string(file_request_id),
             ]),
             FetchOptions(
                 method='GET',
@@ -123,7 +127,7 @@ class FileRequestsManager:
         file_request_id: str,
         title: Optional[str] = None,
         description: Optional[str] = None,
-        status: Optional[UpdateFileRequestByIdStatusArg] = None,
+        status: Optional[UpdateFileRequestByIdStatus] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
         expires_at: Optional[str] = None,
@@ -157,7 +161,7 @@ class FileRequestsManager:
             to the file request URL will receive a `HTTP 404` status
             code.
             This will default to the value on the existing file request.
-        :type status: Optional[UpdateFileRequestByIdStatusArg], optional
+        :type status: Optional[UpdateFileRequestByIdStatus], optional
         :param is_email_required: Whether a file request submitter is required to provide
             their email address.
             When this setting is set to true, the Box UI will show
@@ -196,12 +200,14 @@ class FileRequestsManager:
             'is_description_required': is_description_required,
             'expires_at': expires_at,
         }
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+                self.network_session.base_urls.base_url,
+                '/file_requests/',
+                to_string(file_request_id),
             ]),
             FetchOptions(
                 method='PUT',
@@ -238,7 +244,9 @@ class FileRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_requests/', to_string(file_request_id)
+                self.network_session.base_urls.base_url,
+                '/file_requests/',
+                to_string(file_request_id),
             ]),
             FetchOptions(
                 method='DELETE',
@@ -253,10 +261,10 @@ class FileRequestsManager:
     def create_file_request_copy(
         self,
         file_request_id: str,
-        folder: CreateFileRequestCopyFolderArg,
+        folder: CreateFileRequestCopyFolder,
         title: Optional[str] = None,
         description: Optional[str] = None,
-        status: Optional[CreateFileRequestCopyStatusArg] = None,
+        status: Optional[CreateFileRequestCopyStatus] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
         expires_at: Optional[str] = None,
@@ -276,7 +284,7 @@ class FileRequestsManager:
             Example: "123"
         :type file_request_id: str
         :param folder: The folder to associate the new file request to.
-        :type folder: CreateFileRequestCopyFolderArg
+        :type folder: CreateFileRequestCopyFolder
         :param title: An optional new title for the file request. This can be
             used to change the title of the file request.
             This will default to the value on the existing file request.
@@ -291,7 +299,7 @@ class FileRequestsManager:
             to the file request URL will receive a `HTTP 404` status
             code.
             This will default to the value on the existing file request.
-        :type status: Optional[CreateFileRequestCopyStatusArg], optional
+        :type status: Optional[CreateFileRequestCopyStatus], optional
         :param is_email_required: Whether a file request submitter is required to provide
             their email address.
             When this setting is set to true, the Box UI will show
@@ -327,7 +335,8 @@ class FileRequestsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_requests/',
+                self.network_session.base_urls.base_url,
+                '/file_requests/',
                 to_string(file_request_id),
                 '/copy',
             ]),

@@ -37,7 +37,7 @@ from box_sdk_gen.json_data import SerializedData
 from box_sdk_gen.json_data import sd_to_json
 
 
-class CreateWebLinkParentArg(BaseObject):
+class CreateWebLinkParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -47,7 +47,7 @@ class CreateWebLinkParentArg(BaseObject):
         self.id = id
 
 
-class UpdateWebLinkByIdParentArg(BaseObject):
+class UpdateWebLinkByIdParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -57,16 +57,16 @@ class UpdateWebLinkByIdParentArg(BaseObject):
         self.id = id
 
 
-class UpdateWebLinkByIdSharedLinkArgAccessField(str, Enum):
+class UpdateWebLinkByIdSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateWebLinkByIdSharedLinkArg(BaseObject):
+class UpdateWebLinkByIdSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateWebLinkByIdSharedLinkArgAccessField] = None,
+        access: Optional[UpdateWebLinkByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
@@ -83,7 +83,7 @@ class UpdateWebLinkByIdSharedLinkArg(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateWebLinkByIdSharedLinkArgAccessField], optional
+        :type access: Optional[UpdateWebLinkByIdSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -114,15 +114,17 @@ class WebLinksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def create_web_link(
         self,
         url: str,
-        parent: CreateWebLinkParentArg,
+        parent: CreateWebLinkParent,
         name: Optional[str] = None,
         description: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -133,7 +135,7 @@ class WebLinksManager:
             `"http://"` or `"https://"`.
         :type url: str
         :param parent: The parent folder to create the web link within.
-        :type parent: CreateWebLinkParentArg
+        :type parent: CreateWebLinkParent
         :param name: Name of the web link. Defaults to the URL if not set.
         :type name: Optional[str], optional
         :param description: Description of the web link.
@@ -151,7 +153,7 @@ class WebLinksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links']),
+            ''.join([self.network_session.base_urls.base_url, '/web_links']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -188,11 +190,15 @@ class WebLinksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({
-            'boxapi': to_string(boxapi), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'boxapi': to_string(boxapi), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -207,10 +213,10 @@ class WebLinksManager:
         self,
         web_link_id: str,
         url: Optional[str] = None,
-        parent: Optional[UpdateWebLinkByIdParentArg] = None,
+        parent: Optional[UpdateWebLinkByIdParent] = None,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        shared_link: Optional[UpdateWebLinkByIdSharedLinkArg] = None,
+        shared_link: Optional[UpdateWebLinkByIdSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> WebLink:
         """
@@ -226,7 +232,7 @@ class WebLinksManager:
         :param description: A new description of the web link.
         :type description: Optional[str], optional
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[UpdateWebLinkByIdSharedLinkArg], optional
+        :type shared_link: Optional[UpdateWebLinkByIdSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -241,7 +247,11 @@ class WebLinksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -269,7 +279,11 @@ class WebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

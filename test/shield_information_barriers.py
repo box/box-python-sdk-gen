@@ -9,7 +9,7 @@ from box_sdk_gen.schemas import ShieldInformationBarrier
 from box_sdk_gen.schemas import ShieldInformationBarriers
 
 from box_sdk_gen.managers.shield_information_barriers import (
-    CreateShieldInformationBarrierChangeStatusStatusArg,
+    CreateShieldInformationBarrierChangeStatusStatus,
 )
 
 from box_sdk_gen.utils import get_env_var
@@ -43,5 +43,5 @@ def testShieldInformationBarriers():
     with pytest.raises(Exception):
         client.shield_information_barriers.create_shield_information_barrier_change_status(
             id=barrier_id,
-            status=CreateShieldInformationBarrierChangeStatusStatusArg.DISABLED.value,
+            status=CreateShieldInformationBarrierChangeStatusStatus.DISABLED.value,
         )

@@ -37,18 +37,16 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFolderWatermarkWatermarkArgImprintField(str, Enum):
+class UpdateFolderWatermarkWatermarkImprintField(str, Enum):
     DEFAULT = 'default'
 
 
-class UpdateFolderWatermarkWatermarkArg(BaseObject):
-    def __init__(
-        self, imprint: UpdateFolderWatermarkWatermarkArgImprintField, **kwargs
-    ):
+class UpdateFolderWatermarkWatermark(BaseObject):
+    def __init__(self, imprint: UpdateFolderWatermarkWatermarkImprintField, **kwargs):
         """
         :param imprint: The type of watermark to apply.
             Currently only supports one option.
-        :type imprint: UpdateFolderWatermarkWatermarkArgImprintField
+        :type imprint: UpdateFolderWatermarkWatermarkImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
@@ -58,8 +56,10 @@ class FolderWatermarksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -86,7 +86,10 @@ class FolderWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='GET',
@@ -101,7 +104,7 @@ class FolderWatermarksManager:
     def update_folder_watermark(
         self,
         folder_id: str,
-        watermark: UpdateFolderWatermarkWatermarkArg,
+        watermark: UpdateFolderWatermarkWatermark,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Watermark:
         """
@@ -117,7 +120,7 @@ class FolderWatermarksManager:
             Example: "12345"
         :type folder_id: str
         :param watermark: The watermark to imprint on the folder
-        :type watermark: UpdateFolderWatermarkWatermarkArg
+        :type watermark: UpdateFolderWatermarkWatermark
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -127,7 +130,10 @@ class FolderWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='PUT',
@@ -164,7 +170,10 @@ class FolderWatermarksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/watermark'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/watermark',
             ]),
             FetchOptions(
                 method='DELETE',

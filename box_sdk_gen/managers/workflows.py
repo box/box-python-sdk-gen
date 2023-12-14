@@ -39,11 +39,11 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateWorkflowStartTypeArg(str, Enum):
+class CreateWorkflowStartType(str, Enum):
     WORKFLOW_PARAMETERS = 'workflow_parameters'
 
 
-class CreateWorkflowStartFlowArg(BaseObject):
+class CreateWorkflowStartFlow(BaseObject):
     def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the flow object
@@ -56,20 +56,20 @@ class CreateWorkflowStartFlowArg(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartFilesArgTypeField(str, Enum):
+class CreateWorkflowStartFilesTypeField(str, Enum):
     FILE = 'file'
 
 
-class CreateWorkflowStartFilesArg(BaseObject):
+class CreateWorkflowStartFiles(BaseObject):
     def __init__(
         self,
-        type: Optional[CreateWorkflowStartFilesArgTypeField] = None,
+        type: Optional[CreateWorkflowStartFilesTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the file object
-        :type type: Optional[CreateWorkflowStartFilesArgTypeField], optional
+        :type type: Optional[CreateWorkflowStartFilesTypeField], optional
         :param id: The id of the file
         :type id: Optional[str], optional
         """
@@ -78,20 +78,20 @@ class CreateWorkflowStartFilesArg(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartFolderArgTypeField(str, Enum):
+class CreateWorkflowStartFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class CreateWorkflowStartFolderArg(BaseObject):
+class CreateWorkflowStartFolder(BaseObject):
     def __init__(
         self,
-        type: Optional[CreateWorkflowStartFolderArgTypeField] = None,
+        type: Optional[CreateWorkflowStartFolderTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the folder object
-        :type type: Optional[CreateWorkflowStartFolderArgTypeField], optional
+        :type type: Optional[CreateWorkflowStartFolderTypeField], optional
         :param id: The id of the folder
         :type id: Optional[str], optional
         """
@@ -100,15 +100,15 @@ class CreateWorkflowStartFolderArg(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartOutcomesArgTypeField(str, Enum):
+class CreateWorkflowStartOutcomesTypeField(str, Enum):
     OUTCOME = 'outcome'
 
 
-class CreateWorkflowStartOutcomesArg(BaseObject):
+class CreateWorkflowStartOutcomes(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[CreateWorkflowStartOutcomesArgTypeField] = None,
+        type: Optional[CreateWorkflowStartOutcomesTypeField] = None,
         parameter: Optional[str] = None,
         **kwargs
     ):
@@ -116,7 +116,7 @@ class CreateWorkflowStartOutcomesArg(BaseObject):
         :param id: The id of the outcome
         :type id: Optional[str], optional
         :param type: The type of the outcome object
-        :type type: Optional[CreateWorkflowStartOutcomesArgTypeField], optional
+        :type type: Optional[CreateWorkflowStartOutcomesTypeField], optional
         :param parameter: This is a placeholder example for various objects that
             can be passed in - refer to the guides section to find
             out more information.
@@ -132,8 +132,10 @@ class WorkflowsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -186,7 +188,7 @@ class WorkflowsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/workflows']),
+            ''.join([self.network_session.base_urls.base_url, '/workflows']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -201,11 +203,11 @@ class WorkflowsManager:
     def create_workflow_start(
         self,
         workflow_id: str,
-        flow: CreateWorkflowStartFlowArg,
-        files: List[CreateWorkflowStartFilesArg],
-        folder: CreateWorkflowStartFolderArg,
-        type: Optional[CreateWorkflowStartTypeArg] = None,
-        outcomes: Optional[List[CreateWorkflowStartOutcomesArg]] = None,
+        flow: CreateWorkflowStartFlow,
+        files: List[CreateWorkflowStartFiles],
+        folder: CreateWorkflowStartFolder,
+        type: Optional[CreateWorkflowStartType] = None,
+        outcomes: Optional[List[CreateWorkflowStartOutcomes]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
         """
@@ -220,16 +222,16 @@ class WorkflowsManager:
             Example: "12345"
         :type workflow_id: str
         :param flow: The flow that will be triggered
-        :type flow: CreateWorkflowStartFlowArg
+        :type flow: CreateWorkflowStartFlow
         :param files: The array of files for which the workflow should start. All files
             must be in the workflow's configured folder.
-        :type files: List[CreateWorkflowStartFilesArg]
+        :type files: List[CreateWorkflowStartFiles]
         :param folder: The folder object for which the workflow is configured.
-        :type folder: CreateWorkflowStartFolderArg
+        :type folder: CreateWorkflowStartFolder
         :param type: The type of the parameters object
-        :type type: Optional[CreateWorkflowStartTypeArg], optional
+        :type type: Optional[CreateWorkflowStartType], optional
         :param outcomes: A list of outcomes required to be configured at start time.
-        :type outcomes: Optional[List[CreateWorkflowStartOutcomesArg]], optional
+        :type outcomes: Optional[List[CreateWorkflowStartOutcomes]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -245,7 +247,10 @@ class WorkflowsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/workflows/', to_string(workflow_id), '/start'
+                self.network_session.base_urls.base_url,
+                '/workflows/',
+                to_string(workflow_id),
+                '/start',
             ]),
             FetchOptions(
                 method='POST',

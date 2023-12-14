@@ -4,7 +4,7 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.schemas import TrashFolder
 
@@ -19,7 +19,7 @@ client: BoxClient = get_default_client()
 
 def testTrashedFolders():
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
+        name=get_uuid(), parent=CreateFolderParent(id='0')
     )
     client.folders.delete_folder_by_id(folder_id=folder.id)
     from_trash: TrashFolder = client.trashed_folders.get_folder_trash(

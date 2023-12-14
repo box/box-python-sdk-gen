@@ -6,9 +6,9 @@ from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import Invite
 
-from box_sdk_gen.managers.invites import CreateInviteEnterpriseArg
+from box_sdk_gen.managers.invites import CreateInviteEnterprise
 
-from box_sdk_gen.managers.invites import CreateInviteActionableByArg
+from box_sdk_gen.managers.invites import CreateInviteActionableBy
 
 from box_sdk_gen.utils import get_uuid
 
@@ -23,8 +23,8 @@ def testInvites():
     current_user: UserFull = client.users.get_user_me(fields=['enterprise'])
     email: str = get_env_var('BOX_EXTERNAL_USER_EMAIL')
     invitation: Invite = client.invites.create_invite(
-        enterprise=CreateInviteEnterpriseArg(id=current_user.enterprise.id),
-        actionable_by=CreateInviteActionableByArg(login=email),
+        enterprise=CreateInviteEnterprise(id=current_user.enterprise.id),
+        actionable_by=CreateInviteActionableBy(login=email),
     )
     assert to_string(invitation.type) == 'invite'
     assert invitation.invited_to.id == current_user.enterprise.id

@@ -1,8 +1,8 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.base_object import BaseObject
+
+from typing import Optional
 
 from typing import Dict
 
@@ -39,42 +39,34 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
-    str, Enum
-):
+class UpdateClassificationOnFileRequestBodyOpField(str, Enum):
     REPLACE = 'replace'
 
 
-class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgPathField(
-    str, Enum
-):
-    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
+class UpdateClassificationOnFileRequestBodyPathField(str, Enum):
+    _BOX__SECURITY__CLASSIFICATION__KEY = '/Box__Security__Classification__Key'
 
 
-class UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
+class UpdateClassificationOnFileRequestBody(BaseObject):
     def __init__(
         self,
-        op: Optional[
-            UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgOpField
-        ] = None,
-        path: Optional[
-            UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgPathField
-        ] = None,
-        value: Optional[str] = None,
+        op: UpdateClassificationOnFileRequestBodyOpField,
+        path: UpdateClassificationOnFileRequestBodyPathField,
+        value: str,
         **kwargs
     ):
         """
         :param op: `replace`
-        :type op: Optional[UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgOpField], optional
+        :type op: UpdateClassificationOnFileRequestBodyOpField
         :param path: Defines classifications
             available in the enterprise.
-        :type path: Optional[UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArgPathField], optional
+        :type path: UpdateClassificationOnFileRequestBodyPathField
         :param value: The name of the classification to apply to this file.
             To list the available classifications in an enterprise,
             use the classification API to retrieve the
             [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
             which lists all available classification keys.
-        :type value: Optional[str], optional
+        :type value: str
         """
         super().__init__(**kwargs)
         self.op = op
@@ -86,12 +78,14 @@ class FileClassificationsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
-    def get_file_metadata_enterprise_security_classification_6_vm_vochw_u_wo(
+    def get_classification_on_file(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Classification:
         """
@@ -124,7 +118,8 @@ class FileClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -138,7 +133,7 @@ class FileClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def create_file_metadata_enterprise_security_classification(
+    def add_classification_to_file(
         self,
         file_id: str,
         box_security_classification_key: Optional[str] = None,
@@ -183,7 +178,8 @@ class FileClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -199,12 +195,10 @@ class FileClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def update_file_metadata_enterprise_security_classification(
+    def update_classification_on_file(
         self,
         file_id: str,
-        request_body: List[
-            UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg
-        ],
+        request_body: List[UpdateClassificationOnFileRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Classification:
         """
@@ -226,8 +220,8 @@ class FileClassificationsManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
-        :param request_body: Request body of updateFileMetadataEnterpriseSecurityClassification method
-        :type request_body: List[UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg]
+        :param request_body: Request body of updateClassificationOnFile method
+        :type request_body: List[UpdateClassificationOnFileRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -236,7 +230,8 @@ class FileClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -252,7 +247,7 @@ class FileClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def delete_file_metadata_enterprise_security_classification(
+    def delete_classification_from_file(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -282,7 +277,8 @@ class FileClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),

@@ -35,7 +35,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFileVersionRetentionsDispositionActionArg(str, Enum):
+class GetFileVersionRetentionsDispositionAction(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'
     REMOVE_RETENTION = 'remove_retention'
 
@@ -44,8 +44,10 @@ class FileVersionRetentionsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -54,9 +56,7 @@ class FileVersionRetentionsManager:
         file_id: Optional[str] = None,
         file_version_id: Optional[str] = None,
         policy_id: Optional[str] = None,
-        disposition_action: Optional[
-            GetFileVersionRetentionsDispositionActionArg
-        ] = None,
+        disposition_action: Optional[GetFileVersionRetentionsDispositionAction] = None,
         disposition_before: Optional[str] = None,
         disposition_after: Optional[str] = None,
         limit: Optional[int] = None,
@@ -73,7 +73,7 @@ class FileVersionRetentionsManager:
         :type policy_id: Optional[str], optional
         :param disposition_action: Filters results by the retention policy with this disposition
             action.
-        :type disposition_action: Optional[GetFileVersionRetentionsDispositionActionArg], optional
+        :type disposition_action: Optional[GetFileVersionRetentionsDispositionAction], optional
         :param disposition_before: Filters results by files that will have their disposition
             come into effect before this date.
         :type disposition_before: Optional[str], optional
@@ -103,7 +103,9 @@ class FileVersionRetentionsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/file_version_retentions']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/file_version_retentions']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -133,7 +135,8 @@ class FileVersionRetentionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/file_version_retentions/',
+                self.network_session.base_urls.base_url,
+                '/file_version_retentions/',
                 to_string(file_version_retention_id),
             ]),
             FetchOptions(

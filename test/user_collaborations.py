@@ -10,19 +10,19 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import Collaboration
 
-from box_sdk_gen.managers.user_collaborations import CreateCollaborationItemArg
+from box_sdk_gen.managers.user_collaborations import CreateCollaborationItem
 
-from box_sdk_gen.managers.user_collaborations import CreateCollaborationItemArgTypeField
+from box_sdk_gen.managers.user_collaborations import CreateCollaborationItemTypeField
 
-from box_sdk_gen.managers.user_collaborations import CreateCollaborationAccessibleByArg
+from box_sdk_gen.managers.user_collaborations import CreateCollaborationAccessibleBy
 
 from box_sdk_gen.managers.user_collaborations import (
-    CreateCollaborationAccessibleByArgTypeField,
+    CreateCollaborationAccessibleByTypeField,
 )
 
-from box_sdk_gen.managers.user_collaborations import CreateCollaborationRoleArg
+from box_sdk_gen.managers.user_collaborations import CreateCollaborationRole
 
-from box_sdk_gen.managers.user_collaborations import UpdateCollaborationByIdRoleArg
+from box_sdk_gen.managers.user_collaborations import UpdateCollaborationByIdRole
 
 from box_sdk_gen.utils import get_uuid
 
@@ -41,13 +41,13 @@ def testUserCollaborations():
     )
     folder: FolderFull = create_new_folder()
     collaboration: Collaboration = client.user_collaborations.create_collaboration(
-        item=CreateCollaborationItemArg(
-            type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id
+        item=CreateCollaborationItem(
+            type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
         ),
-        accessible_by=CreateCollaborationAccessibleByArg(
-            type=CreateCollaborationAccessibleByArgTypeField.USER.value, id=user.id
+        accessible_by=CreateCollaborationAccessibleBy(
+            type=CreateCollaborationAccessibleByTypeField.USER.value, id=user.id
         ),
-        role=CreateCollaborationRoleArg.EDITOR.value,
+        role=CreateCollaborationRole.EDITOR.value,
     )
     assert to_string(collaboration.role) == 'editor'
     collaboration_id: str = collaboration.id
@@ -63,7 +63,7 @@ def testUserCollaborations():
     updated_collaboration: Collaboration = (
         client.user_collaborations.update_collaboration_by_id(
             collaboration_id=collaboration_id,
-            role=UpdateCollaborationByIdRoleArg.VIEWER.value,
+            role=UpdateCollaborationByIdRole.VIEWER.value,
         )
     )
     assert to_string(updated_collaboration.role) == 'viewer'
@@ -83,14 +83,13 @@ def testExternalUserCollaborations():
     user_login: str = ''.join([get_uuid(), '@boxdemo.com'])
     folder: FolderFull = create_new_folder()
     collaboration: Collaboration = client.user_collaborations.create_collaboration(
-        item=CreateCollaborationItemArg(
-            type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id
+        item=CreateCollaborationItem(
+            type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
         ),
-        accessible_by=CreateCollaborationAccessibleByArg(
-            type=CreateCollaborationAccessibleByArgTypeField.USER.value,
-            login=user_login,
+        accessible_by=CreateCollaborationAccessibleBy(
+            type=CreateCollaborationAccessibleByTypeField.USER.value, login=user_login
         ),
-        role=CreateCollaborationRoleArg.EDITOR.value,
+        role=CreateCollaborationRole.EDITOR.value,
     )
     assert to_string(collaboration.role) == 'editor'
     collaboration_id: str = collaboration.id
@@ -106,7 +105,7 @@ def testExternalUserCollaborations():
     updated_collaboration: Collaboration = (
         client.user_collaborations.update_collaboration_by_id(
             collaboration_id=collaboration_id,
-            role=UpdateCollaborationByIdRoleArg.VIEWER.value,
+            role=UpdateCollaborationByIdRole.VIEWER.value,
         )
     )
     assert to_string(updated_collaboration.role) == 'viewer'

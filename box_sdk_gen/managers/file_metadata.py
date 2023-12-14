@@ -41,22 +41,22 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFileMetadataByIdScopeArg(str, Enum):
+class GetFileMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class CreateFileMetadataByIdScopeArg(str, Enum):
+class CreateFileMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateFileMetadataByIdScopeArg(str, Enum):
+class UpdateFileMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateFileMetadataByIdRequestBodyArgOpField(str, Enum):
+class UpdateFileMetadataByIdRequestBodyOpField(str, Enum):
     ADD = 'add'
     REPLACE = 'replace'
     REMOVE = 'remove'
@@ -65,7 +65,7 @@ class UpdateFileMetadataByIdRequestBodyArgOpField(str, Enum):
     COPY = 'copy'
 
 
-class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
+class UpdateFileMetadataByIdRequestBody(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'from_': 'from',
         **BaseObject._fields_to_json_mapping,
@@ -77,7 +77,7 @@ class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: Optional[UpdateFileMetadataByIdRequestBodyArgOpField] = None,
+        op: Optional[UpdateFileMetadataByIdRequestBodyOpField] = None,
         path: Optional[str] = None,
         value: Optional[str] = None,
         from_: Optional[str] = None,
@@ -86,7 +86,7 @@ class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
-        :type op: Optional[UpdateFileMetadataByIdRequestBodyArgOpField], optional
+        :type op: Optional[UpdateFileMetadataByIdRequestBodyOpField], optional
         :param path: The location in the metadata JSON object
             to apply the changes to, in the format of a
             [JSON-Pointer](https://tools.ietf.org/html/rfc6901).
@@ -114,7 +114,7 @@ class UpdateFileMetadataByIdRequestBodyArg(BaseObject):
         self.from_ = from_
 
 
-class DeleteFileMetadataByIdScopeArg(str, Enum):
+class DeleteFileMetadataByIdScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
@@ -123,8 +123,10 @@ class FileMetadataManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -149,7 +151,10 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/metadata'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/metadata',
             ]),
             FetchOptions(
                 method='GET',
@@ -164,7 +169,7 @@ class FileMetadataManager:
     def get_file_metadata_by_id(
         self,
         file_id: str,
-        scope: GetFileMetadataByIdScopeArg,
+        scope: GetFileMetadataByIdScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataFull:
@@ -183,7 +188,7 @@ class FileMetadataManager:
         :type file_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetFileMetadataByIdScopeArg
+        :type scope: GetFileMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -195,7 +200,8 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/',
                 to_string(scope),
@@ -215,7 +221,7 @@ class FileMetadataManager:
     def create_file_metadata_by_id(
         self,
         file_id: str,
-        scope: CreateFileMetadataByIdScopeArg,
+        scope: CreateFileMetadataByIdScope,
         template_key: str,
         request_body: Dict[str, str],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -241,7 +247,7 @@ class FileMetadataManager:
         :type file_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: CreateFileMetadataByIdScopeArg
+        :type scope: CreateFileMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -255,7 +261,8 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/',
                 to_string(scope),
@@ -277,9 +284,9 @@ class FileMetadataManager:
     def update_file_metadata_by_id(
         self,
         file_id: str,
-        scope: UpdateFileMetadataByIdScopeArg,
+        scope: UpdateFileMetadataByIdScope,
         template_key: str,
-        request_body: List[UpdateFileMetadataByIdRequestBodyArg],
+        request_body: List[UpdateFileMetadataByIdRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataFull:
         """
@@ -309,12 +316,12 @@ class FileMetadataManager:
         :type file_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: UpdateFileMetadataByIdScopeArg
+        :type scope: UpdateFileMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         :param request_body: Request body of updateFileMetadataById method
-        :type request_body: List[UpdateFileMetadataByIdRequestBodyArg]
+        :type request_body: List[UpdateFileMetadataByIdRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -323,7 +330,8 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/',
                 to_string(scope),
@@ -345,7 +353,7 @@ class FileMetadataManager:
     def delete_file_metadata_by_id(
         self,
         file_id: str,
-        scope: DeleteFileMetadataByIdScopeArg,
+        scope: DeleteFileMetadataByIdScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
@@ -361,7 +369,7 @@ class FileMetadataManager:
         :type file_id: str
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteFileMetadataByIdScopeArg
+        :type scope: DeleteFileMetadataByIdScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -373,7 +381,8 @@ class FileMetadataManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/',
                 to_string(scope),

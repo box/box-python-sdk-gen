@@ -37,8 +37,10 @@ class RecentItemsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -84,7 +86,7 @@ class RecentItemsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/recent_items']),
+            ''.join([self.network_session.base_urls.base_url, '/recent_items']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

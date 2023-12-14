@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateInviteEnterpriseArg(BaseObject):
+class CreateInviteEnterprise(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the enterprise
@@ -47,7 +47,7 @@ class CreateInviteEnterpriseArg(BaseObject):
         self.id = id
 
 
-class CreateInviteActionableByArg(BaseObject):
+class CreateInviteActionableBy(BaseObject):
     def __init__(self, login: Optional[str] = None, **kwargs):
         """
         :param login: The login of the invited user
@@ -61,15 +61,17 @@ class InvitesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def create_invite(
         self,
-        enterprise: CreateInviteEnterpriseArg,
-        actionable_by: CreateInviteActionableByArg,
+        enterprise: CreateInviteEnterprise,
+        actionable_by: CreateInviteActionableBy,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Invite:
@@ -94,9 +96,9 @@ class InvitesManager:
         the application, which can be enabled within the developer console.
 
         :param enterprise: The enterprise to invite the user to
-        :type enterprise: CreateInviteEnterpriseArg
+        :type enterprise: CreateInviteEnterprise
         :param actionable_by: The user to invite
-        :type actionable_by: CreateInviteActionableByArg
+        :type actionable_by: CreateInviteActionableBy
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -115,7 +117,7 @@ class InvitesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/invites']),
+            ''.join([self.network_session.base_urls.base_url, '/invites']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -157,7 +159,11 @@ class InvitesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/invites/', to_string(invite_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/invites/',
+                to_string(invite_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

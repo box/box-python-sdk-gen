@@ -8,9 +8,9 @@ from box_sdk_gen.schemas import Items
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.managers.folders import UpdateFolderByIdCollectionsArg
+from box_sdk_gen.managers.folders import UpdateFolderByIdCollections
 
 from box_sdk_gen.utils import get_uuid
 
@@ -26,11 +26,11 @@ def testCollections():
         collection_id=favourite_collection.id
     )
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
+        name=get_uuid(), parent=CreateFolderParent(id='0')
     )
     client.folders.update_folder_by_id(
         folder_id=folder.id,
-        collections=[UpdateFolderByIdCollectionsArg(id=favourite_collection.id)],
+        collections=[UpdateFolderByIdCollections(id=favourite_collection.id)],
     )
     collection_items_after_update: Items = client.collections.get_collection_items(
         collection_id=favourite_collection.id

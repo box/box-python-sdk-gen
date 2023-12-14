@@ -43,26 +43,26 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateShieldInformationBarrierSegmentMemberTypeArg(str, Enum):
+class CreateShieldInformationBarrierSegmentMemberType(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_MEMBER = (
         'shield_information_barrier_segment_member'
     )
 
 
-class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField(
+class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
-class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(
+class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(
     BaseObject
 ):
     def __init__(
         self,
         id: Optional[str] = None,
         type: Optional[
-            CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField
+            CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -71,7 +71,7 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
             requesting shield information barrier segment.
         :type id: Optional[str], optional
         :param type: The type of the shield barrier segment for this member.
-        :type type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -82,8 +82,10 @@ class ShieldInformationBarrierSegmentMembersManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -108,7 +110,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_members/',
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_members/',
                 to_string(shield_information_barrier_segment_member_id),
             ]),
             FetchOptions(
@@ -142,7 +145,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_members/',
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_members/',
                 to_string(shield_information_barrier_segment_member_id),
             ]),
             FetchOptions(
@@ -190,7 +194,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_members'
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_members',
             ]),
             FetchOptions(
                 method='GET',
@@ -205,9 +210,9 @@ class ShieldInformationBarrierSegmentMembersManager:
 
     def create_shield_information_barrier_segment_member(
         self,
-        shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg,
+        shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment,
         user: UserBase,
-        type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg] = None,
+        type: Optional[CreateShieldInformationBarrierSegmentMemberType] = None,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ShieldInformationBarrierSegmentMember:
@@ -215,11 +220,11 @@ class ShieldInformationBarrierSegmentMembersManager:
         Creates a new shield information barrier segment member.
         :param shield_information_barrier_segment: The `type` and `id` of the
             requested shield information barrier segment.
-        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg
+        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
         :param user: User to which restriction will be applied.
         :type user: UserBase
         :param type: -| A type of the shield barrier segment member.
-        :type type: Optional[CreateShieldInformationBarrierSegmentMemberTypeArg], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentMemberType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -234,7 +239,8 @@ class ShieldInformationBarrierSegmentMembersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_members'
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_members',
             ]),
             FetchOptions(
                 method='POST',

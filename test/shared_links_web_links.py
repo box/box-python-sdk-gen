@@ -8,22 +8,22 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import WebLink
 
-from box_sdk_gen.managers.web_links import CreateWebLinkParentArg
+from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkAddSharedLinkSharedLinkArg,
+    UpdateWebLinkAddSharedLinkSharedLink,
 )
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkAddSharedLinkSharedLinkArgAccessField,
+    UpdateWebLinkAddSharedLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkUpdateSharedLinkSharedLinkArg,
+    UpdateWebLinkUpdateSharedLinkSharedLink,
 )
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkUpdateSharedLinkSharedLinkArgAccessField,
+    UpdateWebLinkUpdateSharedLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -43,15 +43,15 @@ def testSharedLinksWebLinks():
     parent: FolderFull = client.folders.get_folder_by_id(folder_id='0')
     web_link: WebLink = client.web_links.create_web_link(
         url='https://www.box.com',
-        parent=CreateWebLinkParentArg(id=parent.id),
+        parent=CreateWebLinkParent(id=parent.id),
         name=get_uuid(),
         description='Weblink description',
     )
     web_link_id: str = web_link.id
     client.shared_links_web_links.update_web_link_add_shared_link(
         web_link_id=web_link_id,
-        shared_link=UpdateWebLinkAddSharedLinkSharedLinkArg(
-            access=UpdateWebLinkAddSharedLinkSharedLinkArgAccessField.OPEN.value,
+        shared_link=UpdateWebLinkAddSharedLinkSharedLink(
+            access=UpdateWebLinkAddSharedLinkSharedLinkAccessField.OPEN.value,
             password='Secret123@',
         ),
         fields='shared_link',
@@ -85,8 +85,8 @@ def testSharedLinksWebLinks():
     updated_web_link: WebLink = (
         client.shared_links_web_links.update_web_link_update_shared_link(
             web_link_id=web_link_id,
-            shared_link=UpdateWebLinkUpdateSharedLinkSharedLinkArg(
-                access=UpdateWebLinkUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value
+            shared_link=UpdateWebLinkUpdateSharedLinkSharedLink(
+                access=UpdateWebLinkUpdateSharedLinkSharedLinkAccessField.COLLABORATORS.value
             ),
             fields='shared_link',
         )

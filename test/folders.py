@@ -4,11 +4,11 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.managers.folders import CopyFolderParentArg
+from box_sdk_gen.managers.folders import CopyFolderParent
 
-from box_sdk_gen.managers.folders import UpdateFolderByIdParentArg
+from box_sdk_gen.managers.folders import UpdateFolderByIdParent
 
 from box_sdk_gen.schemas import Items
 
@@ -38,7 +38,7 @@ def test_get_folder_full_info_with_extra_fields():
 def test_create_and_delete_folder():
     new_folder_name: str = get_uuid()
     new_folder: FolderFull = client.folders.create_folder(
-        name=new_folder_name, parent=CreateFolderParentArg(id='0')
+        name=new_folder_name, parent=CreateFolderParent(id='0')
     )
     created_folder: FolderFull = client.folders.get_folder_by_id(
         folder_id=new_folder.id
@@ -52,7 +52,7 @@ def test_create_and_delete_folder():
 def test_update_folder():
     folder_to_update_name: str = get_uuid()
     folder_to_update: FolderFull = client.folders.create_folder(
-        name=folder_to_update_name, parent=CreateFolderParentArg(id='0')
+        name=folder_to_update_name, parent=CreateFolderParent(id='0')
     )
     updated_name: str = get_uuid()
     updated_folder: FolderFull = client.folders.update_folder_by_id(
@@ -68,20 +68,20 @@ def test_update_folder():
 def test_copy_move_folder_and_list_folder_items():
     folder_origin_name: str = get_uuid()
     folder_origin: FolderFull = client.folders.create_folder(
-        name=folder_origin_name, parent=CreateFolderParentArg(id='0')
+        name=folder_origin_name, parent=CreateFolderParent(id='0')
     )
     copied_folder_name: str = get_uuid()
     copied_folder: FolderFull = client.folders.copy_folder(
         folder_id=folder_origin.id,
         name=copied_folder_name,
-        parent=CopyFolderParentArg(id='0'),
+        parent=CopyFolderParent(id='0'),
     )
     assert copied_folder.parent.id == '0'
     moved_folder_name: str = get_uuid()
     moved_folder: FolderFull = client.folders.update_folder_by_id(
         folder_id=copied_folder.id,
         name=moved_folder_name,
-        parent=UpdateFolderByIdParentArg(id=folder_origin.id),
+        parent=UpdateFolderByIdParent(id=folder_origin.id),
     )
     assert moved_folder.parent.id == folder_origin.id
     folder_items: Items = client.folders.get_folder_items(folder_id=folder_origin.id)

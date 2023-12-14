@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateCollaborationWhitelistExemptTargetUserArg(BaseObject):
+class CreateCollaborationWhitelistExemptTargetUser(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user to exempt.
@@ -51,8 +51,10 @@ class CollaborationAllowlistExemptTargetsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -78,12 +80,15 @@ class CollaborationAllowlistExemptTargetsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_exempt_targets',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -97,7 +102,7 @@ class CollaborationAllowlistExemptTargetsManager:
 
     def create_collaboration_whitelist_exempt_target(
         self,
-        user: CreateCollaborationWhitelistExemptTargetUserArg,
+        user: CreateCollaborationWhitelistExemptTargetUser,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> CollaborationAllowlistExemptTarget:
         """
@@ -106,7 +111,7 @@ class CollaborationAllowlistExemptTargetsManager:
         for collaborations.
 
         :param user: The user to exempt.
-        :type user: CreateCollaborationWhitelistExemptTargetUserArg
+        :type user: CreateCollaborationWhitelistExemptTargetUser
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -115,7 +120,10 @@ class CollaborationAllowlistExemptTargetsManager:
         request_body: Dict = {'user': user}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaboration_whitelist_exempt_targets']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_exempt_targets',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -149,7 +157,8 @@ class CollaborationAllowlistExemptTargetsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_exempt_targets/',
                 to_string(collaboration_whitelist_exempt_target_id),
             ]),
             FetchOptions(
@@ -183,7 +192,8 @@ class CollaborationAllowlistExemptTargetsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaboration_whitelist_exempt_targets/',
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_exempt_targets/',
                 to_string(collaboration_whitelist_exempt_target_id),
             ]),
             FetchOptions(
