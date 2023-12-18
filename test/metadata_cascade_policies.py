@@ -23,7 +23,7 @@ from box_sdk_gen.managers.metadata_cascade_policies import (
 from box_sdk_gen.schemas import MetadataCascadePolicies
 
 from box_sdk_gen.managers.metadata_cascade_policies import (
-    CreateMetadataCascadePolicyApplyConflictResolution,
+    ApplyMetadataCascadePolicyConflictResolution,
 )
 
 from box_sdk_gen.managers.folder_metadata import CreateFolderMetadataByIdScope
@@ -87,9 +87,9 @@ def testMetadataCascadePolicies():
     )
     assert len(policies.entries) == 1
     with pytest.raises(Exception):
-        client.metadata_cascade_policies.create_metadata_cascade_policy_apply(
+        client.metadata_cascade_policies.apply_metadata_cascade_policy(
             metadata_cascade_policy_id=cascade_policy_id,
-            conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolution.OVERWRITE.value,
+            conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
         )
     data: Dict[str, str] = {'testName': 'xyz'}
     client.folder_metadata.create_folder_metadata_by_id(
@@ -98,9 +98,9 @@ def testMetadataCascadePolicies():
         template_key=template_key,
         request_body=data,
     )
-    client.metadata_cascade_policies.create_metadata_cascade_policy_apply(
+    client.metadata_cascade_policies.apply_metadata_cascade_policy(
         metadata_cascade_policy_id=cascade_policy_id,
-        conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolution.OVERWRITE.value,
+        conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
     )
     client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(
         metadata_cascade_policy_id=cascade_policy_id

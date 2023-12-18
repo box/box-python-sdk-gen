@@ -57,7 +57,7 @@ client: BoxClient = get_default_client()
 
 def get_or_create_second_classification(
     classification_template: ClassificationTemplate,
-):
+) -> ClassificationTemplateFieldsOptionsField:
     classifications: List[ClassificationTemplateFieldsOptionsField] = (
         classification_template.fields[0].options
     )
@@ -90,7 +90,9 @@ def testFileClassifications():
     classification_template: ClassificationTemplate = (
         get_or_create_classification_template()
     )
-    classification = get_or_create_classification(classification_template)
+    classification: ClassificationTemplateFieldsOptionsField = (
+        get_or_create_classification(classification_template)
+    )
     file: FileFull = upload_new_file()
     with pytest.raises(Exception):
         client.file_classifications.get_classification_on_file(file_id=file.id)
@@ -107,7 +109,9 @@ def testFileClassifications():
         client.file_classifications.get_classification_on_file(file_id=file.id)
     )
     assert file_classification.box_security_classification_key == classification.key
-    second_classification = get_or_create_second_classification(classification_template)
+    second_classification: ClassificationTemplateFieldsOptionsField = (
+        get_or_create_second_classification(classification_template)
+    )
     updated_file_classification: Classification = (
         client.file_classifications.update_classification_on_file(
             file_id=file.id,

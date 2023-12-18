@@ -2,6 +2,8 @@ from typing import List
 
 from box_sdk_gen.client import BoxClient
 
+from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
+
 from box_sdk_gen.managers.classifications import UpdateClassificationRequestBody
 
 from box_sdk_gen.managers.classifications import UpdateClassificationRequestBodyOpField
@@ -22,8 +24,6 @@ from box_sdk_gen.managers.classifications import (
     UpdateClassificationRequestBodyDataStaticConfigClassificationField,
 )
 
-from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
-
 from box_sdk_gen.utils import get_uuid
 
 from test.commons import get_default_client
@@ -41,7 +41,9 @@ def testClassifications():
     classification_template: ClassificationTemplate = (
         get_or_create_classification_template()
     )
-    classification = get_or_create_classification(classification_template)
+    classification: ClassificationTemplateFieldsOptionsField = (
+        get_or_create_classification(classification_template)
+    )
     assert not classification.key == ''
     assert not classification.static_config.classification.color_id == 100
     assert (
@@ -72,7 +74,9 @@ def testClassifications():
     updated_classifications: List[ClassificationTemplateFieldsOptionsField] = (
         classification_template_with_updated_classification.fields[0].options
     )
-    updated_classification = updated_classifications[0]
+    updated_classification: ClassificationTemplateFieldsOptionsField = (
+        updated_classifications[0]
+    )
     assert updated_classification.key == updated_classification_name
     assert updated_classification.static_config.classification.color_id == 2
     assert (

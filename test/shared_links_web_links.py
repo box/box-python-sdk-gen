@@ -10,20 +10,18 @@ from box_sdk_gen.schemas import WebLink
 
 from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
+from box_sdk_gen.managers.shared_links_web_links import AddShareLinkToWebLinkSharedLink
+
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkAddSharedLinkSharedLink,
+    AddShareLinkToWebLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkAddSharedLinkSharedLinkAccessField,
+    UpdateSharedLinkOnWebLinkSharedLink,
 )
 
 from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkUpdateSharedLinkSharedLink,
-)
-
-from box_sdk_gen.managers.shared_links_web_links import (
-    UpdateWebLinkUpdateSharedLinkSharedLinkAccessField,
+    UpdateSharedLinkOnWebLinkSharedLinkAccessField,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -48,16 +46,16 @@ def testSharedLinksWebLinks():
         description='Weblink description',
     )
     web_link_id: str = web_link.id
-    client.shared_links_web_links.update_web_link_add_shared_link(
+    client.shared_links_web_links.add_share_link_to_web_link(
         web_link_id=web_link_id,
-        shared_link=UpdateWebLinkAddSharedLinkSharedLink(
-            access=UpdateWebLinkAddSharedLinkSharedLinkAccessField.OPEN.value,
+        shared_link=AddShareLinkToWebLinkSharedLink(
+            access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value,
             password='Secret123@',
         ),
         fields='shared_link',
     )
     web_link_from_api: WebLink = (
-        client.shared_links_web_links.get_web_link_get_shared_link(
+        client.shared_links_web_links.get_shared_link_for_web_link(
             web_link_id=web_link_id, fields='shared_link'
         )
     )
@@ -65,7 +63,7 @@ def testSharedLinksWebLinks():
     user_id: str = get_env_var('USER_ID')
     user_client: BoxClient = get_default_client_as_user(user_id)
     web_link_from_shared_link_password: WebLink = (
-        user_client.shared_links_web_links.get_shared_item_web_links(
+        user_client.shared_links_web_links.find_web_link_for_shared_link(
             boxapi=''.join([
                 'shared_link=',
                 web_link_from_api.shared_link.url,
@@ -75,7 +73,7 @@ def testSharedLinksWebLinks():
     )
     assert web_link_id == web_link_from_shared_link_password.id
     with pytest.raises(Exception):
-        user_client.shared_links_web_links.get_shared_item_web_links(
+        user_client.shared_links_web_links.find_web_link_for_shared_link(
             boxapi=''.join([
                 'shared_link=',
                 web_link_from_api.shared_link.url,
@@ -83,10 +81,10 @@ def testSharedLinksWebLinks():
             ])
         )
     updated_web_link: WebLink = (
-        client.shared_links_web_links.update_web_link_update_shared_link(
+        client.shared_links_web_links.update_shared_link_on_web_link(
             web_link_id=web_link_id,
-            shared_link=UpdateWebLinkUpdateSharedLinkSharedLink(
-                access=UpdateWebLinkUpdateSharedLinkSharedLinkAccessField.COLLABORATORS.value
+            shared_link=UpdateSharedLinkOnWebLinkSharedLink(
+                access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value
             ),
             fields='shared_link',
         )

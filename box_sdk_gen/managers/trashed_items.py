@@ -35,12 +35,12 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFolderTrashItemsDirection(str, Enum):
+class GetTrashedItemsDirection(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
 
-class GetFolderTrashItemsSort(str, Enum):
+class GetTrashedItemsSort(str, Enum):
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
@@ -57,15 +57,15 @@ class TrashedItemsManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_folder_trash_items(
+    def get_trashed_items(
         self,
         fields: Optional[List[str]] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         usemarker: Optional[bool] = None,
         marker: Optional[str] = None,
-        direction: Optional[GetFolderTrashItemsDirection] = None,
-        sort: Optional[GetFolderTrashItemsSort] = None,
+        direction: Optional[GetTrashedItemsDirection] = None,
+        sort: Optional[GetTrashedItemsSort] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Items:
         """
@@ -117,14 +117,14 @@ class TrashedItemsManager:
         :type marker: Optional[str], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetFolderTrashItemsDirection], optional
+        :type direction: Optional[GetTrashedItemsDirection], optional
         :param sort: Defines the **second** attribute by which items
             are sorted.
             Items are always sorted by their `type` first, with
             folders listed before files, and files listed
             before web links.
             This parameter is not supported when using marker-based pagination.
-        :type sort: Optional[GetFolderTrashItemsSort], optional
+        :type sort: Optional[GetTrashedItemsSort], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

@@ -39,13 +39,13 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileAddSharedLinkSharedLinkAccessField(str, Enum):
+class AddShareLinkToFileSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFileAddSharedLinkSharedLinkPermissionsField(BaseObject):
+class AddShareLinkToFileSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
         can_download: Optional[bool] = None,
@@ -75,14 +75,14 @@ class UpdateFileAddSharedLinkSharedLinkPermissionsField(BaseObject):
         self.can_edit = can_edit
 
 
-class UpdateFileAddSharedLinkSharedLink(BaseObject):
+class AddShareLinkToFileSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFileAddSharedLinkSharedLinkAccessField] = None,
+        access: Optional[AddShareLinkToFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[UpdateFileAddSharedLinkSharedLinkPermissionsField] = None,
+        permissions: Optional[AddShareLinkToFileSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -96,7 +96,7 @@ class UpdateFileAddSharedLinkSharedLink(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFileAddSharedLinkSharedLinkAccessField], optional
+        :type access: Optional[AddShareLinkToFileSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -124,13 +124,13 @@ class UpdateFileAddSharedLinkSharedLink(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFileUpdateSharedLinkSharedLinkAccessField(str, Enum):
+class UpdateSharedLinkOnFileSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFileUpdateSharedLinkSharedLinkPermissionsField(BaseObject):
+class UpdateSharedLinkOnFileSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
         can_download: Optional[bool] = None,
@@ -160,16 +160,14 @@ class UpdateFileUpdateSharedLinkSharedLinkPermissionsField(BaseObject):
         self.can_edit = can_edit
 
 
-class UpdateFileUpdateSharedLinkSharedLink(BaseObject):
+class UpdateSharedLinkOnFileSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFileUpdateSharedLinkSharedLinkAccessField] = None,
+        access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[
-            UpdateFileUpdateSharedLinkSharedLinkPermissionsField
-        ] = None,
+        permissions: Optional[UpdateSharedLinkOnFileSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -183,7 +181,7 @@ class UpdateFileUpdateSharedLinkSharedLink(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFileUpdateSharedLinkSharedLinkAccessField], optional
+        :type access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -211,7 +209,7 @@ class UpdateFileUpdateSharedLinkSharedLink(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFileRemoveSharedLinkSharedLink(BaseObject):
+class RemoveSharedLinkFromFileSharedLink(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -227,7 +225,7 @@ class SharedLinksFilesManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_shared_items(
+    def find_file_for_shared_link(
         self,
         boxapi: str,
         fields: Optional[List[str]] = None,
@@ -298,7 +296,7 @@ class SharedLinksFilesManager:
         )
         return deserialize(response.data, FileFull)
 
-    def get_file_get_shared_link(
+    def get_shared_link_for_file(
         self,
         file_id: str,
         fields: str,
@@ -342,11 +340,11 @@ class SharedLinksFilesManager:
         )
         return deserialize(response.data, FileFull)
 
-    def update_file_add_shared_link(
+    def add_share_link_to_file(
         self,
         file_id: str,
         fields: str,
-        shared_link: Optional[UpdateFileAddSharedLinkSharedLink] = None,
+        shared_link: Optional[AddShareLinkToFileSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
         """
@@ -365,7 +363,7 @@ class SharedLinksFilesManager:
         :param shared_link: The settings for the shared link to create on the file.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Optional[UpdateFileAddSharedLinkSharedLink], optional
+        :type shared_link: Optional[AddShareLinkToFileSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -394,11 +392,11 @@ class SharedLinksFilesManager:
         )
         return deserialize(response.data, FileFull)
 
-    def update_file_update_shared_link(
+    def update_shared_link_on_file(
         self,
         file_id: str,
         fields: str,
-        shared_link: Optional[UpdateFileUpdateSharedLinkSharedLink] = None,
+        shared_link: Optional[UpdateSharedLinkOnFileSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
         """
@@ -415,7 +413,7 @@ class SharedLinksFilesManager:
             to be returned for this item.
         :type fields: str
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[UpdateFileUpdateSharedLinkSharedLink], optional
+        :type shared_link: Optional[UpdateSharedLinkOnFileSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -444,11 +442,11 @@ class SharedLinksFilesManager:
         )
         return deserialize(response.data, FileFull)
 
-    def update_file_remove_shared_link(
+    def remove_shared_link_from_file(
         self,
         file_id: str,
         fields: str,
-        shared_link: Optional[UpdateFileRemoveSharedLinkSharedLink] = None,
+        shared_link: Optional[RemoveSharedLinkFromFileSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileFull:
         """
@@ -466,7 +464,7 @@ class SharedLinksFilesManager:
         :type fields: str
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the file.
-        :type shared_link: Optional[UpdateFileRemoveSharedLinkSharedLink], optional
+        :type shared_link: Optional[RemoveSharedLinkFromFileSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

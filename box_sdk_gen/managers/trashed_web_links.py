@@ -117,7 +117,7 @@ class TrashedWebLinksManager:
         )
         return deserialize(response.data, TrashWebLinkRestored)
 
-    def get_web_link_trash(
+    def get_trashed_web_link_by_id(
         self,
         web_link_id: str,
         fields: Optional[List[str]] = None,
@@ -162,7 +162,7 @@ class TrashedWebLinksManager:
         )
         return deserialize(response.data, TrashWebLink)
 
-    def delete_web_link_trash(
+    def delete_trashed_web_link_by_id(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """

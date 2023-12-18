@@ -5,12 +5,12 @@
 
 ##
 
-This operation is performed by calling function `create_oauth_2_token`.
+This operation is performed by calling function `request_access_token`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference//).
 
-_Currently we don't have an example for calling `create_oauth_2_token` in integration tests_
+_Currently we don't have an example for calling `request_access_token` in integration tests_
 
 ### Arguments
 
@@ -23,12 +23,12 @@ This function returns a value of type `AccessToken`.
 
 ##
 
-This operation is performed by calling function `create_oauth_2_revoke`.
+This operation is performed by calling function `revoke_access_token`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference//).
 
-_Currently we don't have an example for calling `create_oauth_2_revoke` in integration tests_
+_Currently we don't have an example for calling `revoke_access_token` in integration tests_
 
 ### Arguments
 

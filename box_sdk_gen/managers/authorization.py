@@ -41,11 +41,11 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetAuthorizeResponseType(str, Enum):
+class AuthorizeUserResponseType(str, Enum):
     CODE = 'code'
 
 
-class CreateOauth2TokenGrantType(str, Enum):
+class RequestAccessTokenGrantType(str, Enum):
     AUTHORIZATION_CODE = 'authorization_code'
     REFRESH_TOKEN = 'refresh_token'
     CLIENT_CREDENTIALS = 'client_credentials'
@@ -57,24 +57,24 @@ class CreateOauth2TokenGrantType(str, Enum):
     )
 
 
-class CreateOauth2TokenSubjectTokenType(str, Enum):
+class RequestAccessTokenSubjectTokenType(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = (
         'urn:ietf:params:oauth:token-type:access_token'
     )
 
 
-class CreateOauth2TokenActorTokenType(str, Enum):
+class RequestAccessTokenActorTokenType(str, Enum):
     URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ID_TOKEN = (
         'urn:ietf:params:oauth:token-type:id_token'
     )
 
 
-class CreateOauth2TokenBoxSubjectType(str, Enum):
+class RequestAccessTokenBoxSubjectType(str, Enum):
     ENTERPRISE = 'enterprise'
     USER = 'user'
 
 
-class CreateOauth2TokenRefreshGrantType(str, Enum):
+class RefreshAccessTokenGrantType(str, Enum):
     REFRESH_TOKEN = 'refresh_token'
 
 
@@ -89,9 +89,9 @@ class AuthorizationManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_authorize(
+    def authorize_user(
         self,
-        response_type: GetAuthorizeResponseType,
+        response_type: AuthorizeUserResponseType,
         client_id: str,
         redirect_uri: Optional[str] = None,
         state: Optional[str] = None,
@@ -116,7 +116,7 @@ class AuthorizationManager:
         format.
 
         :param response_type: The type of response we'd like to receive.
-        :type response_type: GetAuthorizeResponseType
+        :type response_type: AuthorizeUserResponseType
         :param client_id: The Client ID of the application that is requesting to authenticate
             the user. To get the Client ID for your application, log in to your
             Box developer console and click the **Edit Application** link for
@@ -169,21 +169,21 @@ class AuthorizationManager:
         )
         return None
 
-    def create_oauth_2_token(
+    def request_access_token(
         self,
-        grant_type: CreateOauth2TokenGrantType,
+        grant_type: RequestAccessTokenGrantType,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         code: Optional[str] = None,
         refresh_token: Optional[str] = None,
         assertion: Optional[str] = None,
         subject_token: Optional[str] = None,
-        subject_token_type: Optional[CreateOauth2TokenSubjectTokenType] = None,
+        subject_token_type: Optional[RequestAccessTokenSubjectTokenType] = None,
         actor_token: Optional[str] = None,
-        actor_token_type: Optional[CreateOauth2TokenActorTokenType] = None,
+        actor_token_type: Optional[RequestAccessTokenActorTokenType] = None,
         scope: Optional[str] = None,
         resource: Optional[str] = None,
-        box_subject_type: Optional[CreateOauth2TokenBoxSubjectType] = None,
+        box_subject_type: Optional[RequestAccessTokenBoxSubjectType] = None,
         box_subject_id: Optional[str] = None,
         box_shared_link: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -220,7 +220,7 @@ class AuthorizationManager:
         :param grant_type: The type of request being made, either using a client-side obtained
             authorization code, a refresh token, a JWT assertion, client credentials
             grant or another access token for the purpose of downscoping a token.
-        :type grant_type: CreateOauth2TokenGrantType
+        :type grant_type: RequestAccessTokenGrantType
         :param client_id: The Client ID of the application requesting an access token.
             Used in combination with `authorization_code`, `client_credentials`, or
             `urn:ietf:params:oauth:grant-type:jwt-bearer` as the `grant_type`.
@@ -250,7 +250,7 @@ class AuthorizationManager:
         :param subject_token_type: The type of `subject_token` passed in.
             Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
             as the `grant_type`.
-        :type subject_token_type: Optional[CreateOauth2TokenSubjectTokenType], optional
+        :type subject_token_type: Optional[RequestAccessTokenSubjectTokenType], optional
         :param actor_token: The token used to create an annotator token.
             This is a JWT assertion.
             Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
@@ -259,7 +259,7 @@ class AuthorizationManager:
         :param actor_token_type: The type of `actor_token` passed in.
             Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
             as the `grant_type`.
-        :type actor_token_type: Optional[CreateOauth2TokenActorTokenType], optional
+        :type actor_token_type: Optional[RequestAccessTokenActorTokenType], optional
         :param scope: The space-delimited list of scopes that you want apply to the
             new access token.
             The `subject_token` will need to have all of these scopes or
@@ -268,7 +268,7 @@ class AuthorizationManager:
         :param resource: Full URL for the file that the token should be generated for.
         :type resource: Optional[str], optional
         :param box_subject_type: Used in combination with `client_credentials` as the `grant_type`.
-        :type box_subject_type: Optional[CreateOauth2TokenBoxSubjectType], optional
+        :type box_subject_type: Optional[RequestAccessTokenBoxSubjectType], optional
         :param box_subject_id: Used in combination with `client_credentials` as the `grant_type`.
             Value is determined by `box_subject_type`. If `user` use user ID and if
             `enterprise` use enterprise ID.
@@ -313,9 +313,9 @@ class AuthorizationManager:
         )
         return deserialize(response.data, AccessToken)
 
-    def create_oauth_2_token_refresh(
+    def refresh_access_token(
         self,
-        grant_type: CreateOauth2TokenRefreshGrantType,
+        grant_type: RefreshAccessTokenGrantType,
         client_id: str,
         client_secret: str,
         refresh_token: str,
@@ -324,7 +324,7 @@ class AuthorizationManager:
         """
         Refresh an Access Token using its client ID, secret, and refresh token.
         :param grant_type: The type of request being made, in this case a refresh request.
-        :type grant_type: CreateOauth2TokenRefreshGrantType
+        :type grant_type: RefreshAccessTokenGrantType
         :param client_id: The client ID of the application requesting to refresh the token.
         :type client_id: str
         :param client_secret: The client secret of the application requesting to refresh the token.
@@ -357,7 +357,7 @@ class AuthorizationManager:
         )
         return deserialize(response.data, AccessToken)
 
-    def create_oauth_2_revoke(
+    def revoke_access_token(
         self,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,

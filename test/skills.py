@@ -20,11 +20,9 @@ from box_sdk_gen.schemas import KeywordSkillCardInvocationTypeField
 
 from box_sdk_gen.schemas import KeywordSkillCardEntriesField
 
-from box_sdk_gen.managers.skills import UpdateFileMetadataGlobalBoxSkillsCardRequestBody
+from box_sdk_gen.managers.skills import UpdateBoxSkillCardsOnFileRequestBody
 
-from box_sdk_gen.managers.skills import (
-    UpdateFileMetadataGlobalBoxSkillsCardRequestBodyOpField,
-)
+from box_sdk_gen.managers.skills import UpdateBoxSkillCardsOnFileRequestBodyOpField
 
 from box_sdk_gen.utils import get_uuid
 
@@ -43,7 +41,7 @@ def test_skills_cards_CRUD():
     invocation_id: str = get_uuid()
     title_message: str = 'License Plates'
     skill_cards_metadata: SkillCardsMetadata = (
-        client.skills.create_file_metadata_global_box_skills_card(
+        client.skills.create_box_skill_cards_on_file(
             file_id=file.id,
             cards=[
                 KeywordSkillCard(
@@ -69,11 +67,11 @@ def test_skills_cards_CRUD():
     assert skill_cards_metadata.cards[0].skill_card_title.message == title_message
     updated_title_message: str = 'Updated License Plates'
     updated_skill_cards_metadata: SkillCardsMetadata = (
-        client.skills.update_file_metadata_global_box_skills_card(
+        client.skills.update_box_skill_cards_on_file(
             file_id=file.id,
             request_body=[
-                UpdateFileMetadataGlobalBoxSkillsCardRequestBody(
-                    op=UpdateFileMetadataGlobalBoxSkillsCardRequestBodyOpField.REPLACE.value,
+                UpdateBoxSkillCardsOnFileRequestBody(
+                    op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value,
                     path='/cards/0',
                     value=KeywordSkillCard(
                         type=KeywordSkillCardTypeField.SKILL_CARD.value,
@@ -101,8 +99,8 @@ def test_skills_cards_CRUD():
         == updated_title_message
     )
     received_skill_cards_metadata: SkillCardsMetadata = (
-        client.skills.get_file_metadata_global_box_skills_cards(file_id=file.id)
+        client.skills.get_box_skill_cards_on_file(file_id=file.id)
     )
     assert updated_skill_cards_metadata.cards[0].skill.id == skill_id
-    client.skills.delete_file_metadata_global_box_skills_card(file_id=file.id)
+    client.skills.delete_box_skill_cards_from_file(file_id=file.id)
     client.files.delete_file_by_id(file_id=file.id)

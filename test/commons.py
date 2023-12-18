@@ -119,7 +119,9 @@ def upload_new_file() -> FileFull:
     return uploaded_files.entries[0]
 
 
-def get_or_create_classification(classification_template: ClassificationTemplate):
+def get_or_create_classification(
+    classification_template: ClassificationTemplate,
+) -> ClassificationTemplateFieldsOptionsField:
     client: BoxClient = get_default_client()
     classifications: List[ClassificationTemplateFieldsOptionsField] = (
         classification_template.fields[0].options

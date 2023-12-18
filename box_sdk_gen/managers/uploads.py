@@ -97,7 +97,7 @@ class UploadFileAttributes(BaseObject):
         self.content_modified_at = content_modified_at
 
 
-class PreflightFileUploadParent(BaseObject):
+class PreflightFileUploadCheckParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -344,11 +344,11 @@ class UploadsManager:
         )
         return deserialize(response.data, Files)
 
-    def preflight_file_upload(
+    def preflight_file_upload_check(
         self,
         name: Optional[str] = None,
         size: Optional[int] = None,
-        parent: Optional[PreflightFileUploadParent] = None,
+        parent: Optional[PreflightFileUploadCheckParent] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> UploadUrl:
         """

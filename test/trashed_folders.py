@@ -22,7 +22,7 @@ def testTrashedFolders():
         name=get_uuid(), parent=CreateFolderParent(id='0')
     )
     client.folders.delete_folder_by_id(folder_id=folder.id)
-    from_trash: TrashFolder = client.trashed_folders.get_folder_trash(
+    from_trash: TrashFolder = client.trashed_folders.get_trashed_folder_by_id(
         folder_id=folder.id
     )
     assert from_trash.id == folder.id
@@ -36,6 +36,6 @@ def testTrashedFolders():
     assert restored_folder.id == from_api.id
     assert restored_folder.name == from_api.name
     client.folders.delete_folder_by_id(folder_id=folder.id)
-    client.trashed_folders.delete_folder_trash(folder_id=folder.id)
+    client.trashed_folders.delete_trashed_folder_by_id(folder_id=folder.id)
     with pytest.raises(Exception):
-        client.trashed_folders.get_folder_trash(folder_id=folder.id)
+        client.trashed_folders.get_trashed_folder_by_id(folder_id=folder.id)

@@ -51,16 +51,16 @@ from box_sdk_gen.json_data import SerializedData
 from box_sdk_gen.json_data import sd_to_json
 
 
-class CreateMetadataQueryExecuteReadOrderByDirectionField(str, Enum):
+class SearchByMetadataQueryOrderByDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
 
-class CreateMetadataQueryExecuteReadOrderBy(BaseObject):
+class SearchByMetadataQueryOrderBy(BaseObject):
     def __init__(
         self,
         field_key: Optional[str] = None,
-        direction: Optional[CreateMetadataQueryExecuteReadOrderByDirectionField] = None,
+        direction: Optional[SearchByMetadataQueryOrderByDirectionField] = None,
         **kwargs
     ):
         """
@@ -71,7 +71,7 @@ class CreateMetadataQueryExecuteReadOrderBy(BaseObject):
         :param direction: The direction to order by, either ascending or descending.
             The `ordering` direction must be the same for each item in the
             array.
-        :type direction: Optional[CreateMetadataQueryExecuteReadOrderByDirectionField], optional
+        :type direction: Optional[SearchByMetadataQueryOrderByDirectionField], optional
         """
         super().__init__(**kwargs)
         self.field_key = field_key
@@ -83,12 +83,12 @@ class GetMetadataQueryIndicesScope(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
-class GetSearchScope(str, Enum):
+class SearchForContentScope(str, Enum):
     USER_CONTENT = 'user_content'
     ENTERPRISE_CONTENT = 'enterprise_content'
 
 
-class GetSearchContentTypes(str, Enum):
+class SearchForContentContentTypes(str, Enum):
     NAME = 'name'
     DESCRIPTION = 'description'
     FILE_CONTENT = 'file_content'
@@ -96,24 +96,24 @@ class GetSearchContentTypes(str, Enum):
     TAG = 'tag'
 
 
-class GetSearchType(str, Enum):
+class SearchForContentType(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
     WEB_LINK = 'web_link'
 
 
-class GetSearchTrashContent(str, Enum):
+class SearchForContentTrashContent(str, Enum):
     NON_TRASHED_ONLY = 'non_trashed_only'
     TRASHED_ONLY = 'trashed_only'
     ALL_ITEMS = 'all_items'
 
 
-class GetSearchSort(str, Enum):
+class SearchForContentSort(str, Enum):
     MODIFIED_AT = 'modified_at'
     RELEVANCE = 'relevance'
 
 
-class GetSearchDirection(str, Enum):
+class SearchForContentDirection(str, Enum):
     DESC = 'DESC'
     ASC = 'ASC'
 
@@ -129,13 +129,13 @@ class SearchManager:
         self.auth = auth
         self.network_session = network_session
 
-    def create_metadata_query_execute_read(
+    def search_by_metadata_query(
         self,
         from_: str,
         ancestor_folder_id: str,
         query: Optional[str] = None,
         query_params: Optional[Dict[str, str]] = None,
-        order_by: Optional[List[CreateMetadataQueryExecuteReadOrderBy]] = None,
+        order_by: Optional[List[SearchByMetadataQueryOrderBy]] = None,
         limit: Optional[int] = None,
         marker: Optional[str] = None,
         fields: Optional[List[str]] = None,
@@ -179,7 +179,7 @@ class SearchManager:
         :param order_by: A list of template fields and directions to sort the metadata query
             results by.
             The ordering `direction` must be the same for each item in the array.
-        :type order_by: Optional[List[CreateMetadataQueryExecuteReadOrderBy]], optional
+        :type order_by: Optional[List[SearchByMetadataQueryOrderBy]], optional
         :param limit: A value between 0 and 100 that indicates the maximum number of results
             to return for a single request. This only specifies a maximum
             boundary and will not guarantee the minimum number of results
@@ -271,10 +271,10 @@ class SearchManager:
         )
         return deserialize(response.data, MetadataQueryIndices)
 
-    def get_search(
+    def search_for_content(
         self,
         query: Optional[str] = None,
-        scope: Optional[GetSearchScope] = None,
+        scope: Optional[SearchForContentScope] = None,
         file_extensions: Optional[List[str]] = None,
         created_at_range: Optional[List[str]] = None,
         updated_at_range: Optional[List[str]] = None,
@@ -282,12 +282,12 @@ class SearchManager:
         owner_user_ids: Optional[List[str]] = None,
         recent_updater_user_ids: Optional[List[str]] = None,
         ancestor_folder_ids: Optional[List[str]] = None,
-        content_types: Optional[List[GetSearchContentTypes]] = None,
-        type: Optional[GetSearchType] = None,
-        trash_content: Optional[GetSearchTrashContent] = None,
+        content_types: Optional[List[SearchForContentContentTypes]] = None,
+        type: Optional[SearchForContentType] = None,
+        trash_content: Optional[SearchForContentTrashContent] = None,
         mdfilters: Optional[List[MetadataFilter]] = None,
-        sort: Optional[GetSearchSort] = None,
-        direction: Optional[GetSearchDirection] = None,
+        sort: Optional[SearchForContentSort] = None,
+        direction: Optional[SearchForContentDirection] = None,
         limit: Optional[int] = None,
         include_recent_shared_links: Optional[bool] = None,
         fields: Optional[List[str]] = None,
@@ -341,7 +341,7 @@ class SearchManager:
             support channels. Once this scope has been enabled for a user, it
             will allow that use to query for content across the entire
             enterprise and not only the content that they have access to.
-        :type scope: Optional[GetSearchScope], optional
+        :type scope: Optional[SearchForContentScope], optional
         :param file_extensions: Limits the search results to any files that match any of the provided
             file extensions. This list is a comma-separated list of file extensions
             without the dots.
@@ -415,7 +415,7 @@ class SearchManager:
                folder.
             * `tags` - Any tags that are applied to an item, as defined by its
                `tags` field.
-        :type content_types: Optional[List[GetSearchContentTypes]], optional
+        :type content_types: Optional[List[SearchForContentContentTypes]], optional
         :param type: Limits the search results to any items of this type. This
             parameter only takes one value. By default the API returns
             items that match any of these types.
@@ -423,7 +423,7 @@ class SearchManager:
             * `folder` - Limits the search results to folders
             * `web_link` - Limits the search results to web links, also known
                as bookmarks
-        :type type: Optional[GetSearchType], optional
+        :type type: Optional[SearchForContentType], optional
         :param trash_content: Determines if the search should look in the trash for items.
             By default, this API only returns search results for items
             not currently in the trash (`non_trashed_only`).
@@ -431,7 +431,7 @@ class SearchManager:
             * `non_trashed_only` - Only searches for items currently not in
               the trash
             * `all_items` - Searches for both trashed and non-trashed items.
-        :type trash_content: Optional[GetSearchTrashContent], optional
+        :type trash_content: Optional[SearchForContentTrashContent], optional
         :param mdfilters: Limits the search results to any items for which the metadata matches
             the provided filter.
             This parameter contains a list of 1 metadata template to filter
@@ -447,13 +447,13 @@ class SearchManager:
             term in the items name, description, content, and additional properties.
             * `modified_at` returns the results ordered in descending order by date
             at which the item was last modified.
-        :type sort: Optional[GetSearchSort], optional
+        :type sort: Optional[SearchForContentSort], optional
         :param direction: Defines the direction in which search results are ordered. This API
             defaults to returning items in descending (`DESC`) order unless this
             parameter is explicitly specified.
             When results are sorted by `relevance` the ordering is locked to returning
             items in descending order of relevance, and this parameter is ignored.
-        :type direction: Optional[GetSearchDirection], optional
+        :type direction: Optional[SearchForContentDirection], optional
         :param limit: Defines the maximum number of items to return as part of a page of
             results.
         :type limit: Optional[int], optional

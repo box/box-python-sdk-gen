@@ -45,11 +45,11 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetIntegrationMappingSlackPartnerItemType(str, Enum):
+class GetSlackIntegrationMappingPartnerItemType(str, Enum):
     CHANNEL = 'channel'
 
 
-class GetIntegrationMappingSlackBoxItemType(str, Enum):
+class GetSlackIntegrationMappingBoxItemType(str, Enum):
     FOLDER = 'folder'
 
 
@@ -64,14 +64,14 @@ class IntegrationMappingsManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_integration_mapping_slack(
+    def get_slack_integration_mapping(
         self,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemType] = None,
+        partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType] = None,
         partner_item_id: Optional[str] = None,
         box_item_id: Optional[str] = None,
-        box_item_type: Optional[GetIntegrationMappingSlackBoxItemType] = None,
+        box_item_type: Optional[GetSlackIntegrationMappingBoxItemType] = None,
         is_manually_created: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> IntegrationMappings:
@@ -90,13 +90,13 @@ class IntegrationMappingsManager:
         :param limit: The maximum number of items to return per page.
         :type limit: Optional[int], optional
         :param partner_item_type: Mapped item type, for which the mapping should be returned
-        :type partner_item_type: Optional[GetIntegrationMappingSlackPartnerItemType], optional
+        :type partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType], optional
         :param partner_item_id: ID of the mapped item, for which the mapping should be returned
         :type partner_item_id: Optional[str], optional
         :param box_item_id: Box item ID, for which the mappings should be returned
         :type box_item_id: Optional[str], optional
         :param box_item_type: Box item type, for which the mappings should be returned
-        :type box_item_type: Optional[GetIntegrationMappingSlackBoxItemType], optional
+        :type box_item_type: Optional[GetSlackIntegrationMappingBoxItemType], optional
         :param is_manually_created: Whether the mapping has been manually created
         :type is_manually_created: Optional[bool], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
@@ -129,7 +129,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMappings)
 
-    def create_integration_mapping_slack(
+    def create_slack_integration_mapping(
         self,
         partner_item: IntegrationMappingPartnerItemSlack,
         box_item: IntegrationMappingBoxItemSlack,
@@ -174,7 +174,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMapping)
 
-    def update_integration_mapping_slack_by_id(
+    def update_slack_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
         box_item: Optional[IntegrationMappingBoxItemSlack] = None,
@@ -220,7 +220,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMapping)
 
-    def delete_integration_mapping_slack_by_id(
+    def delete_slack_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,

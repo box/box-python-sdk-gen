@@ -142,7 +142,7 @@ class TrashedFoldersManager:
         )
         return deserialize(response.data, TrashFolderRestored)
 
-    def get_folder_trash(
+    def get_trashed_folder_by_id(
         self,
         folder_id: str,
         fields: Optional[List[str]] = None,
@@ -218,7 +218,7 @@ class TrashedFoldersManager:
         )
         return deserialize(response.data, TrashFolder)
 
-    def delete_folder_trash(
+    def delete_trashed_folder_by_id(
         self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """

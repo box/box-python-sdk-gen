@@ -39,11 +39,11 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateWorkflowStartType(str, Enum):
+class StartWorkflowType(str, Enum):
     WORKFLOW_PARAMETERS = 'workflow_parameters'
 
 
-class CreateWorkflowStartFlow(BaseObject):
+class StartWorkflowFlow(BaseObject):
     def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
         """
         :param type: The type of the flow object
@@ -56,20 +56,20 @@ class CreateWorkflowStartFlow(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartFilesTypeField(str, Enum):
+class StartWorkflowFilesTypeField(str, Enum):
     FILE = 'file'
 
 
-class CreateWorkflowStartFiles(BaseObject):
+class StartWorkflowFiles(BaseObject):
     def __init__(
         self,
-        type: Optional[CreateWorkflowStartFilesTypeField] = None,
+        type: Optional[StartWorkflowFilesTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the file object
-        :type type: Optional[CreateWorkflowStartFilesTypeField], optional
+        :type type: Optional[StartWorkflowFilesTypeField], optional
         :param id: The id of the file
         :type id: Optional[str], optional
         """
@@ -78,20 +78,20 @@ class CreateWorkflowStartFiles(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartFolderTypeField(str, Enum):
+class StartWorkflowFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class CreateWorkflowStartFolder(BaseObject):
+class StartWorkflowFolder(BaseObject):
     def __init__(
         self,
-        type: Optional[CreateWorkflowStartFolderTypeField] = None,
+        type: Optional[StartWorkflowFolderTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the folder object
-        :type type: Optional[CreateWorkflowStartFolderTypeField], optional
+        :type type: Optional[StartWorkflowFolderTypeField], optional
         :param id: The id of the folder
         :type id: Optional[str], optional
         """
@@ -100,15 +100,15 @@ class CreateWorkflowStartFolder(BaseObject):
         self.id = id
 
 
-class CreateWorkflowStartOutcomesTypeField(str, Enum):
+class StartWorkflowOutcomesTypeField(str, Enum):
     OUTCOME = 'outcome'
 
 
-class CreateWorkflowStartOutcomes(BaseObject):
+class StartWorkflowOutcomes(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[CreateWorkflowStartOutcomesTypeField] = None,
+        type: Optional[StartWorkflowOutcomesTypeField] = None,
         parameter: Optional[str] = None,
         **kwargs
     ):
@@ -116,7 +116,7 @@ class CreateWorkflowStartOutcomes(BaseObject):
         :param id: The id of the outcome
         :type id: Optional[str], optional
         :param type: The type of the outcome object
-        :type type: Optional[CreateWorkflowStartOutcomesTypeField], optional
+        :type type: Optional[StartWorkflowOutcomesTypeField], optional
         :param parameter: This is a placeholder example for various objects that
             can be passed in - refer to the guides section to find
             out more information.
@@ -200,14 +200,14 @@ class WorkflowsManager:
         )
         return deserialize(response.data, Workflows)
 
-    def create_workflow_start(
+    def start_workflow(
         self,
         workflow_id: str,
-        flow: CreateWorkflowStartFlow,
-        files: List[CreateWorkflowStartFiles],
-        folder: CreateWorkflowStartFolder,
-        type: Optional[CreateWorkflowStartType] = None,
-        outcomes: Optional[List[CreateWorkflowStartOutcomes]] = None,
+        flow: StartWorkflowFlow,
+        files: List[StartWorkflowFiles],
+        folder: StartWorkflowFolder,
+        type: Optional[StartWorkflowType] = None,
+        outcomes: Optional[List[StartWorkflowOutcomes]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
         """
@@ -222,16 +222,16 @@ class WorkflowsManager:
             Example: "12345"
         :type workflow_id: str
         :param flow: The flow that will be triggered
-        :type flow: CreateWorkflowStartFlow
+        :type flow: StartWorkflowFlow
         :param files: The array of files for which the workflow should start. All files
             must be in the workflow's configured folder.
-        :type files: List[CreateWorkflowStartFiles]
+        :type files: List[StartWorkflowFiles]
         :param folder: The folder object for which the workflow is configured.
-        :type folder: CreateWorkflowStartFolder
+        :type folder: StartWorkflowFolder
         :param type: The type of the parameters object
-        :type type: Optional[CreateWorkflowStartType], optional
+        :type type: Optional[StartWorkflowType], optional
         :param outcomes: A list of outcomes required to be configured at start time.
-        :type outcomes: Optional[List[CreateWorkflowStartOutcomes]], optional
+        :type outcomes: Optional[List[StartWorkflowOutcomes]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

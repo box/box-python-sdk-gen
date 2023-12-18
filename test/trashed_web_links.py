@@ -33,7 +33,7 @@ def testTrashedWebLinks():
         description=description,
     )
     client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
-    from_trash: TrashWebLink = client.trashed_web_links.get_web_link_trash(
+    from_trash: TrashWebLink = client.trashed_web_links.get_trashed_web_link_by_id(
         web_link_id=weblink.id
     )
     assert from_trash.id == weblink.id
@@ -49,6 +49,6 @@ def testTrashedWebLinks():
     assert restored_weblink.id == from_api.id
     assert restored_weblink.name == from_api.name
     client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
-    client.trashed_web_links.delete_web_link_trash(web_link_id=weblink.id)
+    client.trashed_web_links.delete_trashed_web_link_by_id(web_link_id=weblink.id)
     with pytest.raises(Exception):
-        client.trashed_web_links.get_web_link_trash(web_link_id=weblink.id)
+        client.trashed_web_links.get_trashed_web_link_by_id(web_link_id=weblink.id)

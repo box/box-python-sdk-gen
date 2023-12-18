@@ -42,7 +42,7 @@ class SessionTerminationManager:
         self.auth = auth
         self.network_session = network_session
 
-    def create_user_terminate_session(
+    def terminate_users_sessions(
         self,
         user_ids: List[str],
         user_logins: List[str],
@@ -86,7 +86,7 @@ class SessionTerminationManager:
         )
         return deserialize(response.data, SessionTerminationMessage)
 
-    def create_group_terminate_session(
+    def terminate_groups_sessions(
         self,
         group_ids: List[str],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,

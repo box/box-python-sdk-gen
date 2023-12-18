@@ -44,7 +44,7 @@ class CreateMetadataCascadePolicyScope(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
-class CreateMetadataCascadePolicyApplyConflictResolution(str, Enum):
+class ApplyMetadataCascadePolicyConflictResolution(str, Enum):
     NONE = 'none'
     OVERWRITE = 'overwrite'
 
@@ -251,10 +251,10 @@ class MetadataCascadePoliciesManager:
         )
         return None
 
-    def create_metadata_cascade_policy_apply(
+    def apply_metadata_cascade_policy(
         self,
         metadata_cascade_policy_id: str,
-        conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolution,
+        conflict_resolution: ApplyMetadataCascadePolicyConflictResolution,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
         """
@@ -277,7 +277,7 @@ class MetadataCascadePoliciesManager:
             * `none` will preserve the existing value on the file
             * `overwrite` will force-apply the templates values over
               any existing values.
-        :type conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolution
+        :type conflict_resolution: ApplyMetadataCascadePolicyConflictResolution
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

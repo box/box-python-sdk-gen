@@ -89,7 +89,7 @@ def testCreateGetAndDeleteFile():
         )
     assert file.name == new_file_name
     client.files.delete_file_by_id(file_id=uploaded_file.id)
-    trashed_file: TrashFile = client.trashed_files.get_file_trash(
+    trashed_file: TrashFile = client.trashed_files.get_trashed_file_by_id(
         file_id=uploaded_file.id
     )
     assert file.id == trashed_file.id

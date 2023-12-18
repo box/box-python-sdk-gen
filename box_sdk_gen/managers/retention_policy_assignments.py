@@ -298,7 +298,7 @@ class RetentionPolicyAssignmentsManager:
         )
         return None
 
-    def get_retention_policy_assignment_file_under_retention(
+    def get_files_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
         marker: Optional[str] = None,
@@ -343,7 +343,7 @@ class RetentionPolicyAssignmentsManager:
         )
         return deserialize(response.data, FilesUnderRetention)
 
-    def get_retention_policy_assignment_file_version_under_retention(
+    def get_file_versions_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
         marker: Optional[str] = None,

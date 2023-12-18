@@ -120,7 +120,7 @@ class TrashedFilesManager:
         )
         return deserialize(response.data, TrashFileRestored)
 
-    def get_file_trash(
+    def get_trashed_file_by_id(
         self,
         file_id: str,
         fields: Optional[List[str]] = None,
@@ -194,7 +194,7 @@ class TrashedFilesManager:
         )
         return deserialize(response.data, TrashFile)
 
-    def delete_file_trash(
+    def delete_trashed_file_by_id(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """

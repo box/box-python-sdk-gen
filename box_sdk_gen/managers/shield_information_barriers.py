@@ -39,7 +39,7 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateShieldInformationBarrierChangeStatusStatus(str, Enum):
+class UpdateShieldInformationBarrierStatusStatus(str, Enum):
     PENDING = 'pending'
     DISABLED = 'disabled'
 
@@ -87,10 +87,10 @@ class ShieldInformationBarriersManager:
         )
         return deserialize(response.data, ShieldInformationBarrier)
 
-    def create_shield_information_barrier_change_status(
+    def update_shield_information_barrier_status(
         self,
         id: str,
-        status: CreateShieldInformationBarrierChangeStatusStatus,
+        status: UpdateShieldInformationBarrierStatusStatus,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ShieldInformationBarrier:
         """
@@ -98,7 +98,7 @@ class ShieldInformationBarriersManager:
         :param id: The ID of the shield information barrier.
         :type id: str
         :param status: The desired status for the shield information barrier.
-        :type status: CreateShieldInformationBarrierChangeStatusStatus
+        :type status: UpdateShieldInformationBarrierStatusStatus
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

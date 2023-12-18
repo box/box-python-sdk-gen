@@ -39,22 +39,22 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetTermOfServicesTosType(str, Enum):
+class GetTermsOfServiceTosType(str, Enum):
     EXTERNAL = 'external'
     MANAGED = 'managed'
 
 
-class CreateTermOfServiceStatus(str, Enum):
+class CreateTermsOfServiceStatus(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
 
-class CreateTermOfServiceTosType(str, Enum):
+class CreateTermsOfServiceTosType(str, Enum):
     EXTERNAL = 'external'
     MANAGED = 'managed'
 
 
-class UpdateTermOfServiceByIdStatus(str, Enum):
+class UpdateTermsOfServiceByIdStatus(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
@@ -70,9 +70,9 @@ class TermsOfServicesManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_term_of_services(
+    def get_terms_of_service(
         self,
-        tos_type: Optional[GetTermOfServicesTosType] = None,
+        tos_type: Optional[GetTermsOfServiceTosType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfServices:
         """
@@ -81,7 +81,7 @@ class TermsOfServicesManager:
         for the enterprise.
 
         :param tos_type: Limits the results to the terms of service of the given type.
-        :type tos_type: Optional[GetTermOfServicesTosType], optional
+        :type tos_type: Optional[GetTermsOfServiceTosType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -104,11 +104,11 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, TermsOfServices)
 
-    def create_term_of_service(
+    def create_terms_of_service(
         self,
-        status: CreateTermOfServiceStatus,
+        status: CreateTermsOfServiceStatus,
         text: str,
-        tos_type: Optional[CreateTermOfServiceTosType] = None,
+        tos_type: Optional[CreateTermsOfServiceTosType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Task:
         """
@@ -117,13 +117,13 @@ class TermsOfServicesManager:
         and type of user.
 
         :param status: Whether this terms of service is active.
-        :type status: CreateTermOfServiceStatus
+        :type status: CreateTermsOfServiceStatus
         :param text: The terms of service text to display to users.
             The text can be set to empty if the `status` is set to `disabled`.
         :type text: str
         :param tos_type: The type of user to set the terms of
             service for.
-        :type tos_type: Optional[CreateTermOfServiceTosType], optional
+        :type tos_type: Optional[CreateTermsOfServiceTosType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -145,7 +145,7 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, Task)
 
-    def get_term_of_service_by_id(
+    def get_terms_of_service_by_id(
         self,
         terms_of_service_id: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -177,10 +177,10 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, TermsOfService)
 
-    def update_term_of_service_by_id(
+    def update_terms_of_service_by_id(
         self,
         terms_of_service_id: str,
-        status: UpdateTermOfServiceByIdStatus,
+        status: UpdateTermsOfServiceByIdStatus,
         text: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfService:
@@ -190,7 +190,7 @@ class TermsOfServicesManager:
             Example: "324234"
         :type terms_of_service_id: str
         :param status: Whether this terms of service is active.
-        :type status: UpdateTermOfServiceByIdStatus
+        :type status: UpdateTermsOfServiceByIdStatus
         :param text: The terms of service text to display to users.
             The text can be set to empty if the `status` is set to `disabled`.
         :type text: str

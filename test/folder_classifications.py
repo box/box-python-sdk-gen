@@ -57,7 +57,7 @@ client: BoxClient = get_default_client()
 
 def get_or_create_second_classification(
     classification_template: ClassificationTemplate,
-):
+) -> ClassificationTemplateFieldsOptionsField:
     classifications: List[ClassificationTemplateFieldsOptionsField] = (
         classification_template.fields[0].options
     )
@@ -90,7 +90,9 @@ def testFolderClassifications():
     classification_template: ClassificationTemplate = (
         get_or_create_classification_template()
     )
-    classification = get_or_create_classification(classification_template)
+    classification: ClassificationTemplateFieldsOptionsField = (
+        get_or_create_classification(classification_template)
+    )
     folder: FolderFull = create_new_folder()
     with pytest.raises(Exception):
         client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
@@ -107,7 +109,9 @@ def testFolderClassifications():
         client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
     )
     assert folder_classification.box_security_classification_key == classification.key
-    second_classification = get_or_create_second_classification(classification_template)
+    second_classification: ClassificationTemplateFieldsOptionsField = (
+        get_or_create_second_classification(classification_template)
+    )
     updated_folder_classification: Classification = (
         client.folder_classifications.update_classification_on_folder(
             folder_id=folder.id,

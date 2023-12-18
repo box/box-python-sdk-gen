@@ -36,7 +36,7 @@ from box_sdk_gen.schemas import SearchResults
 
 from box_sdk_gen.schemas import SearchResultsWithSharedLinks
 
-from box_sdk_gen.managers.search import GetSearchTrashContent
+from box_sdk_gen.managers.search import SearchForContentTrashContent
 
 from box_sdk_gen.utils import get_uuid
 
@@ -78,7 +78,7 @@ def testCreateMetaDataQueryExecuteRead():
     assert metadata.template == template_key
     assert metadata.scope == template.scope
     search_from: str = ''.join([template.scope, '.', template.template_key])
-    query: MetadataQueryResults = client.search.create_metadata_query_execute_read(
+    query: MetadataQueryResults = client.search.search_by_metadata_query(
         from_=search_from,
         query='testName >= :value',
         query_params={'value': '0.0'},
@@ -120,19 +120,19 @@ def testGetMetadataQueryIndices():
 def testGetSearch():
     keyword: str = 'test'
     search: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.get_search(
+        client.search.search_for_content(
             query=keyword,
             ancestor_folder_ids=['0'],
-            trash_content=GetSearchTrashContent.NON_TRASHED_ONLY.value,
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY.value,
         )
     )
     assert len(search.entries) >= 0
     assert to_string(search.type) == 'search_results_items'
     search_with_shared_link: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.get_search(
+        client.search.search_for_content(
             query=keyword,
             ancestor_folder_ids=['0'],
-            trash_content=GetSearchTrashContent.NON_TRASHED_ONLY.value,
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY.value,
             include_recent_shared_links=True,
         )
     )

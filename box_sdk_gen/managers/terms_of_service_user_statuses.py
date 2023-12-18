@@ -39,17 +39,17 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateTermOfServiceUserStatusTosTypeField(str, Enum):
+class CreateTermsOfServiceStatusForUserTosTypeField(str, Enum):
     TERMS_OF_SERVICE = 'terms_of_service'
 
 
-class CreateTermOfServiceUserStatusTos(BaseObject):
+class CreateTermsOfServiceStatusForUserTos(BaseObject):
     def __init__(
-        self, type: CreateTermOfServiceUserStatusTosTypeField, id: str, **kwargs
+        self, type: CreateTermsOfServiceStatusForUserTosTypeField, id: str, **kwargs
     ):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusTosTypeField
+        :type type: CreateTermsOfServiceStatusForUserTosTypeField
         :param id: The ID of terms of service
         :type id: str
         """
@@ -58,17 +58,17 @@ class CreateTermOfServiceUserStatusTos(BaseObject):
         self.id = id
 
 
-class CreateTermOfServiceUserStatusUserTypeField(str, Enum):
+class CreateTermsOfServiceStatusForUserUserTypeField(str, Enum):
     USER = 'user'
 
 
-class CreateTermOfServiceUserStatusUser(BaseObject):
+class CreateTermsOfServiceStatusForUserUser(BaseObject):
     def __init__(
-        self, type: CreateTermOfServiceUserStatusUserTypeField, id: str, **kwargs
+        self, type: CreateTermsOfServiceStatusForUserUserTypeField, id: str, **kwargs
     ):
         """
         :param type: The type of object.
-        :type type: CreateTermOfServiceUserStatusUserTypeField
+        :type type: CreateTermsOfServiceStatusForUserUserTypeField
         :param id: The ID of user
         :type id: str
         """
@@ -88,7 +88,7 @@ class TermsOfServiceUserStatusesManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_term_of_service_user_statuses(
+    def get_terms_of_service_user_statuses(
         self,
         tos_id: str,
         user_id: Optional[str] = None,
@@ -131,19 +131,19 @@ class TermsOfServiceUserStatusesManager:
         )
         return deserialize(response.data, TermsOfServiceUserStatuses)
 
-    def create_term_of_service_user_status(
+    def create_terms_of_service_status_for_user(
         self,
-        tos: CreateTermOfServiceUserStatusTos,
-        user: CreateTermOfServiceUserStatusUser,
+        tos: CreateTermsOfServiceStatusForUserTos,
+        user: CreateTermsOfServiceStatusForUserUser,
         is_accepted: bool,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
         :param tos: The terms of service to set the status for.
-        :type tos: CreateTermOfServiceUserStatusTos
+        :type tos: CreateTermsOfServiceStatusForUserTos
         :param user: The user to set the status for.
-        :type user: CreateTermOfServiceUserStatusUser
+        :type user: CreateTermsOfServiceStatusForUserUser
         :param is_accepted: Whether the user has accepted the terms.
         :type is_accepted: bool
         :param extra_headers: Extra headers that will be included in the HTTP request.
@@ -170,7 +170,7 @@ class TermsOfServiceUserStatusesManager:
         )
         return deserialize(response.data, TermsOfServiceUserStatus)
 
-    def update_term_of_service_user_status_by_id(
+    def update_terms_of_service_status_for_user_by_id(
         self,
         terms_of_service_user_status_id: str,
         is_accepted: bool,

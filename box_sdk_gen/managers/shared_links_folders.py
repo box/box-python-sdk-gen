@@ -39,13 +39,13 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFolderAddSharedLinkSharedLinkAccessField(str, Enum):
+class AddShareLinkToFolderSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFolderAddSharedLinkSharedLinkPermissionsField(BaseObject):
+class AddShareLinkToFolderSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
         can_download: Optional[bool] = None,
@@ -72,16 +72,14 @@ class UpdateFolderAddSharedLinkSharedLinkPermissionsField(BaseObject):
         self.can_edit = can_edit
 
 
-class UpdateFolderAddSharedLinkSharedLink(BaseObject):
+class AddShareLinkToFolderSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFolderAddSharedLinkSharedLinkAccessField] = None,
+        access: Optional[AddShareLinkToFolderSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[
-            UpdateFolderAddSharedLinkSharedLinkPermissionsField
-        ] = None,
+        permissions: Optional[AddShareLinkToFolderSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -95,7 +93,7 @@ class UpdateFolderAddSharedLinkSharedLink(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFolderAddSharedLinkSharedLinkAccessField], optional
+        :type access: Optional[AddShareLinkToFolderSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -123,13 +121,13 @@ class UpdateFolderAddSharedLinkSharedLink(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFolderUpdateSharedLinkSharedLinkAccessField(str, Enum):
+class UpdateSharedLinkOnFolderSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFolderUpdateSharedLinkSharedLinkPermissionsField(BaseObject):
+class UpdateSharedLinkOnFolderSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
         can_download: Optional[bool] = None,
@@ -156,15 +154,15 @@ class UpdateFolderUpdateSharedLinkSharedLinkPermissionsField(BaseObject):
         self.can_edit = can_edit
 
 
-class UpdateFolderUpdateSharedLinkSharedLink(BaseObject):
+class UpdateSharedLinkOnFolderSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFolderUpdateSharedLinkSharedLinkAccessField] = None,
+        access: Optional[UpdateSharedLinkOnFolderSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
         permissions: Optional[
-            UpdateFolderUpdateSharedLinkSharedLinkPermissionsField
+            UpdateSharedLinkOnFolderSharedLinkPermissionsField
         ] = None,
         **kwargs
     ):
@@ -179,7 +177,7 @@ class UpdateFolderUpdateSharedLinkSharedLink(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFolderUpdateSharedLinkSharedLinkAccessField], optional
+        :type access: Optional[UpdateSharedLinkOnFolderSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -207,7 +205,7 @@ class UpdateFolderUpdateSharedLinkSharedLink(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFolderRemoveSharedLinkSharedLink(BaseObject):
+class RemoveSharedLinkFromFolderSharedLink(BaseObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -223,7 +221,7 @@ class SharedLinksFoldersManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_shared_item_folders(
+    def find_folder_for_shared_link(
         self,
         boxapi: str,
         fields: Optional[List[str]] = None,
@@ -288,7 +286,7 @@ class SharedLinksFoldersManager:
         )
         return deserialize(response.data, FolderFull)
 
-    def get_folder_get_shared_link(
+    def get_shared_link_for_folder(
         self,
         folder_id: str,
         fields: str,
@@ -334,11 +332,11 @@ class SharedLinksFoldersManager:
         )
         return deserialize(response.data, FolderFull)
 
-    def update_folder_add_shared_link(
+    def add_share_link_to_folder(
         self,
         folder_id: str,
         fields: str,
-        shared_link: Optional[UpdateFolderAddSharedLinkSharedLink] = None,
+        shared_link: Optional[AddShareLinkToFolderSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
         """
@@ -359,7 +357,7 @@ class SharedLinksFoldersManager:
         :param shared_link: The settings for the shared link to create on the folder.
             Use an empty object (`{}`) to use the default settings for shared
             links.
-        :type shared_link: Optional[UpdateFolderAddSharedLinkSharedLink], optional
+        :type shared_link: Optional[AddShareLinkToFolderSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -388,11 +386,11 @@ class SharedLinksFoldersManager:
         )
         return deserialize(response.data, FolderFull)
 
-    def update_folder_update_shared_link(
+    def update_shared_link_on_folder(
         self,
         folder_id: str,
         fields: str,
-        shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLink] = None,
+        shared_link: Optional[UpdateSharedLinkOnFolderSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
         """
@@ -411,7 +409,7 @@ class SharedLinksFoldersManager:
             to be returned for this item.
         :type fields: str
         :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[UpdateFolderUpdateSharedLinkSharedLink], optional
+        :type shared_link: Optional[UpdateSharedLinkOnFolderSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -440,11 +438,11 @@ class SharedLinksFoldersManager:
         )
         return deserialize(response.data, FolderFull)
 
-    def update_folder_remove_shared_link(
+    def remove_shared_link_from_folder(
         self,
         folder_id: str,
         fields: str,
-        shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLink] = None,
+        shared_link: Optional[RemoveSharedLinkFromFolderSharedLink] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
         """
@@ -464,7 +462,7 @@ class SharedLinksFoldersManager:
         :type fields: str
         :param shared_link: By setting this value to `null`, the shared link
             is removed from the folder.
-        :type shared_link: Optional[UpdateFolderRemoveSharedLinkSharedLink], optional
+        :type shared_link: Optional[RemoveSharedLinkFromFolderSharedLink], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
