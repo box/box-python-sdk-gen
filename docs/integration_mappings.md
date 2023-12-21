@@ -17,7 +17,11 @@ This operation is performed by calling function `get_slack_integration_mapping`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-integration-mappings-slack/).
 
-_Currently we don't have an example for calling `get_slack_integration_mapping` in integration tests_
+<!-- sample get_integration_mappings_slack -->
+
+```python
+user_client.integration_mappings.get_slack_integration_mapping()
+```
 
 ### Arguments
 
@@ -57,7 +61,11 @@ This operation is performed by calling function `create_slack_integration_mappin
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-integration-mappings-slack/).
 
-_Currently we don't have an example for calling `create_slack_integration_mapping` in integration tests_
+<!-- sample post_integration_mappings_slack -->
+
+```python
+user_client.integration_mappings.create_slack_integration_mapping(partner_item=IntegrationMappingPartnerItemSlack(type=IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value, id=partner_item_id, slack_org_id=slack_org_id), box_item=IntegrationMappingBoxItemSlack(id=folder.id, type=IntegrationMappingBoxItemSlackTypeField.FOLDER.value))
+```
 
 ### Arguments
 
