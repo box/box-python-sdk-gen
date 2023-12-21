@@ -188,4 +188,4 @@ class BoxOAuth(Authentication):
             ),
         )
 
-        return AccessToken.from_dict(json_to_serialized_data(response.text))
+        return AccessToken.from_dict(response.data)
