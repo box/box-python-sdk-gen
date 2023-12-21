@@ -39,22 +39,22 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetTermOfServicesTosTypeArg(str, Enum):
+class GetTermsOfServiceTosType(str, Enum):
     EXTERNAL = 'external'
     MANAGED = 'managed'
 
 
-class CreateTermOfServiceStatusArg(str, Enum):
+class CreateTermsOfServiceStatus(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
 
-class CreateTermOfServiceTosTypeArg(str, Enum):
+class CreateTermsOfServiceTosType(str, Enum):
     EXTERNAL = 'external'
     MANAGED = 'managed'
 
 
-class UpdateTermOfServiceByIdStatusArg(str, Enum):
+class UpdateTermsOfServiceByIdStatus(str, Enum):
     ENABLED = 'enabled'
     DISABLED = 'disabled'
 
@@ -63,14 +63,16 @@ class TermsOfServicesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
-    def get_term_of_services(
+    def get_terms_of_service(
         self,
-        tos_type: Optional[GetTermOfServicesTosTypeArg] = None,
+        tos_type: Optional[GetTermsOfServiceTosType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfServices:
         """
@@ -79,18 +81,18 @@ class TermsOfServicesManager:
         for the enterprise.
 
         :param tos_type: Limits the results to the terms of service of the given type.
-        :type tos_type: Optional[GetTermOfServicesTosTypeArg], optional
+        :type tos_type: Optional[GetTermsOfServiceTosType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'tos_type': to_string(tos_type)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'tos_type': to_string(tos_type)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/terms_of_services']),
+            ''.join([self.network_session.base_urls.base_url, '/terms_of_services']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -102,11 +104,11 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, TermsOfServices)
 
-    def create_term_of_service(
+    def create_terms_of_service(
         self,
-        status: CreateTermOfServiceStatusArg,
+        status: CreateTermsOfServiceStatus,
         text: str,
-        tos_type: Optional[CreateTermOfServiceTosTypeArg] = None,
+        tos_type: Optional[CreateTermsOfServiceTosType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Task:
         """
@@ -115,13 +117,13 @@ class TermsOfServicesManager:
         and type of user.
 
         :param status: Whether this terms of service is active.
-        :type status: CreateTermOfServiceStatusArg
+        :type status: CreateTermsOfServiceStatus
         :param text: The terms of service text to display to users.
             The text can be set to empty if the `status` is set to `disabled`.
         :type text: str
         :param tos_type: The type of user to set the terms of
             service for.
-        :type tos_type: Optional[CreateTermOfServiceTosTypeArg], optional
+        :type tos_type: Optional[CreateTermsOfServiceTosType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -130,7 +132,7 @@ class TermsOfServicesManager:
         request_body: Dict = {'status': status, 'tos_type': tos_type, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/terms_of_services']),
+            ''.join([self.network_session.base_urls.base_url, '/terms_of_services']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -143,7 +145,7 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, Task)
 
-    def get_term_of_service_by_id(
+    def get_terms_of_service_by_id(
         self,
         terms_of_service_id: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -161,7 +163,8 @@ class TermsOfServicesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/terms_of_services/',
+                self.network_session.base_urls.base_url,
+                '/terms_of_services/',
                 to_string(terms_of_service_id),
             ]),
             FetchOptions(
@@ -174,10 +177,10 @@ class TermsOfServicesManager:
         )
         return deserialize(response.data, TermsOfService)
 
-    def update_term_of_service_by_id(
+    def update_terms_of_service_by_id(
         self,
         terms_of_service_id: str,
-        status: UpdateTermOfServiceByIdStatusArg,
+        status: UpdateTermsOfServiceByIdStatus,
         text: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TermsOfService:
@@ -187,7 +190,7 @@ class TermsOfServicesManager:
             Example: "324234"
         :type terms_of_service_id: str
         :param status: Whether this terms of service is active.
-        :type status: UpdateTermOfServiceByIdStatusArg
+        :type status: UpdateTermsOfServiceByIdStatus
         :param text: The terms of service text to display to users.
             The text can be set to empty if the `status` is set to `disabled`.
         :type text: str
@@ -200,7 +203,8 @@ class TermsOfServicesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/terms_of_services/',
+                self.network_session.base_urls.base_url,
+                '/terms_of_services/',
                 to_string(terms_of_service_id),
             ]),
             FetchOptions(

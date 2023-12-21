@@ -29,8 +29,10 @@ class DownloadsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -75,14 +77,19 @@ class DownloadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'version': to_string(version), 'access_token': to_string(access_token)
-        })
-        headers_map: Dict[str, str] = prepare_params({
-            'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'version': to_string(version), 'access_token': to_string(access_token)}
+        )
+        headers_map: Dict[str, str] = prepare_params(
+            {'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/content']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/content',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

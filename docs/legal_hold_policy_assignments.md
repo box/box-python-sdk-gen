@@ -22,7 +22,7 @@ _Currently we don't have an example for calling `get_legal_hold_policy_assignmen
 
 - policy_id `str`
   - The ID of the legal hold policy
-- assign_to_type `Optional[GetLegalHoldPolicyAssignmentsAssignToTypeArg]`
+- assign_to_type `Optional[GetLegalHoldPolicyAssignmentsAssignToType]`
   - Filters the results by the type of item the policy was applied to.
 - assign_to_id `Optional[str]`
   - Filters the results by the ID of item the policy was applied to.
@@ -56,7 +56,7 @@ _Currently we don't have an example for calling `create_legal_hold_policy_assign
 
 - policy_id `str`
   - The ID of the policy to assign.
-- assign_to `CreateLegalHoldPolicyAssignmentAssignToArg`
+- assign_to `CreateLegalHoldPolicyAssignmentAssignTo`
   - The item to assign the policy to
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

@@ -39,12 +39,12 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateMetadataCascadePolicyScopeArg(str, Enum):
+class CreateMetadataCascadePolicyScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class CreateMetadataCascadePolicyApplyConflictResolutionArg(str, Enum):
+class ApplyMetadataCascadePolicyConflictResolution(str, Enum):
     NONE = 'none'
     OVERWRITE = 'overwrite'
 
@@ -53,8 +53,10 @@ class MetadataCascadePoliciesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -103,7 +105,9 @@ class MetadataCascadePoliciesManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/metadata_cascade_policies']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -118,7 +122,7 @@ class MetadataCascadePoliciesManager:
     def create_metadata_cascade_policy(
         self,
         folder_id: str,
-        scope: CreateMetadataCascadePolicyScopeArg,
+        scope: CreateMetadataCascadePolicyScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataCascadePolicy:
@@ -142,7 +146,7 @@ class MetadataCascadePoliciesManager:
         :type folder_id: str
         :param scope: The scope of the targeted metadata template. This template will
             need to already have an instance applied to the targeted folder.
-        :type scope: CreateMetadataCascadePolicyScopeArg
+        :type scope: CreateMetadataCascadePolicyScope
         :param template_key: The key of the targeted metadata template. This template will
             need to already have an instance applied to the targeted folder.
             In many cases the template key is automatically derived
@@ -168,7 +172,9 @@ class MetadataCascadePoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_cascade_policies']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/metadata_cascade_policies']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -199,7 +205,8 @@ class MetadataCascadePoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_cascade_policies/',
+                self.network_session.base_urls.base_url,
+                '/metadata_cascade_policies/',
                 to_string(metadata_cascade_policy_id),
             ]),
             FetchOptions(
@@ -230,7 +237,8 @@ class MetadataCascadePoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_cascade_policies/',
+                self.network_session.base_urls.base_url,
+                '/metadata_cascade_policies/',
                 to_string(metadata_cascade_policy_id),
             ]),
             FetchOptions(
@@ -243,10 +251,10 @@ class MetadataCascadePoliciesManager:
         )
         return None
 
-    def create_metadata_cascade_policy_apply(
+    def apply_metadata_cascade_policy(
         self,
         metadata_cascade_policy_id: str,
-        conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg,
+        conflict_resolution: ApplyMetadataCascadePolicyConflictResolution,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
         """
@@ -269,7 +277,7 @@ class MetadataCascadePoliciesManager:
             * `none` will preserve the existing value on the file
             * `overwrite` will force-apply the templates values over
               any existing values.
-        :type conflict_resolution: CreateMetadataCascadePolicyApplyConflictResolutionArg
+        :type conflict_resolution: ApplyMetadataCascadePolicyConflictResolution
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -279,7 +287,8 @@ class MetadataCascadePoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_cascade_policies/',
+                self.network_session.base_urls.base_url,
+                '/metadata_cascade_policies/',
                 to_string(metadata_cascade_policy_id),
                 '/apply',
             ]),

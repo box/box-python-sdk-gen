@@ -12,6 +12,8 @@ from box_sdk_gen.utils import read_byte_stream
 
 from box_sdk_gen.utils import generate_byte_buffer
 
+from box_sdk_gen.utils import generate_byte_stream
+
 from box_sdk_gen.utils import decode_base_64_byte_stream
 
 from box_sdk_gen.client import BoxClient
@@ -51,16 +53,18 @@ def test_jwt_auth():
     assert not new_user.id == user_id
 
 
-def test_oauth_auth():
+def test_oauth_auth_authorizeUrl():
     config: OAuthConfig = OAuthConfig(
         client_id='OAUTH_CLIENT_ID', client_secret='OAUTH_CLIENT_SECRET'
     )
     auth: BoxOAuth = BoxOAuth(config=config)
     auth_url: str = auth.get_authorize_url()
-    expected_auth_url: str = (
-        'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
+    assert (
+        auth_url
+        == 'https://account.box.com/api/oauth2/authorize?client_id=OAUTH_CLIENT_ID&response_type=code'
+        or auth_url
+        == 'https://account.box.com/api/oauth2/authorize?response_type=code&client_id=OAUTH_CLIENT_ID'
     )
-    assert auth_url == expected_auth_url
 
 
 def test_ccg_auth():
@@ -84,7 +88,7 @@ def test_ccg_auth():
     assert not new_user.id == user_id
 
 
-def test_developer_token_auth():
+def get_access_token() -> AccessToken:
     user_id: str = get_env_var('USER_ID')
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
     ccg_config: CCGConfig = CCGConfig(
@@ -96,6 +100,12 @@ def test_developer_token_auth():
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
     auth.as_user(user_id)
     token: AccessToken = auth.retrieve_token()
+    return token
+
+
+def test_developer_token_auth():
+    user_id: str = get_env_var('USER_ID')
+    token: AccessToken = get_access_token()
     dev_auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(token=token.access_token)
     client: BoxClient = BoxClient(auth=dev_auth)
     current_user: UserFull = client.users.get_user_me()

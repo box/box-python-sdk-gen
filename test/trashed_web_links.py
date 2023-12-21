@@ -8,7 +8,7 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import WebLink
 
-from box_sdk_gen.managers.web_links import CreateWebLinkParentArg
+from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
 from box_sdk_gen.schemas import TrashWebLink
 
@@ -28,12 +28,12 @@ def testTrashedWebLinks():
     description: str = 'Weblink description'
     weblink: WebLink = client.web_links.create_web_link(
         url=url,
-        parent=CreateWebLinkParentArg(id=parent.id),
+        parent=CreateWebLinkParent(id=parent.id),
         name=name,
         description=description,
     )
     client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
-    from_trash: TrashWebLink = client.trashed_web_links.get_web_link_trash(
+    from_trash: TrashWebLink = client.trashed_web_links.get_trashed_web_link_by_id(
         web_link_id=weblink.id
     )
     assert from_trash.id == weblink.id
@@ -49,6 +49,6 @@ def testTrashedWebLinks():
     assert restored_weblink.id == from_api.id
     assert restored_weblink.name == from_api.name
     client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
-    client.trashed_web_links.delete_web_link_trash(web_link_id=weblink.id)
+    client.trashed_web_links.delete_trashed_web_link_by_id(web_link_id=weblink.id)
     with pytest.raises(Exception):
-        client.trashed_web_links.get_web_link_trash(web_link_id=weblink.id)
+        client.trashed_web_links.get_trashed_web_link_by_id(web_link_id=weblink.id)

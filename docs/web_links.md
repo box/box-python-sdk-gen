@@ -17,14 +17,14 @@ See the endpoint docs at
 <!-- sample post_web_links -->
 
 ```python
-client.web_links.create_web_link(url=url, parent=CreateWebLinkParentArg(id=parent.id), name=name, description=description)
+client.web_links.create_web_link(url=url, parent=CreateWebLinkParent(id=parent.id), name=name, description=description)
 ```
 
 ### Arguments
 
 - url `str`
   - The URL that this web link links to. Must start with `"http://"` or `"https://"`.
-- parent `CreateWebLinkParentArg`
+- parent `CreateWebLinkParent`
   - The parent folder to create the web link within.
 - name `Optional[str]`
   - Name of the web link. Defaults to the URL if not set.
@@ -81,7 +81,7 @@ See the endpoint docs at
 <!-- sample put_web_links_id -->
 
 ```python
-client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLinkArg(access=shared_access, password=password))
+client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLink(access=shared_access, password=password))
 ```
 
 ### Arguments
@@ -90,13 +90,13 @@ client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name
   - The ID of the web link. Example: "12345"
 - url `Optional[str]`
   - The new URL that the web link links to. Must start with `"http://"` or `"https://"`.
-- parent `Optional[UpdateWebLinkByIdParentArg]`
+- parent `Optional[UpdateWebLinkByIdParent]`
   -
 - name `Optional[str]`
   - A new name for the web link. Defaults to the URL if not set.
 - description `Optional[str]`
   - A new description of the web link.
-- shared_link `Optional[UpdateWebLinkByIdSharedLinkArg]`
+- shared_link `Optional[UpdateWebLinkByIdSharedLink]`
   - The settings for the shared link to update.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

@@ -56,7 +56,7 @@ client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(doma
 
 - domain `str`
   - The domain to add to the list of allowed domains.
-- direction `CreateCollaborationWhitelistEntryDirectionArg`
+- direction `CreateCollaborationWhitelistEntryDirection`
   - The direction in which to allow collaborations.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

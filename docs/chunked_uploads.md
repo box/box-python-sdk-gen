@@ -231,6 +231,10 @@ _Currently we don't have an example for calling `reducer` in integration tests_
 - chunk `ByteStream`
   -
 
+### Returns
+
+This function returns a value of type `PartAccumulator`.
+
 ##
 
 This operation is performed by calling function `upload_big_file`.
@@ -254,3 +258,7 @@ client.chunked_uploads.upload_big_file(file_byte_stream, file_name, file_size, p
   - The total size of the file for the chunked upload in bytes.
 - parent_folder_id `str`
   - The ID of the folder where the file should be uploaded.
+
+### Returns
+
+This function returns a value of type `FileFull`.

@@ -41,25 +41,25 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetFolderByIdSortArg(str, Enum):
+class GetFolderByIdSort(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
 
-class GetFolderByIdDirectionArg(str, Enum):
+class GetFolderByIdDirection(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
 
-class UpdateFolderByIdSyncStateArg(str, Enum):
+class UpdateFolderByIdSyncState(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
 
 
-class UpdateFolderByIdParentArg(BaseObject):
+class UpdateFolderByIdParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of the new parent folder
@@ -69,13 +69,13 @@ class UpdateFolderByIdParentArg(BaseObject):
         self.id = id
 
 
-class UpdateFolderByIdSharedLinkArgAccessField(str, Enum):
+class UpdateFolderByIdSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFolderByIdSharedLinkArgPermissionsField(BaseObject):
+class UpdateFolderByIdSharedLinkPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -87,14 +87,14 @@ class UpdateFolderByIdSharedLinkArgPermissionsField(BaseObject):
         self.can_download = can_download
 
 
-class UpdateFolderByIdSharedLinkArg(BaseObject):
+class UpdateFolderByIdSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFolderByIdSharedLinkArgAccessField] = None,
+        access: Optional[UpdateFolderByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[UpdateFolderByIdSharedLinkArgPermissionsField] = None,
+        permissions: Optional[UpdateFolderByIdSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -108,7 +108,7 @@ class UpdateFolderByIdSharedLinkArg(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFolderByIdSharedLinkArgAccessField], optional
+        :type access: Optional[UpdateFolderByIdSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -134,15 +134,15 @@ class UpdateFolderByIdSharedLinkArg(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFolderByIdFolderUploadEmailArgAccessField(str, Enum):
+class UpdateFolderByIdFolderUploadEmailAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
+class UpdateFolderByIdFolderUploadEmail(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFolderByIdFolderUploadEmailArgAccessField] = None,
+        access: Optional[UpdateFolderByIdFolderUploadEmailAccessField] = None,
         **kwargs
     ):
         """
@@ -156,13 +156,13 @@ class UpdateFolderByIdFolderUploadEmailArg(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Optional[UpdateFolderByIdFolderUploadEmailArgAccessField], optional
+        :type access: Optional[UpdateFolderByIdFolderUploadEmailAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
 
 
-class UpdateFolderByIdCollectionsArg(BaseObject):
+class UpdateFolderByIdCollections(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier for this object
@@ -175,19 +175,19 @@ class UpdateFolderByIdCollectionsArg(BaseObject):
         self.type = type
 
 
-class GetFolderItemsSortArg(str, Enum):
+class GetFolderItemsSort(str, Enum):
     ID = 'id'
     NAME = 'name'
     DATE = 'date'
     SIZE = 'size'
 
 
-class GetFolderItemsDirectionArg(str, Enum):
+class GetFolderItemsDirection(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
 
-class CreateFolderParentArg(BaseObject):
+class CreateFolderParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -197,15 +197,15 @@ class CreateFolderParentArg(BaseObject):
         self.id = id
 
 
-class CreateFolderFolderUploadEmailArgAccessField(str, Enum):
+class CreateFolderFolderUploadEmailAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
 
 
-class CreateFolderFolderUploadEmailArg(BaseObject):
+class CreateFolderFolderUploadEmail(BaseObject):
     def __init__(
         self,
-        access: Optional[CreateFolderFolderUploadEmailArgAccessField] = None,
+        access: Optional[CreateFolderFolderUploadEmailAccessField] = None,
         **kwargs
     ):
         """
@@ -219,19 +219,19 @@ class CreateFolderFolderUploadEmailArg(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Optional[CreateFolderFolderUploadEmailArgAccessField], optional
+        :type access: Optional[CreateFolderFolderUploadEmailAccessField], optional
         """
         super().__init__(**kwargs)
         self.access = access
 
 
-class CreateFolderSyncStateArg(str, Enum):
+class CreateFolderSyncState(str, Enum):
     SYNCED = 'synced'
     NOT_SYNCED = 'not_synced'
     PARTIALLY_SYNCED = 'partially_synced'
 
 
-class CopyFolderParentArg(BaseObject):
+class CopyFolderParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of parent folder
@@ -245,8 +245,10 @@ class FoldersManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -254,8 +256,8 @@ class FoldersManager:
         self,
         folder_id: str,
         fields: Optional[List[str]] = None,
-        sort: Optional[GetFolderByIdSortArg] = None,
-        direction: Optional[GetFolderByIdDirectionArg] = None,
+        sort: Optional[GetFolderByIdSort] = None,
+        direction: Optional[GetFolderByIdDirection] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         if_none_match: Optional[str] = None,
@@ -283,7 +285,7 @@ class FoldersManager:
         To fetch more items within the folder, use the
 
 
-        [Get items in a folder](#get-folders-id-items) endpoint.
+        [Get items in a folder](e://get-folders-id-items) endpoint.
 
         :param folder_id: The unique identifier that represent a folder.
             The ID for any folder can be determined
@@ -331,10 +333,10 @@ class FoldersManager:
               folders listed before files,
               and files listed
               before web links.
-        :type sort: Optional[GetFolderByIdSortArg], optional
+        :type sort: Optional[GetFolderByIdSort], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetFolderByIdDirectionArg], optional
+        :type direction: Optional[GetFolderByIdDirection], optional
         :param offset: The offset of the item at which to begin the response.
             Queries with offset parameter value
             exceeding 10000 will be rejected
@@ -374,7 +376,11 @@ class FoldersManager:
             **extra_headers,
         })
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -391,14 +397,14 @@ class FoldersManager:
         folder_id: str,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        sync_state: Optional[UpdateFolderByIdSyncStateArg] = None,
+        sync_state: Optional[UpdateFolderByIdSyncState] = None,
         can_non_owners_invite: Optional[bool] = None,
-        parent: Optional[UpdateFolderByIdParentArg] = None,
-        shared_link: Optional[UpdateFolderByIdSharedLinkArg] = None,
-        folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmailArg] = None,
+        parent: Optional[UpdateFolderByIdParent] = None,
+        shared_link: Optional[UpdateFolderByIdSharedLink] = None,
+        folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmail] = None,
         tags: Optional[List[str]] = None,
         is_collaboration_restricted_to_enterprise: Optional[bool] = None,
-        collections: Optional[List[UpdateFolderByIdCollectionsArg]] = None,
+        collections: Optional[List[UpdateFolderByIdCollections]] = None,
         can_non_owners_view_collaborators: Optional[bool] = None,
         fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
@@ -426,13 +432,13 @@ class FoldersManager:
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Optional[UpdateFolderByIdSyncStateArg], optional
+        :type sync_state: Optional[UpdateFolderByIdSyncState], optional
         :param can_non_owners_invite: Specifies if users who are not the owner
             of the folder can invite new collaborators to the folder.
         :type can_non_owners_invite: Optional[bool], optional
         :param parent: The parent folder for this folder. Use this to move
             the folder or to restore it out of the trash.
-        :type parent: Optional[UpdateFolderByIdParentArg], optional
+        :type parent: Optional[UpdateFolderByIdParent], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -452,7 +458,7 @@ class FoldersManager:
             Passing an empty array `[]` or `null` will remove
             the folder from all collections.
             [1]: e://get-collections
-        :type collections: Optional[List[UpdateFolderByIdCollectionsArg]], optional
+        :type collections: Optional[List[UpdateFolderByIdCollections]], optional
         :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
             this folder from viewing other collaborations on
             this folder.
@@ -499,11 +505,15 @@ class FoldersManager:
             'can_non_owners_view_collaborators': can_non_owners_view_collaborators,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -554,14 +564,18 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'recursive': to_string(recursive)
-        })
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'recursive': to_string(recursive)}
+        )
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders/', to_string(folder_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 params=query_params_map,
@@ -581,8 +595,8 @@ class FoldersManager:
         marker: Optional[str] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
-        sort: Optional[GetFolderItemsSortArg] = None,
-        direction: Optional[GetFolderItemsDirectionArg] = None,
+        sort: Optional[GetFolderItemsSort] = None,
+        direction: Optional[GetFolderItemsDirection] = None,
         boxapi: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Items:
@@ -661,10 +675,10 @@ class FoldersManager:
               folders listed before files,
               and files listed
               before web links.
-        :type sort: Optional[GetFolderItemsSortArg], optional
+        :type sort: Optional[GetFolderItemsSort], optional
         :param direction: The direction to sort results in. This can be either in alphabetical ascending
             (`ASC`) or descending (`DESC`) order.
-        :type direction: Optional[GetFolderItemsDirectionArg], optional
+        :type direction: Optional[GetFolderItemsDirection], optional
         :param boxapi: The URL, and optional password, for the shared link of this item.
             This header can be used to access items that have not been
             explicitly shared with a user.
@@ -687,12 +701,15 @@ class FoldersManager:
             'sort': to_string(sort),
             'direction': to_string(direction),
         })
-        headers_map: Dict[str, str] = prepare_params({
-            'boxapi': to_string(boxapi), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'boxapi': to_string(boxapi), **extra_headers}
+        )
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/items'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/items',
             ]),
             FetchOptions(
                 method='GET',
@@ -708,9 +725,9 @@ class FoldersManager:
     def create_folder(
         self,
         name: str,
-        parent: CreateFolderParentArg,
-        folder_upload_email: Optional[CreateFolderFolderUploadEmailArg] = None,
-        sync_state: Optional[CreateFolderSyncStateArg] = None,
+        parent: CreateFolderParent,
+        folder_upload_email: Optional[CreateFolderFolderUploadEmail] = None,
+        sync_state: Optional[CreateFolderSyncState] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FolderFull:
@@ -725,11 +742,11 @@ class FoldersManager:
             not allowed either.
         :type name: str
         :param parent: The parent folder to create the new folder within.
-        :type parent: CreateFolderParentArg
+        :type parent: CreateFolderParent
         :param sync_state: Specifies whether a folder should be synced to a
             user's device or not. This is used by Box Sync
             (discontinued) and is not used by Box Drive.
-        :type sync_state: Optional[CreateFolderSyncStateArg], optional
+        :type sync_state: Optional[CreateFolderSyncState], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -753,7 +770,7 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/folders']),
+            ''.join([self.network_session.base_urls.base_url, '/folders']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -770,7 +787,7 @@ class FoldersManager:
     def copy_folder(
         self,
         folder_id: str,
-        parent: CopyFolderParentArg,
+        parent: CopyFolderParent,
         name: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -790,7 +807,7 @@ class FoldersManager:
             Example: "0"
         :type folder_id: str
         :param parent: The destination folder to copy the folder to.
-        :type parent: CopyFolderParentArg
+        :type parent: CopyFolderParent
         :param name: An optional new name for the copied folder.
             There are some restrictions to the file name. Names containing
             non-printable ASCII characters, forward and backward slashes
@@ -818,7 +835,10 @@ class FoldersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/', to_string(folder_id), '/copy'
+                self.network_session.base_urls.base_url,
+                '/folders/',
+                to_string(folder_id),
+                '/copy',
             ]),
             FetchOptions(
                 method='POST',

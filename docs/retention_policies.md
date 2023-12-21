@@ -25,7 +25,7 @@ client.retention_policies.get_retention_policies()
 
 - policy_name `Optional[str]`
   - Filters results by a case sensitive prefix of the name of retention policies.
-- policy_type `Optional[GetRetentionPoliciesPolicyTypeArg]`
+- policy_type `Optional[GetRetentionPoliciesPolicyType]`
   - Filters results by the type of retention policy.
 - created_by_user_id `Optional[str]`
   - Filters results by the ID of the user who created policy.
@@ -56,7 +56,7 @@ See the endpoint docs at
 <!-- sample post_retention_policies -->
 
 ```python
-client.retention_policies.create_retention_policy(policy_name=retention_policy_name, description=retention_description, policy_type=CreateRetentionPolicyPolicyTypeArg.FINITE.value, disposition_action=CreateRetentionPolicyDispositionActionArg.REMOVE_RETENTION.value, retention_length='1', retention_type=CreateRetentionPolicyRetentionTypeArg.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
+client.retention_policies.create_retention_policy(policy_name=retention_policy_name, description=retention_description, policy_type=CreateRetentionPolicyPolicyType.FINITE.value, disposition_action=CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value, retention_length='1', retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
 ```
 
 ### Arguments
@@ -65,13 +65,13 @@ client.retention_policies.create_retention_policy(policy_name=retention_policy_n
   - The name for the retention policy
 - description `Optional[str]`
   - The additional text description of the retention policy.
-- policy_type `CreateRetentionPolicyPolicyTypeArg`
+- policy_type `CreateRetentionPolicyPolicyType`
   - The type of the retention policy. A retention policy type can either be `finite`, where a specific amount of time to retain the content is known upfront, or `indefinite`, where the amount of time to retain the content is still unknown.
-- disposition_action `CreateRetentionPolicyDispositionActionArg`
+- disposition_action `CreateRetentionPolicyDispositionAction`
   - The disposition action of the retention policy. `permanently_delete` deletes the content retained by the policy permanently. `remove_retention` lifts retention policy from the content, allowing it to be deleted by users once the retention policy has expired.
 - retention_length `Optional[str]`
   - The length of the retention policy. This value specifies the duration in days that the retention policy will be active for after being assigned to content. If the policy has a `policy_type` of `indefinite`, the `retention_length` will also be `indefinite`.
-- retention_type `Optional[CreateRetentionPolicyRetentionTypeArg]`
+- retention_type `Optional[CreateRetentionPolicyRetentionType]`
   - Specifies the retention type: _ `modifiable`: You can modify the retention policy. For example, you can add or remove folders, shorten or lengthen the policy duration, or delete the assignment. Use this type if your retention policy is not related to any regulatory purposes. _ `non_modifiable`: You can modify the retention policy only in a limited way: add a folder, lengthen the duration, retire the policy, change the disposition action or notification settings. You cannot perform other actions, such as deleting the assignment or shortening the policy duration. Use this type to ensure compliance with regulatory retention policies.
 - can_owner_extend_retention `Optional[bool]`
   - Whether the owner of a file will be allowed to extend the retention.

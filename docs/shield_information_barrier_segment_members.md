@@ -110,16 +110,16 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segment_members -->
 
 ```python
-client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArgTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), user=UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
+client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), user=UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
 ```
 
 ### Arguments
 
-- type `Optional[CreateShieldInformationBarrierSegmentMemberTypeArg]`
+- type `Optional[CreateShieldInformationBarrierSegmentMemberType]`
   - -| A type of the shield barrier segment member.
 - shield_information_barrier `Optional[ShieldInformationBarrierBase]`
   -
-- shield_information_barrier_segment `CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentArg`
+- shield_information_barrier_segment `CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment`
   - The `type` and `id` of the requested shield information barrier segment.
 - user `UserBase`
   - User to which restriction will be applied.

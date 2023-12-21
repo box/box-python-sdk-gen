@@ -47,9 +47,9 @@ _Currently we don't have an example for calling `create_task_assignment` in inte
 
 ### Arguments
 
-- task `CreateTaskAssignmentTaskArg`
+- task `CreateTaskAssignmentTask`
   - The task to assign to a user.
-- assign_to `CreateTaskAssignmentAssignToArg`
+- assign_to `CreateTaskAssignmentAssignTo`
   - The user to assign the task to.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -103,7 +103,7 @@ _Currently we don't have an example for calling `update_task_assignment_by_id` i
   - The ID of the task assignment. Example: "12345"
 - message `Optional[str]`
   - An optional message by the assignee that can be added to the task.
-- resolution_state `Optional[UpdateTaskAssignmentByIdResolutionStateArg]`
+- resolution_state `Optional[UpdateTaskAssignmentByIdResolutionState]`
   - The state of the task assigned to the user. _ For a task with an `action` value of `complete` this can be `incomplete` or `completed`. _ For a task with an `action` of `review` this can be `incomplete`, `approved`, or `rejected`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

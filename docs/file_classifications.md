@@ -14,12 +14,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/files/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `get_file_metadata_enterprise_security_classification_6_vm_vochw_u_wo`.
+This operation is performed by calling function `get_classification_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `get_file_metadata_enterprise_security_classification_6_vm_vochw_u_wo` in integration tests_
+<!-- sample get_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.file_classifications.get_classification_on_file(file_id=file.id)
+```
 
 ### Arguments
 
@@ -46,12 +50,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/files/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `create_file_metadata_enterprise_security_classification`.
+This operation is performed by calling function `add_classification_to_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `create_file_metadata_enterprise_security_classification` in integration tests_
+<!-- sample post_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.file_classifications.add_classification_to_file(file_id=file.id, box_security_classification_key=classification.key)
+```
 
 ### Arguments
 
@@ -77,19 +85,23 @@ The classification can only be updated if a classification has already been
 applied to the file before. When editing classifications, only values are
 defined for the enterprise will be accepted.
 
-This operation is performed by calling function `update_file_metadata_enterprise_security_classification`.
+This operation is performed by calling function `update_classification_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `update_file_metadata_enterprise_security_classification` in integration tests_
+<!-- sample put_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.file_classifications.update_classification_on_file(file_id=file.id, request_body=[UpdateClassificationOnFileRequestBody(op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- request_body `List[UpdateFileMetadataEnterpriseSecurityClassificationRequestBodyArg]`
-  - Request body of updateFileMetadataEnterpriseSecurityClassification method
+- request_body `List[UpdateClassificationOnFileRequestBody]`
+  - Request body of updateClassificationOnFile method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -107,12 +119,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/files/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `delete_file_metadata_enterprise_security_classification`.
+This operation is performed by calling function `delete_classification_from_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `delete_file_metadata_enterprise_security_classification` in integration tests_
+<!-- sample delete_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.file_classifications.delete_classification_from_file(file_id=file.id)
+```
 
 ### Arguments
 

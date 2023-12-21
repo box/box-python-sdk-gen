@@ -55,12 +55,12 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#add -->
 
 ```python
-client.classifications.add_classification(request_body=[AddClassificationRequestBodyArg(op=AddClassificationRequestBodyArgOpField.ADDENUMOPTION.value, field_key=AddClassificationRequestBodyArgFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value, data=AddClassificationRequestBodyArgDataField(key=get_uuid(), static_config=AddClassificationRequestBodyArgDataFieldStaticConfigField(classification=AddClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField(color_id=3, classification_definition='Some description'))))])
+client.classifications.add_classification(request_body=[AddClassificationRequestBody(op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value, field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value, data=AddClassificationRequestBodyDataField(key=get_uuid(), static_config=AddClassificationRequestBodyDataStaticConfigField(classification=AddClassificationRequestBodyDataStaticConfigClassificationField(color_id=4, classification_definition='Other description'))))])
 ```
 
 ### Arguments
 
-- request_body `List[AddClassificationRequestBodyArg]`
+- request_body `List[AddClassificationRequestBody]`
   - Request body of addClassification method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -90,12 +90,12 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#update -->
 
 ```python
-client.classifications.update_classification(request_body=[UpdateClassificationRequestBodyArg(op=UpdateClassificationRequestBodyArgOpField.EDITENUMOPTION.value, field_key=UpdateClassificationRequestBodyArgFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value, enum_option_key=classification.key, data=UpdateClassificationRequestBodyArgDataField(key=updated_classification_name, static_config=UpdateClassificationRequestBodyArgDataFieldStaticConfigField(classification=UpdateClassificationRequestBodyArgDataFieldStaticConfigFieldClassificationField(color_id=2, classification_definition=updated_classification_description))))])
+client.classifications.update_classification(request_body=[UpdateClassificationRequestBody(op=UpdateClassificationRequestBodyOpField.EDITENUMOPTION.value, field_key=UpdateClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value, enum_option_key=classification.key, data=UpdateClassificationRequestBodyDataField(key=updated_classification_name, static_config=UpdateClassificationRequestBodyDataStaticConfigField(classification=UpdateClassificationRequestBodyDataStaticConfigClassificationField(color_id=2, classification_definition=updated_classification_description))))])
 ```
 
 ### Arguments
 
-- request_body `List[UpdateClassificationRequestBodyArg]`
+- request_body `List[UpdateClassificationRequestBody]`
   - Request body of updateClassification method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -127,17 +127,17 @@ _Currently we don't have an example for calling `create_classification_template`
 
 ### Arguments
 
-- scope `CreateClassificationTemplateScopeArg`
+- scope `CreateClassificationTemplateScope`
   - The scope in which to create the classifications. This should be `enterprise` or `enterprise_{id}` where `id` is the unique ID of the enterprise.
-- template_key `CreateClassificationTemplateTemplateKeyArg`
+- template_key `CreateClassificationTemplateTemplateKey`
   - Defines the list of metadata templates.
-- display_name `CreateClassificationTemplateDisplayNameArg`
+- display_name `CreateClassificationTemplateDisplayName`
   - The name of the template as shown in web and mobile interfaces.
 - hidden `Optional[bool]`
   - Determines if the classification template is hidden or available on web and mobile devices.
 - copy_instance_on_item_copy `Optional[bool]`
   - Determines if classifications are copied along when the file or folder is copied.
-- fields `List[CreateClassificationTemplateFieldsArg]`
+- fields `List[CreateClassificationTemplateFields]`
   - The classification template requires exactly one field, which holds all the valid classification values.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

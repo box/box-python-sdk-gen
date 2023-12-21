@@ -28,7 +28,7 @@ client.trashed_web_links.restore_weblink_from_trash(web_link_id=weblink.id)
   - The ID of the web link. Example: "12345"
 - name `Optional[str]`
   - An optional new name for the web link.
-- parent `Optional[RestoreWeblinkFromTrashParentArg]`
+- parent `Optional[RestoreWeblinkFromTrashParent]`
   -
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -45,7 +45,7 @@ Returns a web link object when it has been restored.
 
 Retrieves a web link that has been moved to the trash.
 
-This operation is performed by calling function `get_web_link_trash`.
+This operation is performed by calling function `get_trashed_web_link_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-web-links-id-trash/).
@@ -53,7 +53,7 @@ See the endpoint docs at
 <!-- sample get_web_links_id_trash -->
 
 ```python
-client.trashed_web_links.get_web_link_trash(web_link_id=weblink.id)
+client.trashed_web_links.get_trashed_web_link_by_id(web_link_id=weblink.id)
 ```
 
 ### Arguments
@@ -78,7 +78,7 @@ was moved to the trash.
 Permanently deletes a web link that is in the trash.
 This action cannot be undone.
 
-This operation is performed by calling function `delete_web_link_trash`.
+This operation is performed by calling function `delete_trashed_web_link_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-web-links-id-trash/).
@@ -86,7 +86,7 @@ See the endpoint docs at
 <!-- sample delete_web_links_id_trash -->
 
 ```python
-client.trashed_web_links.delete_web_link_trash(web_link_id=weblink.id)
+client.trashed_web_links.delete_trashed_web_link_by_id(web_link_id=weblink.id)
 ```
 
 ### Arguments

@@ -1,6 +1,8 @@
+from typing import List
+
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.schemas import FileFull
 
@@ -8,9 +10,49 @@ from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
+
+from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
+
+from box_sdk_gen.managers.classifications import AddClassificationRequestBody
+
+from box_sdk_gen.managers.classifications import AddClassificationRequestBodyOpField
+
+from box_sdk_gen.managers.classifications import (
+    AddClassificationRequestBodyFieldKeyField,
+)
+
+from box_sdk_gen.managers.classifications import AddClassificationRequestBodyDataField
+
+from box_sdk_gen.managers.classifications import (
+    AddClassificationRequestBodyDataStaticConfigField,
+)
+
+from box_sdk_gen.managers.classifications import (
+    AddClassificationRequestBodyDataStaticConfigClassificationField,
+)
+
+from box_sdk_gen.managers.classifications import CreateClassificationTemplateScope
+
+from box_sdk_gen.managers.classifications import CreateClassificationTemplateTemplateKey
+
+from box_sdk_gen.managers.classifications import CreateClassificationTemplateDisplayName
+
+from box_sdk_gen.managers.classifications import CreateClassificationTemplateFields
+
+from box_sdk_gen.managers.classifications import (
+    CreateClassificationTemplateFieldsTypeField,
+)
+
+from box_sdk_gen.managers.classifications import (
+    CreateClassificationTemplateFieldsKeyField,
+)
+
+from box_sdk_gen.managers.classifications import (
+    CreateClassificationTemplateFieldsDisplayNameField,
+)
 
 from box_sdk_gen.schemas import ShieldInformationBarrier
 
@@ -29,6 +71,8 @@ from box_sdk_gen.utils import get_uuid
 from box_sdk_gen.utils import generate_byte_stream
 
 from box_sdk_gen.client import BoxClient
+
+from box_sdk_gen.schemas import ClassificationTemplate
 
 from box_sdk_gen.jwt_auth import BoxJWTAuth
 
@@ -58,7 +102,7 @@ def create_new_folder() -> FolderFull:
     client: BoxClient = get_default_client()
     new_folder_name: str = get_uuid()
     return client.folders.create_folder(
-        name=new_folder_name, parent=CreateFolderParentArg(id='0')
+        name=new_folder_name, parent=CreateFolderParent(id='0')
     )
 
 
@@ -67,12 +111,64 @@ def upload_new_file() -> FileFull:
     new_file_name: str = ''.join([get_uuid(), '.pdf'])
     file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=new_file_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=file_content_stream,
     )
     return uploaded_files.entries[0]
+
+
+def get_or_create_classification(
+    classification_template: ClassificationTemplate,
+) -> ClassificationTemplateFieldsOptionsField:
+    client: BoxClient = get_default_client()
+    classifications: List[ClassificationTemplateFieldsOptionsField] = (
+        classification_template.fields[0].options
+    )
+    current_number_of_classifications: int = len(classifications)
+    if current_number_of_classifications == 0:
+        classification_template_with_new_classification: ClassificationTemplate = (
+            client.classifications.add_classification(
+                request_body=[
+                    AddClassificationRequestBody(
+                        op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
+                        field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
+                        data=AddClassificationRequestBodyDataField(
+                            key=get_uuid(),
+                            static_config=AddClassificationRequestBodyDataStaticConfigField(
+                                classification=AddClassificationRequestBodyDataStaticConfigClassificationField(
+                                    color_id=3,
+                                    classification_definition='Some description',
+                                )
+                            ),
+                        ),
+                    )
+                ]
+            )
+        )
+        return classification_template_with_new_classification.fields[0].options[0]
+    return classifications[0]
+
+
+def get_or_create_classification_template() -> ClassificationTemplate:
+    client: BoxClient = get_default_client()
+    try:
+        return client.classifications.get_classification_template()
+    except Exception:
+        return client.classifications.create_classification_template(
+            scope=CreateClassificationTemplateScope.ENTERPRISE.value,
+            template_key=CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
+            display_name=CreateClassificationTemplateDisplayName.CLASSIFICATION.value,
+            fields=[
+                CreateClassificationTemplateFields(
+                    type=CreateClassificationTemplateFieldsTypeField.ENUM.value,
+                    key=CreateClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
+                    display_name=CreateClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value,
+                    options=[],
+                )
+            ],
+        )
 
 
 def get_or_create_shield_information_barrier(

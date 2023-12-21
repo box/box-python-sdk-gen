@@ -10,7 +10,7 @@
 
 List the Box Skills metadata cards that are attached to a file.
 
-This operation is performed by calling function `get_file_metadata_global_box_skills_cards`.
+This operation is performed by calling function `get_box_skill_cards_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-metadata-global-box-skills-cards/).
@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.get_file_metadata_global_box_skills_cards(file_id=file.id)
+client.skills.get_box_skill_cards_on_file(file_id=file.id)
 ```
 
 ### Arguments
@@ -41,7 +41,7 @@ all of the metadata associated to the file.
 
 Applies one or more Box Skills metadata cards to a file.
 
-This operation is performed by calling function `create_file_metadata_global_box_skills_card`.
+This operation is performed by calling function `create_box_skill_cards_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-id-metadata-global-box-skills-cards/).
@@ -49,7 +49,7 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.create_file_metadata_global_box_skills_card(file_id=file.id, cards=[KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillFieldTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')])])
+client.skills.create_box_skill_cards_on_file(file_id=file.id, cards=[KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')])])
 ```
 
 ### Arguments
@@ -72,7 +72,7 @@ including the data that was applied to the template.
 
 Updates one or more Box Skills metadata cards to a file.
 
-This operation is performed by calling function `update_file_metadata_global_box_skills_card`.
+This operation is performed by calling function `update_box_skill_cards_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-metadata-global-box-skills-cards/).
@@ -80,15 +80,15 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.update_file_metadata_global_box_skills_card(file_id=file.id, request_body=[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(op=UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField.REPLACE.value, path='/cards/0', value=KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=updated_title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillFieldTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationFieldTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')]))])
+client.skills.update_box_skill_cards_on_file(file_id=file.id, request_body=[UpdateBoxSkillCardsOnFileRequestBody(op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value, path='/cards/0', value=KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=updated_title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')]))])
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- request_body `List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg]`
-  - Request body of updateFileMetadataGlobalBoxSkillsCard method
+- request_body `List[UpdateBoxSkillCardsOnFileRequestBody]`
+  - Request body of updateBoxSkillCardsOnFile method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -103,7 +103,7 @@ custom template data included.
 
 Removes any Box Skills cards metadata from a file.
 
-This operation is performed by calling function `delete_file_metadata_global_box_skills_card`.
+This operation is performed by calling function `delete_box_skill_cards_from_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-metadata-global-box-skills-cards/).
@@ -111,7 +111,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.delete_file_metadata_global_box_skills_card(file_id=file.id)
+client.skills.delete_box_skill_cards_from_file(file_id=file.id)
 ```
 
 ### Arguments
@@ -133,26 +133,26 @@ successfully deleted.
 An alternative method that can be used to overwrite and update all Box Skill
 metadata cards on a file.
 
-This operation is performed by calling function `update_skill_invocation_by_id`.
+This operation is performed by calling function `update_all_skill_cards_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-skill-invocations-id/).
 
-_Currently we don't have an example for calling `update_skill_invocation_by_id` in integration tests_
+_Currently we don't have an example for calling `update_all_skill_cards_on_file` in integration tests_
 
 ### Arguments
 
 - skill_id `str`
   - The ID of the skill to apply this metadata for. Example: "33243242"
-- status `UpdateSkillInvocationByIdStatusArg`
+- status `UpdateAllSkillCardsOnFileStatus`
   - Defines the status of this invocation. Set this to `success` when setting Skill cards.
-- metadata `UpdateSkillInvocationByIdMetadataArg`
+- metadata `UpdateAllSkillCardsOnFileMetadata`
   - The metadata to set for this skill. This is a list of Box Skills cards. These cards will overwrite any existing Box skill cards on the file.
-- file `UpdateSkillInvocationByIdFileArg`
+- file `UpdateAllSkillCardsOnFileFile`
   - The file to assign the cards to.
-- file_version `Optional[UpdateSkillInvocationByIdFileVersionArg]`
+- file_version `Optional[UpdateAllSkillCardsOnFileFileVersion]`
   - The optional file version to assign the cards to.
-- usage `Optional[UpdateSkillInvocationByIdUsageArg]`
+- usage `Optional[UpdateAllSkillCardsOnFileUsage]`
   - A descriptor that defines what items are affected by this call. Set this to the default values when setting a card to a `success` state, and leave it out in most other situations.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

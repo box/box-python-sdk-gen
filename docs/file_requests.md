@@ -57,7 +57,7 @@ client.file_requests.update_file_request_by_id(file_request_id=copied_file_reque
   - An optional new title for the file request. This can be used to change the title of the file request. This will default to the value on the existing file request.
 - description `Optional[str]`
   - An optional new description for the file request. This can be used to change the description of the file request. This will default to the value on the existing file request.
-- status `Optional[UpdateFileRequestByIdStatusArg]`
+- status `Optional[UpdateFileRequestByIdStatus]`
   - An optional new status of the file request. When the status is set to `inactive`, the file request will no longer accept new submissions, and any visitor to the file request URL will receive a `HTTP 404` status code. This will default to the value on the existing file request.
 - is_email_required `Optional[bool]`
   - Whether a file request submitter is required to provide their email address. When this setting is set to true, the Box UI will show an email field on the file request form. This will default to the value on the existing file request.
@@ -118,20 +118,20 @@ See the endpoint docs at
 <!-- sample post_file_requests_id_copy -->
 
 ```python
-client.file_requests.create_file_request_copy(file_request_id=file_request_id, folder=CreateFileRequestCopyFolderArg(id=file_request.folder.id, type=CreateFileRequestCopyFolderArgTypeField.FOLDER.value))
+client.file_requests.create_file_request_copy(file_request_id=file_request_id, folder=CreateFileRequestCopyFolder(id=file_request.folder.id, type=CreateFileRequestCopyFolderTypeField.FOLDER.value))
 ```
 
 ### Arguments
 
 - file_request_id `str`
   - The unique identifier that represent a file request. The ID for any file request can be determined by visiting a file request builder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/filerequest/123` the `file_request_id` is `123`. Example: "123"
-- folder `CreateFileRequestCopyFolderArg`
+- folder `CreateFileRequestCopyFolder`
   - The folder to associate the new file request to.
 - title `Optional[str]`
   - An optional new title for the file request. This can be used to change the title of the file request. This will default to the value on the existing file request.
 - description `Optional[str]`
   - An optional new description for the file request. This can be used to change the description of the file request. This will default to the value on the existing file request.
-- status `Optional[CreateFileRequestCopyStatusArg]`
+- status `Optional[CreateFileRequestCopyStatus]`
   - An optional new status of the file request. When the status is set to `inactive`, the file request will no longer accept new submissions, and any visitor to the file request URL will receive a `HTTP 404` status code. This will default to the value on the existing file request.
 - is_email_required `Optional[bool]`
   - Whether a file request submitter is required to provide their email address. When this setting is set to true, the Box UI will show an email field on the file request form. This will default to the value on the existing file request.

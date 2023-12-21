@@ -76,18 +76,16 @@ class APIException(Exception):
     network_response: Optional[Response] = None
 
     def __str__(self):
-        return '\n'.join(
-            (
-                f'Message: {self.message}',
-                f'Status: {self.status}',
-                f'Code: {self.code}',
-                f'Request ID: {self.request_id}',
-                f'Headers: {self.headers}',
-                f'URL: {self.url}',
-                f'Method: {self.method}',
-                f'Context Info: {self.context_info}',
-            )
-        )
+        return '\n'.join((
+            f'Message: {self.message}',
+            f'Status: {self.status}',
+            f'Code: {self.code}',
+            f'Request ID: {self.request_id}',
+            f'Headers: {self.headers}',
+            f'URL: {self.url}',
+            f'Method: {self.method}',
+            f'Context Info: {self.context_info}',
+        ))
 
 
 def fetch(url: str, options: FetchOptions) -> FetchResponse:

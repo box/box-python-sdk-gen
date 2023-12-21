@@ -39,25 +39,25 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetStoragePolicyAssignmentsResolvedForTypeArg(str, Enum):
+class GetStoragePolicyAssignmentsResolvedForType(str, Enum):
     USER = 'user'
     ENTERPRISE = 'enterprise'
 
 
-class CreateStoragePolicyAssignmentStoragePolicyArgTypeField(str, Enum):
+class CreateStoragePolicyAssignmentStoragePolicyTypeField(str, Enum):
     STORAGE_POLICY = 'storage_policy'
 
 
-class CreateStoragePolicyAssignmentStoragePolicyArg(BaseObject):
+class CreateStoragePolicyAssignmentStoragePolicy(BaseObject):
     def __init__(
         self,
-        type: CreateStoragePolicyAssignmentStoragePolicyArgTypeField,
+        type: CreateStoragePolicyAssignmentStoragePolicyTypeField,
         id: str,
         **kwargs
     ):
         """
         :param type: The type to assign.
-        :type type: CreateStoragePolicyAssignmentStoragePolicyArgTypeField
+        :type type: CreateStoragePolicyAssignmentStoragePolicyTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
         """
@@ -66,21 +66,18 @@ class CreateStoragePolicyAssignmentStoragePolicyArg(BaseObject):
         self.id = id
 
 
-class CreateStoragePolicyAssignmentAssignedToArgTypeField(str, Enum):
+class CreateStoragePolicyAssignmentAssignedToTypeField(str, Enum):
     USER = 'user'
     ENTERPRISE = 'enterprise'
 
 
-class CreateStoragePolicyAssignmentAssignedToArg(BaseObject):
+class CreateStoragePolicyAssignmentAssignedTo(BaseObject):
     def __init__(
-        self,
-        type: CreateStoragePolicyAssignmentAssignedToArgTypeField,
-        id: str,
-        **kwargs
+        self, type: CreateStoragePolicyAssignmentAssignedToTypeField, id: str, **kwargs
     ):
         """
         :param type: The type to assign the policy to.
-        :type type: CreateStoragePolicyAssignmentAssignedToArgTypeField
+        :type type: CreateStoragePolicyAssignmentAssignedToTypeField
         :param id: The ID of the user or enterprise
         :type id: str
         """
@@ -89,20 +86,20 @@ class CreateStoragePolicyAssignmentAssignedToArg(BaseObject):
         self.id = id
 
 
-class UpdateStoragePolicyAssignmentByIdStoragePolicyArgTypeField(str, Enum):
+class UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField(str, Enum):
     STORAGE_POLICY = 'storage_policy'
 
 
-class UpdateStoragePolicyAssignmentByIdStoragePolicyArg(BaseObject):
+class UpdateStoragePolicyAssignmentByIdStoragePolicy(BaseObject):
     def __init__(
         self,
-        type: UpdateStoragePolicyAssignmentByIdStoragePolicyArgTypeField,
+        type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField,
         id: str,
         **kwargs
     ):
         """
         :param type: The type to assign.
-        :type type: UpdateStoragePolicyAssignmentByIdStoragePolicyArgTypeField
+        :type type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
         """
@@ -115,14 +112,16 @@ class StoragePolicyAssignmentsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def get_storage_policy_assignments(
         self,
-        resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg,
+        resolved_for_type: GetStoragePolicyAssignmentsResolvedForType,
         resolved_for_id: str,
         marker: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -130,7 +129,7 @@ class StoragePolicyAssignmentsManager:
         """
         Fetches all the storage policy assignment for an enterprise or user.
         :param resolved_for_type: The target type to return assignments for
-        :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForTypeArg
+        :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForType
         :param resolved_for_id: The ID of the user or enterprise to return assignments for
         :type resolved_for_id: str
         :param marker: Defines the position marker at which to begin returning results. This is
@@ -149,7 +148,9 @@ class StoragePolicyAssignmentsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/storage_policy_assignments']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -163,18 +164,18 @@ class StoragePolicyAssignmentsManager:
 
     def create_storage_policy_assignment(
         self,
-        storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg,
-        assigned_to: CreateStoragePolicyAssignmentAssignedToArg,
+        storage_policy: CreateStoragePolicyAssignmentStoragePolicy,
+        assigned_to: CreateStoragePolicyAssignmentAssignedTo,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> StoragePolicyAssignment:
         """
         Creates a storage policy assignment for an enterprise or user.
         :param storage_policy: The storage policy to assign to the user or
             enterprise
-        :type storage_policy: CreateStoragePolicyAssignmentStoragePolicyArg
+        :type storage_policy: CreateStoragePolicyAssignmentStoragePolicy
         :param assigned_to: The user or enterprise to assign the storage
             policy to.
-        :type assigned_to: CreateStoragePolicyAssignmentAssignedToArg
+        :type assigned_to: CreateStoragePolicyAssignmentAssignedTo
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -186,7 +187,9 @@ class StoragePolicyAssignmentsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/storage_policy_assignments']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/storage_policy_assignments']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -217,7 +220,8 @@ class StoragePolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/storage_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/storage_policy_assignments/',
                 to_string(storage_policy_assignment_id),
             ]),
             FetchOptions(
@@ -233,7 +237,7 @@ class StoragePolicyAssignmentsManager:
     def update_storage_policy_assignment_by_id(
         self,
         storage_policy_assignment_id: str,
-        storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg,
+        storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> StoragePolicyAssignment:
         """
@@ -243,7 +247,7 @@ class StoragePolicyAssignmentsManager:
         :type storage_policy_assignment_id: str
         :param storage_policy: The storage policy to assign to the user or
             enterprise
-        :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicyArg
+        :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -253,7 +257,8 @@ class StoragePolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/storage_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/storage_policy_assignments/',
                 to_string(storage_policy_assignment_id),
             ]),
             FetchOptions(
@@ -301,7 +306,8 @@ class StoragePolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/storage_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/storage_policy_assignments/',
                 to_string(storage_policy_assignment_id),
             ]),
             FetchOptions(

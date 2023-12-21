@@ -14,12 +14,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `get_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo`.
+This operation is performed by calling function `get_classification_on_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `get_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo` in integration tests_
+<!-- sample get_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -46,12 +50,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `create_folder_metadata_enterprise_security_classification`.
+This operation is performed by calling function `add_classification_to_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `create_folder_metadata_enterprise_security_classification` in integration tests_
+<!-- sample post_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.folder_classifications.add_classification_to_folder(folder_id=folder.id, box_security_classification_key=classification.key)
+```
 
 ### Arguments
 
@@ -77,19 +85,23 @@ The classification can only be updated if a classification has already been
 applied to the folder before. When editing classifications, only values are
 defined for the enterprise will be accepted.
 
-This operation is performed by calling function `update_folder_metadata_enterprise_security_classification`.
+This operation is performed by calling function `update_classification_on_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `update_folder_metadata_enterprise_security_classification` in integration tests_
+<!-- sample put_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.folder_classifications.update_classification_on_folder(folder_id=folder.id, request_body=[UpdateClassificationOnFolderRequestBody(op=UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+```
 
 ### Arguments
 
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
-- request_body `List[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg]`
-  - Request body of updateFolderMetadataEnterpriseSecurityClassification method
+- request_body `List[UpdateClassificationOnFolderRequestBody]`
+  - Request body of updateClassificationOnFolder method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -107,12 +119,16 @@ This API can also be called by including the enterprise ID in the
 URL explicitly, for example
 `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
-This operation is performed by calling function `delete_folder_metadata_enterprise_security_classification`.
+This operation is performed by calling function `delete_classification_from_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
 
-_Currently we don't have an example for calling `delete_folder_metadata_enterprise_security_classification` in integration tests_
+<!-- sample delete_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
+```python
+client.folder_classifications.delete_classification_from_folder(folder_id=folder.id)
+```
 
 ### Arguments
 

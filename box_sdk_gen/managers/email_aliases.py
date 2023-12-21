@@ -39,8 +39,10 @@ class EmailAliasesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -63,7 +65,10 @@ class EmailAliasesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases'
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/email_aliases',
             ]),
             FetchOptions(
                 method='GET',
@@ -102,7 +107,10 @@ class EmailAliasesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/users/', to_string(user_id), '/email_aliases'
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/email_aliases',
             ]),
             FetchOptions(
                 method='POST',
@@ -138,7 +146,8 @@ class EmailAliasesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/users/',
+                self.network_session.base_urls.base_url,
+                '/users/',
                 to_string(user_id),
                 '/email_aliases/',
                 to_string(email_alias_id),

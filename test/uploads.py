@@ -2,13 +2,13 @@ from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.managers.uploads import UploadFileVersionAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileVersionAttributes
 
 from box_sdk_gen.utils import get_uuid
 
@@ -25,8 +25,8 @@ def testUploadFileAndFileVersion():
     new_file_name: str = get_uuid()
     file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=new_file_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=new_file_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=file_content_stream,
     )
@@ -36,7 +36,7 @@ def testUploadFileAndFileVersion():
     new_file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files_version: Files = client.uploads.upload_file_version(
         file_id=uploaded_file.id,
-        attributes=UploadFileVersionAttributesArg(name=new_file_version_name),
+        attributes=UploadFileVersionAttributes(name=new_file_version_name),
         file=new_file_content_stream,
     )
     new_file_version: FileFull = uploaded_files_version.entries[0]

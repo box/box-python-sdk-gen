@@ -90,16 +90,16 @@ See the endpoint docs at
 <!-- sample post_group_memberships -->
 
 ```python
-client.memberships.create_group_membership(user=CreateGroupMembershipUserArg(id=user.id), group=CreateGroupMembershipGroupArg(id=group.id))
+client.memberships.create_group_membership(user=CreateGroupMembershipUser(id=user.id), group=CreateGroupMembershipGroup(id=group.id))
 ```
 
 ### Arguments
 
-- user `CreateGroupMembershipUserArg`
+- user `CreateGroupMembershipUser`
   - The user to add to the group.
-- group `CreateGroupMembershipGroupArg`
+- group `CreateGroupMembershipGroup`
   - The group to add the user to.
-- role `Optional[CreateGroupMembershipRoleArg]`
+- role `Optional[CreateGroupMembershipRole]`
   - The role of the user in the group.
 - configurable_permissions `Optional[Dict[str, bool]]`
   - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`. Setting these permissions overwrites the default access levels of an admin. Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.
@@ -160,14 +160,14 @@ See the endpoint docs at
 <!-- sample put_group_memberships_id -->
 
 ```python
-client.memberships.update_group_membership_by_id(group_membership_id=group_membership.id, role=UpdateGroupMembershipByIdRoleArg.ADMIN.value)
+client.memberships.update_group_membership_by_id(group_membership_id=group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value)
 ```
 
 ### Arguments
 
 - group_membership_id `str`
   - The ID of the group membership. Example: "434534"
-- role `Optional[UpdateGroupMembershipByIdRoleArg]`
+- role `Optional[UpdateGroupMembershipByIdRole]`
   - The role of the user in the group.
 - configurable_permissions `Optional[Dict[str, bool]]`
   - Custom configuration for the permissions an admin if a group will receive. This option has no effect on members with a role of `member`. Setting these permissions overwrites the default access levels of an admin. Specifying a value of "null" for this object will disable all configurable permissions. Specifying permissions will set them accordingly, omitted permissions will be enabled by default.

@@ -37,8 +37,10 @@ class AvatarsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -57,7 +59,12 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/avatar',
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -97,7 +104,12 @@ class AvatarsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/avatar',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -135,7 +147,12 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id), '/avatar']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/avatar',
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

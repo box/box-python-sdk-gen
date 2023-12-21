@@ -10,16 +10,16 @@
 Returns the current terms of service text and settings
 for the enterprise.
 
-This operation is performed by calling function `get_term_of_services`.
+This operation is performed by calling function `get_terms_of_service`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-terms-of-services/).
 
-_Currently we don't have an example for calling `get_term_of_services` in integration tests_
+_Currently we don't have an example for calling `get_terms_of_service` in integration tests_
 
 ### Arguments
 
-- tos_type `Optional[GetTermOfServicesTosTypeArg]`
+- tos_type `Optional[GetTermsOfServiceTosType]`
   - Limits the results to the terms of service of the given type.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -36,18 +36,18 @@ enterprise.
 Creates a terms of service for a given enterprise
 and type of user.
 
-This operation is performed by calling function `create_term_of_service`.
+This operation is performed by calling function `create_terms_of_service`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-terms-of-services/).
 
-_Currently we don't have an example for calling `create_term_of_service` in integration tests_
+_Currently we don't have an example for calling `create_terms_of_service` in integration tests_
 
 ### Arguments
 
-- status `CreateTermOfServiceStatusArg`
+- status `CreateTermsOfServiceStatus`
   - Whether this terms of service is active.
-- tos_type `Optional[CreateTermOfServiceTosTypeArg]`
+- tos_type `Optional[CreateTermsOfServiceTosType]`
   - The type of user to set the terms of service for.
 - text `str`
   - The terms of service text to display to users. The text can be set to empty if the `status` is set to `disabled`.
@@ -64,12 +64,12 @@ Returns a new task object
 
 Fetches a specific terms of service.
 
-This operation is performed by calling function `get_term_of_service_by_id`.
+This operation is performed by calling function `get_terms_of_service_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-terms-of-services-id/).
 
-_Currently we don't have an example for calling `get_term_of_service_by_id` in integration tests_
+_Currently we don't have an example for calling `get_terms_of_service_by_id` in integration tests_
 
 ### Arguments
 
@@ -88,18 +88,18 @@ Returns a terms of service object.
 
 Updates a specific terms of service.
 
-This operation is performed by calling function `update_term_of_service_by_id`.
+This operation is performed by calling function `update_terms_of_service_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-terms-of-services-id/).
 
-_Currently we don't have an example for calling `update_term_of_service_by_id` in integration tests_
+_Currently we don't have an example for calling `update_terms_of_service_by_id` in integration tests_
 
 ### Arguments
 
 - terms_of_service_id `str`
   - The ID of the terms of service. Example: "324234"
-- status `UpdateTermOfServiceByIdStatusArg`
+- status `UpdateTermsOfServiceByIdStatus`
   - Whether this terms of service is active.
 - text `str`
   - The terms of service text to display to users. The text can be set to empty if the `status` is set to `disabled`.

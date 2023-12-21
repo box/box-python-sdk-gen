@@ -23,7 +23,7 @@ _Currently we don't have an example for calling `get_retention_policy_assignment
 
 - retention_policy_id `str`
   - The ID of the retention policy. Example: "982312"
-- type `Optional[GetRetentionPolicyAssignmentsTypeArg]`
+- type `Optional[GetRetentionPolicyAssignmentsType]`
   - The type of the retention policy assignment to retrieve.
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -56,9 +56,9 @@ _Currently we don't have an example for calling `create_retention_policy_assignm
 
 - policy_id `str`
   - The ID of the retention policy to assign
-- assign_to `CreateRetentionPolicyAssignmentAssignToArg`
+- assign_to `CreateRetentionPolicyAssignmentAssignTo`
   - The item to assign the policy to
-- filter_fields `Optional[List[CreateRetentionPolicyAssignmentFilterFieldsArg]]`
+- filter_fields `Optional[List[CreateRetentionPolicyAssignmentFilterFields]]`
   - If the `assign_to` type is `metadata_template`, then optionally add the `filter_fields` parameter which will require an array of objects with a field entry and a value entry. Currently only one object of `field` and `value` is supported.
 - start_date_field `Optional[str]`
   - The date the retention policy assignment begins. If the `assigned_to` type is `metadata_template`, this field can be a date field's metadata attribute key id.
@@ -127,12 +127,12 @@ is successfully deleted.
 
 Returns a list of files under retention for a retention policy assignment.
 
-This operation is performed by calling function `get_retention_policy_assignment_file_under_retention`.
+This operation is performed by calling function `get_files_under_retention_policy_assignment`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policy-assignments-id-files-under-retention/).
 
-_Currently we don't have an example for calling `get_retention_policy_assignment_file_under_retention` in integration tests_
+_Currently we don't have an example for calling `get_files_under_retention_policy_assignment` in integration tests_
 
 ### Arguments
 
@@ -157,12 +157,12 @@ specified retention policy assignment.
 Returns a list of file versions under retention for a retention policy
 assignment.
 
-This operation is performed by calling function `get_retention_policy_assignment_file_version_under_retention`.
+This operation is performed by calling function `get_file_versions_under_retention_policy_assignment`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policy-assignments-id-file-versions-under-retention/).
 
-_Currently we don't have an example for calling `get_retention_policy_assignment_file_version_under_retention` in integration tests_
+_Currently we don't have an example for calling `get_file_versions_under_retention_policy_assignment` in integration tests_
 
 ### Arguments
 

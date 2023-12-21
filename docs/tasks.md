@@ -51,20 +51,20 @@ See the endpoint docs at
 <!-- sample post_tasks -->
 
 ```python
-client.tasks.create_task(item=CreateTaskItemArg(type=CreateTaskItemArgTypeField.FILE.value, id=file.id), action=CreateTaskActionArg.REVIEW.value, message='test message', due_at='2035-01-01T00:00:00Z', completion_rule=CreateTaskCompletionRuleArg.ALL_ASSIGNEES.value)
+client.tasks.create_task(item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id), action=CreateTaskAction.REVIEW.value, message='test message', due_at='2035-01-01T00:00:00Z', completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value)
 ```
 
 ### Arguments
 
-- item `CreateTaskItemArg`
+- item `CreateTaskItem`
   - The file to attach the task to.
-- action `Optional[CreateTaskActionArg]`
+- action `Optional[CreateTaskAction]`
   - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
 - message `Optional[str]`
   - An optional message to include with the task.
 - due_at `Optional[str]`
   - Defines when the task is due. Defaults to `null` if not provided.
-- completion_rule `Optional[CreateTaskCompletionRuleArg]`
+- completion_rule `Optional[CreateTaskCompletionRule]`
   - Defines which assignees need to complete this task before the task is considered completed. _ `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. _ `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -123,13 +123,13 @@ client.tasks.update_task_by_id(task_id=task.id, message='updated message')
 
 - task_id `str`
   - The ID of the task. Example: "12345"
-- action `Optional[UpdateTaskByIdActionArg]`
+- action `Optional[UpdateTaskByIdAction]`
   - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
 - message `Optional[str]`
   - The message included with the task.
 - due_at `Optional[str]`
   - When the task is due at.
-- completion_rule `Optional[UpdateTaskByIdCompletionRuleArg]`
+- completion_rule `Optional[UpdateTaskByIdCompletionRule]`
   - Defines which assignees need to complete this task before the task is considered completed. _ `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. _ `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

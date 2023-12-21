@@ -39,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class RestoreWeblinkFromTrashParentArg(BaseObject):
+class RestoreWeblinkFromTrashParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -53,8 +53,10 @@ class TrashedWebLinksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -62,7 +64,7 @@ class TrashedWebLinksManager:
         self,
         web_link_id: str,
         name: Optional[str] = None,
-        parent: Optional[RestoreWeblinkFromTrashParentArg] = None,
+        parent: Optional[RestoreWeblinkFromTrashParent] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashWebLinkRestored:
@@ -97,7 +99,11 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/web_links/', to_string(web_link_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+            ]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -111,7 +117,7 @@ class TrashedWebLinksManager:
         )
         return deserialize(response.data, TrashWebLinkRestored)
 
-    def get_web_link_trash(
+    def get_trashed_web_link_by_id(
         self,
         web_link_id: str,
         fields: Optional[List[str]] = None,
@@ -140,7 +146,10 @@ class TrashedWebLinksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash'
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+                '/trash',
             ]),
             FetchOptions(
                 method='GET',
@@ -153,7 +162,7 @@ class TrashedWebLinksManager:
         )
         return deserialize(response.data, TrashWebLink)
 
-    def delete_web_link_trash(
+    def delete_trashed_web_link_by_id(
         self, web_link_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -172,7 +181,10 @@ class TrashedWebLinksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/web_links/', to_string(web_link_id), '/trash'
+                self.network_session.base_urls.base_url,
+                '/web_links/',
+                to_string(web_link_id),
+                '/trash',
             ]),
             FetchOptions(
                 method='DELETE',

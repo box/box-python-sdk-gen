@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateCollaborationWhitelistEntryDirectionArg(str, Enum):
+class CreateCollaborationWhitelistEntryDirection(str, Enum):
     INBOUND = 'inbound'
     OUTBOUND = 'outbound'
     BOTH = 'both'
@@ -47,8 +47,10 @@ class CollaborationAllowlistEntriesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -74,12 +76,15 @@ class CollaborationAllowlistEntriesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_entries',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -94,7 +99,7 @@ class CollaborationAllowlistEntriesManager:
     def create_collaboration_whitelist_entry(
         self,
         domain: str,
-        direction: CreateCollaborationWhitelistEntryDirectionArg,
+        direction: CreateCollaborationWhitelistEntryDirection,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> CollaborationAllowlistEntry:
         """
@@ -105,7 +110,7 @@ class CollaborationAllowlistEntriesManager:
         :param domain: The domain to add to the list of allowed domains.
         :type domain: str
         :param direction: The direction in which to allow collaborations.
-        :type direction: CreateCollaborationWhitelistEntryDirectionArg
+        :type direction: CreateCollaborationWhitelistEntryDirection
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -114,7 +119,10 @@ class CollaborationAllowlistEntriesManager:
         request_body: Dict = {'domain': domain, 'direction': direction}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaboration_whitelist_entries']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_entries',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -148,7 +156,8 @@ class CollaborationAllowlistEntriesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaboration_whitelist_entries/',
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_entries/',
                 to_string(collaboration_whitelist_entry_id),
             ]),
             FetchOptions(
@@ -182,7 +191,8 @@ class CollaborationAllowlistEntriesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaboration_whitelist_entries/',
+                self.network_session.base_urls.base_url,
+                '/collaboration_whitelist_entries/',
                 to_string(collaboration_whitelist_entry_id),
             ]),
             FetchOptions(

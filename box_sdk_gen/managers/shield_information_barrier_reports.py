@@ -43,8 +43,10 @@ class ShieldInformationBarrierReportsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -77,7 +79,10 @@ class ShieldInformationBarrierReportsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/shield_information_barrier_reports']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_reports',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -104,7 +109,10 @@ class ShieldInformationBarrierReportsManager:
         request_body: Dict = {'shield_information_barrier': shield_information_barrier}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/shield_information_barrier_reports']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_reports',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -135,7 +143,8 @@ class ShieldInformationBarrierReportsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_reports/',
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_reports/',
                 to_string(shield_information_barrier_report_id),
             ]),
             FetchOptions(

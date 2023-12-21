@@ -12,11 +12,11 @@ from box_sdk_gen.schemas import GroupFull
 
 from box_sdk_gen.schemas import GroupMembership
 
-from box_sdk_gen.managers.memberships import CreateGroupMembershipUserArg
+from box_sdk_gen.managers.memberships import CreateGroupMembershipUser
 
-from box_sdk_gen.managers.memberships import CreateGroupMembershipGroupArg
+from box_sdk_gen.managers.memberships import CreateGroupMembershipGroup
 
-from box_sdk_gen.managers.memberships import UpdateGroupMembershipByIdRoleArg
+from box_sdk_gen.managers.memberships import UpdateGroupMembershipByIdRole
 
 from box_sdk_gen.utils import get_uuid
 
@@ -39,8 +39,8 @@ def testMemberships():
     )
     assert group_memberships.total_count == 0
     group_membership: GroupMembership = client.memberships.create_group_membership(
-        user=CreateGroupMembershipUserArg(id=user.id),
-        group=CreateGroupMembershipGroupArg(id=group.id),
+        user=CreateGroupMembershipUser(id=user.id),
+        group=CreateGroupMembershipGroup(id=group.id),
     )
     assert group_membership.user.id == user.id
     assert group_membership.group.id == group.id
@@ -54,7 +54,7 @@ def testMemberships():
     updated_group_membership: GroupMembership = (
         client.memberships.update_group_membership_by_id(
             group_membership_id=group_membership.id,
-            role=UpdateGroupMembershipByIdRoleArg.ADMIN.value,
+            role=UpdateGroupMembershipByIdRole.ADMIN.value,
         )
     )
     assert updated_group_membership.id == group_membership.id

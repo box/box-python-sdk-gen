@@ -22,7 +22,7 @@ _Currently we don't have an example for calling `get_file_version_retentions` in
   - Filters results by file versions with this ID.
 - policy_id `Optional[str]`
   - Filters results by the retention policy with this ID.
-- disposition_action `Optional[GetFileVersionRetentionsDispositionActionArg]`
+- disposition_action `Optional[GetFileVersionRetentionsDispositionAction]`
   - Filters results by the retention policy with this disposition action.
 - disposition_before `Optional[str]`
   - Filters results by files that will have their disposition come into effect before this date.

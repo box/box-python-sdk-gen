@@ -45,14 +45,14 @@ See the endpoint docs at
 <!-- sample put_folders_id_watermark -->
 
 ```python
-client.folder_watermarks.update_folder_watermark(folder_id=folder.id, watermark=UpdateFolderWatermarkWatermarkArg(imprint=UpdateFolderWatermarkWatermarkArgImprintField.DEFAULT.value))
+client.folder_watermarks.update_folder_watermark(folder_id=folder.id, watermark=UpdateFolderWatermarkWatermark(imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value))
 ```
 
 ### Arguments
 
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
-- watermark `UpdateFolderWatermarkWatermarkArg`
+- watermark `UpdateFolderWatermarkWatermark`
   - The watermark to imprint on the folder
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

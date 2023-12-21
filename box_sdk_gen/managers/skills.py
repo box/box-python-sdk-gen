@@ -49,14 +49,14 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField(str, Enum):
+class UpdateBoxSkillCardsOnFileRequestBodyOpField(str, Enum):
     REPLACE = 'replace'
 
 
-class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
+class UpdateBoxSkillCardsOnFileRequestBody(BaseObject):
     def __init__(
         self,
-        op: Optional[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField] = None,
+        op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField] = None,
         path: Optional[str] = None,
         value: Optional[
             Union[
@@ -70,7 +70,7 @@ class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
     ):
         """
         :param op: `replace`
-        :type op: Optional[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArgOpField], optional
+        :type op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField], optional
         :param path: The JSON Path that represents the card to replace. In most cases
             this will be in the format `/cards/{index}` where `index` is the
             zero-indexed position of the card in the list of cards.
@@ -82,7 +82,7 @@ class UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg(BaseObject):
         self.value = value
 
 
-class UpdateSkillInvocationByIdStatusArg(str, Enum):
+class UpdateAllSkillCardsOnFileStatus(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
@@ -90,7 +90,7 @@ class UpdateSkillInvocationByIdStatusArg(str, Enum):
     PERMANENT_FAILURE = 'permanent_failure'
 
 
-class UpdateSkillInvocationByIdMetadataArg(BaseObject):
+class UpdateAllSkillCardsOnFileMetadata(BaseObject):
     def __init__(
         self,
         cards: Optional[
@@ -113,20 +113,20 @@ class UpdateSkillInvocationByIdMetadataArg(BaseObject):
         self.cards = cards
 
 
-class UpdateSkillInvocationByIdFileArgTypeField(str, Enum):
+class UpdateAllSkillCardsOnFileFileTypeField(str, Enum):
     FILE = 'file'
 
 
-class UpdateSkillInvocationByIdFileArg(BaseObject):
+class UpdateAllSkillCardsOnFileFile(BaseObject):
     def __init__(
         self,
-        type: Optional[UpdateSkillInvocationByIdFileArgTypeField] = None,
+        type: Optional[UpdateAllSkillCardsOnFileFileTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: `file`
-        :type type: Optional[UpdateSkillInvocationByIdFileArgTypeField], optional
+        :type type: Optional[UpdateAllSkillCardsOnFileFileTypeField], optional
         :param id: The ID of the file
         :type id: Optional[str], optional
         """
@@ -135,20 +135,20 @@ class UpdateSkillInvocationByIdFileArg(BaseObject):
         self.id = id
 
 
-class UpdateSkillInvocationByIdFileVersionArgTypeField(str, Enum):
+class UpdateAllSkillCardsOnFileFileVersionTypeField(str, Enum):
     FILE_VERSION = 'file_version'
 
 
-class UpdateSkillInvocationByIdFileVersionArg(BaseObject):
+class UpdateAllSkillCardsOnFileFileVersion(BaseObject):
     def __init__(
         self,
-        type: Optional[UpdateSkillInvocationByIdFileVersionArgTypeField] = None,
+        type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: `file_version`
-        :type type: Optional[UpdateSkillInvocationByIdFileVersionArgTypeField], optional
+        :type type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField], optional
         :param id: The ID of the file version
         :type id: Optional[str], optional
         """
@@ -157,7 +157,7 @@ class UpdateSkillInvocationByIdFileVersionArg(BaseObject):
         self.id = id
 
 
-class UpdateSkillInvocationByIdUsageArg(BaseObject):
+class UpdateAllSkillCardsOnFileUsage(BaseObject):
     def __init__(
         self, unit: Optional[str] = None, value: Optional[float] = None, **kwargs
     ):
@@ -176,12 +176,14 @@ class SkillsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
-    def get_file_metadata_global_box_skills_cards(
+    def get_box_skill_cards_on_file(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SkillCardsMetadata:
         """
@@ -202,7 +204,8 @@ class SkillsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/global/boxSkillsCards',
             ]),
@@ -216,7 +219,7 @@ class SkillsManager:
         )
         return deserialize(response.data, SkillCardsMetadata)
 
-    def create_file_metadata_global_box_skills_card(
+    def create_box_skill_cards_on_file(
         self,
         file_id: str,
         cards: List[
@@ -250,7 +253,8 @@ class SkillsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/global/boxSkillsCards',
             ]),
@@ -266,10 +270,10 @@ class SkillsManager:
         )
         return deserialize(response.data, SkillCardsMetadata)
 
-    def update_file_metadata_global_box_skills_card(
+    def update_box_skill_cards_on_file(
         self,
         file_id: str,
-        request_body: List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg],
+        request_body: List[UpdateBoxSkillCardsOnFileRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> SkillCardsMetadata:
         """
@@ -282,8 +286,8 @@ class SkillsManager:
             the `file_id` is `123`.
             Example: "12345"
         :type file_id: str
-        :param request_body: Request body of updateFileMetadataGlobalBoxSkillsCard method
-        :type request_body: List[UpdateFileMetadataGlobalBoxSkillsCardRequestBodyArg]
+        :param request_body: Request body of updateBoxSkillCardsOnFile method
+        :type request_body: List[UpdateBoxSkillCardsOnFileRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -292,7 +296,8 @@ class SkillsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/global/boxSkillsCards',
             ]),
@@ -308,7 +313,7 @@ class SkillsManager:
         )
         return deserialize(response.data, SkillCardsMetadata)
 
-    def delete_file_metadata_global_box_skills_card(
+    def delete_box_skill_cards_from_file(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -329,7 +334,8 @@ class SkillsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/metadata/global/boxSkillsCards',
             ]),
@@ -343,14 +349,14 @@ class SkillsManager:
         )
         return None
 
-    def update_skill_invocation_by_id(
+    def update_all_skill_cards_on_file(
         self,
         skill_id: str,
-        status: UpdateSkillInvocationByIdStatusArg,
-        metadata: UpdateSkillInvocationByIdMetadataArg,
-        file: UpdateSkillInvocationByIdFileArg,
-        file_version: Optional[UpdateSkillInvocationByIdFileVersionArg] = None,
-        usage: Optional[UpdateSkillInvocationByIdUsageArg] = None,
+        status: UpdateAllSkillCardsOnFileStatus,
+        metadata: UpdateAllSkillCardsOnFileMetadata,
+        file: UpdateAllSkillCardsOnFileFile,
+        file_version: Optional[UpdateAllSkillCardsOnFileFileVersion] = None,
+        usage: Optional[UpdateAllSkillCardsOnFileUsage] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
         """
@@ -362,19 +368,19 @@ class SkillsManager:
             Example: "33243242"
         :type skill_id: str
         :param status: Defines the status of this invocation. Set this to `success` when setting Skill cards.
-        :type status: UpdateSkillInvocationByIdStatusArg
+        :type status: UpdateAllSkillCardsOnFileStatus
         :param metadata: The metadata to set for this skill. This is a list of
             Box Skills cards. These cards will overwrite any existing Box
             skill cards on the file.
-        :type metadata: UpdateSkillInvocationByIdMetadataArg
+        :type metadata: UpdateAllSkillCardsOnFileMetadata
         :param file: The file to assign the cards to.
-        :type file: UpdateSkillInvocationByIdFileArg
+        :type file: UpdateAllSkillCardsOnFileFile
         :param file_version: The optional file version to assign the cards to.
-        :type file_version: Optional[UpdateSkillInvocationByIdFileVersionArg], optional
+        :type file_version: Optional[UpdateAllSkillCardsOnFileFileVersion], optional
         :param usage: A descriptor that defines what items are affected by this call.
             Set this to the default values when setting a card to a `success`
             state, and leave it out in most other situations.
-        :type usage: Optional[UpdateSkillInvocationByIdUsageArg], optional
+        :type usage: Optional[UpdateAllSkillCardsOnFileUsage], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -390,7 +396,9 @@ class SkillsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/skill_invocations/', to_string(skill_id)
+                self.network_session.base_urls.base_url,
+                '/skill_invocations/',
+                to_string(skill_id),
             ]),
             FetchOptions(
                 method='PUT',

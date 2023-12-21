@@ -13,7 +13,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-reports/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_reports` in integration tests_
+<!-- sample get_shield_information_barrier_reports -->
+
+```python
+client.shield_information_barrier_reports.get_shield_information_barrier_reports(shield_information_barrier_id=barrier_id)
+```
 
 ### Arguments
 
@@ -41,7 +45,11 @@ This operation is performed by calling function `create_shield_information_barri
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-shield-information-barrier-reports/).
 
-_Currently we don't have an example for calling `create_shield_information_barrier_report` in integration tests_
+<!-- sample post_shield_information_barrier_reports -->
+
+```python
+client.shield_information_barrier_reports.create_shield_information_barrier_report(shield_information_barrier=ShieldInformationBarrierBase(id=barrier_id, type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value))
+```
 
 ### Arguments
 
@@ -65,7 +73,11 @@ This operation is performed by calling function `get_shield_information_barrier_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shield-information-barrier-reports-id/).
 
-_Currently we don't have an example for calling `get_shield_information_barrier_report_by_id` in integration tests_
+<!-- sample get_shield_information_barrier_reports_id -->
+
+```python
+client.shield_information_barrier_reports.get_shield_information_barrier_report_by_id(shield_information_barrier_report_id=created_report.id)
+```
 
 ### Arguments
 

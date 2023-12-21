@@ -49,12 +49,12 @@ See the endpoint docs at
 <!-- sample post_collaboration_whitelist_exempt_targets -->
 
 ```python
-client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(user=CreateCollaborationWhitelistExemptTargetUserArg(id=user.id))
+client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(user=CreateCollaborationWhitelistExemptTargetUser(id=user.id))
 ```
 
 ### Arguments
 
-- user `CreateCollaborationWhitelistExemptTargetUserArg`
+- user `CreateCollaborationWhitelistExemptTargetUser`
   - The user to exempt.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

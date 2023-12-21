@@ -37,7 +37,7 @@ client.trashed_folders.restore_folder_from_trash(folder_id=folder.id)
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - name `Optional[str]`
   - An optional new name for the folder.
-- parent `Optional[RestoreFolderFromTrashParentArg]`
+- parent `Optional[RestoreFolderFromTrashParent]`
   -
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -64,7 +64,7 @@ To list all items that have been moved to the trash, please
 use the [`GET /folders/trash/items`](e://get-folders-trash-items/)
 API.
 
-This operation is performed by calling function `get_folder_trash`.
+This operation is performed by calling function `get_trashed_folder_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-trash/).
@@ -72,7 +72,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_trash -->
 
 ```python
-client.trashed_folders.get_folder_trash(folder_id=folder.id)
+client.trashed_folders.get_trashed_folder_by_id(folder_id=folder.id)
 ```
 
 ### Arguments
@@ -97,7 +97,7 @@ was moved to the trash.
 Permanently deletes a folder that is in the trash.
 This action cannot be undone.
 
-This operation is performed by calling function `delete_folder_trash`.
+This operation is performed by calling function `delete_trashed_folder_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-folders-id-trash/).
@@ -105,7 +105,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_trash -->
 
 ```python
-client.trashed_folders.delete_folder_trash(folder_id=folder.id)
+client.trashed_folders.delete_trashed_folder_by_id(folder_id=folder.id)
 ```
 
 ### Arguments

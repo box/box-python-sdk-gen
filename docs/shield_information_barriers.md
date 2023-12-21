@@ -37,7 +37,7 @@ Returns the shield information barrier object.
 
 Change status of shield information barrier with the specified ID.
 
-This operation is performed by calling function `create_shield_information_barrier_change_status`.
+This operation is performed by calling function `update_shield_information_barrier_status`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-shield-information-barriers-change-status/).
@@ -45,14 +45,14 @@ See the endpoint docs at
 <!-- sample post_shield_information_barriers_change_status -->
 
 ```python
-client.shield_information_barriers.create_shield_information_barrier_change_status(id=barrier_id, status=CreateShieldInformationBarrierChangeStatusStatusArg.DISABLED.value)
+client.shield_information_barriers.update_shield_information_barrier_status(id=barrier_id, status=UpdateShieldInformationBarrierStatusStatus.DISABLED.value)
 ```
 
 ### Arguments
 
 - id `str`
   - The ID of the shield information barrier.
-- status `CreateShieldInformationBarrierChangeStatusStatusArg`
+- status `UpdateShieldInformationBarrierStatusStatus`
   - The desired status for the shield information barrier.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

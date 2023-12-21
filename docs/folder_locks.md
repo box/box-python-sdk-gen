@@ -52,14 +52,14 @@ See the endpoint docs at
 <!-- sample post_folder_locks -->
 
 ```python
-client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedOperationsArg(move=True, delete=True), folder=CreateFolderLockFolderArg(id=folder.id, type='folder'))
+client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedOperations(move=True, delete=True), folder=CreateFolderLockFolder(id=folder.id, type='folder'))
 ```
 
 ### Arguments
 
-- locked_operations `Optional[CreateFolderLockLockedOperationsArg]`
+- locked_operations `Optional[CreateFolderLockLockedOperations]`
   - The operations to lock for the folder. If `locked_operations` is included in the request, both `move` and `delete` must also be included and both set to `true`.
-- folder `CreateFolderLockFolderArg`
+- folder `CreateFolderLockFolder`
   - The folder to apply the lock to.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

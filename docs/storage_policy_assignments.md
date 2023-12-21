@@ -21,7 +21,7 @@ _Currently we don't have an example for calling `get_storage_policy_assignments`
 
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
-- resolved_for_type `GetStoragePolicyAssignmentsResolvedForTypeArg`
+- resolved_for_type `GetStoragePolicyAssignmentsResolvedForType`
   - The target type to return assignments for
 - resolved_for_id `str`
   - The ID of the user or enterprise to return assignments for
@@ -48,9 +48,9 @@ _Currently we don't have an example for calling `create_storage_policy_assignmen
 
 ### Arguments
 
-- storage_policy `CreateStoragePolicyAssignmentStoragePolicyArg`
+- storage_policy `CreateStoragePolicyAssignmentStoragePolicy`
   - The storage policy to assign to the user or enterprise
-- assigned_to `CreateStoragePolicyAssignmentAssignedToArg`
+- assigned_to `CreateStoragePolicyAssignmentAssignedTo`
   - The user or enterprise to assign the storage policy to.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -100,7 +100,7 @@ _Currently we don't have an example for calling `update_storage_policy_assignmen
 
 - storage_policy_assignment_id `str`
   - The ID of the storage policy assignment. Example: "932483"
-- storage_policy `UpdateStoragePolicyAssignmentByIdStoragePolicyArg`
+- storage_policy `UpdateStoragePolicyAssignmentByIdStoragePolicy`
   - The storage policy to assign to the user or enterprise
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

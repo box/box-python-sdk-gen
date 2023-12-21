@@ -4,7 +4,7 @@ from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.transfer import TransferOwnedFolderOwnedByArg
+from box_sdk_gen.managers.transfer import TransferOwnedFolderOwnedBy
 
 from box_sdk_gen.utils import get_uuid
 
@@ -21,7 +21,7 @@ def testTransferUserContent():
     current_user: UserFull = client.users.get_user_me()
     transfered_folder: FolderFull = client.transfer.transfer_owned_folder(
         user_id=new_user.id,
-        owned_by=TransferOwnedFolderOwnedByArg(id=current_user.id),
+        owned_by=TransferOwnedFolderOwnedBy(id=current_user.id),
         notify=False,
     )
     assert transfered_folder.owned_by.id == current_user.id

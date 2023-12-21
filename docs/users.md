@@ -31,7 +31,7 @@ client.users.get_users()
 
 - filter_term `Optional[str]`
   - Limits the results to only users who's `name` or `login` start with the search term. For externally managed users, the search term needs to completely match the in order to find the user, and it will only return one user at a time.
-- user_type `Optional[GetUsersUserTypeArg]`
+- user_type `Optional[GetUsersUserType]`
   - Limits the results to the kind of user specified. _ `all` returns every kind of user for whom the `login` or `name` partially matches the `filter_term`. It will only return an external user if the login matches the `filter_term` completely, and in that case it will only return that user. _ `managed` returns all managed and app users for whom the `login` or `name` partially matches the `filter_term`. \* `external` returns all external users for whom the `login` matches the `filter_term` exactly.
 - external_app_user_id `Optional[str]`
   - Limits the results to app users with the given `external_app_user_id` value. When creating an app user, an `external_app_user_id` value can be set. This value can then be used in this endpoint to find any users that match that `external_app_user_id` value.
@@ -79,7 +79,7 @@ client.users.create_user(name=user_name, login=user_login, is_platform_access_on
   - The email address the user uses to log in Required, unless `is_platform_access_only` is set to `true`.
 - is_platform_access_only `Optional[bool]`
   - Specifies that the user is an app user.
-- role `Optional[CreateUserRoleArg]`
+- role `Optional[CreateUserRole]`
   - The user’s enterprise role
 - language `Optional[str]`
   - The language of the user, formatted in modified version of the [ISO 639-1](/guides/api-calls/language-codes) format.
@@ -105,7 +105,7 @@ client.users.create_user(name=user_name, login=user_login, is_platform_access_on
   - Whether to exempt the user from enterprise device limits
 - is_exempt_from_login_verification `Optional[bool]`
   - Whether the user must use two-factor authentication
-- status `Optional[CreateUserStatusArg]`
+- status `Optional[CreateUserStatus]`
   - The user's account status
 - external_app_user_id `Optional[str]`
   - An external identifier for an app user, which can be used to look up the user. This can be used to tie user IDs from external identity providers to Box users.
@@ -231,7 +231,7 @@ client.users.update_user_by_id(user_id=user.id, name=updated_user_name)
   - The name of the user
 - login `Optional[str]`
   - The email address the user uses to log in Note: If the target user's email is not confirmed, then the primary login address cannot be changed.
-- role `Optional[UpdateUserByIdRoleArg]`
+- role `Optional[UpdateUserByIdRole]`
   - The user’s enterprise role
 - language `Optional[str]`
   - The language of the user, formatted in modified version of the [ISO 639-1](/guides/api-calls/language-codes) format.
@@ -257,11 +257,11 @@ client.users.update_user_by_id(user_id=user.id, name=updated_user_name)
   - Whether the user must use two-factor authentication
 - is_password_reset_required `Optional[bool]`
   - Whether the user is required to reset their password
-- status `Optional[UpdateUserByIdStatusArg]`
+- status `Optional[UpdateUserByIdStatus]`
   - The user's account status
 - space_amount `Optional[int]`
   - The user’s total available space in bytes. Set this to `-1` to indicate unlimited storage.
-- notification_email `Optional[UpdateUserByIdNotificationEmailArg]`
+- notification_email `Optional[UpdateUserByIdNotificationEmail]`
   - An alternate notification email address to which email notifications are sent. When it's confirmed, this will be the email address to which notifications are sent instead of to the primary email address. Set this value to `null` to remove the notification email.
 - external_app_user_id `Optional[str]`
   - An external identifier for an app user, which can be used to look up the user. This can be used to tie user IDs from external identity providers to Box users. Note: In order to update this field, you need to request a token using the application that created the app user.

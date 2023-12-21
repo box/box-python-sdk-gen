@@ -41,30 +41,30 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateWebhookTargetArgTypeField(str, Enum):
+class CreateWebhookTargetTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
-class CreateWebhookTargetArg(BaseObject):
+class CreateWebhookTarget(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[CreateWebhookTargetArgTypeField] = None,
+        type: Optional[CreateWebhookTargetTypeField] = None,
         **kwargs
     ):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Optional[CreateWebhookTargetArgTypeField], optional
+        :type type: Optional[CreateWebhookTargetTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class CreateWebhookTriggersArg(str, Enum):
+class CreateWebhookTriggers(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
     FILE_PREVIEWED = 'FILE.PREVIEWED'
     FILE_DOWNLOADED = 'FILE.DOWNLOADED'
@@ -107,30 +107,30 @@ class CreateWebhookTriggersArg(str, Enum):
     SIGN_REQUEST_SIGNER_EMAIL_BOUNCED = 'SIGN_REQUEST.SIGNER_EMAIL_BOUNCED'
 
 
-class UpdateWebhookByIdTargetArgTypeField(str, Enum):
+class UpdateWebhookByIdTargetTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
-class UpdateWebhookByIdTargetArg(BaseObject):
+class UpdateWebhookByIdTarget(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[UpdateWebhookByIdTargetArgTypeField] = None,
+        type: Optional[UpdateWebhookByIdTargetTypeField] = None,
         **kwargs
     ):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Optional[UpdateWebhookByIdTargetArgTypeField], optional
+        :type type: Optional[UpdateWebhookByIdTargetTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class UpdateWebhookByIdTriggersArg(str, Enum):
+class UpdateWebhookByIdTriggers(str, Enum):
     FILE_UPLOADED = 'FILE.UPLOADED'
     FILE_PREVIEWED = 'FILE.PREVIEWED'
     FILE_DOWNLOADED = 'FILE.DOWNLOADED'
@@ -177,8 +177,10 @@ class WebhooksManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -213,12 +215,12 @@ class WebhooksManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks']),
+            ''.join([self.network_session.base_urls.base_url, '/webhooks']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -232,20 +234,20 @@ class WebhooksManager:
 
     def create_webhook(
         self,
-        target: CreateWebhookTargetArg,
+        target: CreateWebhookTarget,
         address: str,
-        triggers: List[CreateWebhookTriggersArg],
+        triggers: List[CreateWebhookTriggers],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Webhook:
         """
         Creates a webhook.
         :param target: The item that will trigger the webhook
-        :type target: CreateWebhookTargetArg
+        :type target: CreateWebhookTarget
         :param address: The URL that is notified by this webhook
         :type address: str
         :param triggers: An array of event names that this webhook is
             to be triggered for
-        :type triggers: List[CreateWebhookTriggersArg]
+        :type triggers: List[CreateWebhookTriggers]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -258,7 +260,7 @@ class WebhooksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks']),
+            ''.join([self.network_session.base_urls.base_url, '/webhooks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -286,7 +288,11 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/webhooks/',
+                to_string(webhook_id),
+            ]),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -300,9 +306,9 @@ class WebhooksManager:
     def update_webhook_by_id(
         self,
         webhook_id: str,
-        target: Optional[UpdateWebhookByIdTargetArg] = None,
+        target: Optional[UpdateWebhookByIdTarget] = None,
         address: Optional[str] = None,
-        triggers: Optional[List[UpdateWebhookByIdTriggersArg]] = None,
+        triggers: Optional[List[UpdateWebhookByIdTriggers]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Webhook:
         """
@@ -311,12 +317,12 @@ class WebhooksManager:
             Example: "3321123"
         :type webhook_id: str
         :param target: The item that will trigger the webhook
-        :type target: Optional[UpdateWebhookByIdTargetArg], optional
+        :type target: Optional[UpdateWebhookByIdTarget], optional
         :param address: The URL that is notified by this webhook
         :type address: Optional[str], optional
         :param triggers: An array of event names that this webhook is
             to be triggered for
-        :type triggers: Optional[List[UpdateWebhookByIdTriggersArg]], optional
+        :type triggers: Optional[List[UpdateWebhookByIdTriggers]], optional
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -329,7 +335,11 @@ class WebhooksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/webhooks/',
+                to_string(webhook_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -357,7 +367,11 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/webhooks/', to_string(webhook_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/webhooks/',
+                to_string(webhook_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

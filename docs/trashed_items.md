@@ -14,7 +14,7 @@ attributes that are not returned by default.
 This endpoint defaults to use offset-based pagination, yet also supports
 marker-based pagination using the `marker` parameter.
 
-This operation is performed by calling function `get_folder_trash_items`.
+This operation is performed by calling function `get_trashed_items`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-trash-items/).
@@ -22,7 +22,7 @@ See the endpoint docs at
 <!-- sample get_folders_trash_items -->
 
 ```python
-client.trashed_items.get_folder_trash_items()
+client.trashed_items.get_trashed_items()
 ```
 
 ### Arguments
@@ -37,9 +37,9 @@ client.trashed_items.get_folder_trash_items()
   - Specifies whether to use marker-based pagination instead of offset-based pagination. Only one pagination method can be used at a time. By setting this value to true, the API will return a `marker` field that can be passed as a parameter to this endpoint to get the next page of the response.
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
-- direction `Optional[GetFolderTrashItemsDirectionArg]`
+- direction `Optional[GetTrashedItemsDirection]`
   - The direction to sort results in. This can be either in alphabetical ascending (`ASC`) or descending (`DESC`) order.
-- sort `Optional[GetFolderTrashItemsSortArg]`
+- sort `Optional[GetTrashedItemsSort]`
   - Defines the **second** attribute by which items are sorted. Items are always sorted by their `type` first, with folders listed before files, and files listed before web links. This parameter is not supported when using marker-based pagination.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

@@ -44,26 +44,26 @@ Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
 You application must be authorized to use the `Manage Box Relay` application
 scope within the developer console.
 
-This operation is performed by calling function `create_workflow_start`.
+This operation is performed by calling function `start_workflow`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-workflows-id-start/).
 
-_Currently we don't have an example for calling `create_workflow_start` in integration tests_
+_Currently we don't have an example for calling `start_workflow` in integration tests_
 
 ### Arguments
 
 - workflow_id `str`
   - The ID of the workflow. Example: "12345"
-- type `Optional[CreateWorkflowStartTypeArg]`
+- type `Optional[StartWorkflowType]`
   - The type of the parameters object
-- flow `CreateWorkflowStartFlowArg`
+- flow `StartWorkflowFlow`
   - The flow that will be triggered
-- files `List[CreateWorkflowStartFilesArg]`
+- files `List[StartWorkflowFiles]`
   - The array of files for which the workflow should start. All files must be in the workflow's configured folder.
-- folder `CreateWorkflowStartFolderArg`
+- folder `StartWorkflowFolder`
   - The folder object for which the workflow is configured.
-- outcomes `Optional[List[CreateWorkflowStartOutcomesArg]]`
+- outcomes `Optional[List[StartWorkflowOutcomes]]`
   - A list of outcomes required to be configured at start time.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

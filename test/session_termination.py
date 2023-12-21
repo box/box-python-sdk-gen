@@ -21,7 +21,7 @@ def testSessionTerminationUser():
     admin_client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
     user: UserFull = admin_client.users.get_user_me()
     result: SessionTerminationMessage = (
-        client.session_termination.create_user_terminate_session(
+        client.session_termination.terminate_users_sessions(
             user_ids=[get_env_var('USER_ID')], user_logins=[user.login]
         )
     )
@@ -36,7 +36,7 @@ def testSessionTerminationGroup():
     group_name: str = get_uuid()
     group: GroupFull = client.groups.create_group(name=group_name)
     result: SessionTerminationMessage = (
-        client.session_termination.create_group_terminate_session(group_ids=[group.id])
+        client.session_termination.terminate_groups_sessions(group_ids=[group.id])
     )
     assert (
         result.message

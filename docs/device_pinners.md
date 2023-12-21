@@ -74,7 +74,7 @@ _Currently we don't have an example for calling `get_enterprise_device_pinners` 
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
-- direction `Optional[GetEnterpriseDevicePinnersDirectionArg]`
+- direction `Optional[GetEnterpriseDevicePinnersDirection]`
   - The direction to sort results in. This can be either in alphabetical ascending (`ASC`) or descending (`DESC`) order.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

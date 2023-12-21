@@ -1,8 +1,8 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.base_object import BaseObject
+
+from typing import Optional
 
 from typing import Dict
 
@@ -39,42 +39,34 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField(
-    str, Enum
-):
+class UpdateClassificationOnFolderRequestBodyOpField(str, Enum):
     REPLACE = 'replace'
 
 
-class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgPathField(
-    str, Enum
-):
-    BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
+class UpdateClassificationOnFolderRequestBodyPathField(str, Enum):
+    _BOX__SECURITY__CLASSIFICATION__KEY = '/Box__Security__Classification__Key'
 
 
-class UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg(BaseObject):
+class UpdateClassificationOnFolderRequestBody(BaseObject):
     def __init__(
         self,
-        op: Optional[
-            UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField
-        ] = None,
-        path: Optional[
-            UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgPathField
-        ] = None,
-        value: Optional[str] = None,
+        op: UpdateClassificationOnFolderRequestBodyOpField,
+        path: UpdateClassificationOnFolderRequestBodyPathField,
+        value: str,
         **kwargs
     ):
         """
         :param op: `replace`
-        :type op: Optional[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgOpField], optional
+        :type op: UpdateClassificationOnFolderRequestBodyOpField
         :param path: Defines classifications
             available in the enterprise.
-        :type path: Optional[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArgPathField], optional
+        :type path: UpdateClassificationOnFolderRequestBodyPathField
         :param value: The name of the classification to apply to this folder.
             To list the available classifications in an enterprise,
             use the classification API to retrieve the
             [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
             which lists all available classification keys.
-        :type value: Optional[str], optional
+        :type value: str
         """
         super().__init__(**kwargs)
         self.op = op
@@ -86,12 +78,14 @@ class FolderClassificationsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
-    def get_folder_metadata_enterprise_security_classification_6_vm_vochw_u_wo(
+    def get_classification_on_folder(
         self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Classification:
         """
@@ -126,7 +120,8 @@ class FolderClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -140,7 +135,7 @@ class FolderClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def create_folder_metadata_enterprise_security_classification(
+    def add_classification_to_folder(
         self,
         folder_id: str,
         box_security_classification_key: Optional[str] = None,
@@ -187,7 +182,8 @@ class FolderClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -203,12 +199,10 @@ class FolderClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def update_folder_metadata_enterprise_security_classification(
+    def update_classification_on_folder(
         self,
         folder_id: str,
-        request_body: List[
-            UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg
-        ],
+        request_body: List[UpdateClassificationOnFolderRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> Classification:
         """
@@ -232,8 +226,8 @@ class FolderClassificationsManager:
             always represented by the ID `0`.
             Example: "12345"
         :type folder_id: str
-        :param request_body: Request body of updateFolderMetadataEnterpriseSecurityClassification method
-        :type request_body: List[UpdateFolderMetadataEnterpriseSecurityClassificationRequestBodyArg]
+        :param request_body: Request body of updateClassificationOnFolder method
+        :type request_body: List[UpdateClassificationOnFolderRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -242,7 +236,8 @@ class FolderClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),
@@ -258,7 +253,7 @@ class FolderClassificationsManager:
         )
         return deserialize(response.data, Classification)
 
-    def delete_folder_metadata_enterprise_security_classification(
+    def delete_classification_from_folder(
         self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -290,7 +285,8 @@ class FolderClassificationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/metadata/enterprise/securityClassification-6VMVochwUWo',
             ]),

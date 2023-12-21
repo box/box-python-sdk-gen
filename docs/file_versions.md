@@ -174,7 +174,7 @@ See the endpoint docs at
 <!-- sample post_files_id_versions_current -->
 
 ```python
-client.file_versions.promote_file_version(file_id=file.id, id=file_versions.entries[0].id, type=PromoteFileVersionTypeArg.FILE_VERSION.value)
+client.file_versions.promote_file_version(file_id=file.id, id=file_versions.entries[0].id, type=PromoteFileVersionType.FILE_VERSION.value)
 ```
 
 ### Arguments
@@ -183,7 +183,7 @@ client.file_versions.promote_file_version(file_id=file.id, id=file_versions.entr
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - id `Optional[str]`
   - The file version ID
-- type `Optional[PromoteFileVersionTypeArg]`
+- type `Optional[PromoteFileVersionType]`
   - The type to promote
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.

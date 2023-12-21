@@ -50,14 +50,14 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.get_file_metadata_by_id(file_id=file.id, scope=GetFileMetadataByIdScopeArg.GLOBAL.value, template_key='properties')
+client.file_metadata.get_file_metadata_by_id(file_id=file.id, scope=GetFileMetadataByIdScope.GLOBAL.value, template_key='properties')
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- scope `GetFileMetadataByIdScopeArg`
+- scope `GetFileMetadataByIdScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -88,14 +88,14 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.create_file_metadata_by_id(file_id=file.id, scope=CreateFileMetadataByIdScopeArg.ENTERPRISE.value, template_key=template_key, request_body={'testName': 1})
+client.file_metadata.create_file_metadata_by_id(file_id=file.id, scope=CreateFileMetadataByIdScope.ENTERPRISE.value, template_key=template_key, request_body={'testName': 1})
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- scope `CreateFileMetadataByIdScopeArg`
+- scope `CreateFileMetadataByIdScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -130,18 +130,18 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.update_file_metadata_by_id(file_id=file.id, scope=UpdateFileMetadataByIdScopeArg.GLOBAL.value, template_key='properties', request_body=[UpdateFileMetadataByIdRequestBodyArg(op=UpdateFileMetadataByIdRequestBodyArgOpField.REPLACE.value, path='/abc', value=new_value)])
+client.file_metadata.update_file_metadata_by_id(file_id=file.id, scope=UpdateFileMetadataByIdScope.GLOBAL.value, template_key='properties', request_body=[UpdateFileMetadataByIdRequestBody(op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- scope `UpdateFileMetadataByIdScopeArg`
+- scope `UpdateFileMetadataByIdScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `List[UpdateFileMetadataByIdRequestBodyArg]`
+- request_body `List[UpdateFileMetadataByIdRequestBody]`
   - Request body of updateFileMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -165,14 +165,14 @@ See the endpoint docs at
 <!-- sample delete_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.delete_file_metadata_by_id(file_id=file.id, scope=DeleteFileMetadataByIdScopeArg.ENTERPRISE.value, template_key=template_key)
+client.file_metadata.delete_file_metadata_by_id(file_id=file.id, scope=DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key=template_key)
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- scope `DeleteFileMetadataByIdScopeArg`
+- scope `DeleteFileMetadataByIdScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"

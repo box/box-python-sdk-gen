@@ -54,12 +54,12 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.get_metadata_template(scope=GetMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.get_metadata_template(scope=GetMetadataTemplateScope.ENTERPRISE.value, template_key=template.template_key)
 ```
 
 ### Arguments
 
-- scope `GetMetadataTemplateScopeArg`
+- scope `GetMetadataTemplateScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -91,16 +91,16 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.update_metadata_template(scope=UpdateMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template_key, request_body=[UpdateMetadataTemplateRequestBodyArg(op=UpdateMetadataTemplateRequestBodyArgOpField.ADDFIELD.value, field_key='newfieldname', data={'type': 'string', 'displayName': 'newFieldName'})])
+client.metadata_templates.update_metadata_template(scope=UpdateMetadataTemplateScope.ENTERPRISE.value, template_key=template_key, request_body=[UpdateMetadataTemplateRequestBody(op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD.value, field_key='newfieldname', data={'type': 'string', 'displayName': 'newFieldName'})])
 ```
 
 ### Arguments
 
-- scope `UpdateMetadataTemplateScopeArg`
+- scope `UpdateMetadataTemplateScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `List[UpdateMetadataTemplateRequestBodyArg]`
+- request_body `List[UpdateMetadataTemplateRequestBody]`
   - Request body of updateMetadataTemplate method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -125,12 +125,12 @@ See the endpoint docs at
 <!-- sample delete_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.delete_metadata_template(scope=DeleteMetadataTemplateScopeArg.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.delete_metadata_template(scope=DeleteMetadataTemplateScope.ENTERPRISE.value, template_key=template.template_key)
 ```
 
 ### Arguments
 
-- scope `DeleteMetadataTemplateScopeArg`
+- scope `DeleteMetadataTemplateScope`
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
@@ -249,7 +249,7 @@ See the endpoint docs at
 <!-- sample post_metadata_templates_schema -->
 
 ```python
-client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFieldsArg(type=CreateMetadataTemplateFieldsArgTypeField.STRING.value, key='testName', display_name='testName')])
+client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.STRING.value, key='testName', display_name='testName')])
 ```
 
 ### Arguments
@@ -262,7 +262,7 @@ client.metadata_templates.create_metadata_template(scope='enterprise', template_
   - The display name of the template.
 - hidden `Optional[bool]`
   - Defines if this template is visible in the Box web app UI, or if it is purely intended for usage through the API.
-- fields `Optional[List[CreateMetadataTemplateFieldsArg]]`
+- fields `Optional[List[CreateMetadataTemplateFields]]`
   - An ordered list of template fields which are part of the template. Each field can be a regular text field, date field, number field, as well as a single or multi-select list.
 - copy_instance_on_item_copy `Optional[bool]`
   - Whether or not to copy any metadata attached to a file or folder when it is copied. By default, metadata is not copied along with a file or folder when it is copied.

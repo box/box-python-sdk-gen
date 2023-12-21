@@ -41,18 +41,18 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateCommentItemArgTypeField(str, Enum):
+class CreateCommentItemTypeField(str, Enum):
     FILE = 'file'
     COMMENT = 'comment'
 
 
-class CreateCommentItemArg(BaseObject):
-    def __init__(self, id: str, type: CreateCommentItemArgTypeField, **kwargs):
+class CreateCommentItem(BaseObject):
+    def __init__(self, id: str, type: CreateCommentItemTypeField, **kwargs):
         """
         :param id: The ID of the item
         :type id: str
         :param type: The type of the item that this comment will be placed on.
-        :type type: CreateCommentItemArgTypeField
+        :type type: CreateCommentItemTypeField
         """
         super().__init__(**kwargs)
         self.id = id
@@ -63,8 +63,10 @@ class CommentsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -115,7 +117,10 @@ class CommentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/comments'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/comments',
             ]),
             FetchOptions(
                 method='GET',
@@ -159,7 +164,11 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/comments/',
+                to_string(comment_id),
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -203,7 +212,11 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/comments/',
+                to_string(comment_id),
+            ]),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -232,7 +245,11 @@ class CommentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments/', to_string(comment_id)]),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/comments/',
+                to_string(comment_id),
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -246,7 +263,7 @@ class CommentsManager:
     def create_comment(
         self,
         message: str,
-        item: CreateCommentItemArg,
+        item: CreateCommentItem,
         tagged_message: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -261,7 +278,7 @@ class CommentsManager:
             parameter instead.
         :type message: str
         :param item: The item to attach the comment to.
-        :type item: CreateCommentItemArg
+        :type item: CreateCommentItem
         :param tagged_message: The text of the comment, including `@[user_id:name]`
             somewhere in the message to mention another user, which
             will send them an email notification, letting them know
@@ -294,7 +311,7 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/comments']),
+            ''.join([self.network_session.base_urls.base_url, '/comments']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

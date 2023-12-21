@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class TransferOwnedFolderOwnedByArg(BaseObject):
+class TransferOwnedFolderOwnedBy(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user who the folder will be
@@ -52,15 +52,17 @@ class TransferManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def transfer_owned_folder(
         self,
         user_id: str,
-        owned_by: TransferOwnedFolderOwnedByArg,
+        owned_by: TransferOwnedFolderOwnedBy,
         fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -137,7 +139,7 @@ class TransferManager:
             Example: "12345"
         :type user_id: str
         :param owned_by: The user who the folder will be transferred to
-        :type owned_by: TransferOwnedFolderOwnedByArg
+        :type owned_by: TransferOwnedFolderOwnedBy
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -156,13 +158,16 @@ class TransferManager:
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {'owned_by': owned_by}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields), 'notify': to_string(notify)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'fields': to_string(fields), 'notify': to_string(notify)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/users/', to_string(user_id), '/folders/0'
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/folders/0',
             ]),
             FetchOptions(
                 method='PUT',

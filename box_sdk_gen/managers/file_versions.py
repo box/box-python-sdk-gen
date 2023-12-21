@@ -39,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class PromoteFileVersionTypeArg(str, Enum):
+class PromoteFileVersionType(str, Enum):
     FILE_VERSION = 'file_version'
 
 
@@ -47,8 +47,10 @@ class FileVersionsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -105,7 +107,10 @@ class FileVersionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/versions'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/versions',
             ]),
             FetchOptions(
                 method='GET',
@@ -159,7 +164,8 @@ class FileVersionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/versions/',
                 to_string(file_version_id),
@@ -216,7 +222,8 @@ class FileVersionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/versions/',
                 to_string(file_version_id),
@@ -268,12 +275,13 @@ class FileVersionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/versions/',
                 to_string(file_version_id),
@@ -292,7 +300,7 @@ class FileVersionsManager:
         self,
         file_id: str,
         id: Optional[str] = None,
-        type: Optional[PromoteFileVersionTypeArg] = None,
+        type: Optional[PromoteFileVersionType] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> FileVersionFull:
@@ -342,7 +350,7 @@ class FileVersionsManager:
         :param id: The file version ID
         :type id: Optional[str], optional
         :param type: The type to promote
-        :type type: Optional[PromoteFileVersionTypeArg], optional
+        :type type: Optional[PromoteFileVersionType], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -362,7 +370,8 @@ class FileVersionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/versions/current',
             ]),

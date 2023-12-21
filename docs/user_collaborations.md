@@ -49,16 +49,16 @@ See the endpoint docs at
 <!-- sample put_collaborations_id -->
 
 ```python
-client.user_collaborations.update_collaboration_by_id(collaboration_id=collaboration_id, role=UpdateCollaborationByIdRoleArg.VIEWER.value)
+client.user_collaborations.update_collaboration_by_id(collaboration_id=collaboration_id, role=UpdateCollaborationByIdRole.VIEWER.value)
 ```
 
 ### Arguments
 
 - collaboration_id `str`
   - The ID of the collaboration Example: "1234"
-- role `UpdateCollaborationByIdRoleArg`
+- role `UpdateCollaborationByIdRole`
   - The level of access granted.
-- status `Optional[UpdateCollaborationByIdStatusArg]`
+- status `Optional[UpdateCollaborationByIdStatus]`
   - <!--alex ignore reject--> Set the status of a `pending` collaboration invitation, effectively accepting, or rejecting the invite.
 - expires_at `Optional[str]`
   - Update the expiration date for the collaboration. At this date, the collaboration will be automatically removed from the item. This feature will only work if the **Automatically remove invited collaborators: Allow folder owners to extend the expiry date** setting has been enabled in the **Enterprise Settings** of the **Admin Console**. When the setting is not enabled, collaborations can not have an expiry date and a value for this field will be result in an error. Additionally, a collaboration can only be given an expiration if it was created after the **Automatically remove invited collaborator** setting was enabled.
@@ -130,16 +130,16 @@ See the endpoint docs at
 <!-- sample post_collaborations -->
 
 ```python
-client.user_collaborations.create_collaboration(item=CreateCollaborationItemArg(type=CreateCollaborationItemArgTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleByArg(type=CreateCollaborationAccessibleByArgTypeField.USER.value, login=user_login), role=CreateCollaborationRoleArg.EDITOR.value)
+client.user_collaborations.create_collaboration(item=CreateCollaborationItem(type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleBy(type=CreateCollaborationAccessibleByTypeField.USER.value, login=user_login), role=CreateCollaborationRole.EDITOR.value)
 ```
 
 ### Arguments
 
-- item `CreateCollaborationItemArg`
+- item `CreateCollaborationItem`
   - The item to attach the comment to.
-- accessible_by `CreateCollaborationAccessibleByArg`
+- accessible_by `CreateCollaborationAccessibleBy`
   - The user or group to give access to the item.
-- role `CreateCollaborationRoleArg`
+- role `CreateCollaborationRole`
   - The level of access granted.
 - is_access_only `Optional[bool]`
   - If set to `true`, collaborators have access to shared items, but such items won't be visible in the All Files list. Additionally, collaborators won't see the the path to the root folder for the shared item.

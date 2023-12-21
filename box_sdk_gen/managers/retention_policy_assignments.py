@@ -43,28 +43,28 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetRetentionPolicyAssignmentsTypeArg(str, Enum):
+class GetRetentionPolicyAssignmentsType(str, Enum):
     FOLDER = 'folder'
     ENTERPRISE = 'enterprise'
     METADATA_TEMPLATE = 'metadata_template'
 
 
-class CreateRetentionPolicyAssignmentAssignToArgTypeField(str, Enum):
+class CreateRetentionPolicyAssignmentAssignToTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
     FOLDER = 'folder'
     METADATA_TEMPLATE = 'metadata_template'
 
 
-class CreateRetentionPolicyAssignmentAssignToArg(BaseObject):
+class CreateRetentionPolicyAssignmentAssignTo(BaseObject):
     def __init__(
         self,
-        type: CreateRetentionPolicyAssignmentAssignToArgTypeField,
+        type: CreateRetentionPolicyAssignmentAssignToTypeField,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of item to assign the policy to.
-        :type type: CreateRetentionPolicyAssignmentAssignToArgTypeField
+        :type type: CreateRetentionPolicyAssignmentAssignToTypeField
         :param id: The ID of item to assign the policy to.
             Set to `null` or omit when `type` is set to
             `enterprise`.
@@ -75,7 +75,7 @@ class CreateRetentionPolicyAssignmentAssignToArg(BaseObject):
         self.id = id
 
 
-class CreateRetentionPolicyAssignmentFilterFieldsArg(BaseObject):
+class CreateRetentionPolicyAssignmentFilterFields(BaseObject):
     def __init__(
         self, field: Optional[str] = None, value: Optional[str] = None, **kwargs
     ):
@@ -95,15 +95,17 @@ class RetentionPolicyAssignmentsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def get_retention_policy_assignments(
         self,
         retention_policy_id: str,
-        type: Optional[GetRetentionPolicyAssignmentsTypeArg] = None,
+        type: Optional[GetRetentionPolicyAssignmentsType] = None,
         fields: Optional[List[str]] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
@@ -118,7 +120,7 @@ class RetentionPolicyAssignmentsManager:
             Example: "982312"
         :type retention_policy_id: str
         :param type: The type of the retention policy assignment to retrieve.
-        :type type: Optional[GetRetentionPolicyAssignmentsTypeArg], optional
+        :type type: Optional[GetRetentionPolicyAssignmentsType], optional
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -147,7 +149,8 @@ class RetentionPolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policies/',
+                self.network_session.base_urls.base_url,
+                '/retention_policies/',
                 to_string(retention_policy_id),
                 '/assignments',
             ]),
@@ -165,9 +168,9 @@ class RetentionPolicyAssignmentsManager:
     def create_retention_policy_assignment(
         self,
         policy_id: str,
-        assign_to: CreateRetentionPolicyAssignmentAssignToArg,
+        assign_to: CreateRetentionPolicyAssignmentAssignTo,
         filter_fields: Optional[
-            List[CreateRetentionPolicyAssignmentFilterFieldsArg]
+            List[CreateRetentionPolicyAssignmentFilterFields]
         ] = None,
         start_date_field: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -177,12 +180,12 @@ class RetentionPolicyAssignmentsManager:
         :param policy_id: The ID of the retention policy to assign
         :type policy_id: str
         :param assign_to: The item to assign the policy to
-        :type assign_to: CreateRetentionPolicyAssignmentAssignToArg
+        :type assign_to: CreateRetentionPolicyAssignmentAssignTo
         :param filter_fields: If the `assign_to` type is `metadata_template`,
             then optionally add the `filter_fields` parameter which will
             require an array of objects with a field entry and a value entry.
             Currently only one object of `field` and `value` is supported.
-        :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFieldsArg]], optional
+        :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFields]], optional
         :param start_date_field: The date the retention policy assignment begins.
             If the `assigned_to` type is `metadata_template`,
             this field can be a date field's metadata attribute key id.
@@ -200,7 +203,10 @@ class RetentionPolicyAssignmentsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/retention_policy_assignments']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/retention_policy_assignments',
+            ]),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -242,7 +248,8 @@ class RetentionPolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/retention_policy_assignments/',
                 to_string(retention_policy_assignment_id),
             ]),
             FetchOptions(
@@ -277,7 +284,8 @@ class RetentionPolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/retention_policy_assignments/',
                 to_string(retention_policy_assignment_id),
             ]),
             FetchOptions(
@@ -290,7 +298,7 @@ class RetentionPolicyAssignmentsManager:
         )
         return None
 
-    def get_retention_policy_assignment_file_under_retention(
+    def get_files_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
         marker: Optional[str] = None,
@@ -313,13 +321,14 @@ class RetentionPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/retention_policy_assignments/',
                 to_string(retention_policy_assignment_id),
                 '/files_under_retention',
             ]),
@@ -334,7 +343,7 @@ class RetentionPolicyAssignmentsManager:
         )
         return deserialize(response.data, FilesUnderRetention)
 
-    def get_retention_policy_assignment_file_version_under_retention(
+    def get_file_versions_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
         marker: Optional[str] = None,
@@ -360,13 +369,14 @@ class RetentionPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/retention_policy_assignments/',
+                self.network_session.base_urls.base_url,
+                '/retention_policy_assignments/',
                 to_string(retention_policy_assignment_id),
                 '/file_versions_under_retention',
             ]),

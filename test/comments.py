@@ -6,17 +6,17 @@ from box_sdk_gen.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import Comments
 
 from box_sdk_gen.schemas import CommentFull
 
-from box_sdk_gen.managers.comments import CreateCommentItemArg
+from box_sdk_gen.managers.comments import CreateCommentItem
 
-from box_sdk_gen.managers.comments import CreateCommentItemArgTypeField
+from box_sdk_gen.managers.comments import CreateCommentItemTypeField
 
 from box_sdk_gen.utils import generate_byte_stream
 
@@ -33,8 +33,8 @@ def comments():
     file_byte_stream: ByteStream = generate_byte_stream(file_size)
     parent_id: str = '0'
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=file_name, parent=UploadFileAttributesArgParentField(id=parent_id)
+        attributes=UploadFileAttributes(
+            name=file_name, parent=UploadFileAttributesParentField(id=parent_id)
         ),
         file=file_byte_stream,
     )
@@ -44,17 +44,15 @@ def comments():
     message: str = 'Hello there!'
     new_comment: CommentFull = client.comments.create_comment(
         message=message,
-        item=CreateCommentItemArg(
-            id=file_id, type=CreateCommentItemArgTypeField.FILE.value
-        ),
+        item=CreateCommentItem(id=file_id, type=CreateCommentItemTypeField.FILE.value),
     )
     assert new_comment.message == message
     assert new_comment.is_reply_comment == False
     assert new_comment.item.id == file_id
     new_reply_comment: CommentFull = client.comments.create_comment(
         message=message,
-        item=CreateCommentItemArg(
-            id=new_comment.id, type=CreateCommentItemArgTypeField.COMMENT.value
+        item=CreateCommentItem(
+            id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value
         ),
     )
     assert new_reply_comment.message == message

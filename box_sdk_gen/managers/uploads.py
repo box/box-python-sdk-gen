@@ -43,7 +43,7 @@ from box_sdk_gen.fetch import MultipartItem
 from box_sdk_gen.json_data import SerializedData
 
 
-class UploadFileVersionAttributesArg(BaseObject):
+class UploadFileVersionAttributes(BaseObject):
     def __init__(self, name: str, content_modified_at: Optional[str] = None, **kwargs):
         """
         :param name: An optional new name for the file. If specified, the file
@@ -58,7 +58,7 @@ class UploadFileVersionAttributesArg(BaseObject):
         self.content_modified_at = content_modified_at
 
 
-class UploadFileAttributesArgParentField(BaseObject):
+class UploadFileAttributesParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The id of the parent folder. Use
@@ -69,11 +69,11 @@ class UploadFileAttributesArgParentField(BaseObject):
         self.id = id
 
 
-class UploadFileAttributesArg(BaseObject):
+class UploadFileAttributes(BaseObject):
     def __init__(
         self,
         name: str,
-        parent: UploadFileAttributesArgParentField,
+        parent: UploadFileAttributesParentField,
         content_created_at: Optional[str] = None,
         content_modified_at: Optional[str] = None,
         **kwargs
@@ -82,7 +82,7 @@ class UploadFileAttributesArg(BaseObject):
         :param name: The name of the file
         :type name: str
         :param parent: The parent folder to upload the file to
-        :type parent: UploadFileAttributesArgParentField
+        :type parent: UploadFileAttributesParentField
         :param content_created_at: Defines the time the file was originally created at.
             If not set, the upload time will be used.
         :type content_created_at: Optional[str], optional
@@ -97,7 +97,7 @@ class UploadFileAttributesArg(BaseObject):
         self.content_modified_at = content_modified_at
 
 
-class PreflightFileUploadParentArg(BaseObject):
+class PreflightFileUploadCheckParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -111,15 +111,17 @@ class UploadsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def upload_file_version(
         self,
         file_id: str,
-        attributes: UploadFileVersionAttributesArg,
+        attributes: UploadFileVersionAttributes,
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
@@ -165,7 +167,7 @@ class UploadsManager:
               uploading the file will receive a HTTP `400` error with a
               `metadata_after_file_contents` error code.
             </Message>
-        :type attributes: UploadFileVersionAttributesArg
+        :type attributes: UploadFileVersionAttributes
         :param file: The content of the file to upload to Box.
             <Message warning>
               The `attributes` part of the body must come **before** the
@@ -212,7 +214,10 @@ class UploadsManager:
         })
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/', to_string(file_id), '/content'
+                self.network_session.base_urls.upload_url,
+                '/files/',
+                to_string(file_id),
+                '/content',
             ]),
             FetchOptions(
                 method='POST',
@@ -240,7 +245,7 @@ class UploadsManager:
 
     def upload_file(
         self,
-        attributes: UploadFileAttributesArg,
+        attributes: UploadFileAttributes,
         file: ByteStream,
         file_file_name: Optional[str] = None,
         file_content_type: Optional[str] = None,
@@ -277,7 +282,7 @@ class UploadsManager:
               uploading the file will receive a HTTP `400` error with a
               `metadata_after_file_contents` error code.
             </Message>
-        :type attributes: UploadFileAttributesArg
+        :type attributes: UploadFileAttributes
         :param file: The content of the file to upload to Box.
             <Message warning>
               The `attributes` part of the body must come **before** the
@@ -310,11 +315,11 @@ class UploadsManager:
             'file_content_type': file_content_type,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'content-md5': to_string(content_md_5), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'content-md5': to_string(content_md_5), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://upload.box.com/api/2.0/files/content']),
+            ''.join([self.network_session.base_urls.upload_url, '/files/content']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -339,11 +344,11 @@ class UploadsManager:
         )
         return deserialize(response.data, Files)
 
-    def preflight_file_upload(
+    def preflight_file_upload_check(
         self,
         name: Optional[str] = None,
         size: Optional[int] = None,
-        parent: Optional[PreflightFileUploadParentArg] = None,
+        parent: Optional[PreflightFileUploadCheckParent] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> UploadUrl:
         """
@@ -363,7 +368,7 @@ class UploadsManager:
         request_body: Dict = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/content']),
+            ''.join([self.network_session.base_urls.base_url, '/files/content']),
             FetchOptions(
                 method='OPTIONS',
                 headers=headers_map,

@@ -10,12 +10,12 @@ Retrieves an overview of users and their status for a
 terms of service, including Whether they have accepted
 the terms and when.
 
-This operation is performed by calling function `get_term_of_service_user_statuses`.
+This operation is performed by calling function `get_terms_of_service_user_statuses`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-terms-of-service-user-statuses/).
 
-_Currently we don't have an example for calling `get_term_of_service_user_statuses` in integration tests_
+_Currently we don't have an example for calling `get_terms_of_service_user_statuses` in integration tests_
 
 ### Arguments
 
@@ -36,18 +36,18 @@ Returns a list of terms of service statuses.
 
 Sets the status for a terms of service for a user.
 
-This operation is performed by calling function `create_term_of_service_user_status`.
+This operation is performed by calling function `create_terms_of_service_status_for_user`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-terms-of-service-user-statuses/).
 
-_Currently we don't have an example for calling `create_term_of_service_user_status` in integration tests_
+_Currently we don't have an example for calling `create_terms_of_service_status_for_user` in integration tests_
 
 ### Arguments
 
-- tos `CreateTermOfServiceUserStatusTosArg`
+- tos `CreateTermsOfServiceStatusForUserTos`
   - The terms of service to set the status for.
-- user `CreateTermOfServiceUserStatusUserArg`
+- user `CreateTermsOfServiceStatusForUserUser`
   - The user to set the status for.
 - is_accepted `bool`
   - Whether the user has accepted the terms.
@@ -64,12 +64,12 @@ Returns a terms of service status object.
 
 Updates the status for a terms of service for a user.
 
-This operation is performed by calling function `update_term_of_service_user_status_by_id`.
+This operation is performed by calling function `update_terms_of_service_status_for_user_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-terms-of-service-user-statuses-id/).
 
-_Currently we don't have an example for calling `update_term_of_service_user_status_by_id` in integration tests_
+_Currently we don't have an example for calling `update_terms_of_service_status_for_user_by_id` in integration tests_
 
 ### Arguments
 

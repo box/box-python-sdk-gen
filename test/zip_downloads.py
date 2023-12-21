@@ -8,13 +8,13 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.utils import ByteStream
 
-from box_sdk_gen.managers.zip_downloads import DownloadZipItemsArg
+from box_sdk_gen.managers.zip_downloads import DownloadZipItems
 
-from box_sdk_gen.managers.zip_downloads import DownloadZipItemsArgTypeField
+from box_sdk_gen.managers.zip_downloads import DownloadZipItemsTypeField
 
 from box_sdk_gen.schemas import ZipDownload
 
-from box_sdk_gen.managers.zip_downloads import CreateZipDownloadItemsArg
+from box_sdk_gen.managers.zip_downloads import CreateZipDownloadItems
 
 from box_sdk_gen.schemas import ZipDownloadStatus
 
@@ -39,14 +39,10 @@ def testZipDownload():
     folder_1: FolderFull = create_new_folder()
     zip_stream: ByteStream = client.zip_downloads.download_zip(
         items=[
-            DownloadZipItemsArg(
-                id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value
-            ),
-            DownloadZipItemsArg(
-                id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value
-            ),
-            DownloadZipItemsArg(
-                id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value
+            DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
+            DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
+            DownloadZipItems(
+                id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
             ),
         ],
         download_file_name='zip',
@@ -65,14 +61,14 @@ def testManualZipDownloadAndCheckStatus():
     folder_1: FolderFull = create_new_folder()
     zip_download: ZipDownload = client.zip_downloads.create_zip_download(
         items=[
-            CreateZipDownloadItemsArg(
-                id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value
+            CreateZipDownloadItems(
+                id=file_1.id, type=DownloadZipItemsTypeField.FILE.value
             ),
-            CreateZipDownloadItemsArg(
-                id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value
+            CreateZipDownloadItems(
+                id=file_2.id, type=DownloadZipItemsTypeField.FILE.value
             ),
-            CreateZipDownloadItemsArg(
-                id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value
+            CreateZipDownloadItems(
+                id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
             ),
         ],
         download_file_name='zip',

@@ -28,7 +28,7 @@ client.trashed_files.restore_file_from_trash(file_id=file.id)
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - name `Optional[str]`
   - An optional new name for the file.
-- parent `Optional[RestoreFileFromTrashParentArg]`
+- parent `Optional[RestoreFileFromTrashParent]`
   -
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -55,7 +55,7 @@ To list all items that have been moved to the trash, please
 use the [`GET /folders/trash/items`](e://get-folders-trash-items/)
 API.
 
-This operation is performed by calling function `get_file_trash`.
+This operation is performed by calling function `get_trashed_file_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-trash/).
@@ -63,7 +63,7 @@ See the endpoint docs at
 <!-- sample get_files_id_trash -->
 
 ```python
-client.trashed_files.get_file_trash(file_id=file.id)
+client.trashed_files.get_trashed_file_by_id(file_id=file.id)
 ```
 
 ### Arguments
@@ -88,7 +88,7 @@ was moved to the trash.
 Permanently deletes a file that is in the trash.
 This action cannot be undone.
 
-This operation is performed by calling function `delete_file_trash`.
+This operation is performed by calling function `delete_trashed_file_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-files-id-trash/).
@@ -96,7 +96,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_trash -->
 
 ```python
-client.trashed_files.delete_file_trash(file_id=file.id)
+client.trashed_files.delete_trashed_file_by_id(file_id=file.id)
 ```
 
 ### Arguments

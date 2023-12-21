@@ -39,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class RestoreFileFromTrashParentArg(BaseObject):
+class RestoreFileFromTrashParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -53,8 +53,10 @@ class TrashedFilesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -62,7 +64,7 @@ class TrashedFilesManager:
         self,
         file_id: str,
         name: Optional[str] = None,
-        parent: Optional[RestoreFileFromTrashParentArg] = None,
+        parent: Optional[RestoreFileFromTrashParent] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> TrashFileRestored:
@@ -102,7 +104,9 @@ class TrashedFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -116,7 +120,7 @@ class TrashedFilesManager:
         )
         return deserialize(response.data, TrashFileRestored)
 
-    def get_file_trash(
+    def get_trashed_file_by_id(
         self,
         file_id: str,
         fields: Optional[List[str]] = None,
@@ -173,7 +177,12 @@ class TrashedFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/trash']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/trash',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -185,7 +194,7 @@ class TrashedFilesManager:
         )
         return deserialize(response.data, TrashFile)
 
-    def delete_file_trash(
+    def delete_trashed_file_by_id(
         self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -208,7 +217,12 @@ class TrashedFilesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/trash']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/trash',
+            ]),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

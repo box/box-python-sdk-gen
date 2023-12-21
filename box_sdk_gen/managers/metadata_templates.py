@@ -41,17 +41,17 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetMetadataTemplateScopeArg(str, Enum):
+class GetMetadataTemplateScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateMetadataTemplateScopeArg(str, Enum):
+class UpdateMetadataTemplateScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class UpdateMetadataTemplateRequestBodyArgOpField(str, Enum):
+class UpdateMetadataTemplateRequestBodyOpField(str, Enum):
     EDITTEMPLATE = 'editTemplate'
     ADDFIELD = 'addField'
     REORDERFIELDS = 'reorderFields'
@@ -67,7 +67,7 @@ class UpdateMetadataTemplateRequestBodyArgOpField(str, Enum):
     REMOVEMULTISELECTOPTION = 'removeMultiSelectOption'
 
 
-class UpdateMetadataTemplateRequestBodyArg(BaseObject):
+class UpdateMetadataTemplateRequestBody(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'field_key': 'fieldKey',
         'field_keys': 'fieldKeys',
@@ -89,7 +89,7 @@ class UpdateMetadataTemplateRequestBodyArg(BaseObject):
 
     def __init__(
         self,
-        op: UpdateMetadataTemplateRequestBodyArgOpField,
+        op: UpdateMetadataTemplateRequestBodyOpField,
         data: Optional[Dict[str, str]] = None,
         field_key: Optional[str] = None,
         field_keys: Optional[List[str]] = None,
@@ -102,7 +102,7 @@ class UpdateMetadataTemplateRequestBodyArg(BaseObject):
         """
         :param op: The type of change to perform on the template. Some
             of these are hazardous as they will change existing templates.
-        :type op: UpdateMetadataTemplateRequestBodyArgOpField
+        :type op: UpdateMetadataTemplateRequestBodyOpField
         :param data: The data for the operation. This will vary depending on the
             operation being performed.
         :type data: Optional[Dict[str, str]], optional
@@ -136,12 +136,12 @@ class UpdateMetadataTemplateRequestBodyArg(BaseObject):
         self.multi_select_option_keys = multi_select_option_keys
 
 
-class DeleteMetadataTemplateScopeArg(str, Enum):
+class DeleteMetadataTemplateScope(str, Enum):
     GLOBAL = 'global'
     ENTERPRISE = 'enterprise'
 
 
-class CreateMetadataTemplateFieldsArgTypeField(str, Enum):
+class CreateMetadataTemplateFieldsTypeField(str, Enum):
     STRING = 'string'
     FLOAT = 'float'
     DATE = 'date'
@@ -149,7 +149,7 @@ class CreateMetadataTemplateFieldsArgTypeField(str, Enum):
     MULTISELECT = 'multiSelect'
 
 
-class CreateMetadataTemplateFieldsArgOptionsField(BaseObject):
+class CreateMetadataTemplateFieldsOptionsField(BaseObject):
     def __init__(self, key: str, **kwargs):
         """
         :param key: The text value of the option. This represents both the display name of the
@@ -160,7 +160,7 @@ class CreateMetadataTemplateFieldsArgOptionsField(BaseObject):
         self.key = key
 
 
-class CreateMetadataTemplateFieldsArg(BaseObject):
+class CreateMetadataTemplateFields(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'display_name': 'displayName',
         **BaseObject._fields_to_json_mapping,
@@ -172,12 +172,12 @@ class CreateMetadataTemplateFieldsArg(BaseObject):
 
     def __init__(
         self,
-        type: CreateMetadataTemplateFieldsArgTypeField,
+        type: CreateMetadataTemplateFieldsTypeField,
         key: str,
         display_name: str,
         description: Optional[str] = None,
         hidden: Optional[bool] = None,
-        options: Optional[List[CreateMetadataTemplateFieldsArgOptionsField]] = None,
+        options: Optional[List[CreateMetadataTemplateFieldsOptionsField]] = None,
         **kwargs
     ):
         """
@@ -187,7 +187,7 @@ class CreateMetadataTemplateFieldsArg(BaseObject):
             Additionally, metadata templates support an `enum` field for a basic list
             of items, and ` multiSelect` field for a similar list of items where the
             user can select more than one value.
-        :type type: CreateMetadataTemplateFieldsArgTypeField
+        :type type: CreateMetadataTemplateFieldsTypeField
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
         :type key: str
@@ -201,7 +201,7 @@ class CreateMetadataTemplateFieldsArg(BaseObject):
         :type hidden: Optional[bool], optional
         :param options: A list of options for this field. This is used in combination with the
             `enum` and `multiSelect` field types.
-        :type options: Optional[List[CreateMetadataTemplateFieldsArgOptionsField]], optional
+        :type options: Optional[List[CreateMetadataTemplateFieldsOptionsField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -216,8 +216,10 @@ class MetadataTemplatesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -238,12 +240,12 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'metadata_instance_id': to_string(metadata_instance_id)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'metadata_instance_id': to_string(metadata_instance_id)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_templates']),
+            ''.join([self.network_session.base_urls.base_url, '/metadata_templates']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -257,7 +259,7 @@ class MetadataTemplatesManager:
 
     def get_metadata_template(
         self,
-        scope: GetMetadataTemplateScopeArg,
+        scope: GetMetadataTemplateScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
@@ -271,7 +273,7 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: GetMetadataTemplateScopeArg
+        :type scope: GetMetadataTemplateScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -283,7 +285,8 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/',
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/',
                 to_string(scope),
                 '/',
                 to_string(template_key),
@@ -301,9 +304,9 @@ class MetadataTemplatesManager:
 
     def update_metadata_template(
         self,
-        scope: UpdateMetadataTemplateScopeArg,
+        scope: UpdateMetadataTemplateScope,
         template_key: str,
-        request_body: List[UpdateMetadataTemplateRequestBodyArg],
+        request_body: List[UpdateMetadataTemplateRequestBody],
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
         """
@@ -322,12 +325,12 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: UpdateMetadataTemplateScopeArg
+        :type scope: UpdateMetadataTemplateScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
         :param request_body: Request body of updateMetadataTemplate method
-        :type request_body: List[UpdateMetadataTemplateRequestBodyArg]
+        :type request_body: List[UpdateMetadataTemplateRequestBody]
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -336,7 +339,8 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/',
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/',
                 to_string(scope),
                 '/',
                 to_string(template_key),
@@ -356,7 +360,7 @@ class MetadataTemplatesManager:
 
     def delete_metadata_template(
         self,
-        scope: DeleteMetadataTemplateScopeArg,
+        scope: DeleteMetadataTemplateScope,
         template_key: str,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> None:
@@ -367,7 +371,7 @@ class MetadataTemplatesManager:
 
         :param scope: The scope of the metadata template
             Example: "global"
-        :type scope: DeleteMetadataTemplateScopeArg
+        :type scope: DeleteMetadataTemplateScope
         :param template_key: The name of the metadata template
             Example: "properties"
         :type template_key: str
@@ -379,7 +383,8 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/',
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/',
                 to_string(scope),
                 '/',
                 to_string(template_key),
@@ -411,7 +416,9 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/metadata_templates/', to_string(template_id)
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/',
+                to_string(template_id),
             ]),
             FetchOptions(
                 method='GET',
@@ -445,12 +452,14 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_templates/global']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/metadata_templates/global']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -484,12 +493,15 @@ class MetadataTemplatesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_templates/enterprise']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/metadata_templates/enterprise',
+            ]),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -507,7 +519,7 @@ class MetadataTemplatesManager:
         display_name: str,
         template_key: Optional[str] = None,
         hidden: Optional[bool] = None,
-        fields: Optional[List[CreateMetadataTemplateFieldsArg]] = None,
+        fields: Optional[List[CreateMetadataTemplateFields]] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> MetadataTemplate:
@@ -536,7 +548,7 @@ class MetadataTemplatesManager:
         :param fields: An ordered list of template fields which are part of the template.
             Each field can be a regular text field, date field, number field,
             as well as a single or multi-select list.
-        :type fields: Optional[List[CreateMetadataTemplateFieldsArg]], optional
+        :type fields: Optional[List[CreateMetadataTemplateFields]], optional
         :param copy_instance_on_item_copy: Whether or not to copy any metadata attached to a file or folder
             when it is copied. By default, metadata is not copied along with a
             file or folder when it is copied.
@@ -556,7 +568,9 @@ class MetadataTemplatesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/metadata_templates/schema']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/metadata_templates/schema']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

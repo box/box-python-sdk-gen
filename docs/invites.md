@@ -23,14 +23,14 @@ See the endpoint docs at
 <!-- sample post_invites -->
 
 ```python
-client.invites.create_invite(enterprise=CreateInviteEnterpriseArg(id=current_user.enterprise.id), actionable_by=CreateInviteActionableByArg(login=email))
+client.invites.create_invite(enterprise=CreateInviteEnterprise(id=current_user.enterprise.id), actionable_by=CreateInviteActionableBy(login=email))
 ```
 
 ### Arguments
 
-- enterprise `CreateInviteEnterpriseArg`
+- enterprise `CreateInviteEnterprise`
   - The enterprise to invite the user to
-- actionable_by `CreateInviteActionableByArg`
+- actionable_by `CreateInviteActionableBy`
   - The user to invite
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.

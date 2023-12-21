@@ -32,12 +32,12 @@ See the endpoint docs at
 <!-- sample post_zip_downloads -->
 
 ```python
-client.zip_downloads.create_zip_download(items=[CreateZipDownloadItemsArg(id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value), CreateZipDownloadItemsArg(id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value), CreateZipDownloadItemsArg(id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.create_zip_download(items=[CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
 ```
 
 ### Arguments
 
-- items `List[CreateZipDownloadItemsArg]`
+- items `List[CreateZipDownloadItems]`
   - A list of items to add to the `zip` archive. These can be folders or files.
 - download_file_name `Optional[str]`
   - The optional name of the `zip` archive. This name will be appended by the `.zip` file extension, for example `January Financials.zip`.
@@ -142,12 +142,12 @@ See the endpoint docs at
 <!-- sample  -->
 
 ```python
-client.zip_downloads.download_zip(items=[DownloadZipItemsArg(id=file_1.id, type=DownloadZipItemsArgTypeField.FILE.value), DownloadZipItemsArg(id=file_2.id, type=DownloadZipItemsArgTypeField.FILE.value), DownloadZipItemsArg(id=folder_1.id, type=DownloadZipItemsArgTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.download_zip(items=[DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
 ```
 
 ### Arguments
 
-- items `List[DownloadZipItemsArg]`
+- items `List[DownloadZipItems]`
   - A list of items to add to the `zip` archive. These can be folders or files.
 - download_file_name `Optional[str]`
   - The optional name of the `zip` archive. This name will be appended by the `.zip` file extension, for example `January Financials.zip`.

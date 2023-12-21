@@ -14,5 +14,5 @@ client: BoxClient = get_default_client()
 def testListTrashedItems():
     file: FileFull = upload_new_file()
     client.files.delete_file_by_id(file_id=file.id)
-    trashed_items: Items = client.trashed_items.get_folder_trash_items()
+    trashed_items: Items = client.trashed_items.get_trashed_items()
     assert len(trashed_items.entries) > 0

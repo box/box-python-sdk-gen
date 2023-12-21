@@ -43,37 +43,37 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetUsersUserTypeArg(str, Enum):
+class GetUsersUserType(str, Enum):
     ALL = 'all'
     MANAGED = 'managed'
     EXTERNAL = 'external'
 
 
-class CreateUserRoleArg(str, Enum):
+class CreateUserRole(str, Enum):
     COADMIN = 'coadmin'
     USER = 'user'
 
 
-class CreateUserStatusArg(str, Enum):
+class CreateUserStatus(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     CANNOT_DELETE_EDIT = 'cannot_delete_edit'
     CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
 
-class UpdateUserByIdRoleArg(str, Enum):
+class UpdateUserByIdRole(str, Enum):
     COADMIN = 'coadmin'
     USER = 'user'
 
 
-class UpdateUserByIdStatusArg(str, Enum):
+class UpdateUserByIdStatus(str, Enum):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     CANNOT_DELETE_EDIT = 'cannot_delete_edit'
     CANNOT_DELETE_EDIT_UPLOAD = 'cannot_delete_edit_upload'
 
 
-class UpdateUserByIdNotificationEmailArg(BaseObject):
+class UpdateUserByIdNotificationEmail(BaseObject):
     def __init__(self, email: Optional[str] = None, **kwargs):
         """
         :param email: The email address to send the notifications to.
@@ -87,15 +87,17 @@ class UsersManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def get_users(
         self,
         filter_term: Optional[str] = None,
-        user_type: Optional[GetUsersUserTypeArg] = None,
+        user_type: Optional[GetUsersUserType] = None,
         external_app_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
@@ -135,7 +137,7 @@ class UsersManager:
               `filter_term`.
             * `external` returns all external users for whom the
               `login` matches the `filter_term` exactly.
-        :type user_type: Optional[GetUsersUserTypeArg], optional
+        :type user_type: Optional[GetUsersUserType], optional
         :param external_app_user_id: Limits the results to app users with the given
             `external_app_user_id` value.
             When creating an app user, an
@@ -187,7 +189,7 @@ class UsersManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users']),
+            ''.join([self.network_session.base_urls.base_url, '/users']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -204,7 +206,7 @@ class UsersManager:
         name: str,
         login: Optional[str] = None,
         is_platform_access_only: Optional[bool] = None,
-        role: Optional[CreateUserRoleArg] = None,
+        role: Optional[CreateUserRole] = None,
         language: Optional[str] = None,
         is_sync_enabled: Optional[bool] = None,
         job_title: Optional[str] = None,
@@ -217,7 +219,7 @@ class UsersManager:
         is_external_collab_restricted: Optional[bool] = None,
         is_exempt_from_device_limits: Optional[bool] = None,
         is_exempt_from_login_verification: Optional[bool] = None,
-        status: Optional[CreateUserStatusArg] = None,
+        status: Optional[CreateUserStatus] = None,
         external_app_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -239,7 +241,7 @@ class UsersManager:
         :param is_platform_access_only: Specifies that the user is an app user.
         :type is_platform_access_only: Optional[bool], optional
         :param role: The user’s enterprise role
-        :type role: Optional[CreateUserRoleArg], optional
+        :type role: Optional[CreateUserRole], optional
         :param language: The language of the user, formatted in modified version of the
             [ISO 639-1](/guides/api-calls/language-codes) format.
         :type language: Optional[str], optional
@@ -272,7 +274,7 @@ class UsersManager:
         :param is_exempt_from_login_verification: Whether the user must use two-factor authentication
         :type is_exempt_from_login_verification: Optional[bool], optional
         :param status: The user's account status
-        :type status: Optional[CreateUserStatusArg], optional
+        :type status: Optional[CreateUserStatus], optional
         :param external_app_user_id: An external identifier for an app user, which can be used to look
             up the user. This can be used to tie user IDs from external
             identity providers to Box users.
@@ -314,7 +316,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users']),
+            ''.join([self.network_session.base_urls.base_url, '/users']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -370,7 +372,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/me']),
+            ''.join([self.network_session.base_urls.base_url, '/users/me']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -434,7 +436,9 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -453,7 +457,7 @@ class UsersManager:
         notify: Optional[bool] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        role: Optional[UpdateUserByIdRoleArg] = None,
+        role: Optional[UpdateUserByIdRole] = None,
         language: Optional[str] = None,
         is_sync_enabled: Optional[bool] = None,
         job_title: Optional[str] = None,
@@ -466,9 +470,9 @@ class UsersManager:
         is_exempt_from_device_limits: Optional[bool] = None,
         is_exempt_from_login_verification: Optional[bool] = None,
         is_password_reset_required: Optional[bool] = None,
-        status: Optional[UpdateUserByIdStatusArg] = None,
+        status: Optional[UpdateUserByIdStatus] = None,
         space_amount: Optional[int] = None,
-        notification_email: Optional[UpdateUserByIdNotificationEmailArg] = None,
+        notification_email: Optional[UpdateUserByIdNotificationEmail] = None,
         external_app_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -497,7 +501,7 @@ class UsersManager:
             primary login address cannot be changed.
         :type login: Optional[str], optional
         :param role: The user’s enterprise role
-        :type role: Optional[UpdateUserByIdRoleArg], optional
+        :type role: Optional[UpdateUserByIdRole], optional
         :param language: The language of the user, formatted in modified version of the
             [ISO 639-1](/guides/api-calls/language-codes) format.
         :type language: Optional[str], optional
@@ -529,7 +533,7 @@ class UsersManager:
         :param is_password_reset_required: Whether the user is required to reset their password
         :type is_password_reset_required: Optional[bool], optional
         :param status: The user's account status
-        :type status: Optional[UpdateUserByIdStatusArg], optional
+        :type status: Optional[UpdateUserByIdStatus], optional
         :param space_amount: The user’s total available space in bytes. Set this to `-1` to
             indicate unlimited storage.
         :type space_amount: Optional[int], optional
@@ -538,7 +542,7 @@ class UsersManager:
             the email address to which notifications are sent instead of
             to the primary email address.
             Set this value to `null` to remove the notification email.
-        :type notification_email: Optional[UpdateUserByIdNotificationEmailArg], optional
+        :type notification_email: Optional[UpdateUserByIdNotificationEmail], optional
         :param external_app_user_id: An external identifier for an app user, which can be used to look
             up the user. This can be used to tie user IDs from external
             identity providers to Box users.
@@ -585,7 +589,9 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -631,12 +637,14 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'notify': to_string(notify), 'force': to_string(force)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'notify': to_string(notify), 'force': to_string(force)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/users/', to_string(user_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 params=query_params_map,

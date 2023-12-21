@@ -14,6 +14,8 @@ from box_sdk_gen.utils import Buffer
 
 from box_sdk_gen.utils import HashName
 
+from box_sdk_gen.schemas import FileFull
+
 from box_sdk_gen.utils import Iterator
 
 from box_sdk_gen.schemas import UploadSession
@@ -85,8 +87,10 @@ class ChunkedUploadsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -117,7 +121,9 @@ class ChunkedUploadsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://upload.box.com/api/2.0/files/upload_sessions']),
+            ''.join(
+                [self.network_session.base_urls.upload_url, '/files/upload_sessions']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -160,7 +166,8 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/',
+                self.network_session.base_urls.upload_url,
+                '/files/',
                 to_string(file_id),
                 '/upload_sessions',
             ]),
@@ -194,7 +201,8 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                self.network_session.base_urls.upload_url,
+                '/files/upload_sessions/',
                 to_string(upload_session_id),
             ]),
             FetchOptions(
@@ -254,7 +262,8 @@ class ChunkedUploadsManager:
         })
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                self.network_session.base_urls.upload_url,
+                '/files/upload_sessions/',
                 to_string(upload_session_id),
             ]),
             FetchOptions(
@@ -290,7 +299,8 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                self.network_session.base_urls.upload_url,
+                '/files/upload_sessions/',
                 to_string(upload_session_id),
             ]),
             FetchOptions(
@@ -330,13 +340,14 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'offset': to_string(offset), 'limit': to_string(limit)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'offset': to_string(offset), 'limit': to_string(limit)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                self.network_session.base_urls.upload_url,
+                '/files/upload_sessions/',
                 to_string(upload_session_id),
                 '/parts',
             ]),
@@ -403,7 +414,8 @@ class ChunkedUploadsManager:
         })
         response: FetchResponse = fetch(
             ''.join([
-                'https://upload.box.com/api/2.0/files/upload_sessions/',
+                self.network_session.base_urls.upload_url,
+                '/files/upload_sessions/',
                 to_string(upload_session_id),
                 '/commit',
             ]),
@@ -419,7 +431,7 @@ class ChunkedUploadsManager:
         )
         return deserialize(response.data, Files)
 
-    def reducer(self, acc: PartAccumulator, chunk: ByteStream):
+    def reducer(self, acc: PartAccumulator, chunk: ByteStream) -> PartAccumulator:
         last_index: int = acc.last_index
         parts: List[UploadPart] = acc.parts
         chunk_buffer: Buffer = read_byte_stream(chunk)
@@ -460,7 +472,7 @@ class ChunkedUploadsManager:
 
     def upload_big_file(
         self, file: ByteStream, file_name: str, file_size: int, parent_folder_id: str
-    ):
+    ) -> FileFull:
         """
         Starts the process of chunk uploading a big file. Should return a File object representing uploaded file.
         :param file: The stream of the file to upload.

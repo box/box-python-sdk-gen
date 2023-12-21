@@ -53,16 +53,16 @@ See the endpoint docs at
 <!-- sample post_webhooks -->
 
 ```python
-client.webhooks.create_webhook(target=CreateWebhookTargetArg(id=folder.id, type=CreateWebhookTargetArgTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=[CreateWebhookTriggersArg.FILE_UPLOADED.value])
+client.webhooks.create_webhook(target=CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=[CreateWebhookTriggers.FILE_UPLOADED.value])
 ```
 
 ### Arguments
 
-- target `CreateWebhookTargetArg`
+- target `CreateWebhookTarget`
   - The item that will trigger the webhook
 - address `str`
   - The URL that is notified by this webhook
-- triggers `List[CreateWebhookTriggersArg]`
+- triggers `List[CreateWebhookTriggers]`
   - An array of event names that this webhook is to be triggered for
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -120,11 +120,11 @@ client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://exa
 
 - webhook_id `str`
   - The ID of the webhook. Example: "3321123"
-- target `Optional[UpdateWebhookByIdTargetArg]`
+- target `Optional[UpdateWebhookByIdTarget]`
   - The item that will trigger the webhook
 - address `Optional[str]`
   - The URL that is notified by this webhook
-- triggers `Optional[List[UpdateWebhookByIdTriggersArg]]`
+- triggers `Optional[List[UpdateWebhookByIdTriggers]]`
   - An array of event names that this webhook is to be triggered for
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

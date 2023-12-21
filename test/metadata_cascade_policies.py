@@ -6,10 +6,10 @@ from typing import Dict
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFieldsArg
+from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
 from box_sdk_gen.managers.metadata_templates import (
-    CreateMetadataTemplateFieldsArgTypeField,
+    CreateMetadataTemplateFieldsTypeField,
 )
 
 from box_sdk_gen.schemas import FolderFull
@@ -17,16 +17,16 @@ from box_sdk_gen.schemas import FolderFull
 from box_sdk_gen.schemas import MetadataCascadePolicy
 
 from box_sdk_gen.managers.metadata_cascade_policies import (
-    CreateMetadataCascadePolicyScopeArg,
+    CreateMetadataCascadePolicyScope,
 )
 
 from box_sdk_gen.schemas import MetadataCascadePolicies
 
 from box_sdk_gen.managers.metadata_cascade_policies import (
-    CreateMetadataCascadePolicyApplyConflictResolutionArg,
+    ApplyMetadataCascadePolicyConflictResolution,
 )
 
-from box_sdk_gen.managers.folder_metadata import CreateFolderMetadataByIdScopeArg
+from box_sdk_gen.managers.folder_metadata import CreateFolderMetadataByIdScope
 
 from box_sdk_gen.utils import get_uuid
 
@@ -50,8 +50,8 @@ def testMetadataCascadePolicies():
         template_key=template_key,
         display_name=template_key,
         fields=[
-            CreateMetadataTemplateFieldsArg(
-                type=CreateMetadataTemplateFieldsArgTypeField.STRING.value,
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
                 key='testName',
                 display_name='testName',
             )
@@ -62,7 +62,7 @@ def testMetadataCascadePolicies():
     cascade_policy: MetadataCascadePolicy = (
         client.metadata_cascade_policies.create_metadata_cascade_policy(
             folder_id=folder.id,
-            scope=CreateMetadataCascadePolicyScopeArg.ENTERPRISE.value,
+            scope=CreateMetadataCascadePolicyScope.ENTERPRISE.value,
             template_key=template_key,
         )
     )
@@ -87,20 +87,20 @@ def testMetadataCascadePolicies():
     )
     assert len(policies.entries) == 1
     with pytest.raises(Exception):
-        client.metadata_cascade_policies.create_metadata_cascade_policy_apply(
+        client.metadata_cascade_policies.apply_metadata_cascade_policy(
             metadata_cascade_policy_id=cascade_policy_id,
-            conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolutionArg.OVERWRITE.value,
+            conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
         )
     data: Dict[str, str] = {'testName': 'xyz'}
     client.folder_metadata.create_folder_metadata_by_id(
         folder_id=folder.id,
-        scope=CreateFolderMetadataByIdScopeArg.ENTERPRISE.value,
+        scope=CreateFolderMetadataByIdScope.ENTERPRISE.value,
         template_key=template_key,
         request_body=data,
     )
-    client.metadata_cascade_policies.create_metadata_cascade_policy_apply(
+    client.metadata_cascade_policies.apply_metadata_cascade_policy(
         metadata_cascade_policy_id=cascade_policy_id,
-        conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolutionArg.OVERWRITE.value,
+        conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
     )
     client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(
         metadata_cascade_policy_id=cascade_policy_id

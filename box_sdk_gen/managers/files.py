@@ -39,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateFileByIdParentArg(BaseObject):
+class UpdateFileByIdParent(BaseObject):
     def __init__(self, id: Optional[str] = None, **kwargs):
         """
         :param id: The ID of parent item
@@ -49,13 +49,13 @@ class UpdateFileByIdParentArg(BaseObject):
         self.id = id
 
 
-class UpdateFileByIdSharedLinkArgAccessField(str, Enum):
+class UpdateFileByIdSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class UpdateFileByIdSharedLinkArgPermissionsField(BaseObject):
+class UpdateFileByIdSharedLinkPermissionsField(BaseObject):
     def __init__(self, can_download: Optional[bool] = None, **kwargs):
         """
         :param can_download: If the shared link allows for downloading of files.
@@ -67,14 +67,14 @@ class UpdateFileByIdSharedLinkArgPermissionsField(BaseObject):
         self.can_download = can_download
 
 
-class UpdateFileByIdSharedLinkArg(BaseObject):
+class UpdateFileByIdSharedLink(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFileByIdSharedLinkArgAccessField] = None,
+        access: Optional[UpdateFileByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[UpdateFileByIdSharedLinkArgPermissionsField] = None,
+        permissions: Optional[UpdateFileByIdSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -88,7 +88,7 @@ class UpdateFileByIdSharedLinkArg(BaseObject):
             no `access` field, for example `{ "shared_link": {} }`.
             The `company` access level is only available to paid
             accounts.
-        :type access: Optional[UpdateFileByIdSharedLinkArgAccessField], optional
+        :type access: Optional[UpdateFileByIdSharedLinkAccessField], optional
         :param password: The password required to access the shared link. Set the
             password to `null` to remove it.
             Passwords must now be at least eight characters
@@ -114,21 +114,21 @@ class UpdateFileByIdSharedLinkArg(BaseObject):
         self.permissions = permissions
 
 
-class UpdateFileByIdLockArgAccessField(str, Enum):
+class UpdateFileByIdLockAccessField(str, Enum):
     LOCK = 'lock'
 
 
-class UpdateFileByIdLockArg(BaseObject):
+class UpdateFileByIdLock(BaseObject):
     def __init__(
         self,
-        access: Optional[UpdateFileByIdLockArgAccessField] = None,
+        access: Optional[UpdateFileByIdLockAccessField] = None,
         expires_at: Optional[str] = None,
         is_download_prevented: Optional[bool] = None,
         **kwargs
     ):
         """
         :param access: The type of this object.
-        :type access: Optional[UpdateFileByIdLockArgAccessField], optional
+        :type access: Optional[UpdateFileByIdLockAccessField], optional
         :param expires_at: Defines the time at which the lock expires.
         :type expires_at: Optional[str], optional
         :param is_download_prevented: Defines if the file can be downloaded while it is locked.
@@ -140,15 +140,15 @@ class UpdateFileByIdLockArg(BaseObject):
         self.is_download_prevented = is_download_prevented
 
 
-class UpdateFileByIdPermissionsArgCanDownloadField(str, Enum):
+class UpdateFileByIdPermissionsCanDownloadField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
 
 
-class UpdateFileByIdPermissionsArg(BaseObject):
+class UpdateFileByIdPermissions(BaseObject):
     def __init__(
         self,
-        can_download: Optional[UpdateFileByIdPermissionsArgCanDownloadField] = None,
+        can_download: Optional[UpdateFileByIdPermissionsCanDownloadField] = None,
         **kwargs
     ):
         """
@@ -159,13 +159,13 @@ class UpdateFileByIdPermissionsArg(BaseObject):
             normally part of the `role` of a collaboration. When set to
             `company`, this essentially removes the download option for
             external users with `viewer` or `editor` a roles.
-        :type can_download: Optional[UpdateFileByIdPermissionsArgCanDownloadField], optional
+        :type can_download: Optional[UpdateFileByIdPermissionsCanDownloadField], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
 
 
-class UpdateFileByIdCollectionsArg(BaseObject):
+class UpdateFileByIdCollections(BaseObject):
     def __init__(self, id: Optional[str] = None, type: Optional[str] = None, **kwargs):
         """
         :param id: The unique identifier for this object
@@ -178,7 +178,7 @@ class UpdateFileByIdCollectionsArg(BaseObject):
         self.type = type
 
 
-class CopyFileParentArg(BaseObject):
+class CopyFileParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of folder to copy the file to.
@@ -188,7 +188,7 @@ class CopyFileParentArg(BaseObject):
         self.id = id
 
 
-class GetFileThumbnailByIdExtensionArg(str, Enum):
+class GetFileThumbnailByIdExtension(str, Enum):
     PNG = 'png'
     JPG = 'jpg'
 
@@ -197,8 +197,10 @@ class FilesManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -276,7 +278,9 @@ class FilesManager:
             **extra_headers,
         })
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -293,12 +297,12 @@ class FilesManager:
         file_id: str,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        parent: Optional[UpdateFileByIdParentArg] = None,
-        shared_link: Optional[UpdateFileByIdSharedLinkArg] = None,
-        lock: Optional[UpdateFileByIdLockArg] = None,
+        parent: Optional[UpdateFileByIdParent] = None,
+        shared_link: Optional[UpdateFileByIdSharedLink] = None,
+        lock: Optional[UpdateFileByIdLock] = None,
         disposition_at: Optional[str] = None,
-        permissions: Optional[UpdateFileByIdPermissionsArg] = None,
-        collections: Optional[List[UpdateFileByIdCollectionsArg]] = None,
+        permissions: Optional[UpdateFileByIdPermissions] = None,
+        collections: Optional[List[UpdateFileByIdCollections]] = None,
         tags: Optional[List[str]] = None,
         fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
@@ -329,12 +333,12 @@ class FilesManager:
             moved, renamed, or otherwise changed by anyone other than the user
             who created the lock.
             Set this to `null` to remove the lock.
-        :type lock: Optional[UpdateFileByIdLockArg], optional
+        :type lock: Optional[UpdateFileByIdLock], optional
         :param disposition_at: The retention expiration timestamp for the given file. This
             date cannot be shortened once set on a file.
         :type disposition_at: Optional[str], optional
         :param permissions: Defines who can download a file.
-        :type permissions: Optional[UpdateFileByIdPermissionsArg], optional
+        :type permissions: Optional[UpdateFileByIdPermissions], optional
         :param collections: An array of collections to make this file
             a member of. Currently
             we only support the `favorites` collection.
@@ -343,7 +347,7 @@ class FilesManager:
             Passing an empty array `[]` or `null` will remove
             the file from all collections.
             [1]: e://get-collections
-        :type collections: Optional[List[UpdateFileByIdCollectionsArg]], optional
+        :type collections: Optional[List[UpdateFileByIdCollections]], optional
         :param tags: The tags for this item. These tags are shown in
             the Box web app and mobile apps next to an item.
             To add or remove a tag, retrieve the item's current tags,
@@ -384,11 +388,13 @@ class FilesManager:
             'tags': tags,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -439,11 +445,13 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match), **extra_headers
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id)]),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -457,7 +465,7 @@ class FilesManager:
     def copy_file(
         self,
         file_id: str,
-        parent: CopyFileParentArg,
+        parent: CopyFileParent,
         name: Optional[str] = None,
         version: Optional[str] = None,
         fields: Optional[List[str]] = None,
@@ -474,7 +482,7 @@ class FilesManager:
             Example: "12345"
         :type file_id: str
         :param parent: The destination folder to copy the file to.
-        :type parent: CopyFileParentArg
+        :type parent: CopyFileParent
         :param name: An optional new name for the copied file.
             There are some restrictions to the file name. Names containing
             non-printable ASCII characters, forward and backward slashes
@@ -502,7 +510,12 @@ class FilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/files/', to_string(file_id), '/copy']),
+            ''.join([
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/copy',
+            ]),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -519,7 +532,7 @@ class FilesManager:
     def get_file_thumbnail_by_id(
         self,
         file_id: str,
-        extension: GetFileThumbnailByIdExtensionArg,
+        extension: GetFileThumbnailByIdExtension,
         min_height: Optional[int] = None,
         min_width: Optional[int] = None,
         max_height: Optional[int] = None,
@@ -556,7 +569,7 @@ class FilesManager:
         :type file_id: str
         :param extension: The file format for the thumbnail
             Example: "png"
-        :type extension: GetFileThumbnailByIdExtensionArg
+        :type extension: GetFileThumbnailByIdExtension
         :param min_height: The minimum height of the thumbnail
         :type min_height: Optional[int], optional
         :param min_width: The minimum width of the thumbnail
@@ -579,7 +592,8 @@ class FilesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/',
+                self.network_session.base_urls.base_url,
+                '/files/',
                 to_string(file_id),
                 '/thumbnail.',
                 to_string(extension),

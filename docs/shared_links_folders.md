@@ -16,7 +16,7 @@ which can originate within the current enterprise or within another.
 This endpoint allows an application to retrieve information about a
 shared folder when only given a shared link.
 
-This operation is performed by calling function `get_shared_item_folders`.
+This operation is performed by calling function `find_folder_for_shared_link`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shared-items-folders/).
@@ -24,7 +24,7 @@ See the endpoint docs at
 <!-- sample get_shared_items#folders -->
 
 ```python
-user_client.shared_links_folders.get_shared_item_folders(boxapi=''.join(['shared_link=', folder_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+user_client.shared_links_folders.find_folder_for_shared_link(boxapi=''.join(['shared_link=', folder_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
 ```
 
 ### Arguments
@@ -49,7 +49,7 @@ the user has access to it.
 
 Gets the information for a shared link on a folder.
 
-This operation is performed by calling function `get_folder_get_shared_link`.
+This operation is performed by calling function `get_shared_link_for_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-get-shared-link/).
@@ -57,7 +57,7 @@ See the endpoint docs at
 <!-- sample get_folders_id#get_shared_link -->
 
 ```python
-client.shared_links_folders.get_folder_get_shared_link(folder_id=folder.id, fields='shared_link')
+client.shared_links_folders.get_shared_link_for_folder(folder_id=folder.id, fields='shared_link')
 ```
 
 ### Arguments
@@ -80,7 +80,7 @@ additional shared link information.
 
 Adds a shared link to a folder.
 
-This operation is performed by calling function `update_folder_add_shared_link`.
+This operation is performed by calling function `add_share_link_to_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-add-shared-link/).
@@ -88,14 +88,14 @@ See the endpoint docs at
 <!-- sample put_folders_id#add_shared_link -->
 
 ```python
-client.shared_links_folders.update_folder_add_shared_link(folder_id=folder.id, shared_link=UpdateFolderAddSharedLinkSharedLinkArg(access=UpdateFolderAddSharedLinkSharedLinkArgAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+client.shared_links_folders.add_share_link_to_folder(folder_id=folder.id, shared_link=AddShareLinkToFolderSharedLink(access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
 ```
 
 ### Arguments
 
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
-- shared_link `Optional[UpdateFolderAddSharedLinkSharedLinkArg]`
+- shared_link `Optional[AddShareLinkToFolderSharedLink]`
   - The settings for the shared link to create on the folder. Use an empty object (`{}`) to use the default settings for shared links.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.
@@ -113,7 +113,7 @@ link attached.
 
 Updates a shared link on a folder.
 
-This operation is performed by calling function `update_folder_update_shared_link`.
+This operation is performed by calling function `update_shared_link_on_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-update-shared-link/).
@@ -121,14 +121,14 @@ See the endpoint docs at
 <!-- sample put_folders_id#update_shared_link -->
 
 ```python
-client.shared_links_folders.update_folder_update_shared_link(folder_id=folder.id, shared_link=UpdateFolderUpdateSharedLinkSharedLinkArg(access=UpdateFolderUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value), fields='shared_link')
+client.shared_links_folders.update_shared_link_on_folder(folder_id=folder.id, shared_link=UpdateSharedLinkOnFolderSharedLink(access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value), fields='shared_link')
 ```
 
 ### Arguments
 
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
-- shared_link `Optional[UpdateFolderUpdateSharedLinkSharedLinkArg]`
+- shared_link `Optional[UpdateSharedLinkOnFolderSharedLink]`
   - The settings for the shared link to update.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.
@@ -146,18 +146,18 @@ link attached.
 
 Removes a shared link from a folder.
 
-This operation is performed by calling function `update_folder_remove_shared_link`.
+This operation is performed by calling function `remove_shared_link_from_folder`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id-remove-shared-link/).
 
-_Currently we don't have an example for calling `update_folder_remove_shared_link` in integration tests_
+_Currently we don't have an example for calling `remove_shared_link_from_folder` in integration tests_
 
 ### Arguments
 
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
-- shared_link `Optional[UpdateFolderRemoveSharedLinkSharedLinkArg]`
+- shared_link `Optional[RemoveSharedLinkFromFolderSharedLink]`
   - By setting this value to `null`, the shared link is removed from the folder.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.

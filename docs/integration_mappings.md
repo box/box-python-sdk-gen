@@ -12,12 +12,12 @@ Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/441
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `get_integration_mapping_slack`.
+This operation is performed by calling function `get_slack_integration_mapping`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-integration-mappings-slack/).
 
-_Currently we don't have an example for calling `get_integration_mapping_slack` in integration tests_
+_Currently we don't have an example for calling `get_slack_integration_mapping` in integration tests_
 
 ### Arguments
 
@@ -25,13 +25,13 @@ _Currently we don't have an example for calling `get_integration_mapping_slack` 
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
-- partner_item_type `Optional[GetIntegrationMappingSlackPartnerItemTypeArg]`
+- partner_item_type `Optional[GetSlackIntegrationMappingPartnerItemType]`
   - Mapped item type, for which the mapping should be returned
 - partner_item_id `Optional[str]`
   - ID of the mapped item, for which the mapping should be returned
 - box_item_id `Optional[str]`
   - Box item ID, for which the mappings should be returned
-- box_item_type `Optional[GetIntegrationMappingSlackBoxItemTypeArg]`
+- box_item_type `Optional[GetSlackIntegrationMappingBoxItemType]`
   - Box item type, for which the mappings should be returned
 - is_manually_created `Optional[bool]`
   - Whether the mapping has been manually created
@@ -52,12 +52,12 @@ by mapping a Slack channel to a Box item.
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `create_integration_mapping_slack`.
+This operation is performed by calling function `create_slack_integration_mapping`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-integration-mappings-slack/).
 
-_Currently we don't have an example for calling `create_integration_mapping_slack` in integration tests_
+_Currently we don't have an example for calling `create_slack_integration_mapping` in integration tests_
 
 ### Arguments
 
@@ -84,12 +84,12 @@ Supports updating the Box folder ID and options.
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `update_integration_mapping_slack_by_id`.
+This operation is performed by calling function `update_slack_integration_mapping_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-integration-mappings-slack-id/).
 
-_Currently we don't have an example for calling `update_integration_mapping_slack_by_id` in integration tests_
+_Currently we don't have an example for calling `update_slack_integration_mapping_by_id` in integration tests_
 
 ### Arguments
 
@@ -115,12 +115,12 @@ Deletes a [Slack integration mapping](https://support.box.com/hc/en-us/articles/
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `delete_integration_mapping_slack_by_id`.
+This operation is performed by calling function `delete_slack_integration_mapping_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-integration-mappings-slack-id/).
 
-_Currently we don't have an example for calling `delete_integration_mapping_slack_by_id` in integration tests_
+_Currently we don't have an example for calling `delete_slack_integration_mapping_by_id` in integration tests_
 
 ### Arguments
 

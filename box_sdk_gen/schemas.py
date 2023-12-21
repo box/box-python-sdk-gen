@@ -193,16 +193,16 @@ class PostOAuth2Revoke(BaseObject):
         self.token = token
 
 
-class ZipDownloadRequestItemsFieldTypeField(str, Enum):
+class ZipDownloadRequestItemsTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
 class ZipDownloadRequestItemsField(BaseObject):
-    def __init__(self, type: ZipDownloadRequestItemsFieldTypeField, id: str, **kwargs):
+    def __init__(self, type: ZipDownloadRequestItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.
-        :type type: ZipDownloadRequestItemsFieldTypeField
+        :type type: ZipDownloadRequestItemsTypeField
         :param id: The identifier of the item to add to the archive. When this item is
             a folder then this can not be the root folder with ID `0`.
         :type id: str
@@ -232,7 +232,7 @@ class ZipDownloadRequest(BaseObject):
         self.download_file_name = download_file_name
 
 
-class MetadataQueryOrderByFieldDirectionField(str, Enum):
+class MetadataQueryOrderByDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -241,7 +241,7 @@ class MetadataQueryOrderByField(BaseObject):
     def __init__(
         self,
         field_key: Optional[str] = None,
-        direction: Optional[MetadataQueryOrderByFieldDirectionField] = None,
+        direction: Optional[MetadataQueryOrderByDirectionField] = None,
         **kwargs
     ):
         """
@@ -252,7 +252,7 @@ class MetadataQueryOrderByField(BaseObject):
         :param direction: The direction to order by, either ascending or descending.
             The `ordering` direction must be the same for each item in the
             array.
-        :type direction: Optional[MetadataQueryOrderByFieldDirectionField], optional
+        :type direction: Optional[MetadataQueryOrderByDirectionField], optional
         """
         super().__init__(**kwargs)
         self.field_key = field_key
@@ -401,7 +401,7 @@ class FileRequestUpdateRequest(BaseObject):
         self.expires_at = expires_at
 
 
-class FileRequestCopyRequestFolderFieldTypeField(str, Enum):
+class FileRequestCopyRequestFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
 
@@ -409,7 +409,7 @@ class FileRequestCopyRequestFolderField(BaseObject):
     def __init__(
         self,
         id: str,
-        type: Optional[FileRequestCopyRequestFolderFieldTypeField] = None,
+        type: Optional[FileRequestCopyRequestFolderTypeField] = None,
         **kwargs
     ):
         """
@@ -417,7 +417,7 @@ class FileRequestCopyRequestFolderField(BaseObject):
             file request to.
         :type id: str
         :param type: `folder`
-        :type type: Optional[FileRequestCopyRequestFolderFieldTypeField], optional
+        :type type: Optional[FileRequestCopyRequestFolderTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -667,21 +667,19 @@ class ClassificationTemplateDisplayNameField(str, Enum):
     CLASSIFICATION = 'Classification'
 
 
-class ClassificationTemplateFieldsFieldTypeField(str, Enum):
+class ClassificationTemplateFieldsTypeField(str, Enum):
     ENUM = 'enum'
 
 
-class ClassificationTemplateFieldsFieldKeyField(str, Enum):
+class ClassificationTemplateFieldsKeyField(str, Enum):
     BOX__SECURITY__CLASSIFICATION__KEY = 'Box__Security__Classification__Key'
 
 
-class ClassificationTemplateFieldsFieldDisplayNameField(str, Enum):
+class ClassificationTemplateFieldsDisplayNameField(str, Enum):
     CLASSIFICATION = 'Classification'
 
 
-class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField(
-    BaseObject
-):
+class ClassificationTemplateFieldsOptionsStaticConfigClassificationField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'classification_definition': 'classificationDefinition',
         'color_id': 'colorID',
@@ -722,11 +720,11 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificati
         self.color_id = color_id
 
 
-class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject):
+class ClassificationTemplateFieldsOptionsStaticConfigField(BaseObject):
     def __init__(
         self,
         classification: Optional[
-            ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField
+            ClassificationTemplateFieldsOptionsStaticConfigClassificationField
         ] = None,
         **kwargs
     ):
@@ -737,13 +735,13 @@ class ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField(BaseObject)
             are used for internal Box Shield and Box Governance
             purposes and no additional value must be derived from
             these fields.
-        :type classification: Optional[ClassificationTemplateFieldsFieldOptionsFieldStaticConfigFieldClassificationField], optional
+        :type classification: Optional[ClassificationTemplateFieldsOptionsStaticConfigClassificationField], optional
         """
         super().__init__(**kwargs)
         self.classification = classification
 
 
-class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
+class ClassificationTemplateFieldsOptionsField(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {
         'static_config': 'staticConfig',
         **BaseObject._fields_to_json_mapping,
@@ -758,7 +756,7 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
         id: str,
         key: str,
         static_config: Optional[
-            ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField
+            ClassificationTemplateFieldsOptionsStaticConfigField
         ] = None,
         **kwargs
     ):
@@ -768,7 +766,7 @@ class ClassificationTemplateFieldsFieldOptionsField(BaseObject):
         :param key: The display name and key for this classification.
         :type key: str
         :param static_config: Additional information about the classification.
-        :type static_config: Optional[ClassificationTemplateFieldsFieldOptionsFieldStaticConfigField], optional
+        :type static_config: Optional[ClassificationTemplateFieldsOptionsStaticConfigField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -789,10 +787,10 @@ class ClassificationTemplateFieldsField(BaseObject):
     def __init__(
         self,
         id: str,
-        type: ClassificationTemplateFieldsFieldTypeField,
-        key: ClassificationTemplateFieldsFieldKeyField,
-        display_name: ClassificationTemplateFieldsFieldDisplayNameField,
-        options: List[ClassificationTemplateFieldsFieldOptionsField],
+        type: ClassificationTemplateFieldsTypeField,
+        key: ClassificationTemplateFieldsKeyField,
+        display_name: ClassificationTemplateFieldsDisplayNameField,
+        options: List[ClassificationTemplateFieldsOptionsField],
         hidden: Optional[bool] = None,
         **kwargs
     ):
@@ -800,14 +798,14 @@ class ClassificationTemplateFieldsField(BaseObject):
         :param id: The unique ID of the field.
         :type id: str
         :param type: The array item type.
-        :type type: ClassificationTemplateFieldsFieldTypeField
+        :type type: ClassificationTemplateFieldsTypeField
         :param key: Defines classifications
             available in the enterprise.
-        :type key: ClassificationTemplateFieldsFieldKeyField
+        :type key: ClassificationTemplateFieldsKeyField
         :param display_name: `Classification`
-        :type display_name: ClassificationTemplateFieldsFieldDisplayNameField
+        :type display_name: ClassificationTemplateFieldsDisplayNameField
         :param options: A list of classifications available in this enterprise.
-        :type options: List[ClassificationTemplateFieldsFieldOptionsField]
+        :type options: List[ClassificationTemplateFieldsOptionsField]
         :param hidden: Classifications are always visible to web and mobile users.
         :type hidden: Optional[bool], optional
         """
@@ -892,7 +890,7 @@ class CollaborationAllowlistEntryDirectionField(str, Enum):
     BOTH = 'both'
 
 
-class CollaborationAllowlistEntryEnterpriseFieldTypeField(str, Enum):
+class CollaborationAllowlistEntryEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -900,7 +898,7 @@ class CollaborationAllowlistEntryEnterpriseField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[CollaborationAllowlistEntryEnterpriseFieldTypeField] = None,
+        type: Optional[CollaborationAllowlistEntryEnterpriseTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -908,7 +906,7 @@ class CollaborationAllowlistEntryEnterpriseField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistEntryEnterpriseFieldTypeField], optional
+        :type type: Optional[CollaborationAllowlistEntryEnterpriseTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -1018,7 +1016,7 @@ class Collection(BaseObject):
         self.collection_type = collection_type
 
 
-class CollectionsOrderFieldDirectionField(str, Enum):
+class CollectionsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -1027,14 +1025,14 @@ class CollectionsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[CollectionsOrderFieldDirectionField] = None,
+        direction: Optional[CollectionsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[CollectionsOrderFieldDirectionField], optional
+        :type direction: Optional[CollectionsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -1814,7 +1812,7 @@ class GroupFull(Group):
         self.permissions = permissions
 
 
-class GroupsOrderFieldDirectionField(str, Enum):
+class GroupsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -1823,14 +1821,14 @@ class GroupsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[GroupsOrderFieldDirectionField] = None,
+        direction: Optional[GroupsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[GroupsOrderFieldDirectionField], optional
+        :type direction: Optional[GroupsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -2082,20 +2080,20 @@ class MetadataCascadePolicyTypeField(str, Enum):
     METADATA_CASCADE_POLICY = 'metadata_cascade_policy'
 
 
-class MetadataCascadePolicyOwnerEnterpriseFieldTypeField(str, Enum):
+class MetadataCascadePolicyOwnerEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
 class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
     def __init__(
         self,
-        type: Optional[MetadataCascadePolicyOwnerEnterpriseFieldTypeField] = None,
+        type: Optional[MetadataCascadePolicyOwnerEnterpriseTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: `enterprise`
-        :type type: Optional[MetadataCascadePolicyOwnerEnterpriseFieldTypeField], optional
+        :type type: Optional[MetadataCascadePolicyOwnerEnterpriseTypeField], optional
         :param id: The ID of the enterprise that owns the policy.
         :type id: Optional[str], optional
         """
@@ -2104,20 +2102,20 @@ class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
         self.id = id
 
 
-class MetadataCascadePolicyParentFieldTypeField(str, Enum):
+class MetadataCascadePolicyParentTypeField(str, Enum):
     FOLDER = 'folder'
 
 
 class MetadataCascadePolicyParentField(BaseObject):
     def __init__(
         self,
-        type: Optional[MetadataCascadePolicyParentFieldTypeField] = None,
+        type: Optional[MetadataCascadePolicyParentTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: `folder`
-        :type type: Optional[MetadataCascadePolicyParentFieldTypeField], optional
+        :type type: Optional[MetadataCascadePolicyParentTypeField], optional
         :param id: The ID of the folder the policy is applied to.
         :type id: Optional[str], optional
         """
@@ -2218,7 +2216,7 @@ class MetadataQueryIndexStatusField(str, Enum):
     DISABLED = 'disabled'
 
 
-class MetadataQueryIndexFieldsFieldSortDirectionField(str, Enum):
+class MetadataQueryIndexFieldsSortDirectionField(str, Enum):
     ASC = 'asc'
     DESC = 'desc'
 
@@ -2227,16 +2225,14 @@ class MetadataQueryIndexFieldsField(BaseObject):
     def __init__(
         self,
         key: Optional[str] = None,
-        sort_direction: Optional[
-            MetadataQueryIndexFieldsFieldSortDirectionField
-        ] = None,
+        sort_direction: Optional[MetadataQueryIndexFieldsSortDirectionField] = None,
         **kwargs
     ):
         """
         :param key: The metadata template field key.
         :type key: Optional[str], optional
         :param sort_direction: The sort direction of the field.
-        :type sort_direction: Optional[MetadataQueryIndexFieldsFieldSortDirectionField], optional
+        :type sort_direction: Optional[MetadataQueryIndexFieldsSortDirectionField], optional
         """
         super().__init__(**kwargs)
         self.key = key
@@ -2295,7 +2291,7 @@ class MetadataTemplateTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'
 
 
-class MetadataTemplateFieldsFieldTypeField(str, Enum):
+class MetadataTemplateFieldsTypeField(str, Enum):
     STRING = 'string'
     FLOAT = 'float'
     DATE = 'date'
@@ -2304,7 +2300,7 @@ class MetadataTemplateFieldsFieldTypeField(str, Enum):
     INTEGER = 'integer'
 
 
-class MetadataTemplateFieldsFieldOptionsField(BaseObject):
+class MetadataTemplateFieldsOptionsField(BaseObject):
     def __init__(self, key: str, id: Optional[str] = None, **kwargs):
         """
         :param key: The text value of the option. This represents both the display name of the
@@ -2330,12 +2326,12 @@ class MetadataTemplateFieldsField(BaseObject):
 
     def __init__(
         self,
-        type: MetadataTemplateFieldsFieldTypeField,
+        type: MetadataTemplateFieldsTypeField,
         key: str,
         display_name: str,
         description: Optional[str] = None,
         hidden: Optional[bool] = None,
-        options: Optional[List[MetadataTemplateFieldsFieldOptionsField]] = None,
+        options: Optional[List[MetadataTemplateFieldsOptionsField]] = None,
         id: Optional[str] = None,
         **kwargs
     ):
@@ -2349,7 +2345,7 @@ class MetadataTemplateFieldsField(BaseObject):
             **Note**: The `integer` value is deprecated.
             It is still present in the response,
             but cannot be used in the POST request.
-        :type type: MetadataTemplateFieldsFieldTypeField
+        :type type: MetadataTemplateFieldsTypeField
         :param key: A unique identifier for the field. The identifier must
             be unique within the template to which it belongs.
         :type key: str
@@ -2363,7 +2359,7 @@ class MetadataTemplateFieldsField(BaseObject):
         :type hidden: Optional[bool], optional
         :param options: A list of options for this field. This is used in combination
             with the `enum` and `multiSelect` field types.
-        :type options: Optional[List[MetadataTemplateFieldsFieldOptionsField]], optional
+        :type options: Optional[List[MetadataTemplateFieldsOptionsField]], optional
         :param id: The unique ID of the metadata template field.
         :type id: Optional[str], optional
         """
@@ -2772,7 +2768,7 @@ class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
         self.id = id
 
 
-class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField(
+class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
@@ -2785,7 +2781,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
         self,
         id: Optional[str] = None,
         type: Optional[
-            ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField
+            ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -2794,14 +2790,14 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
             requesting shield information barrier segment.
         :type id: Optional[str], optional
         :param type: The type of the shield information barrier segment
-        :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentFieldTypeField], optional
+        :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField(
+class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
@@ -2812,7 +2808,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseO
         self,
         id: Optional[str] = None,
         type: Optional[
-            ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField
+            ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -2821,7 +2817,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseO
             restricted shield information barrier segment.
         :type id: Optional[str], optional
         :param type: The type of the shield information segment
-        :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentFieldTypeField], optional
+        :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3017,7 +3013,7 @@ class TermsOfServiceStatusField(str, Enum):
     DISABLED = 'disabled'
 
 
-class TermsOfServiceEnterpriseFieldTypeField(str, Enum):
+class TermsOfServiceEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -3025,7 +3021,7 @@ class TermsOfServiceEnterpriseField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[TermsOfServiceEnterpriseFieldTypeField] = None,
+        type: Optional[TermsOfServiceEnterpriseTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -3033,7 +3029,7 @@ class TermsOfServiceEnterpriseField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[TermsOfServiceEnterpriseFieldTypeField], optional
+        :type type: Optional[TermsOfServiceEnterpriseTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -3163,7 +3159,7 @@ class UploadPart(UploadPartMini):
         self.sha_1 = sha_1
 
 
-class UploadPartsOrderFieldDirectionField(str, Enum):
+class UploadPartsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -3172,14 +3168,14 @@ class UploadPartsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[UploadPartsOrderFieldDirectionField] = None,
+        direction: Optional[UploadPartsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[UploadPartsOrderFieldDirectionField], optional
+        :type direction: Optional[UploadPartsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -3969,14 +3965,14 @@ class TrashWebLinkTypeField(str, Enum):
     WEB_LINK = 'web_link'
 
 
-class TrashWebLinkPathCollectionFieldEntriesFieldTypeField(str, Enum):
+class TrashWebLinkPathCollectionEntriesTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
+class TrashWebLinkPathCollectionEntriesField(BaseObject):
     def __init__(
         self,
-        type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField] = None,
+        type: Optional[TrashWebLinkPathCollectionEntriesTypeField] = None,
         id: Optional[str] = None,
         sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
@@ -3985,7 +3981,7 @@ class TrashWebLinkPathCollectionFieldEntriesField(BaseObject):
     ):
         """
         :param type: `folder`
-        :type type: Optional[TrashWebLinkPathCollectionFieldEntriesFieldTypeField], optional
+        :type type: Optional[TrashWebLinkPathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder.
         :type id: Optional[str], optional
         :param sequence_id: This field is null for the Trash folder
@@ -4007,14 +4003,14 @@ class TrashWebLinkPathCollectionField(BaseObject):
     def __init__(
         self,
         total_count: int,
-        entries: List[TrashWebLinkPathCollectionFieldEntriesField],
+        entries: List[TrashWebLinkPathCollectionEntriesField],
         **kwargs
     ):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
         :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashWebLinkPathCollectionFieldEntriesField]
+        :type entries: List[TrashWebLinkPathCollectionEntriesField]
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4108,14 +4104,14 @@ class TrashFolderTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class TrashFolderPathCollectionFieldEntriesFieldTypeField(str, Enum):
+class TrashFolderPathCollectionEntriesTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class TrashFolderPathCollectionFieldEntriesField(BaseObject):
+class TrashFolderPathCollectionEntriesField(BaseObject):
     def __init__(
         self,
-        type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField] = None,
+        type: Optional[TrashFolderPathCollectionEntriesTypeField] = None,
         id: Optional[str] = None,
         sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
@@ -4124,7 +4120,7 @@ class TrashFolderPathCollectionFieldEntriesField(BaseObject):
     ):
         """
         :param type: `folder`
-        :type type: Optional[TrashFolderPathCollectionFieldEntriesFieldTypeField], optional
+        :type type: Optional[TrashFolderPathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder.
         :type id: Optional[str], optional
         :param sequence_id: This field is null for the Trash folder
@@ -4146,14 +4142,14 @@ class TrashFolderPathCollectionField(BaseObject):
     def __init__(
         self,
         total_count: int,
-        entries: List[TrashFolderPathCollectionFieldEntriesField],
+        entries: List[TrashFolderPathCollectionEntriesField],
         **kwargs
     ):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
         :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashFolderPathCollectionFieldEntriesField]
+        :type entries: List[TrashFolderPathCollectionEntriesField]
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4272,14 +4268,14 @@ class TrashFileTypeField(str, Enum):
     FILE = 'file'
 
 
-class TrashFilePathCollectionFieldEntriesFieldTypeField(str, Enum):
+class TrashFilePathCollectionEntriesTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class TrashFilePathCollectionFieldEntriesField(BaseObject):
+class TrashFilePathCollectionEntriesField(BaseObject):
     def __init__(
         self,
-        type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField] = None,
+        type: Optional[TrashFilePathCollectionEntriesTypeField] = None,
         id: Optional[str] = None,
         sequence_id: Optional[str] = None,
         etag: Optional[str] = None,
@@ -4288,7 +4284,7 @@ class TrashFilePathCollectionFieldEntriesField(BaseObject):
     ):
         """
         :param type: `folder`
-        :type type: Optional[TrashFilePathCollectionFieldEntriesFieldTypeField], optional
+        :type type: Optional[TrashFilePathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder.
         :type id: Optional[str], optional
         :param sequence_id: This field is null for the Trash folder
@@ -4310,14 +4306,14 @@ class TrashFilePathCollectionField(BaseObject):
     def __init__(
         self,
         total_count: int,
-        entries: List[TrashFilePathCollectionFieldEntriesField],
+        entries: List[TrashFilePathCollectionEntriesField],
         **kwargs
     ):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
         :param entries: Array of folders for this item's path collection
-        :type entries: List[TrashFilePathCollectionFieldEntriesField]
+        :type entries: List[TrashFilePathCollectionEntriesField]
         """
         super().__init__(**kwargs)
         self.total_count = total_count
@@ -4666,7 +4662,7 @@ class RetentionPolicyAssignmentTypeField(str, Enum):
     RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'
 
 
-class RetentionPolicyAssignmentAssignedToFieldTypeField(str, Enum):
+class RetentionPolicyAssignmentAssignedToTypeField(str, Enum):
     FOLDER = 'folder'
     ENTERPRISE = 'enterprise'
     METADATA_TEMPLATE = 'metadata_template'
@@ -4676,7 +4672,7 @@ class RetentionPolicyAssignmentAssignedToField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField] = None,
+        type: Optional[RetentionPolicyAssignmentAssignedToTypeField] = None,
         **kwargs
     ):
         """
@@ -4685,7 +4681,7 @@ class RetentionPolicyAssignmentAssignedToField(BaseObject):
             Set to null or omit when type is set to enterprise.
         :type id: Optional[str], optional
         :param type: The type of resource the policy is assigned to.
-        :type type: Optional[RetentionPolicyAssignmentAssignedToFieldTypeField], optional
+        :type type: Optional[RetentionPolicyAssignmentAssignedToTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -4711,8 +4707,8 @@ class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
 class RetentionPolicyAssignment(BaseObject):
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[RetentionPolicyAssignmentTypeField] = None,
+        id: str,
+        type: RetentionPolicyAssignmentTypeField,
         retention_policy: Optional[RetentionPolicyMini] = None,
         assigned_to: Optional[RetentionPolicyAssignmentAssignedToField] = None,
         filter_fields: Optional[
@@ -4725,9 +4721,9 @@ class RetentionPolicyAssignment(BaseObject):
     ):
         """
         :param id: The unique identifier for a retention policy assignment.
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `retention_policy_assignment`
-        :type type: Optional[RetentionPolicyAssignmentTypeField], optional
+        :type type: RetentionPolicyAssignmentTypeField
         :param assigned_to: The `type` and `id` of the content that is under
             retention. The `type` can either be `folder`
             `enterprise`, or `metadata_template`.
@@ -5083,7 +5079,7 @@ class InviteTypeField(str, Enum):
     INVITE = 'invite'
 
 
-class InviteInvitedToFieldTypeField(str, Enum):
+class InviteInvitedToTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -5091,7 +5087,7 @@ class InviteInvitedToField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[InviteInvitedToFieldTypeField] = None,
+        type: Optional[InviteInvitedToTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -5099,7 +5095,7 @@ class InviteInvitedToField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[InviteInvitedToFieldTypeField], optional
+        :type type: Optional[InviteInvitedToTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -5190,7 +5186,7 @@ class GroupMembership(BaseObject):
         self.modified_at = modified_at
 
 
-class GroupMembershipsOrderFieldDirectionField(str, Enum):
+class GroupMembershipsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -5199,14 +5195,14 @@ class GroupMembershipsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[GroupMembershipsOrderFieldDirectionField] = None,
+        direction: Optional[GroupMembershipsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[GroupMembershipsOrderFieldDirectionField], optional
+        :type direction: Optional[GroupMembershipsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -5373,7 +5369,7 @@ class FileVersionFull(FileVersion):
         self.version_number = version_number
 
 
-class FileVersionsOrderFieldDirectionField(str, Enum):
+class FileVersionsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -5382,14 +5378,14 @@ class FileVersionsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[FileVersionsOrderFieldDirectionField] = None,
+        direction: Optional[FileVersionsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[FileVersionsOrderFieldDirectionField], optional
+        :type direction: Optional[FileVersionsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -5554,26 +5550,26 @@ class FilePathCollectionField(BaseObject):
         self.entries = entries
 
 
-class FileSharedLinkFieldAccessField(str, Enum):
+class FileSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class FileSharedLinkFieldEffectiveAccessField(str, Enum):
+class FileSharedLinkEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class FileSharedLinkFieldEffectivePermissionField(str, Enum):
+class FileSharedLinkEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
 
 
-class FileSharedLinkFieldPermissionsField(BaseObject):
+class FileSharedLinkPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
         """
         :param can_download: Defines if the shared link allows for the item to be downloaded. For
@@ -5600,17 +5596,17 @@ class FileSharedLinkField(BaseObject):
     def __init__(
         self,
         url: str,
-        effective_access: FileSharedLinkFieldEffectiveAccessField,
-        effective_permission: FileSharedLinkFieldEffectivePermissionField,
+        effective_access: FileSharedLinkEffectiveAccessField,
+        effective_permission: FileSharedLinkEffectivePermissionField,
         is_password_enabled: bool,
         download_count: int,
         preview_count: int,
         download_url: Optional[str] = None,
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        access: Optional[FileSharedLinkFieldAccessField] = None,
+        access: Optional[FileSharedLinkAccessField] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[FileSharedLinkFieldPermissionsField] = None,
+        permissions: Optional[FileSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -5623,13 +5619,13 @@ class FileSharedLinkField(BaseObject):
         :param effective_access: The effective access level for the shared link. This can be a more
             restrictive access level than the value in the `access` field when the
             enterprise settings restrict the allowed access levels.
-        :type effective_access: FileSharedLinkFieldEffectiveAccessField
+        :type effective_access: FileSharedLinkEffectiveAccessField
         :param effective_permission: The effective permissions for this shared link.
             These result in the more restrictive combination of
             the share link permissions and the item permissions set
             by the administrator, the owner, and any ancestor item
             such as a folder.
-        :type effective_permission: FileSharedLinkFieldEffectivePermissionField
+        :type effective_permission: FileSharedLinkEffectivePermissionField
         :param is_password_enabled: Defines if the shared link requires a password to access the item.
         :type is_password_enabled: bool
         :param download_count: The number of times this item has been downloaded.
@@ -5653,14 +5649,14 @@ class FileSharedLinkField(BaseObject):
                collaborators on this item
             If this field is omitted when creating the shared link, the access level
             will be set to the default access level specified by the enterprise admin.
-        :type access: Optional[FileSharedLinkFieldAccessField], optional
+        :type access: Optional[FileSharedLinkAccessField], optional
         :param unshared_at: The date and time when this link will be unshared. This field can only be
             set by users with paid accounts.
         :type unshared_at: Optional[str], optional
         :param permissions: Defines if this link allows a user to preview, edit, and download an item.
             These permissions refer to the shared link only and
             do not supersede permissions applied to the item itself.
-        :type permissions: Optional[FileSharedLinkFieldPermissionsField], optional
+        :type permissions: Optional[FileSharedLinkPermissionsField], optional
         """
         super().__init__(**kwargs)
         self.url = url
@@ -5845,11 +5841,11 @@ class FileFullPermissionsField(BaseObject):
         self.can_view_annotations_self = can_view_annotations_self
 
 
-class FileFullLockFieldTypeField(str, Enum):
+class FileFullLockTypeField(str, Enum):
     LOCK = 'lock'
 
 
-class FileFullLockFieldAppTypeField(str, Enum):
+class FileFullLockAppTypeField(str, Enum):
     GSUITE = 'gsuite'
     OFFICE_WOPI = 'office_wopi'
     OFFICE_WOPIPLUS = 'office_wopiplus'
@@ -5860,19 +5856,19 @@ class FileFullLockField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[FileFullLockFieldTypeField] = None,
+        type: Optional[FileFullLockTypeField] = None,
         created_by: Optional[UserMini] = None,
         created_at: Optional[str] = None,
         expired_at: Optional[str] = None,
         is_download_prevented: Optional[bool] = None,
-        app_type: Optional[FileFullLockFieldAppTypeField] = None,
+        app_type: Optional[FileFullLockAppTypeField] = None,
         **kwargs
     ):
         """
         :param id: The unique identifier for this lock
         :type id: Optional[str], optional
         :param type: `lock`
-        :type type: Optional[FileFullLockFieldTypeField], optional
+        :type type: Optional[FileFullLockTypeField], optional
         :param created_at: The time this lock was created at.
         :type created_at: Optional[str], optional
         :param expired_at: The time this lock is to expire at, which might be in the past.
@@ -5883,7 +5879,7 @@ class FileFullLockField(BaseObject):
             field identifies the type of the application that holds the lock.
             This is an open enum and may be extended with additional values in
             the future.
-        :type app_type: Optional[FileFullLockFieldAppTypeField], optional
+        :type app_type: Optional[FileFullLockAppTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -5895,7 +5891,7 @@ class FileFullLockField(BaseObject):
         self.app_type = app_type
 
 
-class FileFullExpiringEmbedLinkFieldTokenTypeField(str, Enum):
+class FileFullExpiringEmbedLinkTokenTypeField(str, Enum):
     BEARER = 'bearer'
 
 
@@ -5904,7 +5900,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         self,
         access_token: Optional[str] = None,
         expires_in: Optional[int] = None,
-        token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField] = None,
+        token_type: Optional[FileFullExpiringEmbedLinkTokenTypeField] = None,
         restricted_to: Optional[List[FileScope]] = None,
         url: Optional[str] = None,
         **kwargs
@@ -5915,7 +5911,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
-        :type token_type: Optional[FileFullExpiringEmbedLinkFieldTokenTypeField], optional
+        :type token_type: Optional[FileFullExpiringEmbedLinkTokenTypeField], optional
         :param restricted_to: The permissions that this access token permits,
             providing a list of resources (files, folders, etc)
             and the scopes permitted for each of those resources.
@@ -5958,7 +5954,7 @@ class FileFullMetadataField(BaseObject):
         self.extra_data = kwargs
 
 
-class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
+class FileFullRepresentationsEntriesContentField(BaseObject):
     def __init__(self, url_template: Optional[str] = None, **kwargs):
         """
         :param url_template: The download URL that can be used to fetch the representation.
@@ -5987,7 +5983,7 @@ class FileFullRepresentationsFieldEntriesFieldContentField(BaseObject):
         self.url_template = url_template
 
 
-class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
+class FileFullRepresentationsEntriesInfoField(BaseObject):
     def __init__(self, url: Optional[str] = None, **kwargs):
         """
         :param url: The API URL that can be used to get more info on this file
@@ -5999,7 +5995,7 @@ class FileFullRepresentationsFieldEntriesFieldInfoField(BaseObject):
         self.url = url
 
 
-class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
+class FileFullRepresentationsEntriesPropertiesField(BaseObject):
     def __init__(
         self,
         dimensions: Optional[str] = None,
@@ -6023,19 +6019,17 @@ class FileFullRepresentationsFieldEntriesFieldPropertiesField(BaseObject):
         self.thumb = thumb
 
 
-class FileFullRepresentationsFieldEntriesFieldStatusFieldStateField(str, Enum):
+class FileFullRepresentationsEntriesStatusStateField(str, Enum):
     SUCCESS = 'success'
     VIEWABLE = 'viewable'
     PENDING = 'pending'
     NONE = 'none'
 
 
-class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
+class FileFullRepresentationsEntriesStatusField(BaseObject):
     def __init__(
         self,
-        state: Optional[
-            FileFullRepresentationsFieldEntriesFieldStatusFieldStateField
-        ] = None,
+        state: Optional[FileFullRepresentationsEntriesStatusStateField] = None,
         **kwargs
     ):
         """
@@ -6047,37 +6041,35 @@ class FileFullRepresentationsFieldEntriesFieldStatusField(BaseObject):
             * `none` defines that the representation will be created when
               requested. Request the URL defined in the `info` object to
               trigger this generation.
-        :type state: Optional[FileFullRepresentationsFieldEntriesFieldStatusFieldStateField], optional
+        :type state: Optional[FileFullRepresentationsEntriesStatusStateField], optional
         """
         super().__init__(**kwargs)
         self.state = state
 
 
-class FileFullRepresentationsFieldEntriesField(BaseObject):
+class FileFullRepresentationsEntriesField(BaseObject):
     def __init__(
         self,
-        content: Optional[FileFullRepresentationsFieldEntriesFieldContentField] = None,
-        info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField] = None,
-        properties: Optional[
-            FileFullRepresentationsFieldEntriesFieldPropertiesField
-        ] = None,
+        content: Optional[FileFullRepresentationsEntriesContentField] = None,
+        info: Optional[FileFullRepresentationsEntriesInfoField] = None,
+        properties: Optional[FileFullRepresentationsEntriesPropertiesField] = None,
         representation: Optional[str] = None,
-        status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField] = None,
+        status: Optional[FileFullRepresentationsEntriesStatusField] = None,
         **kwargs
     ):
         """
         :param content: An object containing the URL that can be used to actually fetch
             the representation.
-        :type content: Optional[FileFullRepresentationsFieldEntriesFieldContentField], optional
+        :type content: Optional[FileFullRepresentationsEntriesContentField], optional
         :param info: An object containing the URL that can be used to fetch more info
             on this representation.
-        :type info: Optional[FileFullRepresentationsFieldEntriesFieldInfoField], optional
+        :type info: Optional[FileFullRepresentationsEntriesInfoField], optional
         :param properties: An object containing the size and type of this presentation.
-        :type properties: Optional[FileFullRepresentationsFieldEntriesFieldPropertiesField], optional
+        :type properties: Optional[FileFullRepresentationsEntriesPropertiesField], optional
         :param representation: Indicates the file type of the returned representation.
         :type representation: Optional[str], optional
         :param status: An object containing the status of this representation.
-        :type status: Optional[FileFullRepresentationsFieldEntriesFieldStatusField], optional
+        :type status: Optional[FileFullRepresentationsEntriesStatusField], optional
         """
         super().__init__(**kwargs)
         self.content = content
@@ -6090,12 +6082,12 @@ class FileFullRepresentationsFieldEntriesField(BaseObject):
 class FileFullRepresentationsField(BaseObject):
     def __init__(
         self,
-        entries: Optional[List[FileFullRepresentationsFieldEntriesField]] = None,
+        entries: Optional[List[FileFullRepresentationsEntriesField]] = None,
         **kwargs
     ):
         """
         :param entries: A list of files
-        :type entries: Optional[List[FileFullRepresentationsFieldEntriesField]], optional
+        :type entries: Optional[List[FileFullRepresentationsEntriesField]], optional
         """
         super().__init__(**kwargs)
         self.entries = entries
@@ -6347,11 +6339,11 @@ class DevicePinner(BaseObject):
         self.product_name = product_name
 
 
-class DevicePinnersOrderFieldByField(str, Enum):
+class DevicePinnersOrderByField(str, Enum):
     ID = 'id'
 
 
-class DevicePinnersOrderFieldDirectionField(str, Enum):
+class DevicePinnersOrderDirectionField(str, Enum):
     ASC = 'asc'
     DESC = 'desc'
 
@@ -6359,15 +6351,15 @@ class DevicePinnersOrderFieldDirectionField(str, Enum):
 class DevicePinnersOrderField(BaseObject):
     def __init__(
         self,
-        by: Optional[DevicePinnersOrderFieldByField] = None,
-        direction: Optional[DevicePinnersOrderFieldDirectionField] = None,
+        by: Optional[DevicePinnersOrderByField] = None,
+        direction: Optional[DevicePinnersOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field that is ordered by
-        :type by: Optional[DevicePinnersOrderFieldByField], optional
+        :type by: Optional[DevicePinnersOrderByField], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[DevicePinnersOrderFieldDirectionField], optional
+        :type direction: Optional[DevicePinnersOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -6500,7 +6492,7 @@ class CommentFull(Comment):
         self.tagged_message = tagged_message
 
 
-class CommentsOrderFieldDirectionField(str, Enum):
+class CommentsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -6509,14 +6501,14 @@ class CommentsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[CommentsOrderFieldDirectionField] = None,
+        direction: Optional[CommentsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[CommentsOrderFieldDirectionField], optional
+        :type direction: Optional[CommentsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -6568,7 +6560,7 @@ class CollaborationAllowlistExemptTargetTypeField(str, Enum):
     COLLABORATION_WHITELIST_EXEMPT_TARGET = 'collaboration_whitelist_exempt_target'
 
 
-class CollaborationAllowlistExemptTargetEnterpriseFieldTypeField(str, Enum):
+class CollaborationAllowlistExemptTargetEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -6576,9 +6568,7 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[
-            CollaborationAllowlistExemptTargetEnterpriseFieldTypeField
-        ] = None,
+        type: Optional[CollaborationAllowlistExemptTargetEnterpriseTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -6586,7 +6576,7 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseFieldTypeField], optional
+        :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -6753,7 +6743,7 @@ class ShieldInformationBarrierSegmentMemberMini(
         self.user = user
 
 
-class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField(
+class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
@@ -6766,7 +6756,7 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
         self,
         id: Optional[str] = None,
         type: Optional[
-            ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField
+            ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -6775,7 +6765,7 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
             shield information barrier segment.
         :type id: Optional[str], optional
         :param type: The type of the shield information barrier segment
-        :type type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentFieldTypeField], optional
+        :type type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -7105,7 +7095,7 @@ class WebhookMiniTypeField(str, Enum):
     WEBHOOK = 'webhook'
 
 
-class WebhookMiniTargetFieldTypeField(str, Enum):
+class WebhookMiniTargetTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
@@ -7114,14 +7104,14 @@ class WebhookMiniTargetField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[WebhookMiniTargetFieldTypeField] = None,
+        type: Optional[WebhookMiniTargetTypeField] = None,
         **kwargs
     ):
         """
         :param id: The ID of the item to trigger a webhook
         :type id: Optional[str], optional
         :param type: The type of item to trigger a webhook
-        :type type: Optional[WebhookMiniTargetFieldTypeField], optional
+        :type type: Optional[WebhookMiniTargetTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -7322,26 +7312,26 @@ class WebLinkPathCollectionField(BaseObject):
         self.entries = entries
 
 
-class WebLinkSharedLinkFieldAccessField(str, Enum):
+class WebLinkSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class WebLinkSharedLinkFieldEffectiveAccessField(str, Enum):
+class WebLinkSharedLinkEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class WebLinkSharedLinkFieldEffectivePermissionField(str, Enum):
+class WebLinkSharedLinkEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
 
 
-class WebLinkSharedLinkFieldPermissionsField(BaseObject):
+class WebLinkSharedLinkPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
         """
         :param can_download: Defines if the shared link allows for the item to be downloaded. For
@@ -7368,17 +7358,17 @@ class WebLinkSharedLinkField(BaseObject):
     def __init__(
         self,
         url: str,
-        effective_access: WebLinkSharedLinkFieldEffectiveAccessField,
-        effective_permission: WebLinkSharedLinkFieldEffectivePermissionField,
+        effective_access: WebLinkSharedLinkEffectiveAccessField,
+        effective_permission: WebLinkSharedLinkEffectivePermissionField,
         is_password_enabled: bool,
         download_count: int,
         preview_count: int,
         download_url: Optional[str] = None,
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        access: Optional[WebLinkSharedLinkFieldAccessField] = None,
+        access: Optional[WebLinkSharedLinkAccessField] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[WebLinkSharedLinkFieldPermissionsField] = None,
+        permissions: Optional[WebLinkSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -7391,13 +7381,13 @@ class WebLinkSharedLinkField(BaseObject):
         :param effective_access: The effective access level for the shared link. This can be a more
             restrictive access level than the value in the `access` field when the
             enterprise settings restrict the allowed access levels.
-        :type effective_access: WebLinkSharedLinkFieldEffectiveAccessField
+        :type effective_access: WebLinkSharedLinkEffectiveAccessField
         :param effective_permission: The effective permissions for this shared link.
             These result in the more restrictive combination of
             the share link permissions and the item permissions set
             by the administrator, the owner, and any ancestor item
             such as a folder.
-        :type effective_permission: WebLinkSharedLinkFieldEffectivePermissionField
+        :type effective_permission: WebLinkSharedLinkEffectivePermissionField
         :param is_password_enabled: Defines if the shared link requires a password to access the item.
         :type is_password_enabled: bool
         :param download_count: The number of times this item has been downloaded.
@@ -7421,14 +7411,14 @@ class WebLinkSharedLinkField(BaseObject):
                collaborators on this item
             If this field is omitted when creating the shared link, the access level
             will be set to the default access level specified by the enterprise admin.
-        :type access: Optional[WebLinkSharedLinkFieldAccessField], optional
+        :type access: Optional[WebLinkSharedLinkAccessField], optional
         :param unshared_at: The date and time when this link will be unshared. This field can only be
             set by users with paid accounts.
         :type unshared_at: Optional[str], optional
         :param permissions: Defines if this link allows a user to preview, edit, and download an item.
             These permissions refer to the shared link only and
             do not supersede permissions applied to the item itself.
-        :type permissions: Optional[WebLinkSharedLinkFieldPermissionsField], optional
+        :type permissions: Optional[WebLinkSharedLinkPermissionsField], optional
         """
         super().__init__(**kwargs)
         self.url = url
@@ -7526,7 +7516,7 @@ class WebLink(WebLinkMini):
         self.item_status = item_status
 
 
-class ItemsOrderFieldDirectionField(str, Enum):
+class ItemsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -7535,14 +7525,14 @@ class ItemsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[ItemsOrderFieldDirectionField] = None,
+        direction: Optional[ItemsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[ItemsOrderFieldDirectionField], optional
+        :type direction: Optional[ItemsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -7603,26 +7593,26 @@ class FolderPathCollectionField(BaseObject):
         self.entries = entries
 
 
-class FolderSharedLinkFieldAccessField(str, Enum):
+class FolderSharedLinkAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class FolderSharedLinkFieldEffectiveAccessField(str, Enum):
+class FolderSharedLinkEffectiveAccessField(str, Enum):
     OPEN = 'open'
     COMPANY = 'company'
     COLLABORATORS = 'collaborators'
 
 
-class FolderSharedLinkFieldEffectivePermissionField(str, Enum):
+class FolderSharedLinkEffectivePermissionField(str, Enum):
     CAN_EDIT = 'can_edit'
     CAN_DOWNLOAD = 'can_download'
     CAN_PREVIEW = 'can_preview'
     NO_ACCESS = 'no_access'
 
 
-class FolderSharedLinkFieldPermissionsField(BaseObject):
+class FolderSharedLinkPermissionsField(BaseObject):
     def __init__(self, can_download: bool, can_preview: bool, can_edit: bool, **kwargs):
         """
         :param can_download: Defines if the shared link allows for the item to be downloaded. For
@@ -7649,17 +7639,17 @@ class FolderSharedLinkField(BaseObject):
     def __init__(
         self,
         url: str,
-        effective_access: FolderSharedLinkFieldEffectiveAccessField,
-        effective_permission: FolderSharedLinkFieldEffectivePermissionField,
+        effective_access: FolderSharedLinkEffectiveAccessField,
+        effective_permission: FolderSharedLinkEffectivePermissionField,
         is_password_enabled: bool,
         download_count: int,
         preview_count: int,
         download_url: Optional[str] = None,
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        access: Optional[FolderSharedLinkFieldAccessField] = None,
+        access: Optional[FolderSharedLinkAccessField] = None,
         unshared_at: Optional[str] = None,
-        permissions: Optional[FolderSharedLinkFieldPermissionsField] = None,
+        permissions: Optional[FolderSharedLinkPermissionsField] = None,
         **kwargs
     ):
         """
@@ -7672,13 +7662,13 @@ class FolderSharedLinkField(BaseObject):
         :param effective_access: The effective access level for the shared link. This can be a more
             restrictive access level than the value in the `access` field when the
             enterprise settings restrict the allowed access levels.
-        :type effective_access: FolderSharedLinkFieldEffectiveAccessField
+        :type effective_access: FolderSharedLinkEffectiveAccessField
         :param effective_permission: The effective permissions for this shared link.
             These result in the more restrictive combination of
             the share link permissions and the item permissions set
             by the administrator, the owner, and any ancestor item
             such as a folder.
-        :type effective_permission: FolderSharedLinkFieldEffectivePermissionField
+        :type effective_permission: FolderSharedLinkEffectivePermissionField
         :param is_password_enabled: Defines if the shared link requires a password to access the item.
         :type is_password_enabled: bool
         :param download_count: The number of times this item has been downloaded.
@@ -7702,14 +7692,14 @@ class FolderSharedLinkField(BaseObject):
                collaborators on this item
             If this field is omitted when creating the shared link, the access level
             will be set to the default access level specified by the enterprise admin.
-        :type access: Optional[FolderSharedLinkFieldAccessField], optional
+        :type access: Optional[FolderSharedLinkAccessField], optional
         :param unshared_at: The date and time when this link will be unshared. This field can only be
             set by users with paid accounts.
         :type unshared_at: Optional[str], optional
         :param permissions: Defines if this link allows a user to preview, edit, and download an item.
             These permissions refer to the shared link only and
             do not supersede permissions applied to the item itself.
-        :type permissions: Optional[FolderSharedLinkFieldPermissionsField], optional
+        :type permissions: Optional[FolderSharedLinkPermissionsField], optional
         """
         super().__init__(**kwargs)
         self.url = url
@@ -7726,7 +7716,7 @@ class FolderSharedLinkField(BaseObject):
         self.permissions = permissions
 
 
-class FolderFolderUploadEmailFieldAccessField(str, Enum):
+class FolderFolderUploadEmailAccessField(str, Enum):
     OPEN = 'open'
     COLLABORATORS = 'collaborators'
 
@@ -7734,7 +7724,7 @@ class FolderFolderUploadEmailFieldAccessField(str, Enum):
 class FolderFolderUploadEmailField(BaseObject):
     def __init__(
         self,
-        access: Optional[FolderFolderUploadEmailFieldAccessField] = None,
+        access: Optional[FolderFolderUploadEmailAccessField] = None,
         email: Optional[str] = None,
         **kwargs
     ):
@@ -7749,7 +7739,7 @@ class FolderFolderUploadEmailField(BaseObject):
             any email aliases a user might have registered.
             When set to `open` it will accept emails from any email
             address.
-        :type access: Optional[FolderFolderUploadEmailFieldAccessField], optional
+        :type access: Optional[FolderFolderUploadEmailAccessField], optional
         :param email: The optional upload email address for this folder.
         :type email: Optional[str], optional
         """
@@ -8669,7 +8659,7 @@ class SkillInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
 
-class SkillInvocationSkillFieldTypeField(str, Enum):
+class SkillInvocationSkillTypeField(str, Enum):
     SKILL = 'skill'
 
 
@@ -8677,7 +8667,7 @@ class SkillInvocationSkillField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[SkillInvocationSkillFieldTypeField] = None,
+        type: Optional[SkillInvocationSkillTypeField] = None,
         name: Optional[str] = None,
         api_key: Optional[str] = None,
         **kwargs
@@ -8686,7 +8676,7 @@ class SkillInvocationSkillField(BaseObject):
         :param id: The unique identifier for this skill
         :type id: Optional[str], optional
         :param type: `skill`
-        :type type: Optional[SkillInvocationSkillFieldTypeField], optional
+        :type type: Optional[SkillInvocationSkillTypeField], optional
         :param name: The name of the skill
         :type name: Optional[str], optional
         :param api_key: The client ID of the application
@@ -8699,16 +8689,16 @@ class SkillInvocationSkillField(BaseObject):
         self.api_key = api_key
 
 
-class SkillInvocationTokenFieldReadFieldTokenTypeField(str, Enum):
+class SkillInvocationTokenReadTokenTypeField(str, Enum):
     BEARER = 'bearer'
 
 
-class SkillInvocationTokenFieldReadField(BaseObject):
+class SkillInvocationTokenReadField(BaseObject):
     def __init__(
         self,
         access_token: Optional[str] = None,
         expires_in: Optional[int] = None,
-        token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField] = None,
+        token_type: Optional[SkillInvocationTokenReadTokenTypeField] = None,
         restricted_to: Optional[str] = None,
         **kwargs
     ):
@@ -8718,7 +8708,7 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
-        :type token_type: Optional[SkillInvocationTokenFieldReadFieldTokenTypeField], optional
+        :type token_type: Optional[SkillInvocationTokenReadTokenTypeField], optional
         :param restricted_to: The permissions that this access token permits,
             providing a list of resources (files, folders, etc)
             and the scopes permitted for each of those resources.
@@ -8731,16 +8721,16 @@ class SkillInvocationTokenFieldReadField(BaseObject):
         self.restricted_to = restricted_to
 
 
-class SkillInvocationTokenFieldWriteFieldTokenTypeField(str, Enum):
+class SkillInvocationTokenWriteTokenTypeField(str, Enum):
     BEARER = 'bearer'
 
 
-class SkillInvocationTokenFieldWriteField(BaseObject):
+class SkillInvocationTokenWriteField(BaseObject):
     def __init__(
         self,
         access_token: Optional[str] = None,
         expires_in: Optional[int] = None,
-        token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField] = None,
+        token_type: Optional[SkillInvocationTokenWriteTokenTypeField] = None,
         restricted_to: Optional[str] = None,
         **kwargs
     ):
@@ -8750,7 +8740,7 @@ class SkillInvocationTokenFieldWriteField(BaseObject):
         :param expires_in: The time in seconds by which this token will expire.
         :type expires_in: Optional[int], optional
         :param token_type: The type of access token returned.
-        :type token_type: Optional[SkillInvocationTokenFieldWriteFieldTokenTypeField], optional
+        :type token_type: Optional[SkillInvocationTokenWriteTokenTypeField], optional
         :param restricted_to: The permissions that this access token permits,
             providing a list of resources (files, folders, etc)
             and the scopes permitted for each of those resources.
@@ -8766,22 +8756,22 @@ class SkillInvocationTokenFieldWriteField(BaseObject):
 class SkillInvocationTokenField(BaseObject):
     def __init__(
         self,
-        read: Optional[SkillInvocationTokenFieldReadField] = None,
-        write: Optional[SkillInvocationTokenFieldWriteField] = None,
+        read: Optional[SkillInvocationTokenReadField] = None,
+        write: Optional[SkillInvocationTokenWriteField] = None,
         **kwargs
     ):
         """
         :param read: The basics of an access token
-        :type read: Optional[SkillInvocationTokenFieldReadField], optional
+        :type read: Optional[SkillInvocationTokenReadField], optional
         :param write: The basics of an access token
-        :type write: Optional[SkillInvocationTokenFieldWriteField], optional
+        :type write: Optional[SkillInvocationTokenWriteField], optional
         """
         super().__init__(**kwargs)
         self.read = read
         self.write = write
 
 
-class SkillInvocationStatusFieldStateField(str, Enum):
+class SkillInvocationStatusStateField(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
@@ -8792,7 +8782,7 @@ class SkillInvocationStatusFieldStateField(str, Enum):
 class SkillInvocationStatusField(BaseObject):
     def __init__(
         self,
-        state: Optional[SkillInvocationStatusFieldStateField] = None,
+        state: Optional[SkillInvocationStatusStateField] = None,
         message: Optional[str] = None,
         error_code: Optional[str] = None,
         additional_info: Optional[str] = None,
@@ -8808,7 +8798,7 @@ class SkillInvocationStatusField(BaseObject):
               retried.
             * `permanent_failure` -  Encountered a permanent issue and
               retry would not help.
-        :type state: Optional[SkillInvocationStatusFieldStateField], optional
+        :type state: Optional[SkillInvocationStatusStateField], optional
         :param message: Status information
         :type message: Optional[str], optional
         :param error_code: Error code information, if error occurred.
@@ -8823,7 +8813,7 @@ class SkillInvocationStatusField(BaseObject):
         self.additional_info = additional_info
 
 
-class SkillInvocationEnterpriseFieldTypeField(str, Enum):
+class SkillInvocationEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -8831,7 +8821,7 @@ class SkillInvocationEnterpriseField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[SkillInvocationEnterpriseFieldTypeField] = None,
+        type: Optional[SkillInvocationEnterpriseTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -8839,7 +8829,7 @@ class SkillInvocationEnterpriseField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[SkillInvocationEnterpriseFieldTypeField], optional
+        :type type: Optional[SkillInvocationEnterpriseTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -8912,7 +8902,7 @@ class CollaborationStatusField(str, Enum):
     REJECTED = 'rejected'
 
 
-class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField(
+class CollaborationAcceptanceRequirementsStatusTermsOfServiceRequirementField(
     BaseObject
 ):
     def __init__(
@@ -8931,7 +8921,7 @@ class CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementFie
         self.terms_of_service = terms_of_service
 
 
-class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField(
+class CollaborationAcceptanceRequirementsStatusStrongPasswordRequirementField(
     BaseObject
 ):
     def __init__(
@@ -8958,7 +8948,7 @@ class CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementFie
         self.user_has_strong_password = user_has_strong_password
 
 
-class CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField(
+class CollaborationAcceptanceRequirementsStatusTwoFactorAuthenticationRequirementField(
     BaseObject
 ):
     def __init__(
@@ -8990,13 +8980,13 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
     def __init__(
         self,
         terms_of_service_requirement: Optional[
-            CollaborationAcceptanceRequirementsStatusFieldTermsOfServiceRequirementField
+            CollaborationAcceptanceRequirementsStatusTermsOfServiceRequirementField
         ] = None,
         strong_password_requirement: Optional[
-            CollaborationAcceptanceRequirementsStatusFieldStrongPasswordRequirementField
+            CollaborationAcceptanceRequirementsStatusStrongPasswordRequirementField
         ] = None,
         two_factor_authentication_requirement: Optional[
-            CollaborationAcceptanceRequirementsStatusFieldTwoFactorAuthenticationRequirementField
+            CollaborationAcceptanceRequirementsStatusTwoFactorAuthenticationRequirementField
         ] = None,
         **kwargs
     ):
@@ -9076,7 +9066,7 @@ class Collaboration(BaseObject):
         self.acceptance_requirements_status = acceptance_requirements_status
 
 
-class CollaborationsOrderFieldDirectionField(str, Enum):
+class CollaborationsOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -9085,14 +9075,14 @@ class CollaborationsOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[CollaborationsOrderFieldDirectionField] = None,
+        direction: Optional[CollaborationsOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[CollaborationsOrderFieldDirectionField], optional
+        :type direction: Optional[CollaborationsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -9252,38 +9242,36 @@ class WorkflowMini(BaseObject):
         self.is_enabled = is_enabled
 
 
-class WorkflowFlowsFieldTypeField(str, Enum):
+class WorkflowFlowsTypeField(str, Enum):
     FLOW = 'flow'
 
 
-class WorkflowFlowsFieldTriggerFieldTypeField(str, Enum):
+class WorkflowFlowsTriggerTypeField(str, Enum):
     TRIGGER = 'trigger'
 
 
-class WorkflowFlowsFieldTriggerFieldTriggerTypeField(str, Enum):
+class WorkflowFlowsTriggerTriggerTypeField(str, Enum):
     WORKFLOW_MANUAL_START = 'WORKFLOW_MANUAL_START'
 
 
-class WorkflowFlowsFieldTriggerFieldScopeFieldTypeField(str, Enum):
+class WorkflowFlowsTriggerScopeTypeField(str, Enum):
     TRIGGER_SCOPE = 'trigger_scope'
 
 
-class WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField(str, Enum):
+class WorkflowFlowsTriggerScopeObjectTypeField(str, Enum):
     FOLDER = 'folder'
 
 
-class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
+class WorkflowFlowsTriggerScopeObjectField(BaseObject):
     def __init__(
         self,
-        type: Optional[
-            WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField
-        ] = None,
+        type: Optional[WorkflowFlowsTriggerScopeObjectTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the object
-        :type type: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldObjectFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsTriggerScopeObjectTypeField], optional
         :param id: The id of the object
         :type id: Optional[str], optional
         """
@@ -9292,21 +9280,21 @@ class WorkflowFlowsFieldTriggerFieldScopeFieldObjectField(BaseObject):
         self.id = id
 
 
-class WorkflowFlowsFieldTriggerFieldScopeField(BaseObject):
+class WorkflowFlowsTriggerScopeField(BaseObject):
     def __init__(
         self,
-        type: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldTypeField] = None,
+        type: Optional[WorkflowFlowsTriggerScopeTypeField] = None,
         ref: Optional[str] = None,
-        object: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldObjectField] = None,
+        object: Optional[WorkflowFlowsTriggerScopeObjectField] = None,
         **kwargs
     ):
         """
         :param type: The trigger scope's resource type
-        :type type: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsTriggerScopeTypeField], optional
         :param ref: Indicates the path of the condition value to check
         :type ref: Optional[str], optional
         :param object: The object the `ref` points to
-        :type object: Optional[WorkflowFlowsFieldTriggerFieldScopeFieldObjectField], optional
+        :type object: Optional[WorkflowFlowsTriggerScopeObjectField], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -9314,21 +9302,21 @@ class WorkflowFlowsFieldTriggerFieldScopeField(BaseObject):
         self.object = object
 
 
-class WorkflowFlowsFieldTriggerField(BaseObject):
+class WorkflowFlowsTriggerField(BaseObject):
     def __init__(
         self,
-        type: Optional[WorkflowFlowsFieldTriggerFieldTypeField] = None,
-        trigger_type: Optional[WorkflowFlowsFieldTriggerFieldTriggerTypeField] = None,
-        scope: Optional[List[WorkflowFlowsFieldTriggerFieldScopeField]] = None,
+        type: Optional[WorkflowFlowsTriggerTypeField] = None,
+        trigger_type: Optional[WorkflowFlowsTriggerTriggerTypeField] = None,
+        scope: Optional[List[WorkflowFlowsTriggerScopeField]] = None,
         **kwargs
     ):
         """
         :param type: The trigger's resource type
-        :type type: Optional[WorkflowFlowsFieldTriggerFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsTriggerTypeField], optional
         :param trigger_type: The type of trigger selected for this flow
-        :type trigger_type: Optional[WorkflowFlowsFieldTriggerFieldTriggerTypeField], optional
+        :type trigger_type: Optional[WorkflowFlowsTriggerTriggerTypeField], optional
         :param scope: List of trigger scopes
-        :type scope: Optional[List[WorkflowFlowsFieldTriggerFieldScopeField]], optional
+        :type scope: Optional[List[WorkflowFlowsTriggerScopeField]], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -9336,11 +9324,11 @@ class WorkflowFlowsFieldTriggerField(BaseObject):
         self.scope = scope
 
 
-class WorkflowFlowsFieldOutcomesFieldTypeField(str, Enum):
+class WorkflowFlowsOutcomesTypeField(str, Enum):
     OUTCOME = 'outcome'
 
 
-class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
+class WorkflowFlowsOutcomesActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
     ASSIGN_TASK = 'assign_task'
     COPY_FILE = 'copy_file'
@@ -9366,11 +9354,11 @@ class WorkflowFlowsFieldOutcomesFieldActionTypeField(str, Enum):
     SEND_NOTIFICATION = 'send_notification'
 
 
-class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField(str, Enum):
+class WorkflowFlowsOutcomesIfRejectedTypeField(str, Enum):
     OUTCOME = 'outcome'
 
 
-class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
+class WorkflowFlowsOutcomesIfRejectedActionTypeField(str, Enum):
     ADD_METADATA = 'add_metadata'
     ASSIGN_TASK = 'assign_task'
     COPY_FILE = 'copy_file'
@@ -9396,22 +9384,20 @@ class WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField(str, Enum):
     SEND_NOTIFICATION = 'send_notification'
 
 
-class WorkflowFlowsFieldOutcomesFieldIfRejectedField(BaseObject):
+class WorkflowFlowsOutcomesIfRejectedField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField] = None,
+        type: Optional[WorkflowFlowsOutcomesIfRejectedTypeField] = None,
         name: Optional[str] = None,
-        action_type: Optional[
-            WorkflowFlowsFieldOutcomesFieldIfRejectedFieldActionTypeField
-        ] = None,
+        action_type: Optional[WorkflowFlowsOutcomesIfRejectedActionTypeField] = None,
         **kwargs
     ):
         """
         :param id: The identifier of the outcome
         :type id: Optional[str], optional
         :param type: The outcomes resource type
-        :type type: Optional[WorkflowFlowsFieldOutcomesFieldIfRejectedFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsOutcomesIfRejectedTypeField], optional
         :param name: The name of the outcome
         :type name: Optional[str], optional
         """
@@ -9422,28 +9408,26 @@ class WorkflowFlowsFieldOutcomesFieldIfRejectedField(BaseObject):
         self.action_type = action_type
 
 
-class WorkflowFlowsFieldOutcomesField(BaseObject):
+class WorkflowFlowsOutcomesField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[WorkflowFlowsFieldOutcomesFieldTypeField] = None,
+        type: Optional[WorkflowFlowsOutcomesTypeField] = None,
         name: Optional[str] = None,
-        action_type: Optional[WorkflowFlowsFieldOutcomesFieldActionTypeField] = None,
-        if_rejected: Optional[
-            List[WorkflowFlowsFieldOutcomesFieldIfRejectedField]
-        ] = None,
+        action_type: Optional[WorkflowFlowsOutcomesActionTypeField] = None,
+        if_rejected: Optional[List[WorkflowFlowsOutcomesIfRejectedField]] = None,
         **kwargs
     ):
         """
         :param id: The identifier of the outcome
         :type id: Optional[str], optional
         :param type: The outcomes resource type
-        :type type: Optional[WorkflowFlowsFieldOutcomesFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsOutcomesTypeField], optional
         :param name: The name of the outcome
         :type name: Optional[str], optional
         :param if_rejected: If `action_type` is `assign_task` and the task is rejected, returns a
             list of outcomes to complete
-        :type if_rejected: Optional[List[WorkflowFlowsFieldOutcomesFieldIfRejectedField]], optional
+        :type if_rejected: Optional[List[WorkflowFlowsOutcomesIfRejectedField]], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -9457,9 +9441,9 @@ class WorkflowFlowsField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[WorkflowFlowsFieldTypeField] = None,
-        trigger: Optional[WorkflowFlowsFieldTriggerField] = None,
-        outcomes: Optional[List[WorkflowFlowsFieldOutcomesField]] = None,
+        type: Optional[WorkflowFlowsTypeField] = None,
+        trigger: Optional[WorkflowFlowsTriggerField] = None,
+        outcomes: Optional[List[WorkflowFlowsOutcomesField]] = None,
         created_at: Optional[str] = None,
         created_by: Optional[UserBase] = None,
         **kwargs
@@ -9468,7 +9452,7 @@ class WorkflowFlowsField(BaseObject):
         :param id: The identifier of the flow
         :type id: Optional[str], optional
         :param type: The flow's resource type
-        :type type: Optional[WorkflowFlowsFieldTypeField], optional
+        :type type: Optional[WorkflowFlowsTypeField], optional
         :param created_at: When this flow was created
         :type created_at: Optional[str], optional
         """
@@ -9593,7 +9577,7 @@ class WorkflowFull(Workflow):
         self.modified_by = modified_by
 
 
-class ZipDownloadNameConflictsFieldTypeField(str, Enum):
+class ZipDownloadNameConflictsTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
@@ -9602,7 +9586,7 @@ class ZipDownloadNameConflictsField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[ZipDownloadNameConflictsFieldTypeField] = None,
+        type: Optional[ZipDownloadNameConflictsTypeField] = None,
         original_name: Optional[str] = None,
         download_name: Optional[str] = None,
         **kwargs
@@ -9611,7 +9595,7 @@ class ZipDownloadNameConflictsField(BaseObject):
         :param id: The identifier of the item
         :type id: Optional[str], optional
         :param type: The type of this item
-        :type type: Optional[ZipDownloadNameConflictsFieldTypeField], optional
+        :type type: Optional[ZipDownloadNameConflictsTypeField], optional
         :param original_name: The original name of this item
         :type original_name: Optional[str], optional
         :param download_name: The new name of this item as it will appear in the
@@ -9739,15 +9723,15 @@ class KeywordSkillCardSkillCardTitleField(BaseObject):
         self.code = code
 
 
-class KeywordSkillCardSkillFieldTypeField(str, Enum):
+class KeywordSkillCardSkillTypeField(str, Enum):
     SERVICE = 'service'
 
 
 class KeywordSkillCardSkillField(BaseObject):
-    def __init__(self, type: KeywordSkillCardSkillFieldTypeField, id: str, **kwargs):
+    def __init__(self, type: KeywordSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
-        :type type: KeywordSkillCardSkillFieldTypeField
+        :type type: KeywordSkillCardSkillTypeField
         :param id: A custom identifier that represent the service that
             applied this metadata.
         :type id: str
@@ -9757,17 +9741,15 @@ class KeywordSkillCardSkillField(BaseObject):
         self.id = id
 
 
-class KeywordSkillCardInvocationFieldTypeField(str, Enum):
+class KeywordSkillCardInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
 
 class KeywordSkillCardInvocationField(BaseObject):
-    def __init__(
-        self, type: KeywordSkillCardInvocationFieldTypeField, id: str, **kwargs
-    ):
+    def __init__(self, type: KeywordSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
-        :type type: KeywordSkillCardInvocationFieldTypeField
+        :type type: KeywordSkillCardInvocationTypeField
         :param id: A custom identifier that represent the instance of
             the service that applied this metadata. For example,
             if your `image-recognition-service` runs on multiple
@@ -10017,15 +9999,15 @@ class TimelineSkillCardSkillCardTitleField(BaseObject):
         self.code = code
 
 
-class TimelineSkillCardSkillFieldTypeField(str, Enum):
+class TimelineSkillCardSkillTypeField(str, Enum):
     SERVICE = 'service'
 
 
 class TimelineSkillCardSkillField(BaseObject):
-    def __init__(self, type: TimelineSkillCardSkillFieldTypeField, id: str, **kwargs):
+    def __init__(self, type: TimelineSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
-        :type type: TimelineSkillCardSkillFieldTypeField
+        :type type: TimelineSkillCardSkillTypeField
         :param id: A custom identifier that represent the service that
             applied this metadata.
         :type id: str
@@ -10035,17 +10017,15 @@ class TimelineSkillCardSkillField(BaseObject):
         self.id = id
 
 
-class TimelineSkillCardInvocationFieldTypeField(str, Enum):
+class TimelineSkillCardInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
 
 class TimelineSkillCardInvocationField(BaseObject):
-    def __init__(
-        self, type: TimelineSkillCardInvocationFieldTypeField, id: str, **kwargs
-    ):
+    def __init__(self, type: TimelineSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
-        :type type: TimelineSkillCardInvocationFieldTypeField
+        :type type: TimelineSkillCardInvocationTypeField
         :param id: A custom identifier that represent the instance of
             the service that applied this metadata. For example,
             if your `image-recognition-service` runs on multiple
@@ -10058,7 +10038,7 @@ class TimelineSkillCardInvocationField(BaseObject):
         self.id = id
 
 
-class TimelineSkillCardEntriesFieldAppearsField(BaseObject):
+class TimelineSkillCardEntriesAppearsField(BaseObject):
     def __init__(
         self, start: Optional[int] = None, end: Optional[int] = None, **kwargs
     ):
@@ -10079,7 +10059,7 @@ class TimelineSkillCardEntriesField(BaseObject):
     def __init__(
         self,
         text: Optional[str] = None,
-        appears: Optional[List[TimelineSkillCardEntriesFieldAppearsField]] = None,
+        appears: Optional[List[TimelineSkillCardEntriesAppearsField]] = None,
         image_url: Optional[str] = None,
         **kwargs
     ):
@@ -10090,7 +10070,7 @@ class TimelineSkillCardEntriesField(BaseObject):
         :type text: Optional[str], optional
         :param appears: Defines a list of timestamps for when this item should appear on the
             timeline.
-        :type appears: Optional[List[TimelineSkillCardEntriesFieldAppearsField]], optional
+        :type appears: Optional[List[TimelineSkillCardEntriesAppearsField]], optional
         :param image_url: The image to show on a for an entry that appears
             on a timeline. This image URL is required for every entry.
             The image will be shown in a
@@ -10169,15 +10149,15 @@ class TranscriptSkillCardSkillCardTitleField(BaseObject):
         self.code = code
 
 
-class TranscriptSkillCardSkillFieldTypeField(str, Enum):
+class TranscriptSkillCardSkillTypeField(str, Enum):
     SERVICE = 'service'
 
 
 class TranscriptSkillCardSkillField(BaseObject):
-    def __init__(self, type: TranscriptSkillCardSkillFieldTypeField, id: str, **kwargs):
+    def __init__(self, type: TranscriptSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
-        :type type: TranscriptSkillCardSkillFieldTypeField
+        :type type: TranscriptSkillCardSkillTypeField
         :param id: A custom identifier that represent the service that
             applied this metadata.
         :type id: str
@@ -10187,17 +10167,15 @@ class TranscriptSkillCardSkillField(BaseObject):
         self.id = id
 
 
-class TranscriptSkillCardInvocationFieldTypeField(str, Enum):
+class TranscriptSkillCardInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
 
 class TranscriptSkillCardInvocationField(BaseObject):
-    def __init__(
-        self, type: TranscriptSkillCardInvocationFieldTypeField, id: str, **kwargs
-    ):
+    def __init__(self, type: TranscriptSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
-        :type type: TranscriptSkillCardInvocationFieldTypeField
+        :type type: TranscriptSkillCardInvocationTypeField
         :param id: A custom identifier that represent the instance of
             the service that applied this metadata. For example,
             if your `image-recognition-service` runs on multiple
@@ -10210,7 +10188,7 @@ class TranscriptSkillCardInvocationField(BaseObject):
         self.id = id
 
 
-class TranscriptSkillCardEntriesFieldAppearsField(BaseObject):
+class TranscriptSkillCardEntriesAppearsField(BaseObject):
     def __init__(self, start: Optional[int] = None, **kwargs):
         """
         :param start: The time in seconds when an
@@ -10225,7 +10203,7 @@ class TranscriptSkillCardEntriesField(BaseObject):
     def __init__(
         self,
         text: Optional[str] = None,
-        appears: Optional[List[TranscriptSkillCardEntriesFieldAppearsField]] = None,
+        appears: Optional[List[TranscriptSkillCardEntriesAppearsField]] = None,
         **kwargs
     ):
         """
@@ -10234,7 +10212,7 @@ class TranscriptSkillCardEntriesField(BaseObject):
         :type text: Optional[str], optional
         :param appears: Defines when a transcribed bit of text appears. This only includes a
             start time and no end time.
-        :type appears: Optional[List[TranscriptSkillCardEntriesFieldAppearsField]], optional
+        :type appears: Optional[List[TranscriptSkillCardEntriesAppearsField]], optional
         """
         super().__init__(**kwargs)
         self.text = text
@@ -10308,7 +10286,7 @@ class StatusSkillCardSkillCardTitleField(BaseObject):
         self.code = code
 
 
-class StatusSkillCardStatusFieldCodeField(str, Enum):
+class StatusSkillCardStatusCodeField(str, Enum):
     INVOKED = 'invoked'
     PROCESSING = 'processing'
     SUCCESS = 'success'
@@ -10319,7 +10297,7 @@ class StatusSkillCardStatusFieldCodeField(str, Enum):
 class StatusSkillCardStatusField(BaseObject):
     def __init__(
         self,
-        code: StatusSkillCardStatusFieldCodeField,
+        code: StatusSkillCardStatusCodeField,
         message: Optional[str] = None,
         **kwargs
     ):
@@ -10328,7 +10306,7 @@ class StatusSkillCardStatusField(BaseObject):
             default each of these will have their own accompanied
             messages. These can be adjusted by setting the `message`
             value on this object.
-        :type code: StatusSkillCardStatusFieldCodeField
+        :type code: StatusSkillCardStatusCodeField
         :param message: A custom message that can be provided with this status.
             This will be shown in the web app to the end user.
         :type message: Optional[str], optional
@@ -10338,15 +10316,15 @@ class StatusSkillCardStatusField(BaseObject):
         self.message = message
 
 
-class StatusSkillCardSkillFieldTypeField(str, Enum):
+class StatusSkillCardSkillTypeField(str, Enum):
     SERVICE = 'service'
 
 
 class StatusSkillCardSkillField(BaseObject):
-    def __init__(self, type: StatusSkillCardSkillFieldTypeField, id: str, **kwargs):
+    def __init__(self, type: StatusSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
-        :type type: StatusSkillCardSkillFieldTypeField
+        :type type: StatusSkillCardSkillTypeField
         :param id: A custom identifier that represent the service that
             applied this metadata.
         :type id: str
@@ -10356,17 +10334,15 @@ class StatusSkillCardSkillField(BaseObject):
         self.id = id
 
 
-class StatusSkillCardInvocationFieldTypeField(str, Enum):
+class StatusSkillCardInvocationTypeField(str, Enum):
     SKILL_INVOCATION = 'skill_invocation'
 
 
 class StatusSkillCardInvocationField(BaseObject):
-    def __init__(
-        self, type: StatusSkillCardInvocationFieldTypeField, id: str, **kwargs
-    ):
+    def __init__(self, type: StatusSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
-        :type type: StatusSkillCardInvocationFieldTypeField
+        :type type: StatusSkillCardInvocationTypeField
         :param id: A custom identifier that represent the instance of
             the service that applied this metadata. For example,
             if your `image-recognition-service` runs on multiple
@@ -10668,7 +10644,7 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         self.content_type = content_type
 
 
-class SignRequestSignerSignerDecisionFieldTypeField(str, Enum):
+class SignRequestSignerSignerDecisionTypeField(str, Enum):
     SIGNED = 'signed'
     DECLINED = 'declined'
 
@@ -10676,14 +10652,14 @@ class SignRequestSignerSignerDecisionFieldTypeField(str, Enum):
 class SignRequestSignerSignerDecisionField(BaseObject):
     def __init__(
         self,
-        type: Optional[SignRequestSignerSignerDecisionFieldTypeField] = None,
+        type: Optional[SignRequestSignerSignerDecisionTypeField] = None,
         finalized_at: Optional[str] = None,
         additional_info: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: Type of decision made by the signer
-        :type type: Optional[SignRequestSignerSignerDecisionFieldTypeField], optional
+        :type type: Optional[SignRequestSignerSignerDecisionTypeField], optional
         :param finalized_at: Date and Time that the decision was made
         :type finalized_at: Optional[str], optional
         :param additional_info: Additional info about the decision, such as the decline reason from the signer
@@ -11278,7 +11254,7 @@ class SignTemplateTypeField(str, Enum):
     SIGN_TEMPLATE = 'sign-template'
 
 
-class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
+class SignTemplateAdditionalInfoNonEditableField(str, Enum):
     EMAIL_SUBJECT = 'email_subject'
     EMAIL_MESSAGE = 'email_message'
     NAME = 'name'
@@ -11287,21 +11263,21 @@ class SignTemplateAdditionalInfoFieldNonEditableField(str, Enum):
     SOURCE_FILES = 'source_files'
 
 
-class SignTemplateAdditionalInfoFieldRequiredFieldSignersField(str, Enum):
+class SignTemplateAdditionalInfoRequiredSignersField(str, Enum):
     EMAIL = 'email'
 
 
-class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
+class SignTemplateAdditionalInfoRequiredField(BaseObject):
     def __init__(
         self,
         signers: Optional[
-            List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]
+            List[List[SignTemplateAdditionalInfoRequiredSignersField]]
         ] = None,
         **kwargs
     ):
         """
         :param signers: Required signer fields.
-        :type signers: Optional[List[List[SignTemplateAdditionalInfoFieldRequiredFieldSignersField]]], optional
+        :type signers: Optional[List[List[SignTemplateAdditionalInfoRequiredSignersField]]], optional
         """
         super().__init__(**kwargs)
         self.signers = signers
@@ -11310,17 +11286,15 @@ class SignTemplateAdditionalInfoFieldRequiredField(BaseObject):
 class SignTemplateAdditionalInfoField(BaseObject):
     def __init__(
         self,
-        non_editable: Optional[
-            List[SignTemplateAdditionalInfoFieldNonEditableField]
-        ] = None,
-        required: Optional[SignTemplateAdditionalInfoFieldRequiredField] = None,
+        non_editable: Optional[List[SignTemplateAdditionalInfoNonEditableField]] = None,
+        required: Optional[SignTemplateAdditionalInfoRequiredField] = None,
         **kwargs
     ):
         """
         :param non_editable: Non editable fields.
-        :type non_editable: Optional[List[SignTemplateAdditionalInfoFieldNonEditableField]], optional
+        :type non_editable: Optional[List[SignTemplateAdditionalInfoNonEditableField]], optional
         :param required: Required fields.
-        :type required: Optional[SignTemplateAdditionalInfoFieldRequiredField], optional
+        :type required: Optional[SignTemplateAdditionalInfoRequiredField], optional
         """
         super().__init__(**kwargs)
         self.non_editable = non_editable
@@ -11618,7 +11592,7 @@ class UserFullRoleField(str, Enum):
     USER = 'user'
 
 
-class UserFullEnterpriseFieldTypeField(str, Enum):
+class UserFullEnterpriseTypeField(str, Enum):
     ENTERPRISE = 'enterprise'
 
 
@@ -11626,7 +11600,7 @@ class UserFullEnterpriseField(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
-        type: Optional[UserFullEnterpriseFieldTypeField] = None,
+        type: Optional[UserFullEnterpriseTypeField] = None,
         name: Optional[str] = None,
         **kwargs
     ):
@@ -11634,7 +11608,7 @@ class UserFullEnterpriseField(BaseObject):
         :param id: The unique identifier for this enterprise.
         :type id: Optional[str], optional
         :param type: `enterprise`
-        :type type: Optional[UserFullEnterpriseFieldTypeField], optional
+        :type type: Optional[UserFullEnterpriseTypeField], optional
         :param name: The name of the enterprise
         :type name: Optional[str], optional
         """
@@ -11782,7 +11756,7 @@ class UserFull(User):
         self.external_app_user_id = external_app_user_id
 
 
-class UsersOrderFieldDirectionField(str, Enum):
+class UsersOrderDirectionField(str, Enum):
     ASC = 'ASC'
     DESC = 'DESC'
 
@@ -11791,14 +11765,14 @@ class UsersOrderField(BaseObject):
     def __init__(
         self,
         by: Optional[str] = None,
-        direction: Optional[UsersOrderFieldDirectionField] = None,
+        direction: Optional[UsersOrderDirectionField] = None,
         **kwargs
     ):
         """
         :param by: The field to order by
         :type by: Optional[str], optional
         :param direction: The direction to order by, either ascending or descending
-        :type direction: Optional[UsersOrderFieldDirectionField], optional
+        :type direction: Optional[UsersOrderDirectionField], optional
         """
         super().__init__(**kwargs)
         self.by = by
@@ -11858,7 +11832,7 @@ class MetadataFieldFilterMultiSelect(BaseObject):
     pass
 
 
-class MetadataFieldFilterFloatRangeMapValue(BaseObject):
+class MetadataFieldFilterFloatRangeValue(BaseObject):
     def __init__(
         self, lt: Optional[float] = None, gt: Optional[float] = None, **kwargs
     ):
@@ -11883,7 +11857,7 @@ class MetadataFieldFilterFloatRange(BaseObject):
     pass
 
 
-class MetadataFieldFilterDateRangeMapValue(BaseObject):
+class MetadataFieldFilterDateRangeValue(BaseObject):
     def __init__(self, lt: Optional[str] = None, gt: Optional[str] = None, **kwargs):
         """
         :param lt: Specifies the (inclusive) upper bound for the metadata field

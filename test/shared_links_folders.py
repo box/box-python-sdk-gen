@@ -6,22 +6,18 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.managers.folders import CreateFolderParentArg
+from box_sdk_gen.managers.folders import CreateFolderParent
+
+from box_sdk_gen.managers.shared_links_folders import AddShareLinkToFolderSharedLink
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderAddSharedLinkSharedLinkArg,
+    AddShareLinkToFolderSharedLinkAccessField,
 )
 
-from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderAddSharedLinkSharedLinkArgAccessField,
-)
+from box_sdk_gen.managers.shared_links_folders import UpdateSharedLinkOnFolderSharedLink
 
 from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderUpdateSharedLinkSharedLinkArg,
-)
-
-from box_sdk_gen.managers.shared_links_folders import (
-    UpdateFolderUpdateSharedLinkSharedLinkArgAccessField,
+    UpdateSharedLinkOnFolderSharedLinkAccessField,
 )
 
 from box_sdk_gen.utils import get_uuid
@@ -39,18 +35,18 @@ client: BoxClient = get_default_client()
 
 def testSharedLinksFolders():
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParentArg(id='0')
+        name=get_uuid(), parent=CreateFolderParent(id='0')
     )
-    client.shared_links_folders.update_folder_add_shared_link(
+    client.shared_links_folders.add_share_link_to_folder(
         folder_id=folder.id,
-        shared_link=UpdateFolderAddSharedLinkSharedLinkArg(
-            access=UpdateFolderAddSharedLinkSharedLinkArgAccessField.OPEN.value,
+        shared_link=AddShareLinkToFolderSharedLink(
+            access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value,
             password='Secret123@',
         ),
         fields='shared_link',
     )
     folder_from_api: FolderFull = (
-        client.shared_links_folders.get_folder_get_shared_link(
+        client.shared_links_folders.get_shared_link_for_folder(
             folder_id=folder.id, fields='shared_link'
         )
     )
@@ -58,7 +54,7 @@ def testSharedLinksFolders():
     user_id: str = get_env_var('USER_ID')
     user_client: BoxClient = get_default_client_as_user(user_id)
     folder_from_shared_link_password: FolderFull = (
-        user_client.shared_links_folders.get_shared_item_folders(
+        user_client.shared_links_folders.find_folder_for_shared_link(
             boxapi=''.join([
                 'shared_link=',
                 folder_from_api.shared_link.url,
@@ -68,7 +64,7 @@ def testSharedLinksFolders():
     )
     assert folder.id == folder_from_shared_link_password.id
     with pytest.raises(Exception):
-        user_client.shared_links_folders.get_shared_item_folders(
+        user_client.shared_links_folders.find_folder_for_shared_link(
             boxapi=''.join([
                 'shared_link=',
                 folder_from_api.shared_link.url,
@@ -76,10 +72,10 @@ def testSharedLinksFolders():
             ])
         )
     updated_folder: FolderFull = (
-        client.shared_links_folders.update_folder_update_shared_link(
+        client.shared_links_folders.update_shared_link_on_folder(
             folder_id=folder.id,
-            shared_link=UpdateFolderUpdateSharedLinkSharedLinkArg(
-                access=UpdateFolderUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value
+            shared_link=UpdateSharedLinkOnFolderSharedLink(
+                access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value
             ),
             fields='shared_link',
         )

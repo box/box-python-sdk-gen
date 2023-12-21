@@ -59,14 +59,14 @@ See the endpoint docs at
 <!-- sample post_metadata_cascade_policies -->
 
 ```python
-client.metadata_cascade_policies.create_metadata_cascade_policy(folder_id=folder.id, scope=CreateMetadataCascadePolicyScopeArg.ENTERPRISE.value, template_key=template_key)
+client.metadata_cascade_policies.create_metadata_cascade_policy(folder_id=folder.id, scope=CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key=template_key)
 ```
 
 ### Arguments
 
 - folder_id `str`
   - The ID of the folder to apply the policy to. This folder will need to already have an instance of the targeted metadata template applied to it.
-- scope `CreateMetadataCascadePolicyScopeArg`
+- scope `CreateMetadataCascadePolicyScope`
   - The scope of the targeted metadata template. This template will need to already have an instance applied to the targeted folder.
 - template_key `str`
   - The key of the targeted metadata template. This template will need to already have an instance applied to the targeted folder. In many cases the template key is automatically derived of its display name, for example `Contract Template` would become `contractTemplate`. In some cases the creator of the template will have provided its own template key. Please [list the templates for an enterprise][list], or get all instances on a [file][file] or [folder][folder] to inspect a template's key. [list]: e://get-metadata-templates-enterprise [file]: e://get-files-id-metadata [folder]: e://get-folders-id-metadata
@@ -143,7 +143,7 @@ all of its children. This can be used after creating a new cascade policy to
 enforce the metadata to be cascaded down to all existing files within that
 folder.
 
-This operation is performed by calling function `create_metadata_cascade_policy_apply`.
+This operation is performed by calling function `apply_metadata_cascade_policy`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-metadata-cascade-policies-id-apply/).
@@ -151,14 +151,14 @@ See the endpoint docs at
 <!-- sample post_metadata_cascade_policies_id_apply -->
 
 ```python
-client.metadata_cascade_policies.create_metadata_cascade_policy_apply(metadata_cascade_policy_id=cascade_policy_id, conflict_resolution=CreateMetadataCascadePolicyApplyConflictResolutionArg.OVERWRITE.value)
+client.metadata_cascade_policies.apply_metadata_cascade_policy(metadata_cascade_policy_id=cascade_policy_id, conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value)
 ```
 
 ### Arguments
 
 - metadata_cascade_policy_id `str`
   - The ID of the cascade policy to force-apply. Example: "6fd4ff89-8fc1-42cf-8b29-1890dedd26d7"
-- conflict_resolution `CreateMetadataCascadePolicyApplyConflictResolutionArg`
+- conflict_resolution `ApplyMetadataCascadePolicyConflictResolution`
   - Describes the desired behavior when dealing with the conflict where a metadata template already has an instance applied to a child. _ `none` will preserve the existing value on the file _ `overwrite` will force-apply the templates values over any existing values.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

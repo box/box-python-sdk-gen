@@ -35,7 +35,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetCollaborationsStatusArg(str, Enum):
+class GetCollaborationsStatus(str, Enum):
     PENDING = 'pending'
 
 
@@ -43,8 +43,10 @@ class ListCollaborationsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -100,7 +102,10 @@ class ListCollaborationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/files/', to_string(file_id), '/collaborations'
+                self.network_session.base_urls.base_url,
+                '/files/',
+                to_string(file_id),
+                '/collaborations',
             ]),
             FetchOptions(
                 method='GET',
@@ -153,7 +158,8 @@ class ListCollaborationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/folders/',
+                self.network_session.base_urls.base_url,
+                '/folders/',
                 to_string(folder_id),
                 '/collaborations',
             ]),
@@ -170,7 +176,7 @@ class ListCollaborationsManager:
 
     def get_collaborations(
         self,
-        status: GetCollaborationsStatusArg,
+        status: GetCollaborationsStatus,
         fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
@@ -179,7 +185,7 @@ class ListCollaborationsManager:
         """
         Retrieves all pending collaboration invites for this user.
         :param status: The status of the collaborations to retrieve
-        :type status: GetCollaborationsStatusArg
+        :type status: GetCollaborationsStatus
         :param fields: A comma-separated list of attributes to include in the
             response. This can be used to request fields that are
             not normally returned in a standard response.
@@ -209,7 +215,7 @@ class ListCollaborationsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations']),
+            ''.join([self.network_session.base_urls.base_url, '/collaborations']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -254,13 +260,14 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'limit': to_string(limit), 'offset': to_string(offset)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'limit': to_string(limit), 'offset': to_string(offset)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/groups/',
+                self.network_session.base_urls.base_url,
+                '/groups/',
                 to_string(group_id),
                 '/collaborations',
             ]),

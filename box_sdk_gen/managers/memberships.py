@@ -41,7 +41,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateGroupMembershipUserArg(BaseObject):
+class CreateGroupMembershipUser(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the user to add to the group
@@ -51,7 +51,7 @@ class CreateGroupMembershipUserArg(BaseObject):
         self.id = id
 
 
-class CreateGroupMembershipGroupArg(BaseObject):
+class CreateGroupMembershipGroup(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
         :param id: The ID of the group to add the user to
@@ -61,12 +61,12 @@ class CreateGroupMembershipGroupArg(BaseObject):
         self.id = id
 
 
-class CreateGroupMembershipRoleArg(str, Enum):
+class CreateGroupMembershipRole(str, Enum):
     MEMBER = 'member'
     ADMIN = 'admin'
 
 
-class UpdateGroupMembershipByIdRoleArg(str, Enum):
+class UpdateGroupMembershipByIdRole(str, Enum):
     MEMBER = 'member'
     ADMIN = 'admin'
 
@@ -75,8 +75,10 @@ class MembershipsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -110,13 +112,16 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'limit': to_string(limit), 'offset': to_string(offset)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'limit': to_string(limit), 'offset': to_string(offset)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/users/', to_string(user_id), '/memberships'
+                self.network_session.base_urls.base_url,
+                '/users/',
+                to_string(user_id),
+                '/memberships',
             ]),
             FetchOptions(
                 method='GET',
@@ -159,13 +164,16 @@ class MembershipsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'limit': to_string(limit), 'offset': to_string(offset)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'limit': to_string(limit), 'offset': to_string(offset)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/groups/', to_string(group_id), '/memberships'
+                self.network_session.base_urls.base_url,
+                '/groups/',
+                to_string(group_id),
+                '/memberships',
             ]),
             FetchOptions(
                 method='GET',
@@ -180,9 +188,9 @@ class MembershipsManager:
 
     def create_group_membership(
         self,
-        user: CreateGroupMembershipUserArg,
-        group: CreateGroupMembershipGroupArg,
-        role: Optional[CreateGroupMembershipRoleArg] = None,
+        user: CreateGroupMembershipUser,
+        group: CreateGroupMembershipGroup,
+        role: Optional[CreateGroupMembershipRole] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -193,11 +201,11 @@ class MembershipsManager:
         admin-level permissions will be able to use this API.
 
         :param user: The user to add to the group.
-        :type user: CreateGroupMembershipUserArg
+        :type user: CreateGroupMembershipUser
         :param group: The group to add the user to.
-        :type group: CreateGroupMembershipGroupArg
+        :type group: CreateGroupMembershipGroup
         :param role: The role of the user in the group.
-        :type role: Optional[CreateGroupMembershipRoleArg], optional
+        :type role: Optional[CreateGroupMembershipRole], optional
         :param configurable_permissions: Custom configuration for the permissions an admin
             if a group will receive. This option has no effect
             on members with a role of `member`.
@@ -230,7 +238,7 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/group_memberships']),
+            ''.join([self.network_session.base_urls.base_url, '/group_memberships']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -279,7 +287,8 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/group_memberships/',
+                self.network_session.base_urls.base_url,
+                '/group_memberships/',
                 to_string(group_membership_id),
             ]),
             FetchOptions(
@@ -296,7 +305,7 @@ class MembershipsManager:
     def update_group_membership_by_id(
         self,
         group_membership_id: str,
-        role: Optional[UpdateGroupMembershipByIdRoleArg] = None,
+        role: Optional[UpdateGroupMembershipByIdRole] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -313,7 +322,7 @@ class MembershipsManager:
             Example: "434534"
         :type group_membership_id: str
         :param role: The role of the user in the group.
-        :type role: Optional[UpdateGroupMembershipByIdRoleArg], optional
+        :type role: Optional[UpdateGroupMembershipByIdRole], optional
         :param configurable_permissions: Custom configuration for the permissions an admin
             if a group will receive. This option has no effect
             on members with a role of `member`.
@@ -345,7 +354,8 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/group_memberships/',
+                self.network_session.base_urls.base_url,
+                '/group_memberships/',
                 to_string(group_membership_id),
             ]),
             FetchOptions(
@@ -385,7 +395,8 @@ class MembershipsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/group_memberships/',
+                self.network_session.base_urls.base_url,
+                '/group_memberships/',
                 to_string(group_membership_id),
             ]),
             FetchOptions(

@@ -6,15 +6,15 @@ from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import Files
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg
+from box_sdk_gen.managers.uploads import UploadFileAttributes
 
-from box_sdk_gen.managers.uploads import UploadFileAttributesArgParentField
+from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.managers.files import GetFileThumbnailByIdExtensionArg
+from box_sdk_gen.managers.files import GetFileThumbnailByIdExtension
 
 from box_sdk_gen.schemas import TrashFile
 
-from box_sdk_gen.managers.files import CopyFileParentArg
+from box_sdk_gen.managers.files import CopyFileParent
 
 from box_sdk_gen.utils import get_uuid
 
@@ -35,8 +35,8 @@ client: BoxClient = get_default_client()
 
 def upload_file(file_name: str, file_stream: ByteStream) -> FileFull:
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributesArg(
-            name=file_name, parent=UploadFileAttributesArgParentField(id='0')
+        attributes=UploadFileAttributes(
+            name=file_name, parent=UploadFileAttributesParentField(id='0')
         ),
         file=file_stream,
     )
@@ -54,7 +54,7 @@ def testGetFileThumbnail():
             read_byte_stream(
                 client.files.get_file_thumbnail_by_id(
                     file_id=thumbnail_file.id,
-                    extension=GetFileThumbnailByIdExtensionArg.PNG.value,
+                    extension=GetFileThumbnailByIdExtension.PNG.value,
                 )
             ),
             read_byte_stream(thumbnail_content_stream),
@@ -89,7 +89,7 @@ def testCreateGetAndDeleteFile():
         )
     assert file.name == new_file_name
     client.files.delete_file_by_id(file_id=uploaded_file.id)
-    trashed_file: TrashFile = client.trashed_files.get_file_trash(
+    trashed_file: TrashFile = client.trashed_files.get_trashed_file_by_id(
         file_id=uploaded_file.id
     )
     assert file.id == trashed_file.id
@@ -110,7 +110,7 @@ def testCopyFile():
     file_origin: FileFull = upload_new_file()
     copied_file_name: str = get_uuid()
     copied_file: FileFull = client.files.copy_file(
-        file_id=file_origin.id, name=copied_file_name, parent=CopyFileParentArg(id='0')
+        file_id=file_origin.id, name=copied_file_name, parent=CopyFileParent(id='0')
     )
     assert copied_file.parent.id == '0'
     assert copied_file.name == copied_file_name

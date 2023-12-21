@@ -37,7 +37,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class GetEventsStreamTypeArg(str, Enum):
+class GetEventsStreamType(str, Enum):
     ALL = 'all'
     CHANGES = 'changes'
     SYNC = 'sync'
@@ -45,7 +45,7 @@ class GetEventsStreamTypeArg(str, Enum):
     ADMIN_LOGS_STREAMING = 'admin_logs_streaming'
 
 
-class GetEventsEventTypeArg(str, Enum):
+class GetEventsEventType(str, Enum):
     ACCESS_GRANTED = 'ACCESS_GRANTED'
     ACCESS_REVOKED = 'ACCESS_REVOKED'
     ADD_DEVICE_ASSOCIATION = 'ADD_DEVICE_ASSOCIATION'
@@ -179,17 +179,19 @@ class EventsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
     def get_events(
         self,
-        stream_type: Optional[GetEventsStreamTypeArg] = None,
+        stream_type: Optional[GetEventsStreamType] = None,
         stream_position: Optional[str] = None,
         limit: Optional[int] = None,
-        event_type: Optional[List[GetEventsEventTypeArg]] = None,
+        event_type: Optional[List[GetEventsEventType]] = None,
         created_after: Optional[str] = None,
         created_before: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -235,7 +237,7 @@ class EventsManager:
               the enterprise. Latency will be much lower than `admin_logs`, but
               events will not be returned in chronological order and may
               contain duplicates.
-        :type stream_type: Optional[GetEventsStreamTypeArg], optional
+        :type stream_type: Optional[GetEventsStreamType], optional
         :param stream_position: The location in the event stream to start receiving events from.
             * `now` will return an empty list events and
             the latest stream position for initialization.
@@ -252,7 +254,7 @@ class EventsManager:
             requesting the events with a `stream_type` of `admin_logs` or
             `adming_logs_streaming`. For any other `stream_type` this value will be
             ignored.
-        :type event_type: Optional[List[GetEventsEventTypeArg]], optional
+        :type event_type: Optional[List[GetEventsEventType]], optional
         :param created_after: The lower bound date and time to return events for. This can only be used
             when requesting the events with a `stream_type` of `admin_logs`. For any
             other `stream_type` this value will be ignored.
@@ -276,7 +278,7 @@ class EventsManager:
         })
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/events']),
+            ''.join([self.network_session.base_urls.base_url, '/events']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -372,7 +374,7 @@ class EventsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/events']),
+            ''.join([self.network_session.base_urls.base_url, '/events']),
             FetchOptions(
                 method='OPTIONS',
                 headers=headers_map,

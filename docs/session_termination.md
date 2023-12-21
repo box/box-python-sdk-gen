@@ -10,7 +10,7 @@ and creates asynchronous jobs
 to terminate the user's sessions.
 Returns the status for the POST request.
 
-This operation is performed by calling function `create_user_terminate_session`.
+This operation is performed by calling function `terminate_users_sessions`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-users-terminate-sessions/).
@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample post_users_terminate_sessions -->
 
 ```python
-client.session_termination.create_user_terminate_session(user_ids=[get_env_var('USER_ID')], user_logins=[user.login])
+client.session_termination.terminate_users_sessions(user_ids=[get_env_var('USER_ID')], user_logins=[user.login])
 ```
 
 ### Arguments
@@ -43,7 +43,7 @@ and creates asynchronous jobs
 to terminate the group's sessions.
 Returns the status for the POST request.
 
-This operation is performed by calling function `create_group_terminate_session`.
+This operation is performed by calling function `terminate_groups_sessions`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-groups-terminate-sessions/).
@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample post_groups_terminate_sessions -->
 
 ```python
-client.session_termination.create_group_terminate_session(group_ids=[group.id])
+client.session_termination.terminate_groups_sessions(group_ids=[group.id])
 ```
 
 ### Arguments

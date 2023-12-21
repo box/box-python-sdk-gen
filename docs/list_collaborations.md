@@ -16,7 +16,11 @@ This operation is performed by calling function `get_file_collaborations`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-collaborations/).
 
-_Currently we don't have an example for calling `get_file_collaborations` in integration tests_
+<!-- sample get_files_id_collaborations -->
+
+```python
+client.list_collaborations.get_file_collaborations(file_id=file.id)
+```
 
 ### Arguments
 
@@ -53,7 +57,11 @@ This operation is performed by calling function `get_folder_collaborations`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-collaborations/).
 
-_Currently we don't have an example for calling `get_folder_collaborations` in integration tests_
+<!-- sample get_folders_id_collaborations -->
+
+```python
+client.list_collaborations.get_folder_collaborations(folder_id=folder.id)
+```
 
 ### Arguments
 
@@ -84,11 +92,15 @@ This operation is performed by calling function `get_collaborations`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collaborations/).
 
-_Currently we don't have an example for calling `get_collaborations` in integration tests_
+<!-- sample get_collaborations -->
+
+```python
+client.list_collaborations.get_collaborations(status=GetCollaborationsStatus.PENDING.value)
+```
 
 ### Arguments
 
-- status `GetCollaborationsStatusArg`
+- status `GetCollaborationsStatus`
   - The status of the collaborations to retrieve
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
@@ -121,7 +133,11 @@ This operation is performed by calling function `get_group_collaborations`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-groups-id-collaborations/).
 
-_Currently we don't have an example for calling `get_group_collaborations` in integration tests_
+<!-- sample get_groups_id_collaborations -->
+
+```python
+client.list_collaborations.get_group_collaborations(group_id=group.id)
+```
 
 ### Arguments
 

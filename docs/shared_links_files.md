@@ -19,7 +19,7 @@ shared file when only given a shared link.
 The `shared_link_permission_options` array field can be returned
 by requesting it in the `fields` query parameter.
 
-This operation is performed by calling function `get_shared_items`.
+This operation is performed by calling function `find_file_for_shared_link`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-shared-items/).
@@ -27,7 +27,7 @@ See the endpoint docs at
 <!-- sample get_shared_items -->
 
 ```python
-user_client.shared_links_files.get_shared_items(boxapi=''.join(['shared_link=', file_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+user_client.shared_links_files.find_file_for_shared_link(boxapi=''.join(['shared_link=', file_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
 ```
 
 ### Arguments
@@ -52,7 +52,7 @@ the user has access to it.
 
 Gets the information for a shared link on a file.
 
-This operation is performed by calling function `get_file_get_shared_link`.
+This operation is performed by calling function `get_shared_link_for_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-get-shared-link/).
@@ -60,7 +60,7 @@ See the endpoint docs at
 <!-- sample get_files_id#get_shared_link -->
 
 ```python
-client.shared_links_files.get_file_get_shared_link(file_id=file_id, fields='shared_link')
+client.shared_links_files.get_shared_link_for_file(file_id=file_id, fields='shared_link')
 ```
 
 ### Arguments
@@ -83,7 +83,7 @@ additional shared link information.
 
 Adds a shared link to a file.
 
-This operation is performed by calling function `update_file_add_shared_link`.
+This operation is performed by calling function `add_share_link_to_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-add-shared-link/).
@@ -91,14 +91,14 @@ See the endpoint docs at
 <!-- sample put_files_id#add_shared_link -->
 
 ```python
-client.shared_links_files.update_file_add_shared_link(file_id=file_id, shared_link=UpdateFileAddSharedLinkSharedLinkArg(access=UpdateFileAddSharedLinkSharedLinkArgAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+client.shared_links_files.add_share_link_to_file(file_id=file_id, shared_link=AddShareLinkToFileSharedLink(access=AddShareLinkToFileSharedLinkAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- shared_link `Optional[UpdateFileAddSharedLinkSharedLinkArg]`
+- shared_link `Optional[AddShareLinkToFileSharedLink]`
   - The settings for the shared link to create on the file. Use an empty object (`{}`) to use the default settings for shared links.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.
@@ -116,7 +116,7 @@ link attached.
 
 Updates a shared link on a file.
 
-This operation is performed by calling function `update_file_update_shared_link`.
+This operation is performed by calling function `update_shared_link_on_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-update-shared-link/).
@@ -124,14 +124,14 @@ See the endpoint docs at
 <!-- sample put_files_id#update_shared_link -->
 
 ```python
-client.shared_links_files.update_file_update_shared_link(file_id=file_id, shared_link=UpdateFileUpdateSharedLinkSharedLinkArg(access=UpdateFileUpdateSharedLinkSharedLinkArgAccessField.COLLABORATORS.value), fields='shared_link')
+client.shared_links_files.update_shared_link_on_file(file_id=file_id, shared_link=UpdateSharedLinkOnFileSharedLink(access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS.value), fields='shared_link')
 ```
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- shared_link `Optional[UpdateFileUpdateSharedLinkSharedLinkArg]`
+- shared_link `Optional[UpdateSharedLinkOnFileSharedLink]`
   - The settings for the shared link to update.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.
@@ -149,18 +149,18 @@ link attached.
 
 Removes a shared link from a file.
 
-This operation is performed by calling function `update_file_remove_shared_link`.
+This operation is performed by calling function `remove_shared_link_from_file`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-remove-shared-link/).
 
-_Currently we don't have an example for calling `update_file_remove_shared_link` in integration tests_
+_Currently we don't have an example for calling `remove_shared_link_from_file` in integration tests_
 
 ### Arguments
 
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- shared_link `Optional[UpdateFileRemoveSharedLinkSharedLinkArg]`
+- shared_link `Optional[RemoveSharedLinkFromFileSharedLink]`
   - By setting this value to `null`, the shared link is removed from the file.
 - fields `str`
   - Explicitly request the `shared_link` fields to be returned for this item.

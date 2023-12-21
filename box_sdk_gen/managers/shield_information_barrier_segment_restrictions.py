@@ -41,26 +41,26 @@ from box_sdk_gen.json_data import sd_to_json
 from box_sdk_gen.json_data import SerializedData
 
 
-class CreateShieldInformationBarrierSegmentRestrictionTypeArg(str, Enum):
+class CreateShieldInformationBarrierSegmentRestrictionType(str, Enum):
     SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION = (
         'shield_information_barrier_segment_restriction'
     )
 
 
-class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArgTypeField(
+class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
-class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg(
+class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(
     BaseObject
 ):
     def __init__(
         self,
         id: Optional[str] = None,
         type: Optional[
-            CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArgTypeField
+            CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -69,25 +69,25 @@ class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSe
             shield information barrier segment.
         :type id: Optional[str], optional
         :param type: The type of the shield barrier segment for this member.
-        :type type: Optional[CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArgTypeField], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
 
 
-class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArgTypeField(
+class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField(
     str, Enum
 ):
     SHIELD_INFORMATION_BARRIER_SEGMENT = 'shield_information_barrier_segment'
 
 
-class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg(BaseObject):
+class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment(BaseObject):
     def __init__(
         self,
         id: Optional[str] = None,
         type: Optional[
-            CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArgTypeField
+            CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField
         ] = None,
         **kwargs
     ):
@@ -97,7 +97,7 @@ class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg(BaseO
         :type id: Optional[str], optional
         :param type: The type of the restricted shield
             information barrier segment.
-        :type type: Optional[CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArgTypeField], optional
+        :type type: Optional[CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -108,8 +108,10 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -134,7 +136,8 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_restrictions/',
                 to_string(shield_information_barrier_segment_restriction_id),
             ]),
             FetchOptions(
@@ -168,7 +171,8 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_restrictions/',
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_restrictions/',
                 to_string(shield_information_barrier_segment_restriction_id),
             ]),
             FetchOptions(
@@ -216,7 +220,8 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_restrictions'
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_restrictions',
             ]),
             FetchOptions(
                 method='GET',
@@ -231,9 +236,9 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
 
     def create_shield_information_barrier_segment_restriction(
         self,
-        type: CreateShieldInformationBarrierSegmentRestrictionTypeArg,
-        shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg,
-        restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg,
+        type: CreateShieldInformationBarrierSegmentRestrictionType,
+        shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment,
+        restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
     ) -> ShieldInformationBarrierSegmentRestriction:
@@ -244,13 +249,13 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
 
         :param type: The type of the shield barrier segment
             restriction for this member.
-        :type type: CreateShieldInformationBarrierSegmentRestrictionTypeArg
+        :type type: CreateShieldInformationBarrierSegmentRestrictionType
         :param shield_information_barrier_segment: The `type` and `id` of the requested
             shield information barrier segment.
-        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentArg
+        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment
         :param restricted_segment: The `type` and `id` of the restricted
             shield information barrier segment.
-        :type restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentArg
+        :type restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment
         :param extra_headers: Extra headers that will be included in the HTTP request.
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -265,7 +270,8 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/shield_information_barrier_segment_restrictions'
+                self.network_session.base_urls.base_url,
+                '/shield_information_barrier_segment_restrictions',
             ]),
             FetchOptions(
                 method='POST',

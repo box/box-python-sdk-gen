@@ -39,7 +39,7 @@ from box_sdk_gen.fetch import FetchResponse
 from box_sdk_gen.json_data import SerializedData
 
 
-class UpdateCollaborationByIdRoleArg(str, Enum):
+class UpdateCollaborationByIdRole(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
     PREVIEWER = 'previewer'
@@ -50,28 +50,28 @@ class UpdateCollaborationByIdRoleArg(str, Enum):
     OWNER = 'owner'
 
 
-class UpdateCollaborationByIdStatusArg(str, Enum):
+class UpdateCollaborationByIdStatus(str, Enum):
     PENDING = 'pending'
     ACCEPTED = 'accepted'
     REJECTED = 'rejected'
 
 
-class CreateCollaborationItemArgTypeField(str, Enum):
+class CreateCollaborationItemTypeField(str, Enum):
     FILE = 'file'
     FOLDER = 'folder'
 
 
-class CreateCollaborationItemArg(BaseObject):
+class CreateCollaborationItem(BaseObject):
     def __init__(
         self,
-        type: Optional[CreateCollaborationItemArgTypeField] = None,
+        type: Optional[CreateCollaborationItemTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of the item that this collaboration will be
             granted access to
-        :type type: Optional[CreateCollaborationItemArgTypeField], optional
+        :type type: Optional[CreateCollaborationItemTypeField], optional
         :param id: The ID of the item that will be granted access to
         :type id: Optional[str], optional
         """
@@ -80,22 +80,22 @@ class CreateCollaborationItemArg(BaseObject):
         self.id = id
 
 
-class CreateCollaborationAccessibleByArgTypeField(str, Enum):
+class CreateCollaborationAccessibleByTypeField(str, Enum):
     USER = 'user'
     GROUP = 'group'
 
 
-class CreateCollaborationAccessibleByArg(BaseObject):
+class CreateCollaborationAccessibleBy(BaseObject):
     def __init__(
         self,
-        type: CreateCollaborationAccessibleByArgTypeField,
+        type: CreateCollaborationAccessibleByTypeField,
         id: Optional[str] = None,
         login: Optional[str] = None,
         **kwargs
     ):
         """
         :param type: The type of collaborator to invite.
-        :type type: CreateCollaborationAccessibleByArgTypeField
+        :type type: CreateCollaborationAccessibleByTypeField
         :param id: The ID of the user or group.
             Alternatively, use `login` to specify a user by email
             address.
@@ -110,7 +110,7 @@ class CreateCollaborationAccessibleByArg(BaseObject):
         self.login = login
 
 
-class CreateCollaborationRoleArg(str, Enum):
+class CreateCollaborationRole(str, Enum):
     EDITOR = 'editor'
     VIEWER = 'viewer'
     PREVIEWER = 'previewer'
@@ -124,8 +124,10 @@ class UserCollaborationsManager:
     def __init__(
         self,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: NetworkSession = None,
     ):
+        if network_session is None:
+            network_session = NetworkSession()
         self.auth = auth
         self.network_session = network_session
 
@@ -158,7 +160,9 @@ class UserCollaborationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaborations/', to_string(collaboration_id)
+                self.network_session.base_urls.base_url,
+                '/collaborations/',
+                to_string(collaboration_id),
             ]),
             FetchOptions(
                 method='GET',
@@ -174,8 +178,8 @@ class UserCollaborationsManager:
     def update_collaboration_by_id(
         self,
         collaboration_id: str,
-        role: UpdateCollaborationByIdRoleArg,
-        status: Optional[UpdateCollaborationByIdStatusArg] = None,
+        role: UpdateCollaborationByIdRole,
+        status: Optional[UpdateCollaborationByIdStatus] = None,
         expires_at: Optional[str] = None,
         can_view_path: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
@@ -192,11 +196,11 @@ class UserCollaborationsManager:
             Example: "1234"
         :type collaboration_id: str
         :param role: The level of access granted.
-        :type role: UpdateCollaborationByIdRoleArg
+        :type role: UpdateCollaborationByIdRole
         :param status: <!--alex ignore reject-->
             Set the status of a `pending` collaboration invitation,
             effectively accepting, or rejecting the invite.
-        :type status: Optional[UpdateCollaborationByIdStatusArg], optional
+        :type status: Optional[UpdateCollaborationByIdStatus], optional
         :param expires_at: Update the expiration date for the collaboration. At this date,
             the collaboration will be automatically removed from the item.
             This feature will only work if the **Automatically remove invited
@@ -234,7 +238,9 @@ class UserCollaborationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaborations/', to_string(collaboration_id)
+                self.network_session.base_urls.base_url,
+                '/collaborations/',
+                to_string(collaboration_id),
             ]),
             FetchOptions(
                 method='PUT',
@@ -266,7 +272,9 @@ class UserCollaborationsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([
-                'https://api.box.com/2.0/collaborations/', to_string(collaboration_id)
+                self.network_session.base_urls.base_url,
+                '/collaborations/',
+                to_string(collaboration_id),
             ]),
             FetchOptions(
                 method='DELETE',
@@ -280,9 +288,9 @@ class UserCollaborationsManager:
 
     def create_collaboration(
         self,
-        item: CreateCollaborationItemArg,
-        accessible_by: CreateCollaborationAccessibleByArg,
-        role: CreateCollaborationRoleArg,
+        item: CreateCollaborationItem,
+        accessible_by: CreateCollaborationAccessibleBy,
+        role: CreateCollaborationRole,
         is_access_only: Optional[bool] = None,
         can_view_path: Optional[bool] = None,
         expires_at: Optional[str] = None,
@@ -323,11 +331,11 @@ class UserCollaborationsManager:
         -  `name` is hidden if a collaboration was created using `login`.
 
         :param item: The item to attach the comment to.
-        :type item: CreateCollaborationItemArg
+        :type item: CreateCollaborationItem
         :param accessible_by: The user or group to give access to the item.
-        :type accessible_by: CreateCollaborationAccessibleByArg
+        :type accessible_by: CreateCollaborationAccessibleBy
         :param role: The level of access granted.
-        :type role: CreateCollaborationRoleArg
+        :type role: CreateCollaborationRole
         :param is_access_only: If set to `true`, collaborators have access to
             shared items, but such items won't be visible in the
             All Files list. Additionally, collaborators won't
@@ -379,12 +387,12 @@ class UserCollaborationsManager:
             'can_view_path': can_view_path,
             'expires_at': expires_at,
         }
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields), 'notify': to_string(notify)
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {'fields': to_string(fields), 'notify': to_string(notify)}
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/2.0/collaborations']),
+            ''.join([self.network_session.base_urls.base_url, '/collaborations']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
