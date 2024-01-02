@@ -11820,18 +11820,6 @@ class Users(BaseObject):
         self.entries = entries
 
 
-class MetadataFieldFilterString(BaseObject):
-    pass
-
-
-class MetadataFieldFilterFloat(BaseObject):
-    pass
-
-
-class MetadataFieldFilterMultiSelect(BaseObject):
-    pass
-
-
 class MetadataFieldFilterFloatRangeValue(BaseObject):
     def __init__(
         self, lt: Optional[float] = None, gt: Optional[float] = None, **kwargs
@@ -11853,10 +11841,6 @@ class MetadataFieldFilterFloatRangeValue(BaseObject):
         self.gt = gt
 
 
-class MetadataFieldFilterFloatRange(BaseObject):
-    pass
-
-
 class MetadataFieldFilterDateRangeValue(BaseObject):
     def __init__(self, lt: Optional[str] = None, gt: Optional[str] = None, **kwargs):
         """
@@ -11874,10 +11858,6 @@ class MetadataFieldFilterDateRangeValue(BaseObject):
         super().__init__(**kwargs)
         self.lt = lt
         self.gt = gt
-
-
-class MetadataFieldFilterDateRange(BaseObject):
-    pass
 
 
 class MetadataFilterScopeField(str, Enum):
@@ -11902,11 +11882,11 @@ class MetadataFilter(BaseObject):
         template_key: Optional[str] = None,
         filters: Optional[
             Union[
-                MetadataFieldFilterString,
-                MetadataFieldFilterFloat,
-                MetadataFieldFilterMultiSelect,
-                MetadataFieldFilterFloatRange,
-                MetadataFieldFilterDateRange,
+                Dict[str, str],
+                Dict[str, float],
+                Dict[str, List[str]],
+                Dict[str, MetadataFieldFilterFloatRangeValue],
+                Dict[str, MetadataFieldFilterDateRangeValue],
             ]
         ] = None,
         **kwargs
