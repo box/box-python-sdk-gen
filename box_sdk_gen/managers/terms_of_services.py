@@ -14,8 +14,6 @@ from box_sdk_gen.schemas import TermsOfServices
 
 from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas import Task
-
 from box_sdk_gen.schemas import TermsOfService
 
 from box_sdk_gen.auth import Authentication
@@ -110,7 +108,7 @@ class TermsOfServicesManager:
         text: str,
         tos_type: Optional[CreateTermsOfServiceTosType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> Task:
+    ) -> TermsOfService:
         """
         Creates a terms of service for a given enterprise
 
@@ -143,7 +141,7 @@ class TermsOfServicesManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, Task)
+        return deserialize(response.data, TermsOfService)
 
     def get_terms_of_service_by_id(
         self,

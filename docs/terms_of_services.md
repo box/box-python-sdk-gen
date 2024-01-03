@@ -56,7 +56,7 @@ _Currently we don't have an example for calling `create_terms_of_service` in int
 
 ### Returns
 
-This function returns a value of type `Task`.
+This function returns a value of type `TermsOfService`.
 
 Returns a new task object
 

@@ -1295,85 +1295,6 @@ class FileMini(FileBase):
         self.file_version = file_version
 
 
-class FileScopeScopeField(str, Enum):
-    ANNOTATION_EDIT = 'annotation_edit'
-    ANNOTATION_VIEW_ALL = 'annotation_view_all'
-    ANNOTATION_VIEW_SELF = 'annotation_view_self'
-    BASE_EXPLORER = 'base_explorer'
-    BASE_PICKER = 'base_picker'
-    BASE_PREVIEW = 'base_preview'
-    BASE_UPLOAD = 'base_upload'
-    ITEM_DELETE = 'item_delete'
-    ITEM_DOWNLOAD = 'item_download'
-    ITEM_PREVIEW = 'item_preview'
-    ITEM_RENAME = 'item_rename'
-    ITEM_SHARE = 'item_share'
-
-
-class FileScope(BaseObject):
-    def __init__(
-        self,
-        scope: Optional[FileScopeScopeField] = None,
-        object: Optional[FileMini] = None,
-        **kwargs
-    ):
-        """
-        :param scope: The file scopes for the file access
-        :type scope: Optional[FileScopeScopeField], optional
-        """
-        super().__init__(**kwargs)
-        self.scope = scope
-        self.object = object
-
-
-class AccessTokenTokenTypeField(str, Enum):
-    BEARER = 'bearer'
-
-
-class AccessTokenIssuedTokenTypeField(str, Enum):
-    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = (
-        'urn:ietf:params:oauth:token-type:access_token'
-    )
-
-
-class AccessToken(BaseObject):
-    def __init__(
-        self,
-        access_token: Optional[str] = None,
-        expires_in: Optional[int] = None,
-        token_type: Optional[AccessTokenTokenTypeField] = None,
-        restricted_to: Optional[List[FileScope]] = None,
-        refresh_token: Optional[str] = None,
-        issued_token_type: Optional[AccessTokenIssuedTokenTypeField] = None,
-        **kwargs
-    ):
-        """
-        :param access_token: The requested access token.
-        :type access_token: Optional[str], optional
-        :param expires_in: The time in seconds by which this token will expire.
-        :type expires_in: Optional[int], optional
-        :param token_type: The type of access token returned.
-        :type token_type: Optional[AccessTokenTokenTypeField], optional
-        :param restricted_to: The permissions that this access token permits,
-            providing a list of resources (files, folders, etc)
-            and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[List[FileScope]], optional
-        :param refresh_token: The refresh token for this access token, which can be used
-            to request a new access token when the current one expires.
-        :type refresh_token: Optional[str], optional
-        :param issued_token_type: The type of downscoped access token returned. This is only
-            returned if an access token has been downscoped.
-        :type issued_token_type: Optional[AccessTokenIssuedTokenTypeField], optional
-        """
-        super().__init__(**kwargs)
-        self.access_token = access_token
-        self.expires_in = expires_in
-        self.token_type = token_type
-        self.restricted_to = restricted_to
-        self.refresh_token = refresh_token
-        self.issued_token_type = issued_token_type
-
-
 class FilesUnderRetention(BaseObject):
     def __init__(
         self,
@@ -1558,6 +1479,85 @@ class FolderMini(FolderBase):
         super().__init__(id=id, type=type, etag=etag, **kwargs)
         self.sequence_id = sequence_id
         self.name = name
+
+
+class FileOrFolderScopeScopeField(str, Enum):
+    ANNOTATION_EDIT = 'annotation_edit'
+    ANNOTATION_VIEW_ALL = 'annotation_view_all'
+    ANNOTATION_VIEW_SELF = 'annotation_view_self'
+    BASE_EXPLORER = 'base_explorer'
+    BASE_PICKER = 'base_picker'
+    BASE_PREVIEW = 'base_preview'
+    BASE_UPLOAD = 'base_upload'
+    ITEM_DELETE = 'item_delete'
+    ITEM_DOWNLOAD = 'item_download'
+    ITEM_PREVIEW = 'item_preview'
+    ITEM_RENAME = 'item_rename'
+    ITEM_SHARE = 'item_share'
+
+
+class FileOrFolderScope(BaseObject):
+    def __init__(
+        self,
+        scope: Optional[FileOrFolderScopeScopeField] = None,
+        object: Optional[Union[FolderMini, FileMini]] = None,
+        **kwargs
+    ):
+        """
+        :param scope: The scopes for the resource access
+        :type scope: Optional[FileOrFolderScopeScopeField], optional
+        """
+        super().__init__(**kwargs)
+        self.scope = scope
+        self.object = object
+
+
+class AccessTokenTokenTypeField(str, Enum):
+    BEARER = 'bearer'
+
+
+class AccessTokenIssuedTokenTypeField(str, Enum):
+    URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN = (
+        'urn:ietf:params:oauth:token-type:access_token'
+    )
+
+
+class AccessToken(BaseObject):
+    def __init__(
+        self,
+        access_token: Optional[str] = None,
+        expires_in: Optional[int] = None,
+        token_type: Optional[AccessTokenTokenTypeField] = None,
+        restricted_to: Optional[List[FileOrFolderScope]] = None,
+        refresh_token: Optional[str] = None,
+        issued_token_type: Optional[AccessTokenIssuedTokenTypeField] = None,
+        **kwargs
+    ):
+        """
+        :param access_token: The requested access token.
+        :type access_token: Optional[str], optional
+        :param expires_in: The time in seconds by which this token will expire.
+        :type expires_in: Optional[int], optional
+        :param token_type: The type of access token returned.
+        :type token_type: Optional[AccessTokenTokenTypeField], optional
+        :param restricted_to: The permissions that this access token permits,
+            providing a list of resources (files, folders, etc)
+            and the scopes permitted for each of those resources.
+        :type restricted_to: Optional[List[FileOrFolderScope]], optional
+        :param refresh_token: The refresh token for this access token, which can be used
+            to request a new access token when the current one expires.
+        :type refresh_token: Optional[str], optional
+        :param issued_token_type: The type of downscoped access token returned. This is only
+            returned if an access token has been downscoped.
+        :type issued_token_type: Optional[AccessTokenIssuedTokenTypeField], optional
+        """
+        super().__init__(**kwargs)
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.token_type = token_type
+        self.restricted_to = restricted_to
+        self.refresh_token = refresh_token
+        self.issued_token_type = issued_token_type
 
 
 class IntegrationMappingBaseIntegrationTypeField(str, Enum):
@@ -2991,17 +2991,12 @@ class TermsOfServiceBaseTypeField(str, Enum):
 
 
 class TermsOfServiceBase(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[TermsOfServiceBaseTypeField] = None,
-        **kwargs
-    ):
+    def __init__(self, id: str, type: TermsOfServiceBaseTypeField, **kwargs):
         """
         :param id: The unique identifier for this terms of service.
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `terms_of_service`
-        :type type: Optional[TermsOfServiceBaseTypeField], optional
+        :type type: TermsOfServiceBaseTypeField
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3047,17 +3042,21 @@ class TermsOfServiceTosTypeField(str, Enum):
 class TermsOfService(TermsOfServiceBase):
     def __init__(
         self,
+        id: str,
+        type: TermsOfServiceBaseTypeField,
         status: Optional[TermsOfServiceStatusField] = None,
         enterprise: Optional[TermsOfServiceEnterpriseField] = None,
         tos_type: Optional[TermsOfServiceTosTypeField] = None,
         text: Optional[str] = None,
         created_at: Optional[str] = None,
         modified_at: Optional[str] = None,
-        id: Optional[str] = None,
-        type: Optional[TermsOfServiceBaseTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this terms of service.
+        :type id: str
+        :param type: `terms_of_service`
+        :type type: TermsOfServiceBaseTypeField
         :param status: Whether these terms are enabled or not
         :type status: Optional[TermsOfServiceStatusField], optional
         :param tos_type: Whether to apply these terms to managed users or external users
@@ -3069,10 +3068,6 @@ class TermsOfService(TermsOfServiceBase):
         :type created_at: Optional[str], optional
         :param modified_at: When the legal item was modified.
         :type modified_at: Optional[str], optional
-        :param id: The unique identifier for this terms of service.
-        :type id: Optional[str], optional
-        :param type: `terms_of_service`
-        :type type: Optional[TermsOfServiceBaseTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.status = status
@@ -5901,7 +5896,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         access_token: Optional[str] = None,
         expires_in: Optional[int] = None,
         token_type: Optional[FileFullExpiringEmbedLinkTokenTypeField] = None,
-        restricted_to: Optional[List[FileScope]] = None,
+        restricted_to: Optional[List[FileOrFolderScope]] = None,
         url: Optional[str] = None,
         **kwargs
     ):
@@ -5915,7 +5910,7 @@ class FileFullExpiringEmbedLinkField(BaseObject):
         :param restricted_to: The permissions that this access token permits,
             providing a list of resources (files, folders, etc)
             and the scopes permitted for each of those resources.
-        :type restricted_to: Optional[List[FileScope]], optional
+        :type restricted_to: Optional[List[FileOrFolderScope]], optional
         :param url: The actual expiring embed URL for this file, constructed
             from the file ID and access tokens specified in this object.
         :type url: Optional[str], optional
@@ -10495,6 +10490,7 @@ class SignRequestCreateSigner(BaseObject):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10537,6 +10533,10 @@ class SignRequestCreateSigner(BaseObject):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.email = email
@@ -10549,6 +10549,7 @@ class SignRequestCreateSigner(BaseObject):
         self.login_required = login_required
         self.verification_phone_number = verification_phone_number
         self.password = password
+        self.signer_group_id = signer_group_id
 
 
 class SignRequestPrefillTag(BaseObject):
@@ -10689,6 +10690,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         login_required: Optional[bool] = None,
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -10744,6 +10746,10 @@ class SignRequestSigner(SignRequestCreateSigner):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(
             email=email,
@@ -10756,6 +10762,7 @@ class SignRequestSigner(SignRequestCreateSigner):
             login_required=login_required,
             verification_phone_number=verification_phone_number,
             password=password,
+            signer_group_id=signer_group_id,
             **kwargs
         )
         self.has_viewed_document = has_viewed_document
@@ -11224,6 +11231,7 @@ class TemplateSigner(BaseObject):
         role: Optional[TemplateSignerRoleField] = None,
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
+        signer_group_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -11241,6 +11249,10 @@ class TemplateSigner(BaseObject):
         :type is_in_person: Optional[bool], optional
         :param order: Order of the signer
         :type order: Optional[int], optional
+        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
+            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
+            it will be converted to a single signer and the group will be removed.
+        :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.inputs = inputs
@@ -11248,6 +11260,7 @@ class TemplateSigner(BaseObject):
         self.role = role
         self.is_in_person = is_in_person
         self.order = order
+        self.signer_group_id = signer_group_id
 
 
 class SignTemplateTypeField(str, Enum):
