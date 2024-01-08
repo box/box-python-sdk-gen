@@ -15,7 +15,11 @@ This operation is performed by calling function `get_terms_of_service`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-terms-of-services/).
 
-_Currently we don't have an example for calling `get_terms_of_service` in integration tests_
+<!-- sample get_terms_of_services -->
+
+```python
+client.terms_of_services.get_terms_of_service()
+```
 
 ### Arguments
 
@@ -41,7 +45,11 @@ This operation is performed by calling function `create_terms_of_service`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-terms-of-services/).
 
-_Currently we don't have an example for calling `create_terms_of_service` in integration tests_
+<!-- sample post_terms_of_services -->
+
+```python
+client.terms_of_services.create_terms_of_service(status=CreateTermsOfServiceStatus.ENABLED.value, tos_type=CreateTermsOfServiceTosType.MANAGED.value, text='Test TOS')
+```
 
 ### Arguments
 
@@ -93,7 +101,11 @@ This operation is performed by calling function `update_terms_of_service_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-terms-of-services-id/).
 
-_Currently we don't have an example for calling `update_terms_of_service_by_id` in integration tests_
+<!-- sample put_terms_of_services_id -->
+
+```python
+client.terms_of_services.update_terms_of_service_by_id(terms_of_service_id=tos.id, status=UpdateTermsOfServiceByIdStatus.DISABLED.value, text='Disabled TOS')
+```
 
 ### Arguments
 

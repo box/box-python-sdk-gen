@@ -12,7 +12,14 @@
     - [Obtaining Service Account token](#obtaining-service-account-token)
     - [Obtaining User token](#obtaining-user-token)
     - [Switching between Service Account and User](#switching-between-service-account-and-user)
-  - [BoxOAuth 2.0 Auth](#oauth-20-auth)
+  - [OAuth 2.0 Auth](#oauth-20-auth)
+- [Revoke token](#revoke-token)
+- [Downscope token](#downscope-token)
+- [Token storage](#token-storage)
+  - [In-memory token storage](#in-memory-token-storage)
+  - [File token storage](#file-token-storage)
+  - [File with in-memory token storage](#file-with-in-memory-token-storage)
+  - [Custom storage](#custom-storage)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -112,8 +119,8 @@ make calls as that user. See the [API documentation](https://developer.box.com/)
 for detailed instructions on how to use app auth.
 
 Clients for making calls as an App User can be created with the same JSON JWT config file generated through the
-[Box Developer Console][dev_console], but it is also required to call `auth.as_user('USER_ID')`, with
-a user ID you want to authenticate.
+[Box Developer Console][dev_console]. Calling `auth.as_user('USER_ID')` method will return a new auth object,
+which is authenticated as the user with provided id, leaving the original object unchanged.
 
 ```python
 from box_sdk_gen.client import BoxClient
@@ -121,8 +128,8 @@ from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/settings.json')
 auth = BoxJWTAuth(config=jwt_config)
-auth.as_user('USER_ID')
-user_client = BoxClient(auth=auth)
+user_auth = auth.as_user('USER_ID')
+user_client = BoxClient(auth=user_auth)
 ```
 
 Alternatively, clients for making calls as an App User can be created with the same `JWTConfig`
@@ -310,6 +317,52 @@ def callback():
 
 if __name__ == '__main__':
     app.run(port=4999)
+```
+
+# Revoke token
+
+Access tokens for a client can be revoked when needed. This call invalidates old token, but you can still
+reuse the `auth` object to retrieve a new token. If you make any new call after revoking the token,
+a new token will be automatically retrieved. This method is currently only available for JWT authentication.
+
+To revoke current client's tokens in the storage use the following code:
+
+<!-- sample post_oauth2_revoke -->
+
+```python
+client.auth.revoke_token()
+```
+
+# Downscope token
+
+You can exchange a client's access token for one with a lower scope, in order
+to restrict the permissions for a child client or to pass to a less secure
+location (e.g. a browser-based app). This method is currently only available for JWT authentication.
+
+A downscoped token does not include a refresh token.
+In such a scenario, to obtain a new downscoped token, refresh the original token
+and utilize the newly acquired token to obtain the downscoped token.
+
+More information about downscoping tokens can be found [here](https://developer.box.com/guides/authentication/tokens/downscope/).
+If you want to learn more about available scopes please go [here](https://developer.box.com/guides/api-calls/permissions-and-errors/scopes/#scopes-for-downscoping).
+
+For example to get a new token with only `item_preview` scope, restricted to a single file, suitable for the
+[Content Preview UI Element](https://developer.box.com/en/guides/embed/ui-elements/preview/) you can use the following code.
+You can also initialize `DeveloperTokenAuth` with the retrieved access token and use it to create a new Client.
+
+<!-- sample post_oauth2_token downscope_token -->
+
+```python
+from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
+from box_sdk_gen.schemas import AccessToken
+
+resource = 'https://api.box.com/2.0/files/123456789'
+downscoped_token: AccessToken = auth.downscope_token(
+    scopes=['item_preview'],
+    resource=resource,
+)
+downscoped_auth = BoxDeveloperTokenAuth(downscoped_token.access_token)
+client = BoxClient(auth=downscoped_auth)
 ```
 
 # Token storage

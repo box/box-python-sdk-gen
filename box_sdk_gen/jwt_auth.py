@@ -1,27 +1,157 @@
-from datetime import datetime, timedelta
-import random
-import string
+from typing import Dict
 
-from typing import Optional, Any
+from box_sdk_gen.base_object import BaseObject
 
-try:
-    import jwt
-    from cryptography.hazmat.backends import default_backend
-    from cryptography.hazmat.primitives import serialization
-except ImportError:
-    jwt, default_backend, serialization = None, None, None
+from typing import Optional
 
-from .auth import Authentication
-from .token_storage import TokenStorage, InMemoryTokenStorage
-from .auth_schemas import (
-    TokenRequestBoxSubjectType,
-    TokenRequest,
-    TokenRequestGrantType,
-)
-from .fetch import fetch, FetchResponse, FetchOptions
-from .network import NetworkSession
-from .schemas import AccessToken
-from .json_data import json_to_serialized_data
+from box_sdk_gen.serialization import deserialize
+
+from typing import List
+
+from box_sdk_gen.utils import to_string
+
+from box_sdk_gen.managers.authorization import RequestAccessTokenGrantType
+
+from box_sdk_gen.managers.authorization import RequestAccessTokenSubjectTokenType
+
+from box_sdk_gen.auth import Authentication
+
+from box_sdk_gen.network import NetworkSession
+
+from box_sdk_gen.schemas import AccessToken
+
+from box_sdk_gen.schemas import PostOAuth2Token
+
+from box_sdk_gen.schemas import PostOAuth2Revoke
+
+from box_sdk_gen.token_storage import TokenStorage
+
+from box_sdk_gen.token_storage import InMemoryTokenStorage
+
+from box_sdk_gen.json_data import json_to_serialized_data
+
+from box_sdk_gen.json_data import SerializedData
+
+from box_sdk_gen.utils import get_uuid
+
+from box_sdk_gen.utils import read_text_from_file
+
+from box_sdk_gen.utils import is_browser
+
+from box_sdk_gen.utils import get_epoch_time_in_seconds
+
+from box_sdk_gen.utils import create_jwt_assertion
+
+from box_sdk_gen.utils import JwtSignOptions
+
+from box_sdk_gen.utils import JwtKey
+
+from box_sdk_gen.utils import JwtAlgorithm
+
+from box_sdk_gen.managers.authorization import AuthorizationManager
+
+from box_sdk_gen.utils import to_string
+
+from box_sdk_gen.json_data import sd_to_json
+
+box_jwt_audience: str = 'https://api.box.com/oauth2/token'
+
+
+class JwtConfigAppSettingsAppAuth(BaseObject):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'public_key_id': 'publicKeyID',
+        'private_key': 'privateKey',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'publicKeyID': 'public_key_id',
+        'privateKey': 'private_key',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(self, public_key_id: str, private_key: str, passphrase: str, **kwargs):
+        """
+        :param public_key_id: Public key ID
+        :type public_key_id: str
+        :param private_key: Private key
+        :type private_key: str
+        :param passphrase: Passphrase
+        :type passphrase: str
+        """
+        super().__init__(**kwargs)
+        self.public_key_id = public_key_id
+        self.private_key = private_key
+        self.passphrase = passphrase
+
+
+class JwtConfigAppSettings(BaseObject):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'client_id': 'clientID',
+        'client_secret': 'clientSecret',
+        'app_auth': 'appAuth',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'clientID': 'client_id',
+        'clientSecret': 'client_secret',
+        'appAuth': 'app_auth',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        client_id: str,
+        client_secret: str,
+        app_auth: JwtConfigAppSettingsAppAuth,
+        **kwargs
+    ):
+        """
+        :param client_id: App client ID
+        :type client_id: str
+        :param client_secret: App client secret
+        :type client_secret: str
+        :param app_auth: App auth settings
+        :type app_auth: JwtConfigAppSettingsAppAuth
+        """
+        super().__init__(**kwargs)
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.app_auth = app_auth
+
+
+class JwtConfigFile(BaseObject):
+    _fields_to_json_mapping: Dict[str, str] = {
+        'enterprise_id': 'enterpriseID',
+        'user_id': 'userID',
+        'box_app_settings': 'boxAppSettings',
+        **BaseObject._fields_to_json_mapping,
+    }
+    _json_to_fields_mapping: Dict[str, str] = {
+        'enterpriseID': 'enterprise_id',
+        'userID': 'user_id',
+        'boxAppSettings': 'box_app_settings',
+        **BaseObject._json_to_fields_mapping,
+    }
+
+    def __init__(
+        self,
+        box_app_settings: JwtConfigAppSettings,
+        enterprise_id: Optional[str] = None,
+        user_id: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        :param box_app_settings: App settings
+        :type box_app_settings: JwtConfigAppSettings
+        :param enterprise_id: Enterprise ID
+        :type enterprise_id: Optional[str], optional
+        :param user_id: User ID
+        :type user_id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.box_app_settings = box_app_settings
+        self.enterprise_id = enterprise_id
+        self.user_id = user_id
 
 
 class JWTConfig:
@@ -34,263 +164,276 @@ class JWTConfig:
         private_key_passphrase: str,
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
-        jwt_algorithm: str = 'RS256',
+        jwt_algorithm: Optional[JwtAlgorithm] = 'RS256',
         token_storage: TokenStorage = None,
-        **_kwargs
     ):
         """
-        :param client_id:
-            Box API key used for identifying the application the user is authenticating with.
-        :param client_secret:
-            Box API secret used for making auth requests.
-        :param jwt_key_id:
-            Key ID for the JWT assertion.
-        :param private_key:
-            Contents of RSA private key, used for signing the JWT assertion.
-        :param private_key_passphrase:
-            Passphrase used to unlock the private key.
-        :param enterprise_id:
-            The ID of the Box Developer Edition enterprise.
-
-            May be `None`, if the caller knows that it will not be
-            authenticating as an enterprise instance / service account.
-
-            If `user_id` is passed, this value is not used, unless
-            `authenticate_enterprise()` is called to authenticate as the enterprise instance.
-        :param user_id:
-            The user id to authenticate. This value is not required. But if it is provided, then the user
-            will be auto-authenticated at the time of the first API call.
-
-            Should be `None` if the intention is to authenticate as the
-            enterprise instance / service account. If both `enterprise_id` and
-            `user_id` are non-`None`, the `user` takes precedense when `refresh()`
-            is called.
-
-            <https://developer.box.com/en/guides/applications/>
-            <https://developer.box.com/en/guides/authentication/select/>
-        :param jwt_algorithm:
-            Which algorithm to use for signing the JWT assertion. Must be one of 'RS256', 'RS384', 'RS512'.
-        :param token_storage:
-            Object responsible for storing token. If no custom implementation provided,
-            the token will be stored in memory.
+        :param client_id: App client ID
+        :type client_id: str
+        :param client_secret: App client secret
+        :type client_secret: str
+        :param jwt_key_id: Public key ID
+        :type jwt_key_id: str
+        :param private_key: Private key
+        :type private_key: str
+        :param private_key_passphrase: Passphrase
+        :type private_key_passphrase: str
+        :param enterprise_id: Enterprise ID
+        :type enterprise_id: Optional[str], optional
+        :param user_id: User ID
+        :type user_id: Optional[str], optional
         """
         if token_storage is None:
             token_storage = InMemoryTokenStorage()
-        if not enterprise_id and not user_id:
-            raise Exception("Enterprise ID or User ID is needed")
-
         self.client_id = client_id
         self.client_secret = client_secret
-        self.enterprise_id = enterprise_id
-        self.user_id = user_id
         self.jwt_key_id = jwt_key_id
         self.private_key = private_key
         self.private_key_passphrase = private_key_passphrase
+        self.enterprise_id = enterprise_id
+        self.user_id = user_id
         self.jwt_algorithm = jwt_algorithm
         self.token_storage = token_storage
 
-    @classmethod
+    @staticmethod
     def from_config_json_string(
-        cls, config_json_string: str, token_storage: TokenStorage = None, **kwargs: Any
+        config_json_string: str, token_storage: Optional[TokenStorage] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a string content of JSON file downloaded from the Box Developer Console.
+
         See https://developer.box.com/en/guides/authentication/jwt/ for more information.
 
-        :param config_json_string:
-             String content of JSON file containing the configuration.
-        :param token_storage:
-            Object responsible for storing token. If no custom implementation provided,
-            the token will be stored in memory.
-        :return:
-            Auth instance configured as specified by the config dictionary.
+        :param config_json_string: String content of JSON file containing the configuration.
+        :type config_json_string: str
+        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.g
+        :type token_storage: Optional[TokenStorage], optional
         """
-        config_dict: dict = json_to_serialized_data(config_json_string)
-        if 'boxAppSettings' not in config_dict:
-            raise ValueError('boxAppSettings not present in configuration')
-        return cls(
-            client_id=config_dict['boxAppSettings']['clientID'],
-            client_secret=config_dict['boxAppSettings']['clientSecret'],
-            enterprise_id=config_dict.get('enterpriseID', None),
-            jwt_key_id=config_dict['boxAppSettings']['appAuth'].get(
-                'publicKeyID', None
-            ),
-            private_key=config_dict['boxAppSettings']['appAuth'].get(
-                'privateKey', None
-            ),
-            private_key_passphrase=config_dict['boxAppSettings']['appAuth'].get(
-                'passphrase', None
-            ),
-            token_storage=token_storage,
-            **kwargs
+        config_json: JwtConfigFile = deserialize(
+            json_to_serialized_data(config_json_string), JwtConfigFile
         )
+        new_config = (
+            JWTConfig(
+                client_id=config_json.box_app_settings.client_id,
+                client_secret=config_json.box_app_settings.client_secret,
+                enterprise_id=config_json.enterprise_id,
+                user_id=config_json.user_id,
+                jwt_key_id=config_json.box_app_settings.app_auth.public_key_id,
+                private_key=config_json.box_app_settings.app_auth.private_key,
+                private_key_passphrase=config_json.box_app_settings.app_auth.passphrase,
+                token_storage=token_storage,
+            )
+            if not token_storage == None
+            else JWTConfig(
+                client_id=config_json.box_app_settings.client_id,
+                client_secret=config_json.box_app_settings.client_secret,
+                enterprise_id=config_json.enterprise_id,
+                user_id=config_json.user_id,
+                jwt_key_id=config_json.box_app_settings.app_auth.public_key_id,
+                private_key=config_json.box_app_settings.app_auth.private_key,
+                private_key_passphrase=config_json.box_app_settings.app_auth.passphrase,
+            )
+        )
+        return new_config
 
-    @classmethod
+    @staticmethod
     def from_config_file(
-        cls, config_file_path: str, token_storage: TokenStorage = None, **kwargs: Any
+        config_file_path: str, token_storage: Optional[TokenStorage] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a JSON file downloaded from the Box Developer Console.
+
         See https://developer.box.com/en/guides/authentication/jwt/ for more information.
 
-        :param config_file_path:
-            Path to the JSON file containing the configuration.
-        :param token_storage:
-            Object responsible for storing token. If no custom implementation provided,
-            the token will be stored in memory.
-        :return:
-            Auth instance configured as specified by the JSON file.
+        :param config_file_path: Path to the JSON file containing the configuration.
+        :type config_file_path: str
+        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.
+        :type token_storage: Optional[TokenStorage], optional
         """
-        with open(config_file_path, encoding='utf-8') as config_file:
-            return cls.from_config_json_string(
-                config_file.read(), token_storage, **kwargs
-            )
+        config_json_string: str = read_text_from_file(config_file_path)
+        return JWTConfig.from_config_json_string(config_json_string, token_storage)
 
 
 class BoxJWTAuth(Authentication):
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config: JWTConfig, **kwargs):
         """
-        :param config:
-            Configuration object of Client Credentials Grant auth.
+        :param config: An object containing all JWT configuration to use for authentication
+        :type config: JWTConfig
         """
-        if None in (default_backend, serialization, jwt):
-            raise Exception(
-                'Missing dependencies required for JWTAuth. To install them use'
-                ' command: `pip install box-sdk-gen[jwt]`'
-            )
-
+        super().__init__(**kwargs)
         self.config = config
-        self.token_storage = config.token_storage
-
-        if config.enterprise_id:
-            self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-            self.subject_id = self.config.enterprise_id
-        else:
-            self.subject_id = self.config.user_id
-            self.subject_type = TokenRequestBoxSubjectType.USER
-
-        self._rsa_private_key = self._get_rsa_private_key(
-            config.private_key, config.private_key_passphrase
+        self.token_storage = self.config.token_storage
+        self.subject_id = (
+            self.config.enterprise_id
+            if not self.config.enterprise_id == None
+            else self.config.user_id
         )
-
-    def retrieve_token(
-        self, network_session: Optional[NetworkSession] = None
-    ) -> AccessToken:
-        """
-        Return a current token or get a new one when not available.
-        :param network_session: An object to keep network session state
-        :return: Access token
-        """
-        token = self.token_storage.get()
-        if token is None:
-            return self.refresh_token(network_session=network_session)
-        return token
+        self.subject_type = (
+            'enterprise' if not self.config.enterprise_id == None else 'user'
+        )
 
     def refresh_token(
         self, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
-        Fetch a new access token
+        Get new access token using JWT auth.
         :param network_session: An object to keep network session state
-        :return: New access token
+        :type network_session: Optional[NetworkSession], optional
         """
-        system_random = random.SystemRandom()
-        jti_length = system_random.randint(16, 128)
-        ascii_alphabet = string.ascii_letters + string.digits
-        ascii_len = len(ascii_alphabet)
-        jti = ''.join(
-            ascii_alphabet[int(system_random.random() * ascii_len)]
-            for _ in range(jti_length)
+        if is_browser():
+            raise Exception('JWT auth is not supported in browser environment.')
+        alg: JwtAlgorithm = (
+            self.config.jwt_algorithm
+            if not self.config.jwt_algorithm == None
+            else 'RS256'
         )
-        now_time = datetime.utcnow()
-        now_plus_30 = now_time + timedelta(seconds=30)
-        assertion = jwt.encode(
-            {
-                'iss': self.config.client_id,
-                'sub': self.subject_id,
-                'box_sub_type': self.subject_type,
-                'aud': 'https://api.box.com/oauth2/token',
-                'jti': jti,
-                'exp': int((now_plus_30 - datetime(1970, 1, 1)).total_seconds()),
-            },
-            self._rsa_private_key,
-            algorithm=self.config.jwt_algorithm,
-            headers={
-                'kid': self.config.jwt_key_id,
-            },
+        claims: Dict = {
+            'exp': get_epoch_time_in_seconds() + 30,
+            'box_sub_type': self.subject_type,
+        }
+        jwt_options: JwtSignOptions = JwtSignOptions(
+            algorithm=alg,
+            audience=box_jwt_audience,
+            subject=self.subject_id,
+            issuer=self.config.client_id,
+            jwtid=get_uuid(),
+            keyid=self.config.jwt_key_id,
         )
-
-        request_body = TokenRequest(
-            grant_type=TokenRequestGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER,
+        jwt_key: JwtKey = JwtKey(
+            key=self.config.private_key, passphrase=self.config.private_key_passphrase
+        )
+        assertion: str = create_jwt_assertion(claims, jwt_key, jwt_options)
+        auth_manager: AuthorizationManager = (
+            AuthorizationManager(network_session=network_session)
+            if not network_session == None
+            else AuthorizationManager()
+        )
+        token: AccessToken = auth_manager.request_access_token(
+            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
+            assertion=assertion,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            assertion=assertion,
         )
+        self.token_storage.store(token)
+        return token
 
-        response: FetchResponse = fetch(
-            'https://api.box.com/oauth2/token',
-            FetchOptions(
-                method='POST',
-                data=request_body.to_dict(),
-                content_type='application/x-www-form-urlencoded',
-                network_session=network_session,
-            ),
-        )
-
-        new_token = AccessToken.from_dict(response.data)
-        self.token_storage.store(new_token)
-        return new_token
-
-    def as_user(self, user_id: str):
+    def retrieve_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
-        Set authentication as user. The new token will be automatically fetched with a next API call.
+        Get the current access token. If the current access token is expired or not found, this method will attempt to refresh the token.
+        :param network_session: An object to keep network session state
+        :type network_session: Optional[NetworkSession], optional
+        """
+        old_token = self.token_storage.get()
+        if old_token == None:
+            new_token: AccessToken = self.refresh_token(network_session)
+            return new_token
+        return old_token
 
-        May be one of this application's created App User. Depending on the
-        configured User Access Level, may also be any other App User or Managed
-        User in the enterprise.
+    def as_user(self, user_id: str) -> 'BoxJWTAuth':
+        """
+        Create a new BoxJWTAuth instance that uses the provided user ID as the subject of the JWT assertion.
+
+        May be one of this application's created App User. Depending on the configured User Access Level, may also be any other App User or Managed User in the enterprise.
+
 
         <https://developer.box.com/en/guides/applications/>
+
+
         <https://developer.box.com/en/guides/authentication/select/>
 
-        :param user_id:
-            The id of the user to authenticate.
+        :param user_id: The id of the user to authenticate
+        :type user_id: str
         """
-        self.subject_id = user_id
-        self.subject_type = TokenRequestBoxSubjectType.USER
-        self.token_storage.clear()
-
-    def as_enterprise(self, enterprise_id: str):
-        """
-        Set authentication as enterprise. The new token will be automatically fetched with a next API call.
-
-        :param enterprise_id:
-            The ID of the Box Developer Edition enterprise.
-        """
-        self.subject_id = enterprise_id
-        self.subject_type = TokenRequestBoxSubjectType.ENTERPRISE
-        self.token_storage.clear()
-
-    @classmethod
-    def _get_rsa_private_key(
-        cls,
-        private_key: str,
-        passphrase: str,
-    ) -> Any:
-        encoded_private_key = cls._encode_str_ascii_or_raise(private_key)
-        encoded_passphrase = cls._encode_str_ascii_or_raise(passphrase)
-
-        return serialization.load_pem_private_key(
-            encoded_private_key,
-            password=encoded_passphrase,
-            backend=default_backend(),
+        new_config: JWTConfig = JWTConfig(
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret,
+            enterprise_id=None,
+            user_id=user_id,
+            jwt_key_id=self.config.jwt_key_id,
+            private_key=self.config.private_key,
+            private_key_passphrase=self.config.private_key_passphrase,
+            token_storage=self.token_storage,
         )
+        new_auth: 'BoxJWTAuth' = BoxJWTAuth(config=new_config)
+        self.token_storage.clear()
+        return new_auth
 
-    @staticmethod
-    def _encode_str_ascii_or_raise(passphrase: str) -> bytes:
-        try:
-            return passphrase.encode('ascii')
-        except UnicodeError as unicode_error:
-            raise TypeError(
-                "private_key and private_key_passphrase must contain binary data"
-                " (bytes/str), not a text/unicode string"
-            ) from unicode_error
+    def as_enterprise(self, user_id: str) -> 'BoxJWTAuth':
+        """
+        Create a new BoxJWTAuth instance that uses the provided enterprise ID as the subject of the JWT assertion.
+        :param user_id: The id of the enterprise to authenticate
+        :type user_id: str
+        """
+        new_config: JWTConfig = JWTConfig(
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret,
+            enterprise_id=user_id,
+            user_id=None,
+            jwt_key_id=self.config.jwt_key_id,
+            private_key=self.config.private_key,
+            private_key_passphrase=self.config.private_key_passphrase,
+            token_storage=self.token_storage,
+        )
+        new_auth: 'BoxJWTAuth' = BoxJWTAuth(config=new_config)
+        self.token_storage.clear()
+        return new_auth
+
+    def downscope_token(
+        self,
+        scopes: List[str],
+        resource: Optional[str] = None,
+        shared_link: Optional[str] = None,
+        network_session: Optional[NetworkSession] = None,
+    ) -> AccessToken:
+        """
+        Downscope access token to the provided scopes. Returning a new access token with the provided scopes, with the original access token unchanged.
+        :param scopes: The scope(s) to apply to the resulting token.
+        :type scopes: List[str]
+        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item.
+        :type resource: Optional[str], optional
+        :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item.
+        :type shared_link: Optional[str], optional
+        :param network_session: An object to keep network session state
+        :type network_session: Optional[NetworkSession], optional
+        """
+        token: Optional[AccessToken] = self.token_storage.get()
+        if token == None:
+            raise Exception(
+                'No access token is available. Make an API call to retrieve a token'
+                ' before calling this method.'
+            )
+        auth_manager: AuthorizationManager = (
+            AuthorizationManager(network_session=network_session)
+            if not network_session == None
+            else AuthorizationManager()
+        )
+        downscoped_token: AccessToken = auth_manager.request_access_token(
+            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            subject_token=token.access_token,
+            subject_token_type=RequestAccessTokenSubjectTokenType.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            resource=resource,
+            scope=to_string(scopes),
+            box_shared_link=shared_link,
+        )
+        return downscoped_token
+
+    def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
+        """
+        Revoke the current access token and remove from token storage.
+        :param network_session: An object to keep network session state
+        :type network_session: Optional[NetworkSession], optional
+        """
+        old_token: Optional[AccessToken] = self.token_storage.get()
+        if old_token == None:
+            return None
+        auth_manager: AuthorizationManager = (
+            AuthorizationManager(network_session=network_session)
+            if not network_session == None
+            else AuthorizationManager()
+        )
+        auth_manager.revoke_access_token(
+            self.config.client_id, self.config.client_secret, old_token.access_token
+        )
+        return self.token_storage.clear()

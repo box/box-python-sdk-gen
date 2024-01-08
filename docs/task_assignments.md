@@ -15,7 +15,11 @@ This operation is performed by calling function `get_task_assignments`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-tasks-id-assignments/).
 
-_Currently we don't have an example for calling `get_task_assignments` in integration tests_
+<!-- sample get_tasks_id_assignments -->
+
+```python
+client.task_assignments.get_task_assignments(task_id=task.id)
+```
 
 ### Arguments
 
@@ -43,7 +47,11 @@ This operation is performed by calling function `create_task_assignment`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-task-assignments/).
 
-_Currently we don't have an example for calling `create_task_assignment` in integration tests_
+<!-- sample post_task_assignments -->
+
+```python
+client.task_assignments.create_task_assignment(task=CreateTaskAssignmentTask(type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id), assign_to=CreateTaskAssignmentAssignTo(id=current_user.id))
+```
 
 ### Arguments
 
@@ -69,7 +77,11 @@ This operation is performed by calling function `get_task_assignment_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-task-assignments-id/).
 
-_Currently we don't have an example for calling `get_task_assignment_by_id` in integration tests_
+<!-- sample get_task_assignments_id -->
+
+```python
+client.task_assignments.get_task_assignment_by_id(task_assignment_id=task_assignment.id)
+```
 
 ### Arguments
 
@@ -95,7 +107,11 @@ This operation is performed by calling function `update_task_assignment_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-task-assignments-id/).
 
-_Currently we don't have an example for calling `update_task_assignment_by_id` in integration tests_
+<!-- sample put_task_assignments_id -->
+
+```python
+client.task_assignments.update_task_assignment_by_id(task_assignment_id=task_assignment.id, message='updated message', resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value)
+```
 
 ### Arguments
 
@@ -123,7 +139,11 @@ This operation is performed by calling function `delete_task_assignment_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-task-assignments-id/).
 
-_Currently we don't have an example for calling `delete_task_assignment_by_id` in integration tests_
+<!-- sample delete_task_assignments_id -->
+
+```python
+client.task_assignments.delete_task_assignment_by_id(task_assignment_id=task_assignment.id)
+```
 
 ### Arguments
 

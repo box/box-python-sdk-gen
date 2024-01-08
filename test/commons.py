@@ -14,6 +14,14 @@ from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
+from box_sdk_gen.schemas import TermsOfService
+
+from box_sdk_gen.schemas import TermsOfServices
+
+from box_sdk_gen.managers.terms_of_services import CreateTermsOfServiceStatus
+
+from box_sdk_gen.managers.terms_of_services import CreateTermsOfServiceTosType
+
 from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
 
 from box_sdk_gen.managers.classifications import AddClassificationRequestBody
@@ -89,8 +97,8 @@ def get_jwt_auth() -> BoxJWTAuth:
 
 def get_default_client_as_user(user_id: str) -> BoxClient:
     auth: BoxJWTAuth = get_jwt_auth()
-    auth.as_user(user_id)
-    return BoxClient(auth=auth)
+    auth_user: BoxJWTAuth = auth.as_user(user_id)
+    return BoxClient(auth=auth_user)
 
 
 def get_default_client() -> BoxClient:
@@ -117,6 +125,19 @@ def upload_new_file() -> FileFull:
         file=file_content_stream,
     )
     return uploaded_files.entries[0]
+
+
+def get_or_create_terms_of_services() -> TermsOfService:
+    client: BoxClient = get_default_client()
+    tos: TermsOfServices = client.terms_of_services.get_terms_of_service()
+    number_of_tos: int = len(tos.entries)
+    if number_of_tos == 0:
+        return client.terms_of_services.create_terms_of_service(
+            status=CreateTermsOfServiceStatus.ENABLED.value,
+            tos_type=CreateTermsOfServiceTosType.MANAGED.value,
+            text='Test TOS',
+        )
+    return tos.entries[0]
 
 
 def get_or_create_classification(
