@@ -12,7 +12,11 @@ This operation is performed by calling function `get_storage_policies`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-storage-policies/).
 
-_Currently we don't have an example for calling `get_storage_policies` in integration tests_
+<!-- sample get_storage_policies -->
+
+```python
+client.storage_policies.get_storage_policies()
+```
 
 ### Arguments
 
@@ -40,7 +44,11 @@ This operation is performed by calling function `get_storage_policy_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-storage-policies-id/).
 
-_Currently we don't have an example for calling `get_storage_policy_by_id` in integration tests_
+<!-- sample get_storage_policies_id -->
+
+```python
+client.storage_policies.get_storage_policy_by_id(storage_policy_id=storage_policy.id)
+```
 
 ### Arguments
 

@@ -2,9 +2,17 @@ import base64
 import hashlib
 import os
 import uuid
+from time import time
 from enum import Enum
 from io import SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
+
+try:
+    import jwt
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import serialization
+except ImportError:
+    jwt, default_backend, serialization = None, None, None
 
 from .base_object import BaseObject
 from .json_data import sd_to_json
@@ -173,3 +181,103 @@ def reduce_iterator(
         result = reducer(result, item)
 
     return result
+
+
+def read_text_from_file(file_path: str) -> str:
+    with open(file_path, 'r') as file:
+        return file.read()
+
+
+def is_browser() -> bool:
+    return False
+
+
+def get_epoch_time_in_seconds() -> int:
+    return int(time())
+
+
+class JwtAlgorithm(str, Enum):
+    HS256 = 'HS256'
+    HS384 = 'HS384'
+    HS512 = 'HS512'
+    RS256 = 'RS256'
+    RS384 = 'RS384'
+    RS512 = 'RS512'
+    ES256 = 'ES256'
+    ES384 = 'ES384'
+    ES512 = 'ES512'
+    PS256 = 'PS256'
+    PS384 = 'PS384'
+    PS512 = 'PS512'
+    none = 'none'
+
+
+class JwtSignOptions(BaseObject):
+    def __init__(
+        self,
+        algorithm: JwtAlgorithm,
+        headers: Dict[str, str] = None,
+        audience: Optional[str] = None,
+        issuer: Optional[str] = None,
+        subject: Optional[str] = None,
+        jwtid: Optional[str] = None,
+        keyid: Optional[str] = None,
+        **kwargs
+    ):
+        super().__init__(**kwargs)
+        if headers is None:
+            headers = {}
+        self.algorithm = algorithm
+        self.headers = headers
+        self.audience = audience
+        self.issuer = issuer
+        self.subject = subject
+        self.jwtid = jwtid
+        self.keyid = keyid
+
+
+class JwtKey(BaseObject):
+    def __init__(self, key: str, passphrase: str, **kwargs):
+        super().__init__(**kwargs)
+        self.key = key
+        self.passphrase = passphrase
+
+
+def encode_str_ascii_or_raise(passphrase: str) -> bytes:
+    try:
+        return passphrase.encode('ascii')
+    except UnicodeError as unicode_error:
+        raise TypeError(
+            "private_key and private_key_passphrase must contain binary data"
+            " (bytes/str), not a text/unicode string"
+        ) from unicode_error
+
+
+def get_rsa_private_key(
+    private_key: str,
+    passphrase: str,
+) -> Any:
+    encoded_private_key = encode_str_ascii_or_raise(private_key)
+    encoded_passphrase = encode_str_ascii_or_raise(passphrase)
+
+    return serialization.load_pem_private_key(
+        encoded_private_key,
+        password=encoded_passphrase,
+        backend=default_backend(),
+    )
+
+
+def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> str:
+    return jwt.encode(
+        {
+            'iss': options.issuer,
+            'sub': options.subject,
+            'box_sub_type': claims['box_sub_type'],
+            'aud': options.audience,
+            'jti': options.jwtid,
+            'exp': claims['exp'],
+        },
+        get_rsa_private_key(key.key, key.passphrase),
+        algorithm=options.algorithm,
+        headers={'kid': options.keyid},
+    )
