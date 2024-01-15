@@ -229,19 +229,22 @@ client = BoxClient(auth=auth)
 
 ### Switching between Service Account and User
 
-In order to switch between being authenticated as Service Account and a User you can call:
+You can easily switch to be authenticated as a Service Account or as a User.
+To create a new auth object authenticated as Service Account you can call:
 
 ```python
-auth.as_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
+enterprise_auth = auth.as_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
+enterprise_client = BoxClient(auth=enterprise_auth)
 ```
 
-to authenticate as enterprise or
+To authenticate as user with provided User ID call:
 
 ```python
-auth.as_user(user_id='YOUR_USER_ID')
+user_auth = auth.as_user(user_id='YOUR_USER_ID')
+user_client = BoxClient(auth=user_auth)
 ```
 
-to authenticate as User with provided ID. The new token will be automatically fetched with a next API call.
+The new token will be automatically fetched with a next API call.
 
 [ccg_guide]: https://developer.box.com/guides/authentication/client-credentials/client-credentials-setup/
 
@@ -291,7 +294,7 @@ list names of all items in a root folder.
 from flask import Flask, request, redirect
 
 from box_sdk_gen.client import BoxClient
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
+from box_sdk_gen.oauth import BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
 
 app = Flask(__name__)
 
@@ -302,7 +305,7 @@ AUTH = BoxOAuth(
 
 @app.route("/")
 def get_auth():
-    auth_url = AUTH.get_authorize_url()
+    auth_url = AUTH.get_authorize_url(GetAuthorizeUrlOptions(redirect_uri='YOUR_REDIRECT_URL'))
     return redirect(auth_url, code=302)
 
 
@@ -321,9 +324,10 @@ if __name__ == '__main__':
 
 # Revoke token
 
-Access tokens for a client can be revoked when needed. This call invalidates old token, but you can still
-reuse the `auth` object to retrieve a new token. If you make any new call after revoking the token,
-a new token will be automatically retrieved. This method is currently only available for JWT authentication.
+Access tokens for a client can be revoked when needed. This call invalidates old token.
+For CCGAuth and JWTAuth you can still reuse the `auth` object to retrieve a new token. If you make any new call after revoking the token,
+a new token will be automatically retrieved.
+For OAuth it would be necessary to manually go through the authentication process again.
 
 To revoke current client's tokens in the storage use the following code:
 
@@ -337,7 +341,7 @@ client.auth.revoke_token()
 
 You can exchange a client's access token for one with a lower scope, in order
 to restrict the permissions for a child client or to pass to a less secure
-location (e.g. a browser-based app). This method is currently only available for JWT authentication.
+location (e.g. a browser-based app).
 
 A downscoped token does not include a refresh token.
 In such a scenario, to obtain a new downscoped token, refresh the original token

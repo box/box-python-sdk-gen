@@ -8,8 +8,6 @@ from box_sdk_gen.serialization import deserialize
 
 from typing import List
 
-from box_sdk_gen.utils import to_string
-
 from box_sdk_gen.managers.authorization import RequestAccessTokenGrantType
 
 from box_sdk_gen.managers.authorization import RequestAccessTokenSubjectTokenType
@@ -49,10 +47,6 @@ from box_sdk_gen.utils import JwtKey
 from box_sdk_gen.utils import JwtAlgorithm
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
-
-from box_sdk_gen.utils import to_string
-
-from box_sdk_gen.json_data import sd_to_json
 
 box_jwt_audience: str = 'https://api.box.com/oauth2/token'
 
@@ -331,7 +325,7 @@ class BoxJWTAuth(Authentication):
             return new_token
         return old_token
 
-    def as_user(self, user_id: str) -> 'BoxJWTAuth':
+    def as_user(self, user_id: str, token_storage: TokenStorage = None) -> 'BoxJWTAuth':
         """
         Create a new BoxJWTAuth instance that uses the provided user ID as the subject of the JWT assertion.
 
@@ -345,7 +339,11 @@ class BoxJWTAuth(Authentication):
 
         :param user_id: The id of the user to authenticate
         :type user_id: str
+        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory.
+        :type token_storage: TokenStorage, optional
         """
+        if token_storage is None:
+            token_storage = InMemoryTokenStorage()
         new_config: JWTConfig = JWTConfig(
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -354,18 +352,23 @@ class BoxJWTAuth(Authentication):
             jwt_key_id=self.config.jwt_key_id,
             private_key=self.config.private_key,
             private_key_passphrase=self.config.private_key_passphrase,
-            token_storage=self.token_storage,
+            token_storage=token_storage,
         )
         new_auth: 'BoxJWTAuth' = BoxJWTAuth(config=new_config)
-        self.token_storage.clear()
         return new_auth
 
-    def as_enterprise(self, user_id: str) -> 'BoxJWTAuth':
+    def as_enterprise(
+        self, user_id: str, token_storage: TokenStorage = None
+    ) -> 'BoxJWTAuth':
         """
         Create a new BoxJWTAuth instance that uses the provided enterprise ID as the subject of the JWT assertion.
         :param user_id: The id of the enterprise to authenticate
         :type user_id: str
+        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory.
+        :type token_storage: TokenStorage, optional
         """
+        if token_storage is None:
+            token_storage = InMemoryTokenStorage()
         new_config: JWTConfig = JWTConfig(
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -374,10 +377,9 @@ class BoxJWTAuth(Authentication):
             jwt_key_id=self.config.jwt_key_id,
             private_key=self.config.private_key,
             private_key_passphrase=self.config.private_key_passphrase,
-            token_storage=self.token_storage,
+            token_storage=token_storage,
         )
         new_auth: 'BoxJWTAuth' = BoxJWTAuth(config=new_config)
-        self.token_storage.clear()
         return new_auth
 
     def downscope_token(
@@ -391,7 +393,7 @@ class BoxJWTAuth(Authentication):
         Downscope access token to the provided scopes. Returning a new access token with the provided scopes, with the original access token unchanged.
         :param scopes: The scope(s) to apply to the resulting token.
         :type scopes: List[str]
-        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item.
+        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item. The resource should be a full URL to an item, e.g. https://api.box.com/2.0/files/123456.
         :type resource: Optional[str], optional
         :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item.
         :type shared_link: Optional[str], optional
@@ -414,14 +416,17 @@ class BoxJWTAuth(Authentication):
             subject_token=token.access_token,
             subject_token_type=RequestAccessTokenSubjectTokenType.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,
-            scope=to_string(scopes),
+            scope=' '.join(scopes),
             box_shared_link=shared_link,
         )
         return downscoped_token
 
+    def add_space(self, text: str) -> str:
+        return ''.join([])
+
     def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
         """
-        Revoke the current access token and remove from token storage.
+        Revoke the current access token and remove it from token storage.
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
         """
