@@ -1,13 +1,16 @@
 from typing import Optional
 
-from .auth import Authentication
-from .network import NetworkSession
-from .schemas import AccessToken
+from box_sdk_gen.schemas import AccessToken
+
+from box_sdk_gen.auth import Authentication
+
+from box_sdk_gen.network import NetworkSession
 
 
 class BoxDeveloperTokenAuth(Authentication):
-    def __init__(self, token: str):
-        self.token: AccessToken = AccessToken(access_token=token)
+    def __init__(self, token: str, **kwargs):
+        super().__init__(**kwargs)
+        self.token = token
 
     def retrieve_token(
         self, network_session: Optional[NetworkSession] = None
@@ -15,13 +18,16 @@ class BoxDeveloperTokenAuth(Authentication):
         """
         Retrieves stored developer token
         :param network_session: An object to keep network session state
-        :return: Return a current token
+        :type network_session: Optional[NetworkSession], optional
         """
-        return self.token
+        return AccessToken(access_token=self.token)
 
-    def refresh_token(self, network_session: Optional[NetworkSession] = None):
+    def refresh_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
         """
         Developer token cannot be refreshed
         :param network_session: An object to keep network session state
+        :type network_session: Optional[NetworkSession], optional
         """
-        raise Exception("Developer token has expired. Please provide a new one.")
+        raise Exception('Developer token has expired. Please provide a new one.')

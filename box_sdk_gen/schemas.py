@@ -2868,21 +2868,20 @@ class StoragePolicyMiniTypeField(str, Enum):
 
 
 class StoragePolicyMini(BaseObject):
-    def __init__(
-        self,
-        id: Optional[str] = None,
-        type: Optional[StoragePolicyMiniTypeField] = None,
-        **kwargs
-    ):
+    def __init__(self, id: str, type: StoragePolicyMiniTypeField, **kwargs):
         """
         :param id: The unique identifier for this storage policy
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `storage_policy`
-        :type type: Optional[StoragePolicyMiniTypeField], optional
+        :type type: StoragePolicyMiniTypeField
         """
         super().__init__(**kwargs)
         self.id = id
         self.type = type
+
+
+class StoragePolicyAssignmentTypeField(str, Enum):
+    STORAGE_POLICY_ASSIGNMENT = 'storage_policy_assignment'
 
 
 class StoragePolicyAssignmentAssignedToField(BaseObject):
@@ -2901,11 +2900,21 @@ class StoragePolicyAssignmentAssignedToField(BaseObject):
 class StoragePolicyAssignment(BaseObject):
     def __init__(
         self,
+        id: str,
+        type: StoragePolicyAssignmentTypeField,
         storage_policy: Optional[StoragePolicyMini] = None,
         assigned_to: Optional[StoragePolicyAssignmentAssignedToField] = None,
         **kwargs
     ):
+        """
+        :param id: The unique identifier for a storage policy assignment.
+        :type id: str
+        :param type: `storage_policy_assignment`
+        :type type: StoragePolicyAssignmentTypeField
+        """
         super().__init__(**kwargs)
+        self.id = id
+        self.type = type
         self.storage_policy = storage_policy
         self.assigned_to = assigned_to
 
@@ -2941,18 +2950,18 @@ class StoragePolicyAssignments(BaseObject):
 class StoragePolicy(StoragePolicyMini):
     def __init__(
         self,
+        id: str,
+        type: StoragePolicyMiniTypeField,
         name: Optional[str] = None,
-        id: Optional[str] = None,
-        type: Optional[StoragePolicyMiniTypeField] = None,
         **kwargs
     ):
         """
+        :param id: The unique identifier for this storage policy
+        :type id: str
+        :param type: `storage_policy`
+        :type type: StoragePolicyMiniTypeField
         :param name: A descriptive name of the region
         :type name: Optional[str], optional
-        :param id: The unique identifier for this storage policy
-        :type id: Optional[str], optional
-        :param type: `storage_policy`
-        :type type: Optional[StoragePolicyMiniTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
