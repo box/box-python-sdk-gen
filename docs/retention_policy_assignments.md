@@ -50,7 +50,11 @@ This operation is performed by calling function `create_retention_policy_assignm
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-retention-policy-assignments/).
 
-_Currently we don't have an example for calling `create_retention_policy_assignment` in integration tests_
+<!-- sample post_retention_policy_assignments -->
+
+```python
+client.retention_policy_assignments.create_retention_policy_assignment(policy_id=retention_policy.id, assign_to=CreateRetentionPolicyAssignmentAssignTo(id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value))
+```
 
 ### Arguments
 
