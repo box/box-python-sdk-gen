@@ -12,7 +12,11 @@ This operation is performed by calling function `get_file_version_retentions`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-retentions/).
 
-_Currently we don't have an example for calling `get_file_version_retentions` in integration tests_
+<!-- sample get_file_version_retentions -->
+
+```python
+client.file_version_retentions.get_file_version_retentions()
+```
 
 ### Arguments
 
@@ -50,7 +54,11 @@ This operation is performed by calling function `get_file_version_retention_by_i
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-retentions-id/).
 
-_Currently we don't have an example for calling `get_file_version_retention_by_id` in integration tests_
+<!-- sample get_file_version_retentions_id -->
+
+```python
+client.file_version_retentions.get_file_version_retention_by_id(file_version_retention_id=file_version_retention.id)
+```
 
 ### Arguments
 

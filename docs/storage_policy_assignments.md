@@ -15,7 +15,11 @@ This operation is performed by calling function `get_storage_policy_assignments`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-storage-policy-assignments/).
 
-_Currently we don't have an example for calling `get_storage_policy_assignments` in integration tests_
+<!-- sample get_storage_policy_assignments -->
+
+```python
+client.storage_policy_assignments.get_storage_policy_assignments(resolved_for_type=GetStoragePolicyAssignmentsResolvedForType.USER.value, resolved_for_id=user_id)
+```
 
 ### Arguments
 
@@ -44,7 +48,11 @@ This operation is performed by calling function `create_storage_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-storage-policy-assignments/).
 
-_Currently we don't have an example for calling `create_storage_policy_assignment` in integration tests_
+<!-- sample post_storage_policy_assignments -->
+
+```python
+client.storage_policy_assignments.create_storage_policy_assignment(storage_policy=CreateStoragePolicyAssignmentStoragePolicy(id=policy_id, type=CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value), assigned_to=CreateStoragePolicyAssignmentAssignedTo(id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value))
+```
 
 ### Arguments
 
@@ -70,7 +78,11 @@ This operation is performed by calling function `get_storage_policy_assignment_b
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-storage-policy-assignments-id/).
 
-_Currently we don't have an example for calling `get_storage_policy_assignment_by_id` in integration tests_
+<!-- sample get_storage_policy_assignments_id -->
+
+```python
+client.storage_policy_assignments.get_storage_policy_assignment_by_id(storage_policy_assignment_id=storage_policy_assignment.id)
+```
 
 ### Arguments
 
@@ -94,7 +106,11 @@ This operation is performed by calling function `update_storage_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-storage-policy-assignments-id/).
 
-_Currently we don't have an example for calling `update_storage_policy_assignment_by_id` in integration tests_
+<!-- sample put_storage_policy_assignments_id -->
+
+```python
+client.storage_policy_assignments.update_storage_policy_assignment_by_id(storage_policy_assignment_id=storage_policy_assignment.id, storage_policy=UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id, type=UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value))
+```
 
 ### Arguments
 
@@ -127,7 +143,11 @@ This operation is performed by calling function `delete_storage_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-storage-policy-assignments-id/).
 
-_Currently we don't have an example for calling `delete_storage_policy_assignment_by_id` in integration tests_
+<!-- sample delete_storage_policy_assignments_id -->
+
+```python
+client.storage_policy_assignments.delete_storage_policy_assignment_by_id(storage_policy_assignment_id=storage_policy_assignment.id)
+```
 
 ### Arguments
 
