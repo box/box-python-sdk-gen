@@ -141,10 +141,6 @@ def hex_to_base_64(data: hex):
     return base64.b64encode(bytes.fromhex(data)).decode()
 
 
-def list_concat(a: list, b: list):
-    return [*a, *b]
-
-
 T = TypeVar('T')
 Iterator = Iterable[T]
 Accumulator = TypeVar('Accumulator')

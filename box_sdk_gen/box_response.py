@@ -4,7 +4,10 @@ from requests import Response
 
 class APIResponse:
     def __init__(
-        self, network_response: Response, reauthentication_needed, raised_exception
+        self,
+        network_response: Optional[Response],
+        reauthentication_needed,
+        raised_exception,
     ):
         self.network_response = network_response
         self.reauthentication_needed = reauthentication_needed
