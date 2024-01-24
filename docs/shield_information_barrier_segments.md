@@ -145,8 +145,7 @@ client.shield_information_barrier_segments.create_shield_information_barrier_seg
 
 ### Arguments
 
-- shield_information_barrier `ShieldInformationBarrierBase`
-  -
+- ## shield_information_barrier `ShieldInformationBarrierBase`
 - name `str`
   - Name of the shield information barrier segment
 - description `Optional[str]`

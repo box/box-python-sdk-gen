@@ -37,8 +37,7 @@ client.trashed_folders.restore_folder_from_trash(folder_id=folder.id)
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - name `Optional[str]`
   - An optional new name for the folder.
-- parent `Optional[RestoreFolderFromTrashParent]`
-  -
+- ## parent `Optional[RestoreFolderFromTrashParent]`
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
