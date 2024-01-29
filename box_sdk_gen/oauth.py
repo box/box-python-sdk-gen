@@ -136,8 +136,7 @@ class BoxOAuth(Authentication):
         token = self.token_storage.get()
         if token == None:
             raise Exception(
-                'Access and refresh tokens not available. Authenticate before making'
-                ' any API call first.'
+                'Access and refresh tokens not available. Authenticate before making any API call first.'
             )
         return token
 

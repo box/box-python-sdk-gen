@@ -174,8 +174,7 @@ class BoxCCGAuth(Authentication):
         token: Optional[AccessToken] = self.token_storage.get()
         if token == None:
             raise Exception(
-                'No access token is available. Make an API call to retrieve a token'
-                ' before calling this method.'
+                'No access token is available. Make an API call to retrieve a token before calling this method.'
             )
         auth_manager: AuthorizationManager = (
             AuthorizationManager(network_session=network_session)

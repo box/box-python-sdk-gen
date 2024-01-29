@@ -420,6 +420,7 @@ class CreateClassificationTemplateFields(BaseObject):
         'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'enum'}
 
     def __init__(
         self,

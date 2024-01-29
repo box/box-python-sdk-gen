@@ -41,11 +41,12 @@ client: BoxClient = get_default_client()
 
 def testCreateUpdateGetDeleteTaskAssignment():
     file: FileFull = upload_new_file()
+    date: str = '2035-01-01T00:00:00Z'
     task: Task = client.tasks.create_task(
         item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
         message='test message',
-        due_at='2035-01-01T00:00:00Z',
+        due_at=date,
         completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
     )
     assert task.message == 'test message'

@@ -27,8 +27,7 @@ def testSessionTerminationUser():
     )
     assert (
         result.message
-        == 'Request is successful, please check the admin events for the status of'
-        ' the job'
+        == 'Request is successful, please check the admin events for the status of the job'
     )
 
 
@@ -40,7 +39,6 @@ def testSessionTerminationGroup():
     )
     assert (
         result.message
-        == 'Request is successful, please check the admin events for the status of'
-        ' the job'
+        == 'Request is successful, please check the admin events for the status of the job'
     )
     client.groups.delete_group_by_id(group_id=group.id)

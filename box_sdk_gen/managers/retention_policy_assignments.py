@@ -56,6 +56,8 @@ class CreateRetentionPolicyAssignmentAssignToTypeField(str, Enum):
 
 
 class CreateRetentionPolicyAssignmentAssignTo(BaseObject):
+    _discriminator = 'type', {'enterprise', 'folder', 'metadata_template'}
+
     def __init__(
         self,
         type: CreateRetentionPolicyAssignmentAssignToTypeField,

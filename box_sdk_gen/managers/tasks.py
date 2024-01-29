@@ -44,6 +44,8 @@ class CreateTaskItemTypeField(str, Enum):
 
 
 class CreateTaskItem(BaseObject):
+    _discriminator = 'type', {'file'}
+
     def __init__(
         self,
         id: Optional[str] = None,

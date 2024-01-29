@@ -47,6 +47,8 @@ class CreateWebhookTargetTypeField(str, Enum):
 
 
 class CreateWebhookTarget(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -113,6 +115,8 @@ class UpdateWebhookByIdTargetTypeField(str, Enum):
 
 
 class UpdateWebhookByIdTarget(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(
         self,
         id: Optional[str] = None,

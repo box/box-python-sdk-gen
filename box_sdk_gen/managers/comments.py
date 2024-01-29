@@ -47,6 +47,8 @@ class CreateCommentItemTypeField(str, Enum):
 
 
 class CreateCommentItem(BaseObject):
+    _discriminator = 'type', {'file', 'comment'}
+
     def __init__(self, id: str, type: CreateCommentItemTypeField, **kwargs):
         """
         :param id: The ID of the item

@@ -69,9 +69,12 @@ user_client.integration_mappings.create_slack_integration_mapping(partner_item=I
 
 ### Arguments
 
-- ## partner_item `IntegrationMappingPartnerItemSlack`
-- ## box_item `IntegrationMappingBoxItemSlack`
-- ## options `Optional[IntegrationMappingSlackOptions]`
+- partner_item `IntegrationMappingPartnerItemSlack`
+  -
+- box_item `IntegrationMappingBoxItemSlack`
+  -
+- options `Optional[IntegrationMappingSlackOptions]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -100,8 +103,10 @@ _Currently we don't have an example for calling `update_slack_integration_mappin
 
 - integration_mapping_id `str`
   - An ID of an integration mapping Example: "11235432"
-- ## box_item `Optional[IntegrationMappingBoxItemSlack]`
-- ## options `Optional[IntegrationMappingSlackOptions]`
+- box_item `Optional[IntegrationMappingBoxItemSlack]`
+  -
+- options `Optional[IntegrationMappingSlackOptions]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

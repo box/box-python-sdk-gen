@@ -3,6 +3,7 @@ from typing import get_args, get_origin, Union, Optional
 
 
 class BaseObject:
+    _discriminator = (None, {})
     _json_to_fields_mapping = {}
     _fields_to_json_mapping = {}
 
@@ -79,34 +80,21 @@ class BaseObject:
             if type(None) not in possible_types:
                 print('Value: ', value, 'should not be allowed in Union:', annotation)
             return value
-        if 'type' in value:
-            type_field = 'type'
-        else:
-            type_field = 'skillCardType'
-        type_field_value = value.get(type_field, None)
 
-        curr_type = None
-        for i, possible_type in enumerate(possible_types):
+        for possible_type in possible_types:
+            if (
+                value.get(possible_type._discriminator[0], None)
+                in possible_type._discriminator[1]
+            ):
+                return cls._deserialize(key, value, possible_type)
+
+        for possible_type in possible_types:
             try:
-                if (
-                    type_field_value.replace("_", "")
-                    in possible_types[i].__name__.lower()
-                    or possible_types[i].__init__.__annotations__[type_field][
-                        type_field_value.upper()
-                    ]
-                ):
-                    curr_type = possible_types[i]
-                    break
+                return cls._deserialize(key, value, possible_type)
             except Exception:
                 continue
 
-        if not curr_type:
-            print('Could not deserialize Union: ', annotation, 'of value:', value)
-
-        try:
-            return cls._deserialize(key, value, curr_type)
-        except Exception:
-            return value
+        return value
 
     @classmethod
     def _deserialize_enum(cls, key, value, annotation):

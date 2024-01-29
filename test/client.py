@@ -8,6 +8,10 @@ from box_sdk_gen.utils import get_uuid
 
 from test.commons import get_default_client
 
+from box_sdk_gen.fetch import FetchOptions
+
+from box_sdk_gen.fetch import FetchResponse
+
 client: BoxClient = get_default_client()
 
 

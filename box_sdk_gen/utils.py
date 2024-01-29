@@ -141,10 +141,6 @@ def hex_to_base_64(data: hex):
     return base64.b64encode(bytes.fromhex(data)).decode()
 
 
-def list_concat(a: list, b: list):
-    return [*a, *b]
-
-
 T = TypeVar('T')
 Iterator = Iterable[T]
 Accumulator = TypeVar('Accumulator')
@@ -248,8 +244,7 @@ def encode_str_ascii_or_raise(passphrase: str) -> bytes:
         return passphrase.encode('ascii')
     except UnicodeError as unicode_error:
         raise TypeError(
-            "private_key and private_key_passphrase must contain binary data"
-            " (bytes/str), not a text/unicode string"
+            "private_key and private_key_passphrase must contain binary data (bytes/str), not a text/unicode string"
         ) from unicode_error
 
 

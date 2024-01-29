@@ -44,6 +44,8 @@ class CreateTermsOfServiceStatusForUserTosTypeField(str, Enum):
 
 
 class CreateTermsOfServiceStatusForUserTos(BaseObject):
+    _discriminator = 'type', {'terms_of_service'}
+
     def __init__(
         self, type: CreateTermsOfServiceStatusForUserTosTypeField, id: str, **kwargs
     ):
@@ -63,6 +65,8 @@ class CreateTermsOfServiceStatusForUserUserTypeField(str, Enum):
 
 
 class CreateTermsOfServiceStatusForUserUser(BaseObject):
+    _discriminator = 'type', {'user'}
+
     def __init__(
         self, type: CreateTermsOfServiceStatusForUserUserTypeField, id: str, **kwargs
     ):

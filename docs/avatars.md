@@ -55,8 +55,10 @@ client.avatars.create_user_avatar(user_id=user.id, pic=decode_base_64_byte_strea
   - The ID of the user. Example: "12345"
 - pic `ByteStream`
   - The image file to be uploaded to Box. Accepted file extensions are `.jpg` or `.png`. The maximum file size is 1MB.
-- ## pic_file_name `Optional[str]`
-- ## pic_content_type `Optional[str]`
+- pic_file_name `Optional[str]`
+  -
+- pic_content_type `Optional[str]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

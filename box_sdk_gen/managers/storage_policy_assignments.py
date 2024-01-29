@@ -49,6 +49,8 @@ class CreateStoragePolicyAssignmentStoragePolicyTypeField(str, Enum):
 
 
 class CreateStoragePolicyAssignmentStoragePolicy(BaseObject):
+    _discriminator = 'type', {'storage_policy'}
+
     def __init__(
         self,
         type: CreateStoragePolicyAssignmentStoragePolicyTypeField,
@@ -72,6 +74,8 @@ class CreateStoragePolicyAssignmentAssignedToTypeField(str, Enum):
 
 
 class CreateStoragePolicyAssignmentAssignedTo(BaseObject):
+    _discriminator = 'type', {'user', 'enterprise'}
+
     def __init__(
         self, type: CreateStoragePolicyAssignmentAssignedToTypeField, id: str, **kwargs
     ):
@@ -91,6 +95,8 @@ class UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField(str, Enum):
 
 
 class UpdateStoragePolicyAssignmentByIdStoragePolicy(BaseObject):
+    _discriminator = 'type', {'storage_policy'}
+
     def __init__(
         self,
         type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField,

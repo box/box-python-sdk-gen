@@ -62,6 +62,8 @@ class CreateCollaborationItemTypeField(str, Enum):
 
 
 class CreateCollaborationItem(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(
         self,
         type: Optional[CreateCollaborationItemTypeField] = None,
@@ -86,6 +88,8 @@ class CreateCollaborationAccessibleByTypeField(str, Enum):
 
 
 class CreateCollaborationAccessibleBy(BaseObject):
+    _discriminator = 'type', {'user', 'group'}
+
     def __init__(
         self,
         type: CreateCollaborationAccessibleByTypeField,

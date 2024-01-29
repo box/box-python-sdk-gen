@@ -47,6 +47,8 @@ class CreateZipDownloadItemsTypeField(str, Enum):
 
 
 class CreateZipDownloadItems(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(self, type: CreateZipDownloadItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.
@@ -66,6 +68,8 @@ class DownloadZipItemsTypeField(str, Enum):
 
 
 class DownloadZipItems(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(self, type: DownloadZipItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.

@@ -282,9 +282,7 @@ class SignRequestsManager:
             'prefill_tags': prefill_tags,
             'days_valid': days_valid,
             'external_id': external_id,
-            'is_phone_verification_required_to_view': (
-                is_phone_verification_required_to_view
-            ),
+            'is_phone_verification_required_to_view': is_phone_verification_required_to_view,
             'template_id': template_id,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})

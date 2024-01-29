@@ -226,8 +226,10 @@ _Currently we don't have an example for calling `reducer` in integration tests_
 
 ### Arguments
 
-- ## acc `PartAccumulator`
-- ## chunk `ByteStream`
+- acc `PartAccumulator`
+  -
+- chunk `ByteStream`
+  -
 
 ### Returns
 

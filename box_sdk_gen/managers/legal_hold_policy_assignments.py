@@ -58,6 +58,8 @@ class CreateLegalHoldPolicyAssignmentAssignToTypeField(str, Enum):
 
 
 class CreateLegalHoldPolicyAssignmentAssignTo(BaseObject):
+    _discriminator = 'type', {'file', 'file_version', 'folder', 'user'}
+
     def __init__(
         self, type: CreateLegalHoldPolicyAssignmentAssignToTypeField, id: str, **kwargs
     ):

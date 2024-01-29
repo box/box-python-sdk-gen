@@ -62,8 +62,6 @@ from box_sdk_gen.utils import reduce_iterator
 
 from box_sdk_gen.utils import Hash
 
-from box_sdk_gen.utils import list_concat
-
 from box_sdk_gen.utils import buffer_length
 
 
@@ -464,7 +462,7 @@ class ChunkedUploadsManager:
         acc.file_hash.update_hash(chunk_buffer)
         return PartAccumulator(
             last_index=bytes_end,
-            parts=list_concat(parts, [part]),
+            parts=parts + [part],
             file_size=acc.file_size,
             upload_session_id=acc.upload_session_id,
             file_hash=acc.file_hash,

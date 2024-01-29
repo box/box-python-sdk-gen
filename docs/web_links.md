@@ -90,7 +90,8 @@ client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name
   - The ID of the web link. Example: "12345"
 - url `Optional[str]`
   - The new URL that the web link links to. Must start with `"http://"` or `"https://"`.
-- ## parent `Optional[UpdateWebLinkByIdParent]`
+- parent `Optional[UpdateWebLinkByIdParent]`
+  -
 - name `Optional[str]`
   - A new name for the web link. Defaults to the URL if not set.
 - description `Optional[str]`
