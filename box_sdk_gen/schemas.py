@@ -4543,8 +4543,8 @@ class TermsOfServiceUserStatus(BaseObject):
 
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[TermsOfServiceUserStatusTypeField] = None,
+        id: str,
+        type: TermsOfServiceUserStatusTypeField,
         tos: Optional[TermsOfServiceBase] = None,
         user: Optional[UserMini] = None,
         is_accepted: Optional[bool] = None,
@@ -4554,9 +4554,9 @@ class TermsOfServiceUserStatus(BaseObject):
     ):
         """
         :param id: The unique identifier for this terms of service user status
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `terms_of_service_user_status`
-        :type type: Optional[TermsOfServiceUserStatusTypeField], optional
+        :type type: TermsOfServiceUserStatusTypeField
         :param is_accepted: If the user has accepted the terms of services
         :type is_accepted: Optional[bool], optional
         :param created_at: When the legal item was created
@@ -10734,9 +10734,13 @@ class SignRequestCreateSigner(BaseObject):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If set, signers who have the same value will be assigned to the same input and to the same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to a Sign Request and can only be
+            used/accessed within this Sign Request. A signer group is expected to have more than one signer.
+            If the provided value is only used for one signer, this value will be ignored and request will be handled
+            as it was intended for an individual signer. The value provided can be any string and only used to
+            determine which signers belongs to same group. A successful response will provide a generated UUID value
+            instead for signers in the same signer group.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -10949,9 +10953,13 @@ class SignRequestSigner(SignRequestCreateSigner):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If set, signers who have the same value will be assigned to the same input and to the same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to a Sign Request and can only be
+            used/accessed within this Sign Request. A signer group is expected to have more than one signer.
+            If the provided value is only used for one signer, this value will be ignored and request will be handled
+            as it was intended for an individual signer. The value provided can be any string and only used to
+            determine which signers belongs to same group. A successful response will provide a generated UUID value
+            instead for signers in the same signer group.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(
@@ -11452,9 +11460,9 @@ class TemplateSigner(BaseObject):
         :type is_in_person: Optional[bool], optional
         :param order: Order of the signer
         :type order: Optional[int], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If provided, this value points signers that are assigned the same inputs and belongs to same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used
+            within Sign Requests created from it.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
