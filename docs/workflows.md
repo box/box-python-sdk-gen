@@ -16,7 +16,11 @@ This operation is performed by calling function `get_workflows`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-workflows/).
 
-_Currently we don't have an example for calling `get_workflows` in integration tests_
+<!-- sample get_workflows -->
+
+```python
+admin_client.workflows.get_workflows(folder_id=workflow_folder_id)
+```
 
 ### Arguments
 
@@ -49,7 +53,11 @@ This operation is performed by calling function `start_workflow`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-workflows-id-start/).
 
-_Currently we don't have an example for calling `start_workflow` in integration tests_
+<!-- sample post_workflows_id_start -->
+
+```python
+admin_client.workflows.start_workflow(workflow_id=workflow_to_run.id, type=StartWorkflowType.WORKFLOW_PARAMETERS.value, flow=StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id), files=[StartWorkflowFiles(type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id)], folder=StartWorkflowFolder(type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id))
+```
 
 ### Arguments
 
