@@ -15,7 +15,11 @@ This operation is performed by calling function `get_terms_of_service_user_statu
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-terms-of-service-user-statuses/).
 
-_Currently we don't have an example for calling `get_terms_of_service_user_statuses` in integration tests_
+<!-- sample get_terms_of_service_user_statuses -->
+
+```python
+client.terms_of_service_user_statuses.get_terms_of_service_user_statuses(tos_id=tos.id, user_id=user.id)
+```
 
 ### Arguments
 
@@ -41,7 +45,11 @@ This operation is performed by calling function `create_terms_of_service_status_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-terms-of-service-user-statuses/).
 
-_Currently we don't have an example for calling `create_terms_of_service_status_for_user` in integration tests_
+<!-- sample post_terms_of_service_user_statuses -->
+
+```python
+client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(tos=CreateTermsOfServiceStatusForUserTos(type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value, id=tos.id), user=CreateTermsOfServiceStatusForUserUser(type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value, id=user.id), is_accepted=False)
+```
 
 ### Arguments
 
@@ -69,7 +77,11 @@ This operation is performed by calling function `update_terms_of_service_status_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-terms-of-service-user-statuses-id/).
 
-_Currently we don't have an example for calling `update_terms_of_service_status_for_user_by_id` in integration tests_
+<!-- sample put_terms_of_service_user_statuses_id -->
+
+```python
+client.terms_of_service_user_statuses.update_terms_of_service_status_for_user_by_id(terms_of_service_user_status_id=created_tos_user_status.id, is_accepted=True)
+```
 
 ### Arguments
 

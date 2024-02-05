@@ -24,7 +24,7 @@ To retreive information about a File, call `get_file_by_id` method. This method 
 <!-- sample get_files_id -->
 
 ```python
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen import FileFull
 
 file: FileFull = client.files.get_file_by_id(file_id='123456789')
 print(f'File with id {file.id} has name {file.name}')
@@ -36,7 +36,7 @@ If you want the response object to contain additional fields that are not return
 such fields in a comma-separated string
 
 ```python
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen import FileFull
 
 file: FileFull = client.files.get_file_by_id(file_id='12345', fields='is_externally_owned,has_collaborations')
 ```
@@ -52,7 +52,7 @@ To update a file's information, call `update_file_by_id` method. This method ret
 <!-- sample put_files_id -->
 
 ```python
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen import FileFull
 
 file: FileFull = client.files.update_file_by_id(file_id='123', name='test.txt', description='Test file')
 print(f'File with id {file.id} has new name {file.name}')
@@ -67,9 +67,7 @@ This method returns a `File` object which contains information about the copied 
 <!-- sample post_files_id_copy -->
 
 ```python
-from box_sdk_gen.managers.files import CopyFileParentArg
-from box_sdk_gen.schemas import FileFull
-
+from box_sdk_gen import FileFull, CopyFileParentArg
 
 file: FileFull = client.files.copy_file(
     file_id='123456789',
@@ -97,7 +95,7 @@ This method returns a `TrashFileRestored` object which contains information abou
 <!-- sample post_files_id -->
 
 ```python
-from box_sdk_gen.schemas import TrashFileRestored
+from box_sdk_gen import TrashFileRestored
 
 file: TrashFileRestored = client.files.restore_file_from_trash(file_id='123456789')
 print(f'File restored with id {file.id}, name {file.name}')
@@ -117,8 +115,7 @@ To save downloaded thumbnail to your local disk you can use e.g. `shutil.copyfil
 
 ```python
 import shutil
-from box_sdk_gen.managers.files import GetFileThumbnailByIdExtensionArg
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen import GetFileThumbnailByIdExtensionArg, ByteStream
 
 thumbnail: ByteStream = client.files.get_file_thumbnail_by_id(
     file_id='1199932968894',

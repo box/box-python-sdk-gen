@@ -1,3 +1,5 @@
+from box_sdk_gen.utils import to_string
+
 from typing import List
 
 from box_sdk_gen.schemas import FolderFull
@@ -13,8 +15,6 @@ from box_sdk_gen.schemas import Files
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
-
-from box_sdk_gen.schemas import TermsOfService
 
 from box_sdk_gen.schemas import TermsOfServices
 
@@ -82,6 +82,8 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import ClassificationTemplate
 
+from box_sdk_gen.schemas import TermsOfService
+
 from box_sdk_gen.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.jwt_auth import JWTConfig
@@ -131,13 +133,19 @@ def get_or_create_terms_of_services() -> TermsOfService:
     client: BoxClient = get_default_client()
     tos: TermsOfServices = client.terms_of_services.get_terms_of_service()
     number_of_tos: int = len(tos.entries)
-    if number_of_tos == 0:
-        return client.terms_of_services.create_terms_of_service(
-            status=CreateTermsOfServiceStatus.ENABLED.value,
-            tos_type=CreateTermsOfServiceTosType.MANAGED.value,
-            text='Test TOS',
-        )
-    return tos.entries[0]
+    if number_of_tos >= 1:
+        first_tos: TermsOfService = tos.entries[0]
+        if to_string(first_tos.tos_type) == 'managed':
+            return first_tos
+    if number_of_tos >= 2:
+        second_tos: TermsOfService = tos.entries[1]
+        if to_string(second_tos.tos_type) == 'managed':
+            return second_tos
+    return client.terms_of_services.create_terms_of_service(
+        status=CreateTermsOfServiceStatus.DISABLED.value,
+        tos_type=CreateTermsOfServiceTosType.MANAGED.value,
+        text='Test TOS',
+    )
 
 
 def get_or_create_classification(

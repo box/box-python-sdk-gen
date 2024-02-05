@@ -60,16 +60,13 @@ Using `BoxClient` object you can access managers, which allow you to perform som
 The example below demonstrates how to authenticate with Developer Token and print names of all items inside a root folder.
 
 ```python
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
-from box_sdk_gen.client import BoxClient
-
+from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
 def main(token: str):
     auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(token=token)
     client: BoxClient = BoxClient(auth=auth)
     for item in client.folders.get_folder_items('0').entries:
         print(item.name)
-
 
 if __name__ == '__main__':
     main('INSERT YOUR DEVELOPER TOKEN HERE')

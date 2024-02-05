@@ -154,8 +154,7 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import Client
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
+from box_sdk_gen import Client, BoxDeveloperTokenAuth
 
 auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
 client = BoxClient(auth=auth)
@@ -179,8 +178,7 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/config.json')
 auth = BoxJWTAuth(config=jwt_config)
@@ -211,7 +209,7 @@ auth = JWTAuth(
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig(
     client_id='YOUR_CLIENT_ID',
@@ -275,8 +273,7 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
+from box_sdk_gen import BoxClient, BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
     client_id="YOUR_CLIENT_ID",
@@ -306,7 +303,7 @@ auth = CCGAuth(
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
+from box_sdk_gen import BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
   client_id="YOUR_CLIENT_ID",
@@ -376,7 +373,7 @@ auth_url, csrf_token = auth.get_authorization_url('http://YOUR_REDIRECT_URL')
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
+from box_sdk_gen import BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
 
 auth = BoxOAuth(
   OAuthConfig(
@@ -405,7 +402,7 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen.client import BoxClient
+from box_sdk_gen import BoxClient
 
 access_token = auth.get_tokens_authorization_code_grant('YOUR_AUTH_CODE')
 client = BoxClient(auth)
@@ -453,9 +450,7 @@ AuthConfig constructor.
 
 ```python
 from typing import Optional
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage, TokenStorage
-from .schemas import AccessToken
+from box_sdk_gen import BoxOAuth, OAuthConfig, FileWithInMemoryCacheTokenStorage, TokenStorage, AccessToken
 
 class MyCustomTokenStorage(TokenStorage):
   def store(self, token: AccessToken) -> None:
@@ -483,8 +478,7 @@ auth = BoxOAuth(
 or reuse one of the provided implementations: `FileTokenStorage` or `FileWithInMemoryCacheTokenStorage`:
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
+from box_sdk_gen import BoxOAuth, OAuthConfig, FileWithInMemoryCacheTokenStorage
 
 auth = BoxOAuth(
   OAuthConfig(

@@ -39,8 +39,7 @@ object with the `token` set to the developer token and construct the client with
 <!-- sample x_auth init_with_dev_token -->
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
+from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
 auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
 client = BoxClient(auth=auth)
@@ -79,8 +78,7 @@ Service Account. Call one of static `BoxJWTAuth` method:
 or `JWTConfig.from_config_json_string(config_json_string)` and pass JSON config file content as string.
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/settings.json')
 auth = BoxJWTAuth(config=jwt_config)
@@ -93,8 +91,7 @@ print(f'Service Account user ID is {service_account.id}')
 Otherwise, you'll need to provide the necessary configuration fields directly to the `JWTConfig` constructor:
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig(
     client_id='YOUR_CLIENT_ID',
@@ -123,8 +120,7 @@ Clients for making calls as an App User can be created with the same JSON JWT co
 which is authenticated as the user with provided id, leaving the original object unchanged.
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/settings.json')
 auth = BoxJWTAuth(config=jwt_config)
@@ -137,8 +133,7 @@ constructor as in the above examples, similarly to creating a Service Account cl
 `user_id` instead of `enterprise_id` when constructing the auth config instance:
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.jwt_auth import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig(
   client_id='YOUR_CLIENT_ID',
@@ -168,9 +163,7 @@ and secret with enterprise or user ID, which allows you to work using service or
 You can use `BoxCCGAuth` to initialize a client object the same way as for other authentication types:
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
-
+from box_sdk_gen import BoxClient, BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
   client_id="YOUR_CLIENT_ID",
@@ -194,8 +187,7 @@ are not accessible in any other account by default, and vice versa.
 To obtain service account you will have to provide enterprise ID with client id and secret:
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
+from box_sdk_gen import BoxClient, BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
   client_id="YOUR_CLIENT_ID",
@@ -215,8 +207,7 @@ select `Generate user access tokens`. Do not forget to re-authorize application 
 To obtain user account you will have to provide user ID with client id and secret.
 
 ```python
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.ccg_auth import BoxCCGAuth, CCGConfig
+from box_sdk_gen import BoxClient, BoxCCGAuth, CCGConfig
 
 ccg_config = CCGConfig(
   client_id="YOUR_CLIENT_ID",
@@ -264,7 +255,7 @@ browser or web view) in order to obtain an auth code.
 <!-- sample get_authorize -->
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
+from box_sdk_gen import BoxOAuth, OAuthConfig
 
 auth = BoxOAuth(
   OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
@@ -281,7 +272,7 @@ You need to provide the auth code to the SDK to obtain an access token, then you
 <!-- sample post_oauth2_token --->
 
 ```python
-from box_sdk_gen.client import BoxClient
+from box_sdk_gen import BoxClient
 
 auth.get_tokens_authorization_code_grant('YOUR_ACCESS_CODE')
 client = BoxClient(auth)
@@ -293,8 +284,7 @@ list names of all items in a root folder.
 ```python
 from flask import Flask, request, redirect
 
-from box_sdk_gen.client import BoxClient
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
+from box_sdk_gen import BoxClient, BoxOAuth, OAuthConfig, GetAuthorizeUrlOptions
 
 app = Flask(__name__)
 
@@ -357,8 +347,7 @@ You can also initialize `DeveloperTokenAuth` with the retrieved access token and
 <!-- sample post_oauth2_token downscope_token -->
 
 ```python
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
-from box_sdk_gen.schemas import AccessToken
+from box_sdk_gen import BoxDeveloperTokenAuth, AccessToken
 
 resource = 'https://api.box.com/2.0/files/123456789'
 downscoped_token: AccessToken = auth.downscope_token(
@@ -379,7 +368,7 @@ To use in-memory token storage, you don't need to do anything more than
 create an Auth class using AuthConfig, for example, for BoxOAuth:
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
+from box_sdk_gen import BoxOAuth, OAuthConfig
 
 auth = BoxOAuth(
     OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
@@ -393,8 +382,7 @@ you can use the `FileTokenStorage` class. To enable storing the token in a file,
 `FileTokenStorage` to the AuthConfig class. For example, for BoxOAuth:
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileTokenStorage
+from box_sdk_gen import BoxOAuth, OAuthConfig, FileTokenStorage
 
 auth = BoxOAuth(
     OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileTokenStorage())
@@ -409,8 +397,7 @@ you can use the `FileWithInMemoryCacheTokenStorage` class. To enable storing the
 you need to pass an object of type `FileWithInMemoryCacheTokenStorage` to the AuthConfig class. For example, for BoxOAuth:
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
-from box_sdk_gen.token_storage import FileWithInMemoryCacheTokenStorage
+from box_sdk_gen import BoxOAuth, OAuthConfig, FileWithInMemoryCacheTokenStorage
 
 auth = BoxOAuth(
     OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=FileWithInMemoryCacheTokenStorage())
@@ -423,7 +410,7 @@ You can also provide a custom token storage class. All you need to do is create 
 and implements all of its abstract methods. Then, pass an instance of your class to the AuthConfig constructor.
 
 ```python
-from box_sdk_gen.oauth import BoxOAuth, OAuthConfig
+from box_sdk_gen import BoxOAuth, OAuthConfig
 
 auth = BoxOAuth(
     OAuthConfig(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', token_storage=MyCustomTokenStorage())
