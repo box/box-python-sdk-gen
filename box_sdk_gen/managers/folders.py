@@ -498,9 +498,7 @@ class FoldersManager:
             'shared_link': shared_link,
             'folder_upload_email': folder_upload_email,
             'tags': tags,
-            'is_collaboration_restricted_to_enterprise': (
-                is_collaboration_restricted_to_enterprise
-            ),
+            'is_collaboration_restricted_to_enterprise': is_collaboration_restricted_to_enterprise,
             'collections': collections,
             'can_non_owners_view_collaborators': can_non_owners_view_collaborators,
         }

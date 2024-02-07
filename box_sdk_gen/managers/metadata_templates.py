@@ -169,6 +169,7 @@ class CreateMetadataTemplateFields(BaseObject):
         'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'string', 'float', 'date', 'enum', 'multiSelect'}
 
     def __init__(
         self,

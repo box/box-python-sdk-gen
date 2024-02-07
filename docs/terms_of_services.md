@@ -48,7 +48,7 @@ See the endpoint docs at
 <!-- sample post_terms_of_services -->
 
 ```python
-client.terms_of_services.create_terms_of_service(status=CreateTermsOfServiceStatus.ENABLED.value, tos_type=CreateTermsOfServiceTosType.MANAGED.value, text='Test TOS')
+client.terms_of_services.create_terms_of_service(status=CreateTermsOfServiceStatus.DISABLED.value, tos_type=CreateTermsOfServiceTosType.MANAGED.value, text='Test TOS')
 ```
 
 ### Arguments

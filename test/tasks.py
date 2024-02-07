@@ -37,11 +37,12 @@ def testCreateUpdateGetDeleteTask():
         file=generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
+    date: str = '2035-01-01T00:00:00Z'
     task: Task = client.tasks.create_task(
         item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
         message='test message',
-        due_at='2035-01-01T00:00:00Z',
+        due_at=date,
         completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
     )
     assert task.message == 'test message'

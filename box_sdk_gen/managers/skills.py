@@ -118,6 +118,8 @@ class UpdateAllSkillCardsOnFileFileTypeField(str, Enum):
 
 
 class UpdateAllSkillCardsOnFileFile(BaseObject):
+    _discriminator = 'type', {'file'}
+
     def __init__(
         self,
         type: Optional[UpdateAllSkillCardsOnFileFileTypeField] = None,
@@ -140,6 +142,8 @@ class UpdateAllSkillCardsOnFileFileVersionTypeField(str, Enum):
 
 
 class UpdateAllSkillCardsOnFileFileVersion(BaseObject):
+    _discriminator = 'type', {'file_version'}
+
     def __init__(
         self,
         type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField] = None,

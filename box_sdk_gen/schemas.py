@@ -199,6 +199,8 @@ class ZipDownloadRequestItemsTypeField(str, Enum):
 
 
 class ZipDownloadRequestItemsField(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(self, type: ZipDownloadRequestItemsTypeField, id: str, **kwargs):
         """
         :param type: The type of the item to add to the archive.
@@ -406,6 +408,8 @@ class FileRequestCopyRequestFolderTypeField(str, Enum):
 
 
 class FileRequestCopyRequestFolderField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         id: str,
@@ -520,6 +524,8 @@ class ClientErrorContextInfoField(BaseObject):
 
 
 class ClientError(BaseObject):
+    _discriminator = 'type', {'error'}
+
     def __init__(
         self,
         type: Optional[ClientErrorTypeField] = None,
@@ -783,6 +789,7 @@ class ClassificationTemplateFieldsField(BaseObject):
         'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'enum'}
 
     def __init__(
         self,
@@ -831,6 +838,7 @@ class ClassificationTemplate(BaseObject):
         'copyInstanceOnItemCopy': 'copy_instance_on_item_copy',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'metadata_template'}
 
     def __init__(
         self,
@@ -895,6 +903,8 @@ class CollaborationAllowlistEntryEnterpriseTypeField(str, Enum):
 
 
 class CollaborationAllowlistEntryEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -917,6 +927,8 @@ class CollaborationAllowlistEntryEnterpriseField(BaseObject):
 
 
 class CollaborationAllowlistEntry(BaseObject):
+    _discriminator = 'type', {'collaboration_whitelist_entry'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -989,6 +1001,8 @@ class CollectionCollectionTypeField(str, Enum):
 
 
 class Collection(BaseObject):
+    _discriminator = 'type', {'collection'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -1085,6 +1099,8 @@ class CommentBaseTypeField(str, Enum):
 
 
 class CommentBase(BaseObject):
+    _discriminator = 'type', {'comment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -1107,6 +1123,8 @@ class EmailAliasTypeField(str, Enum):
 
 
 class EmailAlias(BaseObject):
+    _discriminator = 'type', {'email_alias'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -1155,6 +1173,8 @@ class EnterpriseBaseTypeField(str, Enum):
 
 
 class EnterpriseBase(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -1177,6 +1197,8 @@ class FileBaseTypeField(str, Enum):
 
 
 class FileBase(BaseObject):
+    _discriminator = 'type', {'file'}
+
     def __init__(
         self, id: str, type: FileBaseTypeField, etag: Optional[str] = None, **kwargs
     ):
@@ -1206,6 +1228,8 @@ class FileVersionBaseTypeField(str, Enum):
 
 
 class FileVersionBase(BaseObject):
+    _discriminator = 'type', {'file_version'}
+
     def __init__(self, id: str, type: FileVersionBaseTypeField, **kwargs):
         """
         :param id: The unique identifier that represent a file version.
@@ -1425,6 +1449,8 @@ class FolderBaseTypeField(str, Enum):
 
 
 class FolderBase(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self, id: str, type: FolderBaseTypeField, etag: Optional[str] = None, **kwargs
     ):
@@ -1637,6 +1663,8 @@ class GroupBaseTypeField(str, Enum):
 
 
 class GroupBase(BaseObject):
+    _discriminator = 'type', {'group'}
+
     def __init__(self, id: str, type: GroupBaseTypeField, **kwargs):
         """
         :param id: The unique identifier for this object
@@ -1881,6 +1909,8 @@ class LegalHoldPolicyMiniTypeField(str, Enum):
 
 
 class LegalHoldPolicyMini(BaseObject):
+    _discriminator = 'type', {'legal_hold_policy'}
+
     def __init__(self, id: str, type: LegalHoldPolicyMiniTypeField, **kwargs):
         """
         :param id: The unique identifier for this legal hold policy
@@ -1898,6 +1928,8 @@ class LegalHoldPolicyAssignmentBaseTypeField(str, Enum):
 
 
 class LegalHoldPolicyAssignmentBase(BaseObject):
+    _discriminator = 'type', {'legal_hold_policy_assignment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2085,6 +2117,8 @@ class MetadataCascadePolicyOwnerEnterpriseTypeField(str, Enum):
 
 
 class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         type: Optional[MetadataCascadePolicyOwnerEnterpriseTypeField] = None,
@@ -2107,6 +2141,8 @@ class MetadataCascadePolicyParentTypeField(str, Enum):
 
 
 class MetadataCascadePolicyParentField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[MetadataCascadePolicyParentTypeField] = None,
@@ -2133,6 +2169,7 @@ class MetadataCascadePolicy(BaseObject):
         'templateKey': 'template_key',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'metadata_cascade_policy'}
 
     def __init__(
         self,
@@ -2323,6 +2360,14 @@ class MetadataTemplateFieldsField(BaseObject):
         'displayName': 'display_name',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {
+        'string',
+        'float',
+        'date',
+        'enum',
+        'multiSelect',
+        'integer',
+    }
 
     def __init__(
         self,
@@ -2386,6 +2431,7 @@ class MetadataTemplate(BaseObject):
         'copyInstanceOnItemCopy': 'copy_instance_on_item_copy',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'metadata_template'}
 
     def __init__(
         self,
@@ -2525,6 +2571,8 @@ class RetentionPolicyBaseTypeField(str, Enum):
 
 
 class RetentionPolicyBase(BaseObject):
+    _discriminator = 'type', {'retention_policy'}
+
     def __init__(self, id: str, type: RetentionPolicyBaseTypeField, **kwargs):
         """
         :param id: The unique identifier that represents a retention policy.
@@ -2586,6 +2634,8 @@ class FileVersionRetentionTypeField(str, Enum):
 
 
 class FileVersionRetention(BaseObject):
+    _discriminator = 'type', {'file_version_retention'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2652,6 +2702,8 @@ class RetentionPolicyAssignmentBaseTypeField(str, Enum):
 
 
 class RetentionPolicyAssignmentBase(BaseObject):
+    _discriminator = 'type', {'retention_policy_assignment'}
+
     def __init__(self, id: str, type: RetentionPolicyAssignmentBaseTypeField, **kwargs):
         """
         :param id: The unique identifier that represents a file version.
@@ -2669,6 +2721,8 @@ class ShieldInformationBarrierBaseTypeField(str, Enum):
 
 
 class ShieldInformationBarrierBase(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2701,6 +2755,8 @@ class ShieldInformationBarrierReportBaseTypeField(str, Enum):
 
 
 class ShieldInformationBarrierReportBase(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_report'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2725,6 +2781,8 @@ class ShieldInformationBarrierSegmentMemberBaseTypeField(str, Enum):
 
 
 class ShieldInformationBarrierSegmentMemberBase(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_segment_member'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2750,6 +2808,8 @@ class ShieldInformationBarrierSegmentRestrictionBaseTypeField(str, Enum):
 
 
 class ShieldInformationBarrierSegmentRestrictionBase(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_segment_restriction'}
+
     def __init__(
         self,
         type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None,
@@ -2777,6 +2837,8 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentField(
     BaseObject
 ):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2804,6 +2866,8 @@ class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentTypeField(
 
 
 class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -2868,6 +2932,8 @@ class StoragePolicyMiniTypeField(str, Enum):
 
 
 class StoragePolicyMini(BaseObject):
+    _discriminator = 'type', {'storage_policy'}
+
     def __init__(self, id: str, type: StoragePolicyMiniTypeField, **kwargs):
         """
         :param id: The unique identifier for this storage policy
@@ -2898,6 +2964,8 @@ class StoragePolicyAssignmentAssignedToField(BaseObject):
 
 
 class StoragePolicyAssignment(BaseObject):
+    _discriminator = 'type', {'storage_policy_assignment'}
+
     def __init__(
         self,
         id: str,
@@ -3000,6 +3068,8 @@ class TermsOfServiceBaseTypeField(str, Enum):
 
 
 class TermsOfServiceBase(BaseObject):
+    _discriminator = 'type', {'terms_of_service'}
+
     def __init__(self, id: str, type: TermsOfServiceBaseTypeField, **kwargs):
         """
         :param id: The unique identifier for this terms of service.
@@ -3022,6 +3092,8 @@ class TermsOfServiceEnterpriseTypeField(str, Enum):
 
 
 class TermsOfServiceEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -3273,6 +3345,8 @@ class UploadSessionSessionEndpointsField(BaseObject):
 
 
 class UploadSession(BaseObject):
+    _discriminator = 'type', {'upload_session'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -3370,6 +3444,8 @@ class UserBaseTypeField(str, Enum):
 
 
 class UserBase(BaseObject):
+    _discriminator = 'type', {'user'}
+
     def __init__(self, id: str, type: UserBaseTypeField, **kwargs):
         """
         :param id: The unique identifier for this user
@@ -3470,6 +3546,8 @@ class EventSourceClassificationField(BaseObject):
 
 
 class EventSource(BaseObject):
+    _discriminator = 'item_type', {'file', 'folder'}
+
     def __init__(
         self,
         item_type: EventSourceItemTypeField,
@@ -3627,6 +3705,8 @@ class TrashWebLinkRestoredItemStatusField(str, Enum):
 
 
 class TrashWebLinkRestored(BaseObject):
+    _discriminator = 'type', {'web_link'}
+
     def __init__(
         self,
         sequence_id: str,
@@ -3729,6 +3809,8 @@ class TrashFolderRestoredItemStatusField(str, Enum):
 
 
 class TrashFolderRestored(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -3863,6 +3945,7 @@ class TrashFileRestored(BaseObject):
         'sha1': 'sha_1',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'file'}
 
     def __init__(
         self,
@@ -3974,6 +4057,8 @@ class TrashWebLinkPathCollectionEntriesTypeField(str, Enum):
 
 
 class TrashWebLinkPathCollectionEntriesField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[TrashWebLinkPathCollectionEntriesTypeField] = None,
@@ -4028,6 +4113,8 @@ class TrashWebLinkItemStatusField(str, Enum):
 
 
 class TrashWebLink(BaseObject):
+    _discriminator = 'type', {'web_link'}
+
     def __init__(
         self,
         type: Optional[TrashWebLinkTypeField] = None,
@@ -4113,6 +4200,8 @@ class TrashFolderPathCollectionEntriesTypeField(str, Enum):
 
 
 class TrashFolderPathCollectionEntriesField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[TrashFolderPathCollectionEntriesTypeField] = None,
@@ -4167,6 +4256,8 @@ class TrashFolderItemStatusField(str, Enum):
 
 
 class TrashFolder(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         id: str,
@@ -4277,6 +4368,8 @@ class TrashFilePathCollectionEntriesTypeField(str, Enum):
 
 
 class TrashFilePathCollectionEntriesField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[TrashFilePathCollectionEntriesTypeField] = None,
@@ -4339,6 +4432,7 @@ class TrashFile(BaseObject):
         'sha1': 'sha_1',
         **BaseObject._json_to_fields_mapping,
     }
+    _discriminator = 'type', {'file'}
 
     def __init__(
         self,
@@ -4445,10 +4539,12 @@ class TermsOfServiceUserStatusTypeField(str, Enum):
 
 
 class TermsOfServiceUserStatus(BaseObject):
+    _discriminator = 'type', {'terms_of_service_user_status'}
+
     def __init__(
         self,
-        id: Optional[str] = None,
-        type: Optional[TermsOfServiceUserStatusTypeField] = None,
+        id: str,
+        type: TermsOfServiceUserStatusTypeField,
         tos: Optional[TermsOfServiceBase] = None,
         user: Optional[UserMini] = None,
         is_accepted: Optional[bool] = None,
@@ -4458,9 +4554,9 @@ class TermsOfServiceUserStatus(BaseObject):
     ):
         """
         :param id: The unique identifier for this terms of service user status
-        :type id: Optional[str], optional
+        :type id: str
         :param type: `terms_of_service_user_status`
-        :type type: Optional[TermsOfServiceUserStatusTypeField], optional
+        :type type: TermsOfServiceUserStatusTypeField
         :param is_accepted: If the user has accepted the terms of services
         :type is_accepted: Optional[bool], optional
         :param created_at: When the legal item was created
@@ -4508,6 +4604,8 @@ class TaskAssignmentResolutionStateField(str, Enum):
 
 
 class TaskAssignment(BaseObject):
+    _discriminator = 'type', {'task_assignment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -4589,6 +4687,8 @@ class TaskCompletionRuleField(str, Enum):
 
 
 class Task(BaseObject):
+    _discriminator = 'type', {'task'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -4673,6 +4773,8 @@ class RetentionPolicyAssignmentAssignedToTypeField(str, Enum):
 
 
 class RetentionPolicyAssignmentAssignedToField(BaseObject):
+    _discriminator = 'type', {'folder', 'enterprise', 'metadata_template'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -4709,6 +4811,8 @@ class RetentionPolicyAssignmentFilterFieldsField(BaseObject):
 
 
 class RetentionPolicyAssignment(BaseObject):
+    _discriminator = 'type', {'retention_policy_assignment'}
+
     def __init__(
         self,
         id: str,
@@ -5088,6 +5192,8 @@ class InviteInvitedToTypeField(str, Enum):
 
 
 class InviteInvitedToField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -5110,6 +5216,8 @@ class InviteInvitedToField(BaseObject):
 
 
 class Invite(BaseObject):
+    _discriminator = 'type', {'invite'}
+
     def __init__(
         self,
         id: str,
@@ -5157,6 +5265,8 @@ class GroupMembershipRoleField(str, Enum):
 
 
 class GroupMembership(BaseObject):
+    _discriminator = 'type', {'group_membership'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -5447,6 +5557,8 @@ class FileRequestStatusField(str, Enum):
 
 
 class FileRequest(BaseObject):
+    _discriminator = 'type', {'file_request'}
+
     def __init__(
         self,
         id: str,
@@ -5857,6 +5969,8 @@ class FileFullLockAppTypeField(str, Enum):
 
 
 class FileFullLockField(BaseObject):
+    _discriminator = 'type', {'lock'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6320,6 +6434,8 @@ class DevicePinnerTypeField(str, Enum):
 
 
 class DevicePinner(BaseObject):
+    _discriminator = 'type', {'device_pinner'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6569,6 +6685,8 @@ class CollaborationAllowlistExemptTargetEnterpriseTypeField(str, Enum):
 
 
 class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6591,6 +6709,8 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
 
 
 class CollaborationAllowlistExemptTarget(BaseObject):
+    _discriminator = 'type', {'collaboration_whitelist_exempt_target'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6756,6 +6876,8 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeFi
 class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
     BaseObject
 ):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6847,6 +6969,8 @@ class ShieldInformationBarrierSegmentTypeField(str, Enum):
 
 
 class ShieldInformationBarrierSegment(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -6926,6 +7050,8 @@ class ShieldInformationBarrierStatusField(str, Enum):
 
 
 class ShieldInformationBarrier(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -7105,6 +7231,8 @@ class WebhookMiniTargetTypeField(str, Enum):
 
 
 class WebhookMiniTargetField(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -7123,6 +7251,8 @@ class WebhookMiniTargetField(BaseObject):
 
 
 class WebhookMini(BaseObject):
+    _discriminator = 'type', {'webhook'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -7255,6 +7385,8 @@ class WebLinkBaseTypeField(str, Enum):
 
 
 class WebLinkBase(BaseObject):
+    _discriminator = 'type', {'web_link'}
+
     def __init__(
         self, id: str, type: WebLinkBaseTypeField, etag: Optional[str] = None, **kwargs
     ):
@@ -7948,6 +8080,8 @@ class FileVersionLegalHoldTypeField(str, Enum):
 
 
 class FileVersionLegalHold(BaseObject):
+    _discriminator = 'type', {'file_version_legal_hold'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -8293,6 +8427,8 @@ class SearchResultsWithSharedLinksTypeField(str, Enum):
 
 
 class SearchResultsWithSharedLinks(BaseObject):
+    _discriminator = 'type', {'search_results_with_shared_links'}
+
     def __init__(
         self,
         type: SearchResultsWithSharedLinksTypeField,
@@ -8334,6 +8470,8 @@ class SearchResultsTypeField(str, Enum):
 
 
 class SearchResults(BaseObject):
+    _discriminator = 'type', {'search_results_items'}
+
     def __init__(
         self,
         type: SearchResultsTypeField,
@@ -8668,6 +8806,8 @@ class SkillInvocationSkillTypeField(str, Enum):
 
 
 class SkillInvocationSkillField(BaseObject):
+    _discriminator = 'type', {'skill'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -8822,6 +8962,8 @@ class SkillInvocationEnterpriseTypeField(str, Enum):
 
 
 class SkillInvocationEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -8844,6 +8986,8 @@ class SkillInvocationEnterpriseField(BaseObject):
 
 
 class SkillInvocation(BaseObject):
+    _discriminator = 'type', {'skill_invocation'}
+
     def __init__(
         self,
         type: Optional[SkillInvocationTypeField] = None,
@@ -9003,6 +9147,8 @@ class CollaborationAcceptanceRequirementsStatusField(BaseObject):
 
 
 class Collaboration(BaseObject):
+    _discriminator = 'type', {'collaboration'}
+
     def __init__(
         self,
         id: str,
@@ -9182,6 +9328,8 @@ class WebhookInvocationTriggerField(str, Enum):
 
 
 class WebhookInvocation(BaseObject):
+    _discriminator = 'type', {'webhook_event'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9217,6 +9365,8 @@ class WorkflowMiniTypeField(str, Enum):
 
 
 class WorkflowMini(BaseObject):
+    _discriminator = 'type', {'workflow'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9267,6 +9417,8 @@ class WorkflowFlowsTriggerScopeObjectTypeField(str, Enum):
 
 
 class WorkflowFlowsTriggerScopeObjectField(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[WorkflowFlowsTriggerScopeObjectTypeField] = None,
@@ -9285,6 +9437,8 @@ class WorkflowFlowsTriggerScopeObjectField(BaseObject):
 
 
 class WorkflowFlowsTriggerScopeField(BaseObject):
+    _discriminator = 'type', {'trigger_scope'}
+
     def __init__(
         self,
         type: Optional[WorkflowFlowsTriggerScopeTypeField] = None,
@@ -9307,6 +9461,8 @@ class WorkflowFlowsTriggerScopeField(BaseObject):
 
 
 class WorkflowFlowsTriggerField(BaseObject):
+    _discriminator = 'type', {'trigger'}
+
     def __init__(
         self,
         type: Optional[WorkflowFlowsTriggerTypeField] = None,
@@ -9389,6 +9545,8 @@ class WorkflowFlowsOutcomesIfRejectedActionTypeField(str, Enum):
 
 
 class WorkflowFlowsOutcomesIfRejectedField(BaseObject):
+    _discriminator = 'type', {'outcome'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9413,6 +9571,8 @@ class WorkflowFlowsOutcomesIfRejectedField(BaseObject):
 
 
 class WorkflowFlowsOutcomesField(BaseObject):
+    _discriminator = 'type', {'outcome'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9442,6 +9602,8 @@ class WorkflowFlowsOutcomesField(BaseObject):
 
 
 class WorkflowFlowsField(BaseObject):
+    _discriminator = 'type', {'flow'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9587,6 +9749,8 @@ class ZipDownloadNameConflictsTypeField(str, Enum):
 
 
 class ZipDownloadNameConflictsField(BaseObject):
+    _discriminator = 'type', {'file', 'folder'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -9732,6 +9896,8 @@ class KeywordSkillCardSkillTypeField(str, Enum):
 
 
 class KeywordSkillCardSkillField(BaseObject):
+    _discriminator = 'type', {'service'}
+
     def __init__(self, type: KeywordSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
@@ -9750,6 +9916,8 @@ class KeywordSkillCardInvocationTypeField(str, Enum):
 
 
 class KeywordSkillCardInvocationField(BaseObject):
+    _discriminator = 'type', {'skill_invocation'}
+
     def __init__(self, type: KeywordSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
@@ -9777,6 +9945,8 @@ class KeywordSkillCardEntriesField(BaseObject):
 
 
 class KeywordSkillCard(BaseObject):
+    _discriminator = 'skill_card_type', {'keyword'}
+
     def __init__(
         self,
         type: KeywordSkillCardTypeField,
@@ -9834,6 +10004,8 @@ class IntegrationMappingPartnerItemSlackTypeField(str, Enum):
 
 
 class IntegrationMappingPartnerItemSlack(BaseObject):
+    _discriminator = 'type', {'channel'}
+
     def __init__(
         self,
         type: IntegrationMappingPartnerItemSlackTypeField,
@@ -9954,6 +10126,8 @@ class IntegrationMappingBoxItemSlackTypeField(str, Enum):
 
 
 class IntegrationMappingBoxItemSlack(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self, type: IntegrationMappingBoxItemSlackTypeField, id: str, **kwargs
     ):
@@ -10008,6 +10182,8 @@ class TimelineSkillCardSkillTypeField(str, Enum):
 
 
 class TimelineSkillCardSkillField(BaseObject):
+    _discriminator = 'type', {'service'}
+
     def __init__(self, type: TimelineSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
@@ -10026,6 +10202,8 @@ class TimelineSkillCardInvocationTypeField(str, Enum):
 
 
 class TimelineSkillCardInvocationField(BaseObject):
+    _discriminator = 'type', {'skill_invocation'}
+
     def __init__(self, type: TimelineSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
@@ -10090,6 +10268,8 @@ class TimelineSkillCardEntriesField(BaseObject):
 
 
 class TimelineSkillCard(BaseObject):
+    _discriminator = 'skill_card_type', {'timeline'}
+
     def __init__(
         self,
         type: TimelineSkillCardTypeField,
@@ -10158,6 +10338,8 @@ class TranscriptSkillCardSkillTypeField(str, Enum):
 
 
 class TranscriptSkillCardSkillField(BaseObject):
+    _discriminator = 'type', {'service'}
+
     def __init__(self, type: TranscriptSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
@@ -10176,6 +10358,8 @@ class TranscriptSkillCardInvocationTypeField(str, Enum):
 
 
 class TranscriptSkillCardInvocationField(BaseObject):
+    _discriminator = 'type', {'skill_invocation'}
+
     def __init__(self, type: TranscriptSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
@@ -10224,6 +10408,8 @@ class TranscriptSkillCardEntriesField(BaseObject):
 
 
 class TranscriptSkillCard(BaseObject):
+    _discriminator = 'skill_card_type', {'transcript'}
+
     def __init__(
         self,
         type: TranscriptSkillCardTypeField,
@@ -10325,6 +10511,8 @@ class StatusSkillCardSkillTypeField(str, Enum):
 
 
 class StatusSkillCardSkillField(BaseObject):
+    _discriminator = 'type', {'service'}
+
     def __init__(self, type: StatusSkillCardSkillTypeField, id: str, **kwargs):
         """
         :param type: `service`
@@ -10343,6 +10531,8 @@ class StatusSkillCardInvocationTypeField(str, Enum):
 
 
 class StatusSkillCardInvocationField(BaseObject):
+    _discriminator = 'type', {'skill_invocation'}
+
     def __init__(self, type: StatusSkillCardInvocationTypeField, id: str, **kwargs):
         """
         :param type: `skill_invocation`
@@ -10360,6 +10550,8 @@ class StatusSkillCardInvocationField(BaseObject):
 
 
 class StatusSkillCard(BaseObject):
+    _discriminator = 'skill_card_type', {'status'}
+
     def __init__(
         self,
         type: StatusSkillCardTypeField,
@@ -10542,9 +10734,13 @@ class SignRequestCreateSigner(BaseObject):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If set, signers who have the same value will be assigned to the same input and to the same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to a Sign Request and can only be
+            used/accessed within this Sign Request. A signer group is expected to have more than one signer.
+            If the provided value is only used for one signer, this value will be ignored and request will be handled
+            as it was intended for an individual signer. The value provided can be any string and only used to
+            determine which signers belongs to same group. A successful response will provide a generated UUID value
+            instead for signers in the same signer group.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -10660,6 +10856,8 @@ class SignRequestSignerSignerDecisionTypeField(str, Enum):
 
 
 class SignRequestSignerSignerDecisionField(BaseObject):
+    _discriminator = 'type', {'signed', 'declined'}
+
     def __init__(
         self,
         type: Optional[SignRequestSignerSignerDecisionTypeField] = None,
@@ -10755,9 +10953,13 @@ class SignRequestSigner(SignRequestCreateSigner):
         :param password: If set, the signer is required to enter the password before they are able
             to sign a document. This field is write only.
         :type password: Optional[str], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If set, signers who have the same value will be assigned to the same input and to the same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to a Sign Request and can only be
+            used/accessed within this Sign Request. A signer group is expected to have more than one signer.
+            If the provided value is only used for one signer, this value will be ignored and request will be handled
+            as it was intended for an individual signer. The value provided can be any string and only used to
+            determine which signers belongs to same group. A successful response will provide a generated UUID value
+            instead for signers in the same signer group.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(
@@ -11258,9 +11460,9 @@ class TemplateSigner(BaseObject):
         :type is_in_person: Optional[bool], optional
         :param order: Order of the signer
         :type order: Optional[int], optional
-        :param signer_group_id: If set, signers who have the same group ID will be assigned to the same input.
-            A signer group is expected to have more than one signer. When a group contains fewer than two signers,
-            it will be converted to a single signer and the group will be removed.
+        :param signer_group_id: If provided, this value points signers that are assigned the same inputs and belongs to same signer group.
+            A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used
+            within Sign Requests created from it.
         :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -11389,6 +11591,8 @@ class SignTemplateCustomBrandingField(BaseObject):
 
 
 class SignTemplate(BaseObject):
+    _discriminator = 'type', {'sign-template'}
+
     def __init__(
         self,
         type: Optional[SignTemplateTypeField] = None,
@@ -11586,6 +11790,8 @@ class TrackingCodeTypeField(str, Enum):
 
 
 class TrackingCode(BaseObject):
+    _discriminator = 'type', {'tracking_code'}
+
     def __init__(
         self,
         type: Optional[TrackingCodeTypeField] = None,
@@ -11619,6 +11825,8 @@ class UserFullEnterpriseTypeField(str, Enum):
 
 
 class UserFullEnterpriseField(BaseObject):
+    _discriminator = 'type', {'enterprise'}
+
     def __init__(
         self,
         id: Optional[str] = None,

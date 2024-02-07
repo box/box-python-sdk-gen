@@ -17,7 +17,7 @@ This method returns a `Files` object which contains information about the upload
 <!-- sample post_files_content -->
 
 ```python
-from box_sdk_gen.managers.uploads import UploadFileAttributesArg, UploadFileAttributesArgParentField
+from box_sdk_gen import UploadFileAttributesArg, UploadFileAttributesArgParentField
 
 attrs = UploadFileAttributesArg(
     name='filename.txt',

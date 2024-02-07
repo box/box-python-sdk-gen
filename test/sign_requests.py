@@ -8,7 +8,13 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.schemas import SignRequest
 
+from box_sdk_gen.schemas import FileBase
+
 from box_sdk_gen.schemas import FileBaseTypeField
+
+from box_sdk_gen.schemas import SignRequestCreateSigner
+
+from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import FolderBaseTypeField
 
@@ -22,18 +28,10 @@ from test.commons import create_new_folder
 
 from test.commons import get_default_client
 
-from box_sdk_gen.schemas import SignRequestCreateRequest
-
-from box_sdk_gen.schemas import SignRequestCreateSigner
-
-from box_sdk_gen.schemas import FolderMini
-
-from box_sdk_gen.schemas import FileBase
-
 client: BoxClient = get_default_client()
 
 
-def test_create_get_cancel_and_list_sign_request():
+def testCreateGetCancelAndListSignRequest():
     signer_email: str = ''.join([get_uuid(), '@box.com'])
     file_to_sign: FileFull = upload_new_file()
     destination_folder: FolderFull = create_new_folder()

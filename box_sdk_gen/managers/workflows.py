@@ -61,6 +61,8 @@ class StartWorkflowFilesTypeField(str, Enum):
 
 
 class StartWorkflowFiles(BaseObject):
+    _discriminator = 'type', {'file'}
+
     def __init__(
         self,
         type: Optional[StartWorkflowFilesTypeField] = None,
@@ -83,6 +85,8 @@ class StartWorkflowFolderTypeField(str, Enum):
 
 
 class StartWorkflowFolder(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         type: Optional[StartWorkflowFolderTypeField] = None,
@@ -105,6 +109,8 @@ class StartWorkflowOutcomesTypeField(str, Enum):
 
 
 class StartWorkflowOutcomes(BaseObject):
+    _discriminator = 'type', {'outcome'}
+
     def __init__(
         self,
         id: Optional[str] = None,

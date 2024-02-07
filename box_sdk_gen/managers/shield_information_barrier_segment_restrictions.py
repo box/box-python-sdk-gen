@@ -56,6 +56,8 @@ class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSe
 class CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(
     BaseObject
 ):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,
@@ -83,6 +85,8 @@ class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField
 
 
 class CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment(BaseObject):
+    _discriminator = 'type', {'shield_information_barrier_segment'}
+
     def __init__(
         self,
         id: Optional[str] = None,

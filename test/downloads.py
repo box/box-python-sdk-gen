@@ -24,6 +24,10 @@ from box_sdk_gen.utils import read_byte_stream
 
 from test.commons import get_default_client
 
+from box_sdk_gen.fetch import FetchOptions
+
+from box_sdk_gen.fetch import FetchResponse
+
 client: BoxClient = get_default_client()
 
 

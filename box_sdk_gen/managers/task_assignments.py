@@ -44,6 +44,8 @@ class CreateTaskAssignmentTaskTypeField(str, Enum):
 
 
 class CreateTaskAssignmentTask(BaseObject):
+    _discriminator = 'type', {'task'}
+
     def __init__(self, id: str, type: CreateTaskAssignmentTaskTypeField, **kwargs):
         """
         :param id: The ID of the task

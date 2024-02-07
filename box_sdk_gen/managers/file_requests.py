@@ -51,6 +51,8 @@ class CreateFileRequestCopyFolderTypeField(str, Enum):
 
 
 class CreateFileRequestCopyFolder(BaseObject):
+    _discriminator = 'type', {'folder'}
+
     def __init__(
         self,
         id: str,

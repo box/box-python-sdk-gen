@@ -60,16 +60,13 @@ Using `BoxClient` object you can access managers, which allow you to perform som
 The example below demonstrates how to authenticate with Developer Token and print names of all items inside a root folder.
 
 ```python
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
-from box_sdk_gen.client import BoxClient
-
+from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
 def main(token: str):
     auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(token=token)
     client: BoxClient = BoxClient(auth=auth)
     for item in client.folders.get_folder_items('0').entries:
         print(item.name)
-
 
 if __name__ == '__main__':
     main('INSERT YOUR DEVELOPER TOKEN HERE')
@@ -98,6 +95,7 @@ Now select `Authorization` and submit application to be reviewed by account admi
 2. Encode configuration file to Base64, e.g. using command: `base64 -i path_to_json_file`
 3. Set environment variable: `JWT_CONFIG_BASE_64` with base64 encoded jwt configuration file
 4. Set environment variable: `BOX_FILE_REQUEST_ID` with ID of file request already created in the user account, `BOX_EXTERNAL_USER_EMAIL` with email of free external user which not belongs to any enterprise.
+5. Set environment variable: `WORKFLOW_FOLDER_ID` with the ID of the Relay workflow that deletes the file that triggered the workflow. The workflow should have a manual start to be able to start it from the API.
 
 ### Running tests
 

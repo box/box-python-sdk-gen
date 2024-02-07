@@ -4,7 +4,7 @@ import random
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Union
 from sys import version_info as py_version
 
 import requests
@@ -59,6 +59,7 @@ class FetchOptions:
 @dataclass
 class FetchResponse:
     status: int
+    headers: Dict[str, str]
     data: Optional[SerializedData] = None
     content: Optional[ByteStream] = None
 
@@ -113,36 +114,34 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
     )
 
     while attempt_nr < max_attempts:
-        if response.ok:
-            if options.response_format == 'binary':
-                return FetchResponse(
-                    status=response.status_code,
-                    content=ResponseByteStream(
-                        response.network_response.iter_content(chunk_size=1024)
-                    ),
-                )
-            else:
-                return FetchResponse(
-                    status=response.status_code,
-                    data=(
-                        json_to_serialized_data(response.text)
-                        if response.text
-                        else None
-                    ),
-                    content=io.BytesIO(response.content),
-                )
+        if response.network_response:
+            if response.ok:
+                if options.response_format == 'binary':
+                    return FetchResponse(
+                        status=response.status_code,
+                        headers=dict(response.network_response.headers),
+                        content=ResponseByteStream(
+                            response.network_response.iter_content(chunk_size=1024)
+                        ),
+                    )
+                else:
+                    return FetchResponse(
+                        status=response.status_code,
+                        headers=dict(response.network_response.headers),
+                        data=(
+                            json_to_serialized_data(response.text)
+                            if response.text
+                            else None
+                        ),
+                        content=io.BytesIO(response.content),
+                    )
 
-        if response.reauthentication_needed:
-            headers['Authorization'] = (
-                'Bearer'
-                f' {options.auth.refresh_token(options.network_session).access_token}'
-            )
-        elif response.status_code != 429 and response.status_code < 500:
-            __raise_on_unsuccessful_request(
-                network_response=response.network_response,
-                url=url,
-                method=options.method,
-            )
+            if response.status_code != 429 and response.status_code < 500:
+                __raise_on_unsuccessful_request(
+                    network_response=response.network_response,
+                    url=url,
+                    method=options.method,
+                )
 
         time.sleep(
             __get_retry_after_time(
@@ -151,6 +150,12 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             )
         )
 
+        if response.reauthentication_needed:
+            headers['Authorization'] = (
+                f'Bearer {options.auth.refresh_token(options.network_session).access_token}'
+            )
+
+        attempt_nr += 1
         response: APIResponse = __make_request(
             session=requests_session,
             method=options.method,
@@ -162,7 +167,6 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             multipart_data=options.multipart_data,
             attempt_nr=attempt_nr,
         )
-        attempt_nr += 1
 
     __raise_on_unsuccessful_request(
         network_response=response.network_response, url=url, method=options.method
@@ -177,8 +181,7 @@ def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
         headers.update(options.headers)
     if options.auth:
         headers['Authorization'] = (
-            'Bearer'
-            f' {options.auth.retrieve_token(options.network_session).access_token}'
+            f'Bearer {options.auth.retrieve_token(options.network_session).access_token}'
         )
 
     headers['User-Agent'] = USER_AGENT_HEADER
@@ -219,28 +222,13 @@ def __make_request(
         else:
             headers['Content-Type'] = content_type
 
-    def get_data():
-        if (
-            content_type == 'application/json'
-            or content_type == 'application/json-patch+json'
-        ):
-            return sd_to_json(data) if data else None
-        if content_type == 'application/x-www-form-urlencoded':
-            return sd_to_url_params(data)
-        if (
-            content_type == 'multipart/form-data'
-            or content_type == 'application/octet-stream'
-        ):
-            return data
-        raise
-
     raised_exception = None
     try:
         network_response = session.request(
             method=method,
             url=url,
             headers=headers,
-            data=get_data(),
+            data=__prepare_data(content_type, data),
             params=params,
             stream=True,
         )
@@ -303,3 +291,19 @@ def __get_retry_after_time(
     ) + min_randomization
     exponential = math.pow(2, attempt_number)
     return exponential * _RETRY_BASE_INTERVAL * randomization
+
+
+def __prepare_data(content_type: str, data: Union[dict, MultipartEncoder]):
+    if (
+        content_type == 'application/json'
+        or content_type == 'application/json-patch+json'
+    ):
+        return sd_to_json(data) if data else None
+    if content_type == 'application/x-www-form-urlencoded':
+        return sd_to_url_params(data)
+    if (
+        content_type == 'multipart/form-data'
+        or content_type == 'application/octet-stream'
+    ):
+        return data
+    raise
