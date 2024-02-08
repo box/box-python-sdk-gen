@@ -4,7 +4,7 @@ from os.path import dirname, join
 
 
 def main():
-    install_requires = ['requests', 'requests_toolbelt', 'urllib3<2']
+    install_requires = ['requests', 'requests_toolbelt']
     tests_require = ['pytest', 'pytest-timeout', 'pytest-cov']
     dev_requires = ['tox']
     jwt_requires = ['pyjwt>=1.7.0', 'cryptography>=3']
