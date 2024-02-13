@@ -124,11 +124,13 @@ class TrashedFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -201,12 +203,14 @@ class TrashedFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/trash',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/trash',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -243,12 +247,14 @@ class TrashedFoldersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/trash',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/trash',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

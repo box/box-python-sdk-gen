@@ -61,21 +61,25 @@ def testSharedLinksFiles():
     user_client: BoxClient = get_default_client_as_user(user_id)
     file_from_shared_link_password: FileFull = (
         user_client.shared_links_files.find_file_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                file_from_api.shared_link.url,
-                '&shared_link_password=Secret123@',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    file_from_api.shared_link.url,
+                    '&shared_link_password=Secret123@',
+                ]
+            )
         )
     )
     assert file_id == file_from_shared_link_password.id
     with pytest.raises(Exception):
         user_client.shared_links_files.find_file_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                file_from_api.shared_link.url,
-                '&shared_link_password=incorrectPassword',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    file_from_api.shared_link.url,
+                    '&shared_link_password=incorrectPassword',
+                ]
+            )
         )
     updated_file: FileFull = client.shared_links_files.update_shared_link_on_file(
         file_id=file_id,

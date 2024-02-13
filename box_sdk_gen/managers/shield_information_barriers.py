@@ -72,11 +72,13 @@ class ShieldInformationBarriersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barriers/',
-                to_string(shield_information_barrier_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barriers/',
+                    to_string(shield_information_barrier_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -107,10 +109,12 @@ class ShieldInformationBarriersManager:
         request_body: Dict = {'id': id, 'status': status}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barriers/change_status',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barriers/change_status',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -149,10 +153,12 @@ class ShieldInformationBarriersManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barriers',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barriers',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -187,10 +193,12 @@ class ShieldInformationBarriersManager:
         request_body: Dict = {'enterprise': enterprise}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barriers',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barriers',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

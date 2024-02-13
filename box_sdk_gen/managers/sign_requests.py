@@ -83,12 +83,14 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/sign_requests/',
-                to_string(sign_request_id),
-                '/cancel',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/sign_requests/',
+                    to_string(sign_request_id),
+                    '/cancel',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -116,12 +118,14 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/sign_requests/',
-                to_string(sign_request_id),
-                '/resend',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/sign_requests/',
+                    to_string(sign_request_id),
+                    '/resend',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -149,11 +153,13 @@ class SignRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/sign_requests/',
-                to_string(sign_request_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/sign_requests/',
+                    to_string(sign_request_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

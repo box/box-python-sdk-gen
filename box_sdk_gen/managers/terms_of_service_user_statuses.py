@@ -120,10 +120,12 @@ class TermsOfServiceUserStatusesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/terms_of_service_user_statuses',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/terms_of_service_user_statuses',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -158,10 +160,12 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/terms_of_service_user_statuses',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/terms_of_service_user_statuses',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -195,11 +199,13 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/terms_of_service_user_statuses/',
-                to_string(terms_of_service_user_status_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/terms_of_service_user_statuses/',
+                    to_string(terms_of_service_user_status_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,

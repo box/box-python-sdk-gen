@@ -64,12 +64,14 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/email_aliases',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/email_aliases',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -106,12 +108,14 @@ class EmailAliasesManager:
         request_body: Dict = {'email': email}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/email_aliases',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/email_aliases',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -145,13 +149,15 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/email_aliases/',
-                to_string(email_alias_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/email_aliases/',
+                    to_string(email_alias_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

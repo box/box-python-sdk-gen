@@ -292,11 +292,13 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/webhooks/',
-                to_string(webhook_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/webhooks/',
+                    to_string(webhook_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -339,11 +341,13 @@ class WebhooksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/webhooks/',
-                to_string(webhook_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/webhooks/',
+                    to_string(webhook_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -371,11 +375,13 @@ class WebhooksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/webhooks/',
-                to_string(webhook_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/webhooks/',
+                    to_string(webhook_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

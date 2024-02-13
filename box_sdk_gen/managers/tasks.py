@@ -117,12 +117,14 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/tasks',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/tasks',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

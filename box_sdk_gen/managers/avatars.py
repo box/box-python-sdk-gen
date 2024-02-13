@@ -59,12 +59,14 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/avatar',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/avatar',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -104,12 +106,14 @@ class AvatarsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/avatar',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/avatar',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -147,12 +151,14 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/avatar',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/avatar',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

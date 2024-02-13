@@ -112,14 +112,16 @@ class RetentionPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'policy_name': to_string(policy_name),
-            'policy_type': to_string(policy_type),
-            'created_by_user_id': to_string(created_by_user_id),
-            'fields': to_string(fields),
-            'limit': to_string(limit),
-            'marker': to_string(marker),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'policy_name': to_string(policy_name),
+                'policy_type': to_string(policy_type),
+                'created_by_user_id': to_string(created_by_user_id),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/retention_policies']),
@@ -255,11 +257,13 @@ class RetentionPoliciesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/retention_policies/',
-                to_string(retention_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -360,11 +364,13 @@ class RetentionPoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/retention_policies/',
-                to_string(retention_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -394,11 +400,13 @@ class RetentionPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/retention_policies/',
-                to_string(retention_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/retention_policies/',
+                    to_string(retention_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

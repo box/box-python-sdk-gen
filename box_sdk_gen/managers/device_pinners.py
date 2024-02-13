@@ -68,11 +68,13 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/device_pinners/',
-                to_string(device_pinner_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/device_pinners/',
+                    to_string(device_pinner_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -100,11 +102,13 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/device_pinners/',
-                to_string(device_pinner_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/device_pinners/',
+                    to_string(device_pinner_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -148,19 +152,23 @@ class DevicePinnersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-            'direction': to_string(direction),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'direction': to_string(direction),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/enterprises/',
-                to_string(enterprise_id),
-                '/device_pinners',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/enterprises/',
+                    to_string(enterprise_id),
+                    '/device_pinners',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

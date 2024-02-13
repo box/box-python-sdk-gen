@@ -91,16 +91,18 @@ class FileVersionRetentionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'file_id': to_string(file_id),
-            'file_version_id': to_string(file_version_id),
-            'policy_id': to_string(policy_id),
-            'disposition_action': to_string(disposition_action),
-            'disposition_before': to_string(disposition_before),
-            'disposition_after': to_string(disposition_after),
-            'limit': to_string(limit),
-            'marker': to_string(marker),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'file_id': to_string(file_id),
+                'file_version_id': to_string(file_version_id),
+                'policy_id': to_string(policy_id),
+                'disposition_action': to_string(disposition_action),
+                'disposition_before': to_string(disposition_before),
+                'disposition_after': to_string(disposition_after),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -134,11 +136,13 @@ class FileVersionRetentionsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_version_retentions/',
-                to_string(file_version_retention_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_version_retentions/',
+                    to_string(file_version_retention_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,

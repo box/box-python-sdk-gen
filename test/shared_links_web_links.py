@@ -64,21 +64,25 @@ def testSharedLinksWebLinks():
     user_client: BoxClient = get_default_client_as_user(user_id)
     web_link_from_shared_link_password: WebLink = (
         user_client.shared_links_web_links.find_web_link_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                web_link_from_api.shared_link.url,
-                '&shared_link_password=Secret123@',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    web_link_from_api.shared_link.url,
+                    '&shared_link_password=Secret123@',
+                ]
+            )
         )
     )
     assert web_link_id == web_link_from_shared_link_password.id
     with pytest.raises(Exception):
         user_client.shared_links_web_links.find_web_link_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                web_link_from_api.shared_link.url,
-                '&shared_link_password=incorrectPassword',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    web_link_from_api.shared_link.url,
+                    '&shared_link_password=incorrectPassword',
+                ]
+            )
         )
     updated_web_link: WebLink = (
         client.shared_links_web_links.update_shared_link_on_web_link(

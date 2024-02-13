@@ -85,12 +85,14 @@ class FolderWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -129,12 +131,14 @@ class FolderWatermarksManager:
         request_body: Dict = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -169,12 +173,14 @@ class FolderWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

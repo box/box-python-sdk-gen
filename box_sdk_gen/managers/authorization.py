@@ -148,13 +148,15 @@ class AuthorizationManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'response_type': to_string(response_type),
-            'client_id': to_string(client_id),
-            'redirect_uri': to_string(redirect_uri),
-            'state': to_string(state),
-            'scope': to_string(scope),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'response_type': to_string(response_type),
+                'client_id': to_string(client_id),
+                'redirect_uri': to_string(redirect_uri),
+                'state': to_string(state),
+                'scope': to_string(scope),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.oauth_2_url, '/authorize']),

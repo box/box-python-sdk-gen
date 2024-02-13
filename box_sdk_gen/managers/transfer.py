@@ -163,12 +163,14 @@ class TransferManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/users/',
-                to_string(user_id),
-                '/folders/0',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/users/',
+                    to_string(user_id),
+                    '/folders/0',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,

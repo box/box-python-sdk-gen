@@ -104,15 +104,17 @@ class IntegrationMappingsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-            'partner_item_type': to_string(partner_item_type),
-            'partner_item_id': to_string(partner_item_id),
-            'box_item_id': to_string(box_item_id),
-            'box_item_type': to_string(box_item_type),
-            'is_manually_created': to_string(is_manually_created),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'partner_item_type': to_string(partner_item_type),
+                'partner_item_id': to_string(partner_item_id),
+                'box_item_id': to_string(box_item_id),
+                'box_item_type': to_string(box_item_type),
+                'is_manually_created': to_string(is_manually_created),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -203,11 +205,13 @@ class IntegrationMappingsManager:
         request_body: Dict = {'box_item': box_item, 'options': options}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/integration_mappings/slack/',
-                to_string(integration_mapping_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/integration_mappings/slack/',
+                    to_string(integration_mapping_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -243,11 +247,13 @@ class IntegrationMappingsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/integration_mappings/slack/',
-                to_string(integration_mapping_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/integration_mappings/slack/',
+                    to_string(integration_mapping_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

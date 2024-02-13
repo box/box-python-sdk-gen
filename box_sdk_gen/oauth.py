@@ -28,6 +28,8 @@ from box_sdk_gen.json_data import sd_to_url_params
 
 from box_sdk_gen.utils import prepare_params
 
+from box_sdk_gen.errors import BoxSDKError
+
 box_oauth_2_auth_url: str = 'https://account.box.com/api/oauth2/authorize'
 
 
@@ -86,19 +88,23 @@ class BoxOAuth(Authentication):
         """
         if options is None:
             options = GetAuthorizeUrlOptions()
-        params: Dict[str, str] = prepare_params({
-            'client_id': (
-                options.client_id
-                if not options.client_id == None
-                else self.config.client_id
-            ),
-            'response_type': (
-                options.response_type if not options.response_type == None else 'code'
-            ),
-            'redirect_uri': options.redirect_uri,
-            'state': options.state,
-            'scope': options.scope,
-        })
+        params: Dict[str, str] = prepare_params(
+            {
+                'client_id': (
+                    options.client_id
+                    if not options.client_id == None
+                    else self.config.client_id
+                ),
+                'response_type': (
+                    options.response_type
+                    if not options.response_type == None
+                    else 'code'
+                ),
+                'redirect_uri': options.redirect_uri,
+                'state': options.state,
+                'scope': options.scope,
+            }
+        )
         return ''.join([box_oauth_2_auth_url, '?', sd_to_url_params(params)])
 
     def get_tokens_authorization_code_grant(
@@ -135,8 +141,8 @@ class BoxOAuth(Authentication):
         """
         token = self.token_storage.get()
         if token == None:
-            raise Exception(
-                'Access and refresh tokens not available. Authenticate before making any API call first.'
+            raise BoxSDKError(
+                message='Access and refresh tokens not available. Authenticate before making any API call first.'
             )
         return token
 
@@ -212,7 +218,7 @@ class BoxOAuth(Authentication):
         """
         token: Optional[AccessToken] = self.token_storage.get()
         if token == None or token.access_token == None:
-            raise Exception('No access token is available.')
+            raise BoxSDKError(message='No access token is available.')
         auth_manager: AuthorizationManager = (
             AuthorizationManager(network_session=network_session)
             if not network_session == None

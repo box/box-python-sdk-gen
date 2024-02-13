@@ -85,10 +85,12 @@ class CollaborationAllowlistExemptTargetsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_exempt_targets',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_exempt_targets',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -120,10 +122,12 @@ class CollaborationAllowlistExemptTargetsManager:
         request_body: Dict = {'user': user}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_exempt_targets',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_exempt_targets',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -156,11 +160,13 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_exempt_targets/',
-                to_string(collaboration_whitelist_exempt_target_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_exempt_targets/',
+                    to_string(collaboration_whitelist_exempt_target_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -191,11 +197,13 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_exempt_targets/',
-                to_string(collaboration_whitelist_exempt_target_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_exempt_targets/',
+                    to_string(collaboration_whitelist_exempt_target_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

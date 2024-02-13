@@ -111,19 +111,23 @@ class CommentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'limit': to_string(limit),
-            'offset': to_string(offset),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/comments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/comments',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -166,11 +170,13 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/comments/',
-                to_string(comment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/comments/',
+                    to_string(comment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -214,11 +220,13 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/comments/',
-                to_string(comment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/comments/',
+                    to_string(comment_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -247,11 +255,13 @@ class CommentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/comments/',
-                to_string(comment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/comments/',
+                    to_string(comment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

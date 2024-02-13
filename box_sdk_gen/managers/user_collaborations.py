@@ -163,11 +163,13 @@ class UserCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaborations/',
-                to_string(collaboration_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaborations/',
+                    to_string(collaboration_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -241,11 +243,13 @@ class UserCollaborationsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaborations/',
-                to_string(collaboration_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaborations/',
+                    to_string(collaboration_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -275,11 +279,13 @@ class UserCollaborationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaborations/',
-                to_string(collaboration_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaborations/',
+                    to_string(collaboration_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

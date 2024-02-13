@@ -493,10 +493,12 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -535,10 +537,12 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -579,10 +583,12 @@ class ClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -658,10 +664,12 @@ class ClassificationsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/schema#classifications',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/schema#classifications',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

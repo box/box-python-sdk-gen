@@ -207,18 +207,22 @@ class UploadsManager:
             'file_content_type': file_content_type,
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'if-match': to_string(if_match),
-            'content-md5': to_string(content_md_5),
-            **extra_headers,
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'if-match': to_string(if_match),
+                'content-md5': to_string(content_md_5),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/',
-                to_string(file_id),
-                '/content',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/content',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

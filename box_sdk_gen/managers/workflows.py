@@ -186,12 +186,14 @@ class WorkflowsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'folder_id': to_string(folder_id),
-            'trigger_type': to_string(trigger_type),
-            'limit': to_string(limit),
-            'marker': to_string(marker),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'folder_id': to_string(folder_id),
+                'trigger_type': to_string(trigger_type),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/workflows']),
@@ -252,12 +254,14 @@ class WorkflowsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/workflows/',
-                to_string(workflow_id),
-                '/start',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/workflows/',
+                    to_string(workflow_id),
+                    '/start',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

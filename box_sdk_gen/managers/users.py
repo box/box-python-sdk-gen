@@ -177,16 +177,18 @@ class UsersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'filter_term': to_string(filter_term),
-            'user_type': to_string(user_type),
-            'external_app_user_id': to_string(external_app_user_id),
-            'fields': to_string(fields),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-            'usemarker': to_string(usemarker),
-            'marker': to_string(marker),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'filter_term': to_string(filter_term),
+                'user_type': to_string(user_type),
+                'external_app_user_id': to_string(external_app_user_id),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/users']),

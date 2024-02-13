@@ -363,24 +363,30 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'sort': to_string(sort),
-            'direction': to_string(direction),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-        })
-        headers_map: Dict[str, str] = prepare_params({
-            'if-none-match': to_string(if_none_match),
-            'boxapi': to_string(boxapi),
-            **extra_headers,
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+            }
+        )
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -507,11 +513,13 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -569,11 +577,13 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 params=query_params_map,
@@ -690,25 +700,29 @@ class FoldersManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'usemarker': to_string(usemarker),
-            'marker': to_string(marker),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-            'sort': to_string(sort),
-            'direction': to_string(direction),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params(
             {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/items',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/items',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -832,12 +846,14 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/copy',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/copy',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

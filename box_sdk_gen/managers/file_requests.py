@@ -109,11 +109,13 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_requests/',
-                to_string(file_request_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_requests/',
+                    to_string(file_request_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -206,11 +208,13 @@ class FileRequestsManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_requests/',
-                to_string(file_request_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_requests/',
+                    to_string(file_request_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -245,11 +249,13 @@ class FileRequestsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_requests/',
-                to_string(file_request_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_requests/',
+                    to_string(file_request_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -336,12 +342,14 @@ class FileRequestsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_requests/',
-                to_string(file_request_id),
-                '/copy',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_requests/',
+                    to_string(file_request_id),
+                    '/copy',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

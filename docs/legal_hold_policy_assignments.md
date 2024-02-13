@@ -16,7 +16,11 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments/).
 
-_Currently we don't have an example for calling `get_legal_hold_policy_assignments` in integration tests_
+<!-- sample get_legal_hold_policy_assignments -->
+
+```python
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(policy_id=legal_hold_policy_id)
+```
 
 ### Arguments
 
@@ -50,7 +54,11 @@ This operation is performed by calling function `create_legal_hold_policy_assign
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-legal-hold-policy-assignments/).
 
-_Currently we don't have an example for calling `create_legal_hold_policy_assignment` in integration tests_
+<!-- sample post_legal_hold_policy_assignments -->
+
+```python
+client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(policy_id=legal_hold_policy_id, assign_to=CreateLegalHoldPolicyAssignmentAssignTo(type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE.value, id=file_id))
+```
 
 ### Arguments
 
@@ -76,7 +84,11 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id/).
 
-_Currently we don't have an example for calling `get_legal_hold_policy_assignment_by_id` in integration tests_
+<!-- sample get_legal_hold_policy_assignments_id -->
+
+```python
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(legal_hold_policy_assignment_id=legal_hold_policy_assignment_id)
+```
 
 ### Arguments
 
@@ -103,7 +115,11 @@ This operation is performed by calling function `delete_legal_hold_policy_assign
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-legal-hold-policy-assignments-id/).
 
-_Currently we don't have an example for calling `delete_legal_hold_policy_assignment_by_id` in integration tests_
+<!-- sample delete_legal_hold_policy_assignments_id -->
+
+```python
+client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(legal_hold_policy_assignment_id=legal_hold_policy_assignment_id)
+```
 
 ### Arguments
 

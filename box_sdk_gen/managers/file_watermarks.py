@@ -83,12 +83,14 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -125,12 +127,14 @@ class FileWatermarksManager:
         request_body: Dict = {'watermark': watermark}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -163,12 +167,14 @@ class FileWatermarksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/watermark',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/watermark',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

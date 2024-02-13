@@ -194,11 +194,13 @@ class WebLinksManager:
             {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -247,11 +249,13 @@ class WebLinksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -279,11 +283,13 @@ class WebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

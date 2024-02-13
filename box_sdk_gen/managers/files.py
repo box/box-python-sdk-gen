@@ -271,12 +271,14 @@ class FilesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'if-none-match': to_string(if_none_match),
-            'boxapi': to_string(boxapi),
-            'x-rep-hints': to_string(x_rep_hints),
-            **extra_headers,
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
+                'x-rep-hints': to_string(x_rep_hints),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
             ''.join(
                 [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
@@ -510,12 +512,14 @@ class FilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/copy',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/copy',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -583,21 +587,25 @@ class FilesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'min_height': to_string(min_height),
-            'min_width': to_string(min_width),
-            'max_height': to_string(max_height),
-            'max_width': to_string(max_width),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'min_height': to_string(min_height),
+                'min_width': to_string(min_width),
+                'max_height': to_string(max_height),
+                'max_width': to_string(max_width),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/thumbnail.',
-                to_string(extension),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/thumbnail.',
+                    to_string(extension),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

@@ -6,6 +6,8 @@ from box_sdk_gen.auth import Authentication
 
 from box_sdk_gen.network import NetworkSession
 
+from box_sdk_gen.errors import BoxSDKError
+
 
 class BoxDeveloperTokenAuth(Authentication):
     def __init__(self, token: str, **kwargs):
@@ -30,4 +32,6 @@ class BoxDeveloperTokenAuth(Authentication):
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
         """
-        raise Exception('Developer token has expired. Please provide a new one.')
+        raise BoxSDKError(
+            message='Developer token has expired. Please provide a new one.'
+        )
