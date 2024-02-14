@@ -147,11 +147,13 @@ class StoragePolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker),
-            'resolved_for_type': to_string(resolved_for_type),
-            'resolved_for_id': to_string(resolved_for_id),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'marker': to_string(marker),
+                'resolved_for_type': to_string(resolved_for_type),
+                'resolved_for_id': to_string(resolved_for_id),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -225,11 +227,13 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/storage_policy_assignments/',
-                to_string(storage_policy_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/storage_policy_assignments/',
+                    to_string(storage_policy_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -262,11 +266,13 @@ class StoragePolicyAssignmentsManager:
         request_body: Dict = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/storage_policy_assignments/',
-                to_string(storage_policy_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/storage_policy_assignments/',
+                    to_string(storage_policy_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -311,11 +317,13 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/storage_policy_assignments/',
-                to_string(storage_policy_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/storage_policy_assignments/',
+                    to_string(storage_policy_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

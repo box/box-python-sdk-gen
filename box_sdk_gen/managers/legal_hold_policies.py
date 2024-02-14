@@ -84,12 +84,14 @@ class LegalHoldPoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'policy_name': to_string(policy_name),
-            'fields': to_string(fields),
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'policy_name': to_string(policy_name),
+                'fields': to_string(fields),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/legal_hold_policies']),
@@ -189,11 +191,13 @@ class LegalHoldPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policies/',
-                to_string(legal_hold_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -235,11 +239,13 @@ class LegalHoldPoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policies/',
-                to_string(legal_hold_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -275,11 +281,13 @@ class LegalHoldPoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policies/',
-                to_string(legal_hold_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policies/',
+                    to_string(legal_hold_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

@@ -82,11 +82,13 @@ class CollectionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/collections']),
@@ -138,19 +140,23 @@ class CollectionsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collections/',
-                to_string(collection_id),
-                '/items',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collections/',
+                    to_string(collection_id),
+                    '/items',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

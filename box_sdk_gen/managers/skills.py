@@ -207,12 +207,14 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/global/boxSkillsCards',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/global/boxSkillsCards',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -256,12 +258,14 @@ class SkillsManager:
         request_body: Dict = {'cards': cards}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/global/boxSkillsCards',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/global/boxSkillsCards',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -299,12 +303,14 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/global/boxSkillsCards',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/global/boxSkillsCards',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -337,12 +343,14 @@ class SkillsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/global/boxSkillsCards',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/global/boxSkillsCards',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -399,11 +407,13 @@ class SkillsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/skill_invocations/',
-                to_string(skill_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/skill_invocations/',
+                    to_string(skill_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,

@@ -99,11 +99,13 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -145,12 +147,14 @@ class TrashedWebLinksManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-                '/trash',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                    '/trash',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -180,12 +184,14 @@ class TrashedWebLinksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/web_links/',
-                to_string(web_link_id),
-                '/trash',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/web_links/',
+                    to_string(web_link_id),
+                    '/trash',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

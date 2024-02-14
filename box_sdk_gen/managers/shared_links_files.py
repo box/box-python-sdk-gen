@@ -278,11 +278,13 @@ class SharedLinksFilesManager:
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
-        headers_map: Dict[str, str] = prepare_params({
-            'if-none-match': to_string(if_none_match),
-            'boxapi': to_string(boxapi),
-            **extra_headers,
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'if-none-match': to_string(if_none_match),
+                'boxapi': to_string(boxapi),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/shared_items']),
             FetchOptions(
@@ -323,12 +325,14 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '#get_shared_link',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '#get_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -373,12 +377,14 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '#add_shared_link',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '#add_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -423,12 +429,14 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '#update_shared_link',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '#update_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -474,12 +482,14 @@ class SharedLinksFilesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '#remove_shared_link',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '#remove_shared_link',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,

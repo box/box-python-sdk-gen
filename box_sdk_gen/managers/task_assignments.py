@@ -108,12 +108,14 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/tasks/',
-                to_string(task_id),
-                '/assignments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/tasks/',
+                    to_string(task_id),
+                    '/assignments',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -180,11 +182,13 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/task_assignments/',
-                to_string(task_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -226,11 +230,13 @@ class TaskAssignmentsManager:
         request_body: Dict = {'message': message, 'resolution_state': resolution_state}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/task_assignments/',
-                to_string(task_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -260,11 +266,13 @@ class TaskAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/task_assignments/',
-                to_string(task_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/task_assignments/',
+                    to_string(task_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

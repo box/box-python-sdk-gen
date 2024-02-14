@@ -219,10 +219,12 @@ class SearchManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_queries/execute_read',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_queries/execute_read',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -506,29 +508,31 @@ class SearchManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'query': to_string(query),
-            'scope': to_string(scope),
-            'file_extensions': to_string(file_extensions),
-            'created_at_range': to_string(created_at_range),
-            'updated_at_range': to_string(updated_at_range),
-            'size_range': to_string(size_range),
-            'owner_user_ids': to_string(owner_user_ids),
-            'recent_updater_user_ids': to_string(recent_updater_user_ids),
-            'ancestor_folder_ids': to_string(ancestor_folder_ids),
-            'content_types': to_string(content_types),
-            'type': to_string(type),
-            'trash_content': to_string(trash_content),
-            'mdfilters': to_string(mdfilters),
-            'sort': to_string(sort),
-            'direction': to_string(direction),
-            'limit': to_string(limit),
-            'include_recent_shared_links': to_string(include_recent_shared_links),
-            'fields': to_string(fields),
-            'offset': to_string(offset),
-            'deleted_user_ids': to_string(deleted_user_ids),
-            'deleted_at_range': to_string(deleted_at_range),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'query': to_string(query),
+                'scope': to_string(scope),
+                'file_extensions': to_string(file_extensions),
+                'created_at_range': to_string(created_at_range),
+                'updated_at_range': to_string(updated_at_range),
+                'size_range': to_string(size_range),
+                'owner_user_ids': to_string(owner_user_ids),
+                'recent_updater_user_ids': to_string(recent_updater_user_ids),
+                'ancestor_folder_ids': to_string(ancestor_folder_ids),
+                'content_types': to_string(content_types),
+                'type': to_string(type),
+                'trash_content': to_string(trash_content),
+                'mdfilters': to_string(mdfilters),
+                'sort': to_string(sort),
+                'direction': to_string(direction),
+                'limit': to_string(limit),
+                'include_recent_shared_links': to_string(include_recent_shared_links),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'deleted_user_ids': to_string(deleted_user_ids),
+                'deleted_at_range': to_string(deleted_at_range),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/search']),

@@ -64,11 +64,13 @@ class FileVersionLegalHoldsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/file_version_legal_holds/',
-                to_string(file_version_legal_hold_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/file_version_legal_holds/',
+                    to_string(file_version_legal_hold_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -144,11 +146,13 @@ class FileVersionLegalHoldsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'policy_id': to_string(policy_id),
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'policy_id': to_string(policy_id),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(

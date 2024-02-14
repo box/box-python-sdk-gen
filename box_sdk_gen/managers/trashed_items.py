@@ -130,15 +130,17 @@ class TrashedItemsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'limit': to_string(limit),
-            'offset': to_string(offset),
-            'usemarker': to_string(usemarker),
-            'marker': to_string(marker),
-            'direction': to_string(direction),
-            'sort': to_string(sort),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+                'usemarker': to_string(usemarker),
+                'marker': to_string(marker),
+                'direction': to_string(direction),
+                'sort': to_string(sort),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/folders/trash/items']),

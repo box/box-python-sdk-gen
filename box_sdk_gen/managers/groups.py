@@ -111,12 +111,14 @@ class GroupsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'filter_term': to_string(filter_term),
-            'fields': to_string(fields),
-            'limit': to_string(limit),
-            'offset': to_string(offset),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'filter_term': to_string(filter_term),
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/groups']),
@@ -258,11 +260,13 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/groups/',
-                to_string(group_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/groups/',
+                    to_string(group_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -362,11 +366,13 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/groups/',
-                to_string(group_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/groups/',
+                    to_string(group_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 params=query_params_map,
@@ -398,11 +404,13 @@ class GroupsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/groups/',
-                to_string(group_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/groups/',
+                    to_string(group_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

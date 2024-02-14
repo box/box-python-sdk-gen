@@ -97,12 +97,14 @@ class MetadataCascadePoliciesManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'folder_id': to_string(folder_id),
-            'owner_enterprise_id': to_string(owner_enterprise_id),
-            'marker': to_string(marker),
-            'offset': to_string(offset),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'folder_id': to_string(folder_id),
+                'owner_enterprise_id': to_string(owner_enterprise_id),
+                'marker': to_string(marker),
+                'offset': to_string(offset),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
@@ -204,11 +206,13 @@ class MetadataCascadePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_cascade_policies/',
-                to_string(metadata_cascade_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_cascade_policies/',
+                    to_string(metadata_cascade_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -236,11 +240,13 @@ class MetadataCascadePoliciesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_cascade_policies/',
-                to_string(metadata_cascade_policy_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_cascade_policies/',
+                    to_string(metadata_cascade_policy_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -286,12 +292,14 @@ class MetadataCascadePoliciesManager:
         request_body: Dict = {'conflict_resolution': conflict_resolution}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_cascade_policies/',
-                to_string(metadata_cascade_policy_id),
-                '/apply',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_cascade_policies/',
+                    to_string(metadata_cascade_policy_id),
+                    '/apply',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

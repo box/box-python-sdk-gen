@@ -159,11 +159,13 @@ class InvitesManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/invites/',
-                to_string(invite_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/invites/',
+                    to_string(invite_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

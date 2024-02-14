@@ -81,10 +81,12 @@ class CollaborationAllowlistEntriesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_entries',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_entries',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -119,10 +121,12 @@ class CollaborationAllowlistEntriesManager:
         request_body: Dict = {'domain': domain, 'direction': direction}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_entries',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_entries',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -155,11 +159,13 @@ class CollaborationAllowlistEntriesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_entries/',
-                to_string(collaboration_whitelist_entry_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_entries/',
+                    to_string(collaboration_whitelist_entry_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -190,11 +196,13 @@ class CollaborationAllowlistEntriesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/collaboration_whitelist_entries/',
-                to_string(collaboration_whitelist_entry_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/collaboration_whitelist_entries/',
+                    to_string(collaboration_whitelist_entry_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

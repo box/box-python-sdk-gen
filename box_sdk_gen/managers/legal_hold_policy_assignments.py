@@ -125,20 +125,24 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'policy_id': to_string(policy_id),
-            'assign_to_type': to_string(assign_to_type),
-            'assign_to_id': to_string(assign_to_id),
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-            'fields': to_string(fields),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'policy_id': to_string(policy_id),
+                'assign_to_type': to_string(assign_to_type),
+                'assign_to_id': to_string(assign_to_id),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -170,10 +174,12 @@ class LegalHoldPolicyAssignmentsManager:
         request_body: Dict = {'policy_id': policy_id, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -203,11 +209,13 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments/',
-                to_string(legal_hold_policy_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments/',
+                    to_string(legal_hold_policy_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -241,11 +249,13 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments/',
-                to_string(legal_hold_policy_assignment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments/',
+                    to_string(legal_hold_policy_assignment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -325,19 +335,23 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-            'fields': to_string(fields),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments/',
-                to_string(legal_hold_policy_assignment_id),
-                '/files_on_hold',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments/',
+                    to_string(legal_hold_policy_assignment_id),
+                    '/files_on_hold',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -418,19 +432,23 @@ class LegalHoldPolicyAssignmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-            'fields': to_string(fields),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'fields': to_string(fields),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/legal_hold_policy_assignments/',
-                to_string(legal_hold_policy_assignment_id),
-                '/file_versions_on_hold',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/legal_hold_policy_assignments/',
+                    to_string(legal_hold_policy_assignment_id),
+                    '/file_versions_on_hold',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

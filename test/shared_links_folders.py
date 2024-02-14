@@ -55,21 +55,25 @@ def testSharedLinksFolders():
     user_client: BoxClient = get_default_client_as_user(user_id)
     folder_from_shared_link_password: FolderFull = (
         user_client.shared_links_folders.find_folder_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                folder_from_api.shared_link.url,
-                '&shared_link_password=Secret123@',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    folder_from_api.shared_link.url,
+                    '&shared_link_password=Secret123@',
+                ]
+            )
         )
     )
     assert folder.id == folder_from_shared_link_password.id
     with pytest.raises(Exception):
         user_client.shared_links_folders.find_folder_for_shared_link(
-            boxapi=''.join([
-                'shared_link=',
-                folder_from_api.shared_link.url,
-                '&shared_link_password=incorrectPassword',
-            ])
+            boxapi=''.join(
+                [
+                    'shared_link=',
+                    folder_from_api.shared_link.url,
+                    '&shared_link_password=incorrectPassword',
+                ]
+            )
         )
     updated_folder: FolderFull = (
         client.shared_links_folders.update_shared_link_on_folder(

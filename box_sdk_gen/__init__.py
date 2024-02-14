@@ -1,6 +1,6 @@
 from .base_object import *
 
-from .box_response import *
+from .errors import *
 
 from .fetch import *
 

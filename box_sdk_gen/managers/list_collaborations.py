@@ -94,19 +94,23 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'fields': to_string(fields),
-            'limit': to_string(limit),
-            'marker': to_string(marker),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/collaborations',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/collaborations',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -157,12 +161,14 @@ class ListCollaborationsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/folders/',
-                to_string(folder_id),
-                '/collaborations',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/folders/',
+                    to_string(folder_id),
+                    '/collaborations',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -207,12 +213,14 @@ class ListCollaborationsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'status': to_string(status),
-            'fields': to_string(fields),
-            'offset': to_string(offset),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'status': to_string(status),
+                'fields': to_string(fields),
+                'offset': to_string(offset),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/collaborations']),
@@ -265,12 +273,14 @@ class ListCollaborationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/groups/',
-                to_string(group_id),
-                '/collaborations',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/groups/',
+                    to_string(group_id),
+                    '/collaborations',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

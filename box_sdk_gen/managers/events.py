@@ -268,14 +268,16 @@ class EventsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'stream_type': to_string(stream_type),
-            'stream_position': to_string(stream_position),
-            'limit': to_string(limit),
-            'event_type': to_string(event_type),
-            'created_after': to_string(created_after),
-            'created_before': to_string(created_before),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'stream_type': to_string(stream_type),
+                'stream_position': to_string(stream_position),
+                'limit': to_string(limit),
+                'event_type': to_string(event_type),
+                'created_after': to_string(created_after),
+                'created_before': to_string(created_before),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/events']),

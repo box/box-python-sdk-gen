@@ -150,12 +150,14 @@ class FileMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -199,15 +201,17 @@ class FileMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -260,15 +264,17 @@ class FileMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -329,15 +335,17 @@ class FileMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -380,15 +388,17 @@ class FileMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/files/',
-                to_string(file_id),
-                '/metadata/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/metadata/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,

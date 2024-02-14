@@ -1,4 +1,6 @@
 import io
+from datetime import datetime
+
 import math
 import random
 import time
@@ -8,11 +10,11 @@ from typing import Optional, Dict, List, Union
 from sys import version_info as py_version
 
 import requests
-from requests import Response, RequestException
+from requests import RequestException, Session, Response
 from requests_toolbelt import MultipartEncoder
 
-from .box_response import APIResponse
 from .network import NetworkSession
+from .errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
 from .auth import Authentication
 from .utils import ByteStream, ResponseByteStream
 from .json_data import (
@@ -65,28 +67,27 @@ class FetchResponse:
 
 
 @dataclass
-class APIException(Exception):
-    status: int
-    code: Optional[str] = None
-    message: Optional[str] = None
-    request_id: Optional[str] = None
-    headers: dict = None
-    url: str = None
-    method: str = None
-    context_info: Optional[dict] = None
-    network_response: Optional[Response] = None
+class APIRequest:
+    method: str
+    url: str
+    headers: Dict[str, str]
+    params: Dict[str, str]
+    data: Optional[Union[str, ByteStream, MultipartEncoder]]
 
-    def __str__(self):
-        return '\n'.join((
-            f'Message: {self.message}',
-            f'Status: {self.status}',
-            f'Code: {self.code}',
-            f'Request ID: {self.request_id}',
-            f'Headers: {self.headers}',
-            f'URL: {self.url}',
-            f'Method: {self.method}',
-            f'Context Info: {self.context_info}',
-        ))
+
+@dataclass
+class APIResponse:
+    network_response: Optional[Response] = None
+    reauthentication_needed: Optional[bool] = False
+    raised_exception: Optional[Exception] = None
+
+    def get_header(
+        self, header_name: str, default_value: Optional[str] = None
+    ) -> Optional[str]:
+        try:
+            return self.network_response.headers[header_name]
+        except (ValueError, KeyError, AttributeError):
+            return default_value
 
 
 def fetch(url: str, options: FetchOptions) -> FetchResponse:
@@ -97,28 +98,27 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         max_attempts = DEFAULT_MAX_ATTEMPTS
         requests_session = requests.Session()
 
-    headers = __compose_headers_for_request(options)
-    params = options.params or {}
-
     attempt_nr = 1
-    response: APIResponse = __make_request(
-        session=requests_session,
-        method=options.method,
-        url=url,
-        headers=headers,
-        data=options.file_stream or options.data,
-        content_type=options.content_type,
-        params=params,
-        multipart_data=options.multipart_data,
-        attempt_nr=attempt_nr,
-    )
+    response = APIResponse()
 
-    while attempt_nr < max_attempts:
-        if response.network_response:
-            if response.ok:
+    while True:
+        request: APIRequest = __prepare_request(
+            url=url, options=options, reauthenticate=response.reauthentication_needed
+        )
+        response: APIResponse = __make_request(
+            request=request, session=requests_session
+        )
+
+        # Retry network exception only once
+        if response.raised_exception and attempt_nr > 1:
+            break
+
+        if response.network_response != None:
+            network_response = response.network_response
+            if network_response.ok:
                 if options.response_format == 'binary':
                     return FetchResponse(
-                        status=response.status_code,
+                        status=network_response.status_code,
                         headers=dict(response.network_response.headers),
                         content=ResponseByteStream(
                             response.network_response.iter_content(chunk_size=1024)
@@ -126,22 +126,24 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
                     )
                 else:
                     return FetchResponse(
-                        status=response.status_code,
+                        status=network_response.status_code,
                         headers=dict(response.network_response.headers),
                         data=(
-                            json_to_serialized_data(response.text)
-                            if response.text
+                            json_to_serialized_data(network_response.text)
+                            if network_response.text
                             else None
                         ),
-                        content=io.BytesIO(response.content),
+                        content=io.BytesIO(network_response.content),
                     )
 
-            if response.status_code != 429 and response.status_code < 500:
-                __raise_on_unsuccessful_request(
-                    network_response=response.network_response,
-                    url=url,
-                    method=options.method,
-                )
+            if (
+                network_response.status_code != 429
+                and network_response.status_code < 500
+            ):
+                __raise_on_unsuccessful_request(request=request, response=response)
+
+        if attempt_nr >= max_attempts:
+            break
 
         time.sleep(
             __get_retry_after_time(
@@ -150,60 +152,22 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             )
         )
 
-        if response.reauthentication_needed:
-            headers['Authorization'] = (
-                f'Bearer {options.auth.refresh_token(options.network_session).access_token}'
-            )
-
         attempt_nr += 1
-        response: APIResponse = __make_request(
-            session=requests_session,
-            method=options.method,
-            url=url,
-            headers=headers,
-            data=options.file_stream or options.data,
-            content_type=options.content_type,
-            params=params,
-            multipart_data=options.multipart_data,
-            attempt_nr=attempt_nr,
-        )
 
-    __raise_on_unsuccessful_request(
-        network_response=response.network_response, url=url, method=options.method
-    )
+    __raise_on_unsuccessful_request(request=request, response=response)
 
 
-def __compose_headers_for_request(options: FetchOptions) -> Dict[str, str]:
-    headers = {}
-    if options.network_session:
-        headers.update(options.network_session.additional_headers)
-    if options.headers:
-        headers.update(options.headers)
-    if options.auth:
-        headers['Authorization'] = (
-            f'Bearer {options.auth.retrieve_token(options.network_session).access_token}'
-        )
+def __prepare_request(
+    url: str, options: FetchOptions, reauthenticate: bool = False
+) -> APIRequest:
+    headers = __prepare_headers(options, reauthenticate)
+    params = options.params or {}
+    data = __prepare_body(options.content_type, options.file_stream or options.data)
 
-    headers['User-Agent'] = USER_AGENT_HEADER
-    headers['X-Box-UA'] = X_BOX_UA_HEADER
-    return headers
-
-
-def __make_request(
-    session,
-    method,
-    url,
-    headers,
-    data,
-    content_type,
-    params,
-    multipart_data,
-    attempt_nr,
-) -> APIResponse:
-    if content_type:
-        if content_type == 'multipart/form-data':
+    if options.content_type:
+        if options.content_type == 'multipart/form-data':
             fields = OrderedDict()
-            for part in multipart_data:
+            for part in options.multipart_data:
                 if part.data:
                     fields[part.part_name] = sd_to_json(part.data)
                 else:
@@ -220,34 +184,73 @@ def __make_request(
             data = multipart_stream
             headers['Content-Type'] = multipart_stream.content_type
         else:
-            headers['Content-Type'] = content_type
+            headers['Content-Type'] = options.content_type
 
+    return APIRequest(
+        method=options.method, url=url, headers=headers, params=params, data=data
+    )
+
+
+def __prepare_headers(
+    options: FetchOptions, reauthenticate: bool = False
+) -> Dict[str, str]:
+    headers = {}
+    if options.network_session:
+        headers.update(options.network_session.additional_headers)
+    if options.headers:
+        headers.update(options.headers)
+    if options.auth:
+        if reauthenticate:
+            headers['Authorization'] = (
+                f'Bearer {options.auth.refresh_token(options.network_session).access_token}'
+            )
+        else:
+            headers['Authorization'] = (
+                f'Bearer {options.auth.retrieve_token(options.network_session).access_token}'
+            )
+
+    headers['User-Agent'] = USER_AGENT_HEADER
+    headers['X-Box-UA'] = X_BOX_UA_HEADER
+    return headers
+
+
+def __prepare_body(
+    content_type: str, data: Union[dict, ByteStream]
+) -> Optional[Union[str, ByteStream]]:
+    if (
+        content_type == 'application/json'
+        or content_type == 'application/json-patch+json'
+    ):
+        return sd_to_json(data) if data else None
+    if content_type == 'application/x-www-form-urlencoded':
+        return sd_to_url_params(data)
+    if (
+        content_type == 'multipart/form-data'
+        or content_type == 'application/octet-stream'
+    ):
+        return data
+    raise
+
+
+def __make_request(request: APIRequest, session: Session) -> APIResponse:
     raised_exception = None
+    reauthentication_needed = False
     try:
         network_response = session.request(
-            method=method,
-            url=url,
-            headers=headers,
-            data=__prepare_data(content_type, data),
-            params=params,
+            method=request.method,
+            url=request.url,
+            headers=request.headers,
+            data=request.data,
+            params=request.params,
             stream=True,
         )
         reauthentication_needed = network_response.status_code == 401
     except RequestException as request_exc:
-        if attempt_nr > 1:
-            raise
         raised_exception = request_exc
         network_response = None
 
         if 'EOF occurred in violation of protocol' in str(request_exc):
             reauthentication_needed = True
-        elif any(
-            text in str(request_exc)
-            for text in ['Connection aborted', 'Connection broken', 'Connection reset']
-        ):
-            reauthentication_needed = False
-        else:
-            raise
 
     return APIResponse(
         network_response=network_response,
@@ -256,23 +259,37 @@ def __make_request(
     )
 
 
-def __raise_on_unsuccessful_request(network_response, url, method) -> None:
+def __raise_on_unsuccessful_request(request: APIRequest, response: APIResponse) -> None:
+    if response.raised_exception:
+        raise BoxSDKError(
+            message=str(response.raised_exception),
+            timestamp=str(datetime.now()),
+            error=response.raised_exception,
+        )
+
+    network_response = response.network_response
+
     try:
         response_json = network_response.json()
     except ValueError:
         response_json = {}
 
-    raise APIException(
-        status=network_response.status_code,
-        headers=network_response.headers,
-        code=response_json.get('code', None) or response_json.get('error', None),
-        message=response_json.get('message', None)
-        or response_json.get('error_description', None),
-        request_id=response_json.get('request_id', None),
-        url=url,
-        method=method,
-        context_info=response_json.get('context_info', None),
-        network_response=network_response,
+    raise BoxAPIError(
+        message=f'{network_response.status_code} {response_json.get("message", "")}; Request ID: {response_json.get("request_id", "")}',
+        timestamp=str(datetime.now()),
+        request_info=RequestInfo(
+            method=request.method,
+            url=request.url,
+            query_params=request.params,
+            headers=request.headers,
+            body=request.data,
+        ),
+        response_info=ResponseInfo(
+            status_code=network_response.status_code,
+            headers=dict(network_response.headers),
+            body=response_json,
+            raw_body=network_response.text,
+        ),
     )
 
 
@@ -291,19 +308,3 @@ def __get_retry_after_time(
     ) + min_randomization
     exponential = math.pow(2, attempt_number)
     return exponential * _RETRY_BASE_INTERVAL * randomization
-
-
-def __prepare_data(content_type: str, data: Union[dict, MultipartEncoder]):
-    if (
-        content_type == 'application/json'
-        or content_type == 'application/json-patch+json'
-    ):
-        return sd_to_json(data) if data else None
-    if content_type == 'application/x-www-form-urlencoded':
-        return sd_to_url_params(data)
-    if (
-        content_type == 'multipart/form-data'
-        or content_type == 'application/octet-stream'
-    ):
-        return data
-    raise

@@ -20,6 +20,8 @@ from box_sdk_gen.token_storage import InMemoryTokenStorage
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
+from box_sdk_gen.errors import BoxSDKError
+
 
 class CCGConfig:
     def __init__(
@@ -173,8 +175,8 @@ class BoxCCGAuth(Authentication):
         """
         token: Optional[AccessToken] = self.token_storage.get()
         if token == None:
-            raise Exception(
-                'No access token is available. Make an API call to retrieve a token before calling this method.'
+            raise BoxSDKError(
+                message='No access token is available. Make an API call to retrieve a token before calling this method.'
             )
         auth_manager: AuthorizationManager = (
             AuthorizationManager(network_session=network_session)

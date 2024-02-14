@@ -163,12 +163,14 @@ class ChunkedUploadsManager:
         request_body: Dict = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/',
-                to_string(file_id),
-                '/upload_sessions',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/',
+                    to_string(file_id),
+                    '/upload_sessions',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -198,11 +200,13 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/upload_sessions/',
-                to_string(upload_session_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/upload_sessions/',
+                    to_string(upload_session_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -253,17 +257,21 @@ class ChunkedUploadsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({
-            'digest': to_string(digest),
-            'content-range': to_string(content_range),
-            **extra_headers,
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'digest': to_string(digest),
+                'content-range': to_string(content_range),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/upload_sessions/',
-                to_string(upload_session_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/upload_sessions/',
+                    to_string(upload_session_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -296,11 +304,13 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/upload_sessions/',
-                to_string(upload_session_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/upload_sessions/',
+                    to_string(upload_session_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -343,12 +353,14 @@ class ChunkedUploadsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/upload_sessions/',
-                to_string(upload_session_id),
-                '/parts',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/upload_sessions/',
+                    to_string(upload_session_id),
+                    '/parts',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -404,19 +416,23 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {'parts': parts}
-        headers_map: Dict[str, str] = prepare_params({
-            'digest': to_string(digest),
-            'if-match': to_string(if_match),
-            'if-none-match': to_string(if_none_match),
-            **extra_headers,
-        })
+        headers_map: Dict[str, str] = prepare_params(
+            {
+                'digest': to_string(digest),
+                'if-match': to_string(if_match),
+                'if-none-match': to_string(if_none_match),
+                **extra_headers,
+            }
+        )
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.upload_url,
-                '/files/upload_sessions/',
-                to_string(upload_session_id),
-                '/commit',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/files/upload_sessions/',
+                    to_string(upload_session_id),
+                    '/commit',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -440,14 +456,16 @@ class ChunkedUploadsManager:
         chunk_size: int = buffer_length(chunk_buffer)
         bytes_start: int = last_index + 1
         bytes_end: int = last_index + chunk_size
-        content_range: str = ''.join([
-            'bytes ',
-            to_string(bytes_start),
-            '-',
-            to_string(bytes_end),
-            '/',
-            to_string(acc.file_size),
-        ])
+        content_range: str = ''.join(
+            [
+                'bytes ',
+                to_string(bytes_start),
+                '-',
+                to_string(bytes_end),
+                '/',
+                to_string(acc.file_size),
+            ]
+        )
         uploaded_part: UploadedPart = self.upload_file_part(
             upload_session_id=acc.upload_session_id,
             request_body=generate_byte_stream_from_buffer(chunk_buffer),

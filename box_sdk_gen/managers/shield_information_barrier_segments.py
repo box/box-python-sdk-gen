@@ -65,11 +65,13 @@ class ShieldInformationBarrierSegmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barrier_segments/',
-                to_string(shield_information_barrier_segment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barrier_segments/',
+                    to_string(shield_information_barrier_segment_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -105,11 +107,13 @@ class ShieldInformationBarrierSegmentsManager:
         request_body: Dict = {'name': name, 'description': description}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barrier_segments/',
-                to_string(shield_information_barrier_segment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barrier_segments/',
+                    to_string(shield_information_barrier_segment_id),
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -142,11 +146,13 @@ class ShieldInformationBarrierSegmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barrier_segments/',
-                to_string(shield_information_barrier_segment_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barrier_segments/',
+                    to_string(shield_information_barrier_segment_id),
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -182,17 +188,23 @@ class ShieldInformationBarrierSegmentsManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({
-            'shield_information_barrier_id': to_string(shield_information_barrier_id),
-            'marker': to_string(marker),
-            'limit': to_string(limit),
-        })
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'shield_information_barrier_id': to_string(
+                    shield_information_barrier_id
+                ),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barrier_segments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barrier_segments',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -229,10 +241,12 @@ class ShieldInformationBarrierSegmentsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/shield_information_barrier_segments',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/shield_information_barrier_segments',
+                ]
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

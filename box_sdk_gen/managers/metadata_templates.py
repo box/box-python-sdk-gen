@@ -285,14 +285,16 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-                '/schema',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                    '/schema',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -339,14 +341,16 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-                '/schema',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                    '/schema',
+                ]
+            ),
             FetchOptions(
                 method='PUT',
                 headers=headers_map,
@@ -383,14 +387,16 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/',
-                to_string(scope),
-                '/',
-                to_string(template_key),
-                '/schema',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/',
+                    to_string(scope),
+                    '/',
+                    to_string(template_key),
+                    '/schema',
+                ]
+            ),
             FetchOptions(
                 method='DELETE',
                 headers=headers_map,
@@ -416,11 +422,13 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/',
-                to_string(template_id),
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/',
+                    to_string(template_id),
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 headers=headers_map,
@@ -499,10 +507,12 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([
-                self.network_session.base_urls.base_url,
-                '/metadata_templates/enterprise',
-            ]),
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/metadata_templates/enterprise',
+                ]
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
