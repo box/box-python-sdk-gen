@@ -113,7 +113,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
         if response.raised_exception and attempt_nr > 1:
             break
 
-        if response.network_response != None:
+        if response.network_response is not None:
             network_response = response.network_response
             if network_response.ok:
                 if options.response_format == 'binary':
@@ -137,7 +137,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
                     )
 
             if (
-                network_response.status_code != 429
+                not response.reauthentication_needed
+                and network_response.status_code != 429
                 and network_response.status_code < 500
             ):
                 __raise_on_unsuccessful_request(request=request, response=response)

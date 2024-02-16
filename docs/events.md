@@ -20,7 +20,11 @@ This operation is performed by calling function `get_events`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-events/).
 
-_Currently we don't have an example for calling `get_events` in integration tests_
+<!-- sample get_events -->
+
+```python
+client.events.get_events(stream_type=GetEventsStreamType.CHANGES.value)
+```
 
 ### Arguments
 
@@ -92,7 +96,11 @@ This operation is performed by calling function `get_events_with_long_polling`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/options-events/).
 
-_Currently we don't have an example for calling `get_events_with_long_polling` in integration tests_
+<!-- sample options_events -->
+
+```python
+client.events.get_events_with_long_polling()
+```
 
 ### Arguments
 

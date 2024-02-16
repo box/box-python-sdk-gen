@@ -2,9 +2,9 @@ from typing import Optional
 
 from typing import List
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenGrantType
+from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenSubjectTokenType
+from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
 
 from box_sdk_gen.schemas import AccessToken
 
@@ -61,13 +61,21 @@ class BoxCCGAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = self.config.token_storage
+        self.token_storage = (
+            InMemoryTokenStorage()
+            if self.config.token_storage == None
+            else self.config.token_storage
+        )
         self.subject_id = (
             self.config.user_id
             if not self.config.user_id == None
             else self.config.enterprise_id
         )
-        self.subject_type = 'user' if not self.config.user_id == None else 'enterprise'
+        self.subject_type = (
+            PostOAuth2TokenBoxSubjectTypeField.USER.value
+            if not self.config.user_id == None
+            else PostOAuth2TokenBoxSubjectTypeField.ENTERPRISE.value
+        )
 
     def refresh_token(
         self, network_session: Optional[NetworkSession] = None
@@ -82,8 +90,8 @@ class BoxCCGAuth(Authentication):
             if not network_session == None
             else AuthorizationManager()
         )
-        token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.CLIENT_CREDENTIALS.value,
+        token: Optional[AccessToken] = auth_manager.request_access_token(
+            grant_type=PostOAuth2TokenGrantTypeField.CLIENT_CREDENTIALS.value,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
             box_subject_type=self.subject_type,
@@ -100,7 +108,7 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
         """
-        old_token = self.token_storage.get()
+        old_token: Optional[AccessToken] = self.token_storage.get()
         if old_token == None:
             new_token: AccessToken = self.refresh_token(network_session)
             return new_token
@@ -184,9 +192,9 @@ class BoxCCGAuth(Authentication):
             else AuthorizationManager()
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
             subject_token=token.access_token,
-            subject_token_type=RequestAccessTokenSubjectTokenType.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,
             scope=' '.join(scopes),
             box_shared_link=shared_link,
