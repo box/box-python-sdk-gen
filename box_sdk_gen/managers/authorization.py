@@ -10,6 +10,12 @@ from box_sdk_gen.serialization import serialize
 
 from box_sdk_gen.serialization import deserialize
 
+from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
+
+from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
+
+from box_sdk_gen.schemas import PostOAuth2TokenBoxSubjectTypeField
+
 from box_sdk_gen.schemas import AccessToken
 
 from box_sdk_gen.schemas import OAuth2Error

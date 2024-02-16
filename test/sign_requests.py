@@ -59,3 +59,27 @@ def testCreateGetCancelAndListSignRequest():
     assert to_string(sign_requests.entries[0].type) == 'sign-request'
     client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
     client.files.delete_file_by_id(file_id=file_to_sign.id)
+
+
+def testCreateSignRequestWithSignerGroupId():
+    signer_1_email: str = ''.join([get_uuid(), '@box.com'])
+    signer_2_email: str = ''.join([get_uuid(), '@box.com'])
+    file_to_sign: FileFull = upload_new_file()
+    destination_folder: FolderFull = create_new_folder()
+    created_sign_request: SignRequest = client.sign_requests.create_sign_request(
+        source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
+        signers=[
+            SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'),
+            SignRequestCreateSigner(email=signer_2_email, signer_group_id='user'),
+        ],
+        parent_folder=FolderMini(
+            id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
+        ),
+    )
+    assert len(created_sign_request.signers) == 3
+    assert (
+        created_sign_request.signers[1].signer_group_id
+        == created_sign_request.signers[2].signer_group_id
+    )
+    client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
+    client.files.delete_file_by_id(file_id=file_to_sign.id)

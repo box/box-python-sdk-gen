@@ -83,7 +83,8 @@ class BaseObject:
 
         for possible_type in possible_types:
             if (
-                value.get(possible_type._discriminator[0], None)
+                issubclass(possible_type, BaseObject)
+                and value.get(possible_type._discriminator[0], None)
                 in possible_type._discriminator[1]
             ):
                 return cls._deserialize(key, value, possible_type)

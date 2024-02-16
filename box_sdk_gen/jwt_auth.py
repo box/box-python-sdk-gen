@@ -8,9 +8,9 @@ from box_sdk_gen.serialization import deserialize
 
 from typing import List
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenGrantType
+from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenSubjectTokenType
+from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
 
 from box_sdk_gen.auth import Authentication
 
@@ -49,8 +49,6 @@ from box_sdk_gen.utils import JwtAlgorithm
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
 from box_sdk_gen.errors import BoxSDKError
-
-box_jwt_audience: str = 'https://api.box.com/oauth2/token'
 
 
 class JwtConfigAppSettingsAppAuth(BaseObject):
@@ -160,7 +158,7 @@ class JWTConfig:
         private_key_passphrase: str,
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
-        jwt_algorithm: Optional[JwtAlgorithm] = 'RS256',
+        algorithm: Optional[JwtAlgorithm] = JwtAlgorithm.RS256.value,
         token_storage: TokenStorage = None,
     ):
         """
@@ -188,7 +186,7 @@ class JWTConfig:
         self.private_key_passphrase = private_key_passphrase
         self.enterprise_id = enterprise_id
         self.user_id = user_id
-        self.jwt_algorithm = jwt_algorithm
+        self.algorithm = algorithm
         self.token_storage = token_storage
 
     @staticmethod
@@ -208,7 +206,7 @@ class JWTConfig:
         config_json: JwtConfigFile = deserialize(
             json_to_serialized_data(config_json_string), JwtConfigFile
         )
-        new_config = (
+        new_config: 'JWTConfig' = (
             JWTConfig(
                 client_id=config_json.box_app_settings.client_id,
                 client_secret=config_json.box_app_settings.client_secret,
@@ -258,7 +256,11 @@ class BoxJWTAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = self.config.token_storage
+        self.token_storage = (
+            InMemoryTokenStorage()
+            if self.config.token_storage == None
+            else self.config.token_storage
+        )
         self.subject_id = (
             self.config.enterprise_id
             if not self.config.enterprise_id == None
@@ -281,9 +283,9 @@ class BoxJWTAuth(Authentication):
                 message='JWT auth is not supported in browser environment.'
             )
         alg: JwtAlgorithm = (
-            self.config.jwt_algorithm
-            if not self.config.jwt_algorithm == None
-            else 'RS256'
+            self.config.algorithm
+            if not self.config.algorithm == None
+            else JwtAlgorithm.RS256.value
         )
         claims: Dict = {
             'exp': get_epoch_time_in_seconds() + 30,
@@ -291,7 +293,7 @@ class BoxJWTAuth(Authentication):
         }
         jwt_options: JwtSignOptions = JwtSignOptions(
             algorithm=alg,
-            audience=box_jwt_audience,
+            audience='https://api.box.com/oauth2/token',
             subject=self.subject_id,
             issuer=self.config.client_id,
             jwtid=get_uuid(),
@@ -307,7 +309,7 @@ class BoxJWTAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
+            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
             assertion=assertion,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -323,7 +325,7 @@ class BoxJWTAuth(Authentication):
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
         """
-        old_token = self.token_storage.get()
+        old_token: Optional[AccessToken] = self.token_storage.get()
         if old_token == None:
             new_token: AccessToken = self.refresh_token(network_session)
             return new_token
@@ -415,17 +417,14 @@ class BoxJWTAuth(Authentication):
             else AuthorizationManager()
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
             subject_token=token.access_token,
-            subject_token_type=RequestAccessTokenSubjectTokenType.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,
             scope=' '.join(scopes),
             box_shared_link=shared_link,
         )
         return downscoped_token
-
-    def add_space(self, text: str) -> str:
-        return ''.join([])
 
     def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
         """

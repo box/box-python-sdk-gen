@@ -2,11 +2,13 @@ from typing import Optional
 
 from typing import Dict
 
+from box_sdk_gen.serialization import serialize
+
 from typing import List
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenGrantType
+from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
 
-from box_sdk_gen.managers.authorization import RequestAccessTokenSubjectTokenType
+from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
 
 from box_sdk_gen.auth import Authentication
 
@@ -30,7 +32,7 @@ from box_sdk_gen.utils import prepare_params
 
 from box_sdk_gen.errors import BoxSDKError
 
-box_oauth_2_auth_url: str = 'https://account.box.com/api/oauth2/authorize'
+from box_sdk_gen.json_data import SerializedData
 
 
 class OAuthConfig:
@@ -80,7 +82,11 @@ class BoxOAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = self.config.token_storage
+        self.token_storage = (
+            InMemoryTokenStorage()
+            if self.config.token_storage == None
+            else self.config.token_storage
+        )
 
     def get_authorize_url(self, options: GetAuthorizeUrlOptions = None) -> str:
         """
@@ -88,7 +94,7 @@ class BoxOAuth(Authentication):
         """
         if options is None:
             options = GetAuthorizeUrlOptions()
-        params: Dict[str, str] = prepare_params(
+        params_map: Dict[str, str] = prepare_params(
             {
                 'client_id': (
                     options.client_id
@@ -105,7 +111,12 @@ class BoxOAuth(Authentication):
                 'scope': options.scope,
             }
         )
-        return ''.join([box_oauth_2_auth_url, '?', sd_to_url_params(params)])
+        return ''.join(
+            [
+                'https://account.box.com/api/oauth2/authorize?',
+                sd_to_url_params(serialize(params_map)),
+            ]
+        )
 
     def get_tokens_authorization_code_grant(
         self, authorization_code: str, network_session: Optional[NetworkSession] = None
@@ -123,7 +134,7 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.AUTHORIZATION_CODE.value,
+            grant_type=PostOAuth2TokenGrantTypeField.AUTHORIZATION_CODE.value,
             code=authorization_code,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -139,7 +150,7 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
         """
-        token = self.token_storage.get()
+        token: Optional[AccessToken] = self.token_storage.get()
         if token == None:
             raise BoxSDKError(
                 message='Access and refresh tokens not available. Authenticate before making any API call first.'
@@ -147,22 +158,16 @@ class BoxOAuth(Authentication):
         return token
 
     def refresh_token(
-        self,
-        network_session: Optional[NetworkSession] = None,
-        refresh_token: Optional[str] = None,
+        self, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Get a new access token for the app user.
         :param network_session: An object to keep network session state
         :type network_session: Optional[NetworkSession], optional
-        :param refresh_token: A refresh token to use
-        :type refresh_token: Optional[str], optional
         """
         old_token: Optional[AccessToken] = self.token_storage.get()
-        token_used_for_refresh = (
-            refresh_token
-            if not refresh_token == None
-            else old_token.refresh_token if not old_token == None else None
+        token_used_for_refresh: Optional[str] = (
+            old_token.refresh_token if not old_token == None else None
         )
         auth_manager: AuthorizationManager = (
             AuthorizationManager(network_session=network_session)
@@ -170,7 +175,7 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.REFRESH_TOKEN.value,
+            grant_type=PostOAuth2TokenGrantTypeField.REFRESH_TOKEN.value,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
             refresh_token=token_used_for_refresh,
@@ -225,9 +230,9 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            grant_type=RequestAccessTokenGrantType.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
             subject_token=token.access_token,
-            subject_token_type=RequestAccessTokenSubjectTokenType.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,
             scope=' '.join(scopes),
             box_shared_link=shared_link,
