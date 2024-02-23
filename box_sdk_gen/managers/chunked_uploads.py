@@ -4,19 +4,19 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.serialization import serialize
+from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.serialization import deserialize
+from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.utils import Buffer
+from box_sdk_gen.internal.utils import Buffer
 
-from box_sdk_gen.utils import HashName
+from box_sdk_gen.internal.utils import HashName
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.utils import Iterator
+from box_sdk_gen.internal.utils import Iterator
 
 from box_sdk_gen.schemas import UploadSession
 
@@ -30,39 +30,39 @@ from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.schemas import UploadPart
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.utils import prepare_params
+from box_sdk_gen.internal.utils import prepare_params
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.fetch import fetch
+from box_sdk_gen.networking.fetch import FetchOptions
 
-from box_sdk_gen.fetch import FetchOptions
+from box_sdk_gen.networking.fetch import FetchResponse
 
-from box_sdk_gen.fetch import FetchResponse
+from box_sdk_gen.networking.fetch import fetch
 
-from box_sdk_gen.json_data import SerializedData
+from box_sdk_gen.serialization.json.json_data import SerializedData
 
-from box_sdk_gen.json_data import sd_to_json
+from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.utils import generate_byte_stream_from_buffer
+from box_sdk_gen.internal.utils import generate_byte_stream_from_buffer
 
-from box_sdk_gen.utils import hex_to_base_64
+from box_sdk_gen.internal.utils import hex_to_base_64
 
-from box_sdk_gen.utils import iterate_chunks
+from box_sdk_gen.internal.utils import iterate_chunks
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.internal.utils import read_byte_stream
 
-from box_sdk_gen.utils import reduce_iterator
+from box_sdk_gen.internal.utils import reduce_iterator
 
-from box_sdk_gen.utils import Hash
+from box_sdk_gen.internal.utils import Hash
 
-from box_sdk_gen.utils import buffer_length
+from box_sdk_gen.internal.utils import buffer_length
 
 
 class PartAccumulator:

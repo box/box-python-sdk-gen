@@ -12,7 +12,7 @@ from box_sdk_gen.managers.folder_locks import CreateFolderLockLockedOperations
 
 from box_sdk_gen.managers.folder_locks import CreateFolderLockFolder
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client
 

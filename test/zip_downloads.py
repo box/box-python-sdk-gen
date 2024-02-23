@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
@@ -6,7 +6,7 @@ from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.managers.zip_downloads import DownloadZipItems
 
@@ -24,11 +24,11 @@ from test.commons import upload_new_file
 
 from test.commons import create_new_folder
 
-from box_sdk_gen.utils import buffer_equals
+from box_sdk_gen.internal.utils import buffer_equals
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.internal.utils import read_byte_stream
 
-from box_sdk_gen.utils import generate_byte_buffer
+from box_sdk_gen.internal.utils import generate_byte_buffer
 
 client: BoxClient = get_default_client()
 

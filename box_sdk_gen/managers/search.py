@@ -2,17 +2,17 @@ from enum import Enum
 
 from typing import Optional
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import Dict
 
 from typing import List
 
-from box_sdk_gen.serialization import serialize
+from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.serialization import deserialize
+from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from typing import Union
 
@@ -22,33 +22,31 @@ from box_sdk_gen.schemas import ClientError
 
 from box_sdk_gen.schemas import MetadataQuery
 
-from box_sdk_gen.schemas import MetadataQueryIndices
-
 from box_sdk_gen.schemas import SearchResults
 
 from box_sdk_gen.schemas import SearchResultsWithSharedLinks
 
 from box_sdk_gen.schemas import MetadataFilter
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.utils import prepare_params
+from box_sdk_gen.internal.utils import prepare_params
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.fetch import fetch
+from box_sdk_gen.networking.fetch import FetchOptions
 
-from box_sdk_gen.fetch import FetchOptions
+from box_sdk_gen.networking.fetch import FetchResponse
 
-from box_sdk_gen.fetch import FetchResponse
+from box_sdk_gen.networking.fetch import fetch
 
-from box_sdk_gen.json_data import SerializedData
+from box_sdk_gen.serialization.json.json_data import SerializedData
 
-from box_sdk_gen.json_data import sd_to_json
+from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 
 class SearchByMetadataQueryOrderByDirectionField(str, Enum):
@@ -76,11 +74,6 @@ class SearchByMetadataQueryOrderBy(BaseObject):
         super().__init__(**kwargs)
         self.field_key = field_key
         self.direction = direction
-
-
-class GetMetadataQueryIndicesScope(str, Enum):
-    GLOBAL = 'global'
-    ENTERPRISE = 'enterprise'
 
 
 class SearchForContentScope(str, Enum):
@@ -236,42 +229,6 @@ class SearchManager:
             ),
         )
         return deserialize(response.data, MetadataQueryResults)
-
-    def get_metadata_query_indices(
-        self,
-        scope: GetMetadataQueryIndicesScope,
-        template_key: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
-    ) -> MetadataQueryIndices:
-        """
-        Retrieves the metadata query indices for a given scope and template key.
-        :param scope: The scope of the metadata template
-        :type scope: GetMetadataQueryIndicesScope
-        :param template_key: The name of the metadata template
-        :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params(
-            {'scope': to_string(scope), 'template_key': to_string(template_key)}
-        )
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            ''.join(
-                [self.network_session.base_urls.base_url, '/metadata_query_indices']
-            ),
-            FetchOptions(
-                method='GET',
-                params=query_params_map,
-                headers=headers_map,
-                response_format='json',
-                auth=self.auth,
-                network_session=self.network_session,
-            ),
-        )
-        return deserialize(response.data, MetadataQueryIndices)
 
     def search_for_content(
         self,

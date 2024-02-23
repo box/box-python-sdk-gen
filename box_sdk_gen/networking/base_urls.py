@@ -1,6 +1,6 @@
 from typing import Dict
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.internal.base_object import BaseObject
 
 
 class BaseUrls(BaseObject):

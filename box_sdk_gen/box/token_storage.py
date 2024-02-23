@@ -2,7 +2,7 @@ import shelve
 from abc import abstractmethod
 from typing import Optional
 
-from .schemas import AccessToken
+from ..schemas import AccessToken
 
 
 class TokenStorage:

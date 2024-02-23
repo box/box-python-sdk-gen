@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
@@ -30,9 +30,9 @@ from test.commons import get_default_client_as_user
 
 from test.commons import get_or_create_terms_of_services
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
 
 def testGetTermsOfServiceUserStatuses():

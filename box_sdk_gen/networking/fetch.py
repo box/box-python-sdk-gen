@@ -14,10 +14,10 @@ from requests import RequestException, Session, Response
 from requests_toolbelt import MultipartEncoder
 
 from .network import NetworkSession
-from .errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
+from ..box.errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
 from .auth import Authentication
-from .utils import ByteStream, ResponseByteStream
-from .json_data import (
+from ..internal.utils import ByteStream, ResponseByteStream
+from ..serialization.json.json_data import (
     SerializedData,
     sd_to_json,
     sd_to_url_params,

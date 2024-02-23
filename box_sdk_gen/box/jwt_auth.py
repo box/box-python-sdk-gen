@@ -1,10 +1,10 @@
 from typing import Dict
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import Optional
 
-from box_sdk_gen.serialization import deserialize
+from box_sdk_gen.serialization.json.serializer import deserialize
 
 from typing import List
 
@@ -12,9 +12,9 @@ from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
 
 from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
 from box_sdk_gen.schemas import AccessToken
 
@@ -22,33 +22,33 @@ from box_sdk_gen.schemas import PostOAuth2Token
 
 from box_sdk_gen.schemas import PostOAuth2Revoke
 
-from box_sdk_gen.token_storage import TokenStorage
+from box_sdk_gen.box.token_storage import TokenStorage
 
-from box_sdk_gen.token_storage import InMemoryTokenStorage
+from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
-from box_sdk_gen.json_data import json_to_serialized_data
+from box_sdk_gen.serialization.json.json_data import json_to_serialized_data
 
-from box_sdk_gen.json_data import SerializedData
+from box_sdk_gen.serialization.json.json_data import SerializedData
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import read_text_from_file
+from box_sdk_gen.internal.utils import read_text_from_file
 
-from box_sdk_gen.utils import is_browser
+from box_sdk_gen.internal.utils import is_browser
 
-from box_sdk_gen.utils import get_epoch_time_in_seconds
+from box_sdk_gen.internal.utils import get_epoch_time_in_seconds
 
-from box_sdk_gen.utils import create_jwt_assertion
+from box_sdk_gen.internal.utils import create_jwt_assertion
 
-from box_sdk_gen.utils import JwtSignOptions
+from box_sdk_gen.internal.utils import JwtSignOptions
 
-from box_sdk_gen.utils import JwtKey
+from box_sdk_gen.internal.utils import JwtKey
 
-from box_sdk_gen.utils import JwtAlgorithm
+from box_sdk_gen.internal.utils import JwtAlgorithm
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
-from box_sdk_gen.errors import BoxSDKError
+from box_sdk_gen.box.errors import BoxSDKError
 
 
 class JwtConfigAppSettingsAppAuth(BaseObject):

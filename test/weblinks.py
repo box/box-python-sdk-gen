@@ -8,7 +8,7 @@ from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
 from box_sdk_gen.managers.web_links import UpdateWebLinkByIdSharedLink
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client
 

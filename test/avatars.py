@@ -6,21 +6,21 @@ from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.schemas import UserAvatar
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.utils import decode_base_64
+from box_sdk_gen.internal.utils import decode_base_64
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import buffer_equals
+from box_sdk_gen.internal.utils import buffer_equals
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.internal.utils import read_byte_stream
 
-from box_sdk_gen.utils import generate_byte_buffer
+from box_sdk_gen.internal.utils import generate_byte_buffer
 
-from box_sdk_gen.utils import decode_base_64_byte_stream
+from box_sdk_gen.internal.utils import decode_base_64_byte_stream
 
 from test.commons import get_default_client
 

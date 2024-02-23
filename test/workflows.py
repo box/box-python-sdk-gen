@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
@@ -26,11 +26,11 @@ from box_sdk_gen.managers.workflows import StartWorkflowFolder
 
 from box_sdk_gen.managers.workflows import StartWorkflowFolderTypeField
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
 from test.commons import get_default_client
 

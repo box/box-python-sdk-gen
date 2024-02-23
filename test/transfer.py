@@ -6,7 +6,7 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.transfer import TransferOwnedFolderOwnedBy
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client
 

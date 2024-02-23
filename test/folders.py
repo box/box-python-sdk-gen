@@ -12,7 +12,7 @@ from box_sdk_gen.managers.folders import UpdateFolderByIdParent
 
 from box_sdk_gen.schemas import Items
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client
 

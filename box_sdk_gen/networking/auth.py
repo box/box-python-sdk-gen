@@ -4,7 +4,7 @@ from abc import abstractmethod
 
 from box_sdk_gen.schemas import AccessToken
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
 
 class Authentication:

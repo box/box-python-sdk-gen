@@ -249,7 +249,7 @@ See the endpoint docs at
 <!-- sample post_metadata_templates_schema -->
 
 ```python
-client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.STRING.value, key='testName', display_name='testName')])
+client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.FLOAT.value, key='testName', display_name='testName')])
 ```
 
 ### Arguments

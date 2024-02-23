@@ -1,10 +1,10 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
@@ -18,9 +18,9 @@ from box_sdk_gen.schemas import TrashFile
 
 from box_sdk_gen.schemas import TrashFileRestored
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
 from test.commons import get_default_client
 

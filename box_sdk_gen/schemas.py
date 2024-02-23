@@ -2,7 +2,7 @@ from enum import Enum
 
 from typing import Optional
 
-from box_sdk_gen.base_object import BaseObject
+from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
@@ -2300,28 +2300,6 @@ class MetadataQueryIndex(BaseObject):
         self.status = status
         self.id = id
         self.fields = fields
-
-
-class MetadataQueryIndices(BaseObject):
-    def __init__(
-        self,
-        entries: Optional[List[MetadataQueryIndex]] = None,
-        limit: Optional[int] = None,
-        next_marker: Optional[str] = None,
-        **kwargs
-    ):
-        """
-        :param entries: A collection of metadata query indices.
-        :type entries: Optional[List[MetadataQueryIndex]], optional
-        :param limit: The limit that was used for this request.
-        :type limit: Optional[int], optional
-        :param next_marker: The marker for the start of the next page of results.
-        :type next_marker: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.entries = entries
-        self.limit = limit
-        self.next_marker = next_marker
 
 
 class MetadataTemplateTypeField(str, Enum):
@@ -10816,6 +10794,7 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         page_index: int,
         type: Optional[SignRequestSignerInputTypeField] = None,
         content_type: Optional[SignRequestSignerInputContentTypeField] = None,
+        read_only: Optional[bool] = None,
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
@@ -10829,6 +10808,8 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         :type type: Optional[SignRequestSignerInputTypeField], optional
         :param content_type: Content type of input
         :type content_type: Optional[SignRequestSignerInputContentTypeField], optional
+        :param read_only: Whether this input was defined as read-only(immutable by signers) or not
+        :type read_only: Optional[bool], optional
         :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
         :type document_tag_id: Optional[str], optional
         :param text_value: Text prefill value
@@ -10848,6 +10829,7 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         self.page_index = page_index
         self.type = type
         self.content_type = content_type
+        self.read_only = read_only
 
 
 class SignRequestSignerSignerDecisionTypeField(str, Enum):
@@ -10986,7 +10968,6 @@ class SignRequestSigner(SignRequestCreateSigner):
 class SignRequestBase(BaseObject):
     def __init__(
         self,
-        parent_folder: FolderMini,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -11031,7 +11012,6 @@ class SignRequestBase(BaseObject):
         :type template_id: Optional[str], optional
         """
         super().__init__(**kwargs)
-        self.parent_folder = parent_folder
         self.is_document_preparation_needed = is_document_preparation_needed
         self.redirect_url = redirect_url
         self.declined_redirect_url = declined_redirect_url
@@ -11091,7 +11071,6 @@ class SignRequestSignFilesField(BaseObject):
 class SignRequest(SignRequestBase):
     def __init__(
         self,
-        parent_folder: FolderMini,
         type: Optional[SignRequestTypeField] = None,
         source_files: Optional[List[FileBase]] = None,
         signers: Optional[List[SignRequestSigner]] = None,
@@ -11102,6 +11081,7 @@ class SignRequest(SignRequestBase):
         status: Optional[SignRequestStatusField] = None,
         sign_files: Optional[SignRequestSignFilesField] = None,
         auto_expire_at: Optional[str] = None,
+        parent_folder: Optional[FolderMini] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -11168,7 +11148,6 @@ class SignRequest(SignRequestBase):
         :type template_id: Optional[str], optional
         """
         super().__init__(
-            parent_folder=parent_folder,
             is_document_preparation_needed=is_document_preparation_needed,
             redirect_url=redirect_url,
             declined_redirect_url=declined_redirect_url,
@@ -11194,6 +11173,7 @@ class SignRequest(SignRequestBase):
         self.status = status
         self.sign_files = sign_files
         self.auto_expire_at = auto_expire_at
+        self.parent_folder = parent_folder
 
 
 class SignRequests(BaseObject):
@@ -11230,9 +11210,9 @@ class SignRequestCreateRequest(SignRequestBase):
     def __init__(
         self,
         signers: List[SignRequestCreateSigner],
-        parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
         signature_color: Optional[SignRequestCreateRequestSignatureColorField] = None,
+        parent_folder: Optional[FolderMini] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -11283,7 +11263,6 @@ class SignRequestCreateRequest(SignRequestBase):
         :type template_id: Optional[str], optional
         """
         super().__init__(
-            parent_folder=parent_folder,
             is_document_preparation_needed=is_document_preparation_needed,
             redirect_url=redirect_url,
             declined_redirect_url=declined_redirect_url,
@@ -11302,6 +11281,7 @@ class SignRequestCreateRequest(SignRequestBase):
         self.signers = signers
         self.source_files = source_files
         self.signature_color = signature_color
+        self.parent_folder = parent_folder
 
 
 class TemplateSignerInputTypeField(str, Enum):
@@ -11373,6 +11353,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         coordinates: Optional[TemplateSignerInputCoordinatesField] = None,
         dimensions: Optional[TemplateSignerInputDimensionsField] = None,
         label: Optional[str] = None,
+        read_only: Optional[bool] = None,
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
@@ -11400,6 +11381,8 @@ class TemplateSignerInput(SignRequestPrefillTag):
         :type dimensions: Optional[TemplateSignerInputDimensionsField], optional
         :param label: The label field is used especially for text, attachment, radio, and checkbox type inputs.
         :type label: Optional[str], optional
+        :param read_only: Whether this input was defined as read-only(immutable by signers) or not
+        :type read_only: Optional[bool], optional
         :param document_tag_id: This references the ID of a specific tag contained in a file of the sign request.
         :type document_tag_id: Optional[str], optional
         :param text_value: Text prefill value
@@ -11426,6 +11409,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         self.coordinates = coordinates
         self.dimensions = dimensions
         self.label = label
+        self.read_only = read_only
 
 
 class TemplateSignerRoleField(str, Enum):

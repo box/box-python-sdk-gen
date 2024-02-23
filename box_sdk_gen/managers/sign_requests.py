@@ -4,13 +4,13 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.serialization import deserialize
+from box_sdk_gen.serialization.json.serializer import deserialize
 
 from typing import List
 
-from box_sdk_gen.serialization import serialize
+from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.schemas import FileBase
 
@@ -28,25 +28,25 @@ from box_sdk_gen.schemas import SignRequests
 
 from box_sdk_gen.schemas import SignRequestCreateRequest
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.utils import prepare_params
+from box_sdk_gen.internal.utils import prepare_params
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.fetch import fetch
+from box_sdk_gen.networking.fetch import FetchOptions
 
-from box_sdk_gen.fetch import FetchOptions
+from box_sdk_gen.networking.fetch import FetchResponse
 
-from box_sdk_gen.fetch import FetchResponse
+from box_sdk_gen.networking.fetch import fetch
 
-from box_sdk_gen.json_data import sd_to_json
+from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.json_data import SerializedData
+from box_sdk_gen.serialization.json.json_data import SerializedData
 
 
 class CreateSignRequestSignatureColor(str, Enum):
@@ -212,9 +212,9 @@ class SignRequestsManager:
     def create_sign_request(
         self,
         signers: List[SignRequestCreateSigner],
-        parent_folder: FolderMini,
         source_files: Optional[List[FileBase]] = None,
         signature_color: Optional[CreateSignRequestSignatureColor] = None,
+        parent_folder: Optional[FolderMini] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -276,6 +276,7 @@ class SignRequestsManager:
             'source_files': source_files,
             'signature_color': signature_color,
             'signers': signers,
+            'parent_folder': parent_folder,
             'is_document_preparation_needed': is_document_preparation_needed,
             'redirect_url': redirect_url,
             'declined_redirect_url': declined_redirect_url,
@@ -283,7 +284,6 @@ class SignRequestsManager:
             'email_subject': email_subject,
             'email_message': email_message,
             'are_reminders_enabled': are_reminders_enabled,
-            'parent_folder': parent_folder,
             'name': name,
             'prefill_tags': prefill_tags,
             'days_valid': days_valid,

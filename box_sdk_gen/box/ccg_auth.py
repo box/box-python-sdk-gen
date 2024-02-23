@@ -10,17 +10,17 @@ from box_sdk_gen.schemas import AccessToken
 
 from box_sdk_gen.schemas import PostOAuth2TokenBoxSubjectTypeField
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.token_storage import TokenStorage
+from box_sdk_gen.box.token_storage import TokenStorage
 
-from box_sdk_gen.token_storage import InMemoryTokenStorage
+from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
-from box_sdk_gen.errors import BoxSDKError
+from box_sdk_gen.box.errors import BoxSDKError
 
 
 class CCGConfig:

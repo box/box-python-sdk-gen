@@ -1,8 +1,8 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.utils import Buffer
+from box_sdk_gen.internal.utils import Buffer
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
@@ -12,21 +12,21 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import generate_byte_buffer
+from box_sdk_gen.internal.utils import generate_byte_buffer
 
-from box_sdk_gen.utils import generate_byte_stream_from_buffer
+from box_sdk_gen.internal.utils import generate_byte_stream_from_buffer
 
-from box_sdk_gen.utils import buffer_equals
+from box_sdk_gen.internal.utils import buffer_equals
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.internal.utils import read_byte_stream
 
 from test.commons import get_default_client
 
-from box_sdk_gen.fetch import FetchOptions
+from box_sdk_gen.networking.fetch import FetchOptions
 
-from box_sdk_gen.fetch import FetchResponse
+from box_sdk_gen.networking.fetch import FetchResponse
 
 client: BoxClient = get_default_client()
 
