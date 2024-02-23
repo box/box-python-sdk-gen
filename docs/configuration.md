@@ -17,5 +17,5 @@ from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
 auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
 client = BoxClient(auth=auth)
-client.network.MAX_ATTEMPTS = 6
+client.network_session.MAX_ATTEMPTS = 6
 ```
