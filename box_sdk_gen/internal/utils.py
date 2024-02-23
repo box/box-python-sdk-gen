@@ -15,8 +15,8 @@ except ImportError:
     jwt, default_backend, serialization = None, None, None
 
 from .base_object import BaseObject
-from .json_data import sd_to_json
-from .serialization import serialize
+from ..serialization.json.json_data import sd_to_json
+from ..serialization.json.serializer import serialize
 
 ByteStream = BufferedIOBase
 Buffer = bytes

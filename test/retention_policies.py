@@ -10,7 +10,7 @@ from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyRetenti
 
 from box_sdk_gen.schemas import RetentionPolicies
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.client import BoxClient
 

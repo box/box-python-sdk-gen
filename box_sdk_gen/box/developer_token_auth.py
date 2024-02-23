@@ -2,11 +2,11 @@ from typing import Optional
 
 from box_sdk_gen.schemas import AccessToken
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.errors import BoxSDKError
+from box_sdk_gen.box.errors import BoxSDKError
 
 
 class BoxDeveloperTokenAuth(Authentication):

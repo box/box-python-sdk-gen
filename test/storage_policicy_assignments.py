@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.schemas import StoragePolicyAssignment
 
@@ -38,13 +38,13 @@ from box_sdk_gen.managers.storage_policy_assignments import (
     UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField,
 )
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client_as_user
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 admin_user_id: str = get_env_var('USER_ID')
 

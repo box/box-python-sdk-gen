@@ -1,7 +1,6 @@
 # SearchManager
 
 - [Query files/folders by metadata](#query-files-folders-by-metadata)
-- [List metadata query indices](#list-metadata-query-indices)
 - [Search for content](#search-for-content)
 
 ## Query files/folders by metadata
@@ -50,36 +49,6 @@ client.search.search_by_metadata_query(from_=search_from, query='testName >= :va
 This function returns a value of type `MetadataQueryResults`.
 
 Returns a list of files and folders that match this metadata query.
-
-## List metadata query indices
-
-Retrieves the metadata query indices for a given scope and template key.
-
-This operation is performed by calling function `get_metadata_query_indices`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-query-indices/).
-
-<!-- sample get_metadata_query_indices -->
-
-```python
-client.search.get_metadata_query_indices(scope=GetMetadataQueryIndicesScope.ENTERPRISE.value, template_key=template_key)
-```
-
-### Arguments
-
-- scope `GetMetadataQueryIndicesScope`
-  - The scope of the metadata template
-- template_key `str`
-  - The name of the metadata template
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `MetadataQueryIndices`.
-
-Returns a collection of metadata query indices for scope and template key.
 
 ## Search for content
 

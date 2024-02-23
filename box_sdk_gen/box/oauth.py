@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.serialization import serialize
+from box_sdk_gen.serialization.json.serializer import serialize
 
 from typing import List
 
@@ -10,9 +10,9 @@ from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
 
 from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
 from box_sdk_gen.schemas import AccessToken
 
@@ -22,17 +22,17 @@ from box_sdk_gen.schemas import PostOAuth2Revoke
 
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
-from box_sdk_gen.token_storage import TokenStorage
+from box_sdk_gen.box.token_storage import TokenStorage
 
-from box_sdk_gen.token_storage import InMemoryTokenStorage
+from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
-from box_sdk_gen.json_data import sd_to_url_params
+from box_sdk_gen.serialization.json.json_data import sd_to_url_params
 
-from box_sdk_gen.utils import prepare_params
+from box_sdk_gen.internal.utils import prepare_params
 
-from box_sdk_gen.errors import BoxSDKError
+from box_sdk_gen.box.errors import BoxSDKError
 
-from box_sdk_gen.json_data import SerializedData
+from box_sdk_gen.serialization.json.json_data import SerializedData
 
 
 class OAuthConfig:

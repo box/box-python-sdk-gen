@@ -1,6 +1,6 @@
 from typing import get_origin, Union, Type
 
-from .base_object import BaseObject
+from ...internal.base_object import BaseObject
 from .json_data import SerializedData
 
 

@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from typing import List
 
@@ -8,7 +8,7 @@ from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.utils import ByteStream
+from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.schemas import Files
 
@@ -70,13 +70,13 @@ from box_sdk_gen.schemas import EnterpriseBase
 
 from box_sdk_gen.schemas import EnterpriseBaseTypeField
 
-from box_sdk_gen.utils import decode_base_64
+from box_sdk_gen.internal.utils import decode_base_64
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
 from box_sdk_gen.client import BoxClient
 
@@ -84,9 +84,9 @@ from box_sdk_gen.schemas import ClassificationTemplate
 
 from box_sdk_gen.schemas import TermsOfService
 
-from box_sdk_gen.jwt_auth import BoxJWTAuth
+from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 
-from box_sdk_gen.jwt_auth import JWTConfig
+from box_sdk_gen.box.jwt_auth import JWTConfig
 
 
 def get_jwt_auth() -> BoxJWTAuth:

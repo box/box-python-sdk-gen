@@ -1,6 +1,6 @@
 from typing import Union
 
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
@@ -28,19 +28,15 @@ from box_sdk_gen.schemas import MetadataQueryResults
 
 from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScope
 
-from box_sdk_gen.schemas import MetadataQueryIndices
-
-from box_sdk_gen.managers.search import GetMetadataQueryIndicesScope
-
 from box_sdk_gen.schemas import SearchResults
 
 from box_sdk_gen.schemas import SearchResultsWithSharedLinks
 
 from box_sdk_gen.managers.search import SearchForContentTrashContent
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
 from test.commons import get_default_client
 
@@ -90,31 +86,6 @@ def testCreateMetaDataQueryExecuteRead():
         template_key=template.template_key,
     )
     client.files.delete_file_by_id(file_id=file.id)
-
-
-def testGetMetadataQueryIndices():
-    template_key: str = ''.join(['key', get_uuid()])
-    template: MetadataTemplate = client.metadata_templates.create_metadata_template(
-        scope='enterprise',
-        template_key=template_key,
-        display_name=template_key,
-        fields=[
-            CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
-                key='testName',
-                display_name='testName',
-            )
-        ],
-    )
-    assert template.template_key == template_key
-    indices: MetadataQueryIndices = client.search.get_metadata_query_indices(
-        scope=GetMetadataQueryIndicesScope.ENTERPRISE.value, template_key=template_key
-    )
-    assert len(indices.entries) >= 0
-    client.metadata_templates.delete_metadata_template(
-        scope=DeleteMetadataTemplateScope.ENTERPRISE.value,
-        template_key=template.template_key,
-    )
 
 
 def testGetSearch():

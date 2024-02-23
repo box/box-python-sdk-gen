@@ -34,9 +34,9 @@ from box_sdk_gen.managers.shield_information_barrier_segment_restrictions import
 
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestrictions
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client_as_user
 

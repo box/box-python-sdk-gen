@@ -160,11 +160,11 @@ from box_sdk_gen.managers.sign_templates import SignTemplatesManager
 
 from box_sdk_gen.managers.integration_mappings import IntegrationMappingsManager
 
-from box_sdk_gen.auth import Authentication
+from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.network import NetworkSession
+from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.base_urls import BaseUrls
+from box_sdk_gen.networking.base_urls import BaseUrls
 
 
 class BoxClient:

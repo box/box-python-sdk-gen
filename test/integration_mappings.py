@@ -16,11 +16,11 @@ from box_sdk_gen.schemas import IntegrationMappingBoxItemSlackTypeField
 
 from box_sdk_gen.schemas import IntegrationMappings
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client
 

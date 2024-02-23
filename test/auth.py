@@ -16,39 +16,39 @@ from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.utils import decode_base_64
+from box_sdk_gen.internal.utils import decode_base_64
 
-from box_sdk_gen.utils import get_env_var
+from box_sdk_gen.internal.utils import get_env_var
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
-from box_sdk_gen.utils import buffer_equals
+from box_sdk_gen.internal.utils import buffer_equals
 
-from box_sdk_gen.utils import read_byte_stream
+from box_sdk_gen.internal.utils import read_byte_stream
 
-from box_sdk_gen.utils import generate_byte_buffer
+from box_sdk_gen.internal.utils import generate_byte_buffer
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
-from box_sdk_gen.utils import decode_base_64_byte_stream
+from box_sdk_gen.internal.utils import decode_base_64_byte_stream
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.ccg_auth import BoxCCGAuth
+from box_sdk_gen.box.ccg_auth import BoxCCGAuth
 
-from box_sdk_gen.ccg_auth import CCGConfig
+from box_sdk_gen.box.ccg_auth import CCGConfig
 
-from box_sdk_gen.developer_token_auth import BoxDeveloperTokenAuth
+from box_sdk_gen.box.developer_token_auth import BoxDeveloperTokenAuth
 
-from box_sdk_gen.oauth import BoxOAuth
+from box_sdk_gen.box.oauth import BoxOAuth
 
-from box_sdk_gen.oauth import OAuthConfig
+from box_sdk_gen.box.oauth import OAuthConfig
 
 from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.jwt_auth import BoxJWTAuth
+from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 
-from box_sdk_gen.jwt_auth import JWTConfig
+from box_sdk_gen.box.jwt_auth import JWTConfig
 
 
 def test_jwt_auth():

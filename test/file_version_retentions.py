@@ -1,4 +1,4 @@
-from box_sdk_gen.utils import to_string
+from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.schemas import RetentionPolicy
 
@@ -36,9 +36,9 @@ from box_sdk_gen.schemas import FileVersionRetentions
 
 from box_sdk_gen.schemas import FileVersionRetention
 
-from box_sdk_gen.utils import generate_byte_stream
+from box_sdk_gen.internal.utils import generate_byte_stream
 
-from box_sdk_gen.utils import get_uuid
+from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.client import BoxClient
 
