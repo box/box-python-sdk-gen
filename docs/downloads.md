@@ -19,9 +19,9 @@ it won;t be necessary to store the entire file content in-memory.
 To get the full content of the file in `bytes` format just call `read()` method on returned object.
 
 ```python
-from box_sdk_gen import ByteStream
+from io import BufferedIOBase
 
-file_content_stream: ByteStream = client.downloads.download_file(file_id='123456789')
+file_content_stream: BufferedIOBase = client.downloads.download_file(file_id='123456789')
 print('File content: ', file_content_stream.read())
 ```
 
@@ -31,9 +31,9 @@ To save downloaded file to your local disk you can use e.g. `shutil.copyfileobj(
 
 ```python
 import shutil
-from box_sdk_gen import ByteStream
+from io import BufferedIOBase
 
-file_content_stream: ByteStream = client.downloads.download_file(file_id='123456789')
+file_content_stream: BufferedIOBase = client.downloads.download_file(file_id='123456789')
 with open('file.pdf', 'wb') as f:
     shutil.copyfileobj(file_content_stream, f)
 print('File was successfully downloaded as "file.pdf"')

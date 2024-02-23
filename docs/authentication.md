@@ -347,7 +347,7 @@ You can also initialize `DeveloperTokenAuth` with the retrieved access token and
 <!-- sample post_oauth2_token downscope_token -->
 
 ```python
-from box_sdk_gen import BoxDeveloperTokenAuth, AccessToken
+from box_sdk_gen import BoxDeveloperTokenAuth, AccessToken, BoxClient
 
 resource = 'https://api.box.com/2.0/files/123456789'
 downscoped_token: AccessToken = auth.downscope_token(

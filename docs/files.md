@@ -1,130 +1,232 @@
-# Files
+# FilesManager
 
-File objects represent individual files in Box. They can be used to download a
-file's contents, upload new versions, and perform other common file operations
-(move, copy, delete, etc.).
+- [Get file information](#get-file-information)
+- [Update file](#update-file)
+- [Delete file](#delete-file)
+- [Copy file](#copy-file)
+- [Get file thumbnail](#get-file-thumbnail)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Get file information
 
-- [Get a File's Information](#get-a-files-information)
-  - [Getting additional fields](#getting-additional-fields)
-- [Update a File's Information](#update-a-files-information)
-- [Copy a File](#copy-a-file)
-- [Delete a File](#delete-a-file)
-- [Restore a File from Trash](#restore-a-file-from-trash)
-- [Get Thumbnail](#get-thumbnail)
+Retrieves the details about a file.
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+This operation is performed by calling function `get_file_by_id`.
 
-## Get a File's Information
-
-To retreive information about a File, call `get_file_by_id` method. This method returns a `File` object which contains information about the file.
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id/).
 
 <!-- sample get_files_id -->
 
 ```python
-from box_sdk_gen import FileFull
-
-file: FileFull = client.files.get_file_by_id(file_id='123456789')
-print(f'File with id {file.id} has name {file.name}')
+client.files.get_file_by_id(file_id=file.id)
 ```
 
-### Getting additional fields
+### Arguments
 
-If you want the response object to contain additional fields that are not return by default, you should pass a list of
-such fields in a comma-separated string
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- fields `Optional[List[str]]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested. Additionally this field can be used to query any metadata applied to the file by specifying the `metadata` field as well as the scope and key of the template to retrieve, for example `?field=metadata.enterprise_12345.contractTemplate`.
+- if_none_match `Optional[str]`
+  - Ensures an item is only returned if it has changed. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `304 Not Modified` if the item has not changed since.
+- boxapi `Optional[str]`
+  - The URL, and optional password, for the shared link of this item. This header can be used to access items that have not been explicitly shared with a user. Use the format `shared_link=[link]` or if a password is required then use `shared_link=[link]&shared_link_password=[password]`. This header can be used on the file or folder shared, as well as on any files or folders nested within the item.
+- x_rep_hints `Optional[str]`
+  - A header required to request specific `representations` of a file. Use this in combination with the `fields` query parameter to request a specific file representation. The general format for these representations is `X-Rep-Hints: [...]` where `[...]` is one or many hints in the format `[fileType?query]`. For example, to request a `png` representation in `32x32` as well as `64x64` pixel dimensions provide the following hints. `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]` Additionally, a `text` representation is available for all document file types in Box using the `[extracted_text]` representation. `x-rep-hints: [extracted_text]`
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
-```python
-from box_sdk_gen import FileFull
+### Returns
 
-file: FileFull = client.files.get_file_by_id(file_id='12345', fields='is_externally_owned,has_collaborations')
-```
+This function returns a value of type `FileFull`.
 
-NOTE: Be aware that specifying `fields` parameter will have the effect that none of the standard fields
-are returned in the response unless explicitly specified, instead only fields defined in `FileBase`
-are returned, additional to the fields requested.
+Returns a file object.
 
-## Update a File's Information
+Not all available fields are returned by default. Use the
+[fields](#param-fields) query parameter to explicitly request
+any specific fields.
 
-To update a file's information, call `update_file_by_id` method. This method returns a `File` object which contains information about the file.
+## Update file
+
+Updates a file. This can be used to rename or move a file,
+create a shared link, or lock a file.
+
+This operation is performed by calling function `update_file_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-id/).
 
 <!-- sample put_files_id -->
 
 ```python
-from box_sdk_gen import FileFull
-
-file: FileFull = client.files.update_file_by_id(file_id='123', name='test.txt', description='Test file')
-print(f'File with id {file.id} has new name {file.name}')
+client.files.update_file_by_id(file_id=file_to_update.id, name=updated_name, description='Updated description')
 ```
 
-## Copy a File
+### Arguments
 
-To copy a file to a new location, call `copy_file` method.
-You need to specify the `parent` field in the request body, which is the destination folder and optionally the `name` field which is the new name of the file.
-This method returns a `File` object which contains information about the copied file.
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- name `Optional[str]`
+  - An optional different name for the file. This can be used to rename the file.
+- description `Optional[str]`
+  - The description for a file. This can be seen in the right-hand sidebar panel when viewing a file in the Box web app. Additionally, this index is used in the search index of the file, allowing users to find the file by the content in the description.
+- parent `Optional[UpdateFileByIdParent]`
+  -
+- shared_link `Optional[UpdateFileByIdSharedLink]`
+  -
+- lock `Optional[UpdateFileByIdLock]`
+  - Defines a lock on an item. This prevents the item from being moved, renamed, or otherwise changed by anyone other than the user who created the lock. Set this to `null` to remove the lock.
+- disposition_at `Optional[str]`
+  - The retention expiration timestamp for the given file. This date cannot be shortened once set on a file.
+- permissions `Optional[UpdateFileByIdPermissions]`
+  - Defines who can download a file.
+- collections `Optional[List[UpdateFileByIdCollections]]`
+  - An array of collections to make this file a member of. Currently we only support the `favorites` collection. To get the ID for a collection, use the [List all collections][1] endpoint. Passing an empty array `[]` or `null` will remove the file from all collections. [1]: e://get-collections
+- tags `Optional[List[str]]`
+  - The tags for this item. These tags are shown in the Box web app and mobile apps next to an item. To add or remove a tag, retrieve the item's current tags, modify them, and then update this field. There is a limit of 100 tags per item, and 10,000 unique tags per enterprise.
+- fields `Optional[List[str]]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- if_match `Optional[str]`
+  - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
-<!-- sample post_files_id_copy -->
+### Returns
 
-```python
-from box_sdk_gen import FileFull, CopyFileParentArg
+This function returns a value of type `FileFull`.
 
-file: FileFull = client.files.copy_file(
-    file_id='123456789',
-    parent=CopyFileParentArg(id='0'),
-    name='test_copy.txt'
-)
-print(f'File copied with id {file.id}, name {file.name}')
-```
+Returns a file object.
 
-## Delete a File
+Not all available fields are returned by default. Use the
+[fields](#param-fields) query parameter to explicitly request
+any specific fields.
 
-To delete a file, call `delete_file_by_id` method. If the file is successfully deleted, this method returns `None`. Otherwise, it raises an exception.
+## Delete file
+
+Deletes a file, either permanently or by moving it to
+the trash.
+
+The the enterprise settings determine whether the item will
+be permanently deleted from Box or moved to the trash.
+
+This operation is performed by calling function `delete_file_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-id/).
 
 <!-- sample delete_files_id -->
 
 ```python
-client.files.delete_file_by_id(file_id='123456789')
+client.files.delete_file_by_id(file_id=file_2.id)
 ```
 
-## Restore a File from Trash
+### Arguments
 
-To restore a file from trash, call `restore_file_from_trash` method.
-This method returns a `TrashFileRestored` object which contains information about the restored file.
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- if_match `Optional[str]`
+  - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
-<!-- sample post_files_id -->
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the file has been successfully
+deleted.
+
+## Copy file
+
+Creates a copy of a file.
+
+This operation is performed by calling function `copy_file`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-id-copy/).
+
+<!-- sample post_files_id_copy -->
 
 ```python
-from box_sdk_gen import TrashFileRestored
-
-file: TrashFileRestored = client.files.restore_file_from_trash(file_id='123456789')
-print(f'File restored with id {file.id}, name {file.name}')
+client.files.copy_file(file_id=file_origin.id, name=copied_file_name, parent=CopyFileParent(id='0'))
 ```
 
-## Get Thumbnail
+### Arguments
 
-To retrieve a thumbnail for a file, call `get_file_thumbnail_by_id` method. This method returns a `ByteStream` object,
-which is an implementation of `io.BufferedIOBase`, which contains the thumbnail data in the specified format.
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- name `Optional[str]`
+  - An optional new name for the copied file. There are some restrictions to the file name. Names containing non-printable ASCII characters, forward and backward slashes (`/`, `\`), and protected names like `.` and `..` are automatically sanitized by removing the non-allowed characters.
+- version `Optional[str]`
+  - An optional ID of the specific file version to copy.
+- parent `CopyFileParent`
+  - The destination folder to copy the file to.
+- fields `Optional[List[str]]`
+  - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
 
-Optionally, you can specify the information about the thumbnail you want to retrieve,
-including the `max_height`, `max_width`, `min_height`, `min_width`.
+### Returns
 
-To save downloaded thumbnail to your local disk you can use e.g. `shutil.copyfileobj()` method:
+This function returns a value of type `FileFull`.
+
+Returns a new file object representing the copied file.
+
+Not all available fields are returned by default. Use the
+[fields](#param-fields) query parameter to explicitly request
+any specific fields.
+
+## Get file thumbnail
+
+Retrieves a thumbnail, or smaller image representation, of a file.
+
+Sizes of `32x32`,`64x64`, `128x128`, and `256x256` can be returned in
+the `.png` format and sizes of `32x32`, `160x160`, and `320x320`
+can be returned in the `.jpg` format.
+
+Thumbnails can be generated for the image and video file formats listed
+[found on our community site][1].
+
+[1]: https://community.box.com/t5/Migrating-and-Previewing-Content/File-Types-and-Fonts-Supported-in-Box-Content-Preview/ta-p/327
+
+This operation is performed by calling function `get_file_thumbnail_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id-thumbnail-id/).
 
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
-import shutil
-from box_sdk_gen import GetFileThumbnailByIdExtensionArg, ByteStream
-
-thumbnail: ByteStream = client.files.get_file_thumbnail_by_id(
-    file_id='1199932968894',
-    extension=GetFileThumbnailByIdExtensionArg.PNG,
-    min_height=256,
-    min_width=256,
-    max_height=256,
-    max_width=256,
-)
-with open('thumbnail.png', 'wb') as f:
-    shutil.copyfileobj(thumbnail, f)
+client.files.get_file_thumbnail_by_id(file_id=thumbnail_file.id, extension=GetFileThumbnailByIdExtension.PNG.value)
 ```
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extension `GetFileThumbnailByIdExtension`
+  - The file format for the thumbnail Example: "png"
+- min_height `Optional[int]`
+  - The minimum height of the thumbnail
+- min_width `Optional[int]`
+  - The minimum width of the thumbnail
+- max_height `Optional[int]`
+  - The maximum height of the thumbnail
+- max_width `Optional[int]`
+  - The maximum width of the thumbnail
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `ByteStream`.
+
+When a thumbnail can be created the thumbnail data will be
+returned in the body of the response.Sometimes generating a thumbnail can take a few seconds. In these
+situations the API returns a `Location`-header pointing to a
+placeholder graphic for this file type.
+
+The placeholder graphic can be used in a user interface until the
+thumbnail generation has completed. The `Retry-After`-header indicates
+when to the thumbnail will be ready. At that time, retry this endpoint
+to retrieve the thumbnail.

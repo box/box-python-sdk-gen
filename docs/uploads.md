@@ -17,13 +17,13 @@ This method returns a `Files` object which contains information about the upload
 <!-- sample post_files_content -->
 
 ```python
-from box_sdk_gen import UploadFileAttributesArg, UploadFileAttributesArgParentField
+from box_sdk_gen import UploadFileAttributes, UploadFileAttributesParentField, Files, File
 
-attrs = UploadFileAttributesArg(
+attrs = UploadFileAttributes(
     name='filename.txt',
-    parent=UploadFileAttributesArgParentField(id='0')
+    parent=UploadFileAttributesParentField(id='0')
 )
-files: File = client.uploads.upload_file(attributes=attrs, file=open('filename.txt', 'rb'))
-file = files.entries[0]
+files: Files = client.uploads.upload_file(attributes=attrs, file=open('filename.txt', 'rb'))
+file: File = files.entries[0]
 print(f'File uploaded with id {file.id}, name {file.name}')
 ```
