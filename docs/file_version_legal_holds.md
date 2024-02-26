@@ -13,7 +13,11 @@ This operation is performed by calling function `get_file_version_legal_hold_by_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-legal-holds-id/).
 
-_Currently we don't have an example for calling `get_file_version_legal_hold_by_id` in integration tests_
+<!-- sample get_file_version_legal_holds_id -->
+
+```python
+client.file_version_legal_holds.get_file_version_legal_hold_by_id(file_version_legal_hold_id=file_version_legal_hold_id)
+```
 
 ### Arguments
 
@@ -56,7 +60,11 @@ This operation is performed by calling function `get_file_version_legal_holds`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-file-version-legal-holds/).
 
-_Currently we don't have an example for calling `get_file_version_legal_holds` in integration tests_
+<!-- sample get_file_version_legal_holds -->
+
+```python
+client.file_version_legal_holds.get_file_version_legal_holds(policy_id=policy_id)
+```
 
 ### Arguments
 
