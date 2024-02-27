@@ -8717,7 +8717,7 @@ class Event(BaseObject):
         created_by: Optional[UserMini] = None,
         event_type: Optional[EventEventTypeField] = None,
         session_id: Optional[str] = None,
-        source: Optional[Union[User, EventSource, File, Folder]] = None,
+        source: Optional[Union[User, EventSource, File, Folder, Dict[str, str]]] = None,
         additional_details: Optional[EventAdditionalDetailsField] = None,
         **kwargs
     ):
