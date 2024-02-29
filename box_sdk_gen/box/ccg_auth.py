@@ -22,6 +22,10 @@ from box_sdk_gen.managers.authorization import AuthorizationManager
 
 from box_sdk_gen.box.errors import BoxSDKError
 
+from box_sdk_gen.schemas import PostOAuth2Token
+
+from box_sdk_gen.schemas import PostOAuth2Revoke
+
 
 class CCGConfig:
     def __init__(
