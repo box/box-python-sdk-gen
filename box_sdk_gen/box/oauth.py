@@ -183,6 +183,12 @@ class BoxOAuth(Authentication):
         self.token_storage.store(token)
         return token
 
+    def retrieve_authorization_header(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> str:
+        token: AccessToken = self.retrieve_token(network_session)
+        return ''.join(['Bearer ', token.access_token])
+
     def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
         """
         Revoke an active Access Token, effectively logging a user out that has been previously authenticated.
@@ -200,7 +206,6 @@ class BoxOAuth(Authentication):
         auth_manager.revoke_access_token(
             self.config.client_id, self.config.client_secret, token.access_token
         )
-        self.token_storage.clear()
         return None
 
     def downscope_token(

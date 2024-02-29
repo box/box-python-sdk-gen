@@ -35,3 +35,9 @@ class BoxDeveloperTokenAuth(Authentication):
         raise BoxSDKError(
             message='Developer token has expired. Please provide a new one.'
         )
+
+    def retrieve_authorization_header(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> str:
+        token: AccessToken = self.retrieve_token(network_session)
+        return ''.join(['Bearer ', token.access_token])
