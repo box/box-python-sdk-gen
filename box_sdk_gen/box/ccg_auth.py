@@ -118,6 +118,12 @@ class BoxCCGAuth(Authentication):
             return new_token
         return old_token
 
+    def retrieve_authorization_header(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> str:
+        token: AccessToken = self.retrieve_token(network_session)
+        return ''.join(['Bearer ', token.access_token])
+
     def as_user(self, user_id: str, token_storage: TokenStorage = None) -> 'BoxCCGAuth':
         """
         Create a new BoxCCGAuth instance that uses the provided user ID as the subject ID.

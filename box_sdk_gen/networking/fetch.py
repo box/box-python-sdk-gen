@@ -202,13 +202,10 @@ def __prepare_headers(
         headers.update(options.headers)
     if options.auth:
         if reauthenticate:
-            headers['Authorization'] = (
-                f'Bearer {options.auth.refresh_token(options.network_session).access_token}'
-            )
-        else:
-            headers['Authorization'] = (
-                f'Bearer {options.auth.retrieve_token(options.network_session).access_token}'
-            )
+            options.auth.refresh_token(options.network_session)
+        headers['Authorization'] = options.auth.retrieve_authorization_header(
+            options.network_session
+        )
 
     headers['User-Agent'] = USER_AGENT_HEADER
     headers['X-Box-UA'] = X_BOX_UA_HEADER
