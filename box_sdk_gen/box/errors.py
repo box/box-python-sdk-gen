@@ -1,5 +1,5 @@
 import pprint
-from typing import Optional
+from typing import Any, Optional
 
 from typing import Dict
 
@@ -10,14 +10,14 @@ class BoxSDKError(Exception):
         message: str,
         timestamp: str = None,
         error: Optional[Exception] = None,
-        type: Optional[str] = None,
+        name: Optional[str] = None,
         **kwargs,
     ):
         super().__init__(message)
         self.message = message
         self.timestamp = timestamp
         self.error = error
-        self.type = type
+        self.name = name
 
     def __str__(self):
         return ''.join(
@@ -69,17 +69,29 @@ class ResponseInfo:
         headers: Dict[str, str],
         body: Dict = None,
         raw_body: Optional[str] = None,
+        code: Optional[str] = None,
+        context_info: Optional[Dict[str, Any]] = None,
+        request_id: Optional[str] = None,
+        help_url: Optional[str] = None,
     ):
         self.status_code = status_code
         self.headers = headers
         self.body = body
         self.raw_body = raw_body
+        self.code = code
+        self.context_info = context_info
+        self.request_id = request_id
+        self.help_url = help_url
 
     def __str__(self):
         return ''.join(
             (
                 f'\n\tStatus code: {self.status_code}',
                 f'\n\tHeaders: \n{pprint.pformat(self.headers, indent=8)}',
+                f'\n\tCode: {self.code}',
+                f'\n\tContext Info: \n{pprint.pformat(self.context_info, indent=8)}',
+                f'\n\tRequest Id: {self.request_id}',
+                f'\n\tHelp Url: {self.help_url}',
                 ''.join(
                     [
                         '\n\tBody: ',
@@ -100,11 +112,11 @@ class BoxAPIError(BoxSDKError):
         message: str,
         timestamp: str,
         error: Optional[str] = None,
-        type: Optional[str] = None,
+        name: Optional[str] = None,
         **kwargs,
     ):
         super().__init__(
-            message=message, timestamp=timestamp, error=error, type=type, **kwargs
+            message=message, timestamp=timestamp, error=error, name=name, **kwargs
         )
         self.request_info = request_info
         self.response_info = response_info
