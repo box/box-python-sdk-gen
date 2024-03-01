@@ -287,6 +287,10 @@ def __raise_on_unsuccessful_request(request: APIRequest, response: APIResponse) 
             headers=dict(network_response.headers),
             body=response_json,
             raw_body=network_response.text,
+            code=response_json.get("code", None),
+            context_info=response_json.get("context_info", {}),
+            request_id=response_json.get("request_id", None),
+            help_url=response_json.get("help_url", None),
         ),
     )
 
