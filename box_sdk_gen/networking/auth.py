@@ -18,5 +18,13 @@ class Authentication:
         pass
 
     @abstractmethod
-    def refresh_token(self, network_session: NetworkSession) -> AccessToken:
+    def refresh_token(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> AccessToken:
+        pass
+
+    @abstractmethod
+    def retrieve_authorization_header(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> str:
         pass

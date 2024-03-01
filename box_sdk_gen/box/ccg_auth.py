@@ -22,6 +22,10 @@ from box_sdk_gen.managers.authorization import AuthorizationManager
 
 from box_sdk_gen.box.errors import BoxSDKError
 
+from box_sdk_gen.schemas import PostOAuth2Token
+
+from box_sdk_gen.schemas import PostOAuth2Revoke
+
 
 class CCGConfig:
     def __init__(
@@ -113,6 +117,12 @@ class BoxCCGAuth(Authentication):
             new_token: AccessToken = self.refresh_token(network_session)
             return new_token
         return old_token
+
+    def retrieve_authorization_header(
+        self, network_session: Optional[NetworkSession] = None
+    ) -> str:
+        token: AccessToken = self.retrieve_token(network_session)
+        return ''.join(['Bearer ', token.access_token])
 
     def as_user(self, user_id: str, token_storage: TokenStorage = None) -> 'BoxCCGAuth':
         """

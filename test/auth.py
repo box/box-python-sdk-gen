@@ -215,13 +215,13 @@ def test_oauth_auth_revoke():
         client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
     )
     auth: BoxOAuth = BoxOAuth(config=config)
+    client: BoxClient = BoxClient(auth=auth)
     token: AccessToken = get_access_token()
     auth.token_storage.store(token)
-    token_before_revoke: Optional[AccessToken] = auth.token_storage.get()
+    client.users.get_user_me()
     auth.revoke_token()
-    token_after_revoke: Optional[AccessToken] = auth.token_storage.get()
-    assert not token_before_revoke == None
-    assert token_after_revoke == None
+    with pytest.raises(Exception):
+        client.users.get_user_me()
 
 
 def test_oauth_auth_downscope():
