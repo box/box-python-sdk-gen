@@ -17,7 +17,11 @@ This operation is performed by calling function `get_retention_policy_assignment
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policies-id-assignments/).
 
-_Currently we don't have an example for calling `get_retention_policy_assignments` in integration tests_
+<!-- sample get_retention_policies_id_assignments -->
+
+```python
+client.retention_policy_assignments.get_retention_policy_assignments(retention_policy_id=retention_policy.id)
+```
 
 ### Arguments
 
@@ -53,7 +57,7 @@ See the endpoint docs at
 <!-- sample post_retention_policy_assignments -->
 
 ```python
-client.retention_policy_assignments.create_retention_policy_assignment(policy_id=retention_policy.id, assign_to=CreateRetentionPolicyAssignmentAssignTo(id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value))
+client.retention_policy_assignments.create_retention_policy_assignment(policy_id=retention_policy.id, assign_to=CreateRetentionPolicyAssignmentAssignTo(type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value, id=folder.id))
 ```
 
 ### Arguments
@@ -84,7 +88,11 @@ This operation is performed by calling function `get_retention_policy_assignment
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policy-assignments-id/).
 
-_Currently we don't have an example for calling `get_retention_policy_assignment_by_id` in integration tests_
+<!-- sample get_retention_policy_assignments_id -->
+
+```python
+client.retention_policy_assignments.get_retention_policy_assignment_by_id(retention_policy_assignment_id=retention_policy_assignment.id)
+```
 
 ### Arguments
 
@@ -111,7 +119,11 @@ This operation is performed by calling function `delete_retention_policy_assignm
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-retention-policy-assignments-id/).
 
-_Currently we don't have an example for calling `delete_retention_policy_assignment_by_id` in integration tests_
+<!-- sample delete_retention_policy_assignments_id -->
+
+```python
+client.retention_policy_assignments.delete_retention_policy_assignment_by_id(retention_policy_assignment_id=retention_policy_assignment.id)
+```
 
 ### Arguments
 
@@ -136,7 +148,11 @@ This operation is performed by calling function `get_files_under_retention_polic
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-retention-policy-assignments-id-files-under-retention/).
 
-_Currently we don't have an example for calling `get_files_under_retention_policy_assignment` in integration tests_
+<!-- sample get_retention_policy_assignments_id_files_under_retention -->
+
+```python
+client.retention_policy_assignments.get_files_under_retention_policy_assignment(retention_policy_assignment_id=retention_policy_assignment.id)
+```
 
 ### Arguments
 
