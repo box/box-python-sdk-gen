@@ -23,11 +23,12 @@ from ..serialization.json.json_data import (
     sd_to_url_params,
     json_to_serialized_data,
 )
+from .version import __version__
 
 DEFAULT_MAX_ATTEMPTS = 5
 _RETRY_RANDOMIZATION_FACTOR = 0.5
 _RETRY_BASE_INTERVAL = 1
-SDK_VERSION = '0.1.0'
+SDK_VERSION = __version__
 USER_AGENT_HEADER = f'box-python-generated-sdk-{SDK_VERSION}'
 X_BOX_UA_HEADER = (
     f'agent=box-python-generated-sdk/{SDK_VERSION}; '

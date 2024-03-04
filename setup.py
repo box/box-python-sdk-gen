@@ -2,12 +2,18 @@ from setuptools import setup, find_packages
 
 from os.path import dirname, join
 
+import re
+
 
 def main():
-    install_requires = ['requests', 'requests_toolbelt']
+    install_requires = ['requests', 'requests-toolbelt']
     tests_require = ['pytest', 'pytest-timeout', 'pytest-cov']
     dev_requires = ['tox']
     jwt_requires = ['pyjwt>=1.7.0', 'cryptography>=3']
+    version_file = open(join(dirname(__file__), 'box_sdk_gen/networking/version.py'))
+    version_regex = re.compile('.*__version__ = \'(.*?)\'', re.S)
+    version_string_grouped = version_regex.match(version_file.read())
+    __version__ = version_string_grouped.group(1)
     extras_require = {
         'test': tests_require + jwt_requires,
         'dev': dev_requires,
@@ -15,7 +21,7 @@ def main():
     }
     setup(
         name='box-sdk-gen',
-        version='0.1.0',
+        version=__version__,
         description='[Box Platform](https://box.dev) provides functionality to provide access to content stored within [Box](https://box.com). It provides endpoints for basic manipulation of files and folders, management of users within an enterprise, as well as more complex topics such as legal holds and retention policies.',
         url='https://github.com/box/box-python-sdk-gen.git',
         licence='Apache-2.0, http://www.apache.org/licenses/LICENSE-2.0',
