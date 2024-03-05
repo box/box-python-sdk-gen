@@ -13,7 +13,11 @@ This operation is performed by calling function `get_device_pinner_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-device-pinners-id/).
 
-_Currently we don't have an example for calling `get_device_pinner_by_id` in integration tests_
+<!-- sample get_device_pinners_id -->
+
+```python
+client.device_pinners.get_device_pinner_by_id(device_pinner_id=device_pinner_id)
+```
 
 ### Arguments
 
@@ -37,7 +41,11 @@ This operation is performed by calling function `delete_device_pinner_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-device-pinners-id/).
 
-_Currently we don't have an example for calling `delete_device_pinner_by_id` in integration tests_
+<!-- sample delete_device_pinners_id -->
+
+```python
+client.device_pinners.delete_device_pinner_by_id(device_pinner_id=device_pinner_id)
+```
 
 ### Arguments
 
@@ -64,7 +72,11 @@ This operation is performed by calling function `get_enterprise_device_pinners`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-enterprises-id-device-pinners/).
 
-_Currently we don't have an example for calling `get_enterprise_device_pinners` in integration tests_
+<!-- sample get_enterprises_id_device_pinners -->
+
+```python
+client.device_pinners.get_enterprise_device_pinners(enterprise_id=enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC.value)
+```
 
 ### Arguments
 
