@@ -53,11 +53,11 @@ class CreateFolderLockLockedOperations(BaseObject):
 class CreateFolderLockFolder(BaseObject):
     def __init__(self, type: str, id: str, **kwargs):
         """
-        :param type: The content type the lock is being applied to. Only `folder`
-            is supported.
-        :type type: str
-        :param id: The ID of the folder.
-        :type id: str
+                :param type: The content type the lock is being applied to. Only `folder`
+        is supported.
+                :type type: str
+                :param id: The ID of the folder.
+                :type id: str
         """
         super().__init__(**kwargs)
         self.type = type
@@ -67,8 +67,9 @@ class CreateFolderLockFolder(BaseObject):
 class FolderLocksManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -76,27 +77,32 @@ class FolderLocksManager:
         self.network_session = network_session
 
     def get_folder_locks(
-        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        folder_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderLocks:
         """
-        Retrieves folder lock details for a given folder.
+                Retrieves folder lock details for a given folder.
 
-        You must be authenticated as the owner or co-owner of the folder to
+                You must be authenticated as the owner or co-owner of the folder to
 
 
-        use this endpoint.
+                use this endpoint.
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-        :type folder_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+                :type folder_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -120,28 +126,29 @@ class FolderLocksManager:
     def create_folder_lock(
         self,
         folder: CreateFolderLockFolder,
+        *,
         locked_operations: Optional[CreateFolderLockLockedOperations] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderLock:
         """
-        Creates a folder lock on a folder, preventing it from being moved and/or
+                Creates a folder lock on a folder, preventing it from being moved and/or
 
-        deleted.
-
-
-        You must be authenticated as the owner or co-owner of the folder to
+                deleted.
 
 
-        use this endpoint.
+                You must be authenticated as the owner or co-owner of the folder to
 
-        :param folder: The folder to apply the lock to.
-        :type folder: CreateFolderLockFolder
-        :param locked_operations: The operations to lock for the folder. If `locked_operations` is
-            included in the request, both `move` and `delete` must also be
-            included and both set to `true`.
-        :type locked_operations: Optional[CreateFolderLockLockedOperations], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                use this endpoint.
+
+                :param folder: The folder to apply the lock to.
+                :type folder: CreateFolderLockFolder
+                :param locked_operations: The operations to lock for the folder. If `locked_operations` is
+        included in the request, both `move` and `delete` must also be
+        included and both set to `true`., defaults to None
+                :type locked_operations: Optional[CreateFolderLockLockedOperations], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -164,21 +171,22 @@ class FolderLocksManager:
     def delete_folder_lock_by_id(
         self,
         folder_lock_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a folder lock on a given folder.
+                Deletes a folder lock on a given folder.
 
-        You must be authenticated as the owner or co-owner of the folder to
+                You must be authenticated as the owner or co-owner of the folder to
 
 
-        use this endpoint.
+                use this endpoint.
 
-        :param folder_lock_id: The ID of the folder lock.
-            Example: "12345"
-        :type folder_lock_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param folder_lock_id: The ID of the folder lock.
+        Example: "12345"
+                :type folder_lock_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

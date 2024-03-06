@@ -35,34 +35,30 @@ client: BoxClient = get_default_client()
 
 def testFolderMetadata():
     folder: FolderFull = create_new_folder()
-    folder_metadata: Metadatas = client.folder_metadata.get_folder_metadata(
-        folder_id=folder.id
-    )
+    folder_metadata: Metadatas = client.folder_metadata.get_folder_metadata(folder.id)
     assert len(folder_metadata.entries) == 0
     created_metadata: MetadataFull = (
         client.folder_metadata.create_folder_metadata_by_id(
-            folder_id=folder.id,
-            scope=CreateFolderMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
-            request_body={'abc': 'xyz'},
+            folder.id,
+            CreateFolderMetadataByIdScope.GLOBAL.value,
+            'properties',
+            {'abc': 'xyz'},
         )
     )
     assert to_string(created_metadata.template) == 'properties'
     assert to_string(created_metadata.scope) == 'global'
     assert created_metadata.version == 0
     received_metadata: MetadataFull = client.folder_metadata.get_folder_metadata_by_id(
-        folder_id=folder.id,
-        scope=GetFolderMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
+        folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
     )
     assert received_metadata.extra_data['abc'] == 'xyz'
     new_value: str = 'bar'
     updated_metadata: MetadataFull = (
         client.folder_metadata.update_folder_metadata_by_id(
-            folder_id=folder.id,
-            scope=UpdateFolderMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
-            request_body=[
+            folder.id,
+            UpdateFolderMetadataByIdScope.GLOBAL.value,
+            'properties',
+            [
                 UpdateFolderMetadataByIdRequestBody(
                     op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
                     path='/abc',
@@ -73,21 +69,15 @@ def testFolderMetadata():
     )
     received_updated_metadata: MetadataFull = (
         client.folder_metadata.get_folder_metadata_by_id(
-            folder_id=folder.id,
-            scope=GetFolderMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
+            folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
         )
     )
     assert received_updated_metadata.extra_data['abc'] == new_value
     client.folder_metadata.delete_folder_metadata_by_id(
-        folder_id=folder.id,
-        scope=DeleteFolderMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
+        folder.id, DeleteFolderMetadataByIdScope.GLOBAL.value, 'properties'
     )
     with pytest.raises(Exception):
         client.folder_metadata.get_folder_metadata_by_id(
-            folder_id=folder.id,
-            scope=GetFolderMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
+            folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
         )
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+    client.folders.delete_folder_by_id(folder.id)

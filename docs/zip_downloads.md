@@ -32,7 +32,7 @@ See the endpoint docs at
 <!-- sample post_zip_downloads -->
 
 ```python
-client.zip_downloads.create_zip_download(items=[CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.create_zip_download([CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
 ```
 
 ### Arguments
@@ -76,7 +76,7 @@ See the endpoint docs at
 <!-- sample get_zip_downloads_id_content -->
 
 ```python
-client.zip_downloads.get_zip_download_content(download_url=zip_download.download_url)
+client.zip_downloads.get_zip_download_content(zip_download.download_url)
 ```
 
 ### Arguments
@@ -116,7 +116,7 @@ See the endpoint docs at
 <!-- sample get_zip_downloads_id_status -->
 
 ```python
-client.zip_downloads.get_zip_download_status(status_url=zip_download.status_url)
+client.zip_downloads.get_zip_download_status(zip_download.status_url)
 ```
 
 ### Arguments
@@ -142,7 +142,7 @@ See the endpoint docs at
 <!-- sample  -->
 
 ```python
-client.zip_downloads.download_zip(items=[DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.download_zip([DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
 ```
 
 ### Arguments

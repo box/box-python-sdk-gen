@@ -46,9 +46,9 @@ client: BoxClient = get_default_client()
 def testMetadataCascadePolicies():
     template_key: str = ''.join(['key', get_uuid()])
     client.metadata_templates.create_metadata_template(
-        scope='enterprise',
+        'enterprise',
+        template_key,
         template_key=template_key,
-        display_name=template_key,
         fields=[
             CreateMetadataTemplateFields(
                 type=CreateMetadataTemplateFieldsTypeField.STRING.value,
@@ -61,9 +61,7 @@ def testMetadataCascadePolicies():
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
     cascade_policy: MetadataCascadePolicy = (
         client.metadata_cascade_policies.create_metadata_cascade_policy(
-            folder_id=folder.id,
-            scope=CreateMetadataCascadePolicyScope.ENTERPRISE.value,
-            template_key=template_key,
+            folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key
         )
     )
     assert to_string(cascade_policy.type) == 'metadata_cascade_policy'
@@ -76,37 +74,31 @@ def testMetadataCascadePolicies():
     cascade_policy_id: str = cascade_policy.id
     policy_from_the_api: MetadataCascadePolicy = (
         client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(
-            metadata_cascade_policy_id=cascade_policy_id
+            cascade_policy_id
         )
     )
     assert cascade_policy_id == policy_from_the_api.id
     policies: MetadataCascadePolicies = (
-        client.metadata_cascade_policies.get_metadata_cascade_policies(
-            folder_id=folder.id
-        )
+        client.metadata_cascade_policies.get_metadata_cascade_policies(folder.id)
     )
     assert len(policies.entries) == 1
     with pytest.raises(Exception):
         client.metadata_cascade_policies.apply_metadata_cascade_policy(
-            metadata_cascade_policy_id=cascade_policy_id,
-            conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
+            cascade_policy_id,
+            ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
         )
     data: Dict[str, str] = {'testName': 'xyz'}
     client.folder_metadata.create_folder_metadata_by_id(
-        folder_id=folder.id,
-        scope=CreateFolderMetadataByIdScope.ENTERPRISE.value,
-        template_key=template_key,
-        request_body=data,
+        folder.id, CreateFolderMetadataByIdScope.ENTERPRISE.value, template_key, data
     )
     client.metadata_cascade_policies.apply_metadata_cascade_policy(
-        metadata_cascade_policy_id=cascade_policy_id,
-        conflict_resolution=ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
+        cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value
     )
     client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(
-        metadata_cascade_policy_id=cascade_policy_id
+        cascade_policy_id
     )
     with pytest.raises(Exception):
         client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(
-            metadata_cascade_policy_id=cascade_policy_id
+            cascade_policy_id
         )
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+    client.folders.delete_folder_by_id(folder.id)

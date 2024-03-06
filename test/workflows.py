@@ -45,17 +45,15 @@ def testWorkflows():
     admin_client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
     workflow_folder_id: str = get_env_var('WORKFLOW_FOLDER_ID')
     uploaded_files: Files = admin_client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(),
             parent=UploadFileAttributesParentField(id=workflow_folder_id),
         ),
-        file=generate_byte_stream(1024 * 1024),
+        generate_byte_stream(1024 * 1024),
     )
     file: FileFull = uploaded_files.entries[0]
     workflow_file_id: str = file.id
-    workflows: Workflows = admin_client.workflows.get_workflows(
-        folder_id=workflow_folder_id
-    )
+    workflows: Workflows = admin_client.workflows.get_workflows(workflow_folder_id)
     assert len(workflows.entries) == 1
     workflow_to_run: Workflow = workflows.entries[0]
     assert to_string(workflow_to_run.type) == 'workflow'
@@ -69,15 +67,15 @@ def testWorkflows():
     assert to_string(workflow_to_run.flows[0].outcomes[0].action_type) == 'delete_file'
     assert to_string(workflow_to_run.flows[0].outcomes[0].type) == 'outcome'
     admin_client.workflows.start_workflow(
-        workflow_id=workflow_to_run.id,
-        type=StartWorkflowType.WORKFLOW_PARAMETERS.value,
-        flow=StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id),
-        files=[
+        workflow_to_run.id,
+        StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id),
+        [
             StartWorkflowFiles(
                 type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id
             )
         ],
-        folder=StartWorkflowFolder(
+        StartWorkflowFolder(
             type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id
         ),
+        type=StartWorkflowType.WORKFLOW_PARAMETERS.value,
     )

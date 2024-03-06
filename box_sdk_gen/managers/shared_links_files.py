@@ -48,26 +48,27 @@ class AddShareLinkToFileSharedLinkAccessField(str, Enum):
 class AddShareLinkToFileSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
+        *,
         can_download: Optional[bool] = None,
         can_preview: Optional[bool] = None,
         can_edit: Optional[bool] = None,
         **kwargs
     ):
         """
-        :param can_download: If the shared link allows for downloading of files.
-            This can only be set when `access` is set to
-            `open` or `company`.
-        :type can_download: Optional[bool], optional
-        :param can_preview: If the shared link allows for previewing of files.
-            This value is always `true`. For shared links on folders
-            this also applies to any items in the folder.
-        :type can_preview: Optional[bool], optional
-        :param can_edit: If the shared link allows for editing of files.
-            This can only be set when `access` is set to
-            `open` or `company`.
-            This value can only be `true` is `can_download` is
-            also `true`.
-        :type can_edit: Optional[bool], optional
+                :param can_download: If the shared link allows for downloading of files.
+        This can only be set when `access` is set to
+        `open` or `company`., defaults to None
+                :type can_download: Optional[bool], optional
+                :param can_preview: If the shared link allows for previewing of files.
+        This value is always `true`. For shared links on folders
+        this also applies to any items in the folder., defaults to None
+                :type can_preview: Optional[bool], optional
+                :param can_edit: If the shared link allows for editing of files.
+        This can only be set when `access` is set to
+        `open` or `company`.
+        This value can only be `true` is `can_download` is
+        also `true`., defaults to None
+                :type can_edit: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
@@ -78,6 +79,7 @@ class AddShareLinkToFileSharedLinkPermissionsField(BaseObject):
 class AddShareLinkToFileSharedLink(BaseObject):
     def __init__(
         self,
+        *,
         access: Optional[AddShareLinkToFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
@@ -86,35 +88,38 @@ class AddShareLinkToFileSharedLink(BaseObject):
         **kwargs
     ):
         """
-        :param access: The level of access for the shared link. This can be
-            restricted to anyone with the link (`open`), only people
-            within the company (`company`) and only those who
-            have been invited to the file (`collaborators`).
-            If not set, this field defaults to the access level specified
-            by the enterprise admin. To create a shared link with this
-            default setting pass the `shared_link` object with
-            no `access` field, for example `{ "shared_link": {} }`.
-            The `company` access level is only available to paid
-            accounts.
-        :type access: Optional[AddShareLinkToFileSharedLinkAccessField], optional
-        :param password: The password required to access the shared link. Set the
-            password to `null` to remove it.
-            Passwords must now be at least eight characters
-            long and include a number, upper case letter, or
-            a non-numeric or non-alphabetic character.
-            A password can only be set when `access` is set to `open`.
-        :type password: Optional[str], optional
-        :param vanity_name: Defines a custom vanity name to use in the shared link URL,
-            for example `https://app.box.com/v/my-shared-link`.
-            Custom URLs should not be used when sharing sensitive content
-            as vanity URLs are a lot easier to guess than regular shared
-            links.
-        :type vanity_name: Optional[str], optional
-        :param unshared_at: The timestamp at which this shared link will
-            expire. This field can only be set by
-            users with paid accounts. The value must be greater than the
-            current date and time.
-        :type unshared_at: Optional[str], optional
+                :param access: The level of access for the shared link. This can be
+        restricted to anyone with the link (`open`), only people
+        within the company (`company`) and only those who
+        have been invited to the file (`collaborators`).
+
+        If not set, this field defaults to the access level specified
+        by the enterprise admin. To create a shared link with this
+        default setting pass the `shared_link` object with
+        no `access` field, for example `{ "shared_link": {} }`.
+
+        The `company` access level is only available to paid
+        accounts., defaults to None
+                :type access: Optional[AddShareLinkToFileSharedLinkAccessField], optional
+                :param password: The password required to access the shared link. Set the
+        password to `null` to remove it.
+        Passwords must now be at least eight characters
+        long and include a number, upper case letter, or
+        a non-numeric or non-alphabetic character.
+        A password can only be set when `access` is set to `open`., defaults to None
+                :type password: Optional[str], optional
+                :param vanity_name: Defines a custom vanity name to use in the shared link URL,
+        for example `https://app.box.com/v/my-shared-link`.
+
+        Custom URLs should not be used when sharing sensitive content
+        as vanity URLs are a lot easier to guess than regular shared
+        links., defaults to None
+                :type vanity_name: Optional[str], optional
+                :param unshared_at: The timestamp at which this shared link will
+        expire. This field can only be set by
+        users with paid accounts. The value must be greater than the
+        current date and time., defaults to None
+                :type unshared_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -133,26 +138,27 @@ class UpdateSharedLinkOnFileSharedLinkAccessField(str, Enum):
 class UpdateSharedLinkOnFileSharedLinkPermissionsField(BaseObject):
     def __init__(
         self,
+        *,
         can_download: Optional[bool] = None,
         can_preview: Optional[bool] = None,
         can_edit: Optional[bool] = None,
         **kwargs
     ):
         """
-        :param can_download: If the shared link allows for downloading of files.
-            This can only be set when `access` is set to
-            `open` or `company`.
-        :type can_download: Optional[bool], optional
-        :param can_preview: If the shared link allows for previewing of files.
-            This value is always `true`. For shared links on folders
-            this also applies to any items in the folder.
-        :type can_preview: Optional[bool], optional
-        :param can_edit: If the shared link allows for editing of files.
-            This can only be set when `access` is set to
-            `open` or `company`.
-            This value can only be `true` is `can_download` is
-            also `true`.
-        :type can_edit: Optional[bool], optional
+                :param can_download: If the shared link allows for downloading of files.
+        This can only be set when `access` is set to
+        `open` or `company`., defaults to None
+                :type can_download: Optional[bool], optional
+                :param can_preview: If the shared link allows for previewing of files.
+        This value is always `true`. For shared links on folders
+        this also applies to any items in the folder., defaults to None
+                :type can_preview: Optional[bool], optional
+                :param can_edit: If the shared link allows for editing of files.
+        This can only be set when `access` is set to
+        `open` or `company`.
+        This value can only be `true` is `can_download` is
+        also `true`., defaults to None
+                :type can_edit: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.can_download = can_download
@@ -163,6 +169,7 @@ class UpdateSharedLinkOnFileSharedLinkPermissionsField(BaseObject):
 class UpdateSharedLinkOnFileSharedLink(BaseObject):
     def __init__(
         self,
+        *,
         access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
@@ -171,35 +178,38 @@ class UpdateSharedLinkOnFileSharedLink(BaseObject):
         **kwargs
     ):
         """
-        :param access: The level of access for the shared link. This can be
-            restricted to anyone with the link (`open`), only people
-            within the company (`company`) and only those who
-            have been invited to the folder (`collaborators`).
-            If not set, this field defaults to the access level specified
-            by the enterprise admin. To create a shared link with this
-            default setting pass the `shared_link` object with
-            no `access` field, for example `{ "shared_link": {} }`.
-            The `company` access level is only available to paid
-            accounts.
-        :type access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField], optional
-        :param password: The password required to access the shared link. Set the
-            password to `null` to remove it.
-            Passwords must now be at least eight characters
-            long and include a number, upper case letter, or
-            a non-numeric or non-alphabetic character.
-            A password can only be set when `access` is set to `open`.
-        :type password: Optional[str], optional
-        :param vanity_name: Defines a custom vanity name to use in the shared link URL,
-            for example `https://app.box.com/v/my-shared-link`.
-            Custom URLs should not be used when sharing sensitive content
-            as vanity URLs are a lot easier to guess than regular shared
-            links.
-        :type vanity_name: Optional[str], optional
-        :param unshared_at: The timestamp at which this shared link will
-            expire. This field can only be set by
-            users with paid accounts. The value must be greater than the
-            current date and time.
-        :type unshared_at: Optional[str], optional
+                :param access: The level of access for the shared link. This can be
+        restricted to anyone with the link (`open`), only people
+        within the company (`company`) and only those who
+        have been invited to the folder (`collaborators`).
+
+        If not set, this field defaults to the access level specified
+        by the enterprise admin. To create a shared link with this
+        default setting pass the `shared_link` object with
+        no `access` field, for example `{ "shared_link": {} }`.
+
+        The `company` access level is only available to paid
+        accounts., defaults to None
+                :type access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField], optional
+                :param password: The password required to access the shared link. Set the
+        password to `null` to remove it.
+        Passwords must now be at least eight characters
+        long and include a number, upper case letter, or
+        a non-numeric or non-alphabetic character.
+        A password can only be set when `access` is set to `open`., defaults to None
+                :type password: Optional[str], optional
+                :param vanity_name: Defines a custom vanity name to use in the shared link URL,
+        for example `https://app.box.com/v/my-shared-link`.
+
+        Custom URLs should not be used when sharing sensitive content
+        as vanity URLs are a lot easier to guess than regular shared
+        links., defaults to None
+                :type vanity_name: Optional[str], optional
+                :param unshared_at: The timestamp at which this shared link will
+        expire. This field can only be set by
+        users with paid accounts. The value must be greater than the
+        current date and time., defaults to None
+                :type unshared_at: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -217,8 +227,9 @@ class RemoveSharedLinkFromFileSharedLink(BaseObject):
 class SharedLinksFilesManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -228,52 +239,57 @@ class SharedLinksFilesManager:
     def find_file_for_shared_link(
         self,
         boxapi: str,
+        *,
         fields: Optional[List[str]] = None,
         if_none_match: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
-        Returns the file represented by a shared link.
+                Returns the file represented by a shared link.
 
-        A shared file can be represented by a shared link,
-
-
-        which can originate within the current enterprise or within another.
+                A shared file can be represented by a shared link,
 
 
-        This endpoint allows an application to retrieve information about a
+                which can originate within the current enterprise or within another.
 
 
-        shared file when only given a shared link.
+                This endpoint allows an application to retrieve information about a
 
 
-        The `shared_link_permission_options` array field can be returned
+                shared file when only given a shared link.
 
 
-        by requesting it in the `fields` query parameter.
+                The `shared_link_permission_options` array field can be returned
 
-        :param boxapi: A header containing the shared link and optional password for the
-            shared link.
-            The format for this header is as follows.
-            `shared_link=[link]&shared_link_password=[password]`
-        :type boxapi: str
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param if_none_match: Ensures an item is only returned if it has changed.
-            Pass in the item's last observed `etag` value
-            into this header and the endpoint will fail
-            with a `304 Not Modified` if the item has not
-            changed since.
-        :type if_none_match: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                by requesting it in the `fields` query parameter.
+
+                :param boxapi: A header containing the shared link and optional password for the
+        shared link.
+
+        The format for this header is as follows.
+
+        `shared_link=[link]&shared_link_password=[password]`
+                :type boxapi: str
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param if_none_match: Ensures an item is only returned if it has changed.
+
+        Pass in the item's last observed `etag` value
+        into this header and the endpoint will fail
+        with a `304 Not Modified` if the item has not
+        changed since., defaults to None
+                :type if_none_match: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -302,23 +318,25 @@ class SharedLinksFilesManager:
         self,
         file_id: str,
         fields: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
-        Gets the information for a shared link on a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param fields: Explicitly request the `shared_link` fields
-            to be returned for this item.
-        :type fields: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Gets the information for a shared link on a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param fields: Explicitly request the `shared_link` fields
+        to be returned for this item.
+                :type fields: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -348,28 +366,30 @@ class SharedLinksFilesManager:
         self,
         file_id: str,
         fields: str,
+        *,
         shared_link: Optional[AddShareLinkToFileSharedLink] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
-        Adds a shared link to a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param fields: Explicitly request the `shared_link` fields
-            to be returned for this item.
-        :type fields: str
-        :param shared_link: The settings for the shared link to create on the file.
-            Use an empty object (`{}`) to use the default settings for shared
-            links.
-        :type shared_link: Optional[AddShareLinkToFileSharedLink], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Adds a shared link to a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param fields: Explicitly request the `shared_link` fields
+        to be returned for this item.
+                :type fields: str
+                :param shared_link: The settings for the shared link to create on the file.
+        Use an empty object (`{}`) to use the default settings for shared
+        links., defaults to None
+                :type shared_link: Optional[AddShareLinkToFileSharedLink], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -402,26 +422,28 @@ class SharedLinksFilesManager:
         self,
         file_id: str,
         fields: str,
+        *,
         shared_link: Optional[UpdateSharedLinkOnFileSharedLink] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
-        Updates a shared link on a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param fields: Explicitly request the `shared_link` fields
-            to be returned for this item.
-        :type fields: str
-        :param shared_link: The settings for the shared link to update.
-        :type shared_link: Optional[UpdateSharedLinkOnFileSharedLink], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Updates a shared link on a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param fields: Explicitly request the `shared_link` fields
+        to be returned for this item.
+                :type fields: str
+                :param shared_link: The settings for the shared link to update., defaults to None
+                :type shared_link: Optional[UpdateSharedLinkOnFileSharedLink], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -454,27 +476,29 @@ class SharedLinksFilesManager:
         self,
         file_id: str,
         fields: str,
+        *,
         shared_link: Optional[RemoveSharedLinkFromFileSharedLink] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
-        Removes a shared link from a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param fields: Explicitly request the `shared_link` fields
-            to be returned for this item.
-        :type fields: str
-        :param shared_link: By setting this value to `null`, the shared link
-            is removed from the file.
-        :type shared_link: Optional[RemoveSharedLinkFromFileSharedLink], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Removes a shared link from a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param fields: Explicitly request the `shared_link` fields
+        to be returned for this item.
+                :type fields: str
+                :param shared_link: By setting this value to `null`, the shared link
+        is removed from the file., defaults to None
+                :type shared_link: Optional[RemoveSharedLinkFromFileSharedLink], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

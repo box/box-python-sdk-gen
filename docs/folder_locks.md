@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample get_folder_locks -->
 
 ```python
-client.folder_locks.get_folder_locks(folder_id=folder.id)
+client.folder_locks.get_folder_locks(folder.id)
 ```
 
 ### Arguments
@@ -52,7 +52,7 @@ See the endpoint docs at
 <!-- sample post_folder_locks -->
 
 ```python
-client.folder_locks.create_folder_lock(locked_operations=CreateFolderLockLockedOperations(move=True, delete=True), folder=CreateFolderLockFolder(id=folder.id, type='folder'))
+client.folder_locks.create_folder_lock(CreateFolderLockFolder(id=folder.id, type='folder'), locked_operations=CreateFolderLockLockedOperations(move=True, delete=True))
 ```
 
 ### Arguments
@@ -86,7 +86,7 @@ See the endpoint docs at
 <!-- sample delete_folder_locks_id -->
 
 ```python
-client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
+client.folder_locks.delete_folder_lock_by_id(folder_lock.id)
 ```
 
 ### Arguments

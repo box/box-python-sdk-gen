@@ -56,8 +56,9 @@ class GetSlackIntegrationMappingBoxItemType(str, Enum):
 class IntegrationMappingsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -66,6 +67,7 @@ class IntegrationMappingsManager:
 
     def get_slack_integration_mapping(
         self,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType] = None,
@@ -73,34 +75,35 @@ class IntegrationMappingsManager:
         box_item_id: Optional[str] = None,
         box_item_type: Optional[GetSlackIntegrationMappingBoxItemType] = None,
         is_manually_created: Optional[bool] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMappings:
         """
-        Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack) in a users' enterprise.
+                Lists [Slack integration mappings](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack) in a users' enterprise.
 
-        You need Admin or Co-Admin role to
+                You need Admin or Co-Admin role to
 
 
-        use this endpoint.
+                use this endpoint.
 
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param partner_item_type: Mapped item type, for which the mapping should be returned
-        :type partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType], optional
-        :param partner_item_id: ID of the mapped item, for which the mapping should be returned
-        :type partner_item_id: Optional[str], optional
-        :param box_item_id: Box item ID, for which the mappings should be returned
-        :type box_item_id: Optional[str], optional
-        :param box_item_type: Box item type, for which the mappings should be returned
-        :type box_item_type: Optional[GetSlackIntegrationMappingBoxItemType], optional
-        :param is_manually_created: Whether the mapping has been manually created
-        :type is_manually_created: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param partner_item_type: Mapped item type, for which the mapping should be returned, defaults to None
+                :type partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType], optional
+                :param partner_item_id: ID of the mapped item, for which the mapping should be returned, defaults to None
+                :type partner_item_id: Optional[str], optional
+                :param box_item_id: Box item ID, for which the mappings should be returned, defaults to None
+                :type box_item_id: Optional[str], optional
+                :param box_item_type: Box item type, for which the mappings should be returned, defaults to None
+                :type box_item_type: Optional[GetSlackIntegrationMappingBoxItemType], optional
+                :param is_manually_created: Whether the mapping has been manually created, defaults to None
+                :type is_manually_created: Optional[bool], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -135,8 +138,9 @@ class IntegrationMappingsManager:
         self,
         partner_item: IntegrationMappingPartnerItemSlack,
         box_item: IntegrationMappingBoxItemSlack,
+        *,
         options: Optional[IntegrationMappingSlackOptions] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMapping:
         """
         Creates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack)
@@ -149,7 +153,7 @@ class IntegrationMappingsManager:
 
         use this endpoint.
 
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -179,26 +183,27 @@ class IntegrationMappingsManager:
     def update_slack_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
+        *,
         box_item: Optional[IntegrationMappingBoxItemSlack] = None,
         options: Optional[IntegrationMappingSlackOptions] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMapping:
         """
-        Updates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
+                Updates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
 
-        Supports updating the Box folder ID and options.
-
-
-        You need Admin or Co-Admin role to
+                Supports updating the Box folder ID and options.
 
 
-        use this endpoint.
+                You need Admin or Co-Admin role to
 
-        :param integration_mapping_id: An ID of an integration mapping
-            Example: "11235432"
-        :type integration_mapping_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                use this endpoint.
+
+                :param integration_mapping_id: An ID of an integration mapping
+        Example: "11235432"
+                :type integration_mapping_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -227,21 +232,22 @@ class IntegrationMappingsManager:
     def delete_slack_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
+                Deletes a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack).
 
-        You need Admin or Co-Admin role to
+                You need Admin or Co-Admin role to
 
 
-        use this endpoint.
+                use this endpoint.
 
-        :param integration_mapping_id: An ID of an integration mapping
-            Example: "11235432"
-        :type integration_mapping_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param integration_mapping_id: An ID of an integration mapping
+        Example: "11235432"
+                :type integration_mapping_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

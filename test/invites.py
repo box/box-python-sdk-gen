@@ -23,11 +23,11 @@ def testInvites():
     current_user: UserFull = client.users.get_user_me(fields=['enterprise'])
     email: str = get_env_var('BOX_EXTERNAL_USER_EMAIL')
     invitation: Invite = client.invites.create_invite(
-        enterprise=CreateInviteEnterprise(id=current_user.enterprise.id),
-        actionable_by=CreateInviteActionableBy(login=email),
+        CreateInviteEnterprise(id=current_user.enterprise.id),
+        CreateInviteActionableBy(login=email),
     )
     assert to_string(invitation.type) == 'invite'
     assert invitation.invited_to.id == current_user.enterprise.id
     assert invitation.actionable_by.login == email
-    get_invitation: Invite = client.invites.get_invite_by_id(invite_id=invitation.id)
+    get_invitation: Invite = client.invites.get_invite_by_id(invitation.id)
     assert get_invitation.id == invitation.id

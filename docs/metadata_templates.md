@@ -22,7 +22,7 @@ See the endpoint docs at
 <!-- sample get_metadata_templates -->
 
 ```python
-client.metadata_templates.get_metadata_templates_by_instance_id(metadata_instance_id=created_metadata_instance.id)
+client.metadata_templates.get_metadata_templates_by_instance_id(created_metadata_instance.id)
 ```
 
 ### Arguments
@@ -54,7 +54,7 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.get_metadata_template(scope=GetMetadataTemplateScope.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.get_metadata_template(GetMetadataTemplateScope.ENTERPRISE.value, template.template_key)
 ```
 
 ### Arguments
@@ -91,7 +91,7 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.update_metadata_template(scope=UpdateMetadataTemplateScope.ENTERPRISE.value, template_key=template_key, request_body=[UpdateMetadataTemplateRequestBody(op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD.value, field_key='newfieldname', data={'type': 'string', 'displayName': 'newFieldName'})])
+client.metadata_templates.update_metadata_template(UpdateMetadataTemplateScope.ENTERPRISE.value, template_key, [UpdateMetadataTemplateRequestBody(op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD.value, field_key='newfieldname', data={'type': 'string', 'displayName': 'newFieldName'})])
 ```
 
 ### Arguments
@@ -125,7 +125,7 @@ See the endpoint docs at
 <!-- sample delete_metadata_templates_id_id_schema -->
 
 ```python
-client.metadata_templates.delete_metadata_template(scope=DeleteMetadataTemplateScope.ENTERPRISE.value, template_key=template.template_key)
+client.metadata_templates.delete_metadata_template(DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key)
 ```
 
 ### Arguments
@@ -156,7 +156,7 @@ See the endpoint docs at
 <!-- sample get_metadata_templates_id -->
 
 ```python
-client.metadata_templates.get_metadata_template_by_id(template_id=template.id)
+client.metadata_templates.get_metadata_template_by_id(template.id)
 ```
 
 ### Arguments
@@ -249,7 +249,7 @@ See the endpoint docs at
 <!-- sample post_metadata_templates_schema -->
 
 ```python
-client.metadata_templates.create_metadata_template(scope='enterprise', template_key=template_key, display_name=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.FLOAT.value, key='testName', display_name='testName')])
+client.metadata_templates.create_metadata_template('enterprise', template_key, template_key=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.FLOAT.value, key='testName', display_name='testName')])
 ```
 
 ### Arguments

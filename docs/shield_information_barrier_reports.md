@@ -16,7 +16,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_reports -->
 
 ```python
-client.shield_information_barrier_reports.get_shield_information_barrier_reports(shield_information_barrier_id=barrier_id)
+client.shield_information_barrier_reports.get_shield_information_barrier_reports(barrier_id)
 ```
 
 ### Arguments
@@ -76,7 +76,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_reports_id -->
 
 ```python
-client.shield_information_barrier_reports.get_shield_information_barrier_report_by_id(shield_information_barrier_report_id=created_report.id)
+client.shield_information_barrier_reports.get_shield_information_barrier_report_by_id(created_report.id)
 ```
 
 ### Arguments

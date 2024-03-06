@@ -111,9 +111,7 @@ def get_default_client() -> BoxClient:
 def create_new_folder() -> FolderFull:
     client: BoxClient = get_default_client()
     new_folder_name: str = get_uuid()
-    return client.folders.create_folder(
-        name=new_folder_name, parent=CreateFolderParent(id='0')
-    )
+    return client.folders.create_folder(new_folder_name, CreateFolderParent(id='0'))
 
 
 def upload_new_file() -> FileFull:
@@ -121,10 +119,10 @@ def upload_new_file() -> FileFull:
     new_file_name: str = ''.join([get_uuid(), '.pdf'])
     file_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=new_file_name, parent=UploadFileAttributesParentField(id='0')
         ),
-        file=file_content_stream,
+        file_content_stream,
     )
     return uploaded_files.entries[0]
 
@@ -142,9 +140,9 @@ def get_or_create_terms_of_services() -> TermsOfService:
         if to_string(second_tos.tos_type) == 'managed':
             return second_tos
     return client.terms_of_services.create_terms_of_service(
-        status=CreateTermsOfServiceStatus.DISABLED.value,
+        CreateTermsOfServiceStatus.DISABLED.value,
+        'Test TOS',
         tos_type=CreateTermsOfServiceTosType.MANAGED.value,
-        text='Test TOS',
     )
 
 
@@ -159,7 +157,7 @@ def get_or_create_classification(
     if current_number_of_classifications == 0:
         classification_template_with_new_classification: ClassificationTemplate = (
             client.classifications.add_classification(
-                request_body=[
+                [
                     AddClassificationRequestBody(
                         op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
                         field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -186,10 +184,10 @@ def get_or_create_classification_template() -> ClassificationTemplate:
         return client.classifications.get_classification_template()
     except Exception:
         return client.classifications.create_classification_template(
-            scope=CreateClassificationTemplateScope.ENTERPRISE.value,
-            template_key=CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
-            display_name=CreateClassificationTemplateDisplayName.CLASSIFICATION.value,
-            fields=[
+            CreateClassificationTemplateScope.ENTERPRISE.value,
+            CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
+            CreateClassificationTemplateDisplayName.CLASSIFICATION.value,
+            [
                 CreateClassificationTemplateFields(
                     type=CreateClassificationTemplateFieldsTypeField.ENUM.value,
                     key=CreateClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -209,7 +207,7 @@ def get_or_create_shield_information_barrier(
     number_of_barriers: int = len(barriers.entries)
     if number_of_barriers == 0:
         return client.shield_information_barriers.create_shield_information_barrier(
-            enterprise=EnterpriseBase(
+            EnterpriseBase(
                 id=enterprise_id, type=EnterpriseBaseTypeField.ENTERPRISE.value
             )
         )

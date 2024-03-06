@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample post_sign_requests_id_cancel -->
 
 ```python
-client.sign_requests.cancel_sign_request(sign_request_id=created_sign_request.id)
+client.sign_requests.cancel_sign_request(created_sign_request.id)
 ```
 
 ### Arguments
@@ -71,7 +71,7 @@ See the endpoint docs at
 <!-- sample get_sign_requests_id -->
 
 ```python
-client.sign_requests.get_sign_request_by_id(sign_request_id=created_sign_request.id)
+client.sign_requests.get_sign_request_by_id(created_sign_request.id)
 ```
 
 ### Arguments
@@ -131,7 +131,7 @@ See the endpoint docs at
 <!-- sample post_sign_requests -->
 
 ```python
-client.sign_requests.create_sign_request(source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)], signers=[SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'), SignRequestCreateSigner(email=signer_2_email, signer_group_id='user')], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value))
+client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'), SignRequestCreateSigner(email=signer_2_email, signer_group_id='user')], source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)], parent_folder=FolderMini(id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value))
 ```
 
 ### Arguments

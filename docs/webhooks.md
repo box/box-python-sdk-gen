@@ -53,7 +53,7 @@ See the endpoint docs at
 <!-- sample post_webhooks -->
 
 ```python
-client.webhooks.create_webhook(target=CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value), address='https://example.com/new-webhook', triggers=[CreateWebhookTriggers.FILE_UPLOADED.value])
+client.webhooks.create_webhook(CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value), 'https://example.com/new-webhook', [CreateWebhookTriggers.FILE_UPLOADED.value])
 ```
 
 ### Arguments
@@ -85,7 +85,7 @@ See the endpoint docs at
 <!-- sample get_webhooks_id -->
 
 ```python
-client.webhooks.get_webhook_by_id(webhook_id=webhook.id)
+client.webhooks.get_webhook_by_id(webhook.id)
 ```
 
 ### Arguments
@@ -113,7 +113,7 @@ See the endpoint docs at
 <!-- sample put_webhooks_id -->
 
 ```python
-client.webhooks.update_webhook_by_id(webhook_id=webhook.id, address='https://example.com/updated-webhook')
+client.webhooks.update_webhook_by_id(webhook.id, address='https://example.com/updated-webhook')
 ```
 
 ### Arguments
@@ -147,7 +147,7 @@ See the endpoint docs at
 <!-- sample delete_webhooks_id -->
 
 ```python
-client.webhooks.delete_webhook_by_id(webhook_id=webhook.id)
+client.webhooks.delete_webhook_by_id(webhook.id)
 ```
 
 ### Arguments

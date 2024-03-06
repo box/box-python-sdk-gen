@@ -47,7 +47,7 @@ See the endpoint docs at
 <!-- sample get_storage_policies_id -->
 
 ```python
-client.storage_policies.get_storage_policy_by_id(storage_policy_id=storage_policy.id)
+client.storage_policies.get_storage_policy_by_id(storage_policy.id)
 ```
 
 ### Arguments

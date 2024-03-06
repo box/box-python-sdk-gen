@@ -21,7 +21,7 @@ See the endpoint docs at
 <!-- sample get_users_id_memberships -->
 
 ```python
-client.memberships.get_user_memberships(user_id=user.id)
+client.memberships.get_user_memberships(user.id)
 ```
 
 ### Arguments
@@ -56,7 +56,7 @@ See the endpoint docs at
 <!-- sample get_groups_id_memberships -->
 
 ```python
-client.memberships.get_group_memberships(group_id=group.id)
+client.memberships.get_group_memberships(group.id)
 ```
 
 ### Arguments
@@ -90,7 +90,7 @@ See the endpoint docs at
 <!-- sample post_group_memberships -->
 
 ```python
-client.memberships.create_group_membership(user=CreateGroupMembershipUser(id=user.id), group=CreateGroupMembershipGroup(id=group.id))
+client.memberships.create_group_membership(CreateGroupMembershipUser(id=user.id), CreateGroupMembershipGroup(id=group.id))
 ```
 
 ### Arguments
@@ -128,7 +128,7 @@ See the endpoint docs at
 <!-- sample get_group_memberships_id -->
 
 ```python
-client.memberships.get_group_membership_by_id(group_membership_id=group_membership.id)
+client.memberships.get_group_membership_by_id(group_membership.id)
 ```
 
 ### Arguments
@@ -160,7 +160,7 @@ See the endpoint docs at
 <!-- sample put_group_memberships_id -->
 
 ```python
-client.memberships.update_group_membership_by_id(group_membership_id=group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value)
+client.memberships.update_group_membership_by_id(group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value)
 ```
 
 ### Arguments
@@ -196,7 +196,7 @@ See the endpoint docs at
 <!-- sample delete_group_memberships_id -->
 
 ```python
-client.memberships.delete_group_membership_by_id(group_membership_id=group_membership.id)
+client.memberships.delete_group_membership_by_id(group_membership.id)
 ```
 
 ### Arguments

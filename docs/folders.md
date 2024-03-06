@@ -28,7 +28,7 @@ See the endpoint docs at
 <!-- sample get_folders_id -->
 
 ```python
-client.folders.get_folder_by_id(folder_id='0')
+client.folders.get_folder_by_id('0')
 ```
 
 ### Arguments
@@ -81,7 +81,7 @@ See the endpoint docs at
 <!-- sample put_folders_id -->
 
 ```python
-client.folders.update_folder_by_id(folder_id=copied_folder.id, name=moved_folder_name, parent=UpdateFolderByIdParent(id=folder_origin.id))
+client.folders.update_folder_by_id(copied_folder.id, name=moved_folder_name, parent=UpdateFolderByIdParent(id=folder_origin.id))
 ```
 
 ### Arguments
@@ -145,7 +145,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id -->
 
 ```python
-client.folders.delete_folder_by_id(folder_id=folder_1.id)
+client.folders.delete_folder_by_id(folder_1.id)
 ```
 
 ### Arguments
@@ -182,7 +182,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_items -->
 
 ```python
-client.folders.get_folder_items(folder_id=folder_origin.id)
+client.folders.get_folder_items(folder_origin.id)
 ```
 
 ### Arguments
@@ -226,7 +226,7 @@ See the endpoint docs at
 <!-- sample post_folders -->
 
 ```python
-client.folders.create_folder(name=get_uuid(), parent=CreateFolderParent(id='0'))
+client.folders.create_folder(get_uuid(), CreateFolderParent(id='0'))
 ```
 
 ### Arguments
@@ -268,7 +268,7 @@ See the endpoint docs at
 <!-- sample post_folders_id_copy -->
 
 ```python
-client.folders.copy_folder(folder_id=folder_origin.id, name=copied_folder_name, parent=CopyFolderParent(id='0'))
+client.folders.copy_folder(folder_origin.id, CopyFolderParent(id='0'), name=copied_folder_name)
 ```
 
 ### Arguments

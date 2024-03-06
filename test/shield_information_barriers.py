@@ -32,7 +32,7 @@ def testShieldInformationBarriers():
     barrier_id: str = barrier.id
     barrier_from_api: ShieldInformationBarrier = (
         client.shield_information_barriers.get_shield_information_barrier_by_id(
-            shield_information_barrier_id=barrier_id
+            barrier_id
         )
     )
     assert barrier_from_api.id == barrier_id
@@ -42,6 +42,5 @@ def testShieldInformationBarriers():
     assert len(barriers.entries) == 1
     with pytest.raises(Exception):
         client.shield_information_barriers.update_shield_information_barrier_status(
-            id=barrier_id,
-            status=UpdateShieldInformationBarrierStatusStatus.DISABLED.value,
+            barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED.value
         )

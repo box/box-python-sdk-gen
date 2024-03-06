@@ -62,6 +62,7 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
 
     def __init__(
         self,
+        *,
         id: Optional[str] = None,
         type: Optional[
             CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField
@@ -69,11 +70,11 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
         **kwargs
     ):
         """
-        :param id: The ID reference of the
-            requesting shield information barrier segment.
-        :type id: Optional[str], optional
-        :param type: The type of the shield barrier segment for this member.
-        :type type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField], optional
+                :param id: The ID reference of the
+        requesting shield information barrier segment., defaults to None
+                :type id: Optional[str], optional
+                :param type: The type of the shield barrier segment for this member., defaults to None
+                :type type: Optional[CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -83,8 +84,9 @@ class CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
 class ShieldInformationBarrierSegmentMembersManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -94,18 +96,19 @@ class ShieldInformationBarrierSegmentMembersManager:
     def get_shield_information_barrier_segment_member_by_id(
         self,
         shield_information_barrier_segment_member_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegmentMember:
         """
-        Retrieves a shield information barrier
+                Retrieves a shield information barrier
 
-        segment member by its ID.
+                segment member by its ID.
 
-        :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
-            Example: "7815"
-        :type shield_information_barrier_segment_member_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
+        Example: "7815"
+                :type shield_information_barrier_segment_member_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -131,18 +134,19 @@ class ShieldInformationBarrierSegmentMembersManager:
     def delete_shield_information_barrier_segment_member_by_id(
         self,
         shield_information_barrier_segment_member_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a shield information barrier
+                Deletes a shield information barrier
 
-        segment member based on provided ID.
+                segment member based on provided ID.
 
-        :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
-            Example: "7815"
-        :type shield_information_barrier_segment_member_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param shield_information_barrier_segment_member_id: The ID of the shield information barrier segment Member.
+        Example: "7815"
+                :type shield_information_barrier_segment_member_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -168,25 +172,27 @@ class ShieldInformationBarrierSegmentMembersManager:
     def get_shield_information_barrier_segment_members(
         self,
         shield_information_barrier_segment_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegmentMembers:
         """
-        Lists shield information barrier segment members
+                Lists shield information barrier segment members
 
-        based on provided segment IDs.
+                based on provided segment IDs.
 
-        :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
-        :type shield_information_barrier_segment_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
+                :type shield_information_barrier_segment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -222,21 +228,22 @@ class ShieldInformationBarrierSegmentMembersManager:
         self,
         shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment,
         user: UserBase,
+        *,
         type: Optional[CreateShieldInformationBarrierSegmentMemberType] = None,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegmentMember:
         """
-        Creates a new shield information barrier segment member.
-        :param shield_information_barrier_segment: The `type` and `id` of the
-            requested shield information barrier segment.
-        :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
-        :param user: User to which restriction will be applied.
-        :type user: UserBase
-        :param type: -| A type of the shield barrier segment member.
-        :type type: Optional[CreateShieldInformationBarrierSegmentMemberType], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Creates a new shield information barrier segment member.
+                :param shield_information_barrier_segment: The `type` and `id` of the
+        requested shield information barrier segment.
+                :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
+                :param user: User to which restriction will be applied.
+                :type user: UserBase
+                :param type: -| A type of the shield barrier segment member., defaults to None
+                :type type: Optional[CreateShieldInformationBarrierSegmentMemberType], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

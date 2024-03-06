@@ -20,7 +20,7 @@ See the endpoint docs at
 <!-- sample post_metadata_queries_execute_read -->
 
 ```python
-client.search.search_by_metadata_query(from_=search_from, query='testName >= :value', query_params={'value': '0.0'}, ancestor_folder_id='0')
+client.search.search_by_metadata_query(search_from, '0', query='testName >= :value', query_params={'value': '0.0'})
 ```
 
 ### Arguments

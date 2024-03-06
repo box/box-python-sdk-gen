@@ -30,8 +30,8 @@ client: BoxClient = get_default_client()
 def testAvatars():
     user: UserFull = client.users.get_user_me()
     created_avatar: UserAvatar = client.avatars.create_user_avatar(
-        user_id=user.id,
-        pic=decode_base_64_byte_stream(
+        user.id,
+        decode_base_64_byte_stream(
             'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=='
         ),
         pic_file_name='avatar.png',
@@ -40,8 +40,8 @@ def testAvatars():
     assert not created_avatar.pic_urls.small == None
     assert not created_avatar.pic_urls.large == None
     assert not created_avatar.pic_urls.preview == None
-    response: ByteStream = client.avatars.get_user_avatar(user_id=user.id)
+    response: ByteStream = client.avatars.get_user_avatar(user.id)
     assert buffer_equals(read_byte_stream(response), generate_byte_buffer(0)) == False
-    client.avatars.delete_user_avatar(user_id=user.id)
+    client.avatars.delete_user_avatar(user.id)
     with pytest.raises(Exception):
-        client.avatars.get_user_avatar(user_id=user.id)
+        client.avatars.get_user_avatar(user.id)

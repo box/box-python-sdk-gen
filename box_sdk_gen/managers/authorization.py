@@ -87,8 +87,9 @@ class RefreshAccessTokenGrantType(str, Enum):
 class AuthorizationManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -99,58 +100,59 @@ class AuthorizationManager:
         self,
         response_type: AuthorizeUserResponseType,
         client_id: str,
+        *,
         redirect_uri: Optional[str] = None,
         state: Optional[str] = None,
         scope: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Authorize a user by sending them through the [Box](https://box.com)
+                Authorize a user by sending them through the [Box](https://box.com)
 
-        website and request their permission to act on their behalf.
-
-
-        This is the first step when authenticating a user using
+                website and request their permission to act on their behalf.
 
 
-        OAuth 2.0. To request a user's authorization to use the Box APIs
+                This is the first step when authenticating a user using
 
 
-        on their behalf you will need to send a user to the URL with this
+                OAuth 2.0. To request a user's authorization to use the Box APIs
 
 
-        format.
+                on their behalf you will need to send a user to the URL with this
 
-        :param response_type: The type of response we'd like to receive.
-        :type response_type: AuthorizeUserResponseType
-        :param client_id: The Client ID of the application that is requesting to authenticate
-            the user. To get the Client ID for your application, log in to your
-            Box developer console and click the **Edit Application** link for
-            the application you're working with. In the OAuth 2.0 Parameters section
-            of the configuration page, find the item labelled `client_id`. The
-            text of that item is your application's Client ID.
-        :type client_id: str
-        :param redirect_uri: The URI to which Box redirects the browser after the user has granted
-            or denied the application permission. This URI match one of the redirect
-            URIs in the configuration of your application. It must be a
-            valid HTTPS URI and it needs to be able to handle the redirection to
-            complete the next step in the OAuth 2.0 flow.
-            Although this parameter is optional, it must be a part of the
-            authorization URL if you configured multiple redirect URIs
-            for the application in the developer console. A missing parameter causes
-            a `redirect_uri_missing` error after the user grants application access.
-        :type redirect_uri: Optional[str], optional
-        :param state: A custom string of your choice. Box will pass the same string to
-            the redirect URL when authentication is complete. This parameter
-            can be used to identify a user on redirect, as well as protect
-            against hijacked sessions and other exploits.
-        :type state: Optional[str], optional
-        :param scope: A space-separated list of application scopes you'd like to
-            authenticate the user for. This defaults to all the scopes configured
-            for the application in its configuration page.
-        :type scope: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                format.
+
+                :param response_type: The type of response we'd like to receive.
+                :type response_type: AuthorizeUserResponseType
+                :param client_id: The Client ID of the application that is requesting to authenticate
+        the user. To get the Client ID for your application, log in to your
+        Box developer console and click the **Edit Application** link for
+        the application you're working with. In the OAuth 2.0 Parameters section
+        of the configuration page, find the item labelled `client_id`. The
+        text of that item is your application's Client ID.
+                :type client_id: str
+                :param redirect_uri: The URI to which Box redirects the browser after the user has granted
+        or denied the application permission. This URI match one of the redirect
+        URIs in the configuration of your application. It must be a
+        valid HTTPS URI and it needs to be able to handle the redirection to
+        complete the next step in the OAuth 2.0 flow.
+        Although this parameter is optional, it must be a part of the
+        authorization URL if you configured multiple redirect URIs
+        for the application in the developer console. A missing parameter causes
+        a `redirect_uri_missing` error after the user grants application access., defaults to None
+                :type redirect_uri: Optional[str], optional
+                :param state: A custom string of your choice. Box will pass the same string to
+        the redirect URL when authentication is complete. This parameter
+        can be used to identify a user on redirect, as well as protect
+        against hijacked sessions and other exploits., defaults to None
+                :type state: Optional[str], optional
+                :param scope: A space-separated list of application scopes you'd like to
+        authenticate the user for. This defaults to all the scopes configured
+        for the application in its configuration page., defaults to None
+                :type scope: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -180,6 +182,7 @@ class AuthorizationManager:
     def request_access_token(
         self,
         grant_type: RequestAccessTokenGrantType,
+        *,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         code: Optional[str] = None,
@@ -194,98 +197,108 @@ class AuthorizationManager:
         box_subject_type: Optional[RequestAccessTokenBoxSubjectType] = None,
         box_subject_id: Optional[str] = None,
         box_shared_link: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AccessToken:
         """
-        Request an Access Token using either a client-side obtained OAuth 2.0
+                Request an Access Token using either a client-side obtained OAuth 2.0
 
-        authorization code or a server-side JWT assertion.
-
-
-        An Access Token is a string that enables Box to verify that a
+                authorization code or a server-side JWT assertion.
 
 
-        request belongs to an authorized session. In the normal order of
+                An Access Token is a string that enables Box to verify that a
 
 
-        operations you will begin by requesting authentication from the
+                request belongs to an authorized session. In the normal order of
 
 
-        [authorize](#get-authorize) endpoint and Box will send you an
+                operations you will begin by requesting authentication from the
 
 
-        authorization code.
+                [authorize](#get-authorize) endpoint and Box will send you an
 
 
-        You will then send this code to this endpoint to exchange it for
+                authorization code.
 
 
-        an Access Token. The returned Access Token can then be used to to make
+                You will then send this code to this endpoint to exchange it for
 
 
-        Box API calls.
+                an Access Token. The returned Access Token can then be used to to make
 
-        :param grant_type: The type of request being made, either using a client-side obtained
-            authorization code, a refresh token, a JWT assertion, client credentials
-            grant or another access token for the purpose of downscoping a token.
-        :type grant_type: RequestAccessTokenGrantType
-        :param client_id: The Client ID of the application requesting an access token.
-            Used in combination with `authorization_code`, `client_credentials`, or
-            `urn:ietf:params:oauth:grant-type:jwt-bearer` as the `grant_type`.
-        :type client_id: Optional[str], optional
-        :param client_secret: The client secret of the application requesting an access token.
-            Used in combination with `authorization_code`, `client_credentials`, or
-            `urn:ietf:params:oauth:grant-type:jwt-bearer` as the `grant_type`.
-        :type client_secret: Optional[str], optional
-        :param code: The client-side authorization code passed to your application by
-            Box in the browser redirect after the user has successfully
-            granted your application permission to make API calls on their
-            behalf.
-            Used in combination with `authorization_code` as the `grant_type`.
-        :type code: Optional[str], optional
-        :param refresh_token: A refresh token used to get a new access token with.
-            Used in combination with `refresh_token` as the `grant_type`.
-        :type refresh_token: Optional[str], optional
-        :param assertion: A JWT assertion for which to request a new access token.
-            Used in combination with `urn:ietf:params:oauth:grant-type:jwt-bearer`
-            as the `grant_type`.
-        :type assertion: Optional[str], optional
-        :param subject_token: The token to exchange for a downscoped token. This can be a regular
-            access token, a JWT assertion, or an app token.
-            Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
-            as the `grant_type`.
-        :type subject_token: Optional[str], optional
-        :param subject_token_type: The type of `subject_token` passed in.
-            Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
-            as the `grant_type`.
-        :type subject_token_type: Optional[RequestAccessTokenSubjectTokenType], optional
-        :param actor_token: The token used to create an annotator token.
-            This is a JWT assertion.
-            Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
-            as the `grant_type`.
-        :type actor_token: Optional[str], optional
-        :param actor_token_type: The type of `actor_token` passed in.
-            Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
-            as the `grant_type`.
-        :type actor_token_type: Optional[RequestAccessTokenActorTokenType], optional
-        :param scope: The space-delimited list of scopes that you want apply to the
-            new access token.
-            The `subject_token` will need to have all of these scopes or
-            the call will error with **401 Unauthorized**.
-        :type scope: Optional[str], optional
-        :param resource: Full URL for the file that the token should be generated for.
-        :type resource: Optional[str], optional
-        :param box_subject_type: Used in combination with `client_credentials` as the `grant_type`.
-        :type box_subject_type: Optional[RequestAccessTokenBoxSubjectType], optional
-        :param box_subject_id: Used in combination with `client_credentials` as the `grant_type`.
-            Value is determined by `box_subject_type`. If `user` use user ID and if
-            `enterprise` use enterprise ID.
-        :type box_subject_id: Optional[str], optional
-        :param box_shared_link: Full URL of the shared link on the file or folder
-            that the token should be generated for.
-        :type box_shared_link: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                Box API calls.
+
+                :param grant_type: The type of request being made, either using a client-side obtained
+        authorization code, a refresh token, a JWT assertion, client credentials
+        grant or another access token for the purpose of downscoping a token.
+                :type grant_type: RequestAccessTokenGrantType
+                :param client_id: The Client ID of the application requesting an access token.
+
+        Used in combination with `authorization_code`, `client_credentials`, or
+        `urn:ietf:params:oauth:grant-type:jwt-bearer` as the `grant_type`., defaults to None
+                :type client_id: Optional[str], optional
+                :param client_secret: The client secret of the application requesting an access token.
+
+        Used in combination with `authorization_code`, `client_credentials`, or
+        `urn:ietf:params:oauth:grant-type:jwt-bearer` as the `grant_type`., defaults to None
+                :type client_secret: Optional[str], optional
+                :param code: The client-side authorization code passed to your application by
+        Box in the browser redirect after the user has successfully
+        granted your application permission to make API calls on their
+        behalf.
+
+        Used in combination with `authorization_code` as the `grant_type`., defaults to None
+                :type code: Optional[str], optional
+                :param refresh_token: A refresh token used to get a new access token with.
+
+        Used in combination with `refresh_token` as the `grant_type`., defaults to None
+                :type refresh_token: Optional[str], optional
+                :param assertion: A JWT assertion for which to request a new access token.
+
+        Used in combination with `urn:ietf:params:oauth:grant-type:jwt-bearer`
+        as the `grant_type`., defaults to None
+                :type assertion: Optional[str], optional
+                :param subject_token: The token to exchange for a downscoped token. This can be a regular
+        access token, a JWT assertion, or an app token.
+
+        Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
+        as the `grant_type`., defaults to None
+                :type subject_token: Optional[str], optional
+                :param subject_token_type: The type of `subject_token` passed in.
+
+        Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
+        as the `grant_type`., defaults to None
+                :type subject_token_type: Optional[RequestAccessTokenSubjectTokenType], optional
+                :param actor_token: The token used to create an annotator token.
+        This is a JWT assertion.
+
+        Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
+        as the `grant_type`., defaults to None
+                :type actor_token: Optional[str], optional
+                :param actor_token_type: The type of `actor_token` passed in.
+
+        Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange`
+        as the `grant_type`., defaults to None
+                :type actor_token_type: Optional[RequestAccessTokenActorTokenType], optional
+                :param scope: The space-delimited list of scopes that you want apply to the
+        new access token.
+
+        The `subject_token` will need to have all of these scopes or
+        the call will error with **401 Unauthorized**., defaults to None
+                :type scope: Optional[str], optional
+                :param resource: Full URL for the file that the token should be generated for., defaults to None
+                :type resource: Optional[str], optional
+                :param box_subject_type: Used in combination with `client_credentials` as the `grant_type`., defaults to None
+                :type box_subject_type: Optional[RequestAccessTokenBoxSubjectType], optional
+                :param box_subject_id: Used in combination with `client_credentials` as the `grant_type`.
+        Value is determined by `box_subject_type`. If `user` use user ID and if
+        `enterprise` use enterprise ID., defaults to None
+                :type box_subject_id: Optional[str], optional
+                :param box_shared_link: Full URL of the shared link on the file or folder
+        that the token should be generated for., defaults to None
+                :type box_shared_link: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -327,7 +340,8 @@ class AuthorizationManager:
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AccessToken:
         """
         Refresh an Access Token using its client ID, secret, and refresh token.
@@ -339,7 +353,7 @@ class AuthorizationManager:
         :type client_secret: str
         :param refresh_token: The refresh token to refresh.
         :type refresh_token: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -367,26 +381,27 @@ class AuthorizationManager:
 
     def revoke_access_token(
         self,
+        *,
         client_id: Optional[str] = None,
         client_secret: Optional[str] = None,
         token: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Revoke an active Access Token, effectively logging a user out
+                Revoke an active Access Token, effectively logging a user out
 
-        that has been previously authenticated.
+                that has been previously authenticated.
 
-        :param client_id: The Client ID of the application requesting to revoke the
-            access token.
-        :type client_id: Optional[str], optional
-        :param client_secret: The client secret of the application requesting to revoke
-            an access token.
-        :type client_secret: Optional[str], optional
-        :param token: The access token to revoke.
-        :type token: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param client_id: The Client ID of the application requesting to revoke the
+        access token., defaults to None
+                :type client_id: Optional[str], optional
+                :param client_secret: The client secret of the application requesting to revoke
+        an access token., defaults to None
+                :type client_secret: Optional[str], optional
+                :param token: The access token to revoke., defaults to None
+                :type token: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

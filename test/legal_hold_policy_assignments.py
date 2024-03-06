@@ -36,9 +36,7 @@ def testLegalHoldPolicyAssignments():
     legal_hold_description: str = 'test description'
     legal_hold_policy: LegalHoldPolicy = (
         client.legal_hold_policies.create_legal_hold_policy(
-            policy_name=legal_hold_policy_name,
-            description=legal_hold_description,
-            is_ongoing=True,
+            legal_hold_policy_name, description=legal_hold_description, is_ongoing=True
         )
     )
     legal_hold_policy_id: str = legal_hold_policy.id
@@ -46,8 +44,8 @@ def testLegalHoldPolicyAssignments():
     file_id: str = file.id
     legal_hold_policy_assignment: LegalHoldPolicyAssignment = (
         client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(
-            policy_id=legal_hold_policy_id,
-            assign_to=CreateLegalHoldPolicyAssignmentAssignTo(
+            legal_hold_policy_id,
+            CreateLegalHoldPolicyAssignmentAssignTo(
                 type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE.value,
                 id=file_id,
             ),
@@ -62,28 +60,26 @@ def testLegalHoldPolicyAssignments():
     legal_hold_policy_assignment_id: str = legal_hold_policy_assignment.id
     legal_hold_policy_assignment_from_api: LegalHoldPolicyAssignment = (
         client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(
-            legal_hold_policy_assignment_id=legal_hold_policy_assignment_id
+            legal_hold_policy_assignment_id
         )
     )
     assert legal_hold_policy_assignment_from_api.id == legal_hold_policy_assignment_id
     legal_policy_assignments: LegalHoldPolicyAssignments = (
         client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(
-            policy_id=legal_hold_policy_id
+            legal_hold_policy_id
         )
     )
     assert len(legal_policy_assignments.entries) == 1
     client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
-        legal_hold_policy_assignment_id=legal_hold_policy_assignment_id
+        legal_hold_policy_assignment_id
     )
     with pytest.raises(Exception):
         client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
-            legal_hold_policy_assignment_id=legal_hold_policy_assignment_id
+            legal_hold_policy_assignment_id
         )
-    client.files.delete_file_by_id(file_id=file_id)
+    client.files.delete_file_by_id(file_id)
     try:
-        client.legal_hold_policies.delete_legal_hold_policy_by_id(
-            legal_hold_policy_id=legal_hold_policy_id
-        )
+        client.legal_hold_policies.delete_legal_hold_policy_by_id(legal_hold_policy_id)
     except Exception:
         print(
             ''.join(['Could not delete Legal Policy with id: ', legal_hold_policy_id])

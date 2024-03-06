@@ -37,7 +37,7 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 
 class OAuthConfig:
     def __init__(
-        self, client_id: str, client_secret: str, token_storage: TokenStorage = None
+        self, client_id: str, client_secret: str, *, token_storage: TokenStorage = None
     ):
         if token_storage is None:
             token_storage = InMemoryTokenStorage()
@@ -49,22 +49,23 @@ class OAuthConfig:
 class GetAuthorizeUrlOptions:
     def __init__(
         self,
+        *,
         client_id: Optional[str] = None,
         redirect_uri: Optional[str] = None,
         response_type: Optional[str] = None,
         state: Optional[str] = None,
-        scope: Optional[str] = None,
+        scope: Optional[str] = None
     ):
         """
-        :param client_id: Box API key used for identifying the application the user is authenticating with
+        :param client_id: Box API key used for identifying the application the user is authenticating with, defaults to None
         :type client_id: Optional[str], optional
-        :param redirect_uri: The URI to which Box redirects the browser after the user has granted or denied the application permission. This URI match one of the redirect URIs in the configuration of your application.
+        :param redirect_uri: The URI to which Box redirects the browser after the user has granted or denied the application permission. This URI match one of the redirect URIs in the configuration of your application., defaults to None
         :type redirect_uri: Optional[str], optional
-        :param response_type: The type of response we would like to receive.
+        :param response_type: The type of response we would like to receive., defaults to None
         :type response_type: Optional[str], optional
-        :param state: A custom string of your choice. Box will pass the same string to the redirect URL when authentication is complete. This parameter can be used to identify a user on redirect, as well as protect against hijacked sessions and other exploits.
+        :param state: A custom string of your choice. Box will pass the same string to the redirect URL when authentication is complete. This parameter can be used to identify a user on redirect, as well as protect against hijacked sessions and other exploits., defaults to None
         :type state: Optional[str], optional
-        :param scope: A space-separated list of application scopes you'd like to authenticate the user for. This defaults to all the scopes configured for the application in its configuration page.
+        :param scope: A space-separated list of application scopes you'd like to authenticate the user for. This defaults to all the scopes configured for the application in its configuration page., defaults to None
         :type scope: Optional[str], optional
         """
         self.client_id = client_id
@@ -88,7 +89,7 @@ class BoxOAuth(Authentication):
             else self.config.token_storage
         )
 
-    def get_authorize_url(self, options: GetAuthorizeUrlOptions = None) -> str:
+    def get_authorize_url(self, *, options: GetAuthorizeUrlOptions = None) -> str:
         """
         Get the authorization URL for the app user.
         """
@@ -119,13 +120,16 @@ class BoxOAuth(Authentication):
         )
 
     def get_tokens_authorization_code_grant(
-        self, authorization_code: str, network_session: Optional[NetworkSession] = None
+        self,
+        authorization_code: str,
+        *,
+        network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Acquires token info using an authorization code.
         :param authorization_code: The authorization code to use to get tokens.
         :type authorization_code: str
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         auth_manager: AuthorizationManager = (
@@ -134,7 +138,7 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=PostOAuth2TokenGrantTypeField.AUTHORIZATION_CODE.value,
+            PostOAuth2TokenGrantTypeField.AUTHORIZATION_CODE.value,
             code=authorization_code,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -143,11 +147,11 @@ class BoxOAuth(Authentication):
         return token
 
     def retrieve_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Get the current access token. If the current access token is expired or not found, this method will attempt to refresh the token.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         token: Optional[AccessToken] = self.token_storage.get()
@@ -158,11 +162,11 @@ class BoxOAuth(Authentication):
         return token
 
     def refresh_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Get a new access token for the app user.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         old_token: Optional[AccessToken] = self.token_storage.get()
@@ -175,7 +179,7 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=PostOAuth2TokenGrantTypeField.REFRESH_TOKEN.value,
+            PostOAuth2TokenGrantTypeField.REFRESH_TOKEN.value,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
             refresh_token=token_used_for_refresh,
@@ -184,15 +188,15 @@ class BoxOAuth(Authentication):
         return token
 
     def retrieve_authorization_header(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session)
+        token: AccessToken = self.retrieve_token(network_session=network_session)
         return ''.join(['Bearer ', token.access_token])
 
-    def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
+    def revoke_token(self, *, network_session: Optional[NetworkSession] = None) -> None:
         """
         Revoke an active Access Token, effectively logging a user out that has been previously authenticated.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         token: Optional[AccessToken] = self.token_storage.get()
@@ -204,26 +208,29 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         auth_manager.revoke_access_token(
-            self.config.client_id, self.config.client_secret, token.access_token
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret,
+            token=token.access_token,
         )
         return None
 
     def downscope_token(
         self,
         scopes: List[str],
+        *,
         resource: Optional[str] = None,
         shared_link: Optional[str] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Downscope access token to the provided scopes. Returning a new access token with the provided scopes, with the original access token unchanged.
         :param scopes: The scope(s) to apply to the resulting token.
         :type scopes: List[str]
-        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item. The resource should be a full URL to an item, e.g. https://api.box.com/2.0/files/123456.
+        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item. The resource should be a full URL to an item, e.g. https://api.box.com/2.0/files/123456., defaults to None
         :type resource: Optional[str], optional
-        :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item.
+        :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item., defaults to None
         :type shared_link: Optional[str], optional
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         token: Optional[AccessToken] = self.token_storage.get()
@@ -235,7 +242,7 @@ class BoxOAuth(Authentication):
             else AuthorizationManager()
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
             subject_token=token.access_token,
             subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,

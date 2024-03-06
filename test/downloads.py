@@ -36,14 +36,14 @@ def test_download_file():
     file_buffer: Buffer = generate_byte_buffer(1024 * 1024)
     file_content_stream: ByteStream = generate_byte_stream_from_buffer(file_buffer)
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=new_file_name, parent=UploadFileAttributesParentField(id='0')
         ),
-        file=file_content_stream,
+        file_content_stream,
     )
     uploaded_file: FileFull = uploaded_files.entries[0]
     downloaded_file_content: ByteStream = client.downloads.download_file(
-        file_id=uploaded_file.id
+        uploaded_file.id
     )
     assert buffer_equals(read_byte_stream(downloaded_file_content), file_buffer)
-    client.files.delete_file_by_id(file_id=uploaded_file.id)
+    client.files.delete_file_by_id(uploaded_file.id)

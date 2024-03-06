@@ -16,7 +16,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_watermark -->
 
 ```python
-client.folder_watermarks.get_folder_watermark(folder_id=folder.id)
+client.folder_watermarks.get_folder_watermark(folder.id)
 ```
 
 ### Arguments
@@ -45,7 +45,7 @@ See the endpoint docs at
 <!-- sample put_folders_id_watermark -->
 
 ```python
-client.folder_watermarks.update_folder_watermark(folder_id=folder.id, watermark=UpdateFolderWatermarkWatermark(imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value))
+client.folder_watermarks.update_folder_watermark(folder.id, UpdateFolderWatermarkWatermark(imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value))
 ```
 
 ### Arguments
@@ -77,7 +77,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_watermark -->
 
 ```python
-client.folder_watermarks.delete_folder_watermark(folder_id=folder.id)
+client.folder_watermarks.delete_folder_watermark(folder.id)
 ```
 
 ### Arguments

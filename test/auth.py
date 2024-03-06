@@ -77,24 +77,24 @@ def test_jwt_auth_downscope():
     auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
     parent_client: BoxClient = BoxClient(auth=auth)
     uploaded_files: Files = parent_client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
         ),
-        file=generate_byte_stream(1024 * 1024),
+        generate_byte_stream(1024 * 1024),
     )
     file: FileFull = uploaded_files.entries[0]
     resource_path: str = ''.join(['https://api.box.com/2.0/files/', file.id])
     downscoped_token: AccessToken = auth.downscope_token(
-        ['item_rename', 'item_preview'], resource_path
+        ['item_rename', 'item_preview'], resource=resource_path
     )
     assert not downscoped_token.access_token == None
     downscoped_client: BoxClient = BoxClient(
         auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
     )
-    downscoped_client.files.update_file_by_id(file_id=file.id, name=get_uuid())
+    downscoped_client.files.update_file_by_id(file.id, name=get_uuid())
     with pytest.raises(Exception):
-        downscoped_client.files.delete_file_by_id(file_id=file.id)
-    parent_client.files.delete_file_by_id(file_id=file.id)
+        downscoped_client.files.delete_file_by_id(file.id)
+    parent_client.files.delete_file_by_id(file.id)
 
 
 def test_jwt_auth_revoke():
@@ -155,20 +155,20 @@ def test_ccg_auth_downscope():
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
     parent_client: BoxClient = BoxClient(auth=auth)
     folder: FolderFull = parent_client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParent(id='0')
+        get_uuid(), CreateFolderParent(id='0')
     )
     resource_path: str = ''.join(['https://api.box.com/2.0/folders/', folder.id])
     downscoped_token: AccessToken = auth.downscope_token(
-        ['item_rename', 'item_preview'], resource_path
+        ['item_rename', 'item_preview'], resource=resource_path
     )
     assert not downscoped_token.access_token == None
     downscoped_client: BoxClient = BoxClient(
         auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
     )
-    downscoped_client.folders.update_folder_by_id(folder_id=folder.id, name=get_uuid())
+    downscoped_client.folders.update_folder_by_id(folder.id, name=get_uuid())
     with pytest.raises(Exception):
-        downscoped_client.folders.delete_folder_by_id(folder_id=folder.id)
-    parent_client.folders.delete_folder_by_id(folder_id=folder.id)
+        downscoped_client.folders.delete_folder_by_id(folder.id)
+    parent_client.folders.delete_folder_by_id(folder.id)
 
 
 def test_ccg_auth_revoke():
@@ -233,21 +233,21 @@ def test_oauth_auth_downscope():
     auth.token_storage.store(token)
     parent_client: BoxClient = BoxClient(auth=auth)
     uploaded_files: Files = parent_client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
         ),
-        file=generate_byte_stream(1024 * 1024),
+        generate_byte_stream(1024 * 1024),
     )
     file: FileFull = uploaded_files.entries[0]
     resource_path: str = ''.join(['https://api.box.com/2.0/files/', file.id])
     downscoped_token: AccessToken = auth.downscope_token(
-        ['item_rename', 'item_preview'], resource_path
+        ['item_rename', 'item_preview'], resource=resource_path
     )
     assert not downscoped_token.access_token == None
     downscoped_client: BoxClient = BoxClient(
         auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
     )
-    downscoped_client.files.update_file_by_id(file_id=file.id, name=get_uuid())
+    downscoped_client.files.update_file_by_id(file.id, name=get_uuid())
     with pytest.raises(Exception):
-        downscoped_client.files.delete_file_by_id(file_id=file.id)
-    parent_client.files.delete_file_by_id(file_id=file.id)
+        downscoped_client.files.delete_file_by_id(file.id)
+    parent_client.files.delete_file_by_id(file.id)

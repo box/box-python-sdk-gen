@@ -66,16 +66,17 @@ class CreateCollaborationItem(BaseObject):
 
     def __init__(
         self,
+        *,
         type: Optional[CreateCollaborationItemTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: The type of the item that this collaboration will be
-            granted access to
-        :type type: Optional[CreateCollaborationItemTypeField], optional
-        :param id: The ID of the item that will be granted access to
-        :type id: Optional[str], optional
+                :param type: The type of the item that this collaboration will be
+        granted access to, defaults to None
+                :type type: Optional[CreateCollaborationItemTypeField], optional
+                :param id: The ID of the item that will be granted access to, defaults to None
+                :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -93,20 +94,23 @@ class CreateCollaborationAccessibleBy(BaseObject):
     def __init__(
         self,
         type: CreateCollaborationAccessibleByTypeField,
+        *,
         id: Optional[str] = None,
         login: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: The type of collaborator to invite.
-        :type type: CreateCollaborationAccessibleByTypeField
-        :param id: The ID of the user or group.
-            Alternatively, use `login` to specify a user by email
-            address.
-        :type id: Optional[str], optional
-        :param login: The email address of the user to grant access to the item.
-            Alternatively, use `id` to specify a user by user ID.
-        :type login: Optional[str], optional
+                :param type: The type of collaborator to invite.
+                :type type: CreateCollaborationAccessibleByTypeField
+                :param id: The ID of the user or group.
+
+        Alternatively, use `login` to specify a user by email
+        address., defaults to None
+                :type id: Optional[str], optional
+                :param login: The email address of the user to grant access to the item.
+
+        Alternatively, use `id` to specify a user by user ID., defaults to None
+                :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -127,8 +131,9 @@ class CreateCollaborationRole(str, Enum):
 class UserCollaborationsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -138,25 +143,27 @@ class UserCollaborationsManager:
     def get_collaboration_by_id(
         self,
         collaboration_id: str,
+        *,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collaboration:
         """
-        Retrieves a single collaboration.
-        :param collaboration_id: The ID of the collaboration
-            Example: "1234"
-        :type collaboration_id: str
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves a single collaboration.
+                :param collaboration_id: The ID of the collaboration
+        Example: "1234"
+                :type collaboration_id: str
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -185,53 +192,59 @@ class UserCollaborationsManager:
         self,
         collaboration_id: str,
         role: UpdateCollaborationByIdRole,
+        *,
         status: Optional[UpdateCollaborationByIdStatus] = None,
         expires_at: Optional[str] = None,
         can_view_path: Optional[bool] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collaboration:
         """
-        Updates a collaboration.
+                Updates a collaboration.
 
-        Can be used to change the owner of an item, or to
+                Can be used to change the owner of an item, or to
 
 
-        accept collaboration invites.
+                accept collaboration invites.
 
-        :param collaboration_id: The ID of the collaboration
-            Example: "1234"
-        :type collaboration_id: str
-        :param role: The level of access granted.
-        :type role: UpdateCollaborationByIdRole
-        :param status: <!--alex ignore reject-->
-            Set the status of a `pending` collaboration invitation,
-            effectively accepting, or rejecting the invite.
-        :type status: Optional[UpdateCollaborationByIdStatus], optional
-        :param expires_at: Update the expiration date for the collaboration. At this date,
-            the collaboration will be automatically removed from the item.
-            This feature will only work if the **Automatically remove invited
-            collaborators: Allow folder owners to extend the expiry date**
-            setting has been enabled in the **Enterprise Settings**
-            of the **Admin Console**. When the setting is not enabled,
-            collaborations can not have an expiry date and a value for this
-            field will be result in an error.
-            Additionally, a collaboration can only be given an
-            expiration if it was created after the **Automatically remove
-            invited collaborator** setting was enabled.
-        :type expires_at: Optional[str], optional
-        :param can_view_path: Determines if the invited users can see the entire parent path to
-            the associated folder. The user will not gain privileges in any
-            parent folder and therefore can not see content the user is not
-            collaborated on.
-            Be aware that this meaningfully increases the time required to load the
-            invitee's **All Files** page. We recommend you limit the number of
-            collaborations with `can_view_path` enabled to 1,000 per user.
-            Only owner or co-owners can invite collaborators with a `can_view_path` of
-            `true`.
-            `can_view_path` can only be used for folder collaborations.
-        :type can_view_path: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param collaboration_id: The ID of the collaboration
+        Example: "1234"
+                :type collaboration_id: str
+                :param role: The level of access granted.
+                :type role: UpdateCollaborationByIdRole
+                :param status: <!--alex ignore reject-->
+        Set the status of a `pending` collaboration invitation,
+        effectively accepting, or rejecting the invite., defaults to None
+                :type status: Optional[UpdateCollaborationByIdStatus], optional
+                :param expires_at: Update the expiration date for the collaboration. At this date,
+        the collaboration will be automatically removed from the item.
+
+        This feature will only work if the **Automatically remove invited
+        collaborators: Allow folder owners to extend the expiry date**
+        setting has been enabled in the **Enterprise Settings**
+        of the **Admin Console**. When the setting is not enabled,
+        collaborations can not have an expiry date and a value for this
+        field will be result in an error.
+
+        Additionally, a collaboration can only be given an
+        expiration if it was created after the **Automatically remove
+        invited collaborator** setting was enabled., defaults to None
+                :type expires_at: Optional[str], optional
+                :param can_view_path: Determines if the invited users can see the entire parent path to
+        the associated folder. The user will not gain privileges in any
+        parent folder and therefore can not see content the user is not
+        collaborated on.
+
+        Be aware that this meaningfully increases the time required to load the
+        invitee's **All Files** page. We recommend you limit the number of
+        collaborations with `can_view_path` enabled to 1,000 per user.
+
+        Only owner or co-owners can invite collaborators with a `can_view_path` of
+        `true`.
+
+        `can_view_path` can only be used for folder collaborations., defaults to None
+                :type can_view_path: Optional[bool], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -265,15 +278,16 @@ class UserCollaborationsManager:
     def delete_collaboration_by_id(
         self,
         collaboration_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a single collaboration.
-        :param collaboration_id: The ID of the collaboration
-            Example: "1234"
-        :type collaboration_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Deletes a single collaboration.
+                :param collaboration_id: The ID of the collaboration
+        Example: "1234"
+                :type collaboration_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -301,91 +315,97 @@ class UserCollaborationsManager:
         item: CreateCollaborationItem,
         accessible_by: CreateCollaborationAccessibleBy,
         role: CreateCollaborationRole,
+        *,
         is_access_only: Optional[bool] = None,
         can_view_path: Optional[bool] = None,
         expires_at: Optional[str] = None,
         fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collaboration:
         """
-        Adds a collaboration for a single user or a single group to a file
+                Adds a collaboration for a single user or a single group to a file
 
-        or folder.
-
-
-        Collaborations can be created using email address, user IDs, or a
+                or folder.
 
 
-        group IDs.
+                Collaborations can be created using email address, user IDs, or a
 
 
-        If a collaboration is being created with a group, access to
+                group IDs.
 
 
-        this endpoint is dependent on the group's ability to be invited.
+                If a collaboration is being created with a group, access to
 
 
-        If collaboration is in `pending` status, the following fields
+                this endpoint is dependent on the group's ability to be invited.
 
 
-        are redacted:
+                If collaboration is in `pending` status, the following fields
 
 
-        - `login` and `name` are hidden if a collaboration was created
+                are redacted:
 
 
-        using `user_id`,
+                - `login` and `name` are hidden if a collaboration was created
 
 
-        -  `name` is hidden if a collaboration was created using `login`.
+                using `user_id`,
 
-        :param item: The item to attach the comment to.
-        :type item: CreateCollaborationItem
-        :param accessible_by: The user or group to give access to the item.
-        :type accessible_by: CreateCollaborationAccessibleBy
-        :param role: The level of access granted.
-        :type role: CreateCollaborationRole
-        :param is_access_only: If set to `true`, collaborators have access to
-            shared items, but such items won't be visible in the
-            All Files list. Additionally, collaborators won't
-            see the the path to the root folder for the
-            shared item.
-        :type is_access_only: Optional[bool], optional
-        :param can_view_path: Determines if the invited users can see the entire parent path to
-            the associated folder. The user will not gain privileges in any
-            parent folder and therefore can not see content the user is not
-            collaborated on.
-            Be aware that this meaningfully increases the time required to load the
-            invitee's **All Files** page. We recommend you limit the number of
-            collaborations with `can_view_path` enabled to 1,000 per user.
-            Only owner or co-owners can invite collaborators with a `can_view_path` of
-            `true`.
-            `can_view_path` can only be used for folder collaborations.
-        :type can_view_path: Optional[bool], optional
-        :param expires_at: Set the expiration date for the collaboration. At this date, the
-            collaboration will be automatically removed from the item.
-            This feature will only work if the **Automatically remove invited
-            collaborators: Allow folder owners to extend the expiry date**
-            setting has been enabled in the **Enterprise Settings**
-            of the **Admin Console**. When the setting is not enabled,
-            collaborations can not have an expiry date and a value for this
-            field will be result in an error.
-        :type expires_at: Optional[str], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param notify: Determines if users should receive email notification
-            for the action performed.
-        :type notify: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                -  `name` is hidden if a collaboration was created using `login`.
+
+                :param item: The item to attach the comment to.
+                :type item: CreateCollaborationItem
+                :param accessible_by: The user or group to give access to the item.
+                :type accessible_by: CreateCollaborationAccessibleBy
+                :param role: The level of access granted.
+                :type role: CreateCollaborationRole
+                :param is_access_only: If set to `true`, collaborators have access to
+        shared items, but such items won't be visible in the
+        All Files list. Additionally, collaborators won't
+        see the the path to the root folder for the
+        shared item., defaults to None
+                :type is_access_only: Optional[bool], optional
+                :param can_view_path: Determines if the invited users can see the entire parent path to
+        the associated folder. The user will not gain privileges in any
+        parent folder and therefore can not see content the user is not
+        collaborated on.
+
+        Be aware that this meaningfully increases the time required to load the
+        invitee's **All Files** page. We recommend you limit the number of
+        collaborations with `can_view_path` enabled to 1,000 per user.
+
+        Only owner or co-owners can invite collaborators with a `can_view_path` of
+        `true`.
+
+        `can_view_path` can only be used for folder collaborations., defaults to None
+                :type can_view_path: Optional[bool], optional
+                :param expires_at: Set the expiration date for the collaboration. At this date, the
+        collaboration will be automatically removed from the item.
+
+        This feature will only work if the **Automatically remove invited
+        collaborators: Allow folder owners to extend the expiry date**
+        setting has been enabled in the **Enterprise Settings**
+        of the **Admin Console**. When the setting is not enabled,
+        collaborations can not have an expiry date and a value for this
+        field will be result in an error., defaults to None
+                :type expires_at: Optional[str], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param notify: Determines if users should receive email notification
+        for the action performed., defaults to None
+                :type notify: Optional[bool], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

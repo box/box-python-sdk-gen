@@ -51,14 +51,15 @@ class CreateWebhookTarget(BaseObject):
 
     def __init__(
         self,
+        *,
         id: Optional[str] = None,
         type: Optional[CreateWebhookTargetTypeField] = None,
         **kwargs
     ):
         """
-        :param id: The ID of the item to trigger a webhook
+        :param id: The ID of the item to trigger a webhook, defaults to None
         :type id: Optional[str], optional
-        :param type: The type of item to trigger a webhook
+        :param type: The type of item to trigger a webhook, defaults to None
         :type type: Optional[CreateWebhookTargetTypeField], optional
         """
         super().__init__(**kwargs)
@@ -119,14 +120,15 @@ class UpdateWebhookByIdTarget(BaseObject):
 
     def __init__(
         self,
+        *,
         id: Optional[str] = None,
         type: Optional[UpdateWebhookByIdTargetTypeField] = None,
         **kwargs
     ):
         """
-        :param id: The ID of the item to trigger a webhook
+        :param id: The ID of the item to trigger a webhook, defaults to None
         :type id: Optional[str], optional
-        :param type: The type of item to trigger a webhook
+        :param type: The type of item to trigger a webhook, defaults to None
         :type type: Optional[UpdateWebhookByIdTargetTypeField], optional
         """
         super().__init__(**kwargs)
@@ -180,8 +182,9 @@ class UpdateWebhookByIdTriggers(str, Enum):
 class WebhooksManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -190,32 +193,34 @@ class WebhooksManager:
 
     def get_webhooks(
         self,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Webhooks:
         """
-        Returns all defined webhooks for the requesting application.
+                Returns all defined webhooks for the requesting application.
 
-        This API only returns webhooks that are applied to files or folders that are
-
-
-        owned by the authenticated user. This means that an admin can not see webhooks
+                This API only returns webhooks that are applied to files or folders that are
 
 
-        created by a service account unless the admin has access to those folders, and
+                owned by the authenticated user. This means that an admin can not see webhooks
 
 
-        vice versa.
+                created by a service account unless the admin has access to those folders, and
 
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                vice versa.
+
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -241,19 +246,20 @@ class WebhooksManager:
         target: CreateWebhookTarget,
         address: str,
         triggers: List[CreateWebhookTriggers],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Webhook:
         """
-        Creates a webhook.
-        :param target: The item that will trigger the webhook
-        :type target: CreateWebhookTarget
-        :param address: The URL that is notified by this webhook
-        :type address: str
-        :param triggers: An array of event names that this webhook is
-            to be triggered for
-        :type triggers: List[CreateWebhookTriggers]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Creates a webhook.
+                :param target: The item that will trigger the webhook
+                :type target: CreateWebhookTarget
+                :param address: The URL that is notified by this webhook
+                :type address: str
+                :param triggers: An array of event names that this webhook is
+        to be triggered for
+                :type triggers: List[CreateWebhookTriggers]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -278,15 +284,18 @@ class WebhooksManager:
         return deserialize(response.data, Webhook)
 
     def get_webhook_by_id(
-        self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        webhook_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Webhook:
         """
-        Retrieves a specific webhook
-        :param webhook_id: The ID of the webhook.
-            Example: "3321123"
-        :type webhook_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves a specific webhook
+                :param webhook_id: The ID of the webhook.
+        Example: "3321123"
+                :type webhook_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -312,25 +321,26 @@ class WebhooksManager:
     def update_webhook_by_id(
         self,
         webhook_id: str,
+        *,
         target: Optional[UpdateWebhookByIdTarget] = None,
         address: Optional[str] = None,
         triggers: Optional[List[UpdateWebhookByIdTriggers]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Webhook:
         """
-        Updates a webhook.
-        :param webhook_id: The ID of the webhook.
-            Example: "3321123"
-        :type webhook_id: str
-        :param target: The item that will trigger the webhook
-        :type target: Optional[UpdateWebhookByIdTarget], optional
-        :param address: The URL that is notified by this webhook
-        :type address: Optional[str], optional
-        :param triggers: An array of event names that this webhook is
-            to be triggered for
-        :type triggers: Optional[List[UpdateWebhookByIdTriggers]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Updates a webhook.
+                :param webhook_id: The ID of the webhook.
+        Example: "3321123"
+                :type webhook_id: str
+                :param target: The item that will trigger the webhook, defaults to None
+                :type target: Optional[UpdateWebhookByIdTarget], optional
+                :param address: The URL that is notified by this webhook, defaults to None
+                :type address: Optional[str], optional
+                :param triggers: An array of event names that this webhook is
+        to be triggered for, defaults to None
+                :type triggers: Optional[List[UpdateWebhookByIdTriggers]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -361,15 +371,18 @@ class WebhooksManager:
         return deserialize(response.data, Webhook)
 
     def delete_webhook_by_id(
-        self, webhook_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        webhook_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a webhook.
-        :param webhook_id: The ID of the webhook.
-            Example: "3321123"
-        :type webhook_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Deletes a webhook.
+                :param webhook_id: The ID of the webhook.
+        Example: "3321123"
+                :type webhook_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

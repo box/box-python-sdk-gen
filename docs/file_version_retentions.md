@@ -57,7 +57,7 @@ See the endpoint docs at
 <!-- sample get_file_version_retentions_id -->
 
 ```python
-client.file_version_retentions.get_file_version_retention_by_id(file_version_retention_id=file_version_retention.id)
+client.file_version_retentions.get_file_version_retention_by_id(file_version_retention.id)
 ```
 
 ### Arguments

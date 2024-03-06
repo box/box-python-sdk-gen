@@ -48,7 +48,7 @@ See the endpoint docs at
 <!-- sample post_terms_of_services -->
 
 ```python
-client.terms_of_services.create_terms_of_service(status=CreateTermsOfServiceStatus.DISABLED.value, tos_type=CreateTermsOfServiceTosType.MANAGED.value, text='Test TOS')
+client.terms_of_services.create_terms_of_service(CreateTermsOfServiceStatus.DISABLED.value, 'Test TOS', tos_type=CreateTermsOfServiceTosType.MANAGED.value)
 ```
 
 ### Arguments
@@ -104,7 +104,7 @@ See the endpoint docs at
 <!-- sample put_terms_of_services_id -->
 
 ```python
-client.terms_of_services.update_terms_of_service_by_id(terms_of_service_id=tos.id, status=UpdateTermsOfServiceByIdStatus.DISABLED.value, text='Disabled TOS')
+client.terms_of_services.update_terms_of_service_by_id(tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'Disabled TOS')
 ```
 
 ### Arguments

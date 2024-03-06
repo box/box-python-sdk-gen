@@ -20,7 +20,7 @@ def collaborationAllowlistEntries():
     domain: str = 'example.com'
     new_entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
-            domain=domain, direction=direction
+            domain, direction
         )
     )
     assert new_entry.type == 'collaboration_whitelist_entry'
@@ -28,16 +28,16 @@ def collaborationAllowlistEntries():
     assert new_entry.domain == domain
     entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(
-            collaboration_whitelist_entry_id=new_entry.id
+            new_entry.id
         )
     )
     assert entry.id == new_entry.id
     assert entry.direction == direction
     assert entry.domain == domain
     client.collaboration_allowlist_entries.delete_collaboration_whitelist_entry_by_id(
-        collaboration_whitelist_entry_id=entry.id
+        entry.id
     )
     with pytest.raises(Exception):
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(
-            collaboration_whitelist_entry_id=entry.id
+            entry.id
         )

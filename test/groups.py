@@ -22,19 +22,19 @@ def test_create_get_delete_group():
     group_name: str = get_uuid()
     group_description: str = 'Group description'
     group: GroupFull = client.groups.create_group(
-        name=group_name, description=group_description
+        group_name, description=group_description
     )
     assert group.name == group_name
     group_by_id: GroupFull = client.groups.get_group_by_id(
-        group_id=group.id, fields=['id', 'name', 'description', 'group_type']
+        group.id, fields=['id', 'name', 'description', 'group_type']
     )
     assert group_by_id.id == group.id
     assert group_by_id.description == group_description
     updated_group_name: str = get_uuid()
     updated_group: GroupFull = client.groups.update_group_by_id(
-        group_id=group.id, name=updated_group_name
+        group.id, name=updated_group_name
     )
     assert updated_group.name == updated_group_name
-    client.groups.delete_group_by_id(group_id=group.id)
+    client.groups.delete_group_by_id(group.id)
     with pytest.raises(Exception):
-        client.groups.get_group_by_id(group_id=group.id)
+        client.groups.get_group_by_id(group.id)

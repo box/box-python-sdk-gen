@@ -53,7 +53,7 @@ def testClassifications():
     updated_classification_description: str = get_uuid()
     classification_template_with_updated_classification: ClassificationTemplate = (
         client.classifications.update_classification(
-            request_body=[
+            [
                 UpdateClassificationRequestBody(
                     op=UpdateClassificationRequestBodyOpField.EDITENUMOPTION.value,
                     field_key=UpdateClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,

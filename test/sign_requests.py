@@ -36,8 +36,8 @@ def testCreateGetCancelAndListSignRequest():
     file_to_sign: FileFull = upload_new_file()
     destination_folder: FolderFull = create_new_folder()
     created_sign_request: SignRequest = client.sign_requests.create_sign_request(
+        [SignRequestCreateSigner(email=signer_email)],
         source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
-        signers=[SignRequestCreateSigner(email=signer_email)],
         parent_folder=FolderMini(
             id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
         ),
@@ -46,19 +46,19 @@ def testCreateGetCancelAndListSignRequest():
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.parent_folder.id == destination_folder.id
     new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(
-        sign_request_id=created_sign_request.id
+        created_sign_request.id
     )
     assert new_sign_request.sign_files.files[0].name == file_to_sign.name
     assert new_sign_request.signers[1].email == signer_email
     assert new_sign_request.parent_folder.id == destination_folder.id
     cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(
-        sign_request_id=created_sign_request.id
+        created_sign_request.id
     )
     assert to_string(cancelled_sign_request.status) == 'cancelled'
     sign_requests: SignRequests = client.sign_requests.get_sign_requests()
     assert to_string(sign_requests.entries[0].type) == 'sign-request'
-    client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
-    client.files.delete_file_by_id(file_id=file_to_sign.id)
+    client.folders.delete_folder_by_id(destination_folder.id, recursive=True)
+    client.files.delete_file_by_id(file_to_sign.id)
 
 
 def testCreateSignRequestWithSignerGroupId():
@@ -67,11 +67,11 @@ def testCreateSignRequestWithSignerGroupId():
     file_to_sign: FileFull = upload_new_file()
     destination_folder: FolderFull = create_new_folder()
     created_sign_request: SignRequest = client.sign_requests.create_sign_request(
-        source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
-        signers=[
+        [
             SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'),
             SignRequestCreateSigner(email=signer_2_email, signer_group_id='user'),
         ],
+        source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
         parent_folder=FolderMini(
             id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
         ),
@@ -81,5 +81,5 @@ def testCreateSignRequestWithSignerGroupId():
         created_sign_request.signers[1].signer_group_id
         == created_sign_request.signers[2].signer_group_id
     )
-    client.folders.delete_folder_by_id(folder_id=destination_folder.id, recursive=True)
-    client.files.delete_file_by_id(file_id=file_to_sign.id)
+    client.folders.delete_folder_by_id(destination_folder.id, recursive=True)
+    client.files.delete_file_by_id(file_to_sign.id)

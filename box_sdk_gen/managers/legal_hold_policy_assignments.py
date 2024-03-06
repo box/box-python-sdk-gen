@@ -77,8 +77,9 @@ class CreateLegalHoldPolicyAssignmentAssignTo(BaseObject):
 class LegalHoldPolicyAssignmentsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -88,40 +89,43 @@ class LegalHoldPolicyAssignmentsManager:
     def get_legal_hold_policy_assignments(
         self,
         policy_id: str,
+        *,
         assign_to_type: Optional[GetLegalHoldPolicyAssignmentsAssignToType] = None,
         assign_to_id: Optional[str] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> LegalHoldPolicyAssignments:
         """
-        Retrieves a list of items a legal hold policy has been assigned to.
-        :param policy_id: The ID of the legal hold policy
-        :type policy_id: str
-        :param assign_to_type: Filters the results by the type of item the
-            policy was applied to.
-        :type assign_to_type: Optional[GetLegalHoldPolicyAssignmentsAssignToType], optional
-        :param assign_to_id: Filters the results by the ID of item the
-            policy was applied to.
-        :type assign_to_id: Optional[str], optional
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves a list of items a legal hold policy has been assigned to.
+                :param policy_id: The ID of the legal hold policy
+                :type policy_id: str
+                :param assign_to_type: Filters the results by the type of item the
+        policy was applied to., defaults to None
+                :type assign_to_type: Optional[GetLegalHoldPolicyAssignmentsAssignToType], optional
+                :param assign_to_id: Filters the results by the ID of item the
+        policy was applied to., defaults to None
+                :type assign_to_id: Optional[str], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -158,7 +162,8 @@ class LegalHoldPolicyAssignmentsManager:
         self,
         policy_id: str,
         assign_to: CreateLegalHoldPolicyAssignmentAssignTo,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> LegalHoldPolicyAssignment:
         """
         Assign a legal hold to a file, file version, folder, or user.
@@ -166,7 +171,7 @@ class LegalHoldPolicyAssignmentsManager:
         :type policy_id: str
         :param assign_to: The item to assign the policy to
         :type assign_to: CreateLegalHoldPolicyAssignmentAssignTo
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -195,15 +200,16 @@ class LegalHoldPolicyAssignmentsManager:
     def get_legal_hold_policy_assignment_by_id(
         self,
         legal_hold_policy_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> LegalHoldPolicyAssignment:
         """
-        Retrieve a legal hold policy assignment.
-        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
-            Example: "753465"
-        :type legal_hold_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieve a legal hold policy assignment.
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+        Example: "753465"
+                :type legal_hold_policy_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -229,21 +235,22 @@ class LegalHoldPolicyAssignmentsManager:
     def delete_legal_hold_policy_assignment_by_id(
         self,
         legal_hold_policy_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Remove a legal hold from an item.
+                Remove a legal hold from an item.
 
-        This is an asynchronous process. The policy will not be
+                This is an asynchronous process. The policy will not be
 
 
-        fully removed yet when the response returns.
+                fully removed yet when the response returns.
 
-        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
-            Example: "753465"
-        :type legal_hold_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+        Example: "753465"
+                :type legal_hold_policy_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -269,69 +276,72 @@ class LegalHoldPolicyAssignmentsManager:
     def get_legal_hold_policy_assignment_file_on_hold(
         self,
         legal_hold_policy_assignment_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileVersionLegalHolds:
         """
-        Get a list of current file versions for a legal hold
+                Get a list of current file versions for a legal hold
 
-        assignment.
-
-
-        In some cases you may want to get previous file versions instead. In these
+                assignment.
 
 
-        cases, use the `GET  /legal_hold_policy_assignments/:id/file_versions_on_hold`
+                In some cases you may want to get previous file versions instead. In these
 
 
-        API instead to return any previous versions of a file for this legal hold
+                cases, use the `GET  /legal_hold_policy_assignments/:id/file_versions_on_hold`
 
 
-        policy assignment.
+                API instead to return any previous versions of a file for this legal hold
 
 
-        Due to ongoing re-architecture efforts this API might not return all file
+                policy assignment.
 
 
-        versions held for this policy ID. Instead, this API will only return the
+                Due to ongoing re-architecture efforts this API might not return all file
 
 
-        latest file version held in the newly developed architecture. The `GET
+                versions held for this policy ID. Instead, this API will only return the
 
 
-        /file_version_legal_holds` API can be used to fetch current and past versions
+                latest file version held in the newly developed architecture. The `GET
 
 
-        of files held within the legacy architecture.
+                /file_version_legal_holds` API can be used to fetch current and past versions
 
 
-        The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
+                of files held within the legacy architecture.
 
 
-        find a list of policy assignments for a given policy ID.
+                The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
 
-        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
-            Example: "753465"
-        :type legal_hold_policy_assignment_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                find a list of policy assignments for a given policy ID.
+
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+        Example: "753465"
+                :type legal_hold_policy_assignment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -366,69 +376,72 @@ class LegalHoldPolicyAssignmentsManager:
     def get_legal_hold_policy_assignment_file_version_on_hold(
         self,
         legal_hold_policy_assignment_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileVersionLegalHolds:
         """
-        Get a list of previous file versions for a legal hold
+                Get a list of previous file versions for a legal hold
 
-        assignment.
-
-
-        In some cases you may only need the latest file versions instead. In these
+                assignment.
 
 
-        cases, use the `GET  /legal_hold_policy_assignments/:id/files_on_hold` API
+                In some cases you may only need the latest file versions instead. In these
 
 
-        instead to return any current (latest) versions of a file for this legal hold
+                cases, use the `GET  /legal_hold_policy_assignments/:id/files_on_hold` API
 
 
-        policy assignment.
+                instead to return any current (latest) versions of a file for this legal hold
 
 
-        Due to ongoing re-architecture efforts this API might not return all files
+                policy assignment.
 
 
-        held for this policy ID. Instead, this API will only return past file versions
+                Due to ongoing re-architecture efforts this API might not return all files
 
 
-        held in the newly developed architecture. The `GET /file_version_legal_holds`
+                held for this policy ID. Instead, this API will only return past file versions
 
 
-        API can be used to fetch current and past versions of files held within the
+                held in the newly developed architecture. The `GET /file_version_legal_holds`
 
 
-        legacy architecture.
+                API can be used to fetch current and past versions of files held within the
 
 
-        The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
+                legacy architecture.
 
 
-        find a list of policy assignments for a given policy ID.
+                The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
 
-        :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
-            Example: "753465"
-        :type legal_hold_policy_assignment_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                find a list of policy assignments for a given policy ID.
+
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+        Example: "753465"
+                :type legal_hold_policy_assignment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

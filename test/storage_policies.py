@@ -19,8 +19,6 @@ def testGetStoragePolicies():
     storage_policy: StoragePolicy = storage_policies.entries[0]
     assert to_string(storage_policy.type) == 'storage_policy'
     get_storage_policy: StoragePolicy = (
-        client.storage_policies.get_storage_policy_by_id(
-            storage_policy_id=storage_policy.id
-        )
+        client.storage_policies.get_storage_policy_by_id(storage_policy.id)
     )
     assert get_storage_policy.id == storage_policy.id

@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample post_web_links -->
 
 ```python
-client.web_links.create_web_link(url=url, parent=CreateWebLinkParent(id=parent.id), name=name, description=description)
+client.web_links.create_web_link(url, CreateWebLinkParent(id=parent.id), name=name, description=description)
 ```
 
 ### Arguments
@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample get_web_links_id -->
 
 ```python
-client.web_links.get_web_link_by_id(web_link_id=weblink.id)
+client.web_links.get_web_link_by_id(weblink.id)
 ```
 
 ### Arguments
@@ -81,7 +81,7 @@ See the endpoint docs at
 <!-- sample put_web_links_id -->
 
 ```python
-client.web_links.update_web_link_by_id(web_link_id=weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLink(access=shared_access, password=password))
+client.web_links.update_web_link_by_id(weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLink(access=shared_access, password=password))
 ```
 
 ### Arguments
@@ -119,7 +119,7 @@ See the endpoint docs at
 <!-- sample delete_web_links_id -->
 
 ```python
-client.web_links.delete_web_link_by_id(web_link_id=weblink.id)
+client.web_links.delete_web_link_by_id(weblink.id)
 ```
 
 ### Arguments

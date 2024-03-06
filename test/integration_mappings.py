@@ -31,7 +31,7 @@ client: BoxClient = get_default_client()
 
 def testIntegrationMappings():
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParent(id='0')
+        get_uuid(), CreateFolderParent(id='0')
     )
     slack_org_id: str = '1'
     partner_item_id: str = '1'
@@ -39,12 +39,12 @@ def testIntegrationMappings():
     user_client: BoxClient = get_default_client_as_user(user_id)
     with pytest.raises(Exception):
         user_client.integration_mappings.create_slack_integration_mapping(
-            partner_item=IntegrationMappingPartnerItemSlack(
+            IntegrationMappingPartnerItemSlack(
                 type=IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value,
                 id=partner_item_id,
                 slack_org_id=slack_org_id,
             ),
-            box_item=IntegrationMappingBoxItemSlack(
+            IntegrationMappingBoxItemSlack(
                 id=folder.id, type=IntegrationMappingBoxItemSlackTypeField.FOLDER.value
             ),
         )
@@ -52,4 +52,4 @@ def testIntegrationMappings():
         user_client.integration_mappings.get_slack_integration_mapping()
     )
     assert len(integration_mappings.entries) == 0
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+    client.folders.delete_folder_by_id(folder.id)

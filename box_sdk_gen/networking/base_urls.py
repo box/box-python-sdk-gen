@@ -15,6 +15,7 @@ class BaseUrls(BaseObject):
 
     def __init__(
         self,
+        *,
         base_url: str = 'https://api.box.com/2.0',
         upload_url: str = 'https://upload.box.com/api/2.0',
         oauth_2_url: str = 'https://account.box.com/api/oauth2',

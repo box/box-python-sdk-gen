@@ -16,9 +16,7 @@ client: BoxClient = get_default_client()
 def getFileVersionLegalHolds():
     policy_id: str = '1234567890'
     file_version_legal_holds: FileVersionLegalHolds = (
-        client.file_version_legal_holds.get_file_version_legal_holds(
-            policy_id=policy_id
-        )
+        client.file_version_legal_holds.get_file_version_legal_holds(policy_id)
     )
     file_version_legal_holds_count: int = len(file_version_legal_holds.entries)
     assert file_version_legal_holds_count >= 0
@@ -28,5 +26,5 @@ def getFileVersionLegalHoldById():
     file_version_legal_hold_id: str = '987654321'
     with pytest.raises(Exception):
         client.file_version_legal_holds.get_file_version_legal_hold_by_id(
-            file_version_legal_hold_id=file_version_legal_hold_id
+            file_version_legal_hold_id
         )

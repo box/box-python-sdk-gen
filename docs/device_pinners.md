@@ -16,7 +16,7 @@ See the endpoint docs at
 <!-- sample get_device_pinners_id -->
 
 ```python
-client.device_pinners.get_device_pinner_by_id(device_pinner_id=device_pinner_id)
+client.device_pinners.get_device_pinner_by_id(device_pinner_id)
 ```
 
 ### Arguments
@@ -44,7 +44,7 @@ See the endpoint docs at
 <!-- sample delete_device_pinners_id -->
 
 ```python
-client.device_pinners.delete_device_pinner_by_id(device_pinner_id=device_pinner_id)
+client.device_pinners.delete_device_pinner_by_id(device_pinner_id)
 ```
 
 ### Arguments
@@ -75,7 +75,7 @@ See the endpoint docs at
 <!-- sample get_enterprises_id_device_pinners -->
 
 ```python
-client.device_pinners.get_enterprise_device_pinners(enterprise_id=enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC.value)
+client.device_pinners.get_enterprise_device_pinners(enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC.value)
 ```
 
 ### Arguments

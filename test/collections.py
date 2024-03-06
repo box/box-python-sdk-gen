@@ -23,24 +23,23 @@ def testCollections():
     collections: Collections = client.collections.get_collections()
     favourite_collection: Collection = collections.entries[0]
     collection_items: Items = client.collections.get_collection_items(
-        collection_id=favourite_collection.id
+        favourite_collection.id
     )
     folder: FolderFull = client.folders.create_folder(
-        name=get_uuid(), parent=CreateFolderParent(id='0')
+        get_uuid(), CreateFolderParent(id='0')
     )
     client.folders.update_folder_by_id(
-        folder_id=folder.id,
-        collections=[UpdateFolderByIdCollections(id=favourite_collection.id)],
+        folder.id, collections=[UpdateFolderByIdCollections(id=favourite_collection.id)]
     )
     collection_items_after_update: Items = client.collections.get_collection_items(
-        collection_id=favourite_collection.id
+        favourite_collection.id
     )
     assert (
         len(collection_items_after_update.entries) == len(collection_items.entries) + 1
     )
-    client.folders.update_folder_by_id(folder_id=folder.id, collections=[])
+    client.folders.update_folder_by_id(folder.id, collections=[])
     collection_items_after_remove: Items = client.collections.get_collection_items(
-        collection_id=favourite_collection.id
+        favourite_collection.id
     )
     assert len(collection_items_after_remove.entries) == len(collection_items.entries)
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+    client.folders.delete_folder_by_id(folder.id)

@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id_comments -->
 
 ```python
-client.comments.get_file_comments(file_id=file_id)
+client.comments.get_file_comments(file_id)
 ```
 
 ### Arguments
@@ -54,7 +54,7 @@ See the endpoint docs at
 <!-- sample get_comments_id -->
 
 ```python
-client.comments.get_comment_by_id(comment_id=new_comment.id)
+client.comments.get_comment_by_id(new_comment.id)
 ```
 
 ### Arguments
@@ -84,7 +84,7 @@ See the endpoint docs at
 <!-- sample put_comments_id -->
 
 ```python
-client.comments.update_comment_by_id(comment_id=new_reply_comment.id, message=new_message)
+client.comments.update_comment_by_id(new_reply_comment.id, message=new_message)
 ```
 
 ### Arguments
@@ -116,7 +116,7 @@ See the endpoint docs at
 <!-- sample delete_comments_id -->
 
 ```python
-client.comments.delete_comment_by_id(comment_id=new_comment.id)
+client.comments.delete_comment_by_id(new_comment.id)
 ```
 
 ### Arguments
@@ -145,7 +145,7 @@ See the endpoint docs at
 <!-- sample post_comments -->
 
 ```python
-client.comments.create_comment(message=message, item=CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value))
+client.comments.create_comment(message, CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value))
 ```
 
 ### Arguments

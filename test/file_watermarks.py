@@ -30,20 +30,20 @@ client: BoxClient = get_default_client()
 def testCreateGetDeleteFileWatermark():
     file_name: str = ''.join([get_uuid(), '.txt'])
     uploaded_files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=file_name, parent=UploadFileAttributesParentField(id='0')
         ),
-        file=generate_byte_stream(10),
+        generate_byte_stream(10),
     )
     file: FileFull = uploaded_files.entries[0]
     created_watermark: Watermark = client.file_watermarks.update_file_watermark(
-        file_id=file.id,
-        watermark=UpdateFileWatermarkWatermark(
+        file.id,
+        UpdateFileWatermarkWatermark(
             imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
         ),
     )
-    watermark: Watermark = client.file_watermarks.get_file_watermark(file_id=file.id)
-    client.file_watermarks.delete_file_watermark(file_id=file.id)
+    watermark: Watermark = client.file_watermarks.get_file_watermark(file.id)
+    client.file_watermarks.delete_file_watermark(file.id)
     with pytest.raises(Exception):
-        client.file_watermarks.get_file_watermark(file_id=file.id)
-    client.files.delete_file_by_id(file_id=file.id)
+        client.file_watermarks.get_file_watermark(file.id)
+    client.files.delete_file_by_id(file.id)

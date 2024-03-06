@@ -65,7 +65,7 @@ def get_or_create_second_classification(
     if current_number_of_classifications == 1:
         classification_template_with_new_classification: ClassificationTemplate = (
             client.classifications.add_classification(
-                request_body=[
+                [
                     AddClassificationRequestBody(
                         op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
                         field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -95,10 +95,10 @@ def testFileClassifications():
     )
     file: FileFull = upload_new_file()
     with pytest.raises(Exception):
-        client.file_classifications.get_classification_on_file(file_id=file.id)
+        client.file_classifications.get_classification_on_file(file.id)
     created_file_classification: Classification = (
         client.file_classifications.add_classification_to_file(
-            file_id=file.id, box_security_classification_key=classification.key
+            file.id, box_security_classification_key=classification.key
         )
     )
     assert (
@@ -106,7 +106,7 @@ def testFileClassifications():
         == classification.key
     )
     file_classification: Classification = (
-        client.file_classifications.get_classification_on_file(file_id=file.id)
+        client.file_classifications.get_classification_on_file(file.id)
     )
     assert file_classification.box_security_classification_key == classification.key
     second_classification: ClassificationTemplateFieldsOptionsField = (
@@ -114,8 +114,8 @@ def testFileClassifications():
     )
     updated_file_classification: Classification = (
         client.file_classifications.update_classification_on_file(
-            file_id=file.id,
-            request_body=[
+            file.id,
+            [
                 UpdateClassificationOnFileRequestBody(
                     op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value,
                     path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -128,7 +128,7 @@ def testFileClassifications():
         updated_file_classification.box_security_classification_key
         == second_classification.key
     )
-    client.file_classifications.delete_classification_from_file(file_id=file.id)
+    client.file_classifications.delete_classification_from_file(file.id)
     with pytest.raises(Exception):
-        client.file_classifications.get_classification_on_file(file_id=file.id)
-    client.files.delete_file_by_id(file_id=file.id)
+        client.file_classifications.get_classification_on_file(file.id)
+    client.files.delete_file_by_id(file.id)

@@ -117,8 +117,9 @@ class UpdateStoragePolicyAssignmentByIdStoragePolicy(BaseObject):
 class StoragePolicyAssignmentsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -129,21 +130,23 @@ class StoragePolicyAssignmentsManager:
         self,
         resolved_for_type: GetStoragePolicyAssignmentsResolvedForType,
         resolved_for_id: str,
+        *,
         marker: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> StoragePolicyAssignments:
         """
-        Fetches all the storage policy assignment for an enterprise or user.
-        :param resolved_for_type: The target type to return assignments for
-        :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForType
-        :param resolved_for_id: The ID of the user or enterprise to return assignments for
-        :type resolved_for_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Fetches all the storage policy assignment for an enterprise or user.
+                :param resolved_for_type: The target type to return assignments for
+                :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForType
+                :param resolved_for_id: The ID of the user or enterprise to return assignments for
+                :type resolved_for_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -174,18 +177,19 @@ class StoragePolicyAssignmentsManager:
         self,
         storage_policy: CreateStoragePolicyAssignmentStoragePolicy,
         assigned_to: CreateStoragePolicyAssignmentAssignedTo,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> StoragePolicyAssignment:
         """
-        Creates a storage policy assignment for an enterprise or user.
-        :param storage_policy: The storage policy to assign to the user or
-            enterprise
-        :type storage_policy: CreateStoragePolicyAssignmentStoragePolicy
-        :param assigned_to: The user or enterprise to assign the storage
-            policy to.
-        :type assigned_to: CreateStoragePolicyAssignmentAssignedTo
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Creates a storage policy assignment for an enterprise or user.
+                :param storage_policy: The storage policy to assign to the user or
+        enterprise
+                :type storage_policy: CreateStoragePolicyAssignmentStoragePolicy
+                :param assigned_to: The user or enterprise to assign the storage
+        policy to.
+                :type assigned_to: CreateStoragePolicyAssignmentAssignedTo
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -213,15 +217,16 @@ class StoragePolicyAssignmentsManager:
     def get_storage_policy_assignment_by_id(
         self,
         storage_policy_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> StoragePolicyAssignment:
         """
-        Fetches a specific storage policy assignment.
-        :param storage_policy_assignment_id: The ID of the storage policy assignment.
-            Example: "932483"
-        :type storage_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Fetches a specific storage policy assignment.
+                :param storage_policy_assignment_id: The ID of the storage policy assignment.
+        Example: "932483"
+                :type storage_policy_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -248,18 +253,19 @@ class StoragePolicyAssignmentsManager:
         self,
         storage_policy_assignment_id: str,
         storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> StoragePolicyAssignment:
         """
-        Updates a specific storage policy assignment.
-        :param storage_policy_assignment_id: The ID of the storage policy assignment.
-            Example: "932483"
-        :type storage_policy_assignment_id: str
-        :param storage_policy: The storage policy to assign to the user or
-            enterprise
-        :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Updates a specific storage policy assignment.
+                :param storage_policy_assignment_id: The ID of the storage policy assignment.
+        Example: "932483"
+                :type storage_policy_assignment_id: str
+                :param storage_policy: The storage policy to assign to the user or
+        enterprise
+                :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -288,30 +294,31 @@ class StoragePolicyAssignmentsManager:
     def delete_storage_policy_assignment_by_id(
         self,
         storage_policy_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Delete a storage policy assignment.
+                Delete a storage policy assignment.
 
-        Deleting a storage policy assignment on a user
-
-
-        will have the user inherit the enterprise's default
+                Deleting a storage policy assignment on a user
 
 
-        storage policy.
+                will have the user inherit the enterprise's default
 
 
-        There is a rate limit for calling this endpoint of only
+                storage policy.
 
 
-        twice per user in a 24 hour time frame.
+                There is a rate limit for calling this endpoint of only
 
-        :param storage_policy_assignment_id: The ID of the storage policy assignment.
-            Example: "932483"
-        :type storage_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                twice per user in a 24 hour time frame.
+
+                :param storage_policy_assignment_id: The ID of the storage policy assignment.
+        Example: "932483"
+                :type storage_policy_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

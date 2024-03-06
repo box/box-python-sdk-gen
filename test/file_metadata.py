@@ -35,29 +35,24 @@ client: BoxClient = get_default_client()
 
 def testFileMetadata():
     file: FileFull = upload_new_file()
-    file_metadata: Metadatas = client.file_metadata.get_file_metadata(file_id=file.id)
+    file_metadata: Metadatas = client.file_metadata.get_file_metadata(file.id)
     assert len(file_metadata.entries) == 0
     created_metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
-        file_id=file.id,
-        scope=CreateFileMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
-        request_body={'abc': 'xyz'},
+        file.id, CreateFileMetadataByIdScope.GLOBAL.value, 'properties', {'abc': 'xyz'}
     )
     assert to_string(created_metadata.template) == 'properties'
     assert to_string(created_metadata.scope) == 'global'
     assert created_metadata.version == 0
     received_metadata: MetadataFull = client.file_metadata.get_file_metadata_by_id(
-        file_id=file.id,
-        scope=GetFileMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
+        file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
     )
     assert received_metadata.extra_data['abc'] == 'xyz'
     new_value: str = 'bar'
     updated_metadata: MetadataFull = client.file_metadata.update_file_metadata_by_id(
-        file_id=file.id,
-        scope=UpdateFileMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
-        request_body=[
+        file.id,
+        UpdateFileMetadataByIdScope.GLOBAL.value,
+        'properties',
+        [
             UpdateFileMetadataByIdRequestBody(
                 op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value,
                 path='/abc',
@@ -67,21 +62,15 @@ def testFileMetadata():
     )
     received_updated_metadata: MetadataFull = (
         client.file_metadata.get_file_metadata_by_id(
-            file_id=file.id,
-            scope=GetFileMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
+            file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
         )
     )
     assert received_updated_metadata.extra_data['abc'] == new_value
     client.file_metadata.delete_file_metadata_by_id(
-        file_id=file.id,
-        scope=DeleteFileMetadataByIdScope.GLOBAL.value,
-        template_key='properties',
+        file.id, DeleteFileMetadataByIdScope.GLOBAL.value, 'properties'
     )
     with pytest.raises(Exception):
         client.file_metadata.get_file_metadata_by_id(
-            file_id=file.id,
-            scope=GetFileMetadataByIdScope.GLOBAL.value,
-            template_key='properties',
+            file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
         )
-    client.files.delete_file_by_id(file_id=file.id)
+    client.files.delete_file_by_id(file.id)
