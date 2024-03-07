@@ -45,7 +45,7 @@ See the endpoint docs at
 <!-- sample get_sign_templates_id -->
 
 ```python
-client.sign_templates.get_sign_template_by_id(template_id=sign_templates.entries[0].id)
+client.sign_templates.get_sign_template_by_id(sign_templates.entries[0].id)
 ```
 
 ### Arguments

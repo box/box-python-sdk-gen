@@ -36,8 +36,9 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 class AvatarsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -45,15 +46,15 @@ class AvatarsManager:
         self.network_session = network_session
 
     def get_user_avatar(
-        self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, user_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ByteStream:
         """
-        Retrieves an image of a the user's avatar.
-        :param user_id: The ID of the user.
-            Example: "12345"
-        :type user_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves an image of a the user's avatar.
+                :param user_id: The ID of the user.
+        Example: "12345"
+                :type user_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -81,21 +82,22 @@ class AvatarsManager:
         self,
         user_id: str,
         pic: ByteStream,
+        *,
         pic_file_name: Optional[str] = None,
         pic_content_type: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> UserAvatar:
         """
-        Adds or updates a user avatar.
-        :param user_id: The ID of the user.
-            Example: "12345"
-        :type user_id: str
-        :param pic: The image file to be uploaded to Box.
-            Accepted file extensions are `.jpg` or `.png`.
-            The maximum file size is 1MB.
-        :type pic: ByteStream
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Adds or updates a user avatar.
+                :param user_id: The ID of the user.
+        Example: "12345"
+                :type user_id: str
+                :param pic: The image file to be uploaded to Box.
+        Accepted file extensions are `.jpg` or `.png`.
+        The maximum file size is 1MB.
+                :type pic: ByteStream
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -134,18 +136,18 @@ class AvatarsManager:
         return deserialize(response.data, UserAvatar)
 
     def delete_user_avatar(
-        self, user_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, user_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes an existing user avatar.
+                Removes an existing user avatar.
 
-        You cannot reverse this operation.
+                You cannot reverse this operation.
 
-        :param user_id: The ID of the user.
-            Example: "12345"
-        :type user_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param user_id: The ID of the user.
+        Example: "12345"
+                :type user_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

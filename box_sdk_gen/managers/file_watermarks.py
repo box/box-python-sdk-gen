@@ -44,9 +44,10 @@ class UpdateFileWatermarkWatermarkImprintField(str, Enum):
 class UpdateFileWatermarkWatermark(BaseObject):
     def __init__(self, imprint: UpdateFileWatermarkWatermarkImprintField, **kwargs):
         """
-        :param imprint: The type of watermark to apply.
-            Currently only supports one option.
-        :type imprint: UpdateFileWatermarkWatermarkImprintField
+                :param imprint: The type of watermark to apply.
+
+        Currently only supports one option.
+                :type imprint: UpdateFileWatermarkWatermarkImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
@@ -55,8 +56,9 @@ class UpdateFileWatermarkWatermark(BaseObject):
 class FileWatermarksManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -64,20 +66,21 @@ class FileWatermarksManager:
         self.network_session = network_session
 
     def get_file_watermark(
-        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, file_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Watermark:
         """
-        Retrieve the watermark for a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieve the watermark for a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -105,22 +108,24 @@ class FileWatermarksManager:
         self,
         file_id: str,
         watermark: UpdateFileWatermarkWatermark,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Watermark:
         """
-        Applies or update a watermark on a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param watermark: The watermark to imprint on the file
-        :type watermark: UpdateFileWatermarkWatermark
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Applies or update a watermark on a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param watermark: The watermark to imprint on the file
+                :type watermark: UpdateFileWatermarkWatermark
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -148,20 +153,21 @@ class FileWatermarksManager:
         return deserialize(response.data, Watermark)
 
     def delete_file_watermark(
-        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, file_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes the watermark from a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Removes the watermark from a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

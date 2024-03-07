@@ -22,7 +22,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
+client.folder_classifications.get_classification_on_folder(folder.id)
 ```
 
 ### Arguments
@@ -58,7 +58,7 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.add_classification_to_folder(folder_id=folder.id, box_security_classification_key=classification.key)
+client.folder_classifications.add_classification_to_folder(folder.id, box_security_classification_key=classification.key)
 ```
 
 ### Arguments
@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.update_classification_on_folder(folder_id=folder.id, request_body=[UpdateClassificationOnFolderRequestBody(op=UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+client.folder_classifications.update_classification_on_folder(folder.id, [UpdateClassificationOnFolderRequestBody(op=UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
 ```
 
 ### Arguments
@@ -127,7 +127,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.delete_classification_from_folder(folder_id=folder.id)
+client.folder_classifications.delete_classification_from_folder(folder.id)
 ```
 
 ### Arguments

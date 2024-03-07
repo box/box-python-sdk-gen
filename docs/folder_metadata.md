@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_metadata -->
 
 ```python
-client.folder_metadata.get_folder_metadata(folder_id=folder.id)
+client.folder_metadata.get_folder_metadata(folder.id)
 ```
 
 ### Arguments
@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.get_folder_metadata_by_id(folder_id=folder.id, scope=GetFolderMetadataByIdScope.GLOBAL.value, template_key='properties')
+client.folder_metadata.get_folder_metadata_by_id(folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties')
 ```
 
 ### Arguments
@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.create_folder_metadata_by_id(folder_id=folder.id, scope=CreateFolderMetadataByIdScope.ENTERPRISE.value, template_key=template_key, request_body=data)
+client.folder_metadata.create_folder_metadata_by_id(folder.id, CreateFolderMetadataByIdScope.ENTERPRISE.value, template_key, data)
 ```
 
 ### Arguments
@@ -135,7 +135,7 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.update_folder_metadata_by_id(folder_id=folder.id, scope=UpdateFolderMetadataByIdScope.GLOBAL.value, template_key='properties', request_body=[UpdateFolderMetadataByIdRequestBody(op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
+client.folder_metadata.update_folder_metadata_by_id(folder.id, UpdateFolderMetadataByIdScope.GLOBAL.value, 'properties', [UpdateFolderMetadataByIdRequestBody(op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
 ```
 
 ### Arguments
@@ -170,7 +170,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.delete_folder_metadata_by_id(folder_id=folder.id, scope=DeleteFolderMetadataByIdScope.GLOBAL.value, template_key='properties')
+client.folder_metadata.delete_folder_metadata_by_id(folder.id, DeleteFolderMetadataByIdScope.GLOBAL.value, 'properties')
 ```
 
 ### Arguments

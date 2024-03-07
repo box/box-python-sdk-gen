@@ -23,22 +23,18 @@ client: BoxClient = get_default_client()
 
 def testFolderLocks():
     folder: FolderFull = create_new_folder()
-    folder_locks: FolderLocks = client.folder_locks.get_folder_locks(
-        folder_id=folder.id
-    )
+    folder_locks: FolderLocks = client.folder_locks.get_folder_locks(folder.id)
     assert len(folder_locks.entries) == 0
     folder_lock: FolderLock = client.folder_locks.create_folder_lock(
+        CreateFolderLockFolder(id=folder.id, type='folder'),
         locked_operations=CreateFolderLockLockedOperations(move=True, delete=True),
-        folder=CreateFolderLockFolder(id=folder.id, type='folder'),
     )
     assert folder_lock.folder.id == folder.id
     assert folder_lock.locked_operations.move == True
     assert folder_lock.locked_operations.delete == True
-    client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
+    client.folder_locks.delete_folder_lock_by_id(folder_lock.id)
     with pytest.raises(Exception):
-        client.folder_locks.delete_folder_lock_by_id(folder_lock_id=folder_lock.id)
-    new_folder_locks: FolderLocks = client.folder_locks.get_folder_locks(
-        folder_id=folder.id
-    )
+        client.folder_locks.delete_folder_lock_by_id(folder_lock.id)
+    new_folder_locks: FolderLocks = client.folder_locks.get_folder_locks(folder.id)
     assert len(new_folder_locks.entries) == 0
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+    client.folders.delete_folder_by_id(folder.id)

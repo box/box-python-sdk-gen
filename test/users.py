@@ -27,14 +27,14 @@ def test_create_update_get_delete_user():
     user_name: str = get_uuid()
     user_login: str = ''.join([get_uuid(), '@gmail.com'])
     user: UserFull = client.users.create_user(
-        name=user_name, login=user_login, is_platform_access_only=True
+        user_name, login=user_login, is_platform_access_only=True
     )
     assert user.name == user_name
-    user_by_id: UserFull = client.users.get_user_by_id(user_id=user.id)
+    user_by_id: UserFull = client.users.get_user_by_id(user.id)
     assert user_by_id.id == user.id
     updated_user_name: str = get_uuid()
     updated_user: UserFull = client.users.update_user_by_id(
-        user_id=user.id, name=updated_user_name
+        user.id, name=updated_user_name
     )
     assert updated_user.name == updated_user_name
-    client.users.delete_user_by_id(user_id=user.id)
+    client.users.delete_user_by_id(user.id)

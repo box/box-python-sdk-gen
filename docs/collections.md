@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample get_collections_id_items -->
 
 ```python
-client.collections.get_collection_items(collection_id=favourite_collection.id)
+client.collections.get_collection_items(favourite_collection.id)
 ```
 
 ### Arguments

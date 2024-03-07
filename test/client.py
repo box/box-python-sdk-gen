@@ -18,14 +18,14 @@ client: BoxClient = get_default_client()
 def testWithAsUserHeader():
     user_name: str = get_uuid()
     created_user: UserFull = client.users.create_user(
-        name=user_name, is_platform_access_only=True
+        user_name, is_platform_access_only=True
     )
     as_user_client: BoxClient = client.with_as_user_header(created_user.id)
     admin_user: UserFull = client.users.get_user_me()
     assert not to_string(admin_user.name) == user_name
     app_user: UserFull = as_user_client.users.get_user_me()
     assert to_string(app_user.name) == user_name
-    client.users.delete_user_by_id(user_id=created_user.id)
+    client.users.delete_user_by_id(created_user.id)
 
 
 def testWithSuppressedNotifications():
@@ -37,11 +37,13 @@ def testWithSuppressedNotifications():
 def testWithExtraHeaders():
     user_name: str = get_uuid()
     created_user: UserFull = client.users.create_user(
-        name=user_name, is_platform_access_only=True
+        user_name, is_platform_access_only=True
     )
-    as_user_client: BoxClient = client.with_extra_headers({'As-User': created_user.id})
+    as_user_client: BoxClient = client.with_extra_headers(
+        extra_headers={'As-User': created_user.id}
+    )
     admin_user: UserFull = client.users.get_user_me()
     assert not to_string(admin_user.name) == user_name
     app_user: UserFull = as_user_client.users.get_user_me()
     assert to_string(app_user.name) == user_name
-    client.users.delete_user_by_id(user_id=created_user.id)
+    client.users.delete_user_by_id(created_user.id)

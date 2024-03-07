@@ -42,8 +42,9 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 class ShieldInformationBarrierReportsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -53,22 +54,24 @@ class ShieldInformationBarrierReportsManager:
     def get_shield_information_barrier_reports(
         self,
         shield_information_barrier_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierReports:
         """
-        Lists shield information barrier reports.
-        :param shield_information_barrier_id: The ID of the shield information barrier.
-        :type shield_information_barrier_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Lists shield information barrier reports.
+                :param shield_information_barrier_id: The ID of the shield information barrier.
+                :type shield_information_barrier_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -102,12 +105,13 @@ class ShieldInformationBarrierReportsManager:
 
     def create_shield_information_barrier_report(
         self,
+        *,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierReport:
         """
         Creates a shield information barrier report for a given barrier.
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -136,15 +140,16 @@ class ShieldInformationBarrierReportsManager:
     def get_shield_information_barrier_report_by_id(
         self,
         shield_information_barrier_report_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierReport:
         """
-        Retrieves a shield information barrier report by its ID.
-        :param shield_information_barrier_report_id: The ID of the shield information barrier Report.
-            Example: "3423"
-        :type shield_information_barrier_report_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves a shield information barrier report by its ID.
+                :param shield_information_barrier_report_id: The ID of the shield information barrier Report.
+        Example: "3423"
+                :type shield_information_barrier_report_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

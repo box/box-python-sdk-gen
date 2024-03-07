@@ -168,7 +168,7 @@ from box_sdk_gen.networking.base_urls import BaseUrls
 
 
 class BoxClient:
-    def __init__(self, auth: Authentication, network_session: NetworkSession = None):
+    def __init__(self, auth: Authentication, *, network_session: NetworkSession = None):
         if network_session is None:
             network_session = NetworkSession(base_urls=BaseUrls())
         self.auth = auth
@@ -406,10 +406,12 @@ class BoxClient:
             ),
         )
 
-    def with_extra_headers(self, extra_headers: Dict[str, str] = None) -> 'BoxClient':
+    def with_extra_headers(
+        self, *, extra_headers: Dict[str, str] = None
+    ) -> 'BoxClient':
         """
         Create a new client with a custom set of headers that will be included in every API call
-        :param extra_headers: Custom set of headers that will be included in every API call
+        :param extra_headers: Custom set of headers that will be included in every API call, defaults to None
         :type extra_headers: Dict[str, str], optional
         """
         if extra_headers is None:

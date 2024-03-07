@@ -38,7 +38,7 @@ def testZipDownload():
     file_2: FileFull = upload_new_file()
     folder_1: FolderFull = create_new_folder()
     zip_stream: ByteStream = client.zip_downloads.download_zip(
-        items=[
+        [
             DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
             DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
             DownloadZipItems(
@@ -50,9 +50,9 @@ def testZipDownload():
     assert (
         buffer_equals(read_byte_stream(zip_stream), generate_byte_buffer(10)) == False
     )
-    client.files.delete_file_by_id(file_id=file_1.id)
-    client.files.delete_file_by_id(file_id=file_2.id)
-    client.folders.delete_folder_by_id(folder_id=folder_1.id)
+    client.files.delete_file_by_id(file_1.id)
+    client.files.delete_file_by_id(file_2.id)
+    client.folders.delete_folder_by_id(folder_1.id)
 
 
 def testManualZipDownloadAndCheckStatus():
@@ -60,7 +60,7 @@ def testManualZipDownloadAndCheckStatus():
     file_2: FileFull = upload_new_file()
     folder_1: FolderFull = create_new_folder()
     zip_download: ZipDownload = client.zip_downloads.create_zip_download(
-        items=[
+        [
             CreateZipDownloadItems(
                 id=file_1.id, type=DownloadZipItemsTypeField.FILE.value
             ),
@@ -77,19 +77,19 @@ def testManualZipDownloadAndCheckStatus():
     assert not zip_download.status_url == ''
     assert not zip_download.expires_at == ''
     zip_stream: ByteStream = client.zip_downloads.get_zip_download_content(
-        download_url=zip_download.download_url
+        zip_download.download_url
     )
     assert (
         buffer_equals(read_byte_stream(zip_stream), generate_byte_buffer(10)) == False
     )
     zip_download_status: ZipDownloadStatus = (
-        client.zip_downloads.get_zip_download_status(status_url=zip_download.status_url)
+        client.zip_downloads.get_zip_download_status(zip_download.status_url)
     )
     assert zip_download_status.total_file_count == 2
     assert zip_download_status.downloaded_file_count == 2
     assert zip_download_status.skipped_file_count == 0
     assert zip_download_status.skipped_folder_count == 0
     assert not to_string(zip_download_status.state) == 'failed'
-    client.files.delete_file_by_id(file_id=file_1.id)
-    client.files.delete_file_by_id(file_id=file_2.id)
-    client.folders.delete_folder_by_id(folder_id=folder_1.id)
+    client.files.delete_file_by_id(file_1.id)
+    client.files.delete_file_by_id(file_2.id)
+    client.folders.delete_folder_by_id(folder_1.id)

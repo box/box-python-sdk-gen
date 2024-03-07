@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id -->
 
 ```python
-client.files.get_file_by_id(file_id=file.id)
+client.files.get_file_by_id(file.id)
 ```
 
 ### Arguments
@@ -59,7 +59,7 @@ See the endpoint docs at
 <!-- sample put_files_id -->
 
 ```python
-client.files.update_file_by_id(file_id=file_to_update.id, name=updated_name, description='Updated description')
+client.files.update_file_by_id(file_to_update.id, name=updated_name, description='Updated description')
 ```
 
 ### Arguments
@@ -117,7 +117,7 @@ See the endpoint docs at
 <!-- sample delete_files_id -->
 
 ```python
-client.files.delete_file_by_id(file_id=file_2.id)
+client.files.delete_file_by_id(file_2.id)
 ```
 
 ### Arguments
@@ -148,7 +148,7 @@ See the endpoint docs at
 <!-- sample post_files_id_copy -->
 
 ```python
-client.files.copy_file(file_id=file_origin.id, name=copied_file_name, parent=CopyFileParent(id='0'))
+client.files.copy_file(file_origin.id, CopyFileParent(id='0'), name=copied_file_name)
 ```
 
 ### Arguments
@@ -197,7 +197,7 @@ See the endpoint docs at
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
-client.files.get_file_thumbnail_by_id(file_id=thumbnail_file.id, extension=GetFileThumbnailByIdExtension.PNG.value)
+client.files.get_file_thumbnail_by_id(thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value)
 ```
 
 ### Arguments

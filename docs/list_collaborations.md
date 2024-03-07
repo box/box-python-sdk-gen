@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample get_files_id_collaborations -->
 
 ```python
-client.list_collaborations.get_file_collaborations(file_id=file.id)
+client.list_collaborations.get_file_collaborations(file.id)
 ```
 
 ### Arguments
@@ -60,7 +60,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_collaborations -->
 
 ```python
-client.list_collaborations.get_folder_collaborations(folder_id=folder.id)
+client.list_collaborations.get_folder_collaborations(folder.id)
 ```
 
 ### Arguments
@@ -95,7 +95,7 @@ See the endpoint docs at
 <!-- sample get_collaborations -->
 
 ```python
-client.list_collaborations.get_collaborations(status=GetCollaborationsStatus.PENDING.value)
+client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING.value)
 ```
 
 ### Arguments
@@ -136,7 +136,7 @@ See the endpoint docs at
 <!-- sample get_groups_id_collaborations -->
 
 ```python
-client.list_collaborations.get_group_collaborations(group_id=group.id)
+client.list_collaborations.get_group_collaborations(group.id)
 ```
 
 ### Arguments

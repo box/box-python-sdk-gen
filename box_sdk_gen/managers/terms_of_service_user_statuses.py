@@ -84,8 +84,9 @@ class CreateTermsOfServiceStatusForUserUser(BaseObject):
 class TermsOfServiceUserStatusesManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -95,8 +96,9 @@ class TermsOfServiceUserStatusesManager:
     def get_terms_of_service_user_statuses(
         self,
         tos_id: str,
+        *,
         user_id: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TermsOfServiceUserStatuses:
         """
         Retrieves an overview of users and their status for a
@@ -108,9 +110,9 @@ class TermsOfServiceUserStatusesManager:
 
         :param tos_id: The ID of the terms of service.
         :type tos_id: str
-        :param user_id: Limits results to the given user ID.
+        :param user_id: Limits results to the given user ID., defaults to None
         :type user_id: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -142,7 +144,8 @@ class TermsOfServiceUserStatusesManager:
         tos: CreateTermsOfServiceStatusForUserTos,
         user: CreateTermsOfServiceStatusForUserUser,
         is_accepted: bool,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TermsOfServiceUserStatus:
         """
         Sets the status for a terms of service for a user.
@@ -152,7 +155,7 @@ class TermsOfServiceUserStatusesManager:
         :type user: CreateTermsOfServiceStatusForUserUser
         :param is_accepted: Whether the user has accepted the terms.
         :type is_accepted: bool
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -182,17 +185,18 @@ class TermsOfServiceUserStatusesManager:
         self,
         terms_of_service_user_status_id: str,
         is_accepted: bool,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TermsOfServiceUserStatus:
         """
-        Updates the status for a terms of service for a user.
-        :param terms_of_service_user_status_id: The ID of the terms of service status.
-            Example: "324234"
-        :type terms_of_service_user_status_id: str
-        :param is_accepted: Whether the user has accepted the terms.
-        :type is_accepted: bool
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Updates the status for a terms of service for a user.
+                :param terms_of_service_user_status_id: The ID of the terms of service status.
+        Example: "324234"
+                :type terms_of_service_user_status_id: str
+                :param is_accepted: Whether the user has accepted the terms.
+                :type is_accepted: bool
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

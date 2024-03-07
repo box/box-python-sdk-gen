@@ -51,11 +51,11 @@ class CreateZipDownloadItems(BaseObject):
 
     def __init__(self, type: CreateZipDownloadItemsTypeField, id: str, **kwargs):
         """
-        :param type: The type of the item to add to the archive.
-        :type type: CreateZipDownloadItemsTypeField
-        :param id: The identifier of the item to add to the archive. When this item is
-            a folder then this can not be the root folder with ID `0`.
-        :type id: str
+                :param type: The type of the item to add to the archive.
+                :type type: CreateZipDownloadItemsTypeField
+                :param id: The identifier of the item to add to the archive. When this item is
+        a folder then this can not be the root folder with ID `0`.
+                :type id: str
         """
         super().__init__(**kwargs)
         self.type = type
@@ -72,11 +72,11 @@ class DownloadZipItems(BaseObject):
 
     def __init__(self, type: DownloadZipItemsTypeField, id: str, **kwargs):
         """
-        :param type: The type of the item to add to the archive.
-        :type type: DownloadZipItemsTypeField
-        :param id: The identifier of the item to add to the archive. When this item is
-            a folder then this can not be the root folder with ID `0`.
-        :type id: str
+                :param type: The type of the item to add to the archive.
+                :type type: DownloadZipItemsTypeField
+                :param id: The identifier of the item to add to the archive. When this item is
+        a folder then this can not be the root folder with ID `0`.
+                :type id: str
         """
         super().__init__(**kwargs)
         self.type = type
@@ -86,8 +86,9 @@ class DownloadZipItems(BaseObject):
 class ZipDownloadsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -97,58 +98,59 @@ class ZipDownloadsManager:
     def create_zip_download(
         self,
         items: List[CreateZipDownloadItems],
+        *,
         download_file_name: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ZipDownload:
         """
-        Creates a request to download multiple files and folders as a single `zip`
+                Creates a request to download multiple files and folders as a single `zip`
 
-        archive file. This API does not return the archive but instead performs all
-
-
-        the checks to ensure that the user has access to all the items, and then
+                archive file. This API does not return the archive but instead performs all
 
 
-        returns a `download_url` and a `status_url` that can be used to download the
+                the checks to ensure that the user has access to all the items, and then
 
 
-        archive.
+                returns a `download_url` and a `status_url` that can be used to download the
 
 
-        The limit for an archive is either the Account's upload limit or
+                archive.
 
 
-        10,000 files, whichever is met first.
+                The limit for an archive is either the Account's upload limit or
 
 
-        **Note**: Downloading a large file can be
+                10,000 files, whichever is met first.
 
 
-        affected by various
+                **Note**: Downloading a large file can be
 
 
-        factors such as distance, network latency,
+                affected by various
 
 
-        bandwidth, and congestion, as well as packet loss
+                factors such as distance, network latency,
 
 
-        ratio and current server load.
+                bandwidth, and congestion, as well as packet loss
 
 
-        For these reasons we recommend that a maximum ZIP archive
+                ratio and current server load.
 
 
-        total size does not exceed 25GB.
+                For these reasons we recommend that a maximum ZIP archive
 
-        :param items: A list of items to add to the `zip` archive. These can
-            be folders or files.
-        :type items: List[CreateZipDownloadItems]
-        :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
-            `.zip` file extension, for example `January Financials.zip`.
-        :type download_file_name: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                total size does not exceed 25GB.
+
+                :param items: A list of items to add to the `zip` archive. These can
+        be folders or files.
+                :type items: List[CreateZipDownloadItems]
+                :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
+        `.zip` file extension, for example `January Financials.zip`., defaults to None
+                :type download_file_name: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -171,45 +173,46 @@ class ZipDownloadsManager:
     def get_zip_download_content(
         self,
         download_url: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ByteStream:
         """
-        Returns the contents of a `zip` archive in binary format. This URL does not
+               Returns the contents of a `zip` archive in binary format. This URL does not
 
-        require any form of authentication and could be used in a user's browser to
-
-
-        download the archive to a user's device.
+               require any form of authentication and could be used in a user's browser to
 
 
-        By default, this URL is only valid for a few seconds from the creation of
+               download the archive to a user's device.
 
 
-        the request for this archive. Once a download has started it can not be
+               By default, this URL is only valid for a few seconds from the creation of
 
 
-        stopped and resumed, instead a new request for a zip archive would need to
+               the request for this archive. Once a download has started it can not be
 
 
-        be created.
+               stopped and resumed, instead a new request for a zip archive would need to
 
 
-        The URL of this endpoint should not be considered as fixed. Instead, use
+               be created.
 
 
-        the [Create zip download](e://post_zip_downloads) API to request to create a
+               The URL of this endpoint should not be considered as fixed. Instead, use
 
 
-        `zip` archive, and then follow the `download_url` field in the response to
+               the [Create zip download](e://post_zip_downloads) API to request to create a
 
 
-        this endpoint.
+               `zip` archive, and then follow the `download_url` field in the response to
 
-        :param download_url: The URL that can be used to download created `zip` archive.
-             Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/content`
-        :type download_url: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+               this endpoint.
+
+               :param download_url: The URL that can be used to download created `zip` archive.
+        Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/content`
+               :type download_url: str
+               :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+               :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -227,42 +230,45 @@ class ZipDownloadsManager:
         return response.content
 
     def get_zip_download_status(
-        self, status_url: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        status_url: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ZipDownloadStatus:
         """
-        Returns the download status of a `zip` archive, allowing an application to
+               Returns the download status of a `zip` archive, allowing an application to
 
-        inspect the progress of the download as well as the number of items that
-
-
-        might have been skipped.
+               inspect the progress of the download as well as the number of items that
 
 
-        This endpoint can only be accessed once the download has started.
+               might have been skipped.
 
 
-        Subsequently this endpoint is valid for 12 hours from the start of the
+               This endpoint can only be accessed once the download has started.
 
 
-        download.
+               Subsequently this endpoint is valid for 12 hours from the start of the
 
 
-        The URL of this endpoint should not be considered as fixed. Instead, use
+               download.
 
 
-        the [Create zip download](e://post_zip_downloads) API to request to create a
+               The URL of this endpoint should not be considered as fixed. Instead, use
 
 
-        `zip` archive, and then follow the `status_url` field in the response to
+               the [Create zip download](e://post_zip_downloads) API to request to create a
 
 
-        this endpoint.
+               `zip` archive, and then follow the `status_url` field in the response to
 
-        :param status_url: The URL that can be used to get the status of the `zip` archive being downloaded.
-             Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/status`
-        :type status_url: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+               this endpoint.
+
+               :param status_url: The URL that can be used to get the status of the `zip` archive being downloaded.
+        Example: `https://dl.boxcloud.com/2.0/zip_downloads/29l00nfxDyHOt7RphI9zT_w==nDnZEDjY2S8iEWWCHEEiptFxwoWojjlibZjJ6geuE5xnXENDTPxzgbks_yY=/status`
+               :type status_url: str
+               :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+               :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -282,26 +288,29 @@ class ZipDownloadsManager:
     def download_zip(
         self,
         items: List[DownloadZipItems],
+        *,
         download_file_name: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ByteStream:
         """
-        Creates a zip and downloads its content
-        :param items: A list of items to add to the `zip` archive. These can
-            be folders or files.
-        :type items: List[DownloadZipItems]
-        :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
-            `.zip` file extension, for example `January Financials.zip`.
-        :type download_file_name: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Creates a zip and downloads its content
+                :param items: A list of items to add to the `zip` archive. These can
+        be folders or files.
+                :type items: List[DownloadZipItems]
+                :param download_file_name: The optional name of the `zip` archive. This name will be appended by the
+        `.zip` file extension, for example `January Financials.zip`., defaults to None
+                :type download_file_name: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         zip_download_session: ZipDownload = self.create_zip_download(
-            request_body['items'], request_body['download_file_name'], extra_headers
+            request_body['items'],
+            download_file_name=request_body['download_file_name'],
+            extra_headers=extra_headers,
         )
         return self.get_zip_download_content(
-            zip_download_session.download_url, extra_headers
+            zip_download_session.download_url, extra_headers=extra_headers
         )

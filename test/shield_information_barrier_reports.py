@@ -32,7 +32,7 @@ def shieldInformationBarrierReports():
     barrier_id: str = barrier.id
     existing_reports: ShieldInformationBarrierReports = (
         client.shield_information_barrier_reports.get_shield_information_barrier_reports(
-            shield_information_barrier_id=barrier_id
+            barrier_id
         )
     )
     if len(existing_reports.entries) > 0:
@@ -51,13 +51,13 @@ def shieldInformationBarrierReports():
     )
     retrieved_report: ShieldInformationBarrierReport = (
         client.shield_information_barrier_reports.get_shield_information_barrier_report_by_id(
-            shield_information_barrier_report_id=created_report.id
+            created_report.id
         )
     )
     assert retrieved_report.id == created_report.id
     retrieved_reports: ShieldInformationBarrierReports = (
         client.shield_information_barrier_reports.get_shield_information_barrier_reports(
-            shield_information_barrier_id=barrier_id
+            barrier_id
         )
     )
     assert len(retrieved_reports.entries) > 0

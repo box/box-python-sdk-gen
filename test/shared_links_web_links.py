@@ -38,25 +38,25 @@ client: BoxClient = get_default_client()
 
 
 def testSharedLinksWebLinks():
-    parent: FolderFull = client.folders.get_folder_by_id(folder_id='0')
+    parent: FolderFull = client.folders.get_folder_by_id('0')
     web_link: WebLink = client.web_links.create_web_link(
-        url='https://www.box.com',
-        parent=CreateWebLinkParent(id=parent.id),
+        'https://www.box.com',
+        CreateWebLinkParent(id=parent.id),
         name=get_uuid(),
         description='Weblink description',
     )
     web_link_id: str = web_link.id
     client.shared_links_web_links.add_share_link_to_web_link(
-        web_link_id=web_link_id,
+        web_link_id,
+        'shared_link',
         shared_link=AddShareLinkToWebLinkSharedLink(
             access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value,
             password='Secret123@',
         ),
-        fields='shared_link',
     )
     web_link_from_api: WebLink = (
         client.shared_links_web_links.get_shared_link_for_web_link(
-            web_link_id=web_link_id, fields='shared_link'
+            web_link_id, 'shared_link'
         )
     )
     assert to_string(web_link_from_api.shared_link.access) == 'open'
@@ -64,7 +64,7 @@ def testSharedLinksWebLinks():
     user_client: BoxClient = get_default_client_as_user(user_id)
     web_link_from_shared_link_password: WebLink = (
         user_client.shared_links_web_links.find_web_link_for_shared_link(
-            boxapi=''.join(
+            ''.join(
                 [
                     'shared_link=',
                     web_link_from_api.shared_link.url,
@@ -76,7 +76,7 @@ def testSharedLinksWebLinks():
     assert web_link_id == web_link_from_shared_link_password.id
     with pytest.raises(Exception):
         user_client.shared_links_web_links.find_web_link_for_shared_link(
-            boxapi=''.join(
+            ''.join(
                 [
                     'shared_link=',
                     web_link_from_api.shared_link.url,
@@ -86,12 +86,12 @@ def testSharedLinksWebLinks():
         )
     updated_web_link: WebLink = (
         client.shared_links_web_links.update_shared_link_on_web_link(
-            web_link_id=web_link_id,
+            web_link_id,
+            'shared_link',
             shared_link=UpdateSharedLinkOnWebLinkSharedLink(
                 access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value
             ),
-            fields='shared_link',
         )
     )
     assert to_string(updated_web_link.shared_link.access) == 'collaborators'
-    client.web_links.delete_web_link_by_id(web_link_id=web_link_id)
+    client.web_links.delete_web_link_by_id(web_link_id)

@@ -74,8 +74,9 @@ class UpdateGroupMembershipByIdRole(str, Enum):
 class MembershipsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -85,30 +86,32 @@ class MembershipsManager:
     def get_user_memberships(
         self,
         user_id: str,
+        *,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMemberships:
         """
-        Retrieves all the groups for a user. Only members of this
+                Retrieves all the groups for a user. Only members of this
 
-        group or users with admin-level permissions will be able to
+                group or users with admin-level permissions will be able to
 
 
-        use this API.
+                use this API.
 
-        :param user_id: The ID of the user.
-            Example: "12345"
-        :type user_id: str
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param user_id: The ID of the user.
+        Example: "12345"
+                :type user_id: str
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param offset: The offset of the item at which to begin the response.
+
+        Queries with offset parameter value
+        exceeding 10000 will be rejected
+        with a 400 response., defaults to None
+                :type offset: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -139,30 +142,32 @@ class MembershipsManager:
     def get_group_memberships(
         self,
         group_id: str,
+        *,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMemberships:
         """
-        Retrieves all the members for a group. Only members of this
+                Retrieves all the members for a group. Only members of this
 
-        group or users with admin-level permissions will be able to
+                group or users with admin-level permissions will be able to
 
 
-        use this API.
+                use this API.
 
-        :param group_id: The ID of the group.
-            Example: "57645"
-        :type group_id: str
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param group_id: The ID of the group.
+        Example: "57645"
+                :type group_id: str
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param offset: The offset of the item at which to begin the response.
+
+        Queries with offset parameter value
+        exceeding 10000 will be rejected
+        with a 400 response., defaults to None
+                :type offset: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -194,42 +199,46 @@ class MembershipsManager:
         self,
         user: CreateGroupMembershipUser,
         group: CreateGroupMembershipGroup,
+        *,
         role: Optional[CreateGroupMembershipRole] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMembership:
         """
-        Creates a group membership. Only users with
+                Creates a group membership. Only users with
 
-        admin-level permissions will be able to use this API.
+                admin-level permissions will be able to use this API.
 
-        :param user: The user to add to the group.
-        :type user: CreateGroupMembershipUser
-        :param group: The group to add the user to.
-        :type group: CreateGroupMembershipGroup
-        :param role: The role of the user in the group.
-        :type role: Optional[CreateGroupMembershipRole], optional
-        :param configurable_permissions: Custom configuration for the permissions an admin
-            if a group will receive. This option has no effect
-            on members with a role of `member`.
-            Setting these permissions overwrites the default
-            access levels of an admin.
-            Specifying a value of "null" for this object will disable
-            all configurable permissions. Specifying permissions will set
-            them accordingly, omitted permissions will be enabled by default.
-        :type configurable_permissions: Optional[Dict[str, bool]], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param user: The user to add to the group.
+                :type user: CreateGroupMembershipUser
+                :param group: The group to add the user to.
+                :type group: CreateGroupMembershipGroup
+                :param role: The role of the user in the group., defaults to None
+                :type role: Optional[CreateGroupMembershipRole], optional
+                :param configurable_permissions: Custom configuration for the permissions an admin
+        if a group will receive. This option has no effect
+        on members with a role of `member`.
+
+        Setting these permissions overwrites the default
+        access levels of an admin.
+
+        Specifying a value of "null" for this object will disable
+        all configurable permissions. Specifying permissions will set
+        them accordingly, omitted permissions will be enabled by default., defaults to None
+                :type configurable_permissions: Optional[Dict[str, bool]], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -259,31 +268,33 @@ class MembershipsManager:
     def get_group_membership_by_id(
         self,
         group_membership_id: str,
+        *,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMembership:
         """
-        Retrieves a specific group membership. Only admins of this
+                Retrieves a specific group membership. Only admins of this
 
-        group or users with admin-level permissions will be able to
+                group or users with admin-level permissions will be able to
 
 
-        use this API.
+                use this API.
 
-        :param group_membership_id: The ID of the group membership.
-            Example: "434534"
-        :type group_membership_id: str
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param group_membership_id: The ID of the group membership.
+        Example: "434534"
+                :type group_membership_id: str
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -311,44 +322,48 @@ class MembershipsManager:
     def update_group_membership_by_id(
         self,
         group_membership_id: str,
+        *,
         role: Optional[UpdateGroupMembershipByIdRole] = None,
         configurable_permissions: Optional[Dict[str, bool]] = None,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMembership:
         """
-        Updates a user's group membership. Only admins of this
+                Updates a user's group membership. Only admins of this
 
-        group or users with admin-level permissions will be able to
+                group or users with admin-level permissions will be able to
 
 
-        use this API.
+                use this API.
 
-        :param group_membership_id: The ID of the group membership.
-            Example: "434534"
-        :type group_membership_id: str
-        :param role: The role of the user in the group.
-        :type role: Optional[UpdateGroupMembershipByIdRole], optional
-        :param configurable_permissions: Custom configuration for the permissions an admin
-            if a group will receive. This option has no effect
-            on members with a role of `member`.
-            Setting these permissions overwrites the default
-            access levels of an admin.
-            Specifying a value of "null" for this object will disable
-            all configurable permissions. Specifying permissions will set
-            them accordingly, omitted permissions will be enabled by default.
-        :type configurable_permissions: Optional[Dict[str, bool]], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param group_membership_id: The ID of the group membership.
+        Example: "434534"
+                :type group_membership_id: str
+                :param role: The role of the user in the group., defaults to None
+                :type role: Optional[UpdateGroupMembershipByIdRole], optional
+                :param configurable_permissions: Custom configuration for the permissions an admin
+        if a group will receive. This option has no effect
+        on members with a role of `member`.
+
+        Setting these permissions overwrites the default
+        access levels of an admin.
+
+        Specifying a value of "null" for this object will disable
+        all configurable permissions. Specifying permissions will set
+        them accordingly, omitted permissions will be enabled by default., defaults to None
+                :type configurable_permissions: Optional[Dict[str, bool]], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -382,21 +397,22 @@ class MembershipsManager:
     def delete_group_membership_by_id(
         self,
         group_membership_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a specific group membership. Only admins of this
+                Deletes a specific group membership. Only admins of this
 
-        group or users with admin-level permissions will be able to
+                group or users with admin-level permissions will be able to
 
 
-        use this API.
+                use this API.
 
-        :param group_membership_id: The ID of the group membership.
-            Example: "434534"
-        :type group_membership_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param group_membership_id: The ID of the group membership.
+        Example: "434534"
+                :type group_membership_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

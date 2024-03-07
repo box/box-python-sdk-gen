@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id)
+client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(segment_id)
 ```
 
 ### Arguments
@@ -46,7 +46,7 @@ See the endpoint docs at
 <!-- sample put_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id, description=updated_segment_description)
+client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(segment_id, description=updated_segment_description)
 ```
 
 ### Arguments
@@ -79,7 +79,7 @@ See the endpoint docs at
 <!-- sample delete_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(shield_information_barrier_segment_id=segment_id)
+client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(segment_id)
 ```
 
 ### Arguments
@@ -108,7 +108,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segments -->
 
 ```python
-client.shield_information_barrier_segments.get_shield_information_barrier_segments(shield_information_barrier_id=barrier_id)
+client.shield_information_barrier_segments.get_shield_information_barrier_segments(barrier_id)
 ```
 
 ### Arguments
@@ -140,7 +140,7 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segments -->
 
 ```python
-client.shield_information_barrier_segments.create_shield_information_barrier_segment(shield_information_barrier=ShieldInformationBarrierBase(id=barrier_id, type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value), name=segment_name, description=segment_description)
+client.shield_information_barrier_segments.create_shield_information_barrier_segment(ShieldInformationBarrierBase(id=barrier_id, type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value), segment_name, description=segment_description)
 ```
 
 ### Arguments

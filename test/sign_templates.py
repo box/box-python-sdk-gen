@@ -23,7 +23,7 @@ def testGetSignTemplate():
     assert len(sign_templates.entries) >= 0
     if len(sign_templates.entries) > 0:
         sign_template: SignTemplate = client.sign_templates.get_sign_template_by_id(
-            template_id=sign_templates.entries[0].id
+            sign_templates.entries[0].id
         )
         assert sign_template.id == sign_templates.entries[0].id
         assert len(sign_template.source_files) > 0

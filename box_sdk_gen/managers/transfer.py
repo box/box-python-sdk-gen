@@ -40,9 +40,9 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 class TransferOwnedFolderOwnedBy(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of the user who the folder will be
-            transferred to
-        :type id: str
+                :param id: The ID of the user who the folder will be
+        transferred to
+                :type id: str
         """
         super().__init__(**kwargs)
         self.id = id
@@ -51,8 +51,9 @@ class TransferOwnedFolderOwnedBy(BaseObject):
 class TransferManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -63,97 +64,99 @@ class TransferManager:
         self,
         user_id: str,
         owned_by: TransferOwnedFolderOwnedBy,
+        *,
         fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderFull:
         """
-        Move all of the items (files, folders and workflows) owned by a user into
+                Move all of the items (files, folders and workflows) owned by a user into
 
-        another user's account
-
-
-        Only the root folder (`0`) can be transferred.
+                another user's account
 
 
-        Folders can only be moved across users by users with administrative
+                Only the root folder (`0`) can be transferred.
 
 
-        permissions.
+                Folders can only be moved across users by users with administrative
 
 
-        All existing shared links and folder-level collaborations are transferred
+                permissions.
 
 
-        during the operation. Please note that while collaborations at the individual
+                All existing shared links and folder-level collaborations are transferred
 
 
-        file-level are transferred during the operation, the collaborations are
+                during the operation. Please note that while collaborations at the individual
 
 
-        deleted when the original user is deleted.
+                file-level are transferred during the operation, the collaborations are
 
 
-        This call will be performed synchronously which might lead to a slow response
+                deleted when the original user is deleted.
 
 
-        when the source user has a large number of items in all of its folders.
+                This call will be performed synchronously which might lead to a slow response
 
 
-        If the destination path has a metadata cascade policy attached to any of
+                when the source user has a large number of items in all of its folders.
 
 
-        the parent folders, a metadata cascade operation will be kicked off
+                If the destination path has a metadata cascade policy attached to any of
 
 
-        asynchronously.
+                the parent folders, a metadata cascade operation will be kicked off
 
 
-        There is currently no way to check for when this operation is finished.
+                asynchronously.
 
 
-        The destination folder's name will be in the format `{User}'s Files and
+                There is currently no way to check for when this operation is finished.
 
 
-        Folders`, where `{User}` is the display name of the user.
+                The destination folder's name will be in the format `{User}'s Files and
 
 
-        To make this API call your application will need to have the "Read and write
+                Folders`, where `{User}` is the display name of the user.
 
 
-        all files and folders stored in Box" scope enabled.
+                To make this API call your application will need to have the "Read and write
 
 
-        Please make sure the destination user has access to `Relay` or `Relay Lite`,
+                all files and folders stored in Box" scope enabled.
 
 
-        and has access to the files and folders involved in the workflows being
+                Please make sure the destination user has access to `Relay` or `Relay Lite`,
 
 
-        transferred.
+                and has access to the files and folders involved in the workflows being
 
 
-        Admins will receive an email when the operation is completed.
+                transferred.
 
-        :param user_id: The ID of the user.
-            Example: "12345"
-        :type user_id: str
-        :param owned_by: The user who the folder will be transferred to
-        :type owned_by: TransferOwnedFolderOwnedBy
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param notify: Determines if users should receive email notification
-            for the action performed.
-        :type notify: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                Admins will receive an email when the operation is completed.
+
+                :param user_id: The ID of the user.
+        Example: "12345"
+                :type user_id: str
+                :param owned_by: The user who the folder will be transferred to
+                :type owned_by: TransferOwnedFolderOwnedBy
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param notify: Determines if users should receive email notification
+        for the action performed., defaults to None
+                :type notify: Optional[bool], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

@@ -46,9 +46,9 @@ client: BoxClient = get_default_client()
 def testCreateMetaDataQueryExecuteRead():
     template_key: str = ''.join(['key', get_uuid()])
     template: MetadataTemplate = client.metadata_templates.create_metadata_template(
-        scope='enterprise',
+        'enterprise',
+        template_key,
         template_key=template_key,
-        display_name=template_key,
         fields=[
             CreateMetadataTemplateFields(
                 type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
@@ -59,33 +59,29 @@ def testCreateMetaDataQueryExecuteRead():
     )
     assert template.template_key == template_key
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
         ),
-        file=generate_byte_stream(10),
+        generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
     metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
-        file_id=file.id,
-        scope=CreateFileMetadataByIdScope.ENTERPRISE.value,
-        template_key=template_key,
-        request_body={'testName': 1},
+        file.id,
+        CreateFileMetadataByIdScope.ENTERPRISE.value,
+        template_key,
+        {'testName': 1},
     )
     assert metadata.template == template_key
     assert metadata.scope == template.scope
     search_from: str = ''.join([template.scope, '.', template.template_key])
     query: MetadataQueryResults = client.search.search_by_metadata_query(
-        from_=search_from,
-        query='testName >= :value',
-        query_params={'value': '0.0'},
-        ancestor_folder_id='0',
+        search_from, '0', query='testName >= :value', query_params={'value': '0.0'}
     )
     assert len(query.entries) >= 0
     client.metadata_templates.delete_metadata_template(
-        scope=DeleteMetadataTemplateScope.ENTERPRISE.value,
-        template_key=template.template_key,
+        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
     )
-    client.files.delete_file_by_id(file_id=file.id)
+    client.files.delete_file_by_id(file.id)
 
 
 def testGetSearch():

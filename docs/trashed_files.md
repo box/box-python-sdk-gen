@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample post_files_id -->
 
 ```python
-client.trashed_files.restore_file_from_trash(file_id=file.id)
+client.trashed_files.restore_file_from_trash(file.id)
 ```
 
 ### Arguments
@@ -63,7 +63,7 @@ See the endpoint docs at
 <!-- sample get_files_id_trash -->
 
 ```python
-client.trashed_files.get_trashed_file_by_id(file_id=file.id)
+client.trashed_files.get_trashed_file_by_id(file.id)
 ```
 
 ### Arguments
@@ -96,7 +96,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_trash -->
 
 ```python
-client.trashed_files.delete_trashed_file_by_id(file_id=file.id)
+client.trashed_files.delete_trashed_file_by_id(file.id)
 ```
 
 ### Arguments

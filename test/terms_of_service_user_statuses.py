@@ -40,21 +40,21 @@ def testGetTermsOfServiceUserStatuses():
     client: BoxClient = get_default_client_as_user(admin_user_id)
     tos: TermsOfService = get_or_create_terms_of_services()
     user: UserFull = client.users.create_user(
-        name=get_uuid(),
+        get_uuid(),
         login=''.join([get_uuid(), '@boxdemo.com']),
         is_platform_access_only=True,
     )
     created_tos_user_status: TermsOfServiceUserStatus = (
         client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(
-            tos=CreateTermsOfServiceStatusForUserTos(
+            CreateTermsOfServiceStatusForUserTos(
                 type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value,
                 id=tos.id,
             ),
-            user=CreateTermsOfServiceStatusForUserUser(
+            CreateTermsOfServiceStatusForUserUser(
                 type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value,
                 id=user.id,
             ),
-            is_accepted=False,
+            False,
         )
     )
     assert created_tos_user_status.is_accepted == False
@@ -65,14 +65,14 @@ def testGetTermsOfServiceUserStatuses():
     assert created_tos_user_status.user.id == user.id
     updated_tos_user_status: TermsOfServiceUserStatus = (
         client.terms_of_service_user_statuses.update_terms_of_service_status_for_user_by_id(
-            terms_of_service_user_status_id=created_tos_user_status.id, is_accepted=True
+            created_tos_user_status.id, True
         )
     )
     assert updated_tos_user_status.is_accepted == True
     list_tos_user_statuses: TermsOfServiceUserStatuses = (
         client.terms_of_service_user_statuses.get_terms_of_service_user_statuses(
-            tos_id=tos.id, user_id=user.id
+            tos.id, user_id=user.id
         )
     )
     assert list_tos_user_statuses.total_count > 0
-    client.users.delete_user_by_id(user_id=user.id)
+    client.users.delete_user_by_id(user.id)

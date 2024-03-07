@@ -44,9 +44,10 @@ class UpdateFolderWatermarkWatermarkImprintField(str, Enum):
 class UpdateFolderWatermarkWatermark(BaseObject):
     def __init__(self, imprint: UpdateFolderWatermarkWatermarkImprintField, **kwargs):
         """
-        :param imprint: The type of watermark to apply.
-            Currently only supports one option.
-        :type imprint: UpdateFolderWatermarkWatermarkImprintField
+                :param imprint: The type of watermark to apply.
+
+        Currently only supports one option.
+                :type imprint: UpdateFolderWatermarkWatermarkImprintField
         """
         super().__init__(**kwargs)
         self.imprint = imprint
@@ -55,8 +56,9 @@ class UpdateFolderWatermarkWatermark(BaseObject):
 class FolderWatermarksManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -64,22 +66,27 @@ class FolderWatermarksManager:
         self.network_session = network_session
 
     def get_folder_watermark(
-        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        folder_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Watermark:
         """
-        Retrieve the watermark for a folder.
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieve the watermark for a folder.
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -107,24 +114,27 @@ class FolderWatermarksManager:
         self,
         folder_id: str,
         watermark: UpdateFolderWatermarkWatermark,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Watermark:
         """
-        Applies or update a watermark on a folder.
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param watermark: The watermark to imprint on the folder
-        :type watermark: UpdateFolderWatermarkWatermark
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Applies or update a watermark on a folder.
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param watermark: The watermark to imprint on the folder
+                :type watermark: UpdateFolderWatermarkWatermark
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -152,22 +162,27 @@ class FolderWatermarksManager:
         return deserialize(response.data, Watermark)
 
     def delete_folder_watermark(
-        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        folder_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes the watermark from a folder.
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Removes the watermark from a folder.
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

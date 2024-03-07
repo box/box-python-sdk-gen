@@ -42,8 +42,8 @@ def test_skills_cards_CRUD():
     title_message: str = 'License Plates'
     skill_cards_metadata: SkillCardsMetadata = (
         client.skills.create_box_skill_cards_on_file(
-            file_id=file.id,
-            cards=[
+            file.id,
+            [
                 KeywordSkillCard(
                     type=KeywordSkillCardTypeField.SKILL_CARD.value,
                     skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value,
@@ -68,8 +68,8 @@ def test_skills_cards_CRUD():
     updated_title_message: str = 'Updated License Plates'
     updated_skill_cards_metadata: SkillCardsMetadata = (
         client.skills.update_box_skill_cards_on_file(
-            file_id=file.id,
-            request_body=[
+            file.id,
+            [
                 UpdateBoxSkillCardsOnFileRequestBody(
                     op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value,
                     path='/cards/0',
@@ -99,8 +99,8 @@ def test_skills_cards_CRUD():
         == updated_title_message
     )
     received_skill_cards_metadata: SkillCardsMetadata = (
-        client.skills.get_box_skill_cards_on_file(file_id=file.id)
+        client.skills.get_box_skill_cards_on_file(file.id)
     )
     assert updated_skill_cards_metadata.cards[0].skill.id == skill_id
-    client.skills.delete_box_skill_cards_from_file(file_id=file.id)
-    client.files.delete_file_by_id(file_id=file.id)
+    client.skills.delete_box_skill_cards_from_file(file.id)
+    client.files.delete_file_by_id(file.id)

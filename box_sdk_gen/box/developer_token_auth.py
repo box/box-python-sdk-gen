@@ -15,21 +15,21 @@ class BoxDeveloperTokenAuth(Authentication):
         self.token = token
 
     def retrieve_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Retrieves stored developer token
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         return AccessToken(access_token=self.token)
 
     def refresh_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Developer token cannot be refreshed
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         raise BoxSDKError(
@@ -37,7 +37,7 @@ class BoxDeveloperTokenAuth(Authentication):
         )
 
     def retrieve_authorization_header(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session)
+        token: AccessToken = self.retrieve_token(network_session=network_session)
         return ''.join(['Bearer ', token.access_token])

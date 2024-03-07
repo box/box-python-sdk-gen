@@ -34,8 +34,9 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 class SessionTerminationManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -46,7 +47,8 @@ class SessionTerminationManager:
         self,
         user_ids: List[str],
         user_logins: List[str],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the user,
@@ -63,7 +65,7 @@ class SessionTerminationManager:
         :type user_ids: List[str]
         :param user_logins: A list of user logins
         :type user_logins: List[str]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -89,7 +91,8 @@ class SessionTerminationManager:
     def terminate_groups_sessions(
         self,
         group_ids: List[str],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SessionTerminationMessage:
         """
         Validates the roles and permissions of the group,
@@ -104,7 +107,7 @@ class SessionTerminationManager:
 
         :param group_ids: A list of group IDs
         :type group_ids: List[str]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:

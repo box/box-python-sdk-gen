@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_terms_of_service_user_statuses -->
 
 ```python
-client.terms_of_service_user_statuses.get_terms_of_service_user_statuses(tos_id=tos.id, user_id=user.id)
+client.terms_of_service_user_statuses.get_terms_of_service_user_statuses(tos.id, user_id=user.id)
 ```
 
 ### Arguments
@@ -48,7 +48,7 @@ See the endpoint docs at
 <!-- sample post_terms_of_service_user_statuses -->
 
 ```python
-client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(tos=CreateTermsOfServiceStatusForUserTos(type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value, id=tos.id), user=CreateTermsOfServiceStatusForUserUser(type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value, id=user.id), is_accepted=False)
+client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(CreateTermsOfServiceStatusForUserTos(type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value, id=tos.id), CreateTermsOfServiceStatusForUserUser(type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value, id=user.id), False)
 ```
 
 ### Arguments
@@ -80,7 +80,7 @@ See the endpoint docs at
 <!-- sample put_terms_of_service_user_statuses_id -->
 
 ```python
-client.terms_of_service_user_statuses.update_terms_of_service_status_for_user_by_id(terms_of_service_user_status_id=created_tos_user_status.id, is_accepted=True)
+client.terms_of_service_user_statuses.update_terms_of_service_status_for_user_by_id(created_tos_user_status.id, True)
 ```
 
 ### Arguments

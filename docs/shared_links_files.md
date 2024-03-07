@@ -27,7 +27,7 @@ See the endpoint docs at
 <!-- sample get_shared_items -->
 
 ```python
-user_client.shared_links_files.find_file_for_shared_link(boxapi=''.join(['shared_link=', file_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+user_client.shared_links_files.find_file_for_shared_link(''.join(['shared_link=', file_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
 ```
 
 ### Arguments
@@ -60,7 +60,7 @@ See the endpoint docs at
 <!-- sample get_files_id#get_shared_link -->
 
 ```python
-client.shared_links_files.get_shared_link_for_file(file_id=file_id, fields='shared_link')
+client.shared_links_files.get_shared_link_for_file(file_id, 'shared_link')
 ```
 
 ### Arguments
@@ -91,7 +91,7 @@ See the endpoint docs at
 <!-- sample put_files_id#add_shared_link -->
 
 ```python
-client.shared_links_files.add_share_link_to_file(file_id=file_id, shared_link=AddShareLinkToFileSharedLink(access=AddShareLinkToFileSharedLinkAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+client.shared_links_files.add_share_link_to_file(file_id, 'shared_link', shared_link=AddShareLinkToFileSharedLink(access=AddShareLinkToFileSharedLinkAccessField.OPEN.value, password='Secret123@'))
 ```
 
 ### Arguments
@@ -124,7 +124,7 @@ See the endpoint docs at
 <!-- sample put_files_id#update_shared_link -->
 
 ```python
-client.shared_links_files.update_shared_link_on_file(file_id=file_id, shared_link=UpdateSharedLinkOnFileSharedLink(access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS.value), fields='shared_link')
+client.shared_links_files.update_shared_link_on_file(file_id, 'shared_link', shared_link=UpdateSharedLinkOnFileSharedLink(access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS.value))
 ```
 
 ### Arguments

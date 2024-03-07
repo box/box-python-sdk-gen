@@ -53,10 +53,10 @@ def testCreateUpdateGetDeleteRetentionPolicy():
     description: str = get_uuid()
     retention_policy: RetentionPolicy = (
         client.retention_policies.create_retention_policy(
-            policy_name=get_uuid(),
+            get_uuid(),
+            CreateRetentionPolicyPolicyType.FINITE.value,
+            CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value,
             description=description,
-            policy_type=CreateRetentionPolicyPolicyType.FINITE.value,
-            disposition_action=CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value,
             retention_length='1',
             retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value,
             can_owner_extend_retention=False,
@@ -68,8 +68,8 @@ def testCreateUpdateGetDeleteRetentionPolicy():
     folder: FolderFull = create_new_folder()
     retention_policy_assignment: RetentionPolicyAssignment = (
         client.retention_policy_assignments.create_retention_policy_assignment(
-            policy_id=retention_policy.id,
-            assign_to=CreateRetentionPolicyAssignmentAssignTo(
+            retention_policy.id,
+            CreateRetentionPolicyAssignmentAssignTo(
                 id=folder.id,
                 type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value,
             ),
@@ -81,16 +81,14 @@ def testCreateUpdateGetDeleteRetentionPolicy():
         folder.type
     )
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(), parent=UploadFileAttributesParentField(id=folder.id)
         ),
-        file=generate_byte_stream(10),
+        generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
     new_files: Files = client.uploads.upload_file_version(
-        file_id=file.id,
-        attributes=UploadFileVersionAttributes(name=file.name),
-        file=generate_byte_stream(20),
+        file.id, UploadFileVersionAttributes(name=file.name), generate_byte_stream(20)
     )
     new_file: FileFull = new_files.entries[0]
     assert new_file.id == file.id
@@ -100,19 +98,15 @@ def testCreateUpdateGetDeleteRetentionPolicy():
     file_version_retentions_count: int = len(file_version_retentions.entries)
     assert file_version_retentions_count >= 0
     if file_version_retentions_count == 0:
-        client.retention_policies.delete_retention_policy_by_id(
-            retention_policy_id=retention_policy.id
-        )
-        client.folders.delete_folder_by_id(folder_id=folder.id, recursive=True)
+        client.retention_policies.delete_retention_policy_by_id(retention_policy.id)
+        client.folders.delete_folder_by_id(folder.id, recursive=True)
         return None
     file_version_retention: FileVersionRetention = file_version_retentions.entries[0]
     file_version_retention_by_id: FileVersionRetention = (
         client.file_version_retentions.get_file_version_retention_by_id(
-            file_version_retention_id=file_version_retention.id
+            file_version_retention.id
         )
     )
     assert file_version_retention_by_id.id == file_version_retention.id
-    client.retention_policies.delete_retention_policy_by_id(
-        retention_policy_id=retention_policy.id
-    )
-    client.folders.delete_folder_by_id(folder_id=folder.id, recursive=True)
+    client.retention_policies.delete_retention_policy_by_id(retention_policy.id)
+    client.folders.delete_folder_by_id(folder.id, recursive=True)

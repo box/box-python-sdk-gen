@@ -44,11 +44,13 @@ class StartWorkflowType(str, Enum):
 
 
 class StartWorkflowFlow(BaseObject):
-    def __init__(self, type: Optional[str] = None, id: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, type: Optional[str] = None, id: Optional[str] = None, **kwargs
+    ):
         """
-        :param type: The type of the flow object
+        :param type: The type of the flow object, defaults to None
         :type type: Optional[str], optional
-        :param id: The id of the flow
+        :param id: The id of the flow, defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -65,14 +67,15 @@ class StartWorkflowFiles(BaseObject):
 
     def __init__(
         self,
+        *,
         type: Optional[StartWorkflowFilesTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: The type of the file object
+        :param type: The type of the file object, defaults to None
         :type type: Optional[StartWorkflowFilesTypeField], optional
-        :param id: The id of the file
+        :param id: The id of the file, defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -89,14 +92,15 @@ class StartWorkflowFolder(BaseObject):
 
     def __init__(
         self,
+        *,
         type: Optional[StartWorkflowFolderTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: The type of the folder object
+        :param type: The type of the folder object, defaults to None
         :type type: Optional[StartWorkflowFolderTypeField], optional
-        :param id: The id of the folder
+        :param id: The id of the folder, defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -113,20 +117,21 @@ class StartWorkflowOutcomes(BaseObject):
 
     def __init__(
         self,
+        *,
         id: Optional[str] = None,
         type: Optional[StartWorkflowOutcomesTypeField] = None,
         parameter: Optional[str] = None,
         **kwargs
     ):
         """
-        :param id: The id of the outcome
-        :type id: Optional[str], optional
-        :param type: The type of the outcome object
-        :type type: Optional[StartWorkflowOutcomesTypeField], optional
-        :param parameter: This is a placeholder example for various objects that
-            can be passed in - refer to the guides section to find
-            out more information.
-        :type parameter: Optional[str], optional
+                :param id: The id of the outcome, defaults to None
+                :type id: Optional[str], optional
+                :param type: The type of the outcome object, defaults to None
+                :type type: Optional[StartWorkflowOutcomesTypeField], optional
+                :param parameter: This is a placeholder example for various objects that
+        can be passed in - refer to the guides section to find
+        out more information., defaults to None
+                :type parameter: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -137,8 +142,9 @@ class StartWorkflowOutcomes(BaseObject):
 class WorkflowsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -148,41 +154,45 @@ class WorkflowsManager:
     def get_workflows(
         self,
         folder_id: str,
+        *,
         trigger_type: Optional[str] = None,
         limit: Optional[int] = None,
         marker: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Workflows:
         """
-        Returns list of workflows that act on a given `folder ID`, and
+                Returns list of workflows that act on a given `folder ID`, and
 
-        have a flow with a trigger type of `WORKFLOW_MANUAL_START`.
-
-
-        You application must be authorized to use the `Manage Box Relay` application
+                have a flow with a trigger type of `WORKFLOW_MANUAL_START`.
 
 
-        scope within the developer console in to use this endpoint.
+                You application must be authorized to use the `Manage Box Relay` application
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-        :type folder_id: str
-        :param trigger_type: Type of trigger to search for.
-        :type trigger_type: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                scope within the developer console in to use this endpoint.
+
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+                :type folder_id: str
+                :param trigger_type: Type of trigger to search for., defaults to None
+                :type trigger_type: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -214,34 +224,35 @@ class WorkflowsManager:
         flow: StartWorkflowFlow,
         files: List[StartWorkflowFiles],
         folder: StartWorkflowFolder,
+        *,
         type: Optional[StartWorkflowType] = None,
         outcomes: Optional[List[StartWorkflowOutcomes]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
+                Initiates a flow with a trigger type of `WORKFLOW_MANUAL_START`.
 
-        You application must be authorized to use the `Manage Box Relay` application
+                You application must be authorized to use the `Manage Box Relay` application
 
 
-        scope within the developer console.
+                scope within the developer console.
 
-        :param workflow_id: The ID of the workflow.
-            Example: "12345"
-        :type workflow_id: str
-        :param flow: The flow that will be triggered
-        :type flow: StartWorkflowFlow
-        :param files: The array of files for which the workflow should start. All files
-            must be in the workflow's configured folder.
-        :type files: List[StartWorkflowFiles]
-        :param folder: The folder object for which the workflow is configured.
-        :type folder: StartWorkflowFolder
-        :param type: The type of the parameters object
-        :type type: Optional[StartWorkflowType], optional
-        :param outcomes: A list of outcomes required to be configured at start time.
-        :type outcomes: Optional[List[StartWorkflowOutcomes]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param workflow_id: The ID of the workflow.
+        Example: "12345"
+                :type workflow_id: str
+                :param flow: The flow that will be triggered
+                :type flow: StartWorkflowFlow
+                :param files: The array of files for which the workflow should start. All files
+        must be in the workflow's configured folder.
+                :type files: List[StartWorkflowFiles]
+                :param folder: The folder object for which the workflow is configured.
+                :type folder: StartWorkflowFolder
+                :param type: The type of the parameters object, defaults to None
+                :type type: Optional[StartWorkflowType], optional
+                :param outcomes: A list of outcomes required to be configured at start time., defaults to None
+                :type outcomes: Optional[List[StartWorkflowOutcomes]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample post_web_links_id -->
 
 ```python
-client.trashed_web_links.restore_weblink_from_trash(web_link_id=weblink.id)
+client.trashed_web_links.restore_weblink_from_trash(weblink.id)
 ```
 
 ### Arguments
@@ -53,7 +53,7 @@ See the endpoint docs at
 <!-- sample get_web_links_id_trash -->
 
 ```python
-client.trashed_web_links.get_trashed_web_link_by_id(web_link_id=weblink.id)
+client.trashed_web_links.get_trashed_web_link_by_id(weblink.id)
 ```
 
 ### Arguments
@@ -86,7 +86,7 @@ See the endpoint docs at
 <!-- sample delete_web_links_id_trash -->
 
 ```python
-client.trashed_web_links.delete_trashed_web_link_by_id(web_link_id=weblink.id)
+client.trashed_web_links.delete_trashed_web_link_by_id(weblink.id)
 ```
 
 ### Arguments

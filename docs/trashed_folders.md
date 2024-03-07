@@ -28,7 +28,7 @@ See the endpoint docs at
 <!-- sample post_folders_id -->
 
 ```python
-client.trashed_folders.restore_folder_from_trash(folder_id=folder.id)
+client.trashed_folders.restore_folder_from_trash(folder.id)
 ```
 
 ### Arguments
@@ -72,7 +72,7 @@ See the endpoint docs at
 <!-- sample get_folders_id_trash -->
 
 ```python
-client.trashed_folders.get_trashed_folder_by_id(folder_id=folder.id)
+client.trashed_folders.get_trashed_folder_by_id(folder.id)
 ```
 
 ### Arguments
@@ -105,7 +105,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_trash -->
 
 ```python
-client.trashed_folders.delete_trashed_folder_by_id(folder_id=folder.id)
+client.trashed_folders.delete_trashed_folder_by_id(folder.id)
 ```
 
 ### Arguments

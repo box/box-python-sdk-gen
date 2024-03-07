@@ -47,8 +47,9 @@ class UpdateShieldInformationBarrierStatusStatus(str, Enum):
 class ShieldInformationBarriersManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -58,15 +59,16 @@ class ShieldInformationBarriersManager:
     def get_shield_information_barrier_by_id(
         self,
         shield_information_barrier_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrier:
         """
-        Get shield information barrier based on provided ID.
-        :param shield_information_barrier_id: The ID of the shield information barrier.
-            Example: "1910967"
-        :type shield_information_barrier_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Get shield information barrier based on provided ID.
+                :param shield_information_barrier_id: The ID of the shield information barrier.
+        Example: "1910967"
+                :type shield_information_barrier_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -93,7 +95,8 @@ class ShieldInformationBarriersManager:
         self,
         id: str,
         status: UpdateShieldInformationBarrierStatusStatus,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrier:
         """
         Change status of shield information barrier with the specified ID.
@@ -101,7 +104,7 @@ class ShieldInformationBarriersManager:
         :type id: str
         :param status: The desired status for the shield information barrier.
         :type status: UpdateShieldInformationBarrierStatusStatus
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -129,22 +132,23 @@ class ShieldInformationBarriersManager:
 
     def get_shield_information_barriers(
         self,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarriers:
         """
-        Retrieves a list of shield information barrier objects
+                Retrieves a list of shield information barrier objects
 
-        for the enterprise of JWT.
+                for the enterprise of JWT.
 
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -173,7 +177,8 @@ class ShieldInformationBarriersManager:
     def create_shield_information_barrier(
         self,
         enterprise: EnterpriseBase,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrier:
         """
         Creates a shield information barrier to
@@ -185,7 +190,7 @@ class ShieldInformationBarriersManager:
 
         :param enterprise: The `type` and `id` of enterprise this barrier is under.
         :type enterprise: EnterpriseBase
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:

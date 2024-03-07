@@ -55,7 +55,7 @@ See the endpoint docs at
 <!-- sample post_groups -->
 
 ```python
-client.groups.create_group(name=group_name)
+client.groups.create_group(group_name)
 ```
 
 ### Arguments
@@ -97,7 +97,7 @@ See the endpoint docs at
 <!-- sample get_groups_id -->
 
 ```python
-client.groups.get_group_by_id(group_id=group.id)
+client.groups.get_group_by_id(group.id)
 ```
 
 ### Arguments
@@ -129,7 +129,7 @@ See the endpoint docs at
 <!-- sample put_groups_id -->
 
 ```python
-client.groups.update_group_by_id(group_id=group.id, name=updated_group_name)
+client.groups.update_group_by_id(group.id, name=updated_group_name)
 ```
 
 ### Arguments
@@ -172,7 +172,7 @@ See the endpoint docs at
 <!-- sample delete_groups_id -->
 
 ```python
-client.groups.delete_group_by_id(group_id=group.id)
+client.groups.delete_group_by_id(group.id)
 ```
 
 ### Arguments

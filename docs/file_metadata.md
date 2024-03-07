@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata -->
 
 ```python
-client.file_metadata.get_file_metadata(file_id=file.id)
+client.file_metadata.get_file_metadata(file.id)
 ```
 
 ### Arguments
@@ -50,7 +50,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.get_file_metadata_by_id(file_id=file.id, scope=GetFileMetadataByIdScope.GLOBAL.value, template_key='properties')
+client.file_metadata.get_file_metadata_by_id(file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties')
 ```
 
 ### Arguments
@@ -88,7 +88,7 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.create_file_metadata_by_id(file_id=file.id, scope=CreateFileMetadataByIdScope.ENTERPRISE.value, template_key=template_key, request_body={'testName': 1})
+client.file_metadata.create_file_metadata_by_id(file.id, CreateFileMetadataByIdScope.ENTERPRISE.value, template_key, {'testName': 1})
 ```
 
 ### Arguments
@@ -130,7 +130,7 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.update_file_metadata_by_id(file_id=file.id, scope=UpdateFileMetadataByIdScope.GLOBAL.value, template_key='properties', request_body=[UpdateFileMetadataByIdRequestBody(op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
+client.file_metadata.update_file_metadata_by_id(file.id, UpdateFileMetadataByIdScope.GLOBAL.value, 'properties', [UpdateFileMetadataByIdRequestBody(op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
 ```
 
 ### Arguments
@@ -165,7 +165,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.delete_file_metadata_by_id(file_id=file.id, scope=DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key=template_key)
+client.file_metadata.delete_file_metadata_by_id(file.id, DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key)
 ```
 
 ### Arguments

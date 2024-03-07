@@ -22,7 +22,7 @@ See the endpoint docs at
 <!-- sample get_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.get_classification_on_file(file_id=file.id)
+client.file_classifications.get_classification_on_file(file.id)
 ```
 
 ### Arguments
@@ -58,7 +58,7 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.add_classification_to_file(file_id=file.id, box_security_classification_key=classification.key)
+client.file_classifications.add_classification_to_file(file.id, box_security_classification_key=classification.key)
 ```
 
 ### Arguments
@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.update_classification_on_file(file_id=file.id, request_body=[UpdateClassificationOnFileRequestBody(op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+client.file_classifications.update_classification_on_file(file.id, [UpdateClassificationOnFileRequestBody(op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
 ```
 
 ### Arguments
@@ -127,7 +127,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.delete_classification_from_file(file_id=file.id)
+client.file_classifications.delete_classification_from_file(file.id)
 ```
 
 ### Arguments

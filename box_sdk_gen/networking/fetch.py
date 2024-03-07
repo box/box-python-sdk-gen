@@ -203,9 +203,9 @@ def __prepare_headers(
         headers.update(options.headers)
     if options.auth:
         if reauthenticate:
-            options.auth.refresh_token(options.network_session)
+            options.auth.refresh_token(network_session=options.network_session)
         headers['Authorization'] = options.auth.retrieve_authorization_header(
-            options.network_session
+            network_session=options.network_session
         )
 
     headers['User-Agent'] = USER_AGENT_HEADER

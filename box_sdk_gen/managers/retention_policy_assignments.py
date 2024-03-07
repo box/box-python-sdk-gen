@@ -61,16 +61,17 @@ class CreateRetentionPolicyAssignmentAssignTo(BaseObject):
     def __init__(
         self,
         type: CreateRetentionPolicyAssignmentAssignToTypeField,
+        *,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: The type of item to assign the policy to.
-        :type type: CreateRetentionPolicyAssignmentAssignToTypeField
-        :param id: The ID of item to assign the policy to.
-            Set to `null` or omit when `type` is set to
-            `enterprise`.
-        :type id: Optional[str], optional
+                :param type: The type of item to assign the policy to.
+                :type type: CreateRetentionPolicyAssignmentAssignToTypeField
+                :param id: The ID of item to assign the policy to.
+        Set to `null` or omit when `type` is set to
+        `enterprise`., defaults to None
+                :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.type = type
@@ -79,14 +80,14 @@ class CreateRetentionPolicyAssignmentAssignTo(BaseObject):
 
 class CreateRetentionPolicyAssignmentFilterFields(BaseObject):
     def __init__(
-        self, field: Optional[str] = None, value: Optional[str] = None, **kwargs
+        self, *, field: Optional[str] = None, value: Optional[str] = None, **kwargs
     ):
         """
-        :param field: The metadata attribute key id.
-        :type field: Optional[str], optional
-        :param value: The metadata attribute field id. For value, only
-            enum and multiselect types are supported.
-        :type value: Optional[str], optional
+                :param field: The metadata attribute key id., defaults to None
+                :type field: Optional[str], optional
+                :param value: The metadata attribute field id. For value, only
+        enum and multiselect types are supported., defaults to None
+                :type value: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.field = field
@@ -96,8 +97,9 @@ class CreateRetentionPolicyAssignmentFilterFields(BaseObject):
 class RetentionPolicyAssignmentsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -107,38 +109,40 @@ class RetentionPolicyAssignmentsManager:
     def get_retention_policy_assignments(
         self,
         retention_policy_id: str,
+        *,
         type: Optional[GetRetentionPolicyAssignmentsType] = None,
         fields: Optional[List[str]] = None,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RetentionPolicyAssignments:
         """
-        Returns a list of all retention policy assignments associated with a specified
+                Returns a list of all retention policy assignments associated with a specified
 
-        retention policy.
+                retention policy.
 
-        :param retention_policy_id: The ID of the retention policy.
-            Example: "982312"
-        :type retention_policy_id: str
-        :param type: The type of the retention policy assignment to retrieve.
-        :type type: Optional[GetRetentionPolicyAssignmentsType], optional
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param retention_policy_id: The ID of the retention policy.
+        Example: "982312"
+                :type retention_policy_id: str
+                :param type: The type of the retention policy assignment to retrieve., defaults to None
+                :type type: Optional[GetRetentionPolicyAssignmentsType], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -175,29 +179,31 @@ class RetentionPolicyAssignmentsManager:
         self,
         policy_id: str,
         assign_to: CreateRetentionPolicyAssignmentAssignTo,
+        *,
         filter_fields: Optional[
             List[CreateRetentionPolicyAssignmentFilterFields]
         ] = None,
         start_date_field: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RetentionPolicyAssignment:
         """
-        Assigns a retention policy to an item.
-        :param policy_id: The ID of the retention policy to assign
-        :type policy_id: str
-        :param assign_to: The item to assign the policy to
-        :type assign_to: CreateRetentionPolicyAssignmentAssignTo
-        :param filter_fields: If the `assign_to` type is `metadata_template`,
-            then optionally add the `filter_fields` parameter which will
-            require an array of objects with a field entry and a value entry.
-            Currently only one object of `field` and `value` is supported.
-        :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFields]], optional
-        :param start_date_field: The date the retention policy assignment begins.
-            If the `assigned_to` type is `metadata_template`,
-            this field can be a date field's metadata attribute key id.
-        :type start_date_field: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Assigns a retention policy to an item.
+                :param policy_id: The ID of the retention policy to assign
+                :type policy_id: str
+                :param assign_to: The item to assign the policy to
+                :type assign_to: CreateRetentionPolicyAssignmentAssignTo
+                :param filter_fields: If the `assign_to` type is `metadata_template`,
+        then optionally add the `filter_fields` parameter which will
+        require an array of objects with a field entry and a value entry.
+        Currently only one object of `field` and `value` is supported., defaults to None
+                :type filter_fields: Optional[List[CreateRetentionPolicyAssignmentFilterFields]], optional
+                :param start_date_field: The date the retention policy assignment begins.
+
+        If the `assigned_to` type is `metadata_template`,
+        this field can be a date field's metadata attribute key id., defaults to None
+                :type start_date_field: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -230,25 +236,27 @@ class RetentionPolicyAssignmentsManager:
     def get_retention_policy_assignment_by_id(
         self,
         retention_policy_assignment_id: str,
+        *,
         fields: Optional[List[str]] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RetentionPolicyAssignment:
         """
-        Retrieves a retention policy assignment
-        :param retention_policy_assignment_id: The ID of the retention policy assignment.
-            Example: "1233123"
-        :type retention_policy_assignment_id: str
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves a retention policy assignment
+                :param retention_policy_assignment_id: The ID of the retention policy assignment.
+        Example: "1233123"
+                :type retention_policy_assignment_id: str
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -276,18 +284,19 @@ class RetentionPolicyAssignmentsManager:
     def delete_retention_policy_assignment_by_id(
         self,
         retention_policy_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes a retention policy assignment
+                Removes a retention policy assignment
 
-        applied to content.
+                applied to content.
 
-        :param retention_policy_assignment_id: The ID of the retention policy assignment.
-            Example: "1233123"
-        :type retention_policy_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param retention_policy_assignment_id: The ID of the retention policy assignment.
+        Example: "1233123"
+                :type retention_policy_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -313,23 +322,25 @@ class RetentionPolicyAssignmentsManager:
     def get_files_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FilesUnderRetention:
         """
-        Returns a list of files under retention for a retention policy assignment.
-        :param retention_policy_assignment_id: The ID of the retention policy assignment.
-            Example: "1233123"
-        :type retention_policy_assignment_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Returns a list of files under retention for a retention policy assignment.
+                :param retention_policy_assignment_id: The ID of the retention policy assignment.
+        Example: "1233123"
+                :type retention_policy_assignment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -360,26 +371,28 @@ class RetentionPolicyAssignmentsManager:
     def get_file_versions_under_retention_policy_assignment(
         self,
         retention_policy_assignment_id: str,
+        *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FilesUnderRetention:
         """
-        Returns a list of file versions under retention for a retention policy
+                Returns a list of file versions under retention for a retention policy
 
-        assignment.
+                assignment.
 
-        :param retention_policy_assignment_id: The ID of the retention policy assignment.
-            Example: "1233123"
-        :type retention_policy_assignment_id: str
-        :param marker: Defines the position marker at which to begin returning results. This is
-            used when paginating using marker-based pagination.
-            This requires `usemarker` to be set to `true`.
-        :type marker: Optional[str], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param retention_policy_assignment_id: The ID of the retention policy assignment.
+        Example: "1233123"
+                :type retention_policy_assignment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

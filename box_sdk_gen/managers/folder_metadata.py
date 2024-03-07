@@ -77,6 +77,7 @@ class UpdateFolderMetadataByIdRequestBody(BaseObject):
 
     def __init__(
         self,
+        *,
         op: Optional[UpdateFolderMetadataByIdRequestBodyOpField] = None,
         path: Optional[str] = None,
         value: Optional[str] = None,
@@ -84,28 +85,31 @@ class UpdateFolderMetadataByIdRequestBody(BaseObject):
         **kwargs
     ):
         """
-        :param op: The type of change to perform on the template. Some
-            of these are hazardous as they will change existing templates.
-        :type op: Optional[UpdateFolderMetadataByIdRequestBodyOpField], optional
-        :param path: The location in the metadata JSON object
-            to apply the changes to, in the format of a
-            [JSON-Pointer](https://tools.ietf.org/html/rfc6901).
-            The path must always be prefixed with a `/` to represent the root
-            of the template. The characters `~` and `/` are reserved
-            characters and must be escaped in the key.
-        :type path: Optional[str], optional
-        :param value: The value to be set or tested.
-            Required for `add`, `replace`, and `test` operations. For `add`,
-            if the value exists already the previous value will be overwritten
-            by the new value. For `replace`, the value must exist before
-            replacing.
-            For `test`, the existing value at the `path` location must match
-            the specified value.
-        :type value: Optional[str], optional
-        :param from_: The location in the metadata JSON object to move or copy a value
-            from. Required for `move` or `copy` operations and must be in the
-            format of a [JSON-Pointer](https://tools.ietf.org/html/rfc6901).
-        :type from_: Optional[str], optional
+                :param op: The type of change to perform on the template. Some
+        of these are hazardous as they will change existing templates., defaults to None
+                :type op: Optional[UpdateFolderMetadataByIdRequestBodyOpField], optional
+                :param path: The location in the metadata JSON object
+        to apply the changes to, in the format of a
+        [JSON-Pointer](https://tools.ietf.org/html/rfc6901).
+
+        The path must always be prefixed with a `/` to represent the root
+        of the template. The characters `~` and `/` are reserved
+        characters and must be escaped in the key., defaults to None
+                :type path: Optional[str], optional
+                :param value: The value to be set or tested.
+
+        Required for `add`, `replace`, and `test` operations. For `add`,
+        if the value exists already the previous value will be overwritten
+        by the new value. For `replace`, the value must exist before
+        replacing.
+
+        For `test`, the existing value at the `path` location must match
+        the specified value., defaults to None
+                :type value: Optional[str], optional
+                :param from_: The location in the metadata JSON object to move or copy a value
+        from. Required for `move` or `copy` operations and must be in the
+        format of a [JSON-Pointer](https://tools.ietf.org/html/rfc6901)., defaults to None
+                :type from_: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.op = op
@@ -122,8 +126,9 @@ class DeleteFolderMetadataByIdScope(str, Enum):
 class FolderMetadataManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -131,25 +136,30 @@ class FolderMetadataManager:
         self.network_session = network_session
 
     def get_folder_metadata(
-        self, folder_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self,
+        folder_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Metadatas:
         """
-        Retrieves all metadata for a given folder. This can not be used on the root
+                Retrieves all metadata for a given folder. This can not be used on the root
 
-        folder with ID `0`.
+                folder with ID `0`.
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -178,31 +188,34 @@ class FolderMetadataManager:
         folder_id: str,
         scope: GetFolderMetadataByIdScope,
         template_key: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> MetadataFull:
         """
-        Retrieves the instance of a metadata template that has been applied to a
+                Retrieves the instance of a metadata template that has been applied to a
 
-        folder. This can not be used on the root folder with ID `0`.
+                folder. This can not be used on the root folder with ID `0`.
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param scope: The scope of the metadata template
-            Example: "global"
-        :type scope: GetFolderMetadataByIdScope
-        :param template_key: The name of the metadata template
-            Example: "properties"
-        :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param scope: The scope of the metadata template
+        Example: "global"
+                :type scope: GetFolderMetadataByIdScope
+                :param template_key: The name of the metadata template
+        Example: "properties"
+                :type template_key: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -235,48 +248,51 @@ class FolderMetadataManager:
         scope: CreateFolderMetadataByIdScope,
         template_key: str,
         request_body: Dict[str, str],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> MetadataFull:
         """
-        Applies an instance of a metadata template to a folder.
+                Applies an instance of a metadata template to a folder.
 
-        In most cases only values that are present in the metadata template
-
-
-        will be accepted, except for the `global.properties` template which accepts
+                In most cases only values that are present in the metadata template
 
 
-        any key-value pair.
+                will be accepted, except for the `global.properties` template which accepts
 
 
-        To display the metadata template in the Box web app the enterprise needs to be
+                any key-value pair.
 
 
-        configured to enable **Cascading Folder Level Metadata** for the user in the
+                To display the metadata template in the Box web app the enterprise needs to be
 
 
-        admin console.
+                configured to enable **Cascading Folder Level Metadata** for the user in the
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param scope: The scope of the metadata template
-            Example: "global"
-        :type scope: CreateFolderMetadataByIdScope
-        :param template_key: The name of the metadata template
-            Example: "properties"
-        :type template_key: str
-        :param request_body: Request body of createFolderMetadataById method
-        :type request_body: Dict[str, str]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                admin console.
+
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param scope: The scope of the metadata template
+        Example: "global"
+                :type scope: CreateFolderMetadataByIdScope
+                :param template_key: The name of the metadata template
+        Example: "properties"
+                :type template_key: str
+                :param request_body: Request body of createFolderMetadataById method
+                :type request_body: Dict[str, str]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -311,45 +327,48 @@ class FolderMetadataManager:
         scope: UpdateFolderMetadataByIdScope,
         template_key: str,
         request_body: List[UpdateFolderMetadataByIdRequestBody],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> MetadataFull:
         """
-        Updates a piece of metadata on a folder.
+                Updates a piece of metadata on a folder.
 
-        The metadata instance can only be updated if the template has already been
-
-
-        applied to the folder before. When editing metadata, only values that match
+                The metadata instance can only be updated if the template has already been
 
 
-        the metadata template schema will be accepted.
+                applied to the folder before. When editing metadata, only values that match
 
 
-        The update is applied atomically. If any errors occur during the
+                the metadata template schema will be accepted.
 
 
-        application of the operations, the metadata instance will not be changed.
+                The update is applied atomically. If any errors occur during the
 
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param scope: The scope of the metadata template
-            Example: "global"
-        :type scope: UpdateFolderMetadataByIdScope
-        :param template_key: The name of the metadata template
-            Example: "properties"
-        :type template_key: str
-        :param request_body: Request body of updateFolderMetadataById method
-        :type request_body: List[UpdateFolderMetadataByIdRequestBody]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                application of the operations, the metadata instance will not be changed.
+
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param scope: The scope of the metadata template
+        Example: "global"
+                :type scope: UpdateFolderMetadataByIdScope
+                :param template_key: The name of the metadata template
+        Example: "properties"
+                :type template_key: str
+                :param request_body: Request body of updateFolderMetadataById method
+                :type request_body: List[UpdateFolderMetadataByIdRequestBody]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -383,28 +402,31 @@ class FolderMetadataManager:
         folder_id: str,
         scope: DeleteFolderMetadataByIdScope,
         template_key: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a piece of folder metadata.
-        :param folder_id: The unique identifier that represent a folder.
-            The ID for any folder can be determined
-            by visiting this folder in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/folder/123`
-            the `folder_id` is `123`.
-            The root folder of a Box account is
-            always represented by the ID `0`.
-            Example: "12345"
-        :type folder_id: str
-        :param scope: The scope of the metadata template
-            Example: "global"
-        :type scope: DeleteFolderMetadataByIdScope
-        :param template_key: The name of the metadata template
-            Example: "properties"
-        :type template_key: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Deletes a piece of folder metadata.
+                :param folder_id: The unique identifier that represent a folder.
+
+        The ID for any folder can be determined
+        by visiting this folder in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/folder/123`
+        the `folder_id` is `123`.
+
+        The root folder of a Box account is
+        always represented by the ID `0`.
+        Example: "12345"
+                :type folder_id: str
+                :param scope: The scope of the metadata template
+        Example: "global"
+                :type scope: DeleteFolderMetadataByIdScope
+                :param template_key: The name of the metadata template
+        Example: "properties"
+                :type template_key: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

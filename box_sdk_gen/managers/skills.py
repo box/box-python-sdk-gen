@@ -56,6 +56,7 @@ class UpdateBoxSkillCardsOnFileRequestBodyOpField(str, Enum):
 class UpdateBoxSkillCardsOnFileRequestBody(BaseObject):
     def __init__(
         self,
+        *,
         op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField] = None,
         path: Optional[str] = None,
         value: Optional[
@@ -69,12 +70,12 @@ class UpdateBoxSkillCardsOnFileRequestBody(BaseObject):
         **kwargs
     ):
         """
-        :param op: `replace`
-        :type op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField], optional
-        :param path: The JSON Path that represents the card to replace. In most cases
-            this will be in the format `/cards/{index}` where `index` is the
-            zero-indexed position of the card in the list of cards.
-        :type path: Optional[str], optional
+                :param op: `replace`, defaults to None
+                :type op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField], optional
+                :param path: The JSON Path that represents the card to replace. In most cases
+        this will be in the format `/cards/{index}` where `index` is the
+        zero-indexed position of the card in the list of cards., defaults to None
+                :type path: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.op = op
@@ -93,6 +94,7 @@ class UpdateAllSkillCardsOnFileStatus(str, Enum):
 class UpdateAllSkillCardsOnFileMetadata(BaseObject):
     def __init__(
         self,
+        *,
         cards: Optional[
             List[
                 Union[
@@ -106,7 +108,7 @@ class UpdateAllSkillCardsOnFileMetadata(BaseObject):
         **kwargs
     ):
         """
-        :param cards: A list of Box Skill cards to apply to this file.
+        :param cards: A list of Box Skill cards to apply to this file., defaults to None
         :type cards: Optional[List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]], optional
         """
         super().__init__(**kwargs)
@@ -122,14 +124,15 @@ class UpdateAllSkillCardsOnFileFile(BaseObject):
 
     def __init__(
         self,
+        *,
         type: Optional[UpdateAllSkillCardsOnFileFileTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: `file`
+        :param type: `file`, defaults to None
         :type type: Optional[UpdateAllSkillCardsOnFileFileTypeField], optional
-        :param id: The ID of the file
+        :param id: The ID of the file, defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -146,14 +149,15 @@ class UpdateAllSkillCardsOnFileFileVersion(BaseObject):
 
     def __init__(
         self,
+        *,
         type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField] = None,
         id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: `file_version`
+        :param type: `file_version`, defaults to None
         :type type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField], optional
-        :param id: The ID of the file version
+        :param id: The ID of the file version, defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -163,12 +167,12 @@ class UpdateAllSkillCardsOnFileFileVersion(BaseObject):
 
 class UpdateAllSkillCardsOnFileUsage(BaseObject):
     def __init__(
-        self, unit: Optional[str] = None, value: Optional[float] = None, **kwargs
+        self, *, unit: Optional[str] = None, value: Optional[float] = None, **kwargs
     ):
         """
-        :param unit: `file`
+        :param unit: `file`, defaults to None
         :type unit: Optional[str], optional
-        :param value: `1`
+        :param value: `1`, defaults to None
         :type value: Optional[float], optional
         """
         super().__init__(**kwargs)
@@ -179,8 +183,9 @@ class UpdateAllSkillCardsOnFileUsage(BaseObject):
 class SkillsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -188,20 +193,21 @@ class SkillsManager:
         self.network_session = network_session
 
     def get_box_skill_cards_on_file(
-        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, file_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SkillCardsMetadata:
         """
-        List the Box Skills metadata cards that are attached to a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                List the Box Skills metadata cards that are attached to a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -236,22 +242,24 @@ class SkillsManager:
                 StatusSkillCard,
             ]
         ],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SkillCardsMetadata:
         """
-        Applies one or more Box Skills metadata cards to a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param cards: A list of Box Skill cards to apply to this file.
-        :type cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Applies one or more Box Skills metadata cards to a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param cards: A list of Box Skill cards to apply to this file.
+                :type cards: List[Union[KeywordSkillCard, TimelineSkillCard, TranscriptSkillCard, StatusSkillCard]]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -282,22 +290,24 @@ class SkillsManager:
         self,
         file_id: str,
         request_body: List[UpdateBoxSkillCardsOnFileRequestBody],
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SkillCardsMetadata:
         """
-        Updates one or more Box Skills metadata cards to a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param request_body: Request body of updateBoxSkillCardsOnFile method
-        :type request_body: List[UpdateBoxSkillCardsOnFileRequestBody]
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Updates one or more Box Skills metadata cards to a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param request_body: Request body of updateBoxSkillCardsOnFile method
+                :type request_body: List[UpdateBoxSkillCardsOnFileRequestBody]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -324,20 +334,21 @@ class SkillsManager:
         return deserialize(response.data, SkillCardsMetadata)
 
     def delete_box_skill_cards_from_file(
-        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, file_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes any Box Skills cards metadata from a file.
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Removes any Box Skills cards metadata from a file.
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -367,34 +378,36 @@ class SkillsManager:
         status: UpdateAllSkillCardsOnFileStatus,
         metadata: UpdateAllSkillCardsOnFileMetadata,
         file: UpdateAllSkillCardsOnFileFile,
+        *,
         file_version: Optional[UpdateAllSkillCardsOnFileFileVersion] = None,
         usage: Optional[UpdateAllSkillCardsOnFileUsage] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        An alternative method that can be used to overwrite and update all Box Skill
+                An alternative method that can be used to overwrite and update all Box Skill
 
-        metadata cards on a file.
+                metadata cards on a file.
 
-        :param skill_id: The ID of the skill to apply this metadata for.
-            Example: "33243242"
-        :type skill_id: str
-        :param status: Defines the status of this invocation. Set this to `success` when setting Skill cards.
-        :type status: UpdateAllSkillCardsOnFileStatus
-        :param metadata: The metadata to set for this skill. This is a list of
-            Box Skills cards. These cards will overwrite any existing Box
-            skill cards on the file.
-        :type metadata: UpdateAllSkillCardsOnFileMetadata
-        :param file: The file to assign the cards to.
-        :type file: UpdateAllSkillCardsOnFileFile
-        :param file_version: The optional file version to assign the cards to.
-        :type file_version: Optional[UpdateAllSkillCardsOnFileFileVersion], optional
-        :param usage: A descriptor that defines what items are affected by this call.
-            Set this to the default values when setting a card to a `success`
-            state, and leave it out in most other situations.
-        :type usage: Optional[UpdateAllSkillCardsOnFileUsage], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param skill_id: The ID of the skill to apply this metadata for.
+        Example: "33243242"
+                :type skill_id: str
+                :param status: Defines the status of this invocation. Set this to `success` when setting Skill cards.
+                :type status: UpdateAllSkillCardsOnFileStatus
+                :param metadata: The metadata to set for this skill. This is a list of
+        Box Skills cards. These cards will overwrite any existing Box
+        skill cards on the file.
+                :type metadata: UpdateAllSkillCardsOnFileMetadata
+                :param file: The file to assign the cards to.
+                :type file: UpdateAllSkillCardsOnFileFile
+                :param file_version: The optional file version to assign the cards to., defaults to None
+                :type file_version: Optional[UpdateAllSkillCardsOnFileFileVersion], optional
+                :param usage: A descriptor that defines what items are affected by this call.
+
+        Set this to the default values when setting a card to a `success`
+        state, and leave it out in most other situations., defaults to None
+                :type usage: Optional[UpdateAllSkillCardsOnFileUsage], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

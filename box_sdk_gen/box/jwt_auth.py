@@ -130,6 +130,7 @@ class JwtConfigFile(BaseObject):
     def __init__(
         self,
         box_app_settings: JwtConfigAppSettings,
+        *,
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
         **kwargs
@@ -137,9 +138,9 @@ class JwtConfigFile(BaseObject):
         """
         :param box_app_settings: App settings
         :type box_app_settings: JwtConfigAppSettings
-        :param enterprise_id: Enterprise ID
+        :param enterprise_id: Enterprise ID, defaults to None
         :type enterprise_id: Optional[str], optional
-        :param user_id: User ID
+        :param user_id: User ID, defaults to None
         :type user_id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -156,10 +157,11 @@ class JWTConfig:
         jwt_key_id: str,
         private_key: str,
         private_key_passphrase: str,
+        *,
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
         algorithm: Optional[JwtAlgorithm] = JwtAlgorithm.RS256.value,
-        token_storage: TokenStorage = None,
+        token_storage: TokenStorage = None
     ):
         """
         :param client_id: App client ID
@@ -172,9 +174,9 @@ class JWTConfig:
         :type private_key: str
         :param private_key_passphrase: Passphrase
         :type private_key_passphrase: str
-        :param enterprise_id: Enterprise ID
+        :param enterprise_id: Enterprise ID, defaults to None
         :type enterprise_id: Optional[str], optional
-        :param user_id: User ID
+        :param user_id: User ID, defaults to None
         :type user_id: Optional[str], optional
         """
         if token_storage is None:
@@ -191,7 +193,7 @@ class JWTConfig:
 
     @staticmethod
     def from_config_json_string(
-        config_json_string: str, token_storage: Optional[TokenStorage] = None
+        config_json_string: str, *, token_storage: Optional[TokenStorage] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a string content of JSON file downloaded from the Box Developer Console.
@@ -200,7 +202,7 @@ class JWTConfig:
 
         :param config_json_string: String content of JSON file containing the configuration.
         :type config_json_string: str
-        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.g
+        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.g, defaults to None
         :type token_storage: Optional[TokenStorage], optional
         """
         config_json: JwtConfigFile = deserialize(
@@ -232,7 +234,7 @@ class JWTConfig:
 
     @staticmethod
     def from_config_file(
-        config_file_path: str, token_storage: Optional[TokenStorage] = None
+        config_file_path: str, *, token_storage: Optional[TokenStorage] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a JSON file downloaded from the Box Developer Console.
@@ -241,11 +243,13 @@ class JWTConfig:
 
         :param config_file_path: Path to the JSON file containing the configuration.
         :type config_file_path: str
-        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.
+        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: Optional[TokenStorage], optional
         """
         config_json_string: str = read_text_from_file(config_file_path)
-        return JWTConfig.from_config_json_string(config_json_string, token_storage)
+        return JWTConfig.from_config_json_string(
+            config_json_string, token_storage=token_storage
+        )
 
 
 class BoxJWTAuth(Authentication):
@@ -271,11 +275,11 @@ class BoxJWTAuth(Authentication):
         )
 
     def refresh_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Get new access token using JWT auth.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         if is_browser():
@@ -309,7 +313,7 @@ class BoxJWTAuth(Authentication):
             else AuthorizationManager()
         )
         token: AccessToken = auth_manager.request_access_token(
-            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
             assertion=assertion,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -318,26 +322,28 @@ class BoxJWTAuth(Authentication):
         return token
 
     def retrieve_token(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Get the current access token. If the current access token is expired or not found, this method will attempt to refresh the token.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         old_token: Optional[AccessToken] = self.token_storage.get()
         if old_token == None:
-            new_token: AccessToken = self.refresh_token(network_session)
+            new_token: AccessToken = self.refresh_token(network_session=network_session)
             return new_token
         return old_token
 
     def retrieve_authorization_header(
-        self, network_session: Optional[NetworkSession] = None
+        self, *, network_session: Optional[NetworkSession] = None
     ) -> str:
-        token: AccessToken = self.retrieve_token(network_session)
+        token: AccessToken = self.retrieve_token(network_session=network_session)
         return ''.join(['Bearer ', token.access_token])
 
-    def as_user(self, user_id: str, token_storage: TokenStorage = None) -> 'BoxJWTAuth':
+    def as_user(
+        self, user_id: str, *, token_storage: TokenStorage = None
+    ) -> 'BoxJWTAuth':
         """
         Create a new BoxJWTAuth instance that uses the provided user ID as the subject of the JWT assertion.
 
@@ -351,7 +357,7 @@ class BoxJWTAuth(Authentication):
 
         :param user_id: The id of the user to authenticate
         :type user_id: str
-        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory.
+        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: TokenStorage, optional
         """
         if token_storage is None:
@@ -370,13 +376,13 @@ class BoxJWTAuth(Authentication):
         return new_auth
 
     def as_enterprise(
-        self, user_id: str, token_storage: TokenStorage = None
+        self, user_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxJWTAuth':
         """
         Create a new BoxJWTAuth instance that uses the provided enterprise ID as the subject of the JWT assertion.
         :param user_id: The id of the enterprise to authenticate
         :type user_id: str
-        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory.
+        :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: TokenStorage, optional
         """
         if token_storage is None:
@@ -397,19 +403,20 @@ class BoxJWTAuth(Authentication):
     def downscope_token(
         self,
         scopes: List[str],
+        *,
         resource: Optional[str] = None,
         shared_link: Optional[str] = None,
-        network_session: Optional[NetworkSession] = None,
+        network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
         Downscope access token to the provided scopes. Returning a new access token with the provided scopes, with the original access token unchanged.
         :param scopes: The scope(s) to apply to the resulting token.
         :type scopes: List[str]
-        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item. The resource should be a full URL to an item, e.g. https://api.box.com/2.0/files/123456.
+        :param resource: The file or folder to get a downscoped token for. If None and shared_link None, the resulting token will not be scoped down to just a single item. The resource should be a full URL to an item, e.g. https://api.box.com/2.0/files/123456., defaults to None
         :type resource: Optional[str], optional
-        :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item.
+        :param shared_link: The shared link to get a downscoped token for. If None and item None, the resulting token will not be scoped down to just a single item., defaults to None
         :type shared_link: Optional[str], optional
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         token: Optional[AccessToken] = self.token_storage.get()
@@ -423,7 +430,7 @@ class BoxJWTAuth(Authentication):
             else AuthorizationManager()
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            grant_type=PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
             subject_token=token.access_token,
             subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
             resource=resource,
@@ -432,10 +439,10 @@ class BoxJWTAuth(Authentication):
         )
         return downscoped_token
 
-    def revoke_token(self, network_session: Optional[NetworkSession] = None) -> None:
+    def revoke_token(self, *, network_session: Optional[NetworkSession] = None) -> None:
         """
         Revoke the current access token and remove it from token storage.
-        :param network_session: An object to keep network session state
+        :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
         old_token: Optional[AccessToken] = self.token_storage.get()
@@ -447,6 +454,8 @@ class BoxJWTAuth(Authentication):
             else AuthorizationManager()
         )
         auth_manager.revoke_access_token(
-            self.config.client_id, self.config.client_secret, old_token.access_token
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret,
+            token=old_token.access_token,
         )
         return self.token_storage.clear()

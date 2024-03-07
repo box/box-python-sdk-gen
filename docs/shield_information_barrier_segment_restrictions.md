@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segment_restrictions_id -->
 
 ```python
-client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restriction_by_id(shield_information_barrier_segment_restriction_id=segment_restriction_id)
+client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restriction_by_id(segment_restriction_id)
 ```
 
 ### Arguments
@@ -48,7 +48,7 @@ See the endpoint docs at
 <!-- sample delete_shield_information_barrier_segment_restrictions_id -->
 
 ```python
-client.shield_information_barrier_segment_restrictions.delete_shield_information_barrier_segment_restriction_by_id(shield_information_barrier_segment_restriction_id=segment_restriction_id)
+client.shield_information_barrier_segment_restrictions.delete_shield_information_barrier_segment_restriction_by_id(segment_restriction_id)
 ```
 
 ### Arguments
@@ -77,7 +77,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segment_restrictions -->
 
 ```python
-client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restrictions(shield_information_barrier_segment_id=segment_id)
+client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restrictions(segment_id)
 ```
 
 ### Arguments
@@ -111,7 +111,7 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segment_restrictions -->
 
 ```python
-client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(type=CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value, shield_information_barrier_segment=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(id=segment_id, type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), restricted_segment=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment(id=segment_to_restrict_id, type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value))
+client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value, CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(id=segment_id, type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment(id=segment_to_restrict_id, type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value))
 ```
 
 ### Arguments

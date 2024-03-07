@@ -24,7 +24,7 @@ See the endpoint docs at
 <!-- sample get_shared_items#web_links -->
 
 ```python
-user_client.shared_links_web_links.find_web_link_for_shared_link(boxapi=''.join(['shared_link=', web_link_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+user_client.shared_links_web_links.find_web_link_for_shared_link(''.join(['shared_link=', web_link_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
 ```
 
 ### Arguments
@@ -57,7 +57,7 @@ See the endpoint docs at
 <!-- sample get_web_links_id#get_shared_link -->
 
 ```python
-client.shared_links_web_links.get_shared_link_for_web_link(web_link_id=web_link_id, fields='shared_link')
+client.shared_links_web_links.get_shared_link_for_web_link(web_link_id, 'shared_link')
 ```
 
 ### Arguments
@@ -88,7 +88,7 @@ See the endpoint docs at
 <!-- sample put_web_links_id#add_shared_link -->
 
 ```python
-client.shared_links_web_links.add_share_link_to_web_link(web_link_id=web_link_id, shared_link=AddShareLinkToWebLinkSharedLink(access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value, password='Secret123@'), fields='shared_link')
+client.shared_links_web_links.add_share_link_to_web_link(web_link_id, 'shared_link', shared_link=AddShareLinkToWebLinkSharedLink(access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value, password='Secret123@'))
 ```
 
 ### Arguments
@@ -121,7 +121,7 @@ See the endpoint docs at
 <!-- sample put_web_links_id#update_shared_link -->
 
 ```python
-client.shared_links_web_links.update_shared_link_on_web_link(web_link_id=web_link_id, shared_link=UpdateSharedLinkOnWebLinkSharedLink(access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value), fields='shared_link')
+client.shared_links_web_links.update_shared_link_on_web_link(web_link_id, 'shared_link', shared_link=UpdateSharedLinkOnWebLinkSharedLink(access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value))
 ```
 
 ### Arguments

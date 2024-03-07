@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample get_collaborations_id -->
 
 ```python
-client.user_collaborations.get_collaboration_by_id(collaboration_id=collaboration_id)
+client.user_collaborations.get_collaboration_by_id(collaboration_id)
 ```
 
 ### Arguments
@@ -49,7 +49,7 @@ See the endpoint docs at
 <!-- sample put_collaborations_id -->
 
 ```python
-client.user_collaborations.update_collaboration_by_id(collaboration_id=collaboration_id, role=UpdateCollaborationByIdRole.VIEWER.value)
+client.user_collaborations.update_collaboration_by_id(collaboration_id, UpdateCollaborationByIdRole.VIEWER.value)
 ```
 
 ### Arguments
@@ -87,7 +87,7 @@ See the endpoint docs at
 <!-- sample delete_collaborations_id -->
 
 ```python
-client.user_collaborations.delete_collaboration_by_id(collaboration_id=collaboration_id)
+client.user_collaborations.delete_collaboration_by_id(collaboration_id)
 ```
 
 ### Arguments
@@ -130,7 +130,7 @@ See the endpoint docs at
 <!-- sample post_collaborations -->
 
 ```python
-client.user_collaborations.create_collaboration(item=CreateCollaborationItem(type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id), accessible_by=CreateCollaborationAccessibleBy(type=CreateCollaborationAccessibleByTypeField.USER.value, login=user_login), role=CreateCollaborationRole.EDITOR.value)
+client.user_collaborations.create_collaboration(CreateCollaborationItem(type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id), CreateCollaborationAccessibleBy(type=CreateCollaborationAccessibleByTypeField.USER.value, login=user_login), CreateCollaborationRole.EDITOR.value)
 ```
 
 ### Arguments

@@ -43,7 +43,7 @@ def testCreateUpdateGetDeleteTaskAssignment():
     file: FileFull = upload_new_file()
     date: str = '2035-01-01T00:00:00Z'
     task: Task = client.tasks.create_task(
-        item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
+        CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
         message='test message',
         due_at=date,
@@ -53,26 +53,24 @@ def testCreateUpdateGetDeleteTaskAssignment():
     assert task.item.id == file.id
     current_user: UserFull = client.users.get_user_me()
     task_assignment: TaskAssignment = client.task_assignments.create_task_assignment(
-        task=CreateTaskAssignmentTask(
+        CreateTaskAssignmentTask(
             type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id
         ),
-        assign_to=CreateTaskAssignmentAssignTo(id=current_user.id),
+        CreateTaskAssignmentAssignTo(id=current_user.id),
     )
     assert task_assignment.item.id == file.id
     assert task_assignment.assigned_to.id == current_user.id
     task_assignment_by_id: TaskAssignment = (
-        client.task_assignments.get_task_assignment_by_id(
-            task_assignment_id=task_assignment.id
-        )
+        client.task_assignments.get_task_assignment_by_id(task_assignment.id)
     )
     assert task_assignment_by_id.id == task_assignment.id
     task_assignments_on_task: TaskAssignments = (
-        client.task_assignments.get_task_assignments(task_id=task.id)
+        client.task_assignments.get_task_assignments(task.id)
     )
     assert task_assignments_on_task.total_count == 1
     updated_task_assignment: TaskAssignment = (
         client.task_assignments.update_task_assignment_by_id(
-            task_assignment_id=task_assignment.id,
+            task_assignment.id,
             message='updated message',
             resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value,
         )
@@ -80,7 +78,5 @@ def testCreateUpdateGetDeleteTaskAssignment():
     assert updated_task_assignment.message == 'updated message'
     assert to_string(updated_task_assignment.resolution_state) == 'approved'
     with pytest.raises(Exception):
-        client.task_assignments.delete_task_assignment_by_id(
-            task_assignment_id=task_assignment.id
-        )
-    client.files.delete_file_by_id(file_id=file.id)
+        client.task_assignments.delete_task_assignment_by_id(task_assignment.id)
+    client.files.delete_file_by_id(file.id)

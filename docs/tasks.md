@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample get_files_id_tasks -->
 
 ```python
-client.tasks.get_file_tasks(file_id=file.id)
+client.tasks.get_file_tasks(file.id)
 ```
 
 ### Arguments
@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample post_tasks -->
 
 ```python
-client.tasks.create_task(item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id), action=CreateTaskAction.REVIEW.value, message='test message', due_at=date, completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value)
+client.tasks.create_task(CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id), action=CreateTaskAction.REVIEW.value, message='test message', due_at=date, completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value)
 ```
 
 ### Arguments
@@ -87,7 +87,7 @@ See the endpoint docs at
 <!-- sample get_tasks_id -->
 
 ```python
-client.tasks.get_task_by_id(task_id=task.id)
+client.tasks.get_task_by_id(task.id)
 ```
 
 ### Arguments
@@ -116,7 +116,7 @@ See the endpoint docs at
 <!-- sample put_tasks_id -->
 
 ```python
-client.tasks.update_task_by_id(task_id=task.id, message='updated message')
+client.tasks.update_task_by_id(task.id, message='updated message')
 ```
 
 ### Arguments
@@ -152,7 +152,7 @@ See the endpoint docs at
 <!-- sample delete_tasks_id -->
 
 ```python
-client.tasks.delete_task_by_id(task_id=task.id)
+client.tasks.delete_task_by_id(task.id)
 ```
 
 ### Arguments

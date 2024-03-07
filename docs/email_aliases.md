@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample get_users_id_email_aliases -->
 
 ```python
-client.email_aliases.get_user_email_aliases(user_id=new_user.id)
+client.email_aliases.get_user_email_aliases(new_user.id)
 ```
 
 ### Arguments
@@ -45,7 +45,7 @@ See the endpoint docs at
 <!-- sample post_users_id_email_aliases -->
 
 ```python
-client.email_aliases.create_user_email_alias(user_id=new_user.id, email=new_alias_email)
+client.email_aliases.create_user_email_alias(new_user.id, new_alias_email)
 ```
 
 ### Arguments
@@ -75,7 +75,7 @@ See the endpoint docs at
 <!-- sample delete_users_id_email_aliases_id -->
 
 ```python
-client.email_aliases.delete_user_email_alias_by_id(user_id=new_user.id, email_alias_id=new_alias.id)
+client.email_aliases.delete_user_email_alias_by_id(new_user.id, new_alias.id)
 ```
 
 ### Arguments

@@ -54,8 +54,7 @@ def get_or_create_storage_policy_assignment(
 ) -> StoragePolicyAssignment:
     storage_policy_assignments: StoragePolicyAssignments = (
         client.storage_policy_assignments.get_storage_policy_assignments(
-            resolved_for_type=GetStoragePolicyAssignmentsResolvedForType.USER.value,
-            resolved_for_id=user_id,
+            GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id
         )
     )
     if len(storage_policy_assignments.entries) > 0:
@@ -63,11 +62,11 @@ def get_or_create_storage_policy_assignment(
             return storage_policy_assignments.entries[0]
     storage_policy_assignment: StoragePolicyAssignment = (
         client.storage_policy_assignments.create_storage_policy_assignment(
-            storage_policy=CreateStoragePolicyAssignmentStoragePolicy(
+            CreateStoragePolicyAssignmentStoragePolicy(
                 id=policy_id,
                 type=CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value,
             ),
-            assigned_to=CreateStoragePolicyAssignmentAssignedTo(
+            CreateStoragePolicyAssignmentAssignedTo(
                 id=user_id,
                 type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value,
             ),
@@ -80,7 +79,7 @@ def testGetStoragePolicyAssignments():
     client: BoxClient = get_default_client_as_user(admin_user_id)
     user_name: str = get_uuid()
     new_user: UserFull = client.users.create_user(
-        name=user_name, is_platform_access_only=True
+        user_name, is_platform_access_only=True
     )
     storage_policies: StoragePolicies = client.storage_policies.get_storage_policies()
     storage_policy_1: StoragePolicy = storage_policies.entries[0]
@@ -95,14 +94,14 @@ def testGetStoragePolicyAssignments():
     assert storage_policy_assignment.assigned_to.id == new_user.id
     get_storage_policy_assignment: StoragePolicyAssignment = (
         client.storage_policy_assignments.get_storage_policy_assignment_by_id(
-            storage_policy_assignment_id=storage_policy_assignment.id
+            storage_policy_assignment.id
         )
     )
     assert get_storage_policy_assignment.id == storage_policy_assignment.id
     updated_storage_policy_assignment: StoragePolicyAssignment = (
         client.storage_policy_assignments.update_storage_policy_assignment_by_id(
-            storage_policy_assignment_id=storage_policy_assignment.id,
-            storage_policy=UpdateStoragePolicyAssignmentByIdStoragePolicy(
+            storage_policy_assignment.id,
+            UpdateStoragePolicyAssignmentByIdStoragePolicy(
                 id=storage_policy_2.id,
                 type=UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value,
             ),
@@ -110,6 +109,6 @@ def testGetStoragePolicyAssignments():
     )
     assert updated_storage_policy_assignment.storage_policy.id == storage_policy_2.id
     client.storage_policy_assignments.delete_storage_policy_assignment_by_id(
-        storage_policy_assignment_id=storage_policy_assignment.id
+        storage_policy_assignment.id
     )
-    client.users.delete_user_by_id(user_id=new_user.id)
+    client.users.delete_user_by_id(new_user.id)

@@ -24,4 +24,4 @@ def testChunkedUpload():
     assert uploaded_file.name == file_name
     assert uploaded_file.size == file_size
     assert uploaded_file.parent.id == parent_folder_id
-    client.files.delete_file_by_id(file_id=uploaded_file.id)
+    client.files.delete_file_by_id(uploaded_file.id)

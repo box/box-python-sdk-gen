@@ -34,25 +34,25 @@ def testShieldInformationBarrierSegments():
     segment_description: str = 'barrier segment description'
     segment: ShieldInformationBarrierSegment = (
         client.shield_information_barrier_segments.create_shield_information_barrier_segment(
-            shield_information_barrier=ShieldInformationBarrierBase(
+            ShieldInformationBarrierBase(
                 id=barrier_id,
                 type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
             ),
-            name=segment_name,
+            segment_name,
             description=segment_description,
         )
     )
     assert segment.name == segment_name
     segments: ShieldInformationBarrierSegments = (
         client.shield_information_barrier_segments.get_shield_information_barrier_segments(
-            shield_information_barrier_id=barrier_id
+            barrier_id
         )
     )
     assert len(segments.entries) > 0
     segment_id: str = segment.id
     segment_from_api: ShieldInformationBarrierSegment = (
         client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(
-            shield_information_barrier_segment_id=segment_id
+            segment_id
         )
     )
     assert to_string(segment_from_api.type) == 'shield_information_barrier_segment'
@@ -63,15 +63,14 @@ def testShieldInformationBarrierSegments():
     updated_segment_description: str = 'updated barrier segment description'
     updated_segment: ShieldInformationBarrierSegment = (
         client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(
-            shield_information_barrier_segment_id=segment_id,
-            description=updated_segment_description,
+            segment_id, description=updated_segment_description
         )
     )
     assert updated_segment.description == updated_segment_description
     client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
-        shield_information_barrier_segment_id=segment_id
+        segment_id
     )
     with pytest.raises(Exception):
         client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(
-            shield_information_barrier_segment_id=segment_id
+            segment_id
         )

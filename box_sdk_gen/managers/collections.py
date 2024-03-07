@@ -38,8 +38,9 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 class CollectionsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -48,37 +49,40 @@ class CollectionsManager:
 
     def get_collections(
         self,
+        *,
         fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collections:
         """
-        Retrieves all collections for a given user.
+                Retrieves all collections for a given user.
 
-        Currently, only the `favorites` collection
+                Currently, only the `favorites` collection
 
 
-        is supported.
+                is supported.
 
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param offset: The offset of the item at which to begin the response.
+
+        Queries with offset parameter value
+        exceeding 10000 will be rejected
+        with a 400 response., defaults to None
+                :type offset: Optional[int], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -106,37 +110,40 @@ class CollectionsManager:
     def get_collection_items(
         self,
         collection_id: str,
+        *,
         fields: Optional[List[str]] = None,
         offset: Optional[int] = None,
         limit: Optional[int] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Items:
         """
-        Retrieves the files and/or folders contained within
+                Retrieves the files and/or folders contained within
 
-        this collection.
+                this collection.
 
-        :param collection_id: The ID of the collection.
-            Example: "926489"
-        :type collection_id: str
-        :param fields: A comma-separated list of attributes to include in the
-            response. This can be used to request fields that are
-            not normally returned in a standard response.
-            Be aware that specifying this parameter will have the
-            effect that none of the standard fields are returned in
-            the response unless explicitly specified, instead only
-            fields for the mini representation are returned, additional
-            to the fields requested.
-        :type fields: Optional[List[str]], optional
-        :param offset: The offset of the item at which to begin the response.
-            Queries with offset parameter value
-            exceeding 10000 will be rejected
-            with a 400 response.
-        :type offset: Optional[int], optional
-        :param limit: The maximum number of items to return per page.
-        :type limit: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param collection_id: The ID of the collection.
+        Example: "926489"
+                :type collection_id: str
+                :param fields: A comma-separated list of attributes to include in the
+        response. This can be used to request fields that are
+        not normally returned in a standard response.
+
+        Be aware that specifying this parameter will have the
+        effect that none of the standard fields are returned in
+        the response unless explicitly specified, instead only
+        fields for the mini representation are returned, additional
+        to the fields requested., defaults to None
+                :type fields: Optional[List[str]], optional
+                :param offset: The offset of the item at which to begin the response.
+
+        Queries with offset parameter value
+        exceeding 10000 will be rejected
+        with a 400 response., defaults to None
+                :type offset: Optional[int], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

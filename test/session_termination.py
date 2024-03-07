@@ -22,7 +22,7 @@ def testSessionTerminationUser():
     user: UserFull = admin_client.users.get_user_me()
     result: SessionTerminationMessage = (
         client.session_termination.terminate_users_sessions(
-            user_ids=[get_env_var('USER_ID')], user_logins=[user.login]
+            [get_env_var('USER_ID')], [user.login]
         )
     )
     assert (
@@ -33,12 +33,12 @@ def testSessionTerminationUser():
 
 def testSessionTerminationGroup():
     group_name: str = get_uuid()
-    group: GroupFull = client.groups.create_group(name=group_name)
+    group: GroupFull = client.groups.create_group(group_name)
     result: SessionTerminationMessage = (
-        client.session_termination.terminate_groups_sessions(group_ids=[group.id])
+        client.session_termination.terminate_groups_sessions([group.id])
     )
     assert (
         result.message
         == 'Request is successful, please check the admin events for the status of the job'
     )
-    client.groups.delete_group_by_id(group_id=group.id)
+    client.groups.delete_group_by_id(group.id)

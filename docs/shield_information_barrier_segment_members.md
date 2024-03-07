@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segment_members_id -->
 
 ```python
-client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_member_by_id(shield_information_barrier_segment_member_id=segment_member.id)
+client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_member_by_id(segment_member.id)
 ```
 
 ### Arguments
@@ -47,7 +47,7 @@ See the endpoint docs at
 <!-- sample delete_shield_information_barrier_segment_members_id -->
 
 ```python
-client.shield_information_barrier_segment_members.delete_shield_information_barrier_segment_member_by_id(shield_information_barrier_segment_member_id=segment_member.id)
+client.shield_information_barrier_segment_members.delete_shield_information_barrier_segment_member_by_id(segment_member.id)
 ```
 
 ### Arguments
@@ -77,7 +77,7 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segment_members -->
 
 ```python
-client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_members(shield_information_barrier_segment_id=segment.id)
+client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_members(segment.id)
 ```
 
 ### Arguments
@@ -110,7 +110,7 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segment_members -->
 
 ```python
-client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(shield_information_barrier_segment=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), user=UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
+client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
 ```
 
 ### Arguments

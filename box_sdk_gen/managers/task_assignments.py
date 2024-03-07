@@ -59,16 +59,19 @@ class CreateTaskAssignmentTask(BaseObject):
 
 
 class CreateTaskAssignmentAssignTo(BaseObject):
-    def __init__(self, id: Optional[str] = None, login: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, id: Optional[str] = None, login: Optional[str] = None, **kwargs
+    ):
         """
-        :param id: The ID of the user to assign to the
-            task.
-            To specify a user by their email
-            address use the `login` parameter.
-        :type id: Optional[str], optional
-        :param login: The email address of the user to assign to the task.
-            To specify a user by their user ID please use the `id` parameter.
-        :type login: Optional[str], optional
+                :param id: The ID of the user to assign to the
+        task.
+
+        To specify a user by their email
+        address use the `login` parameter., defaults to None
+                :type id: Optional[str], optional
+                :param login: The email address of the user to assign to the task.
+        To specify a user by their user ID please use the `id` parameter., defaults to None
+                :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -85,8 +88,9 @@ class UpdateTaskAssignmentByIdResolutionState(str, Enum):
 class TaskAssignmentsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -94,15 +98,15 @@ class TaskAssignmentsManager:
         self.network_session = network_session
 
     def get_task_assignments(
-        self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, task_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TaskAssignments:
         """
-        Lists all of the assignments for a given task.
-        :param task_id: The ID of the task.
-            Example: "12345"
-        :type task_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Lists all of the assignments for a given task.
+                :param task_id: The ID of the task.
+        Example: "12345"
+                :type task_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -130,7 +134,8 @@ class TaskAssignmentsManager:
         self,
         task: CreateTaskAssignmentTask,
         assign_to: CreateTaskAssignmentAssignTo,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TaskAssignment:
         """
         Assigns a task to a user.
@@ -144,7 +149,7 @@ class TaskAssignmentsManager:
         :type task: CreateTaskAssignmentTask
         :param assign_to: The user to assign the task to.
         :type assign_to: CreateTaskAssignmentAssignTo
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
@@ -168,15 +173,16 @@ class TaskAssignmentsManager:
     def get_task_assignment_by_id(
         self,
         task_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TaskAssignment:
         """
-        Retrieves information about a task assignment.
-        :param task_assignment_id: The ID of the task assignment.
-            Example: "12345"
-        :type task_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves information about a task assignment.
+                :param task_assignment_id: The ID of the task assignment.
+        Example: "12345"
+                :type task_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -202,28 +208,30 @@ class TaskAssignmentsManager:
     def update_task_assignment_by_id(
         self,
         task_assignment_id: str,
+        *,
         message: Optional[str] = None,
         resolution_state: Optional[UpdateTaskAssignmentByIdResolutionState] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> TaskAssignment:
         """
-        Updates a task assignment. This endpoint can be
+                Updates a task assignment. This endpoint can be
 
-        used to update the state of a task assigned to a user.
+                used to update the state of a task assigned to a user.
 
-        :param task_assignment_id: The ID of the task assignment.
-            Example: "12345"
-        :type task_assignment_id: str
-        :param message: An optional message by the assignee that can be added to the task.
-        :type message: Optional[str], optional
-        :param resolution_state: The state of the task assigned to the user.
-            * For a task with an `action` value of `complete` this can be
-            `incomplete` or `completed`.
-            * For a task with an `action` of `review` this can be
-            `incomplete`, `approved`, or `rejected`.
-        :type resolution_state: Optional[UpdateTaskAssignmentByIdResolutionState], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param task_assignment_id: The ID of the task assignment.
+        Example: "12345"
+                :type task_assignment_id: str
+                :param message: An optional message by the assignee that can be added to the task., defaults to None
+                :type message: Optional[str], optional
+                :param resolution_state: The state of the task assigned to the user.
+
+        * For a task with an `action` value of `complete` this can be
+        `incomplete` or `completed`.
+        * For a task with an `action` of `review` this can be
+        `incomplete`, `approved`, or `rejected`., defaults to None
+                :type resolution_state: Optional[UpdateTaskAssignmentByIdResolutionState], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -252,15 +260,16 @@ class TaskAssignmentsManager:
     def delete_task_assignment_by_id(
         self,
         task_assignment_id: str,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Deletes a specific task assignment.
-        :param task_assignment_id: The ID of the task assignment.
-            Example: "12345"
-        :type task_assignment_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Deletes a specific task assignment.
+                :param task_assignment_id: The ID of the task assignment.
+        Example: "12345"
+                :type task_assignment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

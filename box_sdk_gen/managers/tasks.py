@@ -48,14 +48,15 @@ class CreateTaskItem(BaseObject):
 
     def __init__(
         self,
+        *,
         id: Optional[str] = None,
         type: Optional[CreateTaskItemTypeField] = None,
         **kwargs
     ):
         """
-        :param id: The ID of the file
+        :param id: The ID of the file, defaults to None
         :type id: Optional[str], optional
-        :param type: `file`
+        :param type: `file`, defaults to None
         :type type: Optional[CreateTaskItemTypeField], optional
         """
         super().__init__(**kwargs)
@@ -86,8 +87,9 @@ class UpdateTaskByIdCompletionRule(str, Enum):
 class TasksManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -95,23 +97,24 @@ class TasksManager:
         self.network_session = network_session
 
     def get_file_tasks(
-        self, file_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, file_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Tasks:
         """
-        Retrieves a list of all the tasks for a file. This
+                Retrieves a list of all the tasks for a file. This
 
-        endpoint does not support pagination.
+                endpoint does not support pagination.
 
-        :param file_id: The unique identifier that represents a file.
-            The ID for any file can be determined
-            by visiting a file in the web application
-            and copying the ID from the URL. For example,
-            for the URL `https://*.app.box.com/files/123`
-            the `file_id` is `123`.
-            Example: "12345"
-        :type file_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -138,38 +141,41 @@ class TasksManager:
     def create_task(
         self,
         item: CreateTaskItem,
+        *,
         action: Optional[CreateTaskAction] = None,
         message: Optional[str] = None,
         due_at: Optional[str] = None,
         completion_rule: Optional[CreateTaskCompletionRule] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Task:
         """
-        Creates a single task on a file. This task is not assigned to any user and
+                Creates a single task on a file. This task is not assigned to any user and
 
-        will need to be assigned separately.
+                will need to be assigned separately.
 
-        :param item: The file to attach the task to.
-        :type item: CreateTaskItem
-        :param action: The action the task assignee will be prompted to do. Must be
-            * `review` defines an approval task that can be approved or
-            rejected
-            * `complete` defines a general task which can be completed
-        :type action: Optional[CreateTaskAction], optional
-        :param message: An optional message to include with the task.
-        :type message: Optional[str], optional
-        :param due_at: Defines when the task is due. Defaults to `null` if not
-            provided.
-        :type due_at: Optional[str], optional
-        :param completion_rule: Defines which assignees need to complete this task before the task
-            is considered completed.
-            * `all_assignees` (default) requires all assignees to review or
-            approve the the task in order for it to be considered completed.
-            * `any_assignee` accepts any one assignee to review or
-            approve the the task in order for it to be considered completed.
-        :type completion_rule: Optional[CreateTaskCompletionRule], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param item: The file to attach the task to.
+                :type item: CreateTaskItem
+                :param action: The action the task assignee will be prompted to do. Must be
+
+        * `review` defines an approval task that can be approved or
+        rejected
+        * `complete` defines a general task which can be completed, defaults to None
+                :type action: Optional[CreateTaskAction], optional
+                :param message: An optional message to include with the task., defaults to None
+                :type message: Optional[str], optional
+                :param due_at: Defines when the task is due. Defaults to `null` if not
+        provided., defaults to None
+                :type due_at: Optional[str], optional
+                :param completion_rule: Defines which assignees need to complete this task before the task
+        is considered completed.
+
+        * `all_assignees` (default) requires all assignees to review or
+        approve the the task in order for it to be considered completed.
+        * `any_assignee` accepts any one assignee to review or
+        approve the the task in order for it to be considered completed., defaults to None
+                :type completion_rule: Optional[CreateTaskCompletionRule], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -196,15 +202,15 @@ class TasksManager:
         return deserialize(response.data, Task)
 
     def get_task_by_id(
-        self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, task_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Task:
         """
-        Retrieves information about a specific task.
-        :param task_id: The ID of the task.
-            Example: "12345"
-        :type task_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Retrieves information about a specific task.
+                :param task_id: The ID of the task.
+        Example: "12345"
+                :type task_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -226,38 +232,41 @@ class TasksManager:
     def update_task_by_id(
         self,
         task_id: str,
+        *,
         action: Optional[UpdateTaskByIdAction] = None,
         message: Optional[str] = None,
         due_at: Optional[str] = None,
         completion_rule: Optional[UpdateTaskByIdCompletionRule] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Task:
         """
-        Updates a task. This can be used to update a task's configuration, or to
+                Updates a task. This can be used to update a task's configuration, or to
 
-        update its completion state.
+                update its completion state.
 
-        :param task_id: The ID of the task.
-            Example: "12345"
-        :type task_id: str
-        :param action: The action the task assignee will be prompted to do. Must be
-            * `review` defines an approval task that can be approved or
-            rejected
-            * `complete` defines a general task which can be completed
-        :type action: Optional[UpdateTaskByIdAction], optional
-        :param message: The message included with the task.
-        :type message: Optional[str], optional
-        :param due_at: When the task is due at.
-        :type due_at: Optional[str], optional
-        :param completion_rule: Defines which assignees need to complete this task before the task
-            is considered completed.
-            * `all_assignees` (default) requires all assignees to review or
-            approve the the task in order for it to be considered completed.
-            * `any_assignee` accepts any one assignee to review or
-            approve the the task in order for it to be considered completed.
-        :type completion_rule: Optional[UpdateTaskByIdCompletionRule], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param task_id: The ID of the task.
+        Example: "12345"
+                :type task_id: str
+                :param action: The action the task assignee will be prompted to do. Must be
+
+        * `review` defines an approval task that can be approved or
+        rejected
+        * `complete` defines a general task which can be completed, defaults to None
+                :type action: Optional[UpdateTaskByIdAction], optional
+                :param message: The message included with the task., defaults to None
+                :type message: Optional[str], optional
+                :param due_at: When the task is due at., defaults to None
+                :type due_at: Optional[str], optional
+                :param completion_rule: Defines which assignees need to complete this task before the task
+        is considered completed.
+
+        * `all_assignees` (default) requires all assignees to review or
+        approve the the task in order for it to be considered completed.
+        * `any_assignee` accepts any one assignee to review or
+        approve the the task in order for it to be considered completed., defaults to None
+                :type completion_rule: Optional[UpdateTaskByIdCompletionRule], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -285,15 +294,15 @@ class TasksManager:
         return deserialize(response.data, Task)
 
     def delete_task_by_id(
-        self, task_id: str, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, task_id: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-        Removes a task from a file.
-        :param task_id: The ID of the task.
-            Example: "12345"
-        :type task_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Removes a task from a file.
+                :param task_id: The ID of the task.
+        Example: "12345"
+                :type task_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}

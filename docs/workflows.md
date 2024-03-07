@@ -19,7 +19,7 @@ See the endpoint docs at
 <!-- sample get_workflows -->
 
 ```python
-admin_client.workflows.get_workflows(folder_id=workflow_folder_id)
+admin_client.workflows.get_workflows(workflow_folder_id)
 ```
 
 ### Arguments
@@ -56,7 +56,7 @@ See the endpoint docs at
 <!-- sample post_workflows_id_start -->
 
 ```python
-admin_client.workflows.start_workflow(workflow_id=workflow_to_run.id, type=StartWorkflowType.WORKFLOW_PARAMETERS.value, flow=StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id), files=[StartWorkflowFiles(type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id)], folder=StartWorkflowFolder(type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id))
+admin_client.workflows.start_workflow(workflow_to_run.id, StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id), [StartWorkflowFiles(type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id)], StartWorkflowFolder(type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id), type=StartWorkflowType.WORKFLOW_PARAMETERS.value)
 ```
 
 ### Arguments

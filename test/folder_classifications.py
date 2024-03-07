@@ -65,7 +65,7 @@ def get_or_create_second_classification(
     if current_number_of_classifications == 1:
         classification_template_with_new_classification: ClassificationTemplate = (
             client.classifications.add_classification(
-                request_body=[
+                [
                     AddClassificationRequestBody(
                         op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
                         field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -95,10 +95,10 @@ def testFolderClassifications():
     )
     folder: FolderFull = create_new_folder()
     with pytest.raises(Exception):
-        client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
+        client.folder_classifications.get_classification_on_folder(folder.id)
     created_folder_classification: Classification = (
         client.folder_classifications.add_classification_to_folder(
-            folder_id=folder.id, box_security_classification_key=classification.key
+            folder.id, box_security_classification_key=classification.key
         )
     )
     assert (
@@ -106,7 +106,7 @@ def testFolderClassifications():
         == classification.key
     )
     folder_classification: Classification = (
-        client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
+        client.folder_classifications.get_classification_on_folder(folder.id)
     )
     assert folder_classification.box_security_classification_key == classification.key
     second_classification: ClassificationTemplateFieldsOptionsField = (
@@ -114,8 +114,8 @@ def testFolderClassifications():
     )
     updated_folder_classification: Classification = (
         client.folder_classifications.update_classification_on_folder(
-            folder_id=folder.id,
-            request_body=[
+            folder.id,
+            [
                 UpdateClassificationOnFolderRequestBody(
                     op=UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value,
                     path=UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
@@ -128,7 +128,7 @@ def testFolderClassifications():
         updated_folder_classification.box_security_classification_key
         == second_classification.key
     )
-    client.folder_classifications.delete_classification_from_folder(folder_id=folder.id)
+    client.folder_classifications.delete_classification_from_folder(folder.id)
     with pytest.raises(Exception):
-        client.folder_classifications.get_classification_on_folder(folder_id=folder.id)
-    client.folders.delete_folder_by_id(folder_id=folder.id)
+        client.folder_classifications.get_classification_on_folder(folder.id)
+    client.folders.delete_folder_by_id(folder.id)

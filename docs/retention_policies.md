@@ -56,7 +56,7 @@ See the endpoint docs at
 <!-- sample post_retention_policies -->
 
 ```python
-client.retention_policies.create_retention_policy(policy_name=retention_policy_name, description=retention_description, policy_type=CreateRetentionPolicyPolicyType.FINITE.value, disposition_action=CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value, retention_length='1', retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
+client.retention_policies.create_retention_policy(retention_policy_name, CreateRetentionPolicyPolicyType.FINITE.value, CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value, description=retention_description, retention_length='1', retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
 ```
 
 ### Arguments
@@ -100,7 +100,7 @@ See the endpoint docs at
 <!-- sample get_retention_policies_id -->
 
 ```python
-client.retention_policies.get_retention_policy_by_id(retention_policy_id=retention_policy.id)
+client.retention_policies.get_retention_policy_by_id(retention_policy.id)
 ```
 
 ### Arguments
@@ -130,7 +130,7 @@ See the endpoint docs at
 <!-- sample put_retention_policies_id -->
 
 ```python
-client.retention_policies.update_retention_policy_by_id(retention_policy_id=retention_policy.id, policy_name=updated_retention_policy_name)
+client.retention_policies.update_retention_policy_by_id(retention_policy.id, policy_name=updated_retention_policy_name)
 ```
 
 ### Arguments
@@ -176,7 +176,7 @@ See the endpoint docs at
 <!-- sample delete_retention_policies_id -->
 
 ```python
-client.retention_policies.delete_retention_policy_by_id(retention_policy_id=retention_policy.id)
+client.retention_policies.delete_retention_policy_by_id(retention_policy.id)
 ```
 
 ### Arguments

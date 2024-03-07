@@ -31,15 +31,15 @@ client: BoxClient = get_default_client()
 
 def testCreateUpdateGetDeleteTask():
     files: Files = client.uploads.upload_file(
-        attributes=UploadFileAttributes(
+        UploadFileAttributes(
             name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
         ),
-        file=generate_byte_stream(10),
+        generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
     date: str = '2035-01-01T00:00:00Z'
     task: Task = client.tasks.create_task(
-        item=CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
+        CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
         message='test message',
         due_at=date,
@@ -47,13 +47,13 @@ def testCreateUpdateGetDeleteTask():
     )
     assert task.message == 'test message'
     assert task.item.id == file.id
-    task_by_id: Task = client.tasks.get_task_by_id(task_id=task.id)
+    task_by_id: Task = client.tasks.get_task_by_id(task.id)
     assert task_by_id.id == task.id
-    task_on_file: Tasks = client.tasks.get_file_tasks(file_id=file.id)
+    task_on_file: Tasks = client.tasks.get_file_tasks(file.id)
     assert task_on_file.total_count == 1
     updated_task: Task = client.tasks.update_task_by_id(
-        task_id=task.id, message='updated message'
+        task.id, message='updated message'
     )
     assert updated_task.message == 'updated message'
-    client.tasks.delete_task_by_id(task_id=task.id)
-    client.files.delete_file_by_id(file_id=file.id)
+    client.tasks.delete_task_by_id(task.id)
+    client.files.delete_file_by_id(file.id)

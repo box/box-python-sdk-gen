@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_tasks_id_assignments -->
 
 ```python
-client.task_assignments.get_task_assignments(task_id=task.id)
+client.task_assignments.get_task_assignments(task.id)
 ```
 
 ### Arguments
@@ -50,7 +50,7 @@ See the endpoint docs at
 <!-- sample post_task_assignments -->
 
 ```python
-client.task_assignments.create_task_assignment(task=CreateTaskAssignmentTask(type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id), assign_to=CreateTaskAssignmentAssignTo(id=current_user.id))
+client.task_assignments.create_task_assignment(CreateTaskAssignmentTask(type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id), CreateTaskAssignmentAssignTo(id=current_user.id))
 ```
 
 ### Arguments
@@ -80,7 +80,7 @@ See the endpoint docs at
 <!-- sample get_task_assignments_id -->
 
 ```python
-client.task_assignments.get_task_assignment_by_id(task_assignment_id=task_assignment.id)
+client.task_assignments.get_task_assignment_by_id(task_assignment.id)
 ```
 
 ### Arguments
@@ -110,7 +110,7 @@ See the endpoint docs at
 <!-- sample put_task_assignments_id -->
 
 ```python
-client.task_assignments.update_task_assignment_by_id(task_assignment_id=task_assignment.id, message='updated message', resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value)
+client.task_assignments.update_task_assignment_by_id(task_assignment.id, message='updated message', resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value)
 ```
 
 ### Arguments
@@ -142,7 +142,7 @@ See the endpoint docs at
 <!-- sample delete_task_assignments_id -->
 
 ```python
-client.task_assignments.delete_task_assignment_by_id(task_assignment_id=task_assignment.id)
+client.task_assignments.delete_task_assignment_by_id(task_assignment.id)
 ```
 
 ### Arguments

@@ -178,8 +178,9 @@ class GetEventsEventType(str, Enum):
 class EventsManager:
     def __init__(
         self,
+        *,
         auth: Optional[Authentication] = None,
-        network_session: NetworkSession = None,
+        network_session: NetworkSession = None
     ):
         if network_session is None:
             network_session = NetworkSession()
@@ -188,83 +189,87 @@ class EventsManager:
 
     def get_events(
         self,
+        *,
         stream_type: Optional[GetEventsStreamType] = None,
         stream_position: Optional[str] = None,
         limit: Optional[int] = None,
         event_type: Optional[List[GetEventsEventType]] = None,
         created_after: Optional[str] = None,
         created_before: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Events:
         """
-        Returns up to a year of past events for a given user
+                Returns up to a year of past events for a given user
 
-        or for the entire enterprise.
-
-
-        By default this returns events for the authenticated user. To retrieve events
+                or for the entire enterprise.
 
 
-        for the entire enterprise, set the `stream_type` to `admin_logs_streaming`
+                By default this returns events for the authenticated user. To retrieve events
 
 
-        for live monitoring of new events, or `admin_logs` for querying across
+                for the entire enterprise, set the `stream_type` to `admin_logs_streaming`
 
 
-        historical events. The user making the API call will
+                for live monitoring of new events, or `admin_logs` for querying across
 
 
-        need to have admin privileges, and the application will need to have the
+                historical events. The user making the API call will
 
 
-        scope `manage enterprise properties` checked.
+                need to have admin privileges, and the application will need to have the
 
-        :param stream_type: Defines the type of events that are returned
-            * `all` returns everything for a user and is the default
-            * `changes` returns events that may cause file tree changes
-              such as file updates or collaborations.
-            * `sync` is similar to `changes` but only applies to synced folders
-            * `admin_logs` returns all events for an entire enterprise and
-              requires the user making the API call to have admin permissions. This
-              stream type is for programmatically pulling from a 1 year history of
-              events across all users within the enterprise and within a
-              `created_after` and `created_before` time frame. The complete history
-              of events will be returned in chronological order based on the event
-              time, but latency will be much higher than `admin_logs_streaming`.
-            * `admin_logs_streaming` returns all events for an entire enterprise and
-              requires the user making the API call to have admin permissions. This
-              stream type is for polling for recent events across all users within
-              the enterprise. Latency will be much lower than `admin_logs`, but
-              events will not be returned in chronological order and may
-              contain duplicates.
-        :type stream_type: Optional[GetEventsStreamType], optional
-        :param stream_position: The location in the event stream to start receiving events from.
-            * `now` will return an empty list events and
-            the latest stream position for initialization.
-            * `0` or `null` will return all events.
-        :type stream_position: Optional[str], optional
-        :param limit: Limits the number of events returned
-            Note: Sometimes, the events less than the limit requested can be returned
-            even when there may be more events remaining. This is primarily done in
-            the case where a number of events have already been retrieved and these
-            retrieved events are returned rather than delaying for an unknown amount
-            of time to see if there are any more results.
-        :type limit: Optional[int], optional
-        :param event_type: A comma-separated list of events to filter by. This can only be used when
-            requesting the events with a `stream_type` of `admin_logs` or
-            `adming_logs_streaming`. For any other `stream_type` this value will be
-            ignored.
-        :type event_type: Optional[List[GetEventsEventType]], optional
-        :param created_after: The lower bound date and time to return events for. This can only be used
-            when requesting the events with a `stream_type` of `admin_logs`. For any
-            other `stream_type` this value will be ignored.
-        :type created_after: Optional[str], optional
-        :param created_before: The upper bound date and time to return events for. This can only be used
-            when requesting the events with a `stream_type` of `admin_logs`. For any
-            other `stream_type` this value will be ignored.
-        :type created_before: Optional[str], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request.
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+
+                scope `manage enterprise properties` checked.
+
+                :param stream_type: Defines the type of events that are returned
+
+        * `all` returns everything for a user and is the default
+        * `changes` returns events that may cause file tree changes
+          such as file updates or collaborations.
+        * `sync` is similar to `changes` but only applies to synced folders
+        * `admin_logs` returns all events for an entire enterprise and
+          requires the user making the API call to have admin permissions. This
+          stream type is for programmatically pulling from a 1 year history of
+          events across all users within the enterprise and within a
+          `created_after` and `created_before` time frame. The complete history
+          of events will be returned in chronological order based on the event
+          time, but latency will be much higher than `admin_logs_streaming`.
+        * `admin_logs_streaming` returns all events for an entire enterprise and
+          requires the user making the API call to have admin permissions. This
+          stream type is for polling for recent events across all users within
+          the enterprise. Latency will be much lower than `admin_logs`, but
+          events will not be returned in chronological order and may
+          contain duplicates., defaults to None
+                :type stream_type: Optional[GetEventsStreamType], optional
+                :param stream_position: The location in the event stream to start receiving events from.
+
+        * `now` will return an empty list events and
+        the latest stream position for initialization.
+        * `0` or `null` will return all events., defaults to None
+                :type stream_position: Optional[str], optional
+                :param limit: Limits the number of events returned
+
+        Note: Sometimes, the events less than the limit requested can be returned
+        even when there may be more events remaining. This is primarily done in
+        the case where a number of events have already been retrieved and these
+        retrieved events are returned rather than delaying for an unknown amount
+        of time to see if there are any more results., defaults to None
+                :type limit: Optional[int], optional
+                :param event_type: A comma-separated list of events to filter by. This can only be used when
+        requesting the events with a `stream_type` of `admin_logs` or
+        `adming_logs_streaming`. For any other `stream_type` this value will be
+        ignored., defaults to None
+                :type event_type: Optional[List[GetEventsEventType]], optional
+                :param created_after: The lower bound date and time to return events for. This can only be used
+        when requesting the events with a `stream_type` of `admin_logs`. For any
+        other `stream_type` this value will be ignored., defaults to None
+                :type created_after: Optional[str], optional
+                :param created_before: The upper bound date and time to return events for. This can only be used
+        when requesting the events with a `stream_type` of `admin_logs`. For any
+        other `stream_type` this value will be ignored., defaults to None
+                :type created_before: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -293,7 +298,7 @@ class EventsManager:
         return deserialize(response.data, Events)
 
     def get_events_with_long_polling(
-        self, extra_headers: Optional[Dict[str, Optional[str]]] = None
+        self, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RealtimeServers:
         """
         Returns a list of real-time servers that can be used for long-polling updates
@@ -369,7 +374,7 @@ class EventsManager:
 
         first.
 
-        :param extra_headers: Extra headers that will be included in the HTTP request.
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
