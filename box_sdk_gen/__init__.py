@@ -1,13 +1,13 @@
-from .box import *
+from box_sdk_gen.box import *
 
-from .internal import *
+from box_sdk_gen.internal import *
 
-from .networking import *
+from box_sdk_gen.networking import *
 
-from .serialization import *
+from box_sdk_gen.serialization import *
 
-from .schemas import *
+from box_sdk_gen.schemas import *
 
-from .managers import *
+from box_sdk_gen.managers import *
 
-from .client import *
+from box_sdk_gen.client import *
