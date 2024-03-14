@@ -16,6 +16,14 @@ from box_sdk_gen.schemas import RealtimeServer
 
 from test.commons import get_default_client
 
+from box_sdk_gen.schemas import EventSource
+
+from box_sdk_gen.schemas import File
+
+from box_sdk_gen.schemas import Folder
+
+from box_sdk_gen.schemas import User
+
 client: BoxClient = get_default_client()
 
 
@@ -35,12 +43,12 @@ def testEventUpload():
     assert len(events.entries) > 0
     event: Event = events.entries[0]
     assert to_string(event.event_type) == 'UPLOAD'
+    source: EventSource = event.source
     assert (
-        to_string(event.source.item_type) == 'file'
-        or to_string(event.source.item_type) == 'folder'
+        to_string(source.item_type) == 'file' or to_string(source.item_type) == 'folder'
     )
-    assert not event.source.item_id == ''
-    assert not event.source.item_name == ''
+    assert not source.item_id == ''
+    assert not source.item_name == ''
 
 
 def testEventDeleteUser():
@@ -51,8 +59,9 @@ def testEventDeleteUser():
     assert len(events.entries) > 0
     event: Event = events.entries[0]
     assert to_string(event.event_type) == 'DELETE_USER'
-    assert to_string(event.source.type) == 'user'
-    assert not event.source.id == ''
+    source: User = event.source
+    assert to_string(source.type) == 'user'
+    assert not source.id == ''
 
 
 def testEventSourceFileOrFolder():
@@ -61,11 +70,9 @@ def testEventSourceFileOrFolder():
     )
     assert len(events.entries) > 0
     event: Event = events.entries[0]
-    assert (
-        to_string(event.source.type) == 'file'
-        or to_string(event.source.type) == 'folder'
-    )
-    assert not event.source.id == ''
+    source: File = event.source
+    assert to_string(source.type) == 'file' or to_string(source.type) == 'folder'
+    assert not source.id == ''
 
 
 def testGetEventsWithLongPolling():
