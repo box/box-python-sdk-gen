@@ -235,7 +235,7 @@ class FileMetadataManager:
         file_id: str,
         scope: CreateFileMetadataByIdScope,
         template_key: str,
-        request_body: Dict[str, str],
+        request_body: Dict,
         *,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> MetadataFull:
@@ -266,7 +266,7 @@ class FileMetadataManager:
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of createFileMetadataById method
-                :type request_body: Dict[str, str]
+                :type request_body: Dict
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
