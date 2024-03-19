@@ -91,7 +91,7 @@ class UpdateMetadataTemplateRequestBody(BaseObject):
         self,
         op: UpdateMetadataTemplateRequestBodyOpField,
         *,
-        data: Optional[Dict[str, str]] = None,
+        data: Optional[Dict] = None,
         field_key: Optional[str] = None,
         field_keys: Optional[List[str]] = None,
         enum_option_key: Optional[str] = None,
@@ -106,7 +106,7 @@ class UpdateMetadataTemplateRequestBody(BaseObject):
                 :type op: UpdateMetadataTemplateRequestBodyOpField
                 :param data: The data for the operation. This will vary depending on the
         operation being performed., defaults to None
-                :type data: Optional[Dict[str, str]], optional
+                :type data: Optional[Dict], optional
                 :param field_key: For operations that affect a single field this defines the key of
         the field that is affected., defaults to None
                 :type field_key: Optional[str], optional

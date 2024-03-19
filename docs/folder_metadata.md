@@ -104,7 +104,7 @@ client.folder_metadata.create_folder_metadata_by_id(folder.id, CreateFolderMetad
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `Dict[str, str]`
+- request_body `Dict`
   - Request body of createFolderMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -170,7 +170,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.delete_folder_metadata_by_id(folder.id, DeleteFolderMetadataByIdScope.GLOBAL.value, 'properties')
+client.folder_metadata.delete_folder_metadata_by_id(folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE.value, template_key)
 ```
 
 ### Arguments

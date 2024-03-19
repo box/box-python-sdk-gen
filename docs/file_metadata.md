@@ -99,7 +99,7 @@ client.file_metadata.create_file_metadata_by_id(file.id, CreateFileMetadataByIdS
   - The scope of the metadata template Example: "global"
 - template_key `str`
   - The name of the metadata template Example: "properties"
-- request_body `Dict[str, str]`
+- request_body `Dict`
   - Request body of createFileMetadataById method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
