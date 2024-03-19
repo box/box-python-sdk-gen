@@ -71,8 +71,8 @@ admin_client.workflows.start_workflow(workflow_to_run.id, StartWorkflowFlow(type
   - The array of files for which the workflow should start. All files must be in the workflow's configured folder.
 - folder `StartWorkflowFolder`
   - The folder object for which the workflow is configured.
-- outcomes `Optional[List[Outcome]]`
-  - A configurable outcome the workflow should complete.
+- outcomes `Optional[List[StartWorkflowOutcomes]]`
+  - A list of outcomes required to be configured at start time.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

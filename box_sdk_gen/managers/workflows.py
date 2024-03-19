@@ -18,8 +18,6 @@ from box_sdk_gen.schemas import Workflows
 
 from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas import Outcome
-
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -110,6 +108,37 @@ class StartWorkflowFolder(BaseObject):
         self.id = id
 
 
+class StartWorkflowOutcomesTypeField(str, Enum):
+    OUTCOME = 'outcome'
+
+
+class StartWorkflowOutcomes(BaseObject):
+    _discriminator = 'type', {'outcome'}
+
+    def __init__(
+        self,
+        *,
+        id: Optional[str] = None,
+        type: Optional[StartWorkflowOutcomesTypeField] = None,
+        parameter: Optional[str] = None,
+        **kwargs
+    ):
+        """
+                :param id: The id of the outcome, defaults to None
+                :type id: Optional[str], optional
+                :param type: The type of the outcome object, defaults to None
+                :type type: Optional[StartWorkflowOutcomesTypeField], optional
+                :param parameter: This is a placeholder example for various objects that
+        can be passed in - refer to the guides section to find
+        out more information., defaults to None
+                :type parameter: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type
+        self.parameter = parameter
+
+
 class WorkflowsManager:
     def __init__(
         self,
@@ -197,7 +226,7 @@ class WorkflowsManager:
         folder: StartWorkflowFolder,
         *,
         type: Optional[StartWorkflowType] = None,
-        outcomes: Optional[List[Outcome]] = None,
+        outcomes: Optional[List[StartWorkflowOutcomes]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
@@ -220,8 +249,8 @@ class WorkflowsManager:
                 :type folder: StartWorkflowFolder
                 :param type: The type of the parameters object, defaults to None
                 :type type: Optional[StartWorkflowType], optional
-                :param outcomes: A configurable outcome the workflow should complete., defaults to None
-                :type outcomes: Optional[List[Outcome]], optional
+                :param outcomes: A list of outcomes required to be configured at start time., defaults to None
+                :type outcomes: Optional[List[StartWorkflowOutcomes]], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
