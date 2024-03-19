@@ -88,7 +88,7 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_id_id -->
 
 ```python
-client.file_metadata.create_file_metadata_by_id(file.id, CreateFileMetadataByIdScope.ENTERPRISE.value, template_key, {'testName': 1})
+client.file_metadata.create_file_metadata_by_id(file.id, CreateFileMetadataByIdScope.ENTERPRISE.value, template_key, {'floatField': 10, 'stringField': 'stringValue', 'dateField': '2035-01-02T00:00:00Z', 'enumField': 'enumValue2', 'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']})
 ```
 
 ### Arguments

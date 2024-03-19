@@ -34,6 +34,14 @@ from box_sdk_gen.schemas import SearchResultsWithSharedLinks
 
 from box_sdk_gen.managers.search import SearchForContentTrashContent
 
+from box_sdk_gen.managers.metadata_templates import (
+    CreateMetadataTemplateFieldsOptionsField,
+)
+
+from box_sdk_gen.schemas import MetadataFilter
+
+from box_sdk_gen.schemas import MetadataFilterScopeField
+
 from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import generate_byte_stream
@@ -105,3 +113,111 @@ def testGetSearch():
     )
     assert len(search_with_shared_link.entries) >= 0
     assert to_string(search_with_shared_link.type) == 'search_results_with_shared_links'
+
+
+def testMetadataFilters():
+    template_key: str = ''.join(['key', get_uuid()])
+    template: MetadataTemplate = client.metadata_templates.create_metadata_template(
+        'enterprise',
+        template_key,
+        template_key=template_key,
+        fields=[
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                key='floatField',
+                display_name='floatField',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                key='stringField',
+                display_name='stringField',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                key='dateField',
+                display_name='dateField',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                key='enumField',
+                display_name='enumField',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='enumValue1'),
+                    CreateMetadataTemplateFieldsOptionsField(key='enumValue2'),
+                ],
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                key='multiSelectField',
+                display_name='multiSelectField',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='multiSelectValue1'),
+                    CreateMetadataTemplateFieldsOptionsField(key='multiSelectValue2'),
+                ],
+            ),
+        ],
+    )
+    files: Files = client.uploads.upload_file(
+        UploadFileAttributes(
+            name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
+        ),
+        generate_byte_stream(10),
+    )
+    file: FileFull = files.entries[0]
+    metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
+        file.id,
+        CreateFileMetadataByIdScope.ENTERPRISE.value,
+        template_key,
+        {
+            'floatField': 10,
+            'stringField': 'stringValue',
+            'dateField': '2035-01-02T00:00:00Z',
+            'enumField': 'enumValue2',
+            'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
+        },
+    )
+    string_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
+        client.search.search_for_content(
+            ancestor_folder_ids=['0'],
+            mdfilters=[
+                MetadataFilter(
+                    filters={'stringField': 'stringValue'},
+                    scope=MetadataFilterScopeField.ENTERPRISE.value,
+                    template_key=template_key,
+                )
+            ],
+        )
+    )
+    assert len(string_query.entries) >= 0
+    enum_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
+        client.search.search_for_content(
+            ancestor_folder_ids=['0'],
+            mdfilters=[
+                MetadataFilter(
+                    filters={'enumField': 'enumValue2'},
+                    scope=MetadataFilterScopeField.ENTERPRISE.value,
+                    template_key=template_key,
+                )
+            ],
+        )
+    )
+    assert len(enum_query.entries) >= 0
+    multi_select_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
+        client.search.search_for_content(
+            ancestor_folder_ids=['0'],
+            mdfilters=[
+                MetadataFilter(
+                    filters={
+                        'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']
+                    },
+                    scope=MetadataFilterScopeField.ENTERPRISE.value,
+                    template_key=template_key,
+                )
+            ],
+        )
+    )
+    assert len(multi_select_query.entries) >= 0
+    client.metadata_templates.delete_metadata_template(
+        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+    )
+    client.files.delete_file_by_id(file.id)

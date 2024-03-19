@@ -249,7 +249,7 @@ See the endpoint docs at
 <!-- sample post_metadata_templates_schema -->
 
 ```python
-client.metadata_templates.create_metadata_template('enterprise', template_key, template_key=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.FLOAT.value, key='testName', display_name='testName')])
+client.metadata_templates.create_metadata_template('enterprise', template_key, template_key=template_key, fields=[CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.FLOAT.value, key='floatField', display_name='floatField'), CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.STRING.value, key='stringField', display_name='stringField'), CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.DATE.value, key='dateField', display_name='dateField'), CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.ENUM.value, key='enumField', display_name='enumField', options=[CreateMetadataTemplateFieldsOptionsField(key='enumValue1'), CreateMetadataTemplateFieldsOptionsField(key='enumValue2')]), CreateMetadataTemplateFields(type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value, key='multiSelectField', display_name='multiSelectField', options=[CreateMetadataTemplateFieldsOptionsField(key='multiSelectValue1'), CreateMetadataTemplateFieldsOptionsField(key='multiSelectValue2')])])
 ```
 
 ### Arguments
