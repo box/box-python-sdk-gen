@@ -63,7 +63,7 @@ client.file_requests.update_file_request_by_id(copied_file_request.id, title='up
   - Whether a file request submitter is required to provide their email address. When this setting is set to true, the Box UI will show an email field on the file request form. This will default to the value on the existing file request.
 - is_description_required `Optional[bool]`
   - Whether a file request submitter is required to provide a description of the files they are submitting. When this setting is set to true, the Box UI will show a description field on the file request form. This will default to the value on the existing file request.
-- expires_at `Optional[str]`
+- expires_at `Optional[DateTime]`
   - The date after which a file request will no longer accept new submissions. After this date, the `status` will automatically be set to `inactive`. This will default to the value on the existing file request.
 - if_match `Optional[str]`
   - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
@@ -137,7 +137,7 @@ client.file_requests.create_file_request_copy(file_request_id, CreateFileRequest
   - Whether a file request submitter is required to provide their email address. When this setting is set to true, the Box UI will show an email field on the file request form. This will default to the value on the existing file request.
 - is_description_required `Optional[bool]`
   - Whether a file request submitter is required to provide a description of the files they are submitting. When this setting is set to true, the Box UI will show a description field on the file request form. This will default to the value on the existing file request.
-- expires_at `Optional[str]`
+- expires_at `Optional[DateTime]`
   - The date after which a file request will no longer accept new submissions. After this date, the `status` will automatically be set to `inactive`. This will default to the value on the existing file request.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

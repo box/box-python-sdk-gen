@@ -36,6 +36,8 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class CreateWebLinkParent(BaseObject):
     def __init__(self, id: str, **kwargs):
@@ -70,7 +72,7 @@ class UpdateWebLinkByIdSharedLink(BaseObject):
         access: Optional[UpdateWebLinkByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -105,7 +107,7 @@ class UpdateWebLinkByIdSharedLink(BaseObject):
         expire. This field can only be set by
         users with paid accounts. The value must be greater than the
         current date and time., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access

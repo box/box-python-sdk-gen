@@ -38,6 +38,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class AddShareLinkToWebLinkSharedLinkAccessField(str, Enum):
     OPEN = 'open'
@@ -79,7 +81,7 @@ class AddShareLinkToWebLinkSharedLink(BaseObject):
         access: Optional[AddShareLinkToWebLinkSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[AddShareLinkToWebLinkSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -115,7 +117,7 @@ class AddShareLinkToWebLinkSharedLink(BaseObject):
         expire. This field can only be set by
         users with paid accounts. The value must be greater than the
         current date and time., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -165,7 +167,7 @@ class UpdateSharedLinkOnWebLinkSharedLink(BaseObject):
         access: Optional[UpdateSharedLinkOnWebLinkSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[
             UpdateSharedLinkOnWebLinkSharedLinkPermissionsField
         ] = None,
@@ -203,7 +205,7 @@ class UpdateSharedLinkOnWebLinkSharedLink(BaseObject):
         expire. This field can only be set by
         users with paid accounts. The value must be greater than the
         current date and time., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access

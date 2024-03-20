@@ -62,9 +62,9 @@ client.legal_hold_policies.create_legal_hold_policy(legal_hold_policy_name, desc
   - The name of the policy.
 - description `Optional[str]`
   - A description for the policy.
-- filter_started_at `Optional[str]`
+- filter_started_at `Optional[DateTime]`
   - The filter start date. When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter. Required if `is_ongoing` is set to `false`.
-- filter_ended_at `Optional[str]`
+- filter_ended_at `Optional[DateTime]`
   - The filter end date. When this policy is applied using a `custodian` legal hold assignments, it will only apply to file versions created or uploaded inside of the date range. Other assignment types, such as folders and files, will ignore the date filter. Required if `is_ongoing` is set to `false`.
 - is_ongoing `Optional[bool]`
   - Whether new assignments under this policy should continue applying to files even after initialization. When this policy is applied using a legal hold assignment, it will continue applying the policy to any new file versions even after it has been applied. For example, if a legal hold assignment is placed on a user today, and that user uploads a file tomorrow, that file will get held. This will continue until the policy is retired. Required if no filter dates are set.

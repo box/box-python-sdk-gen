@@ -1,4 +1,5 @@
 import base64
+import datetime
 import hashlib
 import os
 import uuid
@@ -276,3 +277,23 @@ def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> 
         algorithm=options.algorithm,
         headers={'kid': options.keyid},
     )
+
+
+Date = datetime.date
+DateTime = datetime.datetime
+
+
+def date_to_string(date: Date) -> str:
+    return date.isoformat()
+
+
+def date_from_string(date: str) -> Date:
+    return Date.fromisoformat(date)
+
+
+def date_time_to_string(date_time: DateTime) -> str:
+    return date_time.isoformat().replace('+00:00', 'Z')
+
+
+def date_time_from_string(date_time: str) -> DateTime:
+    return DateTime.fromisoformat(date_time.replace('Z', '+00:00'))

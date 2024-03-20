@@ -6,6 +6,8 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FileFull
 
+from box_sdk_gen.internal.utils import DateTime
+
 from box_sdk_gen.schemas import Task
 
 from box_sdk_gen.managers.tasks import CreateTaskItem
@@ -36,12 +38,14 @@ from test.commons import upload_new_file
 
 from test.commons import get_default_client
 
+from box_sdk_gen.internal.utils import date_time_from_string
+
 client: BoxClient = get_default_client()
 
 
 def testCreateUpdateGetDeleteTaskAssignment():
     file: FileFull = upload_new_file()
-    date: str = '2035-01-01T00:00:00Z'
+    date: DateTime = date_time_from_string('2035-01-01T00:00:00Z')
     task: Task = client.tasks.create_task(
         CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
