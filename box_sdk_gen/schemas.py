@@ -10,6 +10,10 @@ from typing import Dict
 
 from typing import Union
 
+from box_sdk_gen.internal.utils import DateTime
+
+from box_sdk_gen.internal.utils import Date
+
 
 class PostOAuth2TokenGrantTypeField(str, Enum):
     AUTHORIZATION_CODE = 'authorization_code'
@@ -379,7 +383,7 @@ class FileRequestUpdateRequest(BaseObject):
         status: Optional[FileRequestUpdateRequestStatusField] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -425,7 +429,7 @@ class FileRequestUpdateRequest(BaseObject):
         `inactive`.
 
         This will default to the value on the existing file request., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.title = title
@@ -472,7 +476,7 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         status: Optional[FileRequestUpdateRequestStatusField] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -520,7 +524,7 @@ class FileRequestCopyRequest(FileRequestUpdateRequest):
         `inactive`.
 
         This will default to the value on the existing file request., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
         """
         super().__init__(
             title=title,
@@ -995,7 +999,7 @@ class CollaborationAllowlistEntry(BaseObject):
         domain: Optional[str] = None,
         direction: Optional[CollaborationAllowlistEntryDirectionField] = None,
         enterprise: Optional[CollaborationAllowlistEntryEnterpriseField] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -1008,7 +1012,7 @@ class CollaborationAllowlistEntry(BaseObject):
         :param direction: The direction of the collaborations to allow., defaults to None
         :type direction: Optional[CollaborationAllowlistEntryDirectionField], optional
         :param created_at: The time the entry was created at, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1803,8 +1807,8 @@ class Group(GroupMini):
         id: str,
         type: GroupBaseTypeField,
         *,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
         **kwargs
@@ -1815,9 +1819,9 @@ class Group(GroupMini):
         :param type: `group`
         :type type: GroupBaseTypeField
         :param created_at: When the group object was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When the group object was last modified, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         :param name: The name of the group, defaults to None
         :type name: Optional[str], optional
         :param group_type: The type of the group., defaults to None
@@ -1862,8 +1866,8 @@ class GroupFull(Group):
         invitability_level: Optional[GroupFullInvitabilityLevelField] = None,
         member_viewability_level: Optional[GroupFullMemberViewabilityLevelField] = None,
         permissions: Optional[GroupFullPermissionsField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
         **kwargs
@@ -1912,9 +1916,9 @@ class GroupFull(Group):
           enterprise, defaults to None
                 :type member_viewability_level: Optional[GroupFullMemberViewabilityLevelField], optional
                 :param created_at: When the group object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the group object was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param name: The name of the group, defaults to None
                 :type name: Optional[str], optional
                 :param group_type: The type of the group., defaults to None
@@ -2746,8 +2750,8 @@ class FileVersionRetention(BaseObject):
         type: Optional[FileVersionRetentionTypeField] = None,
         file_version: Optional[FileVersionMini] = None,
         file: Optional[FileMini] = None,
-        applied_at: Optional[str] = None,
-        disposition_at: Optional[str] = None,
+        applied_at: Optional[DateTime] = None,
+        disposition_at: Optional[DateTime] = None,
         winning_retention_policy: Optional[RetentionPolicyMini] = None,
         **kwargs
     ):
@@ -2758,10 +2762,10 @@ class FileVersionRetention(BaseObject):
                 :type type: Optional[FileVersionRetentionTypeField], optional
                 :param applied_at: When this file version retention object was
         created, defaults to None
-                :type applied_at: Optional[str], optional
+                :type applied_at: Optional[DateTime], optional
                 :param disposition_at: When the retention expires on this file
         version retention, defaults to None
-                :type disposition_at: Optional[str], optional
+                :type disposition_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3250,8 +3254,8 @@ class TermsOfService(TermsOfServiceBase):
         enterprise: Optional[TermsOfServiceEnterpriseField] = None,
         tos_type: Optional[TermsOfServiceTosTypeField] = None,
         text: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -3267,9 +3271,9 @@ class TermsOfService(TermsOfServiceBase):
         empty if the `status` is set to `disabled`., defaults to None
                 :type text: Optional[str], optional
                 :param created_at: When the legal item was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal item was modified., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.status = status
@@ -3482,7 +3486,7 @@ class UploadSession(BaseObject):
         *,
         id: Optional[str] = None,
         type: Optional[UploadSessionTypeField] = None,
-        session_expires_at: Optional[str] = None,
+        session_expires_at: Optional[DateTime] = None,
         part_size: Optional[int] = None,
         total_parts: Optional[int] = None,
         num_parts_processed: Optional[int] = None,
@@ -3495,7 +3499,7 @@ class UploadSession(BaseObject):
                 :param type: `upload_session`, defaults to None
                 :type type: Optional[UploadSessionTypeField], optional
                 :param session_expires_at: The date and time when this session expires., defaults to None
-                :type session_expires_at: Optional[str], optional
+                :type session_expires_at: Optional[DateTime], optional
                 :param part_size: The  size in bytes that must be used for all parts of of the
         upload.
 
@@ -3755,8 +3759,8 @@ class User(UserMini):
         id: str,
         type: UserBaseTypeField,
         *,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         language: Optional[str] = None,
         timezone: Optional[str] = None,
         space_amount: Optional[int] = None,
@@ -3778,9 +3782,9 @@ class User(UserMini):
                 :param type: `user`
                 :type type: UserBaseTypeField
                 :param created_at: When the user object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the user object was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
@@ -3866,8 +3870,8 @@ class TrashWebLinkRestored(BaseObject):
         url: Optional[str] = None,
         parent: Optional[FolderMini] = None,
         description: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         trashed_at: Optional[str] = None,
         purged_at: Optional[str] = None,
         created_by: Optional[UserMini] = None,
@@ -3893,10 +3897,10 @@ class TrashWebLinkRestored(BaseObject):
         visible within the Box web application., defaults to None
                 :type description: Optional[str], optional
                 :param created_at: When this file was created on Box’s servers., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When this file was last updated on the Box
         servers., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: The time at which this bookmark was put in the
         trash - becomes `null` after restore., defaults to None
                 :type trashed_at: Optional[str], optional
@@ -3967,8 +3971,8 @@ class TrashFolderRestored(BaseObject):
         type: Optional[TrashFolderRestoredTypeField] = None,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[TrashFolderRestoredPathCollectionField] = None,
@@ -3976,8 +3980,8 @@ class TrashFolderRestored(BaseObject):
         modified_by: Optional[UserMini] = None,
         trashed_at: Optional[str] = None,
         purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         owned_by: Optional[UserMini] = None,
         shared_link: Optional[str] = None,
         folder_upload_email: Optional[str] = None,
@@ -4005,11 +4009,11 @@ class TrashFolderRestored(BaseObject):
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the folder was last updated. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param size: The folder size in bytes.
 
         Be careful parsing this integer as its
@@ -4023,9 +4027,9 @@ class TrashFolderRestored(BaseObject):
                 :type purged_at: Optional[str], optional
                 :param content_created_at: The date and time at which this folder was originally
         created., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this folder was last updated., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param shared_link: The shared link for this file. This will
         be `null` if a folder had been trashed, even though the original shared
         link does become active again., defaults to None
@@ -4108,8 +4112,8 @@ class TrashFileRestored(BaseObject):
         description: str,
         size: int,
         path_collection: TrashFileRestoredPathCollectionField,
-        created_at: str,
-        modified_at: str,
+        created_at: DateTime,
+        modified_at: DateTime,
         modified_by: UserMini,
         owned_by: UserMini,
         item_status: TrashFileRestoredItemStatusField,
@@ -4119,8 +4123,8 @@ class TrashFileRestored(BaseObject):
         file_version: Optional[FileVersionMini] = None,
         trashed_at: Optional[str] = None,
         purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         shared_link: Optional[str] = None,
         parent: Optional[FolderMini] = None,
@@ -4146,9 +4150,9 @@ class TrashFileRestored(BaseObject):
         get very large and cause an integer overflow.
                 :type size: int
                 :param created_at: The date and time when the file was created on Box.
-                :type created_at: str
+                :type created_at: DateTime
                 :param modified_at: The date and time when the file was last updated on Box.
-                :type modified_at: str
+                :type modified_at: DateTime
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -4169,10 +4173,10 @@ class TrashFileRestored(BaseObject):
                 :type purged_at: Optional[str], optional
                 :param content_created_at: The date and time at which this file was originally
         created, which might be before it was uploaded to Box., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this file was last updated,
         which might be before it was uploaded to Box., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param shared_link: The shared link for this file. This will
         be `null` if a file had been trashed, even though the original shared
         link does become active again., defaults to None
@@ -4283,10 +4287,10 @@ class TrashWebLink(BaseObject):
         parent: Optional[FolderMini] = None,
         description: Optional[str] = None,
         path_collection: Optional[TrashWebLinkPathCollectionField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
         owned_by: Optional[UserMini] = None,
@@ -4310,14 +4314,14 @@ class TrashWebLink(BaseObject):
         visible within the Box web application., defaults to None
                 :type description: Optional[str], optional
                 :param created_at: When this file was created on Box’s servers., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When this file was last updated on the Box
         servers., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: When this file was last moved to the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: When this file will be permanently deleted., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param shared_link: The shared link for this bookmark. This will
         be `null` if a bookmark has been trashed, since the link will no longer
         be active., defaults to None
@@ -4431,12 +4435,12 @@ class TrashFolder(BaseObject):
         *,
         etag: Optional[str] = None,
         sequence_id: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         shared_link: Optional[str] = None,
         folder_upload_email: Optional[str] = None,
         parent: Optional[FolderMini] = None,
@@ -4473,21 +4477,21 @@ class TrashFolder(BaseObject):
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the folder was last updated. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: The time at which this folder was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this folder is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this folder was originally
         created., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this folder was last updated., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param shared_link: The shared link for this folder. This will
         be `null` if a folder has been trashed, since the link will no longer
         be active., defaults to None
@@ -4606,8 +4610,8 @@ class TrashFile(BaseObject):
         description: str,
         size: int,
         path_collection: TrashFilePathCollectionField,
-        created_at: str,
-        modified_at: str,
+        created_at: DateTime,
+        modified_at: DateTime,
         modified_by: UserMini,
         owned_by: UserMini,
         item_status: TrashFileItemStatusField,
@@ -4615,10 +4619,10 @@ class TrashFile(BaseObject):
         etag: Optional[str] = None,
         name: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         shared_link: Optional[str] = None,
         parent: Optional[FolderMini] = None,
@@ -4644,9 +4648,9 @@ class TrashFile(BaseObject):
         get very large and cause an integer overflow.
                 :type size: int
                 :param created_at: The date and time when the file was created on Box.
-                :type created_at: str
+                :type created_at: DateTime
                 :param modified_at: The date and time when the file was last updated on Box.
-                :type modified_at: str
+                :type modified_at: DateTime
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -4660,16 +4664,16 @@ class TrashFile(BaseObject):
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional
                 :param trashed_at: The time at which this file was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this file is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this file was originally
         created, which might be before it was uploaded to Box., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this file was last updated,
         which might be before it was uploaded to Box., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param shared_link: The shared link for this file. This will
         be `null` if a file has been trashed, since the link will no longer
         be active., defaults to None
@@ -4715,8 +4719,8 @@ class TermsOfServiceUserStatus(BaseObject):
         tos: Optional[TermsOfServiceBase] = None,
         user: Optional[UserMini] = None,
         is_accepted: Optional[bool] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -4727,9 +4731,9 @@ class TermsOfServiceUserStatus(BaseObject):
         :param is_accepted: If the user has accepted the terms of services, defaults to None
         :type is_accepted: Optional[bool], optional
         :param created_at: When the legal item was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When the legal item was modified., defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -4782,9 +4786,9 @@ class TaskAssignment(BaseObject):
         item: Optional[FileMini] = None,
         assigned_to: Optional[UserMini] = None,
         message: Optional[str] = None,
-        completed_at: Optional[str] = None,
-        assigned_at: Optional[str] = None,
-        reminded_at: Optional[str] = None,
+        completed_at: Optional[DateTime] = None,
+        assigned_at: Optional[DateTime] = None,
+        reminded_at: Optional[DateTime] = None,
         resolution_state: Optional[TaskAssignmentResolutionStateField] = None,
         assigned_by: Optional[UserMini] = None,
         **kwargs
@@ -4800,12 +4804,12 @@ class TaskAssignment(BaseObject):
                 :type message: Optional[str], optional
                 :param completed_at: The date at which this task assignment was
         completed. This will be `null` if the task is not completed yet., defaults to None
-                :type completed_at: Optional[str], optional
+                :type completed_at: Optional[DateTime], optional
                 :param assigned_at: The date at which this task was assigned to the user., defaults to None
-                :type assigned_at: Optional[str], optional
+                :type assigned_at: Optional[DateTime], optional
                 :param reminded_at: The date at which the assigned user was reminded of this task
         assignment., defaults to None
-                :type reminded_at: Optional[str], optional
+                :type reminded_at: Optional[DateTime], optional
                 :param resolution_state: The current state of the assignment. The available states depend on
         the `action` value of the task object., defaults to None
                 :type resolution_state: Optional[TaskAssignmentResolutionStateField], optional
@@ -4865,13 +4869,13 @@ class Task(BaseObject):
         id: Optional[str] = None,
         type: Optional[TaskTypeField] = None,
         item: Optional[FileMini] = None,
-        due_at: Optional[str] = None,
+        due_at: Optional[DateTime] = None,
         action: Optional[TaskActionField] = None,
         message: Optional[str] = None,
         task_assignment_collection: Optional[TaskAssignments] = None,
         is_completed: Optional[bool] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         completion_rule: Optional[TaskCompletionRuleField] = None,
         **kwargs
     ):
@@ -4881,7 +4885,7 @@ class Task(BaseObject):
                 :param type: `task`, defaults to None
                 :type type: Optional[TaskTypeField], optional
                 :param due_at: When the task is due, defaults to None
-                :type due_at: Optional[str], optional
+                :type due_at: Optional[DateTime], optional
                 :param action: The type of task the task assignee will be prompted to
         perform., defaults to None
                 :type action: Optional[TaskActionField], optional
@@ -4890,7 +4894,7 @@ class Task(BaseObject):
                 :param is_completed: Whether the task has been completed, defaults to None
                 :type is_completed: Optional[bool], optional
                 :param created_at: When the task object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param completion_rule: Defines which assignees need to complete this task before the task
         is considered completed.
 
@@ -4998,7 +5002,7 @@ class RetentionPolicyAssignment(BaseObject):
             List[RetentionPolicyAssignmentFilterFieldsField]
         ] = None,
         assigned_by: Optional[UserMini] = None,
-        assigned_at: Optional[str] = None,
+        assigned_at: Optional[DateTime] = None,
         start_date_field: Optional[str] = None,
         **kwargs
     ):
@@ -5016,7 +5020,7 @@ class RetentionPolicyAssignment(BaseObject):
                 :type filter_fields: Optional[List[RetentionPolicyAssignmentFilterFieldsField]], optional
                 :param assigned_at: When the retention policy assignment object was
         created., defaults to None
-                :type assigned_at: Optional[str], optional
+                :type assigned_at: Optional[DateTime], optional
                 :param start_date_field: The date the retention policy assignment begins.
         If the `assigned_to` type is `metadata_template`,
         this field can be a date field's metadata attribute key id., defaults to None
@@ -5107,8 +5111,8 @@ class RetentionPolicy(RetentionPolicyMini):
         retention_type: Optional[RetentionPolicyRetentionTypeField] = None,
         status: Optional[RetentionPolicyStatusField] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         can_owner_extend_retention: Optional[bool] = None,
         are_owners_notified: Optional[bool] = None,
         custom_notification_recipients: Optional[List[UserMini]] = None,
@@ -5154,9 +5158,9 @@ class RetentionPolicy(RetentionPolicyMini):
         active again., defaults to None
                 :type status: Optional[RetentionPolicyStatusField], optional
                 :param created_at: When the retention policy object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the retention policy object was last modified., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param can_owner_extend_retention: Determines if the owner of items under the policy
         can extend the retention when the original
         retention duration is about to end., defaults to None
@@ -5278,11 +5282,11 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         status: Optional[LegalHoldPolicyStatusField] = None,
         assignment_counts: Optional[LegalHoldPolicyAssignmentCountsField] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        deleted_at: Optional[str] = None,
-        filter_started_at: Optional[str] = None,
-        filter_ended_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        deleted_at: Optional[DateTime] = None,
+        filter_started_at: Optional[DateTime] = None,
+        filter_ended_at: Optional[DateTime] = None,
         release_notes: Optional[str] = None,
         **kwargs
     ):
@@ -5306,22 +5310,22 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
                 :param assignment_counts: Counts of assignments within this a legal hold policy by item type, defaults to None
                 :type assignment_counts: Optional[LegalHoldPolicyAssignmentCountsField], optional
                 :param created_at: When the legal hold policy object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal hold policy object was modified.
         Does not update when assignments are added or removed., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param deleted_at: When the policy release request was sent. (Because
         it can take time for a policy to fully delete, this
         isn't quite the same time that the policy is fully deleted).
 
         If `null`, the policy was not deleted., defaults to None
-                :type deleted_at: Optional[str], optional
+                :type deleted_at: Optional[DateTime], optional
                 :param filter_started_at: User-specified, optional date filter applies to
         Custodian assignments only, defaults to None
-                :type filter_started_at: Optional[str], optional
+                :type filter_started_at: Optional[DateTime], optional
                 :param filter_ended_at: User-specified, optional date filter applies to
         Custodian assignments only, defaults to None
-                :type filter_ended_at: Optional[str], optional
+                :type filter_ended_at: Optional[DateTime], optional
                 :param release_notes: Optional notes about why the policy was created., defaults to None
                 :type release_notes: Optional[str], optional
         """
@@ -5413,8 +5417,8 @@ class Invite(BaseObject):
         actionable_by: Optional[UserMini] = None,
         invited_by: Optional[UserMini] = None,
         status: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -5427,9 +5431,9 @@ class Invite(BaseObject):
         :param status: The status of the invite, defaults to None
         :type status: Optional[str], optional
         :param created_at: When the invite was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When the invite was modified., defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -5462,8 +5466,8 @@ class GroupMembership(BaseObject):
         user: Optional[UserMini] = None,
         group: Optional[GroupMini] = None,
         role: Optional[GroupMembershipRoleField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -5474,9 +5478,9 @@ class GroupMembership(BaseObject):
         :param role: The role of the user in the group., defaults to None
         :type role: Optional[GroupMembershipRoleField], optional
         :param created_at: The time this membership was created., defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: The time this membership was last modified., defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -5565,14 +5569,14 @@ class FileVersion(FileVersionMini):
         *,
         name: Optional[str] = None,
         size: Optional[int] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         modified_by: Optional[UserMini] = None,
-        trashed_at: Optional[str] = None,
+        trashed_at: Optional[DateTime] = None,
         trashed_by: Optional[UserMini] = None,
-        restored_at: Optional[str] = None,
+        restored_at: Optional[DateTime] = None,
         restored_by: Optional[UserMini] = None,
-        purged_at: Optional[str] = None,
+        purged_at: Optional[DateTime] = None,
         uploader_display_name: Optional[str] = None,
         sha_1: Optional[str] = None,
         **kwargs
@@ -5587,15 +5591,15 @@ class FileVersion(FileVersionMini):
         :param size: Size of the file version in bytes, defaults to None
         :type size: Optional[int], optional
         :param created_at: When the file version object was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When the file version object was last updated, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         :param trashed_at: When the file version object was trashed., defaults to None
-        :type trashed_at: Optional[str], optional
+        :type trashed_at: Optional[DateTime], optional
         :param restored_at: When the file version was restored from the trash., defaults to None
-        :type restored_at: Optional[str], optional
+        :type restored_at: Optional[DateTime], optional
         :param purged_at: When the file version object will be permanently deleted., defaults to None
-        :type purged_at: Optional[str], optional
+        :type purged_at: Optional[DateTime], optional
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
         """
@@ -5622,14 +5626,14 @@ class FileVersionFull(FileVersion):
         version_number: Optional[str] = None,
         name: Optional[str] = None,
         size: Optional[int] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         modified_by: Optional[UserMini] = None,
-        trashed_at: Optional[str] = None,
+        trashed_at: Optional[DateTime] = None,
         trashed_by: Optional[UserMini] = None,
-        restored_at: Optional[str] = None,
+        restored_at: Optional[DateTime] = None,
         restored_by: Optional[UserMini] = None,
-        purged_at: Optional[str] = None,
+        purged_at: Optional[DateTime] = None,
         uploader_display_name: Optional[str] = None,
         sha_1: Optional[str] = None,
         **kwargs
@@ -5646,15 +5650,15 @@ class FileVersionFull(FileVersion):
         :param size: Size of the file version in bytes, defaults to None
         :type size: Optional[int], optional
         :param created_at: When the file version object was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When the file version object was last updated, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         :param trashed_at: When the file version object was trashed., defaults to None
-        :type trashed_at: Optional[str], optional
+        :type trashed_at: Optional[DateTime], optional
         :param restored_at: When the file version was restored from the trash., defaults to None
-        :type restored_at: Optional[str], optional
+        :type restored_at: Optional[DateTime], optional
         :param purged_at: When the file version object will be permanently deleted., defaults to None
-        :type purged_at: Optional[str], optional
+        :type purged_at: Optional[DateTime], optional
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
         """
@@ -5764,15 +5768,15 @@ class FileRequest(BaseObject):
         id: str,
         type: FileRequestTypeField,
         folder: FolderMini,
-        created_at: str,
-        updated_at: str,
+        created_at: DateTime,
+        updated_at: DateTime,
         *,
         title: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[FileRequestStatusField] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         url: Optional[str] = None,
         etag: Optional[str] = None,
         created_by: Optional[UserMini] = None,
@@ -5785,9 +5789,9 @@ class FileRequest(BaseObject):
                 :param type: `file_request`
                 :type type: FileRequestTypeField
                 :param created_at: The date and time when the file request was created.
-                :type created_at: str
+                :type created_at: DateTime
                 :param updated_at: The date and time when the file request was last updated.
-                :type updated_at: str
+                :type updated_at: DateTime
                 :param title: The title of file request. This is shown
         in the Box UI to users uploading files.
 
@@ -5834,7 +5838,7 @@ class FileRequest(BaseObject):
 
         After this date, the `status` will automatically be set to
         `inactive`., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param url: The generated URL for this file request. This URL can be shared
         with users to let them upload files to the associated folder., defaults to None
                 :type url: Optional[str], optional
@@ -5935,7 +5939,7 @@ class FileSharedLinkField(BaseObject):
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
         access: Optional[FileSharedLinkAccessField] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[FileSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -5987,7 +5991,7 @@ class FileSharedLinkField(BaseObject):
                 :type access: Optional[FileSharedLinkAccessField], optional
                 :param unshared_at: The date and time when this link will be unshared. This field can only be
         set by users with paid accounts., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
                 :param permissions: Defines if this link allows a user to preview, edit, and download an item.
         These permissions refer to the shared link only and
         do not supersede permissions applied to the item itself., defaults to None
@@ -6023,12 +6027,12 @@ class File(FileMini):
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[FilePathCollectionField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
         owned_by: Optional[UserMini] = None,
@@ -6059,20 +6063,20 @@ class File(FileMini):
         get very large and cause an integer overflow., defaults to None
                 :type size: Optional[int], optional
                 :param created_at: The date and time when the file was created on Box., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the file was last updated on Box., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: The time at which this file was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this file is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this file was originally
         created, which might be before it was uploaded to Box., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this file was last updated,
         which might be before it was uploaded to Box., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -6200,8 +6204,8 @@ class FileFullLockField(BaseObject):
         id: Optional[str] = None,
         type: Optional[FileFullLockTypeField] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        expired_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        expired_at: Optional[DateTime] = None,
         is_download_prevented: Optional[bool] = None,
         app_type: Optional[FileFullLockAppTypeField] = None,
         **kwargs
@@ -6212,9 +6216,9 @@ class FileFullLockField(BaseObject):
                 :param type: `lock`, defaults to None
                 :type type: Optional[FileFullLockTypeField], optional
                 :param created_at: The time this lock was created at., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param expired_at: The time this lock is to expire at, which might be in the past., defaults to None
-                :type expired_at: Optional[str], optional
+                :type expired_at: Optional[DateTime], optional
                 :param is_download_prevented: Whether or not the file can be downloaded while locked., defaults to None
                 :type is_download_prevented: Optional[bool], optional
                 :param app_type: If the lock is managed by an application rather than a user, this
@@ -6497,23 +6501,23 @@ class FileFull(File):
         is_externally_owned: Optional[bool] = None,
         has_collaborations: Optional[bool] = None,
         metadata: Optional[FileFullMetadataField] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         representations: Optional[FileFullRepresentationsField] = None,
         classification: Optional[FileFullClassificationField] = None,
         uploader_display_name: Optional[str] = None,
-        disposition_at: Optional[str] = None,
+        disposition_at: Optional[DateTime] = None,
         shared_link_permission_options: Optional[
             List[FileFullSharedLinkPermissionOptionsField]
         ] = None,
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[FilePathCollectionField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
         owned_by: Optional[UserMini] = None,
@@ -6561,9 +6565,9 @@ class FileFull(File):
                 :param has_collaborations: Specifies if this file has any other collaborators., defaults to None
                 :type has_collaborations: Optional[bool], optional
                 :param expires_at: When the file will automatically be deleted, defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param disposition_at: The retention expiration timestamp for the given file, defaults to None
-                :type disposition_at: Optional[str], optional
+                :type disposition_at: Optional[DateTime], optional
                 :param shared_link_permission_options: A list of the types of roles that user can be invited at
         when sharing this file., defaults to None
                 :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
@@ -6573,20 +6577,20 @@ class FileFull(File):
         get very large and cause an integer overflow., defaults to None
                 :type size: Optional[int], optional
                 :param created_at: The date and time when the file was created on Box., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the file was last updated on Box., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: The time at which this file was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this file is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this file was originally
         created, which might be before it was uploaded to Box., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this file was last updated,
         which might be before it was uploaded to Box., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -6779,8 +6783,8 @@ class Comment(CommentBase):
         is_reply_comment: Optional[bool] = None,
         message: Optional[str] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         item: Optional[CommentItemField] = None,
         id: Optional[str] = None,
         type: Optional[CommentBaseTypeField] = None,
@@ -6793,9 +6797,9 @@ class Comment(CommentBase):
                 :param message: The text of the comment, as provided by the user, defaults to None
                 :type message: Optional[str], optional
                 :param created_at: The time this comment was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The time this comment was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param id: The unique identifier for this comment., defaults to None
                 :type id: Optional[str], optional
                 :param type: `comment`, defaults to None
@@ -6818,8 +6822,8 @@ class CommentFull(Comment):
         is_reply_comment: Optional[bool] = None,
         message: Optional[str] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         item: Optional[CommentItemField] = None,
         id: Optional[str] = None,
         type: Optional[CommentBaseTypeField] = None,
@@ -6837,9 +6841,9 @@ class CommentFull(Comment):
                 :param message: The text of the comment, as provided by the user, defaults to None
                 :type message: Optional[str], optional
                 :param created_at: The time this comment was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The time this comment was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param id: The unique identifier for this comment., defaults to None
                 :type id: Optional[str], optional
                 :param type: `comment`, defaults to None
@@ -6971,8 +6975,8 @@ class CollaborationAllowlistExemptTarget(BaseObject):
         type: Optional[CollaborationAllowlistExemptTargetTypeField] = None,
         enterprise: Optional[CollaborationAllowlistExemptTargetEnterpriseField] = None,
         user: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -6981,9 +6985,9 @@ class CollaborationAllowlistExemptTarget(BaseObject):
         :param type: `collaboration_whitelist_exempt_target`, defaults to None
         :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
         :param created_at: The time the entry was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: The time the entry was modified, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -7034,9 +7038,9 @@ class ShieldInformationBarrierSegmentRestriction(
         restricted_segment: ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField,
         *,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
-        updated_at: Optional[str] = None,
+        updated_at: Optional[DateTime] = None,
         updated_by: Optional[UserBase] = None,
         type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField] = None,
         id: Optional[str] = None,
@@ -7052,11 +7056,11 @@ class ShieldInformationBarrierSegmentRestriction(
                 :param created_at: ISO date time string when this
         shield information barrier
         Segment Restriction object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param updated_at: ISO date time string when this
         shield information barrier segment
         Restriction was updated., defaults to None
-                :type updated_at: Optional[str], optional
+                :type updated_at: Optional[DateTime], optional
                 :param type: Shield information barrier segment restriction, defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField], optional
                 :param id: The unique identifier for the
@@ -7165,9 +7169,9 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         shield_information_barrier_segment: Optional[
             ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField
         ] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
-        updated_at: Optional[str] = None,
+        updated_at: Optional[DateTime] = None,
         updated_by: Optional[UserBase] = None,
         user: Optional[UserBase] = None,
         id: Optional[str] = None,
@@ -7180,10 +7184,10 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
                 :type shield_information_barrier_segment: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField], optional
                 :param created_at: ISO date time string when this shield
         information barrier object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param updated_at: ISO date time string when this
         shield information barrier segment Member was updated., defaults to None
-                :type updated_at: Optional[str], optional
+                :type updated_at: Optional[DateTime], optional
                 :param id: The unique identifier for the
         shield information barrier segment member, defaults to None
                 :type id: Optional[str], optional
@@ -7240,9 +7244,9 @@ class ShieldInformationBarrierSegment(BaseObject):
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
         name: Optional[str] = None,
         description: Optional[str] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
-        updated_at: Optional[str] = None,
+        updated_at: Optional[DateTime] = None,
         updated_by: Optional[UserBase] = None,
         **kwargs
     ):
@@ -7257,10 +7261,10 @@ class ShieldInformationBarrierSegment(BaseObject):
                 :type description: Optional[str], optional
                 :param created_at: ISO date time string when this shield information
         barrier object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param updated_at: ISO date time string when this
         shield information barrier segment was updated., defaults to None
-                :type updated_at: Optional[str], optional
+                :type updated_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -7322,11 +7326,11 @@ class ShieldInformationBarrier(BaseObject):
         type: Optional[ShieldInformationBarrierTypeField] = None,
         enterprise: Optional[EnterpriseBase] = None,
         status: Optional[ShieldInformationBarrierStatusField] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
-        updated_at: Optional[str] = None,
+        updated_at: Optional[DateTime] = None,
         updated_by: Optional[UserBase] = None,
-        enabled_at: Optional[str] = None,
+        enabled_at: Optional[DateTime] = None,
         enabled_by: Optional[UserBase] = None,
         **kwargs
     ):
@@ -7341,15 +7345,15 @@ class ShieldInformationBarrier(BaseObject):
                 :type status: Optional[ShieldInformationBarrierStatusField], optional
                 :param created_at: ISO date time string when this
         shield information barrier object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param created_by: The user who created this shield information barrier., defaults to None
                 :type created_by: Optional[UserBase], optional
                 :param updated_at: ISO date time string when this shield information barrier was updated., defaults to None
-                :type updated_at: Optional[str], optional
+                :type updated_at: Optional[DateTime], optional
                 :param updated_by: The user that updated this shield information barrier., defaults to None
                 :type updated_by: Optional[UserBase], optional
                 :param enabled_at: ISO date time string when this shield information barrier was enabled., defaults to None
-                :type enabled_at: Optional[str], optional
+                :type enabled_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -7410,7 +7414,7 @@ class FolderLock(BaseObject):
         id: Optional[str] = None,
         type: Optional[str] = None,
         created_by: Optional[UserBase] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         locked_operations: Optional[FolderLockLockedOperationsField] = None,
         lock_type: Optional[str] = None,
         **kwargs
@@ -7421,7 +7425,7 @@ class FolderLock(BaseObject):
                 :param type: The object type, always `folder_lock`., defaults to None
                 :type type: Optional[str], optional
                 :param created_at: When the folder lock object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param locked_operations: The operations that have been locked. Currently the `move`
         and `delete` operations cannot be locked separately, and both need to be
         set to `true`.
@@ -7469,15 +7473,15 @@ class WatermarkWatermarkField(BaseObject):
     def __init__(
         self,
         *,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
         :param created_at: When this watermark was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: When this task was modified, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.created_at = created_at
@@ -7624,7 +7628,7 @@ class Webhook(WebhookMini):
         self,
         *,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         address: Optional[str] = None,
         triggers: Optional[List[WebhookTriggersField]] = None,
         id: Optional[str] = None,
@@ -7635,7 +7639,7 @@ class Webhook(WebhookMini):
         """
                 :param created_at: A timestamp identifying the time that
         the webhook was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param address: The URL that is notified by this webhook, defaults to None
                 :type address: Optional[str], optional
                 :param triggers: An array of event names that this webhook is
@@ -7788,7 +7792,7 @@ class WebLinkSharedLinkField(BaseObject):
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
         access: Optional[WebLinkSharedLinkAccessField] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[WebLinkSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -7840,7 +7844,7 @@ class WebLinkSharedLinkField(BaseObject):
                 :type access: Optional[WebLinkSharedLinkAccessField], optional
                 :param unshared_at: The date and time when this link will be unshared. This field can only be
         set by users with paid accounts., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
                 :param permissions: Defines if this link allows a user to preview, edit, and download an item.
         These permissions refer to the shared link only and
         do not supersede permissions applied to the item itself., defaults to None
@@ -7876,10 +7880,10 @@ class WebLink(WebLinkMini):
         parent: Optional[FolderMini] = None,
         description: Optional[str] = None,
         path_collection: Optional[WebLinkPathCollectionField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
         owned_by: Optional[UserMini] = None,
@@ -7900,14 +7904,14 @@ class WebLink(WebLinkMini):
         visible within the Box web application., defaults to None
                 :type description: Optional[str], optional
                 :param created_at: When this file was created on Box’s servers., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When this file was last updated on the Box
         servers., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param trashed_at: When this file was moved to the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: When this file will be permanently deleted., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param item_status: Whether this item is deleted or not. Values include `active`,
         `trashed` if the file has been moved to the trash, and `deleted` if
         the file has been permanently deleted, defaults to None
@@ -8084,7 +8088,7 @@ class FolderSharedLinkField(BaseObject):
         vanity_url: Optional[str] = None,
         vanity_name: Optional[str] = None,
         access: Optional[FolderSharedLinkAccessField] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[FolderSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -8136,7 +8140,7 @@ class FolderSharedLinkField(BaseObject):
                 :type access: Optional[FolderSharedLinkAccessField], optional
                 :param unshared_at: The date and time when this link will be unshared. This field can only be
         set by users with paid accounts., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
                 :param permissions: Defines if this link allows a user to preview, edit, and download an item.
         These permissions refer to the shared link only and
         do not supersede permissions applied to the item itself., defaults to None
@@ -8205,17 +8209,17 @@ class Folder(FolderMini):
         id: str,
         type: FolderBaseTypeField,
         *,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[FolderPathCollectionField] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         owned_by: Optional[UserMini] = None,
         shared_link: Optional[FolderSharedLinkField] = None,
         folder_upload_email: Optional[FolderFolderUploadEmailField] = None,
@@ -8241,26 +8245,26 @@ class Folder(FolderMini):
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the folder was last updated. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param size: The folder size in bytes.
 
         Be careful parsing this integer as its
         value can get very large., defaults to None
                 :type size: Optional[int], optional
                 :param trashed_at: The time at which this folder was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this folder is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this folder was originally
         created., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this folder was last updated., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -8333,8 +8337,8 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         legal_hold_policy: Optional[LegalHoldPolicyMini] = None,
         assigned_to: Optional[Union[File, Folder, WebLink]] = None,
         assigned_by: Optional[UserMini] = None,
-        assigned_at: Optional[str] = None,
-        deleted_at: Optional[str] = None,
+        assigned_at: Optional[DateTime] = None,
+        deleted_at: Optional[DateTime] = None,
         id: Optional[str] = None,
         type: Optional[LegalHoldPolicyAssignmentBaseTypeField] = None,
         **kwargs
@@ -8342,13 +8346,13 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         """
                 :param assigned_at: When the legal hold policy assignment object was
         created, defaults to None
-                :type assigned_at: Optional[str], optional
+                :type assigned_at: Optional[DateTime], optional
                 :param deleted_at: When the assignment release request was sent.
         (Because it can take time for an assignment to fully
         delete, this isn't quite the same time that the
         assignment is fully deleted). If null, Assignment
         was not deleted., defaults to None
-                :type deleted_at: Optional[str], optional
+                :type deleted_at: Optional[DateTime], optional
                 :param id: The unique identifier for this legal hold assignment, defaults to None
                 :type id: Optional[str], optional
                 :param type: `legal_hold_policy_assignment`, defaults to None
@@ -8407,7 +8411,7 @@ class FileVersionLegalHold(BaseObject):
         file_version: Optional[FileVersionMini] = None,
         file: Optional[FileMini] = None,
         legal_hold_policy_assignments: Optional[List[LegalHoldPolicyAssignment]] = None,
-        deleted_at: Optional[str] = None,
+        deleted_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -8419,7 +8423,7 @@ class FileVersionLegalHold(BaseObject):
                 :type legal_hold_policy_assignments: Optional[List[LegalHoldPolicyAssignment]], optional
                 :param deleted_at: Time that this File-Version-Legal-Hold was
         deleted., defaults to None
-                :type deleted_at: Optional[str], optional
+                :type deleted_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -8589,17 +8593,17 @@ class FolderFull(Folder):
         is_accessible_via_shared_link: Optional[bool] = None,
         can_non_owners_view_collaborators: Optional[bool] = None,
         classification: Optional[FolderFullClassificationField] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[FolderPathCollectionField] = None,
         created_by: Optional[UserMini] = None,
         modified_by: Optional[UserMini] = None,
-        trashed_at: Optional[str] = None,
-        purged_at: Optional[str] = None,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        trashed_at: Optional[DateTime] = None,
+        purged_at: Optional[DateTime] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         owned_by: Optional[UserMini] = None,
         shared_link: Optional[FolderSharedLinkField] = None,
         folder_upload_email: Optional[FolderFolderUploadEmailField] = None,
@@ -8650,26 +8654,26 @@ class FolderFull(Folder):
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: The date and time when the folder was last updated. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param size: The folder size in bytes.
 
         Be careful parsing this integer as its
         value can get very large., defaults to None
                 :type size: Optional[int], optional
                 :param trashed_at: The time at which this folder was put in the trash., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Optional[DateTime], optional
                 :param purged_at: The time at which this folder is expected to be purged
         from the trash., defaults to None
-                :type purged_at: Optional[str], optional
+                :type purged_at: Optional[DateTime], optional
                 :param content_created_at: The date and time at which this folder was originally
         created., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: The date and time at which this folder was last updated., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
                 :param item_status: Defines if this item has been deleted or not.
 
         * `active` when the item has is not in the trash
@@ -8851,7 +8855,7 @@ class RecentItem(BaseObject):
         type: Optional[str] = None,
         item: Optional[Union[FileFull, FolderFull, WebLink]] = None,
         interaction_type: Optional[RecentItemInteractionTypeField] = None,
-        interacted_at: Optional[str] = None,
+        interacted_at: Optional[DateTime] = None,
         interaction_shared_link: Optional[str] = None,
         **kwargs
     ):
@@ -8862,7 +8866,7 @@ class RecentItem(BaseObject):
         the item., defaults to None
                 :type interaction_type: Optional[RecentItemInteractionTypeField], optional
                 :param interacted_at: The time of the most recent interaction., defaults to None
-                :type interacted_at: Optional[str], optional
+                :type interacted_at: Optional[DateTime], optional
                 :param interaction_shared_link: If the item was accessed through a shared link it will appear here,
         otherwise this will be null., defaults to None
                 :type interaction_shared_link: Optional[str], optional
@@ -9066,8 +9070,8 @@ class Event(BaseObject):
         self,
         *,
         type: Optional[str] = None,
-        created_at: Optional[str] = None,
-        recorded_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        recorded_at: Optional[DateTime] = None,
         event_id: Optional[str] = None,
         created_by: Optional[UserMini] = None,
         event_type: Optional[EventEventTypeField] = None,
@@ -9080,9 +9084,9 @@ class Event(BaseObject):
                 :param type: `event`, defaults to None
                 :type type: Optional[str], optional
                 :param created_at: When the event object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param recorded_at: When the event object was recorded in database, defaults to None
-                :type recorded_at: Optional[str], optional
+                :type recorded_at: Optional[DateTime], optional
                 :param event_id: The ID of the event object. You can use this to detect duplicate events, defaults to None
                 :type event_id: Optional[str], optional
                 :param session_id: The session of the user that performed the action. Not all events will
@@ -9338,7 +9342,7 @@ class SkillInvocation(BaseObject):
         skill: Optional[SkillInvocationSkillField] = None,
         token: Optional[SkillInvocationTokenField] = None,
         status: Optional[SkillInvocationStatusField] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         trigger: Optional[str] = None,
         enterprise: Optional[SkillInvocationEnterpriseField] = None,
         source: Optional[Union[File, Folder]] = None,
@@ -9355,7 +9359,7 @@ class SkillInvocation(BaseObject):
         :param status: The details status of this event., defaults to None
         :type status: Optional[SkillInvocationStatusField], optional
         :param created_at: The time this invocation was created., defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param trigger: Action that triggered the invocation, defaults to None
         :type trigger: Optional[str], optional
         """
@@ -9505,13 +9509,13 @@ class Collaboration(BaseObject):
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
         role: Optional[CollaborationRoleField] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         is_access_only: Optional[bool] = None,
         status: Optional[CollaborationStatusField] = None,
-        acknowledged_at: Optional[str] = None,
+        acknowledged_at: Optional[DateTime] = None,
         created_by: Optional[UserCollaborations] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         acceptance_requirements_status: Optional[
             CollaborationAcceptanceRequirementsStatusField
         ] = None,
@@ -9529,7 +9533,7 @@ class Collaboration(BaseObject):
                 :type role: Optional[CollaborationRoleField], optional
                 :param expires_at: When the collaboration will expire, or `null` if no expiration
         date is set., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param is_access_only: If set to `true`, collaborators have access to
         shared items, but such items won't be visible in the
         All Files list. Additionally, collaborators won't
@@ -9541,11 +9545,11 @@ class Collaboration(BaseObject):
                 :type status: Optional[CollaborationStatusField], optional
                 :param acknowledged_at: When the `status` of the collaboration object changed to
         `accepted` or `rejected`., defaults to None
-                :type acknowledged_at: Optional[str], optional
+                :type acknowledged_at: Optional[DateTime], optional
                 :param created_at: When the collaboration object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the collaboration object was last modified., defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -9690,7 +9694,7 @@ class WebhookInvocation(BaseObject):
         type: Optional[WebhookInvocationTypeField] = None,
         webhook: Optional[Webhook] = None,
         created_by: Optional[UserMini] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         trigger: Optional[WebhookInvocationTriggerField] = None,
         source: Optional[Union[File, Folder]] = None,
         **kwargs
@@ -9702,7 +9706,7 @@ class WebhookInvocation(BaseObject):
                 :type type: Optional[WebhookInvocationTypeField], optional
                 :param created_at: A timestamp identifying the time that
         the webhook event was triggered., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -9971,7 +9975,7 @@ class WorkflowFlowsField(BaseObject):
         type: Optional[WorkflowFlowsTypeField] = None,
         trigger: Optional[WorkflowFlowsTriggerField] = None,
         outcomes: Optional[List[WorkflowFlowsOutcomesField]] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
         **kwargs
     ):
@@ -9981,7 +9985,7 @@ class WorkflowFlowsField(BaseObject):
         :param type: The flow's resource type, defaults to None
         :type type: Optional[WorkflowFlowsTypeField], optional
         :param created_at: When this flow was created, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -10062,8 +10066,8 @@ class WorkflowFull(Workflow):
     def __init__(
         self,
         *,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
         modified_by: Optional[UserBase] = None,
         flows: Optional[List[WorkflowFlowsField]] = None,
@@ -10076,9 +10080,9 @@ class WorkflowFull(Workflow):
     ):
         """
         :param created_at: The date and time when the workflow was created on Box, defaults to None
-        :type created_at: Optional[str], optional
+        :type created_at: Optional[DateTime], optional
         :param modified_at: The date and time when the workflow was last updated on Box, defaults to None
-        :type modified_at: Optional[str], optional
+        :type modified_at: Optional[DateTime], optional
         :param flows: A list of flows assigned to a workflow., defaults to None
         :type flows: Optional[List[WorkflowFlowsField]], optional
         :param id: The unique identifier for the workflow, defaults to None
@@ -10148,7 +10152,7 @@ class ZipDownload(BaseObject):
         *,
         download_url: Optional[str] = None,
         status_url: Optional[str] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         name_conflicts: Optional[List[List[ZipDownloadNameConflictsField]]] = None,
         **kwargs
     ):
@@ -10179,7 +10183,7 @@ class ZipDownload(BaseObject):
         is started after which the `download_url` is valid for the duration of the
         download, and the `status_url` is valid for 12 hours from the start of the
         download., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param name_conflicts: A list of conflicts that occurred when trying to create the archive. This
         would occur when multiple items have been requested with the
         same name.
@@ -10430,7 +10434,7 @@ class KeywordSkillCard(BaseObject):
         invocation: KeywordSkillCardInvocationField,
         entries: List[KeywordSkillCardEntriesField],
         *,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         skill_card_title: Optional[KeywordSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
@@ -10447,7 +10451,7 @@ class KeywordSkillCard(BaseObject):
                 :param entries: An list of entries in the metadata card.
                 :type entries: List[KeywordSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[KeywordSkillCardSkillCardTitleField], optional
         """
@@ -10525,8 +10529,8 @@ class IntegrationMapping(IntegrationMappingBase):
         options: Optional[IntegrationMappingSlackOptions] = None,
         created_by: Optional[UserIntegrationMappings] = None,
         modified_by: Optional[UserIntegrationMappings] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         id: Optional[str] = None,
         integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None,
         **kwargs
@@ -10552,9 +10556,9 @@ class IntegrationMapping(IntegrationMappingBase):
         last modified the integration mapping, defaults to None
                 :type modified_by: Optional[UserIntegrationMappings], optional
                 :param created_at: When the integration mapping object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the integration mapping object was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
         with `integration_type`), defaults to None
@@ -10830,7 +10834,7 @@ class TimelineSkillCard(BaseObject):
         invocation: TimelineSkillCardInvocationField,
         entries: List[TimelineSkillCardEntriesField],
         *,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         skill_card_title: Optional[TimelineSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
@@ -10848,7 +10852,7 @@ class TimelineSkillCard(BaseObject):
                 :param entries: A list of entries on the timeline.
                 :type entries: List[TimelineSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TimelineSkillCardSkillCardTitleField], optional
                 :param duration: An total duration in seconds of the timeline., defaults to None
@@ -10972,7 +10976,7 @@ class TranscriptSkillCard(BaseObject):
         invocation: TranscriptSkillCardInvocationField,
         entries: List[TranscriptSkillCardEntriesField],
         *,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
@@ -10991,7 +10995,7 @@ class TranscriptSkillCard(BaseObject):
         the transcription.
                 :type entries: List[TranscriptSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField], optional
                 :param duration: An optional total duration in seconds.
@@ -11117,7 +11121,7 @@ class StatusSkillCard(BaseObject):
         skill: StatusSkillCardSkillField,
         invocation: StatusSkillCardInvocationField,
         *,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         skill_card_title: Optional[StatusSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
@@ -11134,7 +11138,7 @@ class StatusSkillCard(BaseObject):
         which instance of a service applied the metadata.
                 :type invocation: StatusSkillCardInvocationField
                 :param created_at: The optional date and time this card was created at., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[StatusSkillCardSkillCardTitleField], optional
         """
@@ -11324,7 +11328,7 @@ class SignRequestPrefillTag(BaseObject):
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
-        date_value: Optional[str] = None,
+        date_value: Optional[Date] = None,
         **kwargs
     ):
         """
@@ -11335,7 +11339,7 @@ class SignRequestPrefillTag(BaseObject):
         :param checkbox_value: Checkbox prefill value, defaults to None
         :type checkbox_value: Optional[bool], optional
         :param date_value: Date prefill value, defaults to None
-        :type date_value: Optional[str], optional
+        :type date_value: Optional[Date], optional
         """
         super().__init__(**kwargs)
         self.document_tag_id = document_tag_id
@@ -11382,7 +11386,7 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
-        date_value: Optional[str] = None,
+        date_value: Optional[Date] = None,
         **kwargs
     ):
         """
@@ -11401,7 +11405,7 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         :param checkbox_value: Checkbox prefill value, defaults to None
         :type checkbox_value: Optional[bool], optional
         :param date_value: Date prefill value, defaults to None
-        :type date_value: Optional[str], optional
+        :type date_value: Optional[Date], optional
         """
         super().__init__(
             document_tag_id=document_tag_id,
@@ -11428,7 +11432,7 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         self,
         *,
         type: Optional[SignRequestSignerSignerDecisionTypeField] = None,
-        finalized_at: Optional[str] = None,
+        finalized_at: Optional[DateTime] = None,
         additional_info: Optional[str] = None,
         **kwargs
     ):
@@ -11436,7 +11440,7 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         :param type: Type of decision made by the signer, defaults to None
         :type type: Optional[SignRequestSignerSignerDecisionTypeField], optional
         :param finalized_at: Date and Time that the decision was made, defaults to None
-        :type finalized_at: Optional[str], optional
+        :type finalized_at: Optional[DateTime], optional
         :param additional_info: Additional info about the decision, such as the decline reason from the signer, defaults to None
         :type additional_info: Optional[str], optional
         """
@@ -11669,7 +11673,7 @@ class SignRequest(SignRequestBase):
         signing_log: Optional[FileMini] = None,
         status: Optional[SignRequestStatusField] = None,
         sign_files: Optional[SignRequestSignFilesField] = None,
-        auto_expire_at: Optional[str] = None,
+        auto_expire_at: Optional[DateTime] = None,
         parent_folder: Optional[FolderMini] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
@@ -11708,7 +11712,7 @@ class SignRequest(SignRequestBase):
         and can be downloaded at any point in the signing process., defaults to None
                 :type sign_files: Optional[SignRequestSignFilesField], optional
                 :param auto_expire_at: Uses `days_valid` to calculate the date and time, in GMT, the sign request will expire if unsigned., defaults to None
-                :type auto_expire_at: Optional[str], optional
+                :type auto_expire_at: Optional[DateTime], optional
                 :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI., defaults to None
                 :type is_document_preparation_needed: Optional[bool], optional
                 :param redirect_url: When specified, signature request will be redirected to this url when a document is signed., defaults to None
@@ -11951,7 +11955,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         document_tag_id: Optional[str] = None,
         text_value: Optional[str] = None,
         checkbox_value: Optional[bool] = None,
-        date_value: Optional[str] = None,
+        date_value: Optional[Date] = None,
         **kwargs
     ):
         """
@@ -11984,7 +11988,7 @@ class TemplateSignerInput(SignRequestPrefillTag):
         :param checkbox_value: Checkbox prefill value, defaults to None
         :type checkbox_value: Optional[bool], optional
         :param date_value: Date prefill value, defaults to None
-        :type date_value: Optional[str], optional
+        :type date_value: Optional[Date], optional
         """
         super().__init__(
             document_tag_id=document_tag_id,
@@ -12317,9 +12321,9 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
         shield_information_barrier: Optional[ShieldInformationBarrierReference] = None,
         status: Optional[ShieldInformationBarrierReportStatusField] = None,
         details: Optional[ShieldInformationBarrierReportDetails] = None,
-        created_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
         created_by: Optional[UserBase] = None,
-        updated_at: Optional[str] = None,
+        updated_at: Optional[DateTime] = None,
         id: Optional[str] = None,
         type: Optional[ShieldInformationBarrierReportBaseTypeField] = None,
         **kwargs
@@ -12329,10 +12333,10 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
                 :type status: Optional[ShieldInformationBarrierReportStatusField], optional
                 :param created_at: ISO date time string when this
         shield information barrier report object was created., defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param updated_at: ISO date time string when this
         shield information barrier report was updated., defaults to None
-                :type updated_at: Optional[str], optional
+                :type updated_at: Optional[DateTime], optional
                 :param id: The unique identifier for the shield information barrier report, defaults to None
                 :type id: Optional[str], optional
                 :param type: The type of the shield information barrier report, defaults to None
@@ -12456,8 +12460,8 @@ class UserFull(User):
         hostname: Optional[str] = None,
         is_platform_access_only: Optional[bool] = None,
         external_app_user_id: Optional[str] = None,
-        created_at: Optional[str] = None,
-        modified_at: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        modified_at: Optional[DateTime] = None,
         language: Optional[str] = None,
         timezone: Optional[str] = None,
         space_amount: Optional[int] = None,
@@ -12509,9 +12513,9 @@ class UserFull(User):
         providers to Box users., defaults to None
                 :type external_app_user_id: Optional[str], optional
                 :param created_at: When the user object was created, defaults to None
-                :type created_at: Optional[str], optional
+                :type created_at: Optional[DateTime], optional
                 :param modified_at: When the user object was last modified, defaults to None
-                :type modified_at: Optional[str], optional
+                :type modified_at: Optional[DateTime], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
@@ -12668,18 +12672,20 @@ class MetadataFieldFilterFloatRangeValue(BaseObject):
 
 
 class MetadataFieldFilterDateRangeValue(BaseObject):
-    def __init__(self, *, lt: Optional[str] = None, gt: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, lt: Optional[DateTime] = None, gt: Optional[DateTime] = None, **kwargs
+    ):
         """
                 :param lt: Specifies the (inclusive) upper bound for the metadata field
         value. The value of a field must be lower than (`lt`) or
         equal to this value for the search query to match this
         template., defaults to None
-                :type lt: Optional[str], optional
+                :type lt: Optional[DateTime], optional
                 :param gt: Specifies the (inclusive) lower bound for the metadata field
         value. The value of a field must be greater than (`gt`) or
         equal to this value for the search query to match this
         template., defaults to None
-                :type gt: Optional[str], optional
+                :type gt: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.lt = lt

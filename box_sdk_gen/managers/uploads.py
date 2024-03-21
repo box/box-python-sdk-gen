@@ -30,6 +30,8 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
+from box_sdk_gen.internal.utils import DateTime
+
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 from box_sdk_gen.networking.fetch import FetchOptions
@@ -45,7 +47,7 @@ from box_sdk_gen.serialization.json.json_data import SerializedData
 
 class UploadFileVersionAttributes(BaseObject):
     def __init__(
-        self, name: str, *, content_modified_at: Optional[str] = None, **kwargs
+        self, name: str, *, content_modified_at: Optional[DateTime] = None, **kwargs
     ):
         """
                 :param name: An optional new name for the file. If specified, the file
@@ -54,7 +56,7 @@ class UploadFileVersionAttributes(BaseObject):
                 :param content_modified_at: Defines the time the file was last modified at.
 
         If not set, the upload time will be used., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.name = name
@@ -78,8 +80,8 @@ class UploadFileAttributes(BaseObject):
         name: str,
         parent: UploadFileAttributesParentField,
         *,
-        content_created_at: Optional[str] = None,
-        content_modified_at: Optional[str] = None,
+        content_created_at: Optional[DateTime] = None,
+        content_modified_at: Optional[DateTime] = None,
         **kwargs
     ):
         """
@@ -90,11 +92,11 @@ class UploadFileAttributes(BaseObject):
                 :param content_created_at: Defines the time the file was originally created at.
 
         If not set, the upload time will be used., defaults to None
-                :type content_created_at: Optional[str], optional
+                :type content_created_at: Optional[DateTime], optional
                 :param content_modified_at: Defines the time the file was last modified at.
 
         If not set, the upload time will be used., defaults to None
-                :type content_modified_at: Optional[str], optional
+                :type content_modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.name = name

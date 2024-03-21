@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from enum import EnumMeta, Enum
 from typing import get_args, get_origin, Union, Optional
 
@@ -35,6 +36,10 @@ class BaseObject:
                 value = v.to_dict()
             elif isinstance(v, Enum):
                 value = v.value
+            elif isinstance(v, date):
+                value = v.isoformat()
+            elif isinstance(v, datetime):
+                value = v.isoformat().replace('+00:00', 'Z')
             else:
                 value = v
             result_dict[self._fields_to_json_mapping.get(k, k)] = value
@@ -60,6 +65,10 @@ class BaseObject:
             return cls._deserialize_union(key, value, annotation)
         elif isinstance(annotation, EnumMeta):
             return cls._deserialize_enum(key, value, annotation)
+        elif annotation == datetime:
+            return cls._deserialize_datetime(key, value, annotation)
+        elif annotation == date:
+            return cls._deserialize_date(key, value, annotation)
         else:
             return cls._deserialize_nested_type(key, value, annotation)
 
@@ -101,6 +110,20 @@ class BaseObject:
     def _deserialize_enum(cls, key, value, annotation):
         try:
             return getattr(annotation, value.upper().replace(' ', '_'))
+        except Exception:
+            return value
+
+    @classmethod
+    def _deserialize_datetime(cls, key, value, annotation):
+        try:
+            return datetime.fromisoformat(value.replace('Z', '+00:00'))
+        except Exception:
+            return value
+
+    @classmethod
+    def _deserialize_date(cls, key, value, annotation):
+        try:
+            return date.fromisoformat(value)
         except Exception:
             return value
 

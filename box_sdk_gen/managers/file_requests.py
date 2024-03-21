@@ -12,6 +12,8 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.internal.utils import DateTime
+
 from box_sdk_gen.schemas import FileRequest
 
 from box_sdk_gen.schemas import ClientError
@@ -139,7 +141,7 @@ class FileRequestsManager:
         status: Optional[UpdateFileRequestByIdStatus] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         if_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileRequest:
@@ -199,7 +201,7 @@ class FileRequestsManager:
         `inactive`.
 
         This will default to the value on the existing file request., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param if_match: Ensures this item hasn't recently changed before
         making changes.
 
@@ -295,7 +297,7 @@ class FileRequestsManager:
         status: Optional[CreateFileRequestCopyStatus] = None,
         is_email_required: Optional[bool] = None,
         is_description_required: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileRequest:
         """
@@ -356,7 +358,7 @@ class FileRequestsManager:
         `inactive`.
 
         This will default to the value on the existing file request., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

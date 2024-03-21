@@ -26,6 +26,8 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
+from box_sdk_gen.internal.utils import DateTime
+
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 from box_sdk_gen.networking.fetch import FetchOptions
@@ -194,8 +196,8 @@ class EventsManager:
         stream_position: Optional[str] = None,
         limit: Optional[int] = None,
         event_type: Optional[List[GetEventsEventType]] = None,
-        created_after: Optional[str] = None,
-        created_before: Optional[str] = None,
+        created_after: Optional[DateTime] = None,
+        created_before: Optional[DateTime] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Events:
         """
@@ -263,11 +265,11 @@ class EventsManager:
                 :param created_after: The lower bound date and time to return events for. This can only be used
         when requesting the events with a `stream_type` of `admin_logs`. For any
         other `stream_type` this value will be ignored., defaults to None
-                :type created_after: Optional[str], optional
+                :type created_after: Optional[DateTime], optional
                 :param created_before: The upper bound date and time to return events for. This can only be used
         when requesting the events with a `stream_type` of `admin_logs`. For any
         other `stream_type` this value will be ignored., defaults to None
-                :type created_before: Optional[str], optional
+                :type created_before: Optional[DateTime], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

@@ -40,6 +40,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class GetFolderByIdSort(str, Enum):
     ID = 'id'
@@ -94,7 +96,7 @@ class UpdateFolderByIdSharedLink(BaseObject):
         access: Optional[UpdateFolderByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[UpdateFolderByIdSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -128,7 +130,7 @@ class UpdateFolderByIdSharedLink(BaseObject):
                 :param unshared_at: The timestamp at which this shared link will
         expire. This field can only be set by
         users with paid accounts., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access

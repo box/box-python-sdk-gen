@@ -18,9 +18,15 @@ from box_sdk_gen.schemas import FolderMini
 
 from box_sdk_gen.schemas import FolderBaseTypeField
 
+from box_sdk_gen.schemas import SignRequestPrefillTag
+
 from box_sdk_gen.schemas import SignRequests
 
 from box_sdk_gen.internal.utils import get_uuid
+
+from box_sdk_gen.internal.utils import date_from_string
+
+from box_sdk_gen.internal.utils import date_to_string
 
 from test.commons import upload_new_file
 
@@ -41,10 +47,18 @@ def testCreateGetCancelAndListSignRequest():
         parent_folder=FolderMini(
             id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
         ),
+        prefill_tags=[
+            SignRequestPrefillTag(
+                date_value=date_from_string('2035-01-01'), document_tag_id='0'
+            )
+        ],
     )
     assert created_sign_request.sign_files.files[0].name == file_to_sign.name
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.parent_folder.id == destination_folder.id
+    assert (
+        date_to_string(created_sign_request.prefill_tags[0].date_value) == '2035-01-01'
+    )
     new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(
         created_sign_request.id
     )

@@ -30,6 +30,8 @@ from box_sdk_gen.internal.utils import read_byte_stream
 
 from box_sdk_gen.internal.utils import generate_byte_buffer
 
+from box_sdk_gen.internal.utils import date_time_to_string
+
 client: BoxClient = get_default_client()
 
 
@@ -75,7 +77,7 @@ def testManualZipDownloadAndCheckStatus():
     )
     assert not zip_download.download_url == ''
     assert not zip_download.status_url == ''
-    assert not zip_download.expires_at == ''
+    assert not date_time_to_string(zip_download.expires_at) == ''
     zip_stream: ByteStream = client.zip_downloads.get_zip_download_content(
         zip_download.download_url
     )

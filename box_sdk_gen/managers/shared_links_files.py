@@ -38,6 +38,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class AddShareLinkToFileSharedLinkAccessField(str, Enum):
     OPEN = 'open'
@@ -83,7 +85,7 @@ class AddShareLinkToFileSharedLink(BaseObject):
         access: Optional[AddShareLinkToFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[AddShareLinkToFileSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -119,7 +121,7 @@ class AddShareLinkToFileSharedLink(BaseObject):
         expire. This field can only be set by
         users with paid accounts. The value must be greater than the
         current date and time., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -173,7 +175,7 @@ class UpdateSharedLinkOnFileSharedLink(BaseObject):
         access: Optional[UpdateSharedLinkOnFileSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[UpdateSharedLinkOnFileSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -209,7 +211,7 @@ class UpdateSharedLinkOnFileSharedLink(BaseObject):
         expire. This field can only be set by
         users with paid accounts. The value must be greater than the
         current date and time., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access
