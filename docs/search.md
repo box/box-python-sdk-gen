@@ -63,7 +63,7 @@ See the endpoint docs at
 <!-- sample get_search -->
 
 ```python
-client.search.search_for_content(query=keyword, ancestor_folder_ids=['0'], trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY.value, include_recent_shared_links=True)
+client.search.search_for_content(ancestor_folder_ids=['0'], mdfilters=[MetadataFilter(filters={'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']}, scope=MetadataFilterScopeField.ENTERPRISE.value, template_key=template_key)])
 ```
 
 ### Arguments
