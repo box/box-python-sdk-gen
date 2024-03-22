@@ -138,7 +138,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
                     )
 
             if (
-                not response.reauthentication_needed
+                not (response.reauthentication_needed and options.auth)
                 and network_response.status_code != 429
                 and network_response.status_code < 500
             ):
@@ -261,9 +261,7 @@ def __make_request(request: APIRequest, session: Session) -> APIResponse:
 def __raise_on_unsuccessful_request(request: APIRequest, response: APIResponse) -> None:
     if response.raised_exception:
         raise BoxSDKError(
-            message=str(response.raised_exception),
-            timestamp=str(datetime.now()),
-            error=response.raised_exception,
+            message=str(response.raised_exception), error=response.raised_exception
         )
 
     network_response = response.network_response
@@ -275,7 +273,6 @@ def __raise_on_unsuccessful_request(request: APIRequest, response: APIResponse) 
 
     raise BoxAPIError(
         message=f'{network_response.status_code} {response_json.get("message", "")}; Request ID: {response_json.get("request_id", "")}',
-        timestamp=str(datetime.now()),
         request_info=RequestInfo(
             method=request.method,
             url=request.url,
