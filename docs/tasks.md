@@ -62,7 +62,7 @@ client.tasks.create_task(CreateTaskItem(type=CreateTaskItemTypeField.FILE.value,
   - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
 - message `Optional[str]`
   - An optional message to include with the task.
-- due_at `Optional[str]`
+- due_at `Optional[DateTime]`
   - Defines when the task is due. Defaults to `null` if not provided.
 - completion_rule `Optional[CreateTaskCompletionRule]`
   - Defines which assignees need to complete this task before the task is considered completed. _ `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. _ `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.
@@ -127,7 +127,7 @@ client.tasks.update_task_by_id(task.id, message='updated message')
   - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
 - message `Optional[str]`
   - The message included with the task.
-- due_at `Optional[str]`
+- due_at `Optional[DateTime]`
   - When the task is due at.
 - completion_rule `Optional[UpdateTaskByIdCompletionRule]`
   - Defines which assignees need to complete this task before the task is considered completed. _ `all_assignees` (default) requires all assignees to review or approve the the task in order for it to be considered completed. _ `any_assignee` accepts any one assignee to review or approve the the task in order for it to be considered completed.

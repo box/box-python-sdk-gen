@@ -38,6 +38,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class UpdateFileByIdParent(BaseObject):
     def __init__(self, *, id: Optional[str] = None, **kwargs):
@@ -74,7 +76,7 @@ class UpdateFileByIdSharedLink(BaseObject):
         access: Optional[UpdateFileByIdSharedLinkAccessField] = None,
         password: Optional[str] = None,
         vanity_name: Optional[str] = None,
-        unshared_at: Optional[str] = None,
+        unshared_at: Optional[DateTime] = None,
         permissions: Optional[UpdateFileByIdSharedLinkPermissionsField] = None,
         **kwargs
     ):
@@ -108,7 +110,7 @@ class UpdateFileByIdSharedLink(BaseObject):
                 :param unshared_at: The timestamp at which this shared link will
         expire. This field can only be set by
         users with paid accounts., defaults to None
-                :type unshared_at: Optional[str], optional
+                :type unshared_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
         self.access = access
@@ -127,7 +129,7 @@ class UpdateFileByIdLock(BaseObject):
         self,
         *,
         access: Optional[UpdateFileByIdLockAccessField] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         is_download_prevented: Optional[bool] = None,
         **kwargs
     ):
@@ -135,7 +137,7 @@ class UpdateFileByIdLock(BaseObject):
         :param access: The type of this object., defaults to None
         :type access: Optional[UpdateFileByIdLockAccessField], optional
         :param expires_at: Defines the time at which the lock expires., defaults to None
-        :type expires_at: Optional[str], optional
+        :type expires_at: Optional[DateTime], optional
         :param is_download_prevented: Defines if the file can be downloaded while it is locked., defaults to None
         :type is_download_prevented: Optional[bool], optional
         """
@@ -326,7 +328,7 @@ class FilesManager:
         parent: Optional[UpdateFileByIdParent] = None,
         shared_link: Optional[UpdateFileByIdSharedLink] = None,
         lock: Optional[UpdateFileByIdLock] = None,
-        disposition_at: Optional[str] = None,
+        disposition_at: Optional[DateTime] = None,
         permissions: Optional[UpdateFileByIdPermissions] = None,
         collections: Optional[List[UpdateFileByIdCollections]] = None,
         tags: Optional[List[str]] = None,
@@ -364,7 +366,7 @@ class FilesManager:
                 :type lock: Optional[UpdateFileByIdLock], optional
                 :param disposition_at: The retention expiration timestamp for the given file. This
         date cannot be shortened once set on a file., defaults to None
-                :type disposition_at: Optional[str], optional
+                :type disposition_at: Optional[DateTime], optional
                 :param permissions: Defines who can download a file., defaults to None
                 :type permissions: Optional[UpdateFileByIdPermissions], optional
                 :param collections: An array of collections to make this file

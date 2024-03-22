@@ -38,6 +38,8 @@ from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class CreateTaskItemTypeField(str, Enum):
     FILE = 'file'
@@ -144,7 +146,7 @@ class TasksManager:
         *,
         action: Optional[CreateTaskAction] = None,
         message: Optional[str] = None,
-        due_at: Optional[str] = None,
+        due_at: Optional[DateTime] = None,
         completion_rule: Optional[CreateTaskCompletionRule] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Task:
@@ -165,7 +167,7 @@ class TasksManager:
                 :type message: Optional[str], optional
                 :param due_at: Defines when the task is due. Defaults to `null` if not
         provided., defaults to None
-                :type due_at: Optional[str], optional
+                :type due_at: Optional[DateTime], optional
                 :param completion_rule: Defines which assignees need to complete this task before the task
         is considered completed.
 
@@ -235,7 +237,7 @@ class TasksManager:
         *,
         action: Optional[UpdateTaskByIdAction] = None,
         message: Optional[str] = None,
-        due_at: Optional[str] = None,
+        due_at: Optional[DateTime] = None,
         completion_rule: Optional[UpdateTaskByIdCompletionRule] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Task:
@@ -256,7 +258,7 @@ class TasksManager:
                 :param message: The message included with the task., defaults to None
                 :type message: Optional[str], optional
                 :param due_at: When the task is due at., defaults to None
-                :type due_at: Optional[str], optional
+                :type due_at: Optional[DateTime], optional
                 :param completion_rule: Defines which assignees need to complete this task before the task
         is considered completed.
 

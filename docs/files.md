@@ -76,7 +76,7 @@ client.files.update_file_by_id(file_to_update.id, name=updated_name, description
   -
 - lock `Optional[UpdateFileByIdLock]`
   - Defines a lock on an item. This prevents the item from being moved, renamed, or otherwise changed by anyone other than the user who created the lock. Set this to `null` to remove the lock.
-- disposition_at `Optional[str]`
+- disposition_at `Optional[DateTime]`
   - The retention expiration timestamp for the given file. This date cannot be shortened once set on a file.
 - permissions `Optional[UpdateFileByIdPermissions]`
   - Defines who can download a file.

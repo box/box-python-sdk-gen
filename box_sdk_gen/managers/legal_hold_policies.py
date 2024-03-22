@@ -36,6 +36,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class LegalHoldPoliciesManager:
     def __init__(
@@ -115,8 +117,8 @@ class LegalHoldPoliciesManager:
         policy_name: str,
         *,
         description: Optional[str] = None,
-        filter_started_at: Optional[str] = None,
-        filter_ended_at: Optional[str] = None,
+        filter_started_at: Optional[DateTime] = None,
+        filter_ended_at: Optional[DateTime] = None,
         is_ongoing: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> LegalHoldPolicy:
@@ -135,7 +137,7 @@ class LegalHoldPoliciesManager:
         files, will ignore the date filter.
 
         Required if `is_ongoing` is set to `false`., defaults to None
-                :type filter_started_at: Optional[str], optional
+                :type filter_started_at: Optional[DateTime], optional
                 :param filter_ended_at: The filter end date.
 
         When this policy is applied using a `custodian` legal
@@ -145,7 +147,7 @@ class LegalHoldPoliciesManager:
         files, will ignore the date filter.
 
         Required if `is_ongoing` is set to `false`., defaults to None
-                :type filter_ended_at: Optional[str], optional
+                :type filter_ended_at: Optional[DateTime], optional
                 :param is_ongoing: Whether new assignments under this policy should
         continue applying to files even after initialization.
 

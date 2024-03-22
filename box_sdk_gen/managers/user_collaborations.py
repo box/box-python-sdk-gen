@@ -38,6 +38,8 @@ from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
+from box_sdk_gen.internal.utils import DateTime
+
 
 class UpdateCollaborationByIdRole(str, Enum):
     EDITOR = 'editor'
@@ -194,7 +196,7 @@ class UserCollaborationsManager:
         role: UpdateCollaborationByIdRole,
         *,
         status: Optional[UpdateCollaborationByIdStatus] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         can_view_path: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collaboration:
@@ -228,7 +230,7 @@ class UserCollaborationsManager:
         Additionally, a collaboration can only be given an
         expiration if it was created after the **Automatically remove
         invited collaborator** setting was enabled., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param can_view_path: Determines if the invited users can see the entire parent path to
         the associated folder. The user will not gain privileges in any
         parent folder and therefore can not see content the user is not
@@ -318,7 +320,7 @@ class UserCollaborationsManager:
         *,
         is_access_only: Optional[bool] = None,
         can_view_path: Optional[bool] = None,
-        expires_at: Optional[str] = None,
+        expires_at: Optional[DateTime] = None,
         fields: Optional[List[str]] = None,
         notify: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -390,7 +392,7 @@ class UserCollaborationsManager:
         of the **Admin Console**. When the setting is not enabled,
         collaborations can not have an expiry date and a value for this
         field will be result in an error., defaults to None
-                :type expires_at: Optional[str], optional
+                :type expires_at: Optional[DateTime], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are
         not normally returned in a standard response.
