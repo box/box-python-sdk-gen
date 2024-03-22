@@ -1,4 +1,5 @@
 import pprint
+from datetime import datetime
 from typing import Any, Optional
 
 from typing import Dict
@@ -8,14 +9,14 @@ class BoxSDKError(Exception):
     def __init__(
         self,
         message: str,
-        timestamp: str = None,
+        timestamp: Optional[datetime] = None,
         error: Optional[Exception] = None,
-        name: Optional[str] = None,
+        name: Optional[str] = 'BoxSDKError',
         **kwargs,
     ):
         super().__init__(message)
         self.message = message
-        self.timestamp = timestamp
+        self.timestamp = timestamp if timestamp is not None else datetime.now()
         self.error = error
         self.name = name
 
@@ -110,9 +111,9 @@ class BoxAPIError(BoxSDKError):
         request_info: RequestInfo,
         response_info: ResponseInfo,
         message: str,
-        timestamp: str,
+        timestamp: Optional[datetime] = None,
         error: Optional[str] = None,
-        name: Optional[str] = None,
+        name: Optional[str] = 'BoxAPIError',
         **kwargs,
     ):
         super().__init__(
