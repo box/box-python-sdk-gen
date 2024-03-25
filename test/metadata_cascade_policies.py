@@ -28,6 +28,8 @@ from box_sdk_gen.managers.metadata_cascade_policies import (
 
 from box_sdk_gen.managers.folder_metadata import CreateFolderMetadataByIdScope
 
+from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScope
+
 from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import get_env_var
@@ -101,4 +103,7 @@ def testMetadataCascadePolicies():
         client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(
             cascade_policy_id
         )
+    client.metadata_templates.delete_metadata_template(
+        DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
+    )
     client.folders.delete_folder_by_id(folder.id)
