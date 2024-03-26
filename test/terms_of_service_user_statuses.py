@@ -26,7 +26,7 @@ from box_sdk_gen.managers.terms_of_service_user_statuses import (
 
 from box_sdk_gen.schemas import TermsOfServiceUserStatuses
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 from test.commons import get_or_create_terms_of_services
 
@@ -37,7 +37,7 @@ from box_sdk_gen.internal.utils import get_env_var
 
 def testGetTermsOfServiceUserStatuses():
     admin_user_id: str = get_env_var('USER_ID')
-    client: BoxClient = get_default_client_as_user(admin_user_id)
+    client: BoxClient = get_default_client_with_user_subject(admin_user_id)
     tos: TermsOfService = get_or_create_terms_of_services()
     user: UserFull = client.users.create_user(
         get_uuid(),

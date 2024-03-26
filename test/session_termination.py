@@ -12,13 +12,15 @@ from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 client: BoxClient = get_default_client()
 
 
 def testSessionTerminationUser():
-    admin_client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
+    admin_client: BoxClient = get_default_client_with_user_subject(
+        get_env_var('USER_ID')
+    )
     user: UserFull = admin_client.users.get_user_me()
     result: SessionTerminationMessage = (
         client.session_termination.terminate_users_sessions(

@@ -38,13 +38,13 @@ from box_sdk_gen.internal.utils import get_env_var
 
 from box_sdk_gen.internal.utils import get_uuid
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 from test.commons import get_or_create_shield_information_barrier
 
 
 def testShieldInformationBarrierSegmentRestrictions():
-    client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
+    client: BoxClient = get_default_client_with_user_subject(get_env_var('USER_ID'))
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
     barrier: ShieldInformationBarrier = get_or_create_shield_information_barrier(
         client, enterprise_id

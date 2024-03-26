@@ -125,7 +125,7 @@ class BoxCCGAuth(Authentication):
         token: AccessToken = self.retrieve_token(network_session=network_session)
         return ''.join(['Bearer ', token.access_token])
 
-    def as_user(
+    def with_user_subject(
         self, user_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxCCGAuth':
         """
@@ -155,7 +155,7 @@ class BoxCCGAuth(Authentication):
         )
         return BoxCCGAuth(config=new_config)
 
-    def as_enterprise(
+    def with_enterprise_subject(
         self, enterprise_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxCCGAuth':
         """

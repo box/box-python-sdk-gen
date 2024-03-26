@@ -24,7 +24,7 @@ from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 client: BoxClient = get_default_client()
 
@@ -36,7 +36,7 @@ def testIntegrationMappings():
     slack_org_id: str = '1'
     partner_item_id: str = '1'
     user_id: str = get_env_var('USER_ID')
-    user_client: BoxClient = get_default_client_as_user(user_id)
+    user_client: BoxClient = get_default_client_with_user_subject(user_id)
     with pytest.raises(Exception):
         user_client.integration_mappings.create_slack_integration_mapping(
             IntegrationMappingPartnerItemSlack(

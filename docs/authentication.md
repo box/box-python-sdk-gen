@@ -116,7 +116,7 @@ make calls as that user. See the [API documentation](https://developer.box.com/)
 for detailed instructions on how to use app auth.
 
 Clients for making calls as an App User can be created with the same JSON JWT config file generated through the
-[Box Developer Console][dev_console]. Calling `auth.as_user('USER_ID')` method will return a new auth object,
+[Box Developer Console][dev_console]. Calling `auth.with_user_subject('USER_ID')` method will return a new auth object,
 which is authenticated as the user with provided id, leaving the original object unchanged.
 
 ```python
@@ -124,7 +124,7 @@ from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
 
 jwt_config = JWTConfig.from_config_file(config_file_path='/path/to/settings.json')
 auth = BoxJWTAuth(config=jwt_config)
-user_auth = auth.as_user('USER_ID')
+user_auth = auth.with_user_subject('USER_ID')
 user_client = BoxClient(auth=user_auth)
 ```
 
@@ -224,14 +224,14 @@ You can easily switch to be authenticated as a Service Account or as a User.
 To create a new auth object authenticated as Service Account you can call:
 
 ```python
-enterprise_auth = auth.as_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
+enterprise_auth = auth.with_enterprise_subject(enterprise_id='YOUR_ENTERPRISE_ID')
 enterprise_client = BoxClient(auth=enterprise_auth)
 ```
 
-To authenticate as user with provided User ID call:
+To authenticate with user subject call:
 
 ```python
-user_auth = auth.as_user(user_id='YOUR_USER_ID')
+user_auth = auth.with_user_subject(user_id='YOUR_USER_ID')
 user_client = BoxClient(auth=user_auth)
 ```
 

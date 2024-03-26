@@ -40,7 +40,7 @@ from box_sdk_gen.managers.storage_policy_assignments import (
 
 from box_sdk_gen.internal.utils import get_env_var
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 from box_sdk_gen.client import BoxClient
 
@@ -76,7 +76,7 @@ def get_or_create_storage_policy_assignment(
 
 
 def testGetStoragePolicyAssignments():
-    client: BoxClient = get_default_client_as_user(admin_user_id)
+    client: BoxClient = get_default_client_with_user_subject(admin_user_id)
     user_name: str = get_uuid()
     new_user: UserFull = client.users.create_user(
         user_name, is_platform_access_only=True

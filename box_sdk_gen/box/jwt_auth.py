@@ -341,7 +341,7 @@ class BoxJWTAuth(Authentication):
         token: AccessToken = self.retrieve_token(network_session=network_session)
         return ''.join(['Bearer ', token.access_token])
 
-    def as_user(
+    def with_user_subject(
         self, user_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxJWTAuth':
         """
@@ -375,7 +375,7 @@ class BoxJWTAuth(Authentication):
         new_auth: 'BoxJWTAuth' = BoxJWTAuth(config=new_config)
         return new_auth
 
-    def as_enterprise(
+    def with_enterprise_subject(
         self, user_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxJWTAuth':
         """
