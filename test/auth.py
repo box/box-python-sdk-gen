@@ -58,11 +58,11 @@ def test_jwt_auth():
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
     auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-    user_auth: BoxJWTAuth = auth.as_user(user_id)
+    user_auth: BoxJWTAuth = auth.with_user_subject(user_id)
     user_client: BoxClient = BoxClient(auth=user_auth)
     current_user: UserFull = user_client.users.get_user_me()
     assert current_user.id == user_id
-    enterprise_auth: BoxJWTAuth = auth.as_enterprise(enterprise_id)
+    enterprise_auth: BoxJWTAuth = auth.with_enterprise_subject(enterprise_id)
     enterprise_client: BoxClient = BoxClient(auth=enterprise_auth)
     new_user: UserFull = enterprise_client.users.get_user_me(fields=['enterprise'])
     assert not new_user.enterprise == None
@@ -134,11 +134,11 @@ def test_ccg_auth():
         user_id=user_id,
     )
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
-    user_auth: BoxCCGAuth = auth.as_user(user_id)
+    user_auth: BoxCCGAuth = auth.with_user_subject(user_id)
     user_client: BoxClient = BoxClient(auth=user_auth)
     current_user: UserFull = user_client.users.get_user_me()
     assert current_user.id == user_id
-    enterprise_auth: BoxCCGAuth = auth.as_enterprise(enterprise_id)
+    enterprise_auth: BoxCCGAuth = auth.with_enterprise_subject(enterprise_id)
     enterprise_client: BoxClient = BoxClient(auth=enterprise_auth)
     new_user: UserFull = enterprise_client.users.get_user_me(fields=['enterprise'])
     assert not new_user.enterprise == None
@@ -196,9 +196,8 @@ def get_access_token() -> AccessToken:
         user_id=user_id,
     )
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
-    auth.as_user(user_id)
-    token: AccessToken = auth.retrieve_token()
-    return token
+    auth_user: BoxCCGAuth = auth.with_user_subject(user_id)
+    return auth_user.retrieve_token()
 
 
 def test_developer_token_auth():

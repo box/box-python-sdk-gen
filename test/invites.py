@@ -14,12 +14,12 @@ from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import get_env_var
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 
 def testInvites():
     user_id: str = get_env_var('USER_ID')
-    client: BoxClient = get_default_client_as_user(user_id)
+    client: BoxClient = get_default_client_with_user_subject(user_id)
     current_user: UserFull = client.users.get_user_me(fields=['enterprise'])
     email: str = get_env_var('BOX_EXTERNAL_USER_EMAIL')
     invitation: Invite = client.invites.create_invite(

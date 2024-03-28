@@ -28,7 +28,7 @@ from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 client: BoxClient = get_default_client()
 
@@ -50,7 +50,7 @@ def testSharedLinksFolders():
     )
     assert to_string(folder_from_api.shared_link.access) == 'open'
     user_id: str = get_env_var('USER_ID')
-    user_client: BoxClient = get_default_client_as_user(user_id)
+    user_client: BoxClient = get_default_client_with_user_subject(user_id)
     folder_from_shared_link_password: FolderFull = (
         user_client.shared_links_folders.find_folder_for_shared_link(
             ''.join(

@@ -12,13 +12,13 @@ from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolderTypeFi
 
 from box_sdk_gen.internal.utils import get_env_var
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 
 def testGetCopyUpdateDeleteFileRequest():
     file_request_id: str = get_env_var('BOX_FILE_REQUEST_ID')
     user_id: str = get_env_var('USER_ID')
-    client: BoxClient = get_default_client_as_user(user_id)
+    client: BoxClient = get_default_client_with_user_subject(user_id)
     file_request: FileRequest = client.file_requests.get_file_request_by_id(
         file_request_id
     )

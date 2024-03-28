@@ -8,17 +8,17 @@ from box_sdk_gen.internal.utils import decode_base_64
 
 from box_sdk_gen.internal.utils import get_env_var
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 
 def testGetSignTemplates():
-    client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
+    client: BoxClient = get_default_client_with_user_subject(get_env_var('USER_ID'))
     sign_templates: SignTemplates = client.sign_templates.get_sign_templates(limit=2)
     assert len(sign_templates.entries) >= 0
 
 
 def testGetSignTemplate():
-    client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
+    client: BoxClient = get_default_client_with_user_subject(get_env_var('USER_ID'))
     sign_templates: SignTemplates = client.sign_templates.get_sign_templates(limit=2)
     assert len(sign_templates.entries) >= 0
     if len(sign_templates.entries) > 0:

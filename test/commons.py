@@ -97,9 +97,9 @@ def get_jwt_auth() -> BoxJWTAuth:
     return auth
 
 
-def get_default_client_as_user(user_id: str) -> BoxClient:
+def get_default_client_with_user_subject(user_id: str) -> BoxClient:
     auth: BoxJWTAuth = get_jwt_auth()
-    auth_user: BoxJWTAuth = auth.as_user(user_id)
+    auth_user: BoxJWTAuth = auth.with_user_subject(user_id)
     return BoxClient(auth=auth_user)
 
 

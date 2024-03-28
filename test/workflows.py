@@ -36,13 +36,15 @@ from test.commons import get_default_client
 
 from test.commons import upload_new_file
 
-from test.commons import get_default_client_as_user
+from test.commons import get_default_client_with_user_subject
 
 client: BoxClient = get_default_client()
 
 
 def testWorkflows():
-    admin_client: BoxClient = get_default_client_as_user(get_env_var('USER_ID'))
+    admin_client: BoxClient = get_default_client_with_user_subject(
+        get_env_var('USER_ID')
+    )
     workflow_folder_id: str = get_env_var('WORKFLOW_FOLDER_ID')
     uploaded_files: Files = admin_client.uploads.upload_file(
         UploadFileAttributes(
