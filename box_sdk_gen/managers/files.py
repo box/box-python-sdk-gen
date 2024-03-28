@@ -250,7 +250,7 @@ class FilesManager:
         Additionally this field can be used to query any metadata
         applied to the file by specifying the `metadata` field as well
         as the scope and key of the template to retrieve, for example
-        `?field=metadata.enterprise_12345.contractTemplate`., defaults to None
+        `?fields=metadata.enterprise_12345.contractTemplate`., defaults to None
                 :type fields: Optional[List[str]], optional
                 :param if_none_match: Ensures an item is only returned if it has changed.
 
