@@ -50,17 +50,13 @@ class UpdateClassificationOnFileRequestBodyPathField(str, Enum):
 class UpdateClassificationOnFileRequestBody(BaseObject):
     def __init__(
         self,
-        op: UpdateClassificationOnFileRequestBodyOpField,
-        path: UpdateClassificationOnFileRequestBodyPathField,
         value: str,
+        *,
+        op: UpdateClassificationOnFileRequestBodyOpField = UpdateClassificationOnFileRequestBodyOpField.REPLACE.value,
+        path: UpdateClassificationOnFileRequestBodyPathField = UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
         **kwargs
     ):
         """
-                :param op: `replace`
-                :type op: UpdateClassificationOnFileRequestBodyOpField
-                :param path: Defines classifications
-        available in the enterprise.
-                :type path: UpdateClassificationOnFileRequestBodyPathField
                 :param value: The name of the classification to apply to this file.
 
         To list the available classifications in an enterprise,
@@ -68,11 +64,16 @@ class UpdateClassificationOnFileRequestBody(BaseObject):
         [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
         which lists all available classification keys.
                 :type value: str
+                :param op: `replace`, defaults to UpdateClassificationOnFileRequestBodyOpField.REPLACE.value
+                :type op: UpdateClassificationOnFileRequestBodyOpField, optional
+                :param path: Defines classifications
+        available in the enterprise., defaults to UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type path: UpdateClassificationOnFileRequestBodyPathField, optional
         """
         super().__init__(**kwargs)
+        self.value = value
         self.op = op
         self.path = path
-        self.value = value
 
 
 class FileClassificationsManager:

@@ -8,12 +8,6 @@ from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
 
 from box_sdk_gen.managers.classifications import AddClassificationRequestBody
 
-from box_sdk_gen.managers.classifications import AddClassificationRequestBodyOpField
-
-from box_sdk_gen.managers.classifications import (
-    AddClassificationRequestBodyFieldKeyField,
-)
-
 from box_sdk_gen.managers.classifications import AddClassificationRequestBodyDataField
 
 from box_sdk_gen.managers.classifications import (
@@ -30,14 +24,6 @@ from box_sdk_gen.schemas import Classification
 
 from box_sdk_gen.managers.file_classifications import (
     UpdateClassificationOnFileRequestBody,
-)
-
-from box_sdk_gen.managers.file_classifications import (
-    UpdateClassificationOnFileRequestBodyOpField,
-)
-
-from box_sdk_gen.managers.file_classifications import (
-    UpdateClassificationOnFileRequestBodyPathField,
 )
 
 from box_sdk_gen.internal.utils import get_uuid
@@ -67,8 +53,6 @@ def get_or_create_second_classification(
             client.classifications.add_classification(
                 [
                     AddClassificationRequestBody(
-                        op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
-                        field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
                         data=AddClassificationRequestBodyDataField(
                             key=get_uuid(),
                             static_config=AddClassificationRequestBodyDataStaticConfigField(
@@ -77,7 +61,7 @@ def get_or_create_second_classification(
                                     classification_definition='Other description',
                                 )
                             ),
-                        ),
+                        )
                     )
                 ]
             )
@@ -115,13 +99,7 @@ def testFileClassifications():
     updated_file_classification: Classification = (
         client.file_classifications.update_classification_on_file(
             file.id,
-            [
-                UpdateClassificationOnFileRequestBody(
-                    op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value,
-                    path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
-                    value=second_classification.key,
-                )
-            ],
+            [UpdateClassificationOnFileRequestBody(value=second_classification.key)],
         )
     )
     assert (

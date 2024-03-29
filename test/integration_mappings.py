@@ -8,11 +8,7 @@ from box_sdk_gen.managers.folders import CreateFolderParent
 
 from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
 
-from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlackTypeField
-
 from box_sdk_gen.schemas import IntegrationMappingBoxItemSlack
-
-from box_sdk_gen.schemas import IntegrationMappingBoxItemSlackTypeField
 
 from box_sdk_gen.schemas import IntegrationMappings
 
@@ -40,13 +36,9 @@ def testIntegrationMappings():
     with pytest.raises(Exception):
         user_client.integration_mappings.create_slack_integration_mapping(
             IntegrationMappingPartnerItemSlack(
-                type=IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value,
-                id=partner_item_id,
-                slack_org_id=slack_org_id,
+                id=partner_item_id, slack_org_id=slack_org_id
             ),
-            IntegrationMappingBoxItemSlack(
-                id=folder.id, type=IntegrationMappingBoxItemSlackTypeField.FOLDER.value
-            ),
+            IntegrationMappingBoxItemSlack(id=folder.id),
         )
     integration_mappings: IntegrationMappings = (
         user_client.integration_mappings.get_slack_integration_mapping()

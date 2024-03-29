@@ -6,12 +6,6 @@ from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
 
 from box_sdk_gen.managers.classifications import UpdateClassificationRequestBody
 
-from box_sdk_gen.managers.classifications import UpdateClassificationRequestBodyOpField
-
-from box_sdk_gen.managers.classifications import (
-    UpdateClassificationRequestBodyFieldKeyField,
-)
-
 from box_sdk_gen.managers.classifications import (
     UpdateClassificationRequestBodyDataField,
 )
@@ -55,8 +49,6 @@ def testClassifications():
         client.classifications.update_classification(
             [
                 UpdateClassificationRequestBody(
-                    op=UpdateClassificationRequestBodyOpField.EDITENUMOPTION.value,
-                    field_key=UpdateClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
                     enum_option_key=classification.key,
                     data=UpdateClassificationRequestBodyDataField(
                         key=updated_classification_name,

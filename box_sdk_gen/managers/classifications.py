@@ -148,25 +148,26 @@ class AddClassificationRequestBody(BaseObject):
 
     def __init__(
         self,
-        op: AddClassificationRequestBodyOpField,
-        field_key: AddClassificationRequestBodyFieldKeyField,
         data: AddClassificationRequestBodyDataField,
+        *,
+        op: AddClassificationRequestBodyOpField = AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
+        field_key: AddClassificationRequestBodyFieldKeyField = AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
         **kwargs
     ):
         """
-                :param op: The type of change to perform on the classification
-        object.
-                :type op: AddClassificationRequestBodyOpField
-                :param field_key: Defines classifications
-        available in the enterprise.
-                :type field_key: AddClassificationRequestBodyFieldKeyField
                 :param data: The details of the classification to add.
                 :type data: AddClassificationRequestBodyDataField
+                :param op: The type of change to perform on the classification
+        object., defaults to AddClassificationRequestBodyOpField.ADDENUMOPTION.value
+                :type op: AddClassificationRequestBodyOpField, optional
+                :param field_key: Defines classifications
+        available in the enterprise., defaults to AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type field_key: AddClassificationRequestBodyFieldKeyField, optional
         """
         super().__init__(**kwargs)
+        self.data = data
         self.op = op
         self.field_key = field_key
-        self.data = data
 
 
 class UpdateClassificationRequestBodyOpField(str, Enum):
@@ -283,29 +284,30 @@ class UpdateClassificationRequestBody(BaseObject):
 
     def __init__(
         self,
-        op: UpdateClassificationRequestBodyOpField,
-        field_key: UpdateClassificationRequestBodyFieldKeyField,
         enum_option_key: str,
         data: UpdateClassificationRequestBodyDataField,
+        *,
+        op: UpdateClassificationRequestBodyOpField = UpdateClassificationRequestBodyOpField.EDITENUMOPTION.value,
+        field_key: UpdateClassificationRequestBodyFieldKeyField = UpdateClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
         **kwargs
     ):
         """
-                :param op: The type of change to perform on the classification
-        object.
-                :type op: UpdateClassificationRequestBodyOpField
-                :param field_key: Defines classifications
-        available in the enterprise.
-                :type field_key: UpdateClassificationRequestBodyFieldKeyField
                 :param enum_option_key: The original label of the classification to change.
                 :type enum_option_key: str
                 :param data: The details of the updated classification.
                 :type data: UpdateClassificationRequestBodyDataField
+                :param op: The type of change to perform on the classification
+        object., defaults to UpdateClassificationRequestBodyOpField.EDITENUMOPTION.value
+                :type op: UpdateClassificationRequestBodyOpField, optional
+                :param field_key: Defines classifications
+        available in the enterprise., defaults to UpdateClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type field_key: UpdateClassificationRequestBodyFieldKeyField, optional
         """
         super().__init__(**kwargs)
-        self.op = op
-        self.field_key = field_key
         self.enum_option_key = enum_option_key
         self.data = data
+        self.op = op
+        self.field_key = field_key
 
 
 class CreateClassificationTemplateScope(str, Enum):
@@ -439,26 +441,26 @@ class CreateClassificationTemplateFields(BaseObject):
 
     def __init__(
         self,
-        type: CreateClassificationTemplateFieldsTypeField,
-        key: CreateClassificationTemplateFieldsKeyField,
-        display_name: CreateClassificationTemplateFieldsDisplayNameField,
         options: List[CreateClassificationTemplateFieldsOptionsField],
         *,
+        type: CreateClassificationTemplateFieldsTypeField = CreateClassificationTemplateFieldsTypeField.ENUM.value,
+        key: CreateClassificationTemplateFieldsKeyField = CreateClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
+        display_name: CreateClassificationTemplateFieldsDisplayNameField = CreateClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value,
         hidden: Optional[bool] = None,
         **kwargs
     ):
         """
-                :param type: The type of the field
-        that is always enum.
-                :type type: CreateClassificationTemplateFieldsTypeField
-                :param key: Defines classifications
-        available in the enterprise.
-                :type key: CreateClassificationTemplateFieldsKeyField
-                :param display_name: A display name for the classification.
-                :type display_name: CreateClassificationTemplateFieldsDisplayNameField
                 :param options: The actual list of classifications that are present on
         this template.
                 :type options: List[CreateClassificationTemplateFieldsOptionsField]
+                :param type: The type of the field
+        that is always enum., defaults to CreateClassificationTemplateFieldsTypeField.ENUM.value
+                :type type: CreateClassificationTemplateFieldsTypeField, optional
+                :param key: Defines classifications
+        available in the enterprise., defaults to CreateClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type key: CreateClassificationTemplateFieldsKeyField, optional
+                :param display_name: A display name for the classification., defaults to CreateClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value
+                :type display_name: CreateClassificationTemplateFieldsDisplayNameField, optional
                 :param hidden: Determines if the classification
         template is
         hidden or available on
@@ -467,10 +469,10 @@ class CreateClassificationTemplateFields(BaseObject):
                 :type hidden: Optional[bool], optional
         """
         super().__init__(**kwargs)
+        self.options = options
         self.type = type
         self.key = key
         self.display_name = display_name
-        self.options = options
         self.hidden = hidden
 
 
@@ -622,11 +624,11 @@ class ClassificationsManager:
 
     def create_classification_template(
         self,
-        scope: CreateClassificationTemplateScope,
-        template_key: CreateClassificationTemplateTemplateKey,
-        display_name: CreateClassificationTemplateDisplayName,
         fields: List[CreateClassificationTemplateFields],
         *,
+        scope: CreateClassificationTemplateScope = CreateClassificationTemplateScope.ENTERPRISE.value,
+        template_key: CreateClassificationTemplateTemplateKey = CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
+        display_name: CreateClassificationTemplateDisplayName = CreateClassificationTemplateDisplayName.CLASSIFICATION.value,
         hidden: Optional[bool] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -648,19 +650,19 @@ class ClassificationsManager:
 
                 classifications.
 
-                :param scope: The scope in which to create the classifications. This should
-        be `enterprise` or `enterprise_{id}` where `id` is the unique
-        ID of the enterprise.
-                :type scope: CreateClassificationTemplateScope
-                :param template_key: Defines the list of metadata templates.
-                :type template_key: CreateClassificationTemplateTemplateKey
-                :param display_name: The name of the
-        template as shown in web and mobile interfaces.
-                :type display_name: CreateClassificationTemplateDisplayName
                 :param fields: The classification template requires exactly
         one field, which holds
         all the valid classification values.
                 :type fields: List[CreateClassificationTemplateFields]
+                :param scope: The scope in which to create the classifications. This should
+        be `enterprise` or `enterprise_{id}` where `id` is the unique
+        ID of the enterprise., defaults to CreateClassificationTemplateScope.ENTERPRISE.value
+                :type scope: CreateClassificationTemplateScope, optional
+                :param template_key: Defines the list of metadata templates., defaults to CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value
+                :type template_key: CreateClassificationTemplateTemplateKey, optional
+                :param display_name: The name of the
+        template as shown in web and mobile interfaces., defaults to CreateClassificationTemplateDisplayName.CLASSIFICATION.value
+                :type display_name: CreateClassificationTemplateDisplayName, optional
                 :param hidden: Determines if the classification template is
         hidden or available on web and mobile
         devices., defaults to None

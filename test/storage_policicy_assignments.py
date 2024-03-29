@@ -13,10 +13,6 @@ from box_sdk_gen.managers.storage_policy_assignments import (
 )
 
 from box_sdk_gen.managers.storage_policy_assignments import (
-    CreateStoragePolicyAssignmentStoragePolicyTypeField,
-)
-
-from box_sdk_gen.managers.storage_policy_assignments import (
     CreateStoragePolicyAssignmentAssignedTo,
 )
 
@@ -32,10 +28,6 @@ from box_sdk_gen.schemas import StoragePolicy
 
 from box_sdk_gen.managers.storage_policy_assignments import (
     UpdateStoragePolicyAssignmentByIdStoragePolicy,
-)
-
-from box_sdk_gen.managers.storage_policy_assignments import (
-    UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField,
 )
 
 from box_sdk_gen.internal.utils import get_env_var
@@ -62,10 +54,7 @@ def get_or_create_storage_policy_assignment(
             return storage_policy_assignments.entries[0]
     storage_policy_assignment: StoragePolicyAssignment = (
         client.storage_policy_assignments.create_storage_policy_assignment(
-            CreateStoragePolicyAssignmentStoragePolicy(
-                id=policy_id,
-                type=CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value,
-            ),
+            CreateStoragePolicyAssignmentStoragePolicy(id=policy_id),
             CreateStoragePolicyAssignmentAssignedTo(
                 id=user_id,
                 type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value,
@@ -101,10 +90,7 @@ def testGetStoragePolicyAssignments():
     updated_storage_policy_assignment: StoragePolicyAssignment = (
         client.storage_policy_assignments.update_storage_policy_assignment_by_id(
             storage_policy_assignment.id,
-            UpdateStoragePolicyAssignmentByIdStoragePolicy(
-                id=storage_policy_2.id,
-                type=UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value,
-            ),
+            UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id),
         )
     )
     assert updated_storage_policy_assignment.storage_policy.id == storage_policy_2.id

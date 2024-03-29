@@ -48,7 +48,7 @@ See the endpoint docs at
 <!-- sample post_terms_of_service_user_statuses -->
 
 ```python
-client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(CreateTermsOfServiceStatusForUserTos(type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value, id=tos.id), CreateTermsOfServiceStatusForUserUser(type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value, id=user.id), False)
+client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(CreateTermsOfServiceStatusForUserTos(id=tos.id), CreateTermsOfServiceStatusForUserUser(id=user.id), False)
 ```
 
 ### Arguments

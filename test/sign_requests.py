@@ -10,13 +10,9 @@ from box_sdk_gen.schemas import SignRequest
 
 from box_sdk_gen.schemas import FileBase
 
-from box_sdk_gen.schemas import FileBaseTypeField
-
 from box_sdk_gen.schemas import SignRequestCreateSigner
 
 from box_sdk_gen.schemas import FolderMini
-
-from box_sdk_gen.schemas import FolderBaseTypeField
 
 from box_sdk_gen.schemas import SignRequestPrefillTag
 
@@ -43,10 +39,8 @@ def testCreateGetCancelAndListSignRequest():
     destination_folder: FolderFull = create_new_folder()
     created_sign_request: SignRequest = client.sign_requests.create_sign_request(
         [SignRequestCreateSigner(email=signer_email)],
-        source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
-        parent_folder=FolderMini(
-            id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
-        ),
+        source_files=[FileBase(id=file_to_sign.id)],
+        parent_folder=FolderMini(id=destination_folder.id),
         prefill_tags=[
             SignRequestPrefillTag(
                 date_value=date_from_string('2035-01-01'), document_tag_id='0'
@@ -85,10 +79,8 @@ def testCreateSignRequestWithSignerGroupId():
             SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'),
             SignRequestCreateSigner(email=signer_2_email, signer_group_id='user'),
         ],
-        source_files=[FileBase(id=file_to_sign.id, type=FileBaseTypeField.FILE.value)],
-        parent_folder=FolderMini(
-            id=destination_folder.id, type=FolderBaseTypeField.FOLDER.value
-        ),
+        source_files=[FileBase(id=file_to_sign.id)],
+        parent_folder=FolderMini(id=destination_folder.id),
     )
     assert len(created_sign_request.signers) == 3
     assert (

@@ -336,23 +336,23 @@ class AuthorizationManager:
 
     def refresh_access_token(
         self,
-        grant_type: RefreshAccessTokenGrantType,
         client_id: str,
         client_secret: str,
         refresh_token: str,
         *,
+        grant_type: RefreshAccessTokenGrantType = RefreshAccessTokenGrantType.REFRESH_TOKEN.value,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AccessToken:
         """
         Refresh an Access Token using its client ID, secret, and refresh token.
-        :param grant_type: The type of request being made, in this case a refresh request.
-        :type grant_type: RefreshAccessTokenGrantType
         :param client_id: The client ID of the application requesting to refresh the token.
         :type client_id: str
         :param client_secret: The client secret of the application requesting to refresh the token.
         :type client_secret: str
         :param refresh_token: The refresh token to refresh.
         :type refresh_token: str
+        :param grant_type: The type of request being made, in this case a refresh request., defaults to RefreshAccessTokenGrantType.REFRESH_TOKEN.value
+        :type grant_type: RefreshAccessTokenGrantType, optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

@@ -255,10 +255,10 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
 
     def create_shield_information_barrier_segment_restriction(
         self,
-        type: CreateShieldInformationBarrierSegmentRestrictionType,
         shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment,
         restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment,
         *,
+        type: CreateShieldInformationBarrierSegmentRestrictionType = CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegmentRestriction:
@@ -267,15 +267,15 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
 
                 segment restriction object.
 
-                :param type: The type of the shield barrier segment
-        restriction for this member.
-                :type type: CreateShieldInformationBarrierSegmentRestrictionType
                 :param shield_information_barrier_segment: The `type` and `id` of the requested
         shield information barrier segment.
                 :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment
                 :param restricted_segment: The `type` and `id` of the restricted
         shield information barrier segment.
                 :type restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment
+                :param type: The type of the shield barrier segment
+        restriction for this member., defaults to CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value
+                :type type: CreateShieldInformationBarrierSegmentRestrictionType, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

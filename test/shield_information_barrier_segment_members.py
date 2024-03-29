@@ -22,8 +22,6 @@ from box_sdk_gen.managers.shield_information_barrier_segment_members import (
 
 from box_sdk_gen.schemas import UserBase
 
-from box_sdk_gen.schemas import UserBaseTypeField
-
 from box_sdk_gen.schemas import ShieldInformationBarrierSegmentMembers
 
 from box_sdk_gen.internal.utils import get_env_var
@@ -59,7 +57,7 @@ def testShieldInformationBarrierSegmentMembers():
                 id=segment.id,
                 type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
             ),
-            UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value),
+            UserBase(id=get_env_var('USER_ID')),
         )
     )
     assert segment_member.user.id == get_env_var('USER_ID')

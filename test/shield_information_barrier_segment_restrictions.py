@@ -74,7 +74,6 @@ def testShieldInformationBarrierSegmentRestrictions():
     segment_to_restrict_id: str = segment_to_restrict.id
     segment_restriction: ShieldInformationBarrierSegmentRestriction = (
         client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(
-            CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value,
             CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(
                 id=segment_id,
                 type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
@@ -83,6 +82,7 @@ def testShieldInformationBarrierSegmentRestrictions():
                 id=segment_to_restrict_id,
                 type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
             ),
+            type=CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value,
         )
     )
     segment_restriction_id: str = segment_restriction.id
