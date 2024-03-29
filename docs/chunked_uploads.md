@@ -9,8 +9,7 @@ This is a manager for chunked uploads (allowed for files at least 20MB).
 - [Remove upload session](#remove-upload-session)
 - [List parts](#list-parts)
 - [Commit upload session](#commit-upload-session)
-- [](#)
-- [](#)
+- [Upload_big_file](#upload-big-file)
 
 ## Create upload session
 
@@ -21,7 +20,11 @@ This operation is performed by calling function `create_file_upload_session`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-upload-sessions/).
 
-_Currently we don't have an example for calling `create_file_upload_session` in integration tests_
+<!-- sample post_files_upload_sessions -->
+
+```python
+self.create_file_upload_session(parent_folder_id, file_size, file_name)
+```
 
 ### Arguments
 
@@ -77,7 +80,11 @@ This operation is performed by calling function `get_file_upload_session_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-upload-sessions-id/).
 
-_Currently we don't have an example for calling `get_file_upload_session_by_id` in integration tests_
+<!-- sample get_files_upload_sessions_id -->
+
+```python
+self.get_file_upload_session_by_id(upload_session_id)
+```
 
 ### Arguments
 
@@ -101,7 +108,11 @@ This operation is performed by calling function `upload_file_part`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-upload-sessions-id/).
 
-_Currently we don't have an example for calling `upload_file_part` in integration tests_
+<!-- sample put_files_upload_sessions_id -->
+
+```python
+self.upload_file_part(acc.upload_session_id, generate_byte_stream_from_buffer(chunk_buffer), digest, content_range)
+```
 
 ### Arguments
 
@@ -159,7 +170,11 @@ This operation is performed by calling function `get_file_upload_session_parts`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-upload-sessions-id-parts/).
 
-_Currently we don't have an example for calling `get_file_upload_session_parts` in integration tests_
+<!-- sample get_files_upload_sessions_id_parts -->
+
+```python
+self.get_file_upload_session_parts(upload_session_id)
+```
 
 ### Arguments
 
@@ -188,7 +203,11 @@ This operation is performed by calling function `create_file_upload_session_comm
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-files-upload-sessions-id-commit/).
 
-_Currently we don't have an example for calling `create_file_upload_session_commit` in integration tests_
+<!-- sample post_files_upload_sessions_id_commit -->
+
+```python
+self.create_file_upload_session_commit(upload_session_id, parts, digest)
+```
 
 ### Arguments
 
@@ -215,34 +234,11 @@ Inspect the upload session to get more information about the
 progress of processing the chunks, then retry committing the file
 when all chunks have processed.
 
-##
+## Upload_big_file
 
-This operation is performed by calling function `reducer`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference//).
-
-_Currently we don't have an example for calling `reducer` in integration tests_
-
-### Arguments
-
-- acc `PartAccumulator`
-  -
-- chunk `ByteStream`
-  -
-
-### Returns
-
-This function returns a value of type `PartAccumulator`.
-
-##
+Starts the process of chunk uploading a big file. Should return a File object representing uploaded file.
 
 This operation is performed by calling function `upload_big_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference//).
-
-<!-- sample  -->
 
 ```python
 client.chunked_uploads.upload_big_file(file_byte_stream, file_name, file_size, parent_folder_id)

@@ -3,7 +3,7 @@
 - [Create zip download](#create-zip-download)
 - [Download zip archive](#download-zip-archive)
 - [Get zip download status](#get-zip-download-status)
-- [](#)
+- [Download ZIP](#download-zip)
 
 ## Create zip download
 
@@ -132,14 +132,11 @@ This function returns a value of type `ZipDownloadStatus`.
 
 Returns the status of the `zip` archive that is being downloaded.
 
-##
+## Download ZIP
+
+Creates a zip and downloads its content
 
 This operation is performed by calling function `download_zip`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference//).
-
-<!-- sample  -->
 
 ```python
 client.zip_downloads.download_zip([DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')

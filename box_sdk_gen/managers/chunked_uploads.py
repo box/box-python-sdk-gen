@@ -465,7 +465,7 @@ class ChunkedUploadsManager:
         )
         return deserialize(response.data, Files)
 
-    def reducer(self, acc: PartAccumulator, chunk: ByteStream) -> PartAccumulator:
+    def _reducer(self, acc: PartAccumulator, chunk: ByteStream) -> PartAccumulator:
         last_index: int = acc.last_index
         parts: List[UploadPart] = acc.parts
         chunk_buffer: Buffer = read_byte_stream(chunk)
@@ -532,7 +532,7 @@ class ChunkedUploadsManager:
         chunks_iterator: Iterator = iterate_chunks(file, part_size)
         results: PartAccumulator = reduce_iterator(
             chunks_iterator,
-            self.reducer,
+            self._reducer,
             PartAccumulator(
                 last_index=-1,
                 parts=[],
