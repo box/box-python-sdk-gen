@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.update_classification_on_folder(folder.id, [UpdateClassificationOnFolderRequestBody(op=UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+client.folder_classifications.update_classification_on_folder(folder.id, [UpdateClassificationOnFolderRequestBody(value=second_classification.key)])
 ```
 
 ### Arguments

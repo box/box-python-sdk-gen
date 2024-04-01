@@ -110,7 +110,7 @@ See the endpoint docs at
 <!-- sample post_shield_information_barriers -->
 
 ```python
-client.shield_information_barriers.create_shield_information_barrier(EnterpriseBase(id=enterprise_id, type=EnterpriseBaseTypeField.ENTERPRISE.value))
+client.shield_information_barriers.create_shield_information_barrier(EnterpriseBase(id=enterprise_id))
 ```
 
 ### Arguments

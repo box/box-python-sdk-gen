@@ -53,19 +53,20 @@ class CreateStoragePolicyAssignmentStoragePolicy(BaseObject):
 
     def __init__(
         self,
-        type: CreateStoragePolicyAssignmentStoragePolicyTypeField,
         id: str,
+        *,
+        type: CreateStoragePolicyAssignmentStoragePolicyTypeField = CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value,
         **kwargs
     ):
         """
-        :param type: The type to assign.
-        :type type: CreateStoragePolicyAssignmentStoragePolicyTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
+        :param type: The type to assign., defaults to CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value
+        :type type: CreateStoragePolicyAssignmentStoragePolicyTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class CreateStoragePolicyAssignmentAssignedToTypeField(str, Enum):
@@ -99,19 +100,20 @@ class UpdateStoragePolicyAssignmentByIdStoragePolicy(BaseObject):
 
     def __init__(
         self,
-        type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField,
         id: str,
+        *,
+        type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField = UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value,
         **kwargs
     ):
         """
-        :param type: The type to assign.
-        :type type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField
         :param id: The ID of the storage policy to assign.
         :type id: str
+        :param type: The type to assign., defaults to UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value
+        :type type: UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class StoragePolicyAssignmentsManager:

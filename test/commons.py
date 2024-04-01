@@ -26,12 +26,6 @@ from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
 
 from box_sdk_gen.managers.classifications import AddClassificationRequestBody
 
-from box_sdk_gen.managers.classifications import AddClassificationRequestBodyOpField
-
-from box_sdk_gen.managers.classifications import (
-    AddClassificationRequestBodyFieldKeyField,
-)
-
 from box_sdk_gen.managers.classifications import AddClassificationRequestBodyDataField
 
 from box_sdk_gen.managers.classifications import (
@@ -42,33 +36,13 @@ from box_sdk_gen.managers.classifications import (
     AddClassificationRequestBodyDataStaticConfigClassificationField,
 )
 
-from box_sdk_gen.managers.classifications import CreateClassificationTemplateScope
-
-from box_sdk_gen.managers.classifications import CreateClassificationTemplateTemplateKey
-
-from box_sdk_gen.managers.classifications import CreateClassificationTemplateDisplayName
-
 from box_sdk_gen.managers.classifications import CreateClassificationTemplateFields
-
-from box_sdk_gen.managers.classifications import (
-    CreateClassificationTemplateFieldsTypeField,
-)
-
-from box_sdk_gen.managers.classifications import (
-    CreateClassificationTemplateFieldsKeyField,
-)
-
-from box_sdk_gen.managers.classifications import (
-    CreateClassificationTemplateFieldsDisplayNameField,
-)
 
 from box_sdk_gen.schemas import ShieldInformationBarrier
 
 from box_sdk_gen.schemas import ShieldInformationBarriers
 
 from box_sdk_gen.schemas import EnterpriseBase
-
-from box_sdk_gen.schemas import EnterpriseBaseTypeField
 
 from box_sdk_gen.internal.utils import decode_base_64
 
@@ -159,8 +133,6 @@ def get_or_create_classification(
             client.classifications.add_classification(
                 [
                     AddClassificationRequestBody(
-                        op=AddClassificationRequestBodyOpField.ADDENUMOPTION.value,
-                        field_key=AddClassificationRequestBodyFieldKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
                         data=AddClassificationRequestBodyDataField(
                             key=get_uuid(),
                             static_config=AddClassificationRequestBodyDataStaticConfigField(
@@ -169,7 +141,7 @@ def get_or_create_classification(
                                     classification_definition='Some description',
                                 )
                             ),
-                        ),
+                        )
                     )
                 ]
             )
@@ -184,17 +156,7 @@ def get_or_create_classification_template() -> ClassificationTemplate:
         return client.classifications.get_classification_template()
     except Exception:
         return client.classifications.create_classification_template(
-            CreateClassificationTemplateScope.ENTERPRISE.value,
-            CreateClassificationTemplateTemplateKey.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
-            CreateClassificationTemplateDisplayName.CLASSIFICATION.value,
-            [
-                CreateClassificationTemplateFields(
-                    type=CreateClassificationTemplateFieldsTypeField.ENUM.value,
-                    key=CreateClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
-                    display_name=CreateClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value,
-                    options=[],
-                )
-            ],
+            [CreateClassificationTemplateFields(options=[])]
         )
 
 
@@ -207,8 +169,6 @@ def get_or_create_shield_information_barrier(
     number_of_barriers: int = len(barriers.entries)
     if number_of_barriers == 0:
         return client.shield_information_barriers.create_shield_information_barrier(
-            EnterpriseBase(
-                id=enterprise_id, type=EnterpriseBaseTypeField.ENTERPRISE.value
-            )
+            EnterpriseBase(id=enterprise_id)
         )
     return barriers.entries[number_of_barriers - 1]

@@ -93,7 +93,7 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.update_classification_on_file(file.id, [UpdateClassificationOnFileRequestBody(op=UpdateClassificationOnFileRequestBodyOpField.REPLACE.value, path=UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value, value=second_classification.key)])
+client.file_classifications.update_classification_on_file(file.id, [UpdateClassificationOnFileRequestBody(value=second_classification.key)])
 ```
 
 ### Arguments

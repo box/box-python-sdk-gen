@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample post_storage_policy_assignments -->
 
 ```python
-client.storage_policy_assignments.create_storage_policy_assignment(CreateStoragePolicyAssignmentStoragePolicy(id=policy_id, type=CreateStoragePolicyAssignmentStoragePolicyTypeField.STORAGE_POLICY.value), CreateStoragePolicyAssignmentAssignedTo(id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value))
+client.storage_policy_assignments.create_storage_policy_assignment(CreateStoragePolicyAssignmentStoragePolicy(id=policy_id), CreateStoragePolicyAssignmentAssignedTo(id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value))
 ```
 
 ### Arguments
@@ -109,7 +109,7 @@ See the endpoint docs at
 <!-- sample put_storage_policy_assignments_id -->
 
 ```python
-client.storage_policy_assignments.update_storage_policy_assignment_by_id(storage_policy_assignment.id, UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id, type=UpdateStoragePolicyAssignmentByIdStoragePolicyTypeField.STORAGE_POLICY.value))
+client.storage_policy_assignments.update_storage_policy_assignment_by_id(storage_policy_assignment.id, UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id))
 ```
 
 ### Arguments

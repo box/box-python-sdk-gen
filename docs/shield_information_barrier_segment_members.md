@@ -110,7 +110,7 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segment_members -->
 
 ```python
-client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), UserBase(id=get_env_var('USER_ID'), type=UserBaseTypeField.USER.value))
+client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(id=segment.id, type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value), UserBase(id=get_env_var('USER_ID')))
 ```
 
 ### Arguments

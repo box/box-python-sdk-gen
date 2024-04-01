@@ -50,17 +50,13 @@ class UpdateClassificationOnFolderRequestBodyPathField(str, Enum):
 class UpdateClassificationOnFolderRequestBody(BaseObject):
     def __init__(
         self,
-        op: UpdateClassificationOnFolderRequestBodyOpField,
-        path: UpdateClassificationOnFolderRequestBodyPathField,
         value: str,
+        *,
+        op: UpdateClassificationOnFolderRequestBodyOpField = UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value,
+        path: UpdateClassificationOnFolderRequestBodyPathField = UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
         **kwargs
     ):
         """
-                :param op: `replace`
-                :type op: UpdateClassificationOnFolderRequestBodyOpField
-                :param path: Defines classifications
-        available in the enterprise.
-                :type path: UpdateClassificationOnFolderRequestBodyPathField
                 :param value: The name of the classification to apply to this folder.
 
         To list the available classifications in an enterprise,
@@ -68,11 +64,16 @@ class UpdateClassificationOnFolderRequestBody(BaseObject):
         [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
         which lists all available classification keys.
                 :type value: str
+                :param op: `replace`, defaults to UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value
+                :type op: UpdateClassificationOnFolderRequestBodyOpField, optional
+                :param path: Defines classifications
+        available in the enterprise., defaults to UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type path: UpdateClassificationOnFolderRequestBodyPathField, optional
         """
         super().__init__(**kwargs)
+        self.value = value
         self.op = op
         self.path = path
-        self.value = value
 
 
 class FolderClassificationsManager:

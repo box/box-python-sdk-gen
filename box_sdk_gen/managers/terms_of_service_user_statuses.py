@@ -47,17 +47,21 @@ class CreateTermsOfServiceStatusForUserTos(BaseObject):
     _discriminator = 'type', {'terms_of_service'}
 
     def __init__(
-        self, type: CreateTermsOfServiceStatusForUserTosTypeField, id: str, **kwargs
+        self,
+        id: str,
+        *,
+        type: CreateTermsOfServiceStatusForUserTosTypeField = CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value,
+        **kwargs
     ):
         """
-        :param type: The type of object.
-        :type type: CreateTermsOfServiceStatusForUserTosTypeField
         :param id: The ID of terms of service
         :type id: str
+        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value
+        :type type: CreateTermsOfServiceStatusForUserTosTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class CreateTermsOfServiceStatusForUserUserTypeField(str, Enum):
@@ -68,17 +72,21 @@ class CreateTermsOfServiceStatusForUserUser(BaseObject):
     _discriminator = 'type', {'user'}
 
     def __init__(
-        self, type: CreateTermsOfServiceStatusForUserUserTypeField, id: str, **kwargs
+        self,
+        id: str,
+        *,
+        type: CreateTermsOfServiceStatusForUserUserTypeField = CreateTermsOfServiceStatusForUserUserTypeField.USER.value,
+        **kwargs
     ):
         """
-        :param type: The type of object.
-        :type type: CreateTermsOfServiceStatusForUserUserTypeField
         :param id: The ID of user
         :type id: str
+        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserUserTypeField.USER.value
+        :type type: CreateTermsOfServiceStatusForUserUserTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class TermsOfServiceUserStatusesManager:

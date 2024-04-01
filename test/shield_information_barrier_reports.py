@@ -19,7 +19,7 @@ from box_sdk_gen.schemas import ShieldInformationBarrier
 from box_sdk_gen.client import BoxClient
 
 
-def shieldInformationBarrierReports():
+def testShieldInformationBarrierReports():
     client: BoxClient = get_default_client_with_user_subject(get_env_var('USER_ID'))
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
     barrier: ShieldInformationBarrier = get_or_create_shield_information_barrier(

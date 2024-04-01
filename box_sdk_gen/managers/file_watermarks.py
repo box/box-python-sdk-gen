@@ -42,12 +42,17 @@ class UpdateFileWatermarkWatermarkImprintField(str, Enum):
 
 
 class UpdateFileWatermarkWatermark(BaseObject):
-    def __init__(self, imprint: UpdateFileWatermarkWatermarkImprintField, **kwargs):
+    def __init__(
+        self,
+        *,
+        imprint: UpdateFileWatermarkWatermarkImprintField = UpdateFileWatermarkWatermarkImprintField.DEFAULT.value,
+        **kwargs
+    ):
         """
                 :param imprint: The type of watermark to apply.
 
-        Currently only supports one option.
-                :type imprint: UpdateFileWatermarkWatermarkImprintField
+        Currently only supports one option., defaults to UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
+                :type imprint: UpdateFileWatermarkWatermarkImprintField, optional
         """
         super().__init__(**kwargs)
         self.imprint = imprint

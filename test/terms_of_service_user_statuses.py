@@ -13,15 +13,7 @@ from box_sdk_gen.managers.terms_of_service_user_statuses import (
 )
 
 from box_sdk_gen.managers.terms_of_service_user_statuses import (
-    CreateTermsOfServiceStatusForUserTosTypeField,
-)
-
-from box_sdk_gen.managers.terms_of_service_user_statuses import (
     CreateTermsOfServiceStatusForUserUser,
-)
-
-from box_sdk_gen.managers.terms_of_service_user_statuses import (
-    CreateTermsOfServiceStatusForUserUserTypeField,
 )
 
 from box_sdk_gen.schemas import TermsOfServiceUserStatuses
@@ -46,14 +38,8 @@ def testGetTermsOfServiceUserStatuses():
     )
     created_tos_user_status: TermsOfServiceUserStatus = (
         client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(
-            CreateTermsOfServiceStatusForUserTos(
-                type=CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value,
-                id=tos.id,
-            ),
-            CreateTermsOfServiceStatusForUserUser(
-                type=CreateTermsOfServiceStatusForUserUserTypeField.USER.value,
-                id=user.id,
-            ),
+            CreateTermsOfServiceStatusForUserTos(id=tos.id),
+            CreateTermsOfServiceStatusForUserUser(id=user.id),
             False,
         )
     )

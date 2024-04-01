@@ -161,27 +161,28 @@ class PostOAuth2TokenRefreshAccessTokenGrantTypeField(str, Enum):
 class PostOAuth2TokenRefreshAccessToken(BaseObject):
     def __init__(
         self,
-        grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField,
         client_id: str,
         client_secret: str,
         refresh_token: str,
+        *,
+        grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField = PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN.value,
         **kwargs
     ):
         """
-        :param grant_type: The type of request being made, in this case a refresh request.
-        :type grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField
         :param client_id: The client ID of the application requesting to refresh the token.
         :type client_id: str
         :param client_secret: The client secret of the application requesting to refresh the token.
         :type client_secret: str
         :param refresh_token: The refresh token to refresh.
         :type refresh_token: str
+        :param grant_type: The type of request being made, in this case a refresh request., defaults to PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN.value
+        :type grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField, optional
         """
         super().__init__(**kwargs)
-        self.grant_type = grant_type
         self.client_id = client_id
         self.client_secret = client_secret
         self.refresh_token = refresh_token
+        self.grant_type = grant_type
 
 
 class PostOAuth2Revoke(BaseObject):
@@ -853,35 +854,35 @@ class ClassificationTemplateFieldsField(BaseObject):
     def __init__(
         self,
         id: str,
-        type: ClassificationTemplateFieldsTypeField,
-        key: ClassificationTemplateFieldsKeyField,
-        display_name: ClassificationTemplateFieldsDisplayNameField,
         options: List[ClassificationTemplateFieldsOptionsField],
         *,
+        type: ClassificationTemplateFieldsTypeField = ClassificationTemplateFieldsTypeField.ENUM.value,
+        key: ClassificationTemplateFieldsKeyField = ClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value,
+        display_name: ClassificationTemplateFieldsDisplayNameField = ClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value,
         hidden: Optional[bool] = None,
         **kwargs
     ):
         """
                 :param id: The unique ID of the field.
                 :type id: str
-                :param type: The array item type.
-                :type type: ClassificationTemplateFieldsTypeField
-                :param key: Defines classifications
-        available in the enterprise.
-                :type key: ClassificationTemplateFieldsKeyField
-                :param display_name: `Classification`
-                :type display_name: ClassificationTemplateFieldsDisplayNameField
                 :param options: A list of classifications available in this enterprise.
                 :type options: List[ClassificationTemplateFieldsOptionsField]
+                :param type: The array item type., defaults to ClassificationTemplateFieldsTypeField.ENUM.value
+                :type type: ClassificationTemplateFieldsTypeField, optional
+                :param key: Defines classifications
+        available in the enterprise., defaults to ClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY.value
+                :type key: ClassificationTemplateFieldsKeyField, optional
+                :param display_name: `Classification`, defaults to ClassificationTemplateFieldsDisplayNameField.CLASSIFICATION.value
+                :type display_name: ClassificationTemplateFieldsDisplayNameField, optional
                 :param hidden: Classifications are always visible to web and mobile users., defaults to None
                 :type hidden: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.id = id
+        self.options = options
         self.type = type
         self.key = key
         self.display_name = display_name
-        self.options = options
         self.hidden = hidden
 
 
@@ -903,12 +904,12 @@ class ClassificationTemplate(BaseObject):
     def __init__(
         self,
         id: str,
-        type: ClassificationTemplateTypeField,
         scope: str,
-        template_key: ClassificationTemplateTemplateKeyField,
-        display_name: ClassificationTemplateDisplayNameField,
         fields: List[ClassificationTemplateFieldsField],
         *,
+        type: ClassificationTemplateTypeField = ClassificationTemplateTypeField.METADATA_TEMPLATE.value,
+        template_key: ClassificationTemplateTemplateKeyField = ClassificationTemplateTemplateKeyField.SECURITYCLASSIFICATION_6VMVOCHWUWO.value,
+        display_name: ClassificationTemplateDisplayNameField = ClassificationTemplateDisplayNameField.CLASSIFICATION.value,
         hidden: Optional[bool] = None,
         copy_instance_on_item_copy: Optional[bool] = None,
         **kwargs
@@ -916,19 +917,19 @@ class ClassificationTemplate(BaseObject):
         """
                 :param id: The ID of the classification template.
                 :type id: str
-                :param type: `metadata_template`
-                :type type: ClassificationTemplateTypeField
                 :param scope: The scope of the classification template. This is in the format
         `enterprise_{id}` where the `id` is the enterprise ID.
                 :type scope: str
-                :param template_key: `securityClassification-6VMVochwUWo`
-                :type template_key: ClassificationTemplateTemplateKeyField
-                :param display_name: The name of this template as shown in web and mobile interfaces.
-                :type display_name: ClassificationTemplateDisplayNameField
                 :param fields: A list of fields for this classification template. This includes
         only one field, the `Box__Security__Classification__Key`, which defines
         the different classifications available in this enterprise.
                 :type fields: List[ClassificationTemplateFieldsField]
+                :param type: `metadata_template`, defaults to ClassificationTemplateTypeField.METADATA_TEMPLATE.value
+                :type type: ClassificationTemplateTypeField, optional
+                :param template_key: `securityClassification-6VMVochwUWo`, defaults to ClassificationTemplateTemplateKeyField.SECURITYCLASSIFICATION_6VMVOCHWUWO.value
+                :type template_key: ClassificationTemplateTemplateKeyField, optional
+                :param display_name: The name of this template as shown in web and mobile interfaces., defaults to ClassificationTemplateDisplayNameField.CLASSIFICATION.value
+                :type display_name: ClassificationTemplateDisplayNameField, optional
                 :param hidden: Determines if the
         template is always available in web and mobile interfaces., defaults to None
                 :type hidden: Optional[bool], optional
@@ -940,11 +941,11 @@ class ClassificationTemplate(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.scope = scope
+        self.fields = fields
+        self.type = type
         self.template_key = template_key
         self.display_name = display_name
-        self.fields = fields
         self.hidden = hidden
         self.copy_instance_on_item_copy = copy_instance_on_item_copy
 
@@ -1274,7 +1275,12 @@ class FileBase(BaseObject):
     _discriminator = 'type', {'file'}
 
     def __init__(
-        self, id: str, type: FileBaseTypeField, *, etag: Optional[str] = None, **kwargs
+        self,
+        id: str,
+        *,
+        etag: Optional[str] = None,
+        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
+        **kwargs
     ):
         """
                 :param id: The unique identifier that represent a file.
@@ -1285,17 +1291,17 @@ class FileBase(BaseObject):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: FileBaseTypeField
                 :param etag: The HTTP `etag` of this file. This can be used within some API
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :type type: FileBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.etag = etag
+        self.type = type
 
 
 class FileVersionBaseTypeField(str, Enum):
@@ -1305,12 +1311,18 @@ class FileVersionBaseTypeField(str, Enum):
 class FileVersionBase(BaseObject):
     _discriminator = 'type', {'file_version'}
 
-    def __init__(self, id: str, type: FileVersionBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`
-        :type type: FileVersionBaseTypeField
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1330,18 +1342,18 @@ class FileVersionMini(FileVersionBase):
     def __init__(
         self,
         id: str,
-        type: FileVersionBaseTypeField,
         *,
         sha_1: Optional[str] = None,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
         **kwargs
     ):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`
-        :type type: FileVersionBaseTypeField
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.sha_1 = sha_1
@@ -1360,13 +1372,13 @@ class FileMini(FileBase):
     def __init__(
         self,
         id: str,
-        type: FileBaseTypeField,
         *,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         sha_1: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         etag: Optional[str] = None,
+        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
         **kwargs
     ):
         """
@@ -1378,8 +1390,6 @@ class FileMini(FileBase):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: FileBaseTypeField
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
@@ -1389,8 +1399,10 @@ class FileMini(FileBase):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :type type: FileBaseTypeField, optional
         """
-        super().__init__(id=id, type=type, etag=etag, **kwargs)
+        super().__init__(id=id, etag=etag, type=type, **kwargs)
         self.sequence_id = sequence_id
         self.name = name
         self.sha_1 = sha_1
@@ -1430,13 +1442,13 @@ class FileConflict(FileMini):
     def __init__(
         self,
         id: str,
-        type: FileBaseTypeField,
         *,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         sha_1: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         etag: Optional[str] = None,
+        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
         **kwargs
     ):
         """
@@ -1448,8 +1460,6 @@ class FileConflict(FileMini):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: FileBaseTypeField
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
@@ -1459,15 +1469,17 @@ class FileConflict(FileMini):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :type type: FileBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             sequence_id=sequence_id,
             name=name,
             sha_1=sha_1,
             file_version=file_version,
             etag=etag,
+            type=type,
             **kwargs
         )
 
@@ -1536,9 +1548,9 @@ class FolderBase(BaseObject):
     def __init__(
         self,
         id: str,
-        type: FolderBaseTypeField,
         *,
         etag: Optional[str] = None,
+        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER.value,
         **kwargs
     ):
         """
@@ -1550,28 +1562,28 @@ class FolderBase(BaseObject):
         for the URL `https://*.app.box.com/folders/123`
         the `folder_id` is `123`.
                 :type id: str
-                :param type: `folder`
-                :type type: FolderBaseTypeField
                 :param etag: The HTTP `etag` of this folder. This can be used within some API
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER.value
+                :type type: FolderBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.etag = etag
+        self.type = type
 
 
 class FolderMini(FolderBase):
     def __init__(
         self,
         id: str,
-        type: FolderBaseTypeField,
         *,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         etag: Optional[str] = None,
+        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER.value,
         **kwargs
     ):
         """
@@ -1583,16 +1595,16 @@ class FolderMini(FolderBase):
         for the URL `https://*.app.box.com/folders/123`
         the `folder_id` is `123`.
                 :type id: str
-                :param type: `folder`
-                :type type: FolderBaseTypeField
                 :param name: The name of the folder., defaults to None
                 :type name: Optional[str], optional
                 :param etag: The HTTP `etag` of this folder. This can be used within some API
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER.value
+                :type type: FolderBaseTypeField, optional
         """
-        super().__init__(id=id, type=type, etag=etag, **kwargs)
+        super().__init__(id=id, etag=etag, type=type, **kwargs)
         self.sequence_id = sequence_id
         self.name = name
 
@@ -1759,12 +1771,18 @@ class GroupBaseTypeField(str, Enum):
 class GroupBase(BaseObject):
     _discriminator = 'type', {'group'}
 
-    def __init__(self, id: str, type: GroupBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier for this object
         :type id: str
-        :param type: `group`
-        :type type: GroupBaseTypeField
+        :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+        :type type: GroupBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1780,21 +1798,21 @@ class GroupMini(GroupBase):
     def __init__(
         self,
         id: str,
-        type: GroupBaseTypeField,
         *,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
+        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this object
         :type id: str
-        :param type: `group`
-        :type type: GroupBaseTypeField
         :param name: The name of the group, defaults to None
         :type name: Optional[str], optional
         :param group_type: The type of the group., defaults to None
         :type group_type: Optional[GroupMiniGroupTypeField], optional
+        :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+        :type type: GroupBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -1805,19 +1823,17 @@ class Group(GroupMini):
     def __init__(
         self,
         id: str,
-        type: GroupBaseTypeField,
         *,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
+        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this object
         :type id: str
-        :param type: `group`
-        :type type: GroupBaseTypeField
         :param created_at: When the group object was created, defaults to None
         :type created_at: Optional[DateTime], optional
         :param modified_at: When the group object was last modified, defaults to None
@@ -1826,8 +1842,10 @@ class Group(GroupMini):
         :type name: Optional[str], optional
         :param group_type: The type of the group., defaults to None
         :type group_type: Optional[GroupMiniGroupTypeField], optional
+        :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+        :type type: GroupBaseTypeField, optional
         """
-        super().__init__(id=id, type=type, name=name, group_type=group_type, **kwargs)
+        super().__init__(id=id, name=name, group_type=group_type, type=type, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
 
@@ -1858,7 +1876,6 @@ class GroupFull(Group):
     def __init__(
         self,
         id: str,
-        type: GroupBaseTypeField,
         *,
         provenance: Optional[str] = None,
         external_sync_identifier: Optional[str] = None,
@@ -1870,13 +1887,12 @@ class GroupFull(Group):
         modified_at: Optional[DateTime] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
+        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this object
                 :type id: str
-                :param type: `group`
-                :type type: GroupBaseTypeField
                 :param provenance: Keeps track of which external source this group is
         coming from (e.g. "Active Directory", "Google Groups",
         "Facebook Groups").  Setting this will
@@ -1923,14 +1939,16 @@ class GroupFull(Group):
                 :type name: Optional[str], optional
                 :param group_type: The type of the group., defaults to None
                 :type group_type: Optional[GroupMiniGroupTypeField], optional
+                :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+                :type type: GroupBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             created_at=created_at,
             modified_at=modified_at,
             name=name,
             group_type=group_type,
+            type=type,
             **kwargs
         )
         self.provenance = provenance
@@ -2017,12 +2035,18 @@ class LegalHoldPolicyMiniTypeField(str, Enum):
 class LegalHoldPolicyMini(BaseObject):
     _discriminator = 'type', {'legal_hold_policy'}
 
-    def __init__(self, id: str, type: LegalHoldPolicyMiniTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier for this legal hold policy
         :type id: str
-        :param type: `legal_hold_policy`
-        :type type: LegalHoldPolicyMiniTypeField
+        :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value
+        :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -2287,8 +2311,8 @@ class MetadataCascadePolicy(BaseObject):
     def __init__(
         self,
         id: str,
-        type: MetadataCascadePolicyTypeField,
         *,
+        type: MetadataCascadePolicyTypeField = MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY.value,
         owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField] = None,
         parent: Optional[MetadataCascadePolicyParentField] = None,
         scope: Optional[str] = None,
@@ -2298,8 +2322,8 @@ class MetadataCascadePolicy(BaseObject):
         """
                 :param id: The ID of the metadata cascade policy object
                 :type id: str
-                :param type: `metadata_cascade_policy`
-                :type type: MetadataCascadePolicyTypeField
+                :param type: `metadata_cascade_policy`, defaults to MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY.value
+                :type type: MetadataCascadePolicyTypeField, optional
                 :param owner_enterprise: The enterprise that owns this policy., defaults to None
                 :type owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField], optional
                 :param parent: Represent the folder the policy is applied to., defaults to None
@@ -2537,8 +2561,8 @@ class MetadataTemplate(BaseObject):
     def __init__(
         self,
         id: str,
-        type: MetadataTemplateTypeField,
         *,
+        type: MetadataTemplateTypeField = MetadataTemplateTypeField.METADATA_TEMPLATE.value,
         scope: Optional[str] = None,
         template_key: Optional[str] = None,
         display_name: Optional[str] = None,
@@ -2550,8 +2574,8 @@ class MetadataTemplate(BaseObject):
         """
                 :param id: The ID of the metadata template.
                 :type id: str
-                :param type: `metadata_template`
-                :type type: MetadataTemplateTypeField
+                :param type: `metadata_template`, defaults to MetadataTemplateTypeField.METADATA_TEMPLATE.value
+                :type type: MetadataTemplateTypeField, optional
                 :param scope: The scope of the metadata template can either be `global` or
         `enterprise_*`. The `global` scope is used for templates that are
         available to any Box enterprise. The `enterprise_*` scope represents
@@ -2679,12 +2703,18 @@ class RetentionPolicyBaseTypeField(str, Enum):
 class RetentionPolicyBase(BaseObject):
     _discriminator = 'type', {'retention_policy'}
 
-    def __init__(self, id: str, type: RetentionPolicyBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier that represents a retention policy.
         :type id: str
-        :param type: `retention_policy`
-        :type type: RetentionPolicyBaseTypeField
+        :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY.value
+        :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -2700,18 +2730,16 @@ class RetentionPolicyMini(RetentionPolicyBase):
     def __init__(
         self,
         id: str,
-        type: RetentionPolicyBaseTypeField,
         *,
         policy_name: Optional[str] = None,
         retention_length: Optional[str] = None,
         disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None,
+        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier that represents a retention policy.
                 :type id: str
-                :param type: `retention_policy`
-                :type type: RetentionPolicyBaseTypeField
                 :param policy_name: The name given to the retention policy., defaults to None
                 :type policy_name: Optional[str], optional
                 :param retention_length: The length of the retention policy. This value
@@ -2729,6 +2757,8 @@ class RetentionPolicyMini(RetentionPolicyBase):
         allowing it to be deleted by users,
         once the retention policy has expired., defaults to None
                 :type disposition_action: Optional[RetentionPolicyMiniDispositionActionField], optional
+                :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY.value
+                :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.policy_name = policy_name
@@ -2813,12 +2843,18 @@ class RetentionPolicyAssignmentBaseTypeField(str, Enum):
 class RetentionPolicyAssignmentBase(BaseObject):
     _discriminator = 'type', {'retention_policy_assignment'}
 
-    def __init__(self, id: str, type: RetentionPolicyAssignmentBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: RetentionPolicyAssignmentBaseTypeField = RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier that represents a file version.
         :type id: str
-        :param type: `retention_policy_assignment`
-        :type type: RetentionPolicyAssignmentBaseTypeField
+        :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT.value
+        :type type: RetentionPolicyAssignmentBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3051,12 +3087,18 @@ class StoragePolicyMiniTypeField(str, Enum):
 class StoragePolicyMini(BaseObject):
     _discriminator = 'type', {'storage_policy'}
 
-    def __init__(self, id: str, type: StoragePolicyMiniTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier for this storage policy
         :type id: str
-        :param type: `storage_policy`
-        :type type: StoragePolicyMiniTypeField
+        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY.value
+        :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3088,8 +3130,8 @@ class StoragePolicyAssignment(BaseObject):
     def __init__(
         self,
         id: str,
-        type: StoragePolicyAssignmentTypeField,
         *,
+        type: StoragePolicyAssignmentTypeField = StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT.value,
         storage_policy: Optional[StoragePolicyMini] = None,
         assigned_to: Optional[StoragePolicyAssignmentAssignedToField] = None,
         **kwargs
@@ -3097,8 +3139,8 @@ class StoragePolicyAssignment(BaseObject):
         """
         :param id: The unique identifier for a storage policy assignment.
         :type id: str
-        :param type: `storage_policy_assignment`
-        :type type: StoragePolicyAssignmentTypeField
+        :param type: `storage_policy_assignment`, defaults to StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT.value
+        :type type: StoragePolicyAssignmentTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3140,18 +3182,18 @@ class StoragePolicy(StoragePolicyMini):
     def __init__(
         self,
         id: str,
-        type: StoragePolicyMiniTypeField,
         *,
         name: Optional[str] = None,
+        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this storage policy
         :type id: str
-        :param type: `storage_policy`
-        :type type: StoragePolicyMiniTypeField
         :param name: A descriptive name of the region, defaults to None
         :type name: Optional[str], optional
+        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY.value
+        :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -3193,12 +3235,18 @@ class TermsOfServiceBaseTypeField(str, Enum):
 class TermsOfServiceBase(BaseObject):
     _discriminator = 'type', {'terms_of_service'}
 
-    def __init__(self, id: str, type: TermsOfServiceBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier for this terms of service.
         :type id: str
-        :param type: `terms_of_service`
-        :type type: TermsOfServiceBaseTypeField
+        :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value
+        :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3248,7 +3296,6 @@ class TermsOfService(TermsOfServiceBase):
     def __init__(
         self,
         id: str,
-        type: TermsOfServiceBaseTypeField,
         *,
         status: Optional[TermsOfServiceStatusField] = None,
         enterprise: Optional[TermsOfServiceEnterpriseField] = None,
@@ -3256,13 +3303,12 @@ class TermsOfService(TermsOfServiceBase):
         text: Optional[str] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
+        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this terms of service.
                 :type id: str
-                :param type: `terms_of_service`
-                :type type: TermsOfServiceBaseTypeField
                 :param status: Whether these terms are enabled or not, defaults to None
                 :type status: Optional[TermsOfServiceStatusField], optional
                 :param tos_type: Whether to apply these terms to managed users or external users, defaults to None
@@ -3274,6 +3320,8 @@ class TermsOfService(TermsOfServiceBase):
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal item was modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
+                :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value
+                :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.status = status
@@ -3585,12 +3633,18 @@ class UserBaseTypeField(str, Enum):
 class UserBase(BaseObject):
     _discriminator = 'type', {'user'}
 
-    def __init__(self, id: str, type: UserBaseTypeField, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
+        **kwargs
+    ):
         """
         :param id: The unique identifier for this user
         :type id: str
-        :param type: `user`
-        :type type: UserBaseTypeField
+        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :type type: UserBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
@@ -3601,21 +3655,21 @@ class UserIntegrationMappings(UserBase):
     def __init__(
         self,
         id: str,
-        type: UserBaseTypeField,
         *,
         name: Optional[str] = None,
         login: Optional[str] = None,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this user
         :type id: str
-        :param type: `user`
-        :type type: UserBaseTypeField
         :param name: The display name of this user, defaults to None
         :type name: Optional[str], optional
         :param login: The primary email address of this user, defaults to None
         :type login: Optional[str], optional
+        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -3626,21 +3680,21 @@ class UserCollaborations(UserBase):
     def __init__(
         self,
         id: str,
-        type: UserBaseTypeField,
         *,
         name: Optional[str] = None,
         login: Optional[str] = None,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this user
         :type id: str
-        :param type: `user`
-        :type type: UserBaseTypeField
         :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned., defaults to None
         :type name: Optional[str], optional
         :param login: The primary email address of this user. If the collaboration status is `pending`, an empty string is returned., defaults to None
         :type login: Optional[str], optional
+        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -3651,21 +3705,21 @@ class UserMini(UserBase):
     def __init__(
         self,
         id: str,
-        type: UserBaseTypeField,
         *,
         name: Optional[str] = None,
         login: Optional[str] = None,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
         **kwargs
     ):
         """
         :param id: The unique identifier for this user
         :type id: str
-        :param type: `user`
-        :type type: UserBaseTypeField
         :param name: The display name of this user, defaults to None
         :type name: Optional[str], optional
         :param login: The primary email address of this user, defaults to None
         :type login: Optional[str], optional
+        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.name = name
@@ -3757,7 +3811,6 @@ class User(UserMini):
     def __init__(
         self,
         id: str,
-        type: UserBaseTypeField,
         *,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
@@ -3774,13 +3827,12 @@ class User(UserMini):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this user
                 :type id: str
-                :param type: `user`
-                :type type: UserBaseTypeField
                 :param created_at: When the user object was created, defaults to None
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the user object was last modified, defaults to None
@@ -3815,8 +3867,10 @@ class User(UserMini):
                 :type name: Optional[str], optional
                 :param login: The primary email address of this user, defaults to None
                 :type login: Optional[str], optional
+                :param type: `user`, defaults to UserBaseTypeField.USER.value
+                :type type: UserBaseTypeField, optional
         """
-        super().__init__(id=id, type=type, name=name, login=login, **kwargs)
+        super().__init__(id=id, name=name, login=login, type=type, **kwargs)
         self.created_at = created_at
         self.modified_at = modified_at
         self.language = language
@@ -4106,7 +4160,6 @@ class TrashFileRestored(BaseObject):
     def __init__(
         self,
         id: str,
-        type: TrashFileRestoredTypeField,
         sequence_id: str,
         sha_1: str,
         description: str,
@@ -4119,6 +4172,7 @@ class TrashFileRestored(BaseObject):
         item_status: TrashFileRestoredItemStatusField,
         *,
         etag: Optional[str] = None,
+        type: TrashFileRestoredTypeField = TrashFileRestoredTypeField.FILE.value,
         name: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         trashed_at: Optional[str] = None,
@@ -4139,8 +4193,6 @@ class TrashFileRestored(BaseObject):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: TrashFileRestoredTypeField
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file.
                 :type sha_1: str
@@ -4163,6 +4215,8 @@ class TrashFileRestored(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to TrashFileRestoredTypeField.FILE.value
+                :type type: TrashFileRestoredTypeField, optional
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional
                 :param trashed_at: The time at which this file was put in the
@@ -4184,7 +4238,6 @@ class TrashFileRestored(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.sequence_id = sequence_id
         self.sha_1 = sha_1
         self.description = description
@@ -4196,6 +4249,7 @@ class TrashFileRestored(BaseObject):
         self.owned_by = owned_by
         self.item_status = item_status
         self.etag = etag
+        self.type = type
         self.name = name
         self.file_version = file_version
         self.trashed_at = trashed_at
@@ -4423,7 +4477,6 @@ class TrashFolder(BaseObject):
     def __init__(
         self,
         id: str,
-        type: TrashFolderTypeField,
         name: str,
         description: str,
         size: int,
@@ -4434,6 +4487,7 @@ class TrashFolder(BaseObject):
         item_status: TrashFolderItemStatusField,
         *,
         etag: Optional[str] = None,
+        type: TrashFolderTypeField = TrashFolderTypeField.FOLDER.value,
         sequence_id: Optional[str] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
@@ -4455,8 +4509,6 @@ class TrashFolder(BaseObject):
         for the URL `https://*.app.box.com/folders/123`
         the `folder_id` is `123`.
                 :type id: str
-                :param type: `folder`
-                :type type: TrashFolderTypeField
                 :param name: The name of the folder.
                 :type name: str
                 :param size: The folder size in bytes.
@@ -4474,6 +4526,8 @@ class TrashFolder(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `folder`, defaults to TrashFolderTypeField.FOLDER.value
+                :type type: TrashFolderTypeField, optional
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
@@ -4503,7 +4557,6 @@ class TrashFolder(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.name = name
         self.description = description
         self.size = size
@@ -4513,6 +4566,7 @@ class TrashFolder(BaseObject):
         self.owned_by = owned_by
         self.item_status = item_status
         self.etag = etag
+        self.type = type
         self.sequence_id = sequence_id
         self.created_at = created_at
         self.modified_at = modified_at
@@ -4604,7 +4658,6 @@ class TrashFile(BaseObject):
     def __init__(
         self,
         id: str,
-        type: TrashFileTypeField,
         sequence_id: str,
         sha_1: str,
         description: str,
@@ -4617,6 +4670,7 @@ class TrashFile(BaseObject):
         item_status: TrashFileItemStatusField,
         *,
         etag: Optional[str] = None,
+        type: TrashFileTypeField = TrashFileTypeField.FILE.value,
         name: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         trashed_at: Optional[DateTime] = None,
@@ -4637,8 +4691,6 @@ class TrashFile(BaseObject):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: TrashFileTypeField
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file.
                 :type sha_1: str
@@ -4661,6 +4713,8 @@ class TrashFile(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to TrashFileTypeField.FILE.value
+                :type type: TrashFileTypeField, optional
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional
                 :param trashed_at: The time at which this file was put in the trash., defaults to None
@@ -4681,7 +4735,6 @@ class TrashFile(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.sequence_id = sequence_id
         self.sha_1 = sha_1
         self.description = description
@@ -4693,6 +4746,7 @@ class TrashFile(BaseObject):
         self.owned_by = owned_by
         self.item_status = item_status
         self.etag = etag
+        self.type = type
         self.name = name
         self.file_version = file_version
         self.trashed_at = trashed_at
@@ -4714,8 +4768,8 @@ class TermsOfServiceUserStatus(BaseObject):
     def __init__(
         self,
         id: str,
-        type: TermsOfServiceUserStatusTypeField,
         *,
+        type: TermsOfServiceUserStatusTypeField = TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS.value,
         tos: Optional[TermsOfServiceBase] = None,
         user: Optional[UserMini] = None,
         is_accepted: Optional[bool] = None,
@@ -4726,8 +4780,8 @@ class TermsOfServiceUserStatus(BaseObject):
         """
         :param id: The unique identifier for this terms of service user status
         :type id: str
-        :param type: `terms_of_service_user_status`
-        :type type: TermsOfServiceUserStatusTypeField
+        :param type: `terms_of_service_user_status`, defaults to TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS.value
+        :type type: TermsOfServiceUserStatusTypeField, optional
         :param is_accepted: If the user has accepted the terms of services, defaults to None
         :type is_accepted: Optional[bool], optional
         :param created_at: When the legal item was created, defaults to None
@@ -4994,8 +5048,8 @@ class RetentionPolicyAssignment(BaseObject):
     def __init__(
         self,
         id: str,
-        type: RetentionPolicyAssignmentTypeField,
         *,
+        type: RetentionPolicyAssignmentTypeField = RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT.value,
         retention_policy: Optional[RetentionPolicyMini] = None,
         assigned_to: Optional[RetentionPolicyAssignmentAssignedToField] = None,
         filter_fields: Optional[
@@ -5009,8 +5063,8 @@ class RetentionPolicyAssignment(BaseObject):
         """
                 :param id: The unique identifier for a retention policy assignment.
                 :type id: str
-                :param type: `retention_policy_assignment`
-                :type type: RetentionPolicyAssignmentTypeField
+                :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT.value
+                :type type: RetentionPolicyAssignmentTypeField, optional
                 :param assigned_to: The `type` and `id` of the content that is under
         retention. The `type` can either be `folder`
         `enterprise`, or `metadata_template`., defaults to None
@@ -5104,7 +5158,6 @@ class RetentionPolicy(RetentionPolicyMini):
     def __init__(
         self,
         id: str,
-        type: RetentionPolicyBaseTypeField,
         *,
         description: Optional[str] = None,
         policy_type: Optional[RetentionPolicyPolicyTypeField] = None,
@@ -5120,13 +5173,12 @@ class RetentionPolicy(RetentionPolicyMini):
         policy_name: Optional[str] = None,
         retention_length: Optional[str] = None,
         disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None,
+        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier that represents a retention policy.
                 :type id: str
-                :param type: `retention_policy`
-                :type type: RetentionPolicyBaseTypeField
                 :param description: The additional text description of the retention policy., defaults to None
                 :type description: Optional[str], optional
                 :param policy_type: The type of the retention policy. A retention
@@ -5190,13 +5242,15 @@ class RetentionPolicy(RetentionPolicyMini):
         allowing it to be deleted by users,
         once the retention policy has expired., defaults to None
                 :type disposition_action: Optional[RetentionPolicyMiniDispositionActionField], optional
+                :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY.value
+                :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             policy_name=policy_name,
             retention_length=retention_length,
             disposition_action=disposition_action,
+            type=type,
             **kwargs
         )
         self.description = description
@@ -5275,7 +5329,6 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
     def __init__(
         self,
         id: str,
-        type: LegalHoldPolicyMiniTypeField,
         *,
         policy_name: Optional[str] = None,
         description: Optional[str] = None,
@@ -5288,13 +5341,12 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         filter_started_at: Optional[DateTime] = None,
         filter_ended_at: Optional[DateTime] = None,
         release_notes: Optional[str] = None,
+        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this legal hold policy
                 :type id: str
-                :param type: `legal_hold_policy`
-                :type type: LegalHoldPolicyMiniTypeField
                 :param policy_name: Name of the legal hold policy., defaults to None
                 :type policy_name: Optional[str], optional
                 :param description: Description of the legal hold policy. Optional
@@ -5328,6 +5380,8 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
                 :type filter_ended_at: Optional[DateTime], optional
                 :param release_notes: Optional notes about why the policy was created., defaults to None
                 :type release_notes: Optional[str], optional
+                :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value
+                :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
         self.policy_name = policy_name
@@ -5411,8 +5465,8 @@ class Invite(BaseObject):
     def __init__(
         self,
         id: str,
-        type: InviteTypeField,
         *,
+        type: InviteTypeField = InviteTypeField.INVITE.value,
         invited_to: Optional[InviteInvitedToField] = None,
         actionable_by: Optional[UserMini] = None,
         invited_by: Optional[UserMini] = None,
@@ -5424,8 +5478,8 @@ class Invite(BaseObject):
         """
         :param id: The unique identifier for this invite
         :type id: str
-        :param type: `invite`
-        :type type: InviteTypeField
+        :param type: `invite`, defaults to InviteTypeField.INVITE.value
+        :type type: InviteTypeField, optional
         :param invited_to: A representation of a Box enterprise, defaults to None
         :type invited_to: Optional[InviteInvitedToField], optional
         :param status: The status of the invite, defaults to None
@@ -5565,7 +5619,6 @@ class FileVersion(FileVersionMini):
     def __init__(
         self,
         id: str,
-        type: FileVersionBaseTypeField,
         *,
         name: Optional[str] = None,
         size: Optional[int] = None,
@@ -5579,13 +5632,12 @@ class FileVersion(FileVersionMini):
         purged_at: Optional[DateTime] = None,
         uploader_display_name: Optional[str] = None,
         sha_1: Optional[str] = None,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
         **kwargs
     ):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`
-        :type type: FileVersionBaseTypeField
         :param name: The name of the file version, defaults to None
         :type name: Optional[str], optional
         :param size: Size of the file version in bytes, defaults to None
@@ -5602,8 +5654,10 @@ class FileVersion(FileVersionMini):
         :type purged_at: Optional[DateTime], optional
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :type type: FileVersionBaseTypeField, optional
         """
-        super().__init__(id=id, type=type, sha_1=sha_1, **kwargs)
+        super().__init__(id=id, sha_1=sha_1, type=type, **kwargs)
         self.name = name
         self.size = size
         self.created_at = created_at
@@ -5621,7 +5675,6 @@ class FileVersionFull(FileVersion):
     def __init__(
         self,
         id: str,
-        type: FileVersionBaseTypeField,
         *,
         version_number: Optional[str] = None,
         name: Optional[str] = None,
@@ -5636,13 +5689,12 @@ class FileVersionFull(FileVersion):
         purged_at: Optional[DateTime] = None,
         uploader_display_name: Optional[str] = None,
         sha_1: Optional[str] = None,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
         **kwargs
     ):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`
-        :type type: FileVersionBaseTypeField
         :param version_number: The version number of this file version, defaults to None
         :type version_number: Optional[str], optional
         :param name: The name of the file version, defaults to None
@@ -5661,10 +5713,11 @@ class FileVersionFull(FileVersion):
         :type purged_at: Optional[DateTime], optional
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             name=name,
             size=size,
             created_at=created_at,
@@ -5677,6 +5730,7 @@ class FileVersionFull(FileVersion):
             purged_at=purged_at,
             uploader_display_name=uploader_display_name,
             sha_1=sha_1,
+            type=type,
             **kwargs
         )
         self.version_number = version_number
@@ -5766,11 +5820,11 @@ class FileRequest(BaseObject):
     def __init__(
         self,
         id: str,
-        type: FileRequestTypeField,
         folder: FolderMini,
         created_at: DateTime,
         updated_at: DateTime,
         *,
+        type: FileRequestTypeField = FileRequestTypeField.FILE_REQUEST.value,
         title: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[FileRequestStatusField] = None,
@@ -5786,12 +5840,12 @@ class FileRequest(BaseObject):
         """
                 :param id: The unique identifier for this file request.
                 :type id: str
-                :param type: `file_request`
-                :type type: FileRequestTypeField
                 :param created_at: The date and time when the file request was created.
                 :type created_at: DateTime
                 :param updated_at: The date and time when the file request was last updated.
                 :type updated_at: DateTime
+                :param type: `file_request`, defaults to FileRequestTypeField.FILE_REQUEST.value
+                :type type: FileRequestTypeField, optional
                 :param title: The title of file request. This is shown
         in the Box UI to users uploading files.
 
@@ -5851,10 +5905,10 @@ class FileRequest(BaseObject):
         """
         super().__init__(**kwargs)
         self.id = id
-        self.type = type
         self.folder = folder
         self.created_at = created_at
         self.updated_at = updated_at
+        self.type = type
         self.title = title
         self.description = description
         self.status = status
@@ -6022,7 +6076,6 @@ class File(FileMini):
     def __init__(
         self,
         id: str,
-        type: FileBaseTypeField,
         *,
         description: Optional[str] = None,
         size: Optional[int] = None,
@@ -6044,6 +6097,7 @@ class File(FileMini):
         sha_1: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         etag: Optional[str] = None,
+        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
         **kwargs
     ):
         """
@@ -6055,8 +6109,6 @@ class File(FileMini):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: FileBaseTypeField
                 :param description: The optional description of this file, defaults to None
                 :type description: Optional[str], optional
                 :param size: The file size in bytes. Be careful parsing this integer as it can
@@ -6092,15 +6144,17 @@ class File(FileMini):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :type type: FileBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             sequence_id=sequence_id,
             name=name,
             sha_1=sha_1,
             file_version=file_version,
             etag=etag,
+            type=type,
             **kwargs
         )
         self.description = description
@@ -6485,7 +6539,6 @@ class FileFull(File):
     def __init__(
         self,
         id: str,
-        type: FileBaseTypeField,
         *,
         version_number: Optional[str] = None,
         comment_count: Optional[int] = None,
@@ -6529,6 +6582,7 @@ class FileFull(File):
         sha_1: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         etag: Optional[str] = None,
+        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
         **kwargs
     ):
         """
@@ -6540,8 +6594,6 @@ class FileFull(File):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param type: `file`
-                :type type: FileBaseTypeField
                 :param version_number: The version number of this file, defaults to None
                 :type version_number: Optional[str], optional
                 :param comment_count: The number of comments on this file, defaults to None
@@ -6606,10 +6658,11 @@ class FileFull(File):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :type type: FileBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             description=description,
             size=size,
             path_collection=path_collection,
@@ -6630,6 +6683,7 @@ class FileFull(File):
             sha_1=sha_1,
             file_version=file_version,
             etag=etag,
+            type=type,
             **kwargs
         )
         self.version_number = version_number
@@ -7669,16 +7723,16 @@ class WebLinkBase(BaseObject):
     def __init__(
         self,
         id: str,
-        type: WebLinkBaseTypeField,
         *,
+        type: WebLinkBaseTypeField = WebLinkBaseTypeField.WEB_LINK.value,
         etag: Optional[str] = None,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this web link
                 :type id: str
-                :param type: `web_link`
-                :type type: WebLinkBaseTypeField
+                :param type: `web_link`, defaults to WebLinkBaseTypeField.WEB_LINK.value
+                :type type: WebLinkBaseTypeField, optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None
                 :type etag: Optional[str], optional
@@ -7693,23 +7747,23 @@ class WebLinkMini(WebLinkBase):
     def __init__(
         self,
         id: str,
-        type: WebLinkBaseTypeField,
         *,
         url: Optional[str] = None,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
+        type: WebLinkBaseTypeField = WebLinkBaseTypeField.WEB_LINK.value,
         etag: Optional[str] = None,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this web link
                 :type id: str
-                :param type: `web_link`
-                :type type: WebLinkBaseTypeField
                 :param url: The URL this web link points to, defaults to None
                 :type url: Optional[str], optional
                 :param name: The name of the web link, defaults to None
                 :type name: Optional[str], optional
+                :param type: `web_link`, defaults to WebLinkBaseTypeField.WEB_LINK.value
+                :type type: WebLinkBaseTypeField, optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None
                 :type etag: Optional[str], optional
@@ -7875,7 +7929,6 @@ class WebLink(WebLinkMini):
     def __init__(
         self,
         id: str,
-        type: WebLinkBaseTypeField,
         *,
         parent: Optional[FolderMini] = None,
         description: Optional[str] = None,
@@ -7892,14 +7945,13 @@ class WebLink(WebLinkMini):
         url: Optional[str] = None,
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
+        type: WebLinkBaseTypeField = WebLinkBaseTypeField.WEB_LINK.value,
         etag: Optional[str] = None,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this web link
                 :type id: str
-                :param type: `web_link`
-                :type type: WebLinkBaseTypeField
                 :param description: The description accompanying the web link. This is
         visible within the Box web application., defaults to None
                 :type description: Optional[str], optional
@@ -7920,16 +7972,18 @@ class WebLink(WebLinkMini):
                 :type url: Optional[str], optional
                 :param name: The name of the web link, defaults to None
                 :type name: Optional[str], optional
+                :param type: `web_link`, defaults to WebLinkBaseTypeField.WEB_LINK.value
+                :type type: WebLinkBaseTypeField, optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None
                 :type etag: Optional[str], optional
         """
         super().__init__(
             id=id,
-            type=type,
             url=url,
             sequence_id=sequence_id,
             name=name,
+            type=type,
             etag=etag,
             **kwargs
         )
@@ -8207,7 +8261,6 @@ class Folder(FolderMini):
     def __init__(
         self,
         id: str,
-        type: FolderBaseTypeField,
         *,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
@@ -8229,6 +8282,7 @@ class Folder(FolderMini):
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         etag: Optional[str] = None,
+        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER.value,
         **kwargs
     ):
         """
@@ -8240,8 +8294,6 @@ class Folder(FolderMini):
         for the URL `https://*.app.box.com/folders/123`
         the `folder_id` is `123`.
                 :type id: str
-                :param type: `folder`
-                :type type: FolderBaseTypeField
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
@@ -8277,9 +8329,11 @@ class Folder(FolderMini):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER.value
+                :type type: FolderBaseTypeField, optional
         """
         super().__init__(
-            id=id, type=type, sequence_id=sequence_id, name=name, etag=etag, **kwargs
+            id=id, sequence_id=sequence_id, name=name, etag=etag, type=type, **kwargs
         )
         self.created_at = created_at
         self.modified_at = modified_at
@@ -8573,7 +8627,6 @@ class FolderFull(Folder):
     def __init__(
         self,
         id: str,
-        type: FolderBaseTypeField,
         *,
         sync_state: Optional[FolderFullSyncStateField] = None,
         has_collaborations: Optional[bool] = None,
@@ -8613,6 +8666,7 @@ class FolderFull(Folder):
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         etag: Optional[str] = None,
+        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER.value,
         **kwargs
     ):
         """
@@ -8624,8 +8678,6 @@ class FolderFull(Folder):
         for the URL `https://*.app.box.com/folders/123`
         the `folder_id` is `123`.
                 :type id: str
-                :param type: `folder`
-                :type type: FolderBaseTypeField
                 :param has_collaborations: Specifies if this folder has any other collaborators., defaults to None
                 :type has_collaborations: Optional[bool], optional
                 :param is_externally_owned: Specifies if this folder is owned by a user outside of the
@@ -8686,10 +8738,11 @@ class FolderFull(Folder):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
+                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER.value
+                :type type: FolderBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             created_at=created_at,
             modified_at=modified_at,
             description=description,
@@ -8710,6 +8763,7 @@ class FolderFull(Folder):
             sequence_id=sequence_id,
             name=name,
             etag=etag,
+            type=type,
             **kwargs
         )
         self.sync_state = sync_state
@@ -8763,17 +8817,15 @@ class SearchResultsWithSharedLinks(BaseObject):
 
     def __init__(
         self,
-        type: SearchResultsWithSharedLinksTypeField,
         *,
         total_count: Optional[int] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
+        type: SearchResultsWithSharedLinksTypeField = SearchResultsWithSharedLinksTypeField.SEARCH_RESULTS_WITH_SHARED_LINKS.value,
         entries: Optional[List[SearchResultWithSharedLink]] = None,
         **kwargs
     ):
         """
-                :param type: Specifies the response as search result items with shared links
-                :type type: SearchResultsWithSharedLinksTypeField
                 :param total_count: One greater than the offset of the last entry in the search results.
         The total number of entries in the collection may be less than
         `total_count`., defaults to None
@@ -8785,16 +8837,18 @@ class SearchResultsWithSharedLinks(BaseObject):
                 :param offset: The 0-based offset of the first entry in this set. This will be the same
         as the `offset` query parameter used., defaults to None
                 :type offset: Optional[int], optional
+                :param type: Specifies the response as search result items with shared links, defaults to SearchResultsWithSharedLinksTypeField.SEARCH_RESULTS_WITH_SHARED_LINKS.value
+                :type type: SearchResultsWithSharedLinksTypeField, optional
                 :param entries: The search results for the query provided, including the
         additional information about any shared links through
         which the item has been shared with the user., defaults to None
                 :type entries: Optional[List[SearchResultWithSharedLink]], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
+        self.type = type
         self.entries = entries
 
 
@@ -8807,17 +8861,15 @@ class SearchResults(BaseObject):
 
     def __init__(
         self,
-        type: SearchResultsTypeField,
         *,
         total_count: Optional[int] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
+        type: SearchResultsTypeField = SearchResultsTypeField.SEARCH_RESULTS_ITEMS.value,
         entries: Optional[List[Union[FileFull, FolderFull, WebLink]]] = None,
         **kwargs
     ):
         """
-                :param type: Specifies the response as search result items without shared links
-                :type type: SearchResultsTypeField
                 :param total_count: One greater than the offset of the last entry in the search results.
         The total number of entries in the collection may be less than
         `total_count`., defaults to None
@@ -8829,14 +8881,16 @@ class SearchResults(BaseObject):
                 :param offset: The 0-based offset of the first entry in this set. This will be the same
         as the `offset` query parameter used., defaults to None
                 :type offset: Optional[int], optional
+                :param type: Specifies the response as search result items without shared links, defaults to SearchResultsTypeField.SEARCH_RESULTS_ITEMS.value
+                :type type: SearchResultsTypeField, optional
                 :param entries: The search results for the query provided., defaults to None
                 :type entries: Optional[List[Union[FileFull, FolderFull, WebLink]]], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.total_count = total_count
         self.limit = limit
         self.offset = offset
+        self.type = type
         self.entries = entries
 
 
@@ -9503,8 +9557,8 @@ class Collaboration(BaseObject):
     def __init__(
         self,
         id: str,
-        type: CollaborationTypeField,
         *,
+        type: CollaborationTypeField = CollaborationTypeField.COLLABORATION.value,
         item: Optional[Union[File, Folder, WebLink]] = None,
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
@@ -9524,8 +9578,8 @@ class Collaboration(BaseObject):
         """
                 :param id: The unique identifier for this collaboration.
                 :type id: str
-                :param type: `collaboration`
-                :type type: CollaborationTypeField
+                :param type: `collaboration`, defaults to CollaborationTypeField.COLLABORATION.value
+                :type type: CollaborationTypeField, optional
                 :param invite_email: The email address used to invite an unregistered collaborator, if
         they are not a registered user., defaults to None
                 :type invite_email: Optional[str], optional
@@ -10264,31 +10318,32 @@ class CompletionRuleVariable(BaseObject):
 
     def __init__(
         self,
-        type: CompletionRuleVariableTypeField,
-        variable_type: CompletionRuleVariableVariableTypeField,
         variable_value: CompletionRuleVariableVariableValueField,
+        *,
+        type: CompletionRuleVariableTypeField = CompletionRuleVariableTypeField.VARIABLE.value,
+        variable_type: CompletionRuleVariableVariableTypeField = CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE.value,
         **kwargs
     ):
         """
-                :param type: Completion
-        Rule object type.
-
-                :type type: CompletionRuleVariableTypeField
-                :param variable_type: Variable type
-        for the Completion
-        Rule object.
-
-                :type variable_type: CompletionRuleVariableVariableTypeField
                 :param variable_value: Variable
         values for a completion
         rule.
 
                 :type variable_value: CompletionRuleVariableVariableValueField
+                :param type: Completion
+        Rule object type.
+        , defaults to CompletionRuleVariableTypeField.VARIABLE.value
+                :type type: CompletionRuleVariableTypeField, optional
+                :param variable_type: Variable type
+        for the Completion
+        Rule object.
+        , defaults to CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE.value
+                :type variable_type: CompletionRuleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)
+        self.variable_value = variable_value
         self.type = type
         self.variable_type = variable_type
-        self.variable_value = variable_value
 
 
 class CollaboratorVariableTypeField(str, Enum):
@@ -10307,17 +10362,21 @@ class CollaboratorVariableVariableValueField(BaseObject):
     _discriminator = 'type', {'user'}
 
     def __init__(
-        self, type: CollaboratorVariableVariableValueTypeField, id: str, **kwargs
+        self,
+        id: str,
+        *,
+        type: CollaboratorVariableVariableValueTypeField = CollaboratorVariableVariableValueTypeField.USER.value,
+        **kwargs
     ):
         """
-        :param type: The object type.
-        :type type: CollaboratorVariableVariableValueTypeField
         :param id: User's ID.
         :type id: str
+        :param type: The object type., defaults to CollaboratorVariableVariableValueTypeField.USER.value
+        :type type: CollaboratorVariableVariableValueTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class CollaboratorVariable(BaseObject):
@@ -10325,28 +10384,29 @@ class CollaboratorVariable(BaseObject):
 
     def __init__(
         self,
-        type: CollaboratorVariableTypeField,
-        variable_type: CollaboratorVariableVariableTypeField,
         variable_value: List[CollaboratorVariableVariableValueField],
+        *,
+        type: CollaboratorVariableTypeField = CollaboratorVariableTypeField.VARIABLE.value,
+        variable_type: CollaboratorVariableVariableTypeField = CollaboratorVariableVariableTypeField.USER_LIST.value,
         **kwargs
     ):
         """
+                :param variable_value: A list of user IDs.
+                :type variable_value: List[CollaboratorVariableVariableValueField]
                 :param type: Collaborator
         object type.
-
-                :type type: CollaboratorVariableTypeField
+        , defaults to CollaboratorVariableTypeField.VARIABLE.value
+                :type type: CollaboratorVariableTypeField, optional
                 :param variable_type: Variable type
         for the Collaborator
         object.
-
-                :type variable_type: CollaboratorVariableVariableTypeField
-                :param variable_value: A list of user IDs.
-                :type variable_value: List[CollaboratorVariableVariableValueField]
+        , defaults to CollaboratorVariableVariableTypeField.USER_LIST.value
+                :type variable_type: CollaboratorVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)
+        self.variable_value = variable_value
         self.type = type
         self.variable_type = variable_type
-        self.variable_value = variable_value
 
 
 class KeywordSkillCardTypeField(str, Enum):
@@ -10377,17 +10437,23 @@ class KeywordSkillCardSkillTypeField(str, Enum):
 class KeywordSkillCardSkillField(BaseObject):
     _discriminator = 'type', {'service'}
 
-    def __init__(self, type: KeywordSkillCardSkillTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: KeywordSkillCardSkillTypeField = KeywordSkillCardSkillTypeField.SERVICE.value,
+        **kwargs
+    ):
         """
-                :param type: `service`
-                :type type: KeywordSkillCardSkillTypeField
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
+                :param type: `service`, defaults to KeywordSkillCardSkillTypeField.SERVICE.value
+                :type type: KeywordSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class KeywordSkillCardInvocationTypeField(str, Enum):
@@ -10397,20 +10463,26 @@ class KeywordSkillCardInvocationTypeField(str, Enum):
 class KeywordSkillCardInvocationField(BaseObject):
     _discriminator = 'type', {'skill_invocation'}
 
-    def __init__(self, type: KeywordSkillCardInvocationTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: KeywordSkillCardInvocationTypeField = KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        **kwargs
+    ):
         """
-                :param type: `skill_invocation`
-                :type type: KeywordSkillCardInvocationTypeField
                 :param id: A custom identifier that represent the instance of
         the service that applied this metadata. For example,
         if your `image-recognition-service` runs on multiple
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
+                :param type: `skill_invocation`, defaults to KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :type type: KeywordSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class KeywordSkillCardEntriesField(BaseObject):
@@ -10428,21 +10500,17 @@ class KeywordSkillCard(BaseObject):
 
     def __init__(
         self,
-        type: KeywordSkillCardTypeField,
-        skill_card_type: KeywordSkillCardSkillCardTypeField,
         skill: KeywordSkillCardSkillField,
         invocation: KeywordSkillCardInvocationField,
         entries: List[KeywordSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
+        type: KeywordSkillCardTypeField = KeywordSkillCardTypeField.SKILL_CARD.value,
+        skill_card_type: KeywordSkillCardSkillCardTypeField = KeywordSkillCardSkillCardTypeField.KEYWORD.value,
         skill_card_title: Optional[KeywordSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
         """
-                :param type: `skill_card`
-                :type type: KeywordSkillCardTypeField
-                :param skill_card_type: `keyword`
-                :type skill_card_type: KeywordSkillCardSkillCardTypeField
                 :param skill: The service that applied this metadata.
                 :type skill: KeywordSkillCardSkillField
                 :param invocation: The invocation of this service, used to track
@@ -10452,16 +10520,20 @@ class KeywordSkillCard(BaseObject):
                 :type entries: List[KeywordSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
+                :param type: `skill_card`, defaults to KeywordSkillCardTypeField.SKILL_CARD.value
+                :type type: KeywordSkillCardTypeField, optional
+                :param skill_card_type: `keyword`, defaults to KeywordSkillCardSkillCardTypeField.KEYWORD.value
+                :type skill_card_type: KeywordSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[KeywordSkillCardSkillCardTitleField], optional
         """
         super().__init__(**kwargs)
-        self.type = type
-        self.skill_card_type = skill_card_type
         self.skill = skill
         self.invocation = invocation
         self.entries = entries
         self.created_at = created_at
+        self.type = type
+        self.skill_card_type = skill_card_type
         self.skill_card_title = skill_card_title
 
 
@@ -10490,26 +10562,26 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
 
     def __init__(
         self,
-        type: IntegrationMappingPartnerItemSlackTypeField,
         id: str,
         *,
+        type: IntegrationMappingPartnerItemSlackTypeField = IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value,
         slack_workspace_id: Optional[str] = None,
         slack_org_id: Optional[str] = None,
         **kwargs
     ):
         """
-        :param type: Type of the mapped item referenced in `id`
-        :type type: IntegrationMappingPartnerItemSlackTypeField
         :param id: ID of the mapped item (of type referenced in `type`)
         :type id: str
+        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value
+        :type type: IntegrationMappingPartnerItemSlackTypeField, optional
         :param slack_workspace_id: ID of the Slack workspace with which the item is associated. Use this parameter if Box for Slack is installed at a workspace level. Do not use `slack_org_id` at the same time., defaults to None
         :type slack_workspace_id: Optional[str], optional
         :param slack_org_id: ID of the Slack org with which the item is associated. Use this parameter if Box for Slack is installed at the org level. Do not use `slack_workspace_id` at the same time., defaults to None
         :type slack_org_id: Optional[str], optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
         self.slack_workspace_id = slack_workspace_id
         self.slack_org_id = slack_org_id
 
@@ -10521,10 +10593,10 @@ class IntegrationMappingTypeField(str, Enum):
 class IntegrationMapping(IntegrationMappingBase):
     def __init__(
         self,
-        type: IntegrationMappingTypeField,
         partner_item: Union[IntegrationMappingPartnerItemSlack],
         box_item: FolderMini,
         *,
+        type: IntegrationMappingTypeField = IntegrationMappingTypeField.INTEGRATION_MAPPING.value,
         is_manually_created: Optional[bool] = None,
         options: Optional[IntegrationMappingSlackOptions] = None,
         created_by: Optional[UserIntegrationMappings] = None,
@@ -10536,13 +10608,13 @@ class IntegrationMapping(IntegrationMappingBase):
         **kwargs
     ):
         """
-                :param type: Mapping type
-                :type type: IntegrationMappingTypeField
                 :param partner_item: Mapped item object for Slack
                 :type partner_item: Union[IntegrationMappingPartnerItemSlack]
                 :param box_item: The Box folder, to which the object from the
         partner app domain (referenced in `partner_item_id`) is mapped
                 :type box_item: FolderMini
+                :param type: Mapping type, defaults to IntegrationMappingTypeField.INTEGRATION_MAPPING.value
+                :type type: IntegrationMappingTypeField, optional
                 :param is_manually_created: Identifies whether the mapping has
         been manually set
         (as opposed to being automatically created), defaults to None
@@ -10570,9 +10642,9 @@ class IntegrationMapping(IntegrationMappingBase):
                 :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
         """
         super().__init__(id=id, integration_type=integration_type, **kwargs)
-        self.type = type
         self.partner_item = partner_item
         self.box_item = box_item
+        self.type = type
         self.is_manually_created = is_manually_created
         self.options = options
         self.created_by = created_by
@@ -10614,17 +10686,21 @@ class IntegrationMappingBoxItemSlack(BaseObject):
     _discriminator = 'type', {'folder'}
 
     def __init__(
-        self, type: IntegrationMappingBoxItemSlackTypeField, id: str, **kwargs
+        self,
+        id: str,
+        *,
+        type: IntegrationMappingBoxItemSlackTypeField = IntegrationMappingBoxItemSlackTypeField.FOLDER.value,
+        **kwargs
     ):
         """
-        :param type: Type of the mapped item referenced in `id`
-        :type type: IntegrationMappingBoxItemSlackTypeField
         :param id: ID of the mapped item (of type referenced in `type`)
         :type id: str
+        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingBoxItemSlackTypeField.FOLDER.value
+        :type type: IntegrationMappingBoxItemSlackTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class IntegrationMappingSlackCreateRequest(BaseObject):
@@ -10665,24 +10741,25 @@ class RoleVariable(BaseObject):
 
     def __init__(
         self,
-        type: RoleVariableTypeField,
-        variable_type: RoleVariableVariableTypeField,
         variable_value: RoleVariableVariableValueField,
+        *,
+        type: RoleVariableTypeField = RoleVariableTypeField.VARIABLE.value,
+        variable_type: RoleVariableVariableTypeField = RoleVariableVariableTypeField.COLLABORATOR_ROLE.value,
         **kwargs
     ):
         """
                 :param type: Role object type.
-
-                :type type: RoleVariableTypeField
+        , defaults to RoleVariableTypeField.VARIABLE.value
+                :type type: RoleVariableTypeField, optional
                 :param variable_type: The variable type used
         by the object.
-
-                :type variable_type: RoleVariableVariableTypeField
+        , defaults to RoleVariableVariableTypeField.COLLABORATOR_ROLE.value
+                :type variable_type: RoleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)
+        self.variable_value = variable_value
         self.type = type
         self.variable_type = variable_type
-        self.variable_value = variable_value
 
 
 class Outcome(BaseObject):
@@ -10738,17 +10815,23 @@ class TimelineSkillCardSkillTypeField(str, Enum):
 class TimelineSkillCardSkillField(BaseObject):
     _discriminator = 'type', {'service'}
 
-    def __init__(self, type: TimelineSkillCardSkillTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TimelineSkillCardSkillTypeField = TimelineSkillCardSkillTypeField.SERVICE.value,
+        **kwargs
+    ):
         """
-                :param type: `service`
-                :type type: TimelineSkillCardSkillTypeField
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
+                :param type: `service`, defaults to TimelineSkillCardSkillTypeField.SERVICE.value
+                :type type: TimelineSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class TimelineSkillCardInvocationTypeField(str, Enum):
@@ -10758,20 +10841,26 @@ class TimelineSkillCardInvocationTypeField(str, Enum):
 class TimelineSkillCardInvocationField(BaseObject):
     _discriminator = 'type', {'skill_invocation'}
 
-    def __init__(self, type: TimelineSkillCardInvocationTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TimelineSkillCardInvocationTypeField = TimelineSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        **kwargs
+    ):
         """
-                :param type: `skill_invocation`
-                :type type: TimelineSkillCardInvocationTypeField
                 :param id: A custom identifier that represent the instance of
         the service that applied this metadata. For example,
         if your `image-recognition-service` runs on multiple
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
+                :param type: `skill_invocation`, defaults to TimelineSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :type type: TimelineSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class TimelineSkillCardEntriesAppearsField(BaseObject):
@@ -10828,22 +10917,18 @@ class TimelineSkillCard(BaseObject):
 
     def __init__(
         self,
-        type: TimelineSkillCardTypeField,
-        skill_card_type: TimelineSkillCardSkillCardTypeField,
         skill: TimelineSkillCardSkillField,
         invocation: TimelineSkillCardInvocationField,
         entries: List[TimelineSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
+        type: TimelineSkillCardTypeField = TimelineSkillCardTypeField.SKILL_CARD.value,
+        skill_card_type: TimelineSkillCardSkillCardTypeField = TimelineSkillCardSkillCardTypeField.TIMELINE.value,
         skill_card_title: Optional[TimelineSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
     ):
         """
-                :param type: `skill_card`
-                :type type: TimelineSkillCardTypeField
-                :param skill_card_type: `timeline`
-                :type skill_card_type: TimelineSkillCardSkillCardTypeField
                 :param skill: The service that applied this metadata.
                 :type skill: TimelineSkillCardSkillField
                 :param invocation: The invocation of this service, used to track
@@ -10853,18 +10938,22 @@ class TimelineSkillCard(BaseObject):
                 :type entries: List[TimelineSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
+                :param type: `skill_card`, defaults to TimelineSkillCardTypeField.SKILL_CARD.value
+                :type type: TimelineSkillCardTypeField, optional
+                :param skill_card_type: `timeline`, defaults to TimelineSkillCardSkillCardTypeField.TIMELINE.value
+                :type skill_card_type: TimelineSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TimelineSkillCardSkillCardTitleField], optional
                 :param duration: An total duration in seconds of the timeline., defaults to None
                 :type duration: Optional[int], optional
         """
         super().__init__(**kwargs)
-        self.type = type
-        self.skill_card_type = skill_card_type
         self.skill = skill
         self.invocation = invocation
         self.entries = entries
         self.created_at = created_at
+        self.type = type
+        self.skill_card_type = skill_card_type
         self.skill_card_title = skill_card_title
         self.duration = duration
 
@@ -10897,17 +10986,23 @@ class TranscriptSkillCardSkillTypeField(str, Enum):
 class TranscriptSkillCardSkillField(BaseObject):
     _discriminator = 'type', {'service'}
 
-    def __init__(self, type: TranscriptSkillCardSkillTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TranscriptSkillCardSkillTypeField = TranscriptSkillCardSkillTypeField.SERVICE.value,
+        **kwargs
+    ):
         """
-                :param type: `service`
-                :type type: TranscriptSkillCardSkillTypeField
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
+                :param type: `service`, defaults to TranscriptSkillCardSkillTypeField.SERVICE.value
+                :type type: TranscriptSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class TranscriptSkillCardInvocationTypeField(str, Enum):
@@ -10917,20 +11012,26 @@ class TranscriptSkillCardInvocationTypeField(str, Enum):
 class TranscriptSkillCardInvocationField(BaseObject):
     _discriminator = 'type', {'skill_invocation'}
 
-    def __init__(self, type: TranscriptSkillCardInvocationTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TranscriptSkillCardInvocationTypeField = TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        **kwargs
+    ):
         """
-                :param type: `skill_invocation`
-                :type type: TranscriptSkillCardInvocationTypeField
                 :param id: A custom identifier that represent the instance of
         the service that applied this metadata. For example,
         if your `image-recognition-service` runs on multiple
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
+                :param type: `skill_invocation`, defaults to TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :type type: TranscriptSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class TranscriptSkillCardEntriesAppearsField(BaseObject):
@@ -10970,22 +11071,18 @@ class TranscriptSkillCard(BaseObject):
 
     def __init__(
         self,
-        type: TranscriptSkillCardTypeField,
-        skill_card_type: TranscriptSkillCardSkillCardTypeField,
         skill: TranscriptSkillCardSkillField,
         invocation: TranscriptSkillCardInvocationField,
         entries: List[TranscriptSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
+        type: TranscriptSkillCardTypeField = TranscriptSkillCardTypeField.SKILL_CARD.value,
+        skill_card_type: TranscriptSkillCardSkillCardTypeField = TranscriptSkillCardSkillCardTypeField.TRANSCRIPT.value,
         skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
     ):
         """
-                :param type: `skill_card`
-                :type type: TranscriptSkillCardTypeField
-                :param skill_card_type: `transcript`
-                :type skill_card_type: TranscriptSkillCardSkillCardTypeField
                 :param skill: The service that applied this metadata.
                 :type skill: TranscriptSkillCardSkillField
                 :param invocation: The invocation of this service, used to track
@@ -10996,6 +11093,10 @@ class TranscriptSkillCard(BaseObject):
                 :type entries: List[TranscriptSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
+                :param type: `skill_card`, defaults to TranscriptSkillCardTypeField.SKILL_CARD.value
+                :type type: TranscriptSkillCardTypeField, optional
+                :param skill_card_type: `transcript`, defaults to TranscriptSkillCardSkillCardTypeField.TRANSCRIPT.value
+                :type skill_card_type: TranscriptSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField], optional
                 :param duration: An optional total duration in seconds.
@@ -11005,12 +11106,12 @@ class TranscriptSkillCard(BaseObject):
                 :type duration: Optional[int], optional
         """
         super().__init__(**kwargs)
-        self.type = type
-        self.skill_card_type = skill_card_type
         self.skill = skill
         self.invocation = invocation
         self.entries = entries
         self.created_at = created_at
+        self.type = type
+        self.skill_card_type = skill_card_type
         self.skill_card_title = skill_card_title
         self.duration = duration
 
@@ -11074,17 +11175,23 @@ class StatusSkillCardSkillTypeField(str, Enum):
 class StatusSkillCardSkillField(BaseObject):
     _discriminator = 'type', {'service'}
 
-    def __init__(self, type: StatusSkillCardSkillTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: StatusSkillCardSkillTypeField = StatusSkillCardSkillTypeField.SERVICE.value,
+        **kwargs
+    ):
         """
-                :param type: `service`
-                :type type: StatusSkillCardSkillTypeField
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
+                :param type: `service`, defaults to StatusSkillCardSkillTypeField.SERVICE.value
+                :type type: StatusSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class StatusSkillCardInvocationTypeField(str, Enum):
@@ -11094,20 +11201,26 @@ class StatusSkillCardInvocationTypeField(str, Enum):
 class StatusSkillCardInvocationField(BaseObject):
     _discriminator = 'type', {'skill_invocation'}
 
-    def __init__(self, type: StatusSkillCardInvocationTypeField, id: str, **kwargs):
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: StatusSkillCardInvocationTypeField = StatusSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        **kwargs
+    ):
         """
-                :param type: `skill_invocation`
-                :type type: StatusSkillCardInvocationTypeField
                 :param id: A custom identifier that represent the instance of
         the service that applied this metadata. For example,
         if your `image-recognition-service` runs on multiple
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
+                :param type: `skill_invocation`, defaults to StatusSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :type type: StatusSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
-        self.type = type
         self.id = id
+        self.type = type
 
 
 class StatusSkillCard(BaseObject):
@@ -11115,21 +11228,17 @@ class StatusSkillCard(BaseObject):
 
     def __init__(
         self,
-        type: StatusSkillCardTypeField,
-        skill_card_type: StatusSkillCardSkillCardTypeField,
         status: StatusSkillCardStatusField,
         skill: StatusSkillCardSkillField,
         invocation: StatusSkillCardInvocationField,
         *,
         created_at: Optional[DateTime] = None,
+        type: StatusSkillCardTypeField = StatusSkillCardTypeField.SKILL_CARD.value,
+        skill_card_type: StatusSkillCardSkillCardTypeField = StatusSkillCardSkillCardTypeField.STATUS.value,
         skill_card_title: Optional[StatusSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
         """
-                :param type: `skill_card`
-                :type type: StatusSkillCardTypeField
-                :param skill_card_type: `status`
-                :type skill_card_type: StatusSkillCardSkillCardTypeField
                 :param status: Sets the status of the skill. This can be used to show a message to the user while the Skill is processing the data, or if it was not able to process the file.
                 :type status: StatusSkillCardStatusField
                 :param skill: The service that applied this metadata.
@@ -11139,16 +11248,20 @@ class StatusSkillCard(BaseObject):
                 :type invocation: StatusSkillCardInvocationField
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
+                :param type: `skill_card`, defaults to StatusSkillCardTypeField.SKILL_CARD.value
+                :type type: StatusSkillCardTypeField, optional
+                :param skill_card_type: `status`, defaults to StatusSkillCardSkillCardTypeField.STATUS.value
+                :type skill_card_type: StatusSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[StatusSkillCardSkillCardTitleField], optional
         """
         super().__init__(**kwargs)
-        self.type = type
-        self.skill_card_type = skill_card_type
         self.status = status
         self.skill = skill
         self.invocation = invocation
         self.created_at = created_at
+        self.type = type
+        self.skill_card_type = skill_card_type
         self.skill_card_title = skill_card_title
 
 
@@ -12446,7 +12559,6 @@ class UserFull(User):
     def __init__(
         self,
         id: str,
-        type: UserBaseTypeField,
         *,
         role: Optional[UserFullRoleField] = None,
         tracking_codes: Optional[List[TrackingCode]] = None,
@@ -12475,13 +12587,12 @@ class UserFull(User):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
+        type: UserBaseTypeField = UserBaseTypeField.USER.value,
         **kwargs
     ):
         """
                 :param id: The unique identifier for this user
                 :type id: str
-                :param type: `user`
-                :type type: UserBaseTypeField
                 :param role: The user’s enterprise role, defaults to None
                 :type role: Optional[UserFullRoleField], optional
                 :param tracking_codes: Tracking codes allow an admin to generate reports from the
@@ -12546,10 +12657,11 @@ class UserFull(User):
                 :type name: Optional[str], optional
                 :param login: The primary email address of this user, defaults to None
                 :type login: Optional[str], optional
+                :param type: `user`, defaults to UserBaseTypeField.USER.value
+                :type type: UserBaseTypeField, optional
         """
         super().__init__(
             id=id,
-            type=type,
             created_at=created_at,
             modified_at=modified_at,
             language=language,
@@ -12565,6 +12677,7 @@ class UserFull(User):
             notification_email=notification_email,
             name=name,
             login=login,
+            type=type,
             **kwargs
         )
         self.role = role
