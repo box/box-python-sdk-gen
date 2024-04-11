@@ -260,11 +260,7 @@ class BoxJWTAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = (
-            InMemoryTokenStorage()
-            if self.config.token_storage == None
-            else self.config.token_storage
-        )
+        self.token_storage = self.config.token_storage
         self.subject_id = (
             self.config.enterprise_id
             if not self.config.enterprise_id == None
@@ -307,10 +303,10 @@ class BoxJWTAuth(Authentication):
             key=self.config.private_key, passphrase=self.config.private_key_passphrase
         )
         assertion: str = create_jwt_assertion(claims, jwt_key, jwt_options)
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
@@ -424,10 +420,10 @@ class BoxJWTAuth(Authentication):
             raise BoxSDKError(
                 message='No access token is available. Make an API call to retrieve a token before calling this method.'
             )
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
@@ -448,10 +444,10 @@ class BoxJWTAuth(Authentication):
         old_token: Optional[AccessToken] = self.token_storage.get()
         if old_token == None:
             return None
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         auth_manager.revoke_access_token(
             client_id=self.config.client_id,

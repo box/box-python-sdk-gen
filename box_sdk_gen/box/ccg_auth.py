@@ -66,11 +66,7 @@ class BoxCCGAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = (
-            InMemoryTokenStorage()
-            if self.config.token_storage == None
-            else self.config.token_storage
-        )
+        self.token_storage = self.config.token_storage
         self.subject_id = (
             self.config.user_id
             if not self.config.user_id == None
@@ -90,12 +86,12 @@ class BoxCCGAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
-        token: Optional[AccessToken] = auth_manager.request_access_token(
+        token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.CLIENT_CREDENTIALS.value,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -200,10 +196,10 @@ class BoxCCGAuth(Authentication):
             raise BoxSDKError(
                 message='No access token is available. Make an API call to retrieve a token before calling this method.'
             )
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
@@ -224,10 +220,10 @@ class BoxCCGAuth(Authentication):
         old_token: Optional[AccessToken] = self.token_storage.get()
         if old_token == None:
             return None
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         auth_manager.revoke_access_token(
             client_id=self.config.client_id,
