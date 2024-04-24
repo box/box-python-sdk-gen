@@ -83,11 +83,7 @@ class BoxOAuth(Authentication):
         """
         super().__init__(**kwargs)
         self.config = config
-        self.token_storage = (
-            InMemoryTokenStorage()
-            if self.config.token_storage == None
-            else self.config.token_storage
-        )
+        self.token_storage = self.config.token_storage
 
     def get_authorize_url(self, *, options: GetAuthorizeUrlOptions = None) -> str:
         """
@@ -132,10 +128,10 @@ class BoxOAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.AUTHORIZATION_CODE.value,
@@ -173,10 +169,10 @@ class BoxOAuth(Authentication):
         token_used_for_refresh: Optional[str] = (
             old_token.refresh_token if not old_token == None else None
         )
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.REFRESH_TOKEN.value,
@@ -202,10 +198,10 @@ class BoxOAuth(Authentication):
         token: Optional[AccessToken] = self.token_storage.get()
         if token == None:
             return None
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         auth_manager.revoke_access_token(
             client_id=self.config.client_id,
@@ -236,10 +232,10 @@ class BoxOAuth(Authentication):
         token: Optional[AccessToken] = self.token_storage.get()
         if token == None or token.access_token == None:
             raise BoxSDKError(message='No access token is available.')
-        auth_manager: AuthorizationManager = (
-            AuthorizationManager(network_session=network_session)
-            if not network_session == None
-            else AuthorizationManager()
+        auth_manager: AuthorizationManager = AuthorizationManager(
+            network_session=(
+                network_session if not network_session == None else NetworkSession()
+            )
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
             PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
