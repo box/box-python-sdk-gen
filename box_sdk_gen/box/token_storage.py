@@ -20,17 +20,17 @@ class TokenStorage:
 
 
 class InMemoryTokenStorage(TokenStorage):
-    def __init__(self, token: Optional[AccessToken] = None):
-        self._token = token
+    def __init__(self):
+        self.token: Optional[AccessToken] = None
 
     def store(self, token: AccessToken) -> None:
-        self._token = token
+        self.token = token
 
     def get(self) -> Optional[AccessToken]:
-        return self._token
+        return self.token
 
     def clear(self) -> None:
-        self._token = None
+        self.token = None
 
 
 class FileTokenStorage(TokenStorage):

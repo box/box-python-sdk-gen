@@ -315,11 +315,9 @@ if __name__ == '__main__':
 # Revoke token
 
 Access tokens for a client can be revoked when needed. This call invalidates old token.
-For BoxCCGAuth and BoxJWTAuth you can still reuse the `auth` object to retrieve a new token.
-If you make any new call after revoking the token, a new token will be automatically retrieved.
-For BoxOAuth it would be necessary to manually go through the authentication process again.
-For BoxDeveloperTokenAuth, it is necessary to provide a DeveloperTokenConfig during initialization,
-containing the client ID and client secret.
+For CCGAuth and JWTAuth you can still reuse the `auth` object to retrieve a new token. If you make any new call after revoking the token,
+a new token will be automatically retrieved.
+For OAuth it would be necessary to manually go through the authentication process again.
 
 To revoke current client's tokens in the storage use the following code:
 
@@ -344,7 +342,7 @@ If you want to learn more about available scopes please go [here](https://develo
 
 For example to get a new token with only `item_preview` scope, restricted to a single file, suitable for the
 [Content Preview UI Element](https://developer.box.com/en/guides/embed/ui-elements/preview/) you can use the following code.
-You can also initialize `BoxDeveloperTokenAuth` with the retrieved access token and use it to create a new Client.
+You can also initialize `DeveloperTokenAuth` with the retrieved access token and use it to create a new Client.
 
 <!-- sample post_oauth2_token downscope_token -->
 
@@ -356,7 +354,7 @@ downscoped_token: AccessToken = auth.downscope_token(
     scopes=['item_preview'],
     resource=resource,
 )
-downscoped_auth = BoxDeveloperTokenAuth(token=downscoped_token.access_token)
+downscoped_auth = BoxDeveloperTokenAuth(downscoped_token.access_token)
 client = BoxClient(auth=downscoped_auth)
 ```
 

@@ -40,8 +40,6 @@ from box_sdk_gen.box.ccg_auth import CCGConfig
 
 from box_sdk_gen.box.developer_token_auth import BoxDeveloperTokenAuth
 
-from box_sdk_gen.box.developer_token_auth import DeveloperTokenConfig
-
 from box_sdk_gen.box.oauth import BoxOAuth
 
 from box_sdk_gen.box.oauth import OAuthConfig
@@ -200,48 +198,6 @@ def get_access_token() -> AccessToken:
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
     auth_user: BoxCCGAuth = auth.with_user_subject(user_id)
     return auth_user.retrieve_token()
-
-
-def test_developer_token_auth_revoke():
-    developer_token_config: DeveloperTokenConfig = DeveloperTokenConfig(
-        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
-    )
-    token: AccessToken = get_access_token()
-    auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(
-        token=token.access_token, config=developer_token_config
-    )
-    auth.retrieve_token()
-    token_from_storage_before_revoke: Optional[AccessToken] = auth.token_storage.get()
-    auth.revoke_token()
-    token_from_storage_after_revoke: Optional[AccessToken] = auth.token_storage.get()
-    assert not token_from_storage_before_revoke == None
-    assert token_from_storage_after_revoke == None
-
-
-def test_developer_token_auth_downscope():
-    developer_token_config: DeveloperTokenConfig = DeveloperTokenConfig(
-        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
-    )
-    token: AccessToken = get_access_token()
-    auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(
-        token=token.access_token, config=developer_token_config
-    )
-    parent_client: BoxClient = BoxClient(auth=auth)
-    folder: FolderFull = parent_client.folders.create_folder(
-        get_uuid(), CreateFolderParent(id='0')
-    )
-    resource_path: str = ''.join(['https://api.box.com/2.0/folders/', folder.id])
-    downscoped_token: AccessToken = auth.downscope_token(
-        ['item_rename', 'item_preview'], resource=resource_path
-    )
-    assert not downscoped_token.access_token == None
-    downscoped_client: BoxClient = BoxClient(
-        auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
-    )
-    downscoped_client.folders.update_folder_by_id(folder.id, name=get_uuid())
-    with pytest.raises(Exception):
-        downscoped_client.folders.delete_folder_by_id(folder.id)
-    parent_client.folders.delete_folder_by_id(folder.id)
 
 
 def test_developer_token_auth():
