@@ -24,8 +24,6 @@ from box_sdk_gen.managers.file_metadata import UpdateFileMetadataByIdRequestBody
 
 from box_sdk_gen.managers.file_metadata import DeleteFileMetadataByIdScope
 
-from box_sdk_gen.schemas import MetadataTemplate
-
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
 from box_sdk_gen.managers.metadata_templates import (
@@ -64,7 +62,7 @@ def testGlobalFileMetadata():
     )
     assert received_metadata.extra_data['abc'] == 'xyz'
     new_value: str = 'bar'
-    updated_metadata: MetadataFull = client.file_metadata.update_file_metadata_by_id(
+    client.file_metadata.update_file_metadata_by_id(
         file.id,
         UpdateFileMetadataByIdScope.GLOBAL.value,
         'properties',
@@ -95,7 +93,7 @@ def testGlobalFileMetadata():
 def testEnterpriseFileMetadata():
     file: FileFull = upload_new_file()
     template_key: str = ''.join(['key', get_uuid()])
-    template: MetadataTemplate = client.metadata_templates.create_metadata_template(
+    client.metadata_templates.create_metadata_template(
         'enterprise',
         template_key,
         template_key=template_key,

@@ -69,19 +69,17 @@ def testGlobalFolderMetadata():
     )
     assert received_metadata.extra_data['abc'] == 'xyz'
     new_value: str = 'bar'
-    updated_metadata: MetadataFull = (
-        client.folder_metadata.update_folder_metadata_by_id(
-            folder.id,
-            UpdateFolderMetadataByIdScope.GLOBAL.value,
-            'properties',
-            [
-                UpdateFolderMetadataByIdRequestBody(
-                    op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
-                    path='/abc',
-                    value=new_value,
-                )
-            ],
-        )
+    client.folder_metadata.update_folder_metadata_by_id(
+        folder.id,
+        UpdateFolderMetadataByIdScope.GLOBAL.value,
+        'properties',
+        [
+            UpdateFolderMetadataByIdRequestBody(
+                op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
+                path='/abc',
+                value=new_value,
+            )
+        ],
     )
     received_updated_metadata: MetadataFull = (
         client.folder_metadata.get_folder_metadata_by_id(

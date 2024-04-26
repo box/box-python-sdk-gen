@@ -1,3 +1,5 @@
+from box_sdk_gen.internal.utils import to_string
+
 import pytest
 
 from box_sdk_gen.client import BoxClient
@@ -5,6 +7,10 @@ from box_sdk_gen.client import BoxClient
 from box_sdk_gen.schemas import CollaborationAllowlistEntries
 
 from box_sdk_gen.schemas import CollaborationAllowlistEntry
+
+from box_sdk_gen.managers.collaboration_allowlist_entries import (
+    CreateCollaborationWhitelistEntryDirection,
+)
 
 from test.commons import get_default_client
 
@@ -16,15 +22,14 @@ def collaborationAllowlistEntries():
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entries()
     )
     assert len(allowlist.entries) >= 0
-    direction: str = 'inbound'
     domain: str = 'example.com'
     new_entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
-            domain, direction
+            domain, CreateCollaborationWhitelistEntryDirection.INBOUND.value
         )
     )
-    assert new_entry.type == 'collaboration_whitelist_entry'
-    assert new_entry.direction == direction
+    assert to_string(new_entry.type) == 'collaboration_whitelist_entry'
+    assert to_string(new_entry.direction) == 'inbound'
     assert new_entry.domain == domain
     entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(
@@ -32,7 +37,7 @@ def collaborationAllowlistEntries():
         )
     )
     assert entry.id == new_entry.id
-    assert entry.direction == direction
+    assert to_string(entry.direction) == to_string(new_entry.direction)
     assert entry.domain == domain
     client.collaboration_allowlist_entries.delete_collaboration_whitelist_entry_by_id(
         entry.id
