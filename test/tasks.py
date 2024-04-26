@@ -43,17 +43,17 @@ def testCreateUpdateGetDeleteTask():
         generate_byte_stream(10),
     )
     file: FileFull = files.entries[0]
-    date: DateTime = date_time_from_string('2035-01-01T00:00:00Z')
+    date_time: DateTime = date_time_from_string('2035-01-01T00:00:00Z')
     task: Task = client.tasks.create_task(
         CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
         action=CreateTaskAction.REVIEW.value,
         message='test message',
-        due_at=date,
+        due_at=date_time,
         completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
     )
     assert task.message == 'test message'
     assert task.item.id == file.id
-    assert date_time_to_string(task.due_at) == '2035-01-01T00:00:00Z'
+    assert date_time_to_string(task.due_at) == date_time_to_string(date_time)
     task_by_id: Task = client.tasks.get_task_by_id(task.id)
     assert task_by_id.id == task.id
     task_on_file: Tasks = client.tasks.get_file_tasks(file.id)

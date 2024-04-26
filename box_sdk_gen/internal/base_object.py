@@ -48,7 +48,7 @@ class BaseObject:
 
     @classmethod
     def _deserialize(cls, key, value, annotation=None):
-        if annotation is None:
+        if annotation is None or value is None:
             return value
         if get_origin(annotation) == Optional:
             return cls._deserialize(key, value, get_args(annotation))
@@ -69,13 +69,15 @@ class BaseObject:
             return cls._deserialize_datetime(key, value, annotation)
         elif annotation == date:
             return cls._deserialize_date(key, value, annotation)
-        else:
+        elif isinstance(annotation, type) and issubclass(annotation, BaseObject):
             return cls._deserialize_nested_type(key, value, annotation)
+        else:
+            return value
 
     @classmethod
     def _deserialize_list(cls, key, value, annotation: list):
-        list_type = get_args(annotation)[0]
         try:
+            list_type = get_args(annotation)[0]
             return [
                 cls._deserialize(key, list_entry, list_type) for list_entry in value
             ]
@@ -84,27 +86,32 @@ class BaseObject:
 
     @classmethod
     def _deserialize_union(cls, key, value, annotation):
-        possible_types = get_args(annotation)
-        if value is None:
-            if type(None) not in possible_types:
-                print('Value: ', value, 'should not be allowed in Union:', annotation)
+        try:
+            possible_types = get_args(annotation)
+            if value is None:
+                if type(None) not in possible_types:
+                    print(
+                        'Value: ', value, 'should not be allowed in Union:', annotation
+                    )
+                return value
+
+            for possible_type in possible_types:
+                if (
+                    isinstance(possible_type, type)
+                    and issubclass(possible_type, BaseObject)
+                    and value.get(possible_type._discriminator[0], None)
+                    in possible_type._discriminator[1]
+                ):
+                    return cls._deserialize(key, value, possible_type)
+
+            for possible_type in possible_types:
+                try:
+                    return cls._deserialize(key, value, possible_type)
+                except Exception:
+                    continue
             return value
-
-        for possible_type in possible_types:
-            if (
-                issubclass(possible_type, BaseObject)
-                and value.get(possible_type._discriminator[0], None)
-                in possible_type._discriminator[1]
-            ):
-                return cls._deserialize(key, value, possible_type)
-
-        for possible_type in possible_types:
-            try:
-                return cls._deserialize(key, value, possible_type)
-            except Exception:
-                continue
-
-        return value
+        except Exception:
+            return value
 
     @classmethod
     def _deserialize_enum(cls, key, value, annotation):
