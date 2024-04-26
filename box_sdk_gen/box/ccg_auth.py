@@ -230,4 +230,5 @@ class BoxCCGAuth(Authentication):
             client_secret=self.config.client_secret,
             token=old_token.access_token,
         )
-        return self.token_storage.clear()
+        self.token_storage.clear()
+        return None
