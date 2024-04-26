@@ -303,7 +303,7 @@ def test_make_request_unauthorised(mock_requests_session, response_401):
 @pytest.mark.parametrize(
     'exc_message, expected_reauthentication_needed',
     [
-        ('Connection aborted', False),
+        ('Connection cancelled', False),
         (
             "Connection broken: ConnectionResetError(54, 'Connection reset by peer')",
             False,
@@ -334,7 +334,7 @@ def test_make_request_network_exception(
 def test_fetch_successfully_retry_network_exception(
     mock_requests_session, network_session_mock, response_200
 ):
-    requests_exception = RequestException('Connection aborted')
+    requests_exception = RequestException('Connection cancelled')
     mock_requests_session.request.side_effect = [requests_exception, response_200]
 
     with patch('time.sleep'):
@@ -347,11 +347,11 @@ def test_fetch_successfully_retry_network_exception(
 def test_fetch_make_only_one_retry_for_network_exception(
     mock_requests_session, network_session_mock
 ):
-    requests_exception = RequestException('Connection aborted')
+    requests_exception = RequestException('Connection cancelled')
     mock_requests_session.request.side_effect = [requests_exception, requests_exception]
 
     with patch('time.sleep'):
-        with pytest.raises(BoxSDKError, match='Connection aborted'):
+        with pytest.raises(BoxSDKError, match='Connection cancelled'):
             fetch(
                 "https://example.com",
                 FetchOptions(network_session=network_session_mock),
