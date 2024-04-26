@@ -51,7 +51,7 @@ See the endpoint docs at
 <!-- sample post_tasks -->
 
 ```python
-client.tasks.create_task(CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id), action=CreateTaskAction.REVIEW.value, message='test message', due_at=date, completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value)
+client.tasks.create_task(CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id), action=CreateTaskAction.REVIEW.value, message='test message', due_at=date_time, completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value)
 ```
 
 ### Arguments
