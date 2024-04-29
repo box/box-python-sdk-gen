@@ -81,7 +81,7 @@ See the endpoint docs at
 <!-- sample put_web_links_id -->
 
 ```python
-client.web_links.update_web_link_by_id(weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLink(access=shared_access, password=password))
+client.web_links.update_web_link_by_id(weblink.id, name=updated_name, shared_link=UpdateWebLinkByIdSharedLink(access=UpdateWebLinkByIdSharedLinkAccessField.OPEN.value, password=password))
 ```
 
 ### Arguments

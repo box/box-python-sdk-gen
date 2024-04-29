@@ -49,7 +49,7 @@ See the endpoint docs at
 <!-- sample post_collaboration_whitelist_entries -->
 
 ```python
-client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(domain, direction)
+client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(domain, CreateCollaborationWhitelistEntryDirection.INBOUND.value)
 ```
 
 ### Arguments

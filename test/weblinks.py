@@ -1,3 +1,5 @@
+from box_sdk_gen.internal.utils import to_string
+
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas import FolderFull
@@ -8,6 +10,8 @@ from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
 from box_sdk_gen.managers.web_links import UpdateWebLinkByIdSharedLink
 
+from box_sdk_gen.managers.web_links import UpdateWebLinkByIdSharedLinkAccessField
+
 from box_sdk_gen.internal.utils import get_uuid
 
 from test.commons import get_default_client
@@ -15,12 +19,11 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def test_create_get_delete_weblink():
+def test_createGetDeleteWeblink():
     url: str = 'https://www.box.com'
     parent: FolderFull = client.folders.get_folder_by_id('0')
     name: str = get_uuid()
     description: str = 'Weblink description'
-    shared_access: str = 'open'
     password: str = 'super-secret-password'
     weblink: WebLink = client.web_links.create_web_link(
         url, CreateWebLinkParent(id=parent.id), name=name, description=description
@@ -37,11 +40,11 @@ def test_create_get_delete_weblink():
         weblink.id,
         name=updated_name,
         shared_link=UpdateWebLinkByIdSharedLink(
-            access=shared_access, password=password
+            access=UpdateWebLinkByIdSharedLinkAccessField.OPEN.value, password=password
         ),
     )
     assert updated_weblink.name == updated_name
-    assert updated_weblink.shared_link.access == shared_access
+    assert to_string(updated_weblink.shared_link.access) == 'open'
     client.web_links.delete_web_link_by_id(weblink.id)
     deleted_weblink: WebLink = client.web_links.get_web_link_by_id(weblink.id)
-    assert deleted_weblink.item_status == 'trashed'
+    assert to_string(deleted_weblink.item_status) == 'trashed'
