@@ -133,3 +133,5 @@ from box_sdk_gen.managers.workflows import *
 from box_sdk_gen.managers.sign_templates import *
 
 from box_sdk_gen.managers.integration_mappings import *
+
+from box_sdk_gen.managers.ai import *

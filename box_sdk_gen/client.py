@@ -160,6 +160,8 @@ from box_sdk_gen.managers.sign_templates import SignTemplatesManager
 
 from box_sdk_gen.managers.integration_mappings import IntegrationMappingsManager
 
+from box_sdk_gen.managers.ai import AiManager
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -381,6 +383,7 @@ class BoxClient:
         self.integration_mappings = IntegrationMappingsManager(
             auth=self.auth, network_session=self.network_session
         )
+        self.ai = AiManager(auth=self.auth, network_session=self.network_session)
 
     def with_as_user_header(self, user_id: str) -> 'BoxClient':
         """
