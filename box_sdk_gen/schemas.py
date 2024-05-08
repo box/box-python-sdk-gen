@@ -9173,6 +9173,7 @@ class EventEventTypeField(str, Enum):
     ITEM_COPY = 'ITEM_COPY'
     ITEM_CREATE = 'ITEM_CREATE'
     ITEM_DOWNLOAD = 'ITEM_DOWNLOAD'
+    ITEM_EMAIL_SEND = 'ITEM_EMAIL_SEND'
     ITEM_MAKE_CURRENT_VERSION = 'ITEM_MAKE_CURRENT_VERSION'
     ITEM_MODIFY = 'ITEM_MODIFY'
     ITEM_MOVE = 'ITEM_MOVE'
@@ -9213,6 +9214,7 @@ class EventEventTypeField(str, Enum):
     RENAME = 'RENAME'
     RETENTION_POLICY_ASSIGNMENT_ADD = 'RETENTION_POLICY_ASSIGNMENT_ADD'
     SHARE = 'SHARE'
+    SHARED_LINK_SEND = 'SHARED_LINK_SEND'
     SHARE_EXPIRATION = 'SHARE_EXPIRATION'
     SHIELD_ALERT = 'SHIELD_ALERT'
     SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED = 'SHIELD_EXTERNAL_COLLAB_ACCESS_BLOCKED'
@@ -12913,7 +12915,7 @@ class Users(BaseObject):
         self.entries = entries
 
 
-class MetadataFieldFilterFloatRangeValue(BaseObject):
+class MetadataFieldFilterFloatRange(BaseObject):
     def __init__(
         self, *, lt: Optional[float] = None, gt: Optional[float] = None, **kwargs
     ):
@@ -12934,7 +12936,7 @@ class MetadataFieldFilterFloatRangeValue(BaseObject):
         self.gt = gt
 
 
-class MetadataFieldFilterDateRangeValue(BaseObject):
+class MetadataFieldFilterDateRange(BaseObject):
     def __init__(
         self, *, lt: Optional[DateTime] = None, gt: Optional[DateTime] = None, **kwargs
     ):
@@ -12977,12 +12979,15 @@ class MetadataFilter(BaseObject):
         scope: Optional[MetadataFilterScopeField] = None,
         template_key: Optional[str] = None,
         filters: Optional[
-            Union[
-                Dict[str, str],
-                Dict[str, float],
-                Dict[str, List[str]],
-                Dict[str, MetadataFieldFilterFloatRangeValue],
-                Dict[str, MetadataFieldFilterDateRangeValue],
+            Dict[
+                str,
+                Union[
+                    str,
+                    float,
+                    List[str],
+                    MetadataFieldFilterFloatRange,
+                    MetadataFieldFilterDateRange,
+                ],
             ]
         ] = None,
         **kwargs
@@ -12994,7 +12999,7 @@ class MetadataFilter(BaseObject):
         for use in this enterprise, and `global` for general templates
         that are available to all enterprises using Box., defaults to None
                 :type scope: Optional[MetadataFilterScopeField], optional
-                :param template_key: The key of the template to filter search results by.
+                :param template_key: The key of the template used to filter search results.
 
         In many cases the template key is automatically derived
         of its display name, for example `Contract Template` would
@@ -13009,6 +13014,11 @@ class MetadataFilter(BaseObject):
         [file]: e://get-files-id-metadata
         [folder]: e://get-folders-id-metadata, defaults to None
                 :type template_key: Optional[str], optional
+                :param filters: Specifies which fields on the template to filter the search
+        results by. When more than one field is specified, the query
+        performs a logical `AND` to ensure that the instance of the
+        template matches each of the fields specified., defaults to None
+                :type filters: Optional[Dict[str, Union[str, float, List[str], MetadataFieldFilterFloatRange, MetadataFieldFilterDateRange]]], optional
         """
         super().__init__(**kwargs)
         self.scope = scope
