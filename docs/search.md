@@ -63,7 +63,7 @@ See the endpoint docs at
 <!-- sample get_search -->
 
 ```python
-client.search.search_for_content(ancestor_folder_ids=['0'], mdfilters=[MetadataFilter(filters={'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']}, scope=MetadataFilterScopeField.ENTERPRISE.value, template_key=template_key)])
+client.search.search_for_content(ancestor_folder_ids=['0'], mdfilters=[MetadataFilter(filters={'stringField': 'stringValue', 'dateField': {}(lt=date_time_from_string('2035-01-01T00:00:00Z'), gt=date_time_from_string('2035-01-03T00:00:00Z')), 'floatField': {}(lt=9.5, gt=10.5), 'enumField': 'enumValue2', 'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']}, scope=MetadataFilterScopeField.ENTERPRISE.value, template_key=template_key)])
 ```
 
 ### Arguments

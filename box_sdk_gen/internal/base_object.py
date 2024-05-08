@@ -32,6 +32,11 @@ class BaseObject:
                     item.to_dict() if isinstance(item, BaseObject) else item
                     for item in v
                 ]
+            elif type(v) is dict:
+                value = {
+                    key: value.to_dict() if isinstance(value, BaseObject) else value
+                    for key, value in v.items()
+                }
             elif isinstance(v, BaseObject):
                 value = v.to_dict()
             elif isinstance(v, Enum):
