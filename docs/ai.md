@@ -12,7 +12,11 @@ This operation is performed by calling function `create_ai_ask`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-ai-ask/).
 
-_Currently we don't have an example for calling `create_ai_ask` in integration tests_
+<!-- sample post_ai_ask -->
+
+```python
+client.ai.create_ai_ask(CreateAiAskMode.MULTIPLE_ITEM_QA.value, 'Which direction sun rises?', [CreateAiAskItems(id=file_to_ask_1.id, type=CreateAiAskItemsTypeField.FILE.value, content='Earth goes around the sun'), CreateAiAskItems(id=file_to_ask_2.id, type=CreateAiAskItemsTypeField.FILE.value, content='Sun rises in the East in the morning')])
+```
 
 ### Arguments
 
@@ -40,7 +44,11 @@ This operation is performed by calling function `create_ai_text_gen`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-ai-text-gen/).
 
-_Currently we don't have an example for calling `create_ai_text_gen` in integration tests_
+<!-- sample post_ai_text_gen -->
+
+```python
+client.ai.create_ai_text_gen('Parapharse the document.s', [CreateAiTextGenItems(id=file_to_ask.id, type=CreateAiTextGenItemsTypeField.FILE.value, content='The Earth goes around the sun. Sun rises in the East in the morning.')], dialogue_history=[CreateAiTextGenDialogueHistory(prompt='What does the earth go around?', answer='The sun', created_at=date_time_from_string('2021-01-01T00:00:00Z')), CreateAiTextGenDialogueHistory(prompt='On Earth, where does the sun rise?', answer='East', created_at=date_time_from_string('2021-01-01T00:00:00Z'))])
+```
 
 ### Arguments
 
