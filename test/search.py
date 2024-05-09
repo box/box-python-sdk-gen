@@ -189,11 +189,11 @@ def testMetadataFilters():
                 MetadataFilter(
                     filters={
                         'stringField': 'stringValue',
-                        'dateField': {}(
+                        'dateField': MetadataFieldFilterDateRange(
                             lt=date_time_from_string('2035-01-01T00:00:00Z'),
                             gt=date_time_from_string('2035-01-03T00:00:00Z'),
                         ),
-                        'floatField': {}(lt=9.5, gt=10.5),
+                        'floatField': MetadataFieldFilterFloatRange(lt=9.5, gt=10.5),
                         'enumField': 'enumValue2',
                         'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
                     },
