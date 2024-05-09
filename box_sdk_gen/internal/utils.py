@@ -109,9 +109,14 @@ def prepare_params(map: Dict[str, Optional[str]]) -> Dict[str, str]:
 def to_string(value: Any) -> Optional[str]:
     if value is None:
         return None
+    if isinstance(value, datetime.datetime):
+        return date_time_to_string(value)
+    if isinstance(value, datetime.date):
+        return date_to_string(value)
     if (
         isinstance(value, BaseObject)
         or isinstance(value, list)
+        and len(value) >= 1
         and isinstance(value[0], BaseObject)
     ):
         return ''.join(sd_to_json(serialize(value)).split())

@@ -46,7 +46,13 @@ from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import generate_byte_stream
 
+from box_sdk_gen.internal.utils import date_time_from_string
+
 from test.commons import get_default_client
+
+from box_sdk_gen.schemas import MetadataFieldFilterDateRange
+
+from box_sdk_gen.schemas import MetadataFieldFilterFloatRange
 
 client: BoxClient = get_default_client()
 
@@ -176,39 +182,20 @@ def testMetadataFilters():
             'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
         },
     )
-    string_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.search_for_content(
-            ancestor_folder_ids=['0'],
-            mdfilters=[
-                MetadataFilter(
-                    filters={'stringField': 'stringValue'},
-                    scope=MetadataFilterScopeField.ENTERPRISE.value,
-                    template_key=template_key,
-                )
-            ],
-        )
-    )
-    assert len(string_query.entries) >= 0
-    enum_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.search_for_content(
-            ancestor_folder_ids=['0'],
-            mdfilters=[
-                MetadataFilter(
-                    filters={'enumField': 'enumValue2'},
-                    scope=MetadataFilterScopeField.ENTERPRISE.value,
-                    template_key=template_key,
-                )
-            ],
-        )
-    )
-    assert len(enum_query.entries) >= 0
-    multi_select_query: Union[SearchResults, SearchResultsWithSharedLinks] = (
+    query: Union[SearchResults, SearchResultsWithSharedLinks] = (
         client.search.search_for_content(
             ancestor_folder_ids=['0'],
             mdfilters=[
                 MetadataFilter(
                     filters={
-                        'multiSelectField': ['multiSelectValue1', 'multiSelectValue2']
+                        'stringField': 'stringValue',
+                        'dateField': {}(
+                            lt=date_time_from_string('2035-01-01T00:00:00Z'),
+                            gt=date_time_from_string('2035-01-03T00:00:00Z'),
+                        ),
+                        'floatField': {}(lt=9.5, gt=10.5),
+                        'enumField': 'enumValue2',
+                        'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
                     },
                     scope=MetadataFilterScopeField.ENTERPRISE.value,
                     template_key=template_key,
@@ -216,7 +203,7 @@ def testMetadataFilters():
             ],
         )
     )
-    assert len(multi_select_query.entries) >= 0
+    assert len(query.entries) >= 0
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
     )
