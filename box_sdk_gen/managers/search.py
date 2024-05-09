@@ -430,7 +430,7 @@ class SearchManager:
                 :type trash_content: Optional[SearchForContentTrashContent], optional
                 :param mdfilters: Limits the search results to any items for which the metadata matches the provided filter.
         This parameter is a list that specifies exactly **one** metadata template used to filter the search results.
-        It is required unless the `query` parameter is provided., defaults to None
+        It  unless the `query` parameter is provided., defaults to None
                 :type mdfilters: Optional[List[MetadataFilter]], optional
                 :param sort: Defines the order in which search results are returned. This API
         defaults to returning items by relevance unless this parameter is

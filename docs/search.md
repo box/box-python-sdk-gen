@@ -93,7 +93,7 @@ client.search.search_for_content(ancestor_folder_ids=['0'], mdfilters=[MetadataF
 - trash_content `Optional[SearchForContentTrashContent]`
   - Determines if the search should look in the trash for items. By default, this API only returns search results for items not currently in the trash (`non_trashed_only`). _ `trashed_only` - Only searches for items currently in the trash _ `non_trashed_only` - Only searches for items currently not in the trash \* `all_items` - Searches for both trashed and non-trashed items.
 - mdfilters `Optional[List[MetadataFilter]]`
-  - Limits the search results to any items for which the metadata matches the provided filter. This parameter is a list that specifies exactly **one** metadata template used to filter the search results. It is required unless the `query` parameter is provided.
+  - Limits the search results to any items for which the metadata matches the provided filter. This parameter is a list that specifies exactly **one** metadata template used to filter the search results. It unless the `query` parameter is provided.
 - sort `Optional[SearchForContentSort]`
   - Defines the order in which search results are returned. This API defaults to returning items by relevance unless this parameter is explicitly specified. _ `relevance` (default) returns the results sorted by relevance to the query search term. The relevance is based on the occurrence of the search term in the items name, description, content, and additional properties. _ `modified_at` returns the results ordered in descending order by date at which the item was last modified.
 - direction `Optional[SearchForContentDirection]`
