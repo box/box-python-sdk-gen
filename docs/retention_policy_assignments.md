@@ -5,7 +5,6 @@
 - [Get retention policy assignment](#get-retention-policy-assignment)
 - [Remove retention policy assignment](#remove-retention-policy-assignment)
 - [Get files under retention](#get-files-under-retention)
-- [Get file versions under retention](#get-file-versions-under-retention)
 
 ## List retention policy assignments
 
@@ -171,33 +170,3 @@ This function returns a value of type `FilesUnderRetention`.
 
 Returns a list of files under retention that are associated with the
 specified retention policy assignment.
-
-## Get file versions under retention
-
-Returns a list of file versions under retention for a retention policy
-assignment.
-
-This operation is performed by calling function `get_file_versions_under_retention_policy_assignment`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-retention-policy-assignments-id-file-versions-under-retention/).
-
-_Currently we don't have an example for calling `get_file_versions_under_retention_policy_assignment` in integration tests_
-
-### Arguments
-
-- retention_policy_assignment_id `str`
-  - The ID of the retention policy assignment. Example: "1233123"
-- marker `Optional[str]`
-  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
-- limit `Optional[int]`
-  - The maximum number of items to return per page.
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `FilesUnderRetention`.
-
-Returns a list of file versions under retention that are associated with
-the specified retention policy assignment.
