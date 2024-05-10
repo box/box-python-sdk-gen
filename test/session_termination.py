@@ -1,10 +1,10 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import UserFull
+from box_sdk_gen.schemas.user_full import UserFull
 
-from box_sdk_gen.schemas import SessionTerminationMessage
+from box_sdk_gen.schemas.session_termination_message import SessionTerminationMessage
 
-from box_sdk_gen.schemas import GroupFull
+from box_sdk_gen.schemas.group_full import GroupFull
 
 from box_sdk_gen.internal.utils import get_uuid
 

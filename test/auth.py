@@ -2,17 +2,19 @@ import pytest
 
 from typing import Optional
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.user_full import UserFull
+
+from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import AccessToken
+from box_sdk_gen.schemas.access_token import AccessToken
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
@@ -45,8 +47,6 @@ from box_sdk_gen.box.developer_token_auth import DeveloperTokenConfig
 from box_sdk_gen.box.oauth import BoxOAuth
 
 from box_sdk_gen.box.oauth import OAuthConfig
-
-from box_sdk_gen.schemas import UserFull
 
 from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 

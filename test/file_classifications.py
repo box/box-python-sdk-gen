@@ -4,7 +4,9 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
+from box_sdk_gen.schemas.classification_template import (
+    ClassificationTemplateFieldsOptionsField,
+)
 
 from box_sdk_gen.managers.classifications import AddClassificationRequestBody
 
@@ -18,9 +20,9 @@ from box_sdk_gen.managers.classifications import (
     AddClassificationRequestBodyDataStaticConfigClassificationField,
 )
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import Classification
+from box_sdk_gen.schemas.classification import Classification
 
 from box_sdk_gen.managers.file_classifications import (
     UpdateClassificationOnFileRequestBody,
@@ -36,7 +38,7 @@ from test.commons import get_or_create_classification_template
 
 from test.commons import get_or_create_classification
 
-from box_sdk_gen.schemas import ClassificationTemplate
+from box_sdk_gen.schemas.classification_template import ClassificationTemplate
 
 client: BoxClient = get_default_client()
 

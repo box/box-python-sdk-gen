@@ -4,7 +4,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import UserFull
+from box_sdk_gen.schemas.user_full import UserFull
 
 from box_sdk_gen.internal.utils import get_uuid
 

@@ -10,11 +10,11 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import FolderLocks
+from box_sdk_gen.schemas.folder_locks import FolderLocks
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import FolderLock
+from box_sdk_gen.schemas.folder_lock import FolderLock
 
 from box_sdk_gen.networking.auth import Authentication
 

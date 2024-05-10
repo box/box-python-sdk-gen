@@ -14,11 +14,11 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from typing import List
 
-from box_sdk_gen.schemas import Metadatas
+from box_sdk_gen.schemas.metadatas import Metadatas
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import MetadataFull
+from box_sdk_gen.schemas.metadata_full import MetadataFull
 
 from box_sdk_gen.networking.auth import Authentication
 

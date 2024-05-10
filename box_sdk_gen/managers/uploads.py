@@ -12,13 +12,13 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import UploadUrl
+from box_sdk_gen.schemas.upload_url import UploadUrl
 
-from box_sdk_gen.schemas import ConflictError
+from box_sdk_gen.schemas.conflict_error import ConflictError
 
 from box_sdk_gen.networking.auth import Authentication
 

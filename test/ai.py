@@ -1,8 +1,8 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import AiResponse
+from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.managers.ai import CreateAiAskMode
 

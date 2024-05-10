@@ -2,7 +2,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import DevicePinners
+from box_sdk_gen.schemas.device_pinners import DevicePinners
 
 from box_sdk_gen.managers.device_pinners import GetEnterpriseDevicePinnersDirection
 

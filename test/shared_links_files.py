@@ -4,7 +4,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
@@ -16,7 +16,7 @@ from box_sdk_gen.managers.shared_links_files import (
     AddShareLinkToFileSharedLinkAccessField,
 )
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.managers.shared_links_files import UpdateSharedLinkOnFileSharedLink
 

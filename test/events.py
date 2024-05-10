@@ -2,27 +2,27 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import Events
+from box_sdk_gen.schemas.events import Events
 
-from box_sdk_gen.schemas import Event
+from box_sdk_gen.schemas.event import Event
 
 from box_sdk_gen.managers.events import GetEventsStreamType
 
 from box_sdk_gen.managers.events import GetEventsEventType
 
-from box_sdk_gen.schemas import RealtimeServers
+from box_sdk_gen.schemas.realtime_servers import RealtimeServers
 
-from box_sdk_gen.schemas import RealtimeServer
+from box_sdk_gen.schemas.realtime_server import RealtimeServer
 
 from test.commons import get_default_client
 
-from box_sdk_gen.schemas import EventSource
+from box_sdk_gen.schemas.event_source import EventSource
 
-from box_sdk_gen.schemas import File
+from box_sdk_gen.schemas.file import File
 
-from box_sdk_gen.schemas import Folder
+from box_sdk_gen.schemas.folder import Folder
 
-from box_sdk_gen.schemas import User
+from box_sdk_gen.schemas.user import User
 
 client: BoxClient = get_default_client()
 

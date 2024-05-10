@@ -4,9 +4,9 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
-from box_sdk_gen.schemas import WebLink
+from box_sdk_gen.schemas.web_link import WebLink
 
 from box_sdk_gen.managers.web_links import CreateWebLinkParent
 

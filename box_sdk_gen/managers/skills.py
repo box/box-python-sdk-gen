@@ -16,17 +16,17 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import SkillCardsMetadata
+from box_sdk_gen.schemas.skill_cards_metadata import SkillCardsMetadata
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import KeywordSkillCard
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCard
 
-from box_sdk_gen.schemas import TimelineSkillCard
+from box_sdk_gen.schemas.timeline_skill_card import TimelineSkillCard
 
-from box_sdk_gen.schemas import TranscriptSkillCard
+from box_sdk_gen.schemas.transcript_skill_card import TranscriptSkillCard
 
-from box_sdk_gen.schemas import StatusSkillCard
+from box_sdk_gen.schemas.status_skill_card import StatusSkillCard
 
 from box_sdk_gen.networking.auth import Authentication
 

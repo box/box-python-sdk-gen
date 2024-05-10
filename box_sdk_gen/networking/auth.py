@@ -4,7 +4,7 @@ from abc import abstractmethod
 
 from typing import List
 
-from box_sdk_gen.schemas import AccessToken
+from box_sdk_gen.schemas.access_token import AccessToken
 
 from box_sdk_gen.networking.network import NetworkSession
 

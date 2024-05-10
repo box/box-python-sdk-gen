@@ -2,27 +2,29 @@ from box_sdk_gen.internal.utils import to_string
 
 from typing import List
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas import TermsOfServices
+from box_sdk_gen.schemas.terms_of_services import TermsOfServices
 
 from box_sdk_gen.managers.terms_of_services import CreateTermsOfServiceStatus
 
 from box_sdk_gen.managers.terms_of_services import CreateTermsOfServiceTosType
 
-from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
+from box_sdk_gen.schemas.classification_template import (
+    ClassificationTemplateFieldsOptionsField,
+)
 
 from box_sdk_gen.managers.classifications import AddClassificationRequestBody
 
@@ -38,11 +40,11 @@ from box_sdk_gen.managers.classifications import (
 
 from box_sdk_gen.managers.classifications import CreateClassificationTemplateFields
 
-from box_sdk_gen.schemas import ShieldInformationBarrier
+from box_sdk_gen.schemas.shield_information_barrier import ShieldInformationBarrier
 
-from box_sdk_gen.schemas import ShieldInformationBarriers
+from box_sdk_gen.schemas.shield_information_barriers import ShieldInformationBarriers
 
-from box_sdk_gen.schemas import EnterpriseBase
+from box_sdk_gen.schemas.enterprise_base import EnterpriseBase
 
 from box_sdk_gen.internal.utils import decode_base_64
 
@@ -54,9 +56,9 @@ from box_sdk_gen.internal.utils import generate_byte_stream
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import ClassificationTemplate
+from box_sdk_gen.schemas.classification_template import ClassificationTemplate
 
-from box_sdk_gen.schemas import TermsOfService
+from box_sdk_gen.schemas.terms_of_service import TermsOfService
 
 from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 

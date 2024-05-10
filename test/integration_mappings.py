@@ -2,15 +2,19 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
+from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
+    IntegrationMappingPartnerItemSlack,
+)
 
-from box_sdk_gen.schemas import IntegrationMappingBoxItemSlack
+from box_sdk_gen.schemas.integration_mapping_box_item_slack import (
+    IntegrationMappingBoxItemSlack,
+)
 
-from box_sdk_gen.schemas import IntegrationMappings
+from box_sdk_gen.schemas.integration_mappings import IntegrationMappings
 
 from box_sdk_gen.internal.utils import generate_byte_stream
 

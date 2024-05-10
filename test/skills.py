@@ -1,24 +1,24 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import SkillCardsMetadata
+from box_sdk_gen.schemas.skill_cards_metadata import SkillCardsMetadata
 
-from box_sdk_gen.schemas import KeywordSkillCardTypeField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardTypeField
 
-from box_sdk_gen.schemas import KeywordSkillCardSkillCardTypeField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardSkillCardTypeField
 
-from box_sdk_gen.schemas import KeywordSkillCardSkillCardTitleField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardSkillCardTitleField
 
-from box_sdk_gen.schemas import KeywordSkillCardSkillField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardSkillField
 
-from box_sdk_gen.schemas import KeywordSkillCardSkillTypeField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardSkillTypeField
 
-from box_sdk_gen.schemas import KeywordSkillCardInvocationField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardInvocationField
 
-from box_sdk_gen.schemas import KeywordSkillCardInvocationTypeField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardInvocationTypeField
 
-from box_sdk_gen.schemas import KeywordSkillCardEntriesField
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCardEntriesField
 
 from box_sdk_gen.managers.skills import UpdateBoxSkillCardsOnFileRequestBody
 
@@ -30,7 +30,7 @@ from test.commons import get_default_client
 
 from test.commons import upload_new_file
 
-from box_sdk_gen.schemas import KeywordSkillCard
+from box_sdk_gen.schemas.keyword_skill_card import KeywordSkillCard
 
 client: BoxClient = get_default_client()
 

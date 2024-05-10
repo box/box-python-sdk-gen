@@ -4,13 +4,13 @@ from box_sdk_gen.internal.utils import Buffer
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.internal.utils import get_uuid
 

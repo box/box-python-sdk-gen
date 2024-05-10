@@ -55,7 +55,7 @@ See the endpoint docs at
 <!-- sample post_groups -->
 
 ```python
-client.groups.create_group(group_name)
+client.groups.create_group(group_name, description=group_description)
 ```
 
 ### Arguments

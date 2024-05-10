@@ -57,7 +57,7 @@ See the endpoint docs at
 <!-- sample post_retention_policy_assignments -->
 
 ```python
-client.retention_policy_assignments.create_retention_policy_assignment(retention_policy.id, CreateRetentionPolicyAssignmentAssignTo(type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value, id=folder.id))
+client.retention_policy_assignments.create_retention_policy_assignment(retention_policy.id, CreateRetentionPolicyAssignmentAssignTo(id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value))
 ```
 
 ### Arguments

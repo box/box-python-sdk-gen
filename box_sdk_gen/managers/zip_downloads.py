@@ -12,13 +12,13 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.schemas import ZipDownload
+from box_sdk_gen.schemas.zip_download import ZipDownload
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import ZipDownloadRequest
+from box_sdk_gen.schemas.zip_download_request import ZipDownloadRequest
 
-from box_sdk_gen.schemas import ZipDownloadStatus
+from box_sdk_gen.schemas.zip_download_status import ZipDownloadStatus
 
 from box_sdk_gen.networking.auth import Authentication
 

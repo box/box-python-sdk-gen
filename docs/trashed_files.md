@@ -63,7 +63,7 @@ See the endpoint docs at
 <!-- sample get_files_id_trash -->
 
 ```python
-client.trashed_files.get_trashed_file_by_id(file.id)
+client.trashed_files.get_trashed_file_by_id(uploaded_file.id)
 ```
 
 ### Arguments

@@ -1,4 +1,4 @@
-from box_sdk_gen.schemas import RetentionPolicy
+from box_sdk_gen.schemas.retention_policy import RetentionPolicy
 
 from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyPolicyType
 
@@ -8,7 +8,7 @@ from box_sdk_gen.managers.retention_policies import (
 
 from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyRetentionType
 
-from box_sdk_gen.schemas import RetentionPolicies
+from box_sdk_gen.schemas.retention_policies import RetentionPolicies
 
 from box_sdk_gen.internal.utils import get_uuid
 

@@ -14,11 +14,11 @@ from typing import List
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import GroupMemberships
+from box_sdk_gen.schemas.group_memberships import GroupMemberships
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import GroupMembership
+from box_sdk_gen.schemas.group_membership import GroupMembership
 
 from box_sdk_gen.networking.auth import Authentication
 
