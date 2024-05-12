@@ -8,7 +8,7 @@ from box_sdk_gen.internal.utils import generate_byte_stream
 
 from test.commons import get_default_client
 
-from box_sdk_gen.schemas.file import File
+from box_sdk_gen.schemas import File
 
 client: BoxClient = get_default_client()
 

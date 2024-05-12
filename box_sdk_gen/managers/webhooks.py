@@ -14,11 +14,11 @@ from typing import List
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.webhooks import Webhooks
+from box_sdk_gen.schemas import Webhooks
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.webhook import Webhook
+from box_sdk_gen.schemas import Webhook
 
 from box_sdk_gen.networking.auth import Authentication
 

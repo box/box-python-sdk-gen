@@ -2,17 +2,17 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.files import Files
+from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.workflows import Workflows
+from box_sdk_gen.schemas import Workflows
 
-from box_sdk_gen.schemas.workflow import Workflow
+from box_sdk_gen.schemas import Workflow
 
 from box_sdk_gen.managers.workflows import StartWorkflowType
 

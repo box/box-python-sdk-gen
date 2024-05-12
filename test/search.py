@@ -4,7 +4,7 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.metadata_template import MetadataTemplate
+from box_sdk_gen.schemas import MetadataTemplate
 
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
@@ -12,27 +12,25 @@ from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsTypeField,
 )
 
-from box_sdk_gen.schemas.files import Files
+from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.metadata_full import MetadataFull
+from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import CreateFileMetadataByIdScope
 
-from box_sdk_gen.schemas.metadata_query_results import MetadataQueryResults
+from box_sdk_gen.schemas import MetadataQueryResults
 
 from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScope
 
-from box_sdk_gen.schemas.search_results import SearchResults
+from box_sdk_gen.schemas import SearchResults
 
-from box_sdk_gen.schemas.search_results_with_shared_links import (
-    SearchResultsWithSharedLinks,
-)
+from box_sdk_gen.schemas import SearchResultsWithSharedLinks
 
 from box_sdk_gen.managers.search import SearchForContentTrashContent
 
@@ -40,9 +38,9 @@ from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsOptionsField,
 )
 
-from box_sdk_gen.schemas.metadata_filter import MetadataFilter
+from box_sdk_gen.schemas import MetadataFilter
 
-from box_sdk_gen.schemas.metadata_filter import MetadataFilterScopeField
+from box_sdk_gen.schemas import MetadataFilterScopeField
 
 from box_sdk_gen.internal.utils import get_uuid
 
@@ -52,13 +50,9 @@ from box_sdk_gen.internal.utils import date_time_from_string
 
 from test.commons import get_default_client
 
-from box_sdk_gen.schemas.metadata_field_filter_date_range import (
-    MetadataFieldFilterDateRange,
-)
+from box_sdk_gen.schemas import MetadataFieldFilterDateRange
 
-from box_sdk_gen.schemas.metadata_field_filter_float_range import (
-    MetadataFieldFilterFloatRange,
-)
+from box_sdk_gen.schemas import MetadataFieldFilterFloatRange
 
 client: BoxClient = get_default_client()
 

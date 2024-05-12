@@ -12,13 +12,11 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.terms_of_service_user_statuses import (
-    TermsOfServiceUserStatuses,
-)
+from box_sdk_gen.schemas import TermsOfServiceUserStatuses
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.terms_of_service_user_status import TermsOfServiceUserStatus
+from box_sdk_gen.schemas import TermsOfServiceUserStatus
 
 from box_sdk_gen.networking.auth import Authentication
 

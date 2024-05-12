@@ -6,9 +6,9 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.user_avatar import UserAvatar
+from box_sdk_gen.schemas import UserAvatar
 
 from box_sdk_gen.networking.auth import Authentication
 

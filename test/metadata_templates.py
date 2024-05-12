@@ -2,7 +2,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.metadata_template import MetadataTemplate
+from box_sdk_gen.schemas import MetadataTemplate
 
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
@@ -20,13 +20,13 @@ from box_sdk_gen.managers.metadata_templates import (
 
 from box_sdk_gen.managers.metadata_templates import GetMetadataTemplateScope
 
-from box_sdk_gen.schemas.metadata_templates import MetadataTemplates
+from box_sdk_gen.schemas import MetadataTemplates
 
 from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScope
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.metadata_full import MetadataFull
+from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import CreateFileMetadataByIdScope
 

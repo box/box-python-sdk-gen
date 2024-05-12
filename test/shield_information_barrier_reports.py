@@ -1,28 +1,20 @@
 from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.schemas.shield_information_barrier import ShieldInformationBarrier
+from box_sdk_gen.schemas import ShieldInformationBarrierReports
 
-from box_sdk_gen.schemas.shield_information_barrier_reports import (
-    ShieldInformationBarrierReports,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierReport
 
-from box_sdk_gen.schemas.shield_information_barrier_report import (
-    ShieldInformationBarrierReport,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
-from box_sdk_gen.schemas.shield_information_barrier_base import (
-    ShieldInformationBarrierBase,
-)
-
-from box_sdk_gen.schemas.shield_information_barrier_base import (
-    ShieldInformationBarrierBaseTypeField,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierBaseTypeField
 
 from box_sdk_gen.internal.utils import get_env_var
 
 from test.commons import get_default_client_with_user_subject
 
 from test.commons import get_or_create_shield_information_barrier
+
+from box_sdk_gen.schemas import ShieldInformationBarrier
 
 from box_sdk_gen.client import BoxClient
 

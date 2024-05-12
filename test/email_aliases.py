@@ -1,10 +1,10 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.user_full import UserFull
+from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas.email_aliases import EmailAliases
+from box_sdk_gen.schemas import EmailAliases
 
-from box_sdk_gen.schemas.email_alias import EmailAlias
+from box_sdk_gen.schemas import EmailAlias
 
 from box_sdk_gen.internal.utils import get_uuid
 

@@ -2,23 +2,15 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.shield_information_barrier import ShieldInformationBarrier
+from box_sdk_gen.schemas import ShieldInformationBarrier
 
-from box_sdk_gen.schemas.shield_information_barrier_segment import (
-    ShieldInformationBarrierSegment,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierSegment
 
-from box_sdk_gen.schemas.shield_information_barrier_base import (
-    ShieldInformationBarrierBase,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
-from box_sdk_gen.schemas.shield_information_barrier_base import (
-    ShieldInformationBarrierBaseTypeField,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierBaseTypeField
 
-from box_sdk_gen.schemas.shield_information_barrier_segment_restriction import (
-    ShieldInformationBarrierSegmentRestriction,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestriction
 
 from box_sdk_gen.managers.shield_information_barrier_segment_restrictions import (
     CreateShieldInformationBarrierSegmentRestrictionType,
@@ -40,9 +32,7 @@ from box_sdk_gen.managers.shield_information_barrier_segment_restrictions import
     CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField,
 )
 
-from box_sdk_gen.schemas.shield_information_barrier_segment_restrictions import (
-    ShieldInformationBarrierSegmentRestrictions,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierSegmentRestrictions
 
 from box_sdk_gen.internal.utils import get_env_var
 

@@ -6,11 +6,11 @@ from typing import List
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.metadatas import Metadatas
+from box_sdk_gen.schemas import Metadatas
 
-from box_sdk_gen.schemas.metadata_full import MetadataFull
+from box_sdk_gen.schemas import MetadataFull
 
 from box_sdk_gen.managers.file_metadata import CreateFileMetadataByIdScope
 

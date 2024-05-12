@@ -2,13 +2,13 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.group_full import GroupFull
+from box_sdk_gen.schemas import GroupFull
 
-from box_sdk_gen.schemas.collaboration import Collaboration
+from box_sdk_gen.schemas import Collaboration
 
 from box_sdk_gen.managers.user_collaborations import CreateCollaborationItem
 
@@ -22,7 +22,7 @@ from box_sdk_gen.managers.user_collaborations import (
 
 from box_sdk_gen.managers.user_collaborations import CreateCollaborationRole
 
-from box_sdk_gen.schemas.collaborations import Collaborations
+from box_sdk_gen.schemas import Collaborations
 
 from box_sdk_gen.managers.list_collaborations import GetCollaborationsStatus
 

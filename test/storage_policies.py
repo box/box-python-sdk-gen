@@ -2,9 +2,9 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.storage_policies import StoragePolicies
+from box_sdk_gen.schemas import StoragePolicies
 
-from box_sdk_gen.schemas.storage_policy import StoragePolicy
+from box_sdk_gen.schemas import StoragePolicy
 
 from box_sdk_gen.internal.utils import get_env_var
 

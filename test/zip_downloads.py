@@ -2,9 +2,9 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.internal.utils import ByteStream
 
@@ -12,11 +12,11 @@ from box_sdk_gen.managers.zip_downloads import DownloadZipItems
 
 from box_sdk_gen.managers.zip_downloads import DownloadZipItemsTypeField
 
-from box_sdk_gen.schemas.zip_download import ZipDownload
+from box_sdk_gen.schemas import ZipDownload
 
 from box_sdk_gen.managers.zip_downloads import CreateZipDownloadItems
 
-from box_sdk_gen.schemas.zip_download_status import ZipDownloadStatus
+from box_sdk_gen.schemas import ZipDownloadStatus
 
 from test.commons import get_default_client
 

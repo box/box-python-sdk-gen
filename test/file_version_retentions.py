@@ -1,6 +1,6 @@
 from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.schemas.retention_policy import RetentionPolicy
+from box_sdk_gen.schemas import RetentionPolicy
 
 from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyPolicyType
 
@@ -10,9 +10,9 @@ from box_sdk_gen.managers.retention_policies import (
 
 from box_sdk_gen.managers.retention_policies import CreateRetentionPolicyRetentionType
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.schemas.retention_policy_assignment import RetentionPolicyAssignment
+from box_sdk_gen.schemas import RetentionPolicyAssignment
 
 from box_sdk_gen.managers.retention_policy_assignments import (
     CreateRetentionPolicyAssignmentAssignTo,
@@ -22,19 +22,19 @@ from box_sdk_gen.managers.retention_policy_assignments import (
     CreateRetentionPolicyAssignmentAssignToTypeField,
 )
 
-from box_sdk_gen.schemas.files import Files
+from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.managers.uploads import UploadFileVersionAttributes
 
-from box_sdk_gen.schemas.file_version_retentions import FileVersionRetentions
+from box_sdk_gen.schemas import FileVersionRetentions
 
-from box_sdk_gen.schemas.file_version_retention import FileVersionRetention
+from box_sdk_gen.schemas import FileVersionRetention
 
 from box_sdk_gen.internal.utils import generate_byte_stream
 

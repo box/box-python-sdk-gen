@@ -14,13 +14,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.internal.utils import DateTime
 
-from box_sdk_gen.schemas.ai_response import AiResponse
+from box_sdk_gen.schemas import AiResponse
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.ai_ask import AiAsk
+from box_sdk_gen.schemas import AiAsk
 
-from box_sdk_gen.schemas.ai_text_gen import AiTextGen
+from box_sdk_gen.schemas import AiTextGen
 
 from box_sdk_gen.networking.auth import Authentication
 

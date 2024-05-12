@@ -2,11 +2,11 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.terms_of_service import TermsOfService
+from box_sdk_gen.schemas import TermsOfService
 
 from box_sdk_gen.managers.terms_of_services import UpdateTermsOfServiceByIdStatus
 
-from box_sdk_gen.schemas.terms_of_services import TermsOfServices
+from box_sdk_gen.schemas import TermsOfServices
 
 from test.commons import get_default_client
 

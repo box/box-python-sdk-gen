@@ -2,9 +2,7 @@ from typing import List
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.classification_template import (
-    ClassificationTemplateFieldsOptionsField,
-)
+from box_sdk_gen.schemas import ClassificationTemplateFieldsOptionsField
 
 from box_sdk_gen.managers.classifications import UpdateClassificationRequestBody
 
@@ -28,7 +26,7 @@ from test.commons import get_or_create_classification_template
 
 from test.commons import get_or_create_classification
 
-from box_sdk_gen.schemas.classification_template import ClassificationTemplate
+from box_sdk_gen.schemas import ClassificationTemplate
 
 client: BoxClient = get_default_client()
 

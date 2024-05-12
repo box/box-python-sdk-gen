@@ -4,13 +4,9 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.collaboration_allowlist_entries import (
-    CollaborationAllowlistEntries,
-)
+from box_sdk_gen.schemas import CollaborationAllowlistEntries
 
-from box_sdk_gen.schemas.collaboration_allowlist_entry import (
-    CollaborationAllowlistEntry,
-)
+from box_sdk_gen.schemas import CollaborationAllowlistEntry
 
 from box_sdk_gen.managers.collaboration_allowlist_entries import (
     CreateCollaborationWhitelistEntryDirection,
@@ -21,7 +17,7 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def testCollaborationAllowlistEntries():
+def collaborationAllowlistEntries():
     allowlist: CollaborationAllowlistEntries = (
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entries()
     )

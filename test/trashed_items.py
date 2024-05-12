@@ -1,8 +1,8 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.items import Items
+from box_sdk_gen.schemas import Items
 
 from test.commons import get_default_client
 

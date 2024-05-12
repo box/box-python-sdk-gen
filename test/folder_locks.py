@@ -2,11 +2,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
-from box_sdk_gen.schemas.folder_locks import FolderLocks
+from box_sdk_gen.schemas import FolderLocks
 
-from box_sdk_gen.schemas.folder_lock import FolderLock
+from box_sdk_gen.schemas import FolderLock
 
 from box_sdk_gen.managers.folder_locks import CreateFolderLockLockedOperations
 

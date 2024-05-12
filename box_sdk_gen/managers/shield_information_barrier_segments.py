@@ -8,19 +8,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.shield_information_barrier_segment import (
-    ShieldInformationBarrierSegment,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierSegment
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.shield_information_barrier_segments import (
-    ShieldInformationBarrierSegments,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierSegments
 
-from box_sdk_gen.schemas.shield_information_barrier_base import (
-    ShieldInformationBarrierBase,
-)
+from box_sdk_gen.schemas import ShieldInformationBarrierBase
 
 from box_sdk_gen.networking.auth import Authentication
 

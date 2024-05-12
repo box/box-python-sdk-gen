@@ -56,7 +56,7 @@ See the endpoint docs at
 <!-- sample post_retention_policies -->
 
 ```python
-client.retention_policies.create_retention_policy(get_uuid(), CreateRetentionPolicyPolicyType.FINITE.value, CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value, description=description, retention_length='1', retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value, can_owner_extend_retention=False)
+client.retention_policies.create_retention_policy(retention_policy_name, CreateRetentionPolicyPolicyType.FINITE.value, CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value, description=retention_description, retention_length='1', retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value, can_owner_extend_retention=True, are_owners_notified=True)
 ```
 
 ### Arguments

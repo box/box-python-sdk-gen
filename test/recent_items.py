@@ -1,6 +1,6 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.recent_items import RecentItems
+from box_sdk_gen.schemas import RecentItems
 
 from box_sdk_gen.internal.utils import decode_base_64
 

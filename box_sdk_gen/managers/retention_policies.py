@@ -12,15 +12,15 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.retention_policies import RetentionPolicies
+from box_sdk_gen.schemas import RetentionPolicies
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.retention_policy import RetentionPolicy
+from box_sdk_gen.schemas import RetentionPolicy
 
-from box_sdk_gen.schemas.user_mini import UserMini
+from box_sdk_gen.schemas import UserMini
 
-from box_sdk_gen.schemas.user_base import UserBase
+from box_sdk_gen.schemas import UserBase
 
 from box_sdk_gen.networking.auth import Authentication
 

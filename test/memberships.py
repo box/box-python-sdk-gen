@@ -4,13 +4,13 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.user_full import UserFull
+from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas.group_memberships import GroupMemberships
+from box_sdk_gen.schemas import GroupMemberships
 
-from box_sdk_gen.schemas.group_full import GroupFull
+from box_sdk_gen.schemas import GroupFull
 
-from box_sdk_gen.schemas.group_membership import GroupMembership
+from box_sdk_gen.schemas import GroupMembership
 
 from box_sdk_gen.managers.memberships import CreateGroupMembershipUser
 

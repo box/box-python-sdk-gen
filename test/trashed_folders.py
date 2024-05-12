@@ -2,13 +2,13 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas.trash_folder import TrashFolder
+from box_sdk_gen.schemas import TrashFolder
 
-from box_sdk_gen.schemas.trash_folder_restored import TrashFolderRestored
+from box_sdk_gen.schemas import TrashFolderRestored
 
 from box_sdk_gen.internal.utils import get_uuid
 

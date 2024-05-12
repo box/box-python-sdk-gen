@@ -10,13 +10,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.shield_information_barrier import ShieldInformationBarrier
+from box_sdk_gen.schemas import ShieldInformationBarrier
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.shield_information_barriers import ShieldInformationBarriers
+from box_sdk_gen.schemas import ShieldInformationBarriers
 
-from box_sdk_gen.schemas.enterprise_base import EnterpriseBase
+from box_sdk_gen.schemas import EnterpriseBase
 
 from box_sdk_gen.networking.auth import Authentication
 

@@ -4,11 +4,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.internal.utils import DateTime
 
-from box_sdk_gen.schemas.task import Task
+from box_sdk_gen.schemas import Task
 
 from box_sdk_gen.managers.tasks import CreateTaskItem
 
@@ -18,9 +18,9 @@ from box_sdk_gen.managers.tasks import CreateTaskAction
 
 from box_sdk_gen.managers.tasks import CreateTaskCompletionRule
 
-from box_sdk_gen.schemas.user_full import UserFull
+from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas.task_assignment import TaskAssignment
+from box_sdk_gen.schemas import TaskAssignment
 
 from box_sdk_gen.managers.task_assignments import CreateTaskAssignmentTask
 
@@ -28,7 +28,7 @@ from box_sdk_gen.managers.task_assignments import CreateTaskAssignmentTaskTypeFi
 
 from box_sdk_gen.managers.task_assignments import CreateTaskAssignmentAssignTo
 
-from box_sdk_gen.schemas.task_assignments import TaskAssignments
+from box_sdk_gen.schemas import TaskAssignments
 
 from box_sdk_gen.managers.task_assignments import (
     UpdateTaskAssignmentByIdResolutionState,

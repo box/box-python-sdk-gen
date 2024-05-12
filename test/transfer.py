@@ -1,8 +1,8 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.user_full import UserFull
+from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.transfer import TransferOwnedFolderOwnedBy
 

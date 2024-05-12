@@ -14,13 +14,13 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.internal.utils import DateTime
 
-from box_sdk_gen.schemas.file_request import FileRequest
+from box_sdk_gen.schemas import FileRequest
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.file_request_update_request import FileRequestUpdateRequest
+from box_sdk_gen.schemas import FileRequestUpdateRequest
 
-from box_sdk_gen.schemas.file_request_copy_request import FileRequestCopyRequest
+from box_sdk_gen.schemas import FileRequestCopyRequest
 
 from box_sdk_gen.networking.auth import Authentication
 

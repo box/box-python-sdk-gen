@@ -6,17 +6,17 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.schemas.files import Files
+from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
-from box_sdk_gen.schemas.trash_file import TrashFile
+from box_sdk_gen.schemas import TrashFile
 
-from box_sdk_gen.schemas.trash_file_restored import TrashFileRestored
+from box_sdk_gen.schemas import TrashFileRestored
 
 from box_sdk_gen.internal.utils import get_uuid
 

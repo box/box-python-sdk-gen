@@ -1,18 +1,18 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.files import Files
+from box_sdk_gen.schemas import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.file_full import FileFull
+from box_sdk_gen.schemas import FileFull
 
 from box_sdk_gen.managers.uploads import UploadFileVersionAttributes
 
-from box_sdk_gen.schemas.file_versions import FileVersions
+from box_sdk_gen.schemas import FileVersions
 
-from box_sdk_gen.schemas.file_version_full import FileVersionFull
+from box_sdk_gen.schemas import FileVersionFull
 
 from box_sdk_gen.managers.file_versions import PromoteFileVersionType
 

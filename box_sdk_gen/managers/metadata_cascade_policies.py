@@ -10,13 +10,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.metadata_cascade_policies import MetadataCascadePolicies
+from box_sdk_gen.schemas import MetadataCascadePolicies
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.metadata_cascade_policy import MetadataCascadePolicy
+from box_sdk_gen.schemas import MetadataCascadePolicy
 
-from box_sdk_gen.schemas.conflict_error import ConflictError
+from box_sdk_gen.schemas import ConflictError
 
 from box_sdk_gen.networking.auth import Authentication
 

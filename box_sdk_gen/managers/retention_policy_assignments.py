@@ -14,13 +14,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.retention_policy_assignments import RetentionPolicyAssignments
+from box_sdk_gen.schemas import RetentionPolicyAssignments
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.retention_policy_assignment import RetentionPolicyAssignment
+from box_sdk_gen.schemas import RetentionPolicyAssignment
 
-from box_sdk_gen.schemas.files_under_retention import FilesUnderRetention
+from box_sdk_gen.schemas import FilesUnderRetention
 
 from box_sdk_gen.networking.auth import Authentication
 
@@ -355,6 +355,58 @@ class RetentionPolicyAssignmentsManager:
                     '/retention_policy_assignments/',
                     to_string(retention_policy_assignment_id),
                     '/files_under_retention',
+                ]
+            ),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
+        return deserialize(response.data, FilesUnderRetention)
+
+    def get_file_versions_under_retention_policy_assignment(
+        self,
+        retention_policy_assignment_id: str,
+        *,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> FilesUnderRetention:
+        """
+                Returns a list of file versions under retention for a retention policy
+
+                assignment.
+
+                :param retention_policy_assignment_id: The ID of the retention policy assignment.
+        Example: "1233123"
+                :type retention_policy_assignment_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params(
+            {'marker': to_string(marker), 'limit': to_string(limit)}
+        )
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            ''.join(
+                [
+                    self.network_session.base_urls.base_url,
+                    '/retention_policy_assignments/',
+                    to_string(retention_policy_assignment_id),
+                    '/file_versions_under_retention',
                 ]
             ),
             FetchOptions(

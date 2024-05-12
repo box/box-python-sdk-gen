@@ -1,6 +1,6 @@
-from box_sdk_gen.schemas.legal_hold_policy import LegalHoldPolicy
+from box_sdk_gen.schemas import LegalHoldPolicy
 
-from box_sdk_gen.schemas.legal_hold_policies import LegalHoldPolicies
+from box_sdk_gen.schemas import LegalHoldPolicies
 
 from box_sdk_gen.internal.utils import DateTime
 

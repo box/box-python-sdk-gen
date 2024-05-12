@@ -4,11 +4,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.folder_full import FolderFull
+from box_sdk_gen.schemas import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas.webhook import Webhook
+from box_sdk_gen.schemas import Webhook
 
 from box_sdk_gen.managers.webhooks import CreateWebhookTarget
 
@@ -16,7 +16,7 @@ from box_sdk_gen.managers.webhooks import CreateWebhookTargetTypeField
 
 from box_sdk_gen.managers.webhooks import CreateWebhookTriggers
 
-from box_sdk_gen.schemas.webhooks import Webhooks
+from box_sdk_gen.schemas import Webhooks
 
 from box_sdk_gen.internal.utils import get_uuid
 

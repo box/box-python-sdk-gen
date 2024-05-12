@@ -4,15 +4,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.collaboration_allowlist_exempt_targets import (
-    CollaborationAllowlistExemptTargets,
-)
+from box_sdk_gen.schemas import CollaborationAllowlistExemptTargets
 
-from box_sdk_gen.schemas.user_full import UserFull
+from box_sdk_gen.schemas import UserFull
 
-from box_sdk_gen.schemas.collaboration_allowlist_exempt_target import (
-    CollaborationAllowlistExemptTarget,
-)
+from box_sdk_gen.schemas import CollaborationAllowlistExemptTarget
 
 from box_sdk_gen.managers.collaboration_allowlist_exempt_targets import (
     CreateCollaborationWhitelistExemptTargetUser,
@@ -25,7 +21,7 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def testCollaborationAllowlistExemptTargets():
+def collaborationAllowlistExemptTargets():
     exempt_targets: CollaborationAllowlistExemptTargets = (
         client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_targets()
     )

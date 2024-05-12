@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample post_web_links -->
 
 ```python
-client.web_links.create_web_link('https://www.box.com', CreateWebLinkParent(id=parent.id), name=get_uuid(), description='Weblink description')
+client.web_links.create_web_link(url, CreateWebLinkParent(id=parent.id), name=name, description=description)
 ```
 
 ### Arguments
@@ -119,7 +119,7 @@ See the endpoint docs at
 <!-- sample delete_web_links_id -->
 
 ```python
-client.web_links.delete_web_link_by_id(web_link_id)
+client.web_links.delete_web_link_by_id(weblink.id)
 ```
 
 ### Arguments

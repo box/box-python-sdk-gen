@@ -12,21 +12,21 @@ from typing import List
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas.file_base import FileBase
+from box_sdk_gen.schemas import FileBase
 
-from box_sdk_gen.schemas.sign_request_create_signer import SignRequestCreateSigner
+from box_sdk_gen.schemas import SignRequestCreateSigner
 
-from box_sdk_gen.schemas.folder_mini import FolderMini
+from box_sdk_gen.schemas import FolderMini
 
-from box_sdk_gen.schemas.sign_request_prefill_tag import SignRequestPrefillTag
+from box_sdk_gen.schemas import SignRequestPrefillTag
 
-from box_sdk_gen.schemas.sign_request import SignRequest
+from box_sdk_gen.schemas import SignRequest
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.sign_requests import SignRequests
+from box_sdk_gen.schemas import SignRequests
 
-from box_sdk_gen.schemas.sign_request_create_request import SignRequestCreateRequest
+from box_sdk_gen.schemas import SignRequestCreateRequest
 
 from box_sdk_gen.networking.auth import Authentication
 

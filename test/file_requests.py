@@ -4,7 +4,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.file_request import FileRequest
+from box_sdk_gen.schemas import FileRequest
 
 from box_sdk_gen.managers.file_requests import CreateFileRequestCopyFolder
 

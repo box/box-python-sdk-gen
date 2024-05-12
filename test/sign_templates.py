@@ -1,8 +1,8 @@
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas.sign_templates import SignTemplates
+from box_sdk_gen.schemas import SignTemplates
 
-from box_sdk_gen.schemas.sign_template import SignTemplate
+from box_sdk_gen.schemas import SignTemplate
 
 from box_sdk_gen.internal.utils import decode_base_64
 

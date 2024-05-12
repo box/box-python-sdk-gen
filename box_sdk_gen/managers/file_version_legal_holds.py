@@ -6,11 +6,11 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.schemas.file_version_legal_hold import FileVersionLegalHold
+from box_sdk_gen.schemas import FileVersionLegalHold
 
-from box_sdk_gen.schemas.client_error import ClientError
+from box_sdk_gen.schemas import ClientError
 
-from box_sdk_gen.schemas.file_version_legal_holds import FileVersionLegalHolds
+from box_sdk_gen.schemas import FileVersionLegalHolds
 
 from box_sdk_gen.networking.auth import Authentication
 
