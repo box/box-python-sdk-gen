@@ -59,7 +59,7 @@ See the endpoint docs at
 <!-- sample put_files_id -->
 
 ```python
-client.files.update_file_by_id(file_to_update.id, name=updated_name, description='Updated description')
+downscoped_client.files.update_file_by_id(file.id, name=get_uuid())
 ```
 
 ### Arguments
@@ -117,7 +117,7 @@ See the endpoint docs at
 <!-- sample delete_files_id -->
 
 ```python
-client.files.delete_file_by_id(file_2.id)
+parent_client.files.delete_file_by_id(file.id)
 ```
 
 ### Arguments

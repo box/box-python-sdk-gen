@@ -4,9 +4,9 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import ShieldInformationBarrier
+from box_sdk_gen.schemas.shield_information_barrier import ShieldInformationBarrier
 
-from box_sdk_gen.schemas import ShieldInformationBarriers
+from box_sdk_gen.schemas.shield_information_barriers import ShieldInformationBarriers
 
 from box_sdk_gen.managers.shield_information_barriers import (
     UpdateShieldInformationBarrierStatusStatus,

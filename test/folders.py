@@ -2,7 +2,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
@@ -10,7 +10,7 @@ from box_sdk_gen.managers.folders import CopyFolderParent
 
 from box_sdk_gen.managers.folders import UpdateFolderByIdParent
 
-from box_sdk_gen.schemas import Items
+from box_sdk_gen.schemas.items import Items
 
 from box_sdk_gen.internal.utils import get_uuid
 

@@ -6,11 +6,11 @@ from typing import List
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
-from box_sdk_gen.schemas import Metadatas
+from box_sdk_gen.schemas.metadatas import Metadatas
 
-from box_sdk_gen.schemas import MetadataFull
+from box_sdk_gen.schemas.metadata_full import MetadataFull
 
 from box_sdk_gen.managers.folder_metadata import CreateFolderMetadataByIdScope
 
@@ -26,7 +26,7 @@ from box_sdk_gen.managers.folder_metadata import (
 
 from box_sdk_gen.managers.folder_metadata import DeleteFolderMetadataByIdScope
 
-from box_sdk_gen.schemas import MetadataTemplate
+from box_sdk_gen.schemas.metadata_template import MetadataTemplate
 
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 

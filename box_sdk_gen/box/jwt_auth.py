@@ -8,19 +8,19 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from typing import List
 
-from box_sdk_gen.schemas import PostOAuth2TokenGrantTypeField
+from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2TokenGrantTypeField
 
-from box_sdk_gen.schemas import PostOAuth2TokenSubjectTokenTypeField
+from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2TokenSubjectTokenTypeField
 
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.schemas import AccessToken
+from box_sdk_gen.schemas.access_token import AccessToken
 
-from box_sdk_gen.schemas import PostOAuth2Token
+from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2Token
 
-from box_sdk_gen.schemas import PostOAuth2Revoke
+from box_sdk_gen.schemas.post_o_auth_2_revoke import PostOAuth2Revoke
 
 from box_sdk_gen.box.token_storage import TokenStorage
 

@@ -1,0 +1,28 @@
+from enum import Enum
+
+from box_sdk_gen.internal.base_object import BaseObject
+
+
+class TermsOfServiceBaseTypeField(str, Enum):
+    TERMS_OF_SERVICE = 'terms_of_service'
+
+
+class TermsOfServiceBase(BaseObject):
+    _discriminator = 'type', {'terms_of_service'}
+
+    def __init__(
+        self,
+        id: str,
+        *,
+        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value,
+        **kwargs
+    ):
+        """
+        :param id: The unique identifier for this terms of service.
+        :type id: str
+        :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value
+        :type type: TermsOfServiceBaseTypeField, optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.type = type

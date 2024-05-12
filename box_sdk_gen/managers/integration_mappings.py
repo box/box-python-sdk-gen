@@ -10,19 +10,27 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import IntegrationMappingPartnerItemSlack
+from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
+    IntegrationMappingPartnerItemSlack,
+)
 
-from box_sdk_gen.schemas import IntegrationMappings
+from box_sdk_gen.schemas.integration_mappings import IntegrationMappings
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import IntegrationMapping
+from box_sdk_gen.schemas.integration_mapping import IntegrationMapping
 
-from box_sdk_gen.schemas import IntegrationMappingSlackCreateRequest
+from box_sdk_gen.schemas.integration_mapping_slack_create_request import (
+    IntegrationMappingSlackCreateRequest,
+)
 
-from box_sdk_gen.schemas import IntegrationMappingBoxItemSlack
+from box_sdk_gen.schemas.integration_mapping_box_item_slack import (
+    IntegrationMappingBoxItemSlack,
+)
 
-from box_sdk_gen.schemas import IntegrationMappingSlackOptions
+from box_sdk_gen.schemas.integration_mapping_slack_options import (
+    IntegrationMappingSlackOptions,
+)
 
 from box_sdk_gen.networking.auth import Authentication
 

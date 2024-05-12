@@ -4,11 +4,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import LegalHoldPolicy
+from box_sdk_gen.schemas.legal_hold_policy import LegalHoldPolicy
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import LegalHoldPolicyAssignment
+from box_sdk_gen.schemas.legal_hold_policy_assignment import LegalHoldPolicyAssignment
 
 from box_sdk_gen.managers.legal_hold_policy_assignments import (
     CreateLegalHoldPolicyAssignmentAssignTo,
@@ -18,7 +18,7 @@ from box_sdk_gen.managers.legal_hold_policy_assignments import (
     CreateLegalHoldPolicyAssignmentAssignToTypeField,
 )
 
-from box_sdk_gen.schemas import LegalHoldPolicyAssignments
+from box_sdk_gen.schemas.legal_hold_policy_assignments import LegalHoldPolicyAssignments
 
 from box_sdk_gen.internal.utils import get_uuid
 

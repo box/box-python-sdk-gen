@@ -4,15 +4,15 @@ from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas import Comments
+from box_sdk_gen.schemas.comments import Comments
 
-from box_sdk_gen.schemas import CommentFull
+from box_sdk_gen.schemas.comment_full import CommentFull
 
 from box_sdk_gen.managers.comments import CreateCommentItem
 
@@ -27,7 +27,7 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def comments():
+def testComments():
     file_size: int = 256
     file_name: str = get_uuid()
     file_byte_stream: ByteStream = generate_byte_stream(file_size)

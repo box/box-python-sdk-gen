@@ -16,17 +16,19 @@ from box_sdk_gen.internal.utils import to_string
 
 from typing import Union
 
-from box_sdk_gen.schemas import MetadataQueryResults
+from box_sdk_gen.schemas.metadata_query_results import MetadataQueryResults
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import MetadataQuery
+from box_sdk_gen.schemas.metadata_query import MetadataQuery
 
-from box_sdk_gen.schemas import SearchResults
+from box_sdk_gen.schemas.search_results import SearchResults
 
-from box_sdk_gen.schemas import SearchResultsWithSharedLinks
+from box_sdk_gen.schemas.search_results_with_shared_links import (
+    SearchResultsWithSharedLinks,
+)
 
-from box_sdk_gen.schemas import MetadataFilter
+from box_sdk_gen.schemas.metadata_filter import MetadataFilter
 
 from box_sdk_gen.networking.auth import Authentication
 

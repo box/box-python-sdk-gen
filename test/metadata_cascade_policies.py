@@ -12,15 +12,15 @@ from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsTypeField,
 )
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
-from box_sdk_gen.schemas import MetadataCascadePolicy
+from box_sdk_gen.schemas.metadata_cascade_policy import MetadataCascadePolicy
 
 from box_sdk_gen.managers.metadata_cascade_policies import (
     CreateMetadataCascadePolicyScope,
 )
 
-from box_sdk_gen.schemas import MetadataCascadePolicies
+from box_sdk_gen.schemas.metadata_cascade_policies import MetadataCascadePolicies
 
 from box_sdk_gen.managers.metadata_cascade_policies import (
     ApplyMetadataCascadePolicyConflictResolution,

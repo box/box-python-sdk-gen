@@ -4,15 +4,15 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
-from box_sdk_gen.schemas import WebLink
+from box_sdk_gen.schemas.web_link import WebLink
 
 from box_sdk_gen.managers.web_links import CreateWebLinkParent
 
-from box_sdk_gen.schemas import TrashWebLink
+from box_sdk_gen.schemas.trash_web_link import TrashWebLink
 
-from box_sdk_gen.schemas import TrashWebLinkRestored
+from box_sdk_gen.schemas.trash_web_link_restored import TrashWebLinkRestored
 
 from box_sdk_gen.internal.utils import get_uuid
 

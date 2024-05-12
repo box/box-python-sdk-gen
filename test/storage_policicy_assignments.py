@@ -1,8 +1,8 @@
 from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.schemas import StoragePolicyAssignment
+from box_sdk_gen.schemas.storage_policy_assignment import StoragePolicyAssignment
 
-from box_sdk_gen.schemas import StoragePolicyAssignments
+from box_sdk_gen.schemas.storage_policy_assignments import StoragePolicyAssignments
 
 from box_sdk_gen.managers.storage_policy_assignments import (
     GetStoragePolicyAssignmentsResolvedForType,
@@ -20,11 +20,11 @@ from box_sdk_gen.managers.storage_policy_assignments import (
     CreateStoragePolicyAssignmentAssignedToTypeField,
 )
 
-from box_sdk_gen.schemas import UserFull
+from box_sdk_gen.schemas.user_full import UserFull
 
-from box_sdk_gen.schemas import StoragePolicies
+from box_sdk_gen.schemas.storage_policies import StoragePolicies
 
-from box_sdk_gen.schemas import StoragePolicy
+from box_sdk_gen.schemas.storage_policy import StoragePolicy
 
 from box_sdk_gen.managers.storage_policy_assignments import (
     UpdateStoragePolicyAssignmentByIdStoragePolicy,

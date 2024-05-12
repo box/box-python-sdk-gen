@@ -12,11 +12,11 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import FileVersions
+from box_sdk_gen.schemas.file_versions import FileVersions
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import FileVersionFull
+from box_sdk_gen.schemas.file_version_full import FileVersionFull
 
 from box_sdk_gen.networking.auth import Authentication
 

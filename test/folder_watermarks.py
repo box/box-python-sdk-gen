@@ -2,11 +2,11 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas import Watermark
+from box_sdk_gen.schemas.watermark import Watermark
 
 from box_sdk_gen.managers.folder_watermarks import UpdateFolderWatermarkWatermark
 

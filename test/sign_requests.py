@@ -2,21 +2,21 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
-from box_sdk_gen.schemas import FolderFull
+from box_sdk_gen.schemas.folder_full import FolderFull
 
-from box_sdk_gen.schemas import SignRequest
+from box_sdk_gen.schemas.sign_request import SignRequest
 
-from box_sdk_gen.schemas import FileBase
+from box_sdk_gen.schemas.file_base import FileBase
 
-from box_sdk_gen.schemas import SignRequestCreateSigner
+from box_sdk_gen.schemas.sign_request_create_signer import SignRequestCreateSigner
 
-from box_sdk_gen.schemas import FolderMini
+from box_sdk_gen.schemas.folder_mini import FolderMini
 
-from box_sdk_gen.schemas import SignRequestPrefillTag
+from box_sdk_gen.schemas.sign_request_prefill_tag import SignRequestPrefillTag
 
-from box_sdk_gen.schemas import SignRequests
+from box_sdk_gen.schemas.sign_requests import SignRequests
 
 from box_sdk_gen.internal.utils import get_uuid
 

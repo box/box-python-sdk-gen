@@ -14,13 +14,13 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
-from box_sdk_gen.schemas import RetentionPolicyAssignments
+from box_sdk_gen.schemas.retention_policy_assignments import RetentionPolicyAssignments
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import RetentionPolicyAssignment
+from box_sdk_gen.schemas.retention_policy_assignment import RetentionPolicyAssignment
 
-from box_sdk_gen.schemas import FilesUnderRetention
+from box_sdk_gen.schemas.files_under_retention import FilesUnderRetention
 
 from box_sdk_gen.networking.auth import Authentication
 

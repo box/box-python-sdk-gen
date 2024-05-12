@@ -14,21 +14,21 @@ from box_sdk_gen.internal.utils import Buffer
 
 from box_sdk_gen.internal.utils import HashName
 
-from box_sdk_gen.schemas import FileFull
+from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.internal.utils import Iterator
 
-from box_sdk_gen.schemas import UploadSession
+from box_sdk_gen.schemas.upload_session import UploadSession
 
-from box_sdk_gen.schemas import ClientError
+from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas import UploadedPart
+from box_sdk_gen.schemas.uploaded_part import UploadedPart
 
-from box_sdk_gen.schemas import UploadParts
+from box_sdk_gen.schemas.upload_parts import UploadParts
 
-from box_sdk_gen.schemas import Files
+from box_sdk_gen.schemas.files import Files
 
-from box_sdk_gen.schemas import UploadPart
+from box_sdk_gen.schemas.upload_part import UploadPart
 
 from box_sdk_gen.networking.auth import Authentication
 
