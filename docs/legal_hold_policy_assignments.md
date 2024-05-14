@@ -158,7 +158,11 @@ This operation is performed by calling function `get_legal_hold_policy_assignmen
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id-files-on-hold/).
 
-_Currently we don't have an example for calling `get_legal_hold_policy_assignment_file_on_hold` in integration tests_
+<!-- sample get_legal_hold_policy_assignments_id_files_on_hold -->
+
+```python
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_hold(legal_hold_policy_assignment_id)
+```
 
 ### Arguments
 

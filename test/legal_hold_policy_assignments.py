@@ -20,6 +20,8 @@ from box_sdk_gen.managers.legal_hold_policy_assignments import (
 
 from box_sdk_gen.schemas.legal_hold_policy_assignments import LegalHoldPolicyAssignments
 
+from box_sdk_gen.schemas.files_on_hold import FilesOnHold
+
 from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import generate_byte_stream
@@ -70,6 +72,13 @@ def testLegalHoldPolicyAssignments():
         )
     )
     assert len(legal_policy_assignments.entries) == 1
+    files_on_hold: FilesOnHold = (
+        client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_hold(
+            legal_hold_policy_assignment_id
+        )
+    )
+    assert len(files_on_hold.entries) == 1
+    assert files_on_hold.entries[0].id == file_id
     client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
         legal_hold_policy_assignment_id
     )
