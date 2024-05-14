@@ -482,7 +482,9 @@ class FileFull(File):
                 :param shared_link_permission_options: A list of the types of roles that user can be invited at
         when sharing this file., defaults to None
                 :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
-                :param description: The optional description of this file, defaults to None
+                :param description: The optional description of this file.
+        If the description exceeds 255 characters, the first 255 characters
+        are set as a file description and the rest of it is ignored., defaults to None
                 :type description: Optional[str], optional
                 :param size: The file size in bytes. Be careful parsing this integer as it can
         get very large and cause an integer overflow., defaults to None

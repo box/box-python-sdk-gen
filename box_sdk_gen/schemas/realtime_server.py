@@ -9,8 +9,8 @@ class RealtimeServer(BaseObject):
         *,
         type: Optional[str] = None,
         url: Optional[str] = None,
-        ttl: Optional[int] = None,
-        max_retries: Optional[int] = None,
+        ttl: Optional[str] = None,
+        max_retries: Optional[str] = None,
         retry_timeout: Optional[int] = None,
         **kwargs
     ):
@@ -20,11 +20,11 @@ class RealtimeServer(BaseObject):
                 :param url: The URL for the server., defaults to None
                 :type url: Optional[str], optional
                 :param ttl: The time in minutes for which this server is available, defaults to None
-                :type ttl: Optional[int], optional
+                :type ttl: Optional[str], optional
                 :param max_retries: The maximum number of retries this server will
         allow before a new long poll should be started by
         getting a [new list of server](#options-events)., defaults to None
-                :type max_retries: Optional[int], optional
+                :type max_retries: Optional[str], optional
                 :param retry_timeout: The maximum number of seconds without a response
         after which you should retry the long poll connection.
 
