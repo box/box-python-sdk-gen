@@ -67,6 +67,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
         signer_group_id: Optional[str] = None,
+        suppress_notifications: Optional[bool] = None,
         **kwargs
     ):
         """
@@ -130,6 +131,8 @@ class SignRequestSigner(SignRequestCreateSigner):
         determine which signers belongs to same group. A successful response will provide a generated UUID value
         instead for signers in the same signer group., defaults to None
                 :type signer_group_id: Optional[str], optional
+                :param suppress_notifications: If true, no emails about the sign request will be sent, defaults to None
+                :type suppress_notifications: Optional[bool], optional
         """
         super().__init__(
             email=email,
@@ -143,6 +146,7 @@ class SignRequestSigner(SignRequestCreateSigner):
             verification_phone_number=verification_phone_number,
             password=password,
             signer_group_id=signer_group_id,
+            suppress_notifications=suppress_notifications,
             **kwargs
         )
         self.has_viewed_document = has_viewed_document
