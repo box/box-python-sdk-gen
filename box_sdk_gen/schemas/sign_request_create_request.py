@@ -45,15 +45,15 @@ class SignRequestCreateRequest(SignRequestBase):
         **kwargs
     ):
         """
-        :param signers: Array of signers for the sign request. 35 is the max number of signers permitted.
+        :param signers: Array of signers for the signature request. 35 is the max number of signers permitted.
         :type signers: List[SignRequestCreateSigner]
         :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file., defaults to None
         :type source_files: Optional[List[FileBase]], optional
         :param signature_color: Force a specific color for the signature (blue, black, or red), defaults to None
         :type signature_color: Optional[SignRequestCreateRequestSignatureColorField], optional
-        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI., defaults to None
+        :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI., defaults to None
         :type is_document_preparation_needed: Optional[bool], optional
-        :param redirect_url: When specified, signature request will be redirected to this url when a document is signed., defaults to None
+        :param redirect_url: When specified, the signature request will be redirected to this url when a document is signed., defaults to None
         :type redirect_url: Optional[str], optional
         :param declined_redirect_url: The uri that a signer will be redirected to after declining to sign a document., defaults to None
         :type declined_redirect_url: Optional[str], optional
@@ -65,9 +65,9 @@ class SignRequestCreateRequest(SignRequestBase):
         :type email_message: Optional[str], optional
         :param are_reminders_enabled: Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers., defaults to None
         :type are_reminders_enabled: Optional[bool], optional
-        :param name: Name of the sign request., defaults to None
+        :param name: Name of the signature request., defaults to None
         :type name: Optional[str], optional
-        :param prefill_tags: When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag., defaults to None
+        :param prefill_tags: When a document contains sign-related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag., defaults to None
         :type prefill_tags: Optional[List[SignRequestPrefillTag]], optional
         :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire., defaults to None
         :type days_valid: Optional[int], optional

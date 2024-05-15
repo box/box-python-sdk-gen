@@ -34,11 +34,11 @@ class SignRequestSignerSignerDecisionField(BaseObject):
         **kwargs
     ):
         """
-        :param type: Type of decision made by the signer, defaults to None
+        :param type: Type of decision made by the signer., defaults to None
         :type type: Optional[SignRequestSignerSignerDecisionTypeField], optional
-        :param finalized_at: Date and Time that the decision was made, defaults to None
+        :param finalized_at: Date and Time that the decision was made., defaults to None
         :type finalized_at: Optional[DateTime], optional
-        :param additional_info: Additional info about the decision, such as the decline reason from the signer, defaults to None
+        :param additional_info: Additional info about the decision, such as the decline reason from the signer., defaults to None
         :type additional_info: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -72,7 +72,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         """
                 :param has_viewed_document: Set to `true` if the signer views the document, defaults to None
                 :type has_viewed_document: Optional[bool], optional
-                :param signer_decision: Final decision made by the signer, defaults to None
+                :param signer_decision: Final decision made by the signer., defaults to None
                 :type signer_decision: Optional[SignRequestSignerSignerDecisionField], optional
                 :param embed_url: URL to direct a signer to for signing, defaults to None
                 :type embed_url: Optional[str], optional
@@ -81,12 +81,12 @@ class SignRequestSigner(SignRequestCreateSigner):
         It will be returned in the response
         only if the `embed_url_external_user_id`
         parameter was passed in the
-        `create sign request` call., defaults to None
+        `create Box Sign request` call., defaults to None
                 :type iframeable_embed_url: Optional[str], optional
                 :param email: Email address of the signer.
         The email address of the signer is required when making signature requests, except when using templates that are configured to include emails., defaults to None
                 :type email: Optional[str], optional
-                :param role: Defines the role of the signer in the sign request. A `signer`
+                :param role: Defines the role of the signer in the signature request. A `signer`
         must sign the document and an `approver` must approve the document. A
         `final_copy_reader` only receives the final signed document and signing
         log., defaults to None
