@@ -235,6 +235,7 @@ class SignRequestsManager:
         external_id: Optional[str] = None,
         is_phone_verification_required_to_view: Optional[bool] = None,
         template_id: Optional[str] = None,
+        external_system_name: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SignRequest:
         """
@@ -274,6 +275,8 @@ class SignRequestsManager:
         :type is_phone_verification_required_to_view: Optional[bool], optional
         :param template_id: When a signature request is created from a template this field will indicate the id of that template., defaults to None
         :type template_id: Optional[str], optional
+        :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`, defaults to None
+        :type external_system_name: Optional[str], optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -297,6 +300,7 @@ class SignRequestsManager:
             'external_id': external_id,
             'is_phone_verification_required_to_view': is_phone_verification_required_to_view,
             'template_id': template_id,
+            'external_system_name': external_system_name,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
