@@ -44,7 +44,7 @@ class TemplateSigner(BaseObject):
                 :type order: Optional[int], optional
                 :param signer_group_id: If provided, this value points signers that are assigned the same inputs and belongs to same signer group.
         A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used
-        within Sign Requests created from it., defaults to None
+        within Box Sign requests created from it., defaults to None
                 :type signer_group_id: Optional[str], optional
         """
         super().__init__(**kwargs)

@@ -1,12 +1,12 @@
 # SignRequestsManager
 
-- [Cancel sign request](#cancel-sign-request)
-- [Resend sign request](#resend-sign-request)
-- [Get sign request by ID](#get-sign-request-by-id)
-- [List sign requests](#list-sign-requests)
-- [Create sign request](#create-sign-request)
+- [Cancel Box Sign request](#cancel-box-sign-request)
+- [Resend Box Sign request](#resend-box-sign-request)
+- [Get Box Sign request by ID](#get-box-sign-request-by-id)
+- [List Box Sign requests](#list-box-sign-requests)
+- [Create Box Sign request](#create-box-sign-request)
 
-## Cancel sign request
+## Cancel Box Sign request
 
 Cancels a sign request.
 
@@ -24,7 +24,7 @@ client.sign_requests.cancel_sign_request(created_sign_request.id)
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the sign request Example: "33243242"
+  - The ID of the signature request Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -34,9 +34,9 @@ This function returns a value of type `SignRequest`.
 
 Returns a Sign Request object.
 
-## Resend sign request
+## Resend Box Sign request
 
-Resends a sign request email to all outstanding signers.
+Resends a signature request email to all outstanding signers.
 
 This operation is performed by calling function `resend_sign_request`.
 
@@ -48,7 +48,7 @@ _Currently we don't have an example for calling `resend_sign_request` in integra
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the sign request Example: "33243242"
+  - The ID of the signature request Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -59,7 +59,7 @@ This function returns a value of type `None`.
 Returns an empty response when the API call was successful.
 The email notifications will be sent asynchronously.
 
-## Get sign request by ID
+## Get Box Sign request by ID
 
 Gets a sign request by ID.
 
@@ -77,7 +77,7 @@ client.sign_requests.get_sign_request_by_id(created_sign_request.id)
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the sign request Example: "33243242"
+  - The ID of the signature request Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -85,12 +85,12 @@ client.sign_requests.get_sign_request_by_id(created_sign_request.id)
 
 This function returns a value of type `SignRequest`.
 
-Returns a sign request
+Returns a signature request.
 
-## List sign requests
+## List Box Sign requests
 
-Gets sign requests created by a user. If the `sign_files` and/or
-`parent_folder` are deleted, the sign request will not return in the list.
+Gets signature requests created by a user. If the `sign_files` and/or
+`parent_folder` are deleted, the signature request will not return in the list.
 
 This operation is performed by calling function `get_sign_requests`.
 
@@ -118,10 +118,10 @@ This function returns a value of type `SignRequests`.
 
 Returns a collection of sign requests
 
-## Create sign request
+## Create Box Sign request
 
-Creates a sign request. This involves preparing a document for signing and
-sending the sign request to signers.
+Creates a signature request. This involves preparing a document for signing and
+sending the signature request to signers.
 
 This operation is performed by calling function `create_sign_request`.
 
@@ -141,13 +141,13 @@ client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1
 - signature_color `Optional[CreateSignRequestSignatureColor]`
   - Force a specific color for the signature (blue, black, or red)
 - signers `List[SignRequestCreateSigner]`
-  - Array of signers for the sign request. 35 is the max number of signers permitted.
+  - Array of signers for the signature request. 35 is the max number of signers permitted.
 - parent_folder `Optional[FolderMini]`
   -
 - is_document_preparation_needed `Optional[bool]`
-  - Indicates if the sender should receive a `prepare_url` in the response to complete document preparation via UI.
+  - Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI.
 - redirect_url `Optional[str]`
-  - When specified, signature request will be redirected to this url when a document is signed.
+  - When specified, the signature request will be redirected to this url when a document is signed.
 - declined_redirect_url `Optional[str]`
   - The uri that a signer will be redirected to after declining to sign a document.
 - are_text_signatures_enabled `Optional[bool]`
@@ -159,9 +159,9 @@ client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1
 - are_reminders_enabled `Optional[bool]`
   - Reminds signers to sign a document on day 3, 8, 13 and 18. Reminders are only sent to outstanding signers.
 - name `Optional[str]`
-  - Name of the sign request.
+  - Name of the signature request.
 - prefill_tags `Optional[List[SignRequestPrefillTag]]`
-  - When a document contains sign related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
+  - When a document contains sign-related tags in the content, you can prefill them using this `prefill_tags` by referencing the 'id' of the tag as the `external_id` field of the prefill tag.
 - days_valid `Optional[int]`
   - Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
 - external_id `Optional[str]`
@@ -177,4 +177,4 @@ client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1
 
 This function returns a value of type `SignRequest`.
 
-Returns a Sign Request object.
+Returns a Box Sign request object.
