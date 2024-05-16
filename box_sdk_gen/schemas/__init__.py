@@ -50,6 +50,8 @@ from box_sdk_gen.schemas.file_version_mini import *
 
 from box_sdk_gen.schemas.file_mini import *
 
+from box_sdk_gen.schemas.files_on_hold import *
+
 from box_sdk_gen.schemas.files_under_retention import *
 
 from box_sdk_gen.schemas.file_conflict import *
@@ -219,6 +221,8 @@ from box_sdk_gen.schemas.file_version import *
 from box_sdk_gen.schemas.file_version_full import *
 
 from box_sdk_gen.schemas.file_versions import *
+
+from box_sdk_gen.schemas.file_versions_on_hold import *
 
 from box_sdk_gen.schemas.file_request import *
 

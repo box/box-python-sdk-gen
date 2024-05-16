@@ -4,7 +4,7 @@
 - [Assign legal hold policy](#assign-legal-hold-policy)
 - [Get legal hold policy assignment](#get-legal-hold-policy-assignment)
 - [Unassign legal hold policy](#unassign-legal-hold-policy)
-- [List current file versions for legal hold policy assignment](#list-current-file-versions-for-legal-hold-policy-assignment)
+- [List files with current file versions for legal hold policy assignment](#list-files-with-current-file-versions-for-legal-hold-policy-assignment)
 
 ## List legal hold policy assignments
 
@@ -134,9 +134,9 @@ This function returns a value of type `None`.
 A blank response is returned if the assignment was
 successfully deleted.
 
-## List current file versions for legal hold policy assignment
+## List files with current file versions for legal hold policy assignment
 
-Get a list of current file versions for a legal hold
+Get a list of files with current file versions for a legal hold
 assignment.
 
 In some cases you may want to get previous file versions instead. In these
@@ -175,7 +175,7 @@ _Currently we don't have an example for calling `get_legal_hold_policy_assignmen
 
 ### Returns
 
-This function returns a value of type `FileVersionLegalHolds`.
+This function returns a value of type `FilesOnHold`.
 
 Returns the list of current file versions held under legal hold for a
 specific legal hold policy assignment.

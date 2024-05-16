@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import Union
+
 from typing import List
 
 from box_sdk_gen.internal.base_object import BaseObject
@@ -12,7 +14,7 @@ class Events(BaseObject):
         self,
         *,
         chunk_size: Optional[int] = None,
-        next_stream_position: Optional[str] = None,
+        next_stream_position: Optional[Union[str, float]] = None,
         entries: Optional[List[Event]] = None,
         **kwargs
     ):
@@ -21,7 +23,7 @@ class Events(BaseObject):
                 :type chunk_size: Optional[int], optional
                 :param next_stream_position: The stream position of the start of the next page (chunk)
         of events., defaults to None
-                :type next_stream_position: Optional[str], optional
+                :type next_stream_position: Optional[Union[str, float]], optional
                 :param entries: A list of events, defaults to None
                 :type entries: Optional[List[Event]], optional
         """

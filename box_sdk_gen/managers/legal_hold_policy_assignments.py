@@ -20,7 +20,9 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.legal_hold_policy_assignment import LegalHoldPolicyAssignment
 
-from box_sdk_gen.schemas.file_version_legal_holds import FileVersionLegalHolds
+from box_sdk_gen.schemas.files_on_hold import FilesOnHold
+
+from box_sdk_gen.schemas.file_versions_on_hold import FileVersionsOnHold
 
 from box_sdk_gen.networking.auth import Authentication
 
@@ -281,9 +283,9 @@ class LegalHoldPolicyAssignmentsManager:
         limit: Optional[int] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> FileVersionLegalHolds:
+    ) -> FilesOnHold:
         """
-                Get a list of current file versions for a legal hold
+                Get a list of files with current file versions for a legal hold
 
                 assignment.
 
@@ -371,4 +373,4 @@ class LegalHoldPolicyAssignmentsManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, FileVersionLegalHolds)
+        return deserialize(response.data, FilesOnHold)
