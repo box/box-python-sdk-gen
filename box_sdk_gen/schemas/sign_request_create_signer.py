@@ -32,7 +32,7 @@ class SignRequestCreateSigner(BaseObject):
                 :param email: Email address of the signer.
         The email address of the signer is required when making signature requests, except when using templates that are configured to include emails., defaults to None
                 :type email: Optional[str], optional
-                :param role: Defines the role of the signer in the sign request. A `signer`
+                :param role: Defines the role of the signer in the signature request. A `signer`
         must sign the document and an `approver` must approve the document. A
         `final_copy_reader` only receives the final signed document and signing
         log., defaults to None
