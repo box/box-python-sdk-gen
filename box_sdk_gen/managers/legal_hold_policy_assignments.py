@@ -22,8 +22,6 @@ from box_sdk_gen.schemas.legal_hold_policy_assignment import LegalHoldPolicyAssi
 
 from box_sdk_gen.schemas.files_on_hold import FilesOnHold
 
-from box_sdk_gen.schemas.file_versions_on_hold import FileVersionsOnHold
-
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
