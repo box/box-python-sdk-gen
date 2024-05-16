@@ -26,6 +26,7 @@ class SignRequestCreateSigner(BaseObject):
         verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
         signer_group_id: Optional[str] = None,
+        suppress_notifications: Optional[bool] = None,
         **kwargs
     ):
         """
@@ -76,6 +77,8 @@ class SignRequestCreateSigner(BaseObject):
         determine which signers belongs to same group. A successful response will provide a generated UUID value
         instead for signers in the same signer group., defaults to None
                 :type signer_group_id: Optional[str], optional
+                :param suppress_notifications: If true, no emails about the sign request will be sent, defaults to None
+                :type suppress_notifications: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.email = email
@@ -89,3 +92,4 @@ class SignRequestCreateSigner(BaseObject):
         self.verification_phone_number = verification_phone_number
         self.password = password
         self.signer_group_id = signer_group_id
+        self.suppress_notifications = suppress_notifications

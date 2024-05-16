@@ -42,6 +42,7 @@ class SignRequestCreateRequest(SignRequestBase):
         external_id: Optional[str] = None,
         is_phone_verification_required_to_view: Optional[bool] = None,
         template_id: Optional[str] = None,
+        external_system_name: Optional[str] = None,
         **kwargs
     ):
         """
@@ -77,6 +78,8 @@ class SignRequestCreateRequest(SignRequestBase):
         :type is_phone_verification_required_to_view: Optional[bool], optional
         :param template_id: When a signature request is created from a template this field will indicate the id of that template., defaults to None
         :type template_id: Optional[str], optional
+        :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`, defaults to None
+        :type external_system_name: Optional[str], optional
         """
         super().__init__(
             is_document_preparation_needed=is_document_preparation_needed,
@@ -92,6 +95,7 @@ class SignRequestCreateRequest(SignRequestBase):
             external_id=external_id,
             is_phone_verification_required_to_view=is_phone_verification_required_to_view,
             template_id=template_id,
+            external_system_name=external_system_name,
             **kwargs
         )
         self.signers = signers
