@@ -170,6 +170,8 @@ client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1
   - Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
 - template_id `Optional[str]`
   - When a signature request is created from a template this field will indicate the id of that template.
+- external_system_name `Optional[str]`
+  - Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
