@@ -148,7 +148,7 @@ See the endpoint docs at
 <!-- sample post_files_id_copy -->
 
 ```python
-client.files.copy_file(file_origin.id, CopyFileParent(id='0'), name=copied_file_name)
+client.files.copy_file(file_origin.id, CopyFileParent(id="0"), name=copied_file_name)
 ```
 
 ### Arguments
@@ -197,7 +197,9 @@ See the endpoint docs at
 <!-- sample get_files_id_thumbnail_id -->
 
 ```python
-client.files.get_file_thumbnail_by_id(thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value)
+client.files.get_file_thumbnail_by_id(
+    thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value
+)
 ```
 
 ### Arguments

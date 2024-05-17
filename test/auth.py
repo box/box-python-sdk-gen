@@ -1,7 +1,5 @@
 import pytest
 
-from typing import Optional
-
 from box_sdk_gen.schemas.user_full import UserFull
 
 from box_sdk_gen.schemas.files import Files
@@ -47,6 +45,8 @@ from box_sdk_gen.box.developer_token_auth import DeveloperTokenConfig
 from box_sdk_gen.box.oauth import BoxOAuth
 
 from box_sdk_gen.box.oauth import OAuthConfig
+
+from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
 from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 
@@ -104,12 +104,14 @@ def test_jwt_auth_revoke():
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
     )
     auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
-    auth.retrieve_token()
-    token_from_storage_before_revoke: Optional[AccessToken] = auth.token_storage.get()
-    auth.revoke_token()
-    token_from_storage_after_revoke: Optional[AccessToken] = auth.token_storage.get()
+    token_from_storage_before_revoke: AccessToken = auth.retrieve_token()
     assert not token_from_storage_before_revoke == None
-    assert token_from_storage_after_revoke == None
+    auth.revoke_token()
+    token_from_storage_after_revoke: AccessToken = auth.retrieve_token()
+    assert (
+        not token_from_storage_before_revoke.access_token
+        == token_from_storage_after_revoke.access_token
+    )
 
 
 def test_oauth_auth_authorizeUrl():
@@ -180,12 +182,14 @@ def test_ccg_auth_revoke():
         user_id=get_env_var('USER_ID'),
     )
     auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
-    auth.retrieve_token()
-    token_from_storage_before_revoke: Optional[AccessToken] = auth.token_storage.get()
-    auth.revoke_token()
-    token_from_storage_after_revoke: Optional[AccessToken] = auth.token_storage.get()
+    token_from_storage_before_revoke: AccessToken = auth.retrieve_token()
     assert not token_from_storage_before_revoke == None
-    assert token_from_storage_after_revoke == None
+    auth.revoke_token()
+    token_from_storage_after_revoke: AccessToken = auth.retrieve_token()
+    assert (
+        not token_from_storage_before_revoke.access_token
+        == token_from_storage_after_revoke.access_token
+    )
 
 
 def get_access_token() -> AccessToken:
@@ -210,12 +214,11 @@ def test_developer_token_auth_revoke():
     auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(
         token=token.access_token, config=developer_token_config
     )
-    auth.retrieve_token()
-    token_from_storage_before_revoke: Optional[AccessToken] = auth.token_storage.get()
-    auth.revoke_token()
-    token_from_storage_after_revoke: Optional[AccessToken] = auth.token_storage.get()
+    token_from_storage_before_revoke: AccessToken = auth.retrieve_token()
     assert not token_from_storage_before_revoke == None
-    assert token_from_storage_after_revoke == None
+    auth.revoke_token()
+    with pytest.raises(Exception):
+        auth.retrieve_token()
 
 
 def test_developer_token_auth_downscope():
@@ -254,13 +257,15 @@ def test_developer_token_auth():
 
 
 def test_oauth_auth_revoke():
+    token: AccessToken = get_access_token()
+    token_storage: InMemoryTokenStorage = InMemoryTokenStorage(token=token)
     config: OAuthConfig = OAuthConfig(
-        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
+        client_id=get_env_var('CLIENT_ID'),
+        client_secret=get_env_var('CLIENT_SECRET'),
+        token_storage=token_storage,
     )
     auth: BoxOAuth = BoxOAuth(config=config)
     client: BoxClient = BoxClient(auth=auth)
-    token: AccessToken = get_access_token()
-    auth.token_storage.store(token)
     client.users.get_user_me()
     auth.revoke_token()
     with pytest.raises(Exception):
@@ -268,12 +273,14 @@ def test_oauth_auth_revoke():
 
 
 def test_oauth_auth_downscope():
+    token: AccessToken = get_access_token()
+    token_storage: InMemoryTokenStorage = InMemoryTokenStorage(token=token)
     config: OAuthConfig = OAuthConfig(
-        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
+        client_id=get_env_var('CLIENT_ID'),
+        client_secret=get_env_var('CLIENT_SECRET'),
+        token_storage=token_storage,
     )
     auth: BoxOAuth = BoxOAuth(config=config)
-    token: AccessToken = get_access_token()
-    auth.token_storage.store(token)
     parent_client: BoxClient = BoxClient(auth=auth)
     uploaded_files: Files = parent_client.uploads.upload_file(
         UploadFileAttributes(

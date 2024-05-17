@@ -18,7 +18,9 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(segment_id)
+client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(
+    segment_id
+)
 ```
 
 ### Arguments
@@ -46,7 +48,9 @@ See the endpoint docs at
 <!-- sample put_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(segment_id, description=updated_segment_description)
+client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(
+    segment_id, description=updated_segment_description
+)
 ```
 
 ### Arguments
@@ -79,7 +83,9 @@ See the endpoint docs at
 <!-- sample delete_shield_information_barrier_segments_id -->
 
 ```python
-client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(segment.id)
+client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
+    segment.id
+)
 ```
 
 ### Arguments
@@ -108,7 +114,9 @@ See the endpoint docs at
 <!-- sample get_shield_information_barrier_segments -->
 
 ```python
-client.shield_information_barrier_segments.get_shield_information_barrier_segments(barrier_id)
+client.shield_information_barrier_segments.get_shield_information_barrier_segments(
+    barrier_id
+)
 ```
 
 ### Arguments
@@ -140,7 +148,13 @@ See the endpoint docs at
 <!-- sample post_shield_information_barrier_segments -->
 
 ```python
-client.shield_information_barrier_segments.create_shield_information_barrier_segment(ShieldInformationBarrierBase(id=barrier_id, type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value), segment_name)
+client.shield_information_barrier_segments.create_shield_information_barrier_segment(
+    ShieldInformationBarrierBase(
+        id=barrier_id,
+        type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+    ),
+    segment_name,
+)
 ```
 
 ### Arguments

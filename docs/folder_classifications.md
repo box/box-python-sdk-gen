@@ -58,7 +58,9 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.add_classification_to_folder(folder.id, box_security_classification_key=classification.key)
+client.folder_classifications.add_classification_to_folder(
+    folder.id, box_security_classification_key=classification.key
+)
 ```
 
 ### Arguments
@@ -93,7 +95,10 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.folder_classifications.update_classification_on_folder(folder.id, [UpdateClassificationOnFolderRequestBody(value=second_classification.key)])
+client.folder_classifications.update_classification_on_folder(
+    folder.id,
+    [UpdateClassificationOnFolderRequestBody(value=second_classification.key)],
+)
 ```
 
 ### Arguments

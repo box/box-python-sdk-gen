@@ -45,7 +45,12 @@ See the endpoint docs at
 <!-- sample put_files_id_watermark -->
 
 ```python
-client.file_watermarks.update_file_watermark(file.id, UpdateFileWatermarkWatermark(imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT.value))
+client.file_watermarks.update_file_watermark(
+    file.id,
+    UpdateFileWatermarkWatermark(
+        imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
+    ),
+)
 ```
 
 ### Arguments

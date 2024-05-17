@@ -45,7 +45,9 @@ See the endpoint docs at
 <!-- sample post_shield_information_barriers_change_status -->
 
 ```python
-client.shield_information_barriers.update_shield_information_barrier_status(barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED.value)
+client.shield_information_barriers.update_shield_information_barrier_status(
+    barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED.value
+)
 ```
 
 ### Arguments
@@ -110,7 +112,9 @@ See the endpoint docs at
 <!-- sample post_shield_information_barriers -->
 
 ```python
-client.shield_information_barriers.create_shield_information_barrier(EnterpriseBase(id=enterprise_id))
+client.shield_information_barriers.create_shield_information_barrier(
+    EnterpriseBase(id=enterprise_id)
+)
 ```
 
 ### Arguments

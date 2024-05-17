@@ -111,7 +111,12 @@ See the endpoint docs at
 <!-- sample put_files_upload_sessions_id -->
 
 ```python
-self.upload_file_part(acc.upload_session_id, generate_byte_stream_from_buffer(chunk_buffer), digest, content_range)
+self.upload_file_part(
+    acc.upload_session_id,
+    generate_byte_stream_from_buffer(chunk_buffer),
+    digest,
+    content_range,
+)
 ```
 
 ### Arguments
@@ -241,7 +246,9 @@ Starts the process of chunk uploading a big file. Should return a File object re
 This operation is performed by calling function `upload_big_file`.
 
 ```python
-client.chunked_uploads.upload_big_file(file_byte_stream, file_name, file_size, parent_folder_id)
+client.chunked_uploads.upload_big_file(
+    file_byte_stream, file_name, file_size, parent_folder_id
+)
 ```
 
 ### Arguments

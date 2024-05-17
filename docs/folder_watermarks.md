@@ -45,7 +45,12 @@ See the endpoint docs at
 <!-- sample put_folders_id_watermark -->
 
 ```python
-client.folder_watermarks.update_folder_watermark(folder.id, UpdateFolderWatermarkWatermark(imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value))
+client.folder_watermarks.update_folder_watermark(
+    folder.id,
+    UpdateFolderWatermarkWatermark(
+        imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value
+    ),
+)
 ```
 
 ### Arguments

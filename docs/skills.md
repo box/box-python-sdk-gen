@@ -49,7 +49,26 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.create_box_skill_cards_on_file(file.id, [KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')])])
+client.skills.create_box_skill_cards_on_file(
+    file.id,
+    [
+        KeywordSkillCard(
+            type=KeywordSkillCardTypeField.SKILL_CARD.value,
+            skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value,
+            skill_card_title=KeywordSkillCardSkillCardTitleField(
+                code="license-plates", message=title_message
+            ),
+            skill=KeywordSkillCardSkillField(
+                id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value
+            ),
+            invocation=KeywordSkillCardInvocationField(
+                id=invocation_id,
+                type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+            ),
+            entries=[KeywordSkillCardEntriesField(text="DN86 BOX")],
+        )
+    ],
+)
 ```
 
 ### Arguments
@@ -80,7 +99,30 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_global_boxSkillsCards -->
 
 ```python
-client.skills.update_box_skill_cards_on_file(file.id, [UpdateBoxSkillCardsOnFileRequestBody(op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value, path='/cards/0', value=KeywordSkillCard(type=KeywordSkillCardTypeField.SKILL_CARD.value, skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value, skill_card_title=KeywordSkillCardSkillCardTitleField(code='license-plates', message=updated_title_message), skill=KeywordSkillCardSkillField(id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value), invocation=KeywordSkillCardInvocationField(id=invocation_id, type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value), entries=[KeywordSkillCardEntriesField(text='DN86 BOX')]))])
+client.skills.update_box_skill_cards_on_file(
+    file.id,
+    [
+        UpdateBoxSkillCardsOnFileRequestBody(
+            op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value,
+            path="/cards/0",
+            value=KeywordSkillCard(
+                type=KeywordSkillCardTypeField.SKILL_CARD.value,
+                skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value,
+                skill_card_title=KeywordSkillCardSkillCardTitleField(
+                    code="license-plates", message=updated_title_message
+                ),
+                skill=KeywordSkillCardSkillField(
+                    id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value
+                ),
+                invocation=KeywordSkillCardInvocationField(
+                    id=invocation_id,
+                    type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+                ),
+                entries=[KeywordSkillCardEntriesField(text="DN86 BOX")],
+            ),
+        )
+    ],
+)
 ```
 
 ### Arguments

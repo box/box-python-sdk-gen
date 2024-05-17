@@ -58,7 +58,9 @@ See the endpoint docs at
 <!-- sample post_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.add_classification_to_file(file.id, box_security_classification_key=classification.key)
+client.file_classifications.add_classification_to_file(
+    file.id, box_security_classification_key=classification.key
+)
 ```
 
 ### Arguments
@@ -93,7 +95,9 @@ See the endpoint docs at
 <!-- sample put_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
-client.file_classifications.update_classification_on_file(file.id, [UpdateClassificationOnFileRequestBody(value=second_classification.key)])
+client.file_classifications.update_classification_on_file(
+    file.id, [UpdateClassificationOnFileRequestBody(value=second_classification.key)]
+)
 ```
 
 ### Arguments

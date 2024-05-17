@@ -16,7 +16,9 @@ See the endpoint docs at
 <!-- sample get_file_version_legal_holds_id -->
 
 ```python
-client.file_version_legal_holds.get_file_version_legal_hold_by_id(file_version_legal_hold_id)
+client.file_version_legal_holds.get_file_version_legal_hold_by_id(
+    file_version_legal_hold_id
+)
 ```
 
 ### Arguments

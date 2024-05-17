@@ -53,7 +53,11 @@ See the endpoint docs at
 <!-- sample post_webhooks -->
 
 ```python
-client.webhooks.create_webhook(CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value), 'https://example.com/new-webhook', [CreateWebhookTriggers.FILE_UPLOADED.value])
+client.webhooks.create_webhook(
+    CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value),
+    "https://example.com/new-webhook",
+    [CreateWebhookTriggers.FILE_UPLOADED.value],
+)
 ```
 
 ### Arguments
@@ -113,7 +117,9 @@ See the endpoint docs at
 <!-- sample put_webhooks_id -->
 
 ```python
-client.webhooks.update_webhook_by_id(webhook.id, address='https://example.com/updated-webhook')
+client.webhooks.update_webhook_by_id(
+    webhook.id, address="https://example.com/updated-webhook"
+)
 ```
 
 ### Arguments

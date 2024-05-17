@@ -50,7 +50,12 @@ See the endpoint docs at
 <!-- sample post_task_assignments -->
 
 ```python
-client.task_assignments.create_task_assignment(CreateTaskAssignmentTask(type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id), CreateTaskAssignmentAssignTo(id=current_user.id))
+client.task_assignments.create_task_assignment(
+    CreateTaskAssignmentTask(
+        type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id
+    ),
+    CreateTaskAssignmentAssignTo(id=current_user.id),
+)
 ```
 
 ### Arguments
@@ -110,7 +115,11 @@ See the endpoint docs at
 <!-- sample put_task_assignments_id -->
 
 ```python
-client.task_assignments.update_task_assignment_by_id(task_assignment.id, message='updated message', resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value)
+client.task_assignments.update_task_assignment_by_id(
+    task_assignment.id,
+    message="updated message",
+    resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value,
+)
 ```
 
 ### Arguments

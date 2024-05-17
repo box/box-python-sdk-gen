@@ -64,7 +64,10 @@ See the endpoint docs at
 <!-- sample post_integration_mappings_slack -->
 
 ```python
-user_client.integration_mappings.create_slack_integration_mapping(IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id), IntegrationMappingBoxItemSlack(id=folder.id))
+user_client.integration_mappings.create_slack_integration_mapping(
+    IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id),
+    IntegrationMappingBoxItemSlack(id=folder.id),
+)
 ```
 
 ### Arguments

@@ -59,7 +59,9 @@ See the endpoint docs at
 <!-- sample post_metadata_cascade_policies -->
 
 ```python
-client.metadata_cascade_policies.create_metadata_cascade_policy(folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key)
+client.metadata_cascade_policies.create_metadata_cascade_policy(
+    folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key
+)
 ```
 
 ### Arguments
@@ -151,7 +153,9 @@ See the endpoint docs at
 <!-- sample post_metadata_cascade_policies_id_apply -->
 
 ```python
-client.metadata_cascade_policies.apply_metadata_cascade_policy(cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value)
+client.metadata_cascade_policies.apply_metadata_cascade_policy(
+    cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value
+)
 ```
 
 ### Arguments

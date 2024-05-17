@@ -126,7 +126,9 @@ See the endpoint docs at
 <!-- sample delete_files_id_versions_id -->
 
 ```python
-client.file_versions.delete_file_version_by_id(file.id, file_versions_restored.entries[0].id)
+client.file_versions.delete_file_version_by_id(
+    file.id, file_versions_restored.entries[0].id
+)
 ```
 
 ### Arguments
@@ -174,7 +176,11 @@ See the endpoint docs at
 <!-- sample post_files_id_versions_current -->
 
 ```python
-client.file_versions.promote_file_version(file.id, id=file_versions.entries[0].id, type=PromoteFileVersionType.FILE_VERSION.value)
+client.file_versions.promote_file_version(
+    file.id,
+    id=file_versions.entries[0].id,
+    type=PromoteFileVersionType.FILE_VERSION.value,
+)
 ```
 
 ### Arguments

@@ -49,7 +49,9 @@ See the endpoint docs at
 <!-- sample post_collaboration_whitelist_exempt_targets -->
 
 ```python
-client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(CreateCollaborationWhitelistExemptTargetUser(id=user.id))
+client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(
+    CreateCollaborationWhitelistExemptTargetUser(id=user.id)
+)
 ```
 
 ### Arguments
@@ -78,7 +80,9 @@ See the endpoint docs at
 <!-- sample get_collaboration_whitelist_exempt_targets_id -->
 
 ```python
-client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(exempt_target.id)
+client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(
+    exempt_target.id
+)
 ```
 
 ### Arguments
@@ -107,7 +111,9 @@ See the endpoint docs at
 <!-- sample delete_collaboration_whitelist_exempt_targets_id -->
 
 ```python
-client.collaboration_allowlist_exempt_targets.delete_collaboration_whitelist_exempt_target_by_id(exempt_target.id)
+client.collaboration_allowlist_exempt_targets.delete_collaboration_whitelist_exempt_target_by_id(
+    exempt_target.id
+)
 ```
 
 ### Arguments

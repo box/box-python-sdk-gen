@@ -145,7 +145,10 @@ See the endpoint docs at
 <!-- sample post_comments -->
 
 ```python
-client.comments.create_comment(message, CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value))
+client.comments.create_comment(
+    message,
+    CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value),
+)
 ```
 
 ### Arguments
