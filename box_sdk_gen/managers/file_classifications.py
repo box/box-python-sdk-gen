@@ -124,7 +124,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -189,7 +189,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -245,7 +245,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -295,7 +295,7 @@ class FileClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]

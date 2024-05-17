@@ -237,7 +237,7 @@ class UploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/content',
                 ]
@@ -350,7 +350,7 @@ class UploadsManager:
             {'content-md5': to_string(content_md_5), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.upload_url, '/files/content']),
+            ''.join([self.network_session.base_urls.upload_url, '/2.0/files/content']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -400,7 +400,7 @@ class UploadsManager:
         request_body: Dict = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/files/content']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/files/content']),
             FetchOptions(
                 method='OPTIONS',
                 headers=headers_map,

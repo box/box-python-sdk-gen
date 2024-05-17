@@ -251,7 +251,9 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/metadata_templates']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/metadata_templates']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -294,7 +296,7 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/',
+                    '/2.0/metadata_templates/',
                     to_string(scope),
                     '/',
                     to_string(template_key),
@@ -351,7 +353,7 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/',
+                    '/2.0/metadata_templates/',
                     to_string(scope),
                     '/',
                     to_string(template_key),
@@ -398,7 +400,7 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/',
+                    '/2.0/metadata_templates/',
                     to_string(scope),
                     '/',
                     to_string(template_key),
@@ -436,7 +438,7 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/',
+                    '/2.0/metadata_templates/',
                     to_string(template_id),
                 ]
             ),
@@ -480,7 +482,10 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/metadata_templates/global']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/metadata_templates/global',
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -525,7 +530,7 @@ class MetadataTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/enterprise',
+                    '/2.0/metadata_templates/enterprise',
                 ]
             ),
             FetchOptions(
@@ -598,7 +603,10 @@ class MetadataTemplatesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/metadata_templates/schema']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/metadata_templates/schema',
+                ]
             ),
             FetchOptions(
                 method='POST',

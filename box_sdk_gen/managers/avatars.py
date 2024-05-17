@@ -63,7 +63,7 @@ class AvatarsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/avatar',
                 ]
@@ -111,7 +111,7 @@ class AvatarsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/avatar',
                 ]
@@ -156,7 +156,7 @@ class AvatarsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/avatar',
                 ]

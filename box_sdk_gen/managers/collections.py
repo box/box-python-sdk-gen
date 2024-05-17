@@ -95,7 +95,7 @@ class CollectionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/collections']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/collections']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -159,7 +159,7 @@ class CollectionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collections/',
+                    '/2.0/collections/',
                     to_string(collection_id),
                     '/items',
                 ]

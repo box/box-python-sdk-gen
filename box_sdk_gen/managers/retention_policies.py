@@ -127,7 +127,9 @@ class RetentionPoliciesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/retention_policies']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/retention_policies']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -222,7 +224,9 @@ class RetentionPoliciesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/retention_policies']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/retention_policies']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -268,7 +272,7 @@ class RetentionPoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policies/',
+                    '/2.0/retention_policies/',
                     to_string(retention_policy_id),
                 ]
             ),
@@ -379,7 +383,7 @@ class RetentionPoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policies/',
+                    '/2.0/retention_policies/',
                     to_string(retention_policy_id),
                 ]
             ),
@@ -416,7 +420,7 @@ class RetentionPoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policies/',
+                    '/2.0/retention_policies/',
                     to_string(retention_policy_id),
                 ]
             ),

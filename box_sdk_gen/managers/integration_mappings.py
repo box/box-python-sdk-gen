@@ -129,7 +129,10 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/integration_mappings/slack']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/integration_mappings/slack',
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -174,7 +177,10 @@ class IntegrationMappingsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/integration_mappings/slack']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/integration_mappings/slack',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -221,7 +227,7 @@ class IntegrationMappingsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/integration_mappings/slack/',
+                    '/2.0/integration_mappings/slack/',
                     to_string(integration_mapping_id),
                 ]
             ),
@@ -264,7 +270,7 @@ class IntegrationMappingsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/integration_mappings/slack/',
+                    '/2.0/integration_mappings/slack/',
                     to_string(integration_mapping_id),
                 ]
             ),

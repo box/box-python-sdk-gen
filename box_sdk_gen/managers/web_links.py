@@ -161,7 +161,7 @@ class WebLinksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/web_links']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/web_links']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -209,7 +209,7 @@ class WebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                 ]
             ),
@@ -265,7 +265,7 @@ class WebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                 ]
             ),
@@ -302,7 +302,7 @@ class WebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                 ]
             ),

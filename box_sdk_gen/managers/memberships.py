@@ -123,7 +123,7 @@ class MembershipsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/memberships',
                 ]
@@ -179,7 +179,7 @@ class MembershipsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/groups/',
+                    '/2.0/groups/',
                     to_string(group_id),
                     '/memberships',
                 ]
@@ -251,7 +251,9 @@ class MembershipsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/group_memberships']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/group_memberships']
+            ),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -304,7 +306,7 @@ class MembershipsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/group_memberships/',
+                    '/2.0/group_memberships/',
                     to_string(group_membership_id),
                 ]
             ),
@@ -377,7 +379,7 @@ class MembershipsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/group_memberships/',
+                    '/2.0/group_memberships/',
                     to_string(group_membership_id),
                 ]
             ),
@@ -421,7 +423,7 @@ class MembershipsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/group_memberships/',
+                    '/2.0/group_memberships/',
                     to_string(group_membership_id),
                 ]
             ),

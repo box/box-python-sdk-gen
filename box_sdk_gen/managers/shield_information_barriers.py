@@ -77,7 +77,7 @@ class ShieldInformationBarriersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barriers/',
+                    '/2.0/shield_information_barriers/',
                     to_string(shield_information_barrier_id),
                 ]
             ),
@@ -115,7 +115,7 @@ class ShieldInformationBarriersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barriers/change_status',
+                    '/2.0/shield_information_barriers/change_status',
                 ]
             ),
             FetchOptions(
@@ -160,7 +160,7 @@ class ShieldInformationBarriersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barriers',
+                    '/2.0/shield_information_barriers',
                 ]
             ),
             FetchOptions(
@@ -201,7 +201,7 @@ class ShieldInformationBarriersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barriers',
+                    '/2.0/shield_information_barriers',
                 ]
             ),
             FetchOptions(

@@ -95,7 +95,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_exempt_targets',
+                    '/2.0/collaboration_whitelist_exempt_targets',
                 ]
             ),
             FetchOptions(
@@ -133,7 +133,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_exempt_targets',
+                    '/2.0/collaboration_whitelist_exempt_targets',
                 ]
             ),
             FetchOptions(
@@ -172,7 +172,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_exempt_targets/',
+                    '/2.0/collaboration_whitelist_exempt_targets/',
                     to_string(collaboration_whitelist_exempt_target_id),
                 ]
             ),
@@ -210,7 +210,7 @@ class CollaborationAllowlistExemptTargetsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_exempt_targets/',
+                    '/2.0/collaboration_whitelist_exempt_targets/',
                     to_string(collaboration_whitelist_exempt_target_id),
                 ]
             ),

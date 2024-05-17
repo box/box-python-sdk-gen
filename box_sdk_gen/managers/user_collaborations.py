@@ -175,7 +175,7 @@ class UserCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaborations/',
+                    '/2.0/collaborations/',
                     to_string(collaboration_id),
                 ]
             ),
@@ -261,7 +261,7 @@ class UserCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaborations/',
+                    '/2.0/collaborations/',
                     to_string(collaboration_id),
                 ]
             ),
@@ -298,7 +298,7 @@ class UserCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaborations/',
+                    '/2.0/collaborations/',
                     to_string(collaboration_id),
                 ]
             ),
@@ -424,7 +424,7 @@ class UserCollaborationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/collaborations']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/collaborations']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

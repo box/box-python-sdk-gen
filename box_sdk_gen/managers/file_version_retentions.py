@@ -109,7 +109,10 @@ class FileVersionRetentionsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/file_version_retentions']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/file_version_retentions',
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -143,7 +146,7 @@ class FileVersionRetentionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_version_retentions/',
+                    '/2.0/file_version_retentions/',
                     to_string(file_version_retention_id),
                 ]
             ),

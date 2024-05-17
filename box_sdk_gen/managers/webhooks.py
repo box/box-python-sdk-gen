@@ -229,7 +229,7 @@ class WebhooksManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/webhooks']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/webhooks']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -270,7 +270,7 @@ class WebhooksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/webhooks']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/webhooks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -304,7 +304,7 @@ class WebhooksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/webhooks/',
+                    '/2.0/webhooks/',
                     to_string(webhook_id),
                 ]
             ),
@@ -354,7 +354,7 @@ class WebhooksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/webhooks/',
+                    '/2.0/webhooks/',
                     to_string(webhook_id),
                 ]
             ),
@@ -391,7 +391,7 @@ class WebhooksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/webhooks/',
+                    '/2.0/webhooks/',
                     to_string(webhook_id),
                 ]
             ),

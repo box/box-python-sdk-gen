@@ -121,7 +121,7 @@ class TaskAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/tasks/',
+                    '/2.0/tasks/',
                     to_string(task_id),
                     '/assignments',
                 ]
@@ -163,7 +163,7 @@ class TaskAssignmentsManager:
         request_body: Dict = {'task': task, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/task_assignments']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/task_assignments']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -197,7 +197,7 @@ class TaskAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/task_assignments/',
+                    '/2.0/task_assignments/',
                     to_string(task_assignment_id),
                 ]
             ),
@@ -247,7 +247,7 @@ class TaskAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/task_assignments/',
+                    '/2.0/task_assignments/',
                     to_string(task_assignment_id),
                 ]
             ),
@@ -284,7 +284,7 @@ class TaskAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/task_assignments/',
+                    '/2.0/task_assignments/',
                     to_string(task_assignment_id),
                 ]
             ),

@@ -68,7 +68,7 @@ class EmailAliasesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/email_aliases',
                 ]
@@ -114,7 +114,7 @@ class EmailAliasesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/email_aliases',
                 ]
@@ -156,7 +156,7 @@ class EmailAliasesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/users/',
+                    '/2.0/users/',
                     to_string(user_id),
                     '/email_aliases/',
                     to_string(email_alias_id),

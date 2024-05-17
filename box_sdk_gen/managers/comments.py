@@ -128,7 +128,7 @@ class CommentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/comments',
                 ]
@@ -180,7 +180,7 @@ class CommentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/comments/',
+                    '/2.0/comments/',
                     to_string(comment_id),
                 ]
             ),
@@ -232,7 +232,7 @@ class CommentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/comments/',
+                    '/2.0/comments/',
                     to_string(comment_id),
                 ]
             ),
@@ -270,7 +270,7 @@ class CommentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/comments/',
+                    '/2.0/comments/',
                     to_string(comment_id),
                 ]
             ),
@@ -340,7 +340,7 @@ class CommentsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/comments']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/comments']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,

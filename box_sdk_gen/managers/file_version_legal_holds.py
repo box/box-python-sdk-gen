@@ -69,7 +69,7 @@ class FileVersionLegalHoldsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_version_legal_holds/',
+                    '/2.0/file_version_legal_holds/',
                     to_string(file_version_legal_hold_id),
                 ]
             ),
@@ -160,7 +160,10 @@ class FileVersionLegalHoldsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/file_version_legal_holds']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/file_version_legal_holds',
+                ]
             ),
             FetchOptions(
                 method='GET',

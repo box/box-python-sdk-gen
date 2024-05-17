@@ -92,7 +92,7 @@ class RecentItemsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/recent_items']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/recent_items']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

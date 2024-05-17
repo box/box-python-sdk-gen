@@ -216,7 +216,7 @@ class SkillsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
@@ -269,7 +269,7 @@ class SkillsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
@@ -316,7 +316,7 @@ class SkillsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
@@ -357,7 +357,7 @@ class SkillsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/global/boxSkillsCards',
                 ]
@@ -423,7 +423,7 @@ class SkillsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/skill_invocations/',
+                    '/2.0/skill_invocations/',
                     to_string(skill_id),
                 ]
             ),

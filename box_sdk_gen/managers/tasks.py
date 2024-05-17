@@ -125,7 +125,7 @@ class TasksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/tasks',
                 ]
@@ -190,7 +190,7 @@ class TasksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/tasks']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/tasks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -219,7 +219,11 @@ class TasksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/tasks/',
+                    to_string(task_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -281,7 +285,11 @@ class TasksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/tasks/',
+                    to_string(task_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -311,7 +319,11 @@ class TasksManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/tasks/', to_string(task_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/tasks/',
+                    to_string(task_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',

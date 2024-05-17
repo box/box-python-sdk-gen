@@ -105,7 +105,7 @@ class TrashedWebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                 ]
             ),
@@ -155,7 +155,7 @@ class TrashedWebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                     '/trash',
                 ]
@@ -195,7 +195,7 @@ class TrashedWebLinksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/web_links/',
+                    '/2.0/web_links/',
                     to_string(web_link_id),
                     '/trash',
                 ]

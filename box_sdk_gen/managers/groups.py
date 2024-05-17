@@ -125,7 +125,7 @@ class GroupsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/groups']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/groups']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -226,7 +226,7 @@ class GroupsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/groups']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/groups']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -279,7 +279,7 @@ class GroupsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/groups/',
+                    '/2.0/groups/',
                     to_string(group_id),
                 ]
             ),
@@ -395,7 +395,7 @@ class GroupsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/groups/',
+                    '/2.0/groups/',
                     to_string(group_id),
                 ]
             ),
@@ -433,7 +433,7 @@ class GroupsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/groups/',
+                    '/2.0/groups/',
                     to_string(group_id),
                 ]
             ),

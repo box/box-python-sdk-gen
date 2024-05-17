@@ -157,7 +157,7 @@ class ZipDownloadsManager:
         request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/zip_downloads']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/zip_downloads']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
