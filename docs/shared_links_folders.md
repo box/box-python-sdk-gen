@@ -24,7 +24,15 @@ See the endpoint docs at
 <!-- sample get_shared_items#folders -->
 
 ```python
-user_client.shared_links_folders.find_folder_for_shared_link(''.join(['shared_link=', folder_from_api.shared_link.url, '&shared_link_password=incorrectPassword']))
+user_client.shared_links_folders.find_folder_for_shared_link(
+    "".join(
+        [
+            "shared_link=",
+            folder_from_api.shared_link.url,
+            "&shared_link_password=incorrectPassword",
+        ]
+    )
+)
 ```
 
 ### Arguments
@@ -57,7 +65,7 @@ See the endpoint docs at
 <!-- sample get_folders_id#get_shared_link -->
 
 ```python
-client.shared_links_folders.get_shared_link_for_folder(folder.id, 'shared_link')
+client.shared_links_folders.get_shared_link_for_folder(folder.id, "shared_link")
 ```
 
 ### Arguments
@@ -88,7 +96,14 @@ See the endpoint docs at
 <!-- sample put_folders_id#add_shared_link -->
 
 ```python
-client.shared_links_folders.add_share_link_to_folder(folder.id, 'shared_link', shared_link=AddShareLinkToFolderSharedLink(access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value, password='Secret123@'))
+client.shared_links_folders.add_share_link_to_folder(
+    folder.id,
+    "shared_link",
+    shared_link=AddShareLinkToFolderSharedLink(
+        access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value,
+        password="Secret123@",
+    ),
+)
 ```
 
 ### Arguments
@@ -121,7 +136,13 @@ See the endpoint docs at
 <!-- sample put_folders_id#update_shared_link -->
 
 ```python
-client.shared_links_folders.update_shared_link_on_folder(folder.id, 'shared_link', shared_link=UpdateSharedLinkOnFolderSharedLink(access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value))
+client.shared_links_folders.update_shared_link_on_folder(
+    folder.id,
+    "shared_link",
+    shared_link=UpdateSharedLinkOnFolderSharedLink(
+        access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value
+    ),
+)
 ```
 
 ### Arguments

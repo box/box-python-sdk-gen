@@ -51,7 +51,9 @@ See the endpoint docs at
 <!-- sample get_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.get_folder_metadata_by_id(folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties')
+client.folder_metadata.get_folder_metadata_by_id(
+    folder.id, GetFolderMetadataByIdScope.GLOBAL.value, "properties"
+)
 ```
 
 ### Arguments
@@ -93,7 +95,18 @@ See the endpoint docs at
 <!-- sample post_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.create_folder_metadata_by_id(folder.id, CreateFolderMetadataByIdScope.ENTERPRISE.value, template_key, {'name': 'John', 'age': 23, 'birthDate': '2001-01-03T02:20:50.520Z', 'countryCode': 'US', 'sports': ['basketball', 'tennis']})
+client.folder_metadata.create_folder_metadata_by_id(
+    folder.id,
+    CreateFolderMetadataByIdScope.ENTERPRISE.value,
+    template_key,
+    {
+        "name": "John",
+        "age": 23,
+        "birthDate": "2001-01-03T02:20:50.520Z",
+        "countryCode": "US",
+        "sports": ["basketball", "tennis"],
+    },
+)
 ```
 
 ### Arguments
@@ -135,7 +148,18 @@ See the endpoint docs at
 <!-- sample put_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.update_folder_metadata_by_id(folder.id, UpdateFolderMetadataByIdScope.GLOBAL.value, 'properties', [UpdateFolderMetadataByIdRequestBody(op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value, path='/abc', value=new_value)])
+client.folder_metadata.update_folder_metadata_by_id(
+    folder.id,
+    UpdateFolderMetadataByIdScope.GLOBAL.value,
+    "properties",
+    [
+        UpdateFolderMetadataByIdRequestBody(
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
+            path="/abc",
+            value=new_value,
+        )
+    ],
+)
 ```
 
 ### Arguments
@@ -170,7 +194,9 @@ See the endpoint docs at
 <!-- sample delete_folders_id_metadata_id_id -->
 
 ```python
-client.folder_metadata.delete_folder_metadata_by_id(folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE.value, template_key)
+client.folder_metadata.delete_folder_metadata_by_id(
+    folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE.value, template_key
+)
 ```
 
 ### Arguments

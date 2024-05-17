@@ -53,7 +53,13 @@ See the endpoint docs at
 <!-- sample post_legal_hold_policies -->
 
 ```python
-client.legal_hold_policies.create_legal_hold_policy(legal_hold_policy_name, description=legal_hold_description, filter_started_at=filter_started_at, filter_ended_at=filter_ended_at, is_ongoing=False)
+client.legal_hold_policies.create_legal_hold_policy(
+    legal_hold_policy_name,
+    description=legal_hold_description,
+    filter_started_at=filter_started_at,
+    filter_ended_at=filter_ended_at,
+    is_ongoing=False,
+)
 ```
 
 ### Arguments
@@ -117,7 +123,9 @@ See the endpoint docs at
 <!-- sample put_legal_hold_policies_id -->
 
 ```python
-client.legal_hold_policies.update_legal_hold_policy_by_id(legal_hold_policy_id, policy_name=updated_legal_hold_policy_name)
+client.legal_hold_policies.update_legal_hold_policy_by_id(
+    legal_hold_policy_id, policy_name=updated_legal_hold_policy_name
+)
 ```
 
 ### Arguments

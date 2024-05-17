@@ -19,7 +19,9 @@ See the endpoint docs at
 <!-- sample get_retention_policies_id_assignments -->
 
 ```python
-client.retention_policy_assignments.get_retention_policy_assignments(retention_policy.id)
+client.retention_policy_assignments.get_retention_policy_assignments(
+    retention_policy.id
+)
 ```
 
 ### Arguments
@@ -56,7 +58,12 @@ See the endpoint docs at
 <!-- sample post_retention_policy_assignments -->
 
 ```python
-client.retention_policy_assignments.create_retention_policy_assignment(retention_policy.id, CreateRetentionPolicyAssignmentAssignTo(id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value))
+client.retention_policy_assignments.create_retention_policy_assignment(
+    retention_policy.id,
+    CreateRetentionPolicyAssignmentAssignTo(
+        id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value
+    ),
+)
 ```
 
 ### Arguments
@@ -90,7 +97,9 @@ See the endpoint docs at
 <!-- sample get_retention_policy_assignments_id -->
 
 ```python
-client.retention_policy_assignments.get_retention_policy_assignment_by_id(retention_policy_assignment.id)
+client.retention_policy_assignments.get_retention_policy_assignment_by_id(
+    retention_policy_assignment.id
+)
 ```
 
 ### Arguments
@@ -121,7 +130,9 @@ See the endpoint docs at
 <!-- sample delete_retention_policy_assignments_id -->
 
 ```python
-client.retention_policy_assignments.delete_retention_policy_assignment_by_id(retention_policy_assignment.id)
+client.retention_policy_assignments.delete_retention_policy_assignment_by_id(
+    retention_policy_assignment.id
+)
 ```
 
 ### Arguments
@@ -150,7 +161,9 @@ See the endpoint docs at
 <!-- sample get_retention_policy_assignments_id_files_under_retention -->
 
 ```python
-client.retention_policy_assignments.get_files_under_retention_policy_assignment(retention_policy_assignment.id)
+client.retention_policy_assignments.get_files_under_retention_policy_assignment(
+    retention_policy_assignment.id
+)
 ```
 
 ### Arguments

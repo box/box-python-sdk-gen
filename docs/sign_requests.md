@@ -131,7 +131,14 @@ See the endpoint docs at
 <!-- sample post_sign_requests -->
 
 ```python
-client.sign_requests.create_sign_request([SignRequestCreateSigner(email=signer_1_email, signer_group_id='user'), SignRequestCreateSigner(email=signer_2_email, signer_group_id='user')], source_files=[FileBase(id=file_to_sign.id)], parent_folder=FolderMini(id=destination_folder.id))
+client.sign_requests.create_sign_request(
+    [
+        SignRequestCreateSigner(email=signer_1_email, signer_group_id="user"),
+        SignRequestCreateSigner(email=signer_2_email, signer_group_id="user"),
+    ],
+    source_files=[FileBase(id=file_to_sign.id)],
+    parent_folder=FolderMini(id=destination_folder.id),
+)
 ```
 
 ### Arguments

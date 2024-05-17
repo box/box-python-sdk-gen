@@ -23,7 +23,10 @@ See the endpoint docs at
 <!-- sample post_invites -->
 
 ```python
-client.invites.create_invite(CreateInviteEnterprise(id=current_user.enterprise.id), CreateInviteActionableBy(login=email))
+client.invites.create_invite(
+    CreateInviteEnterprise(id=current_user.enterprise.id),
+    CreateInviteActionableBy(login=email),
+)
 ```
 
 ### Arguments

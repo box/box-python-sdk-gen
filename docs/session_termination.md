@@ -18,7 +18,9 @@ See the endpoint docs at
 <!-- sample post_users_terminate_sessions -->
 
 ```python
-client.session_termination.terminate_users_sessions([get_env_var('USER_ID')], [user.login])
+client.session_termination.terminate_users_sessions(
+    [get_env_var("USER_ID")], [user.login]
+)
 ```
 
 ### Arguments

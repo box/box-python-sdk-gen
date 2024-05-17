@@ -226,7 +226,7 @@ See the endpoint docs at
 <!-- sample post_folders -->
 
 ```python
-parent_client.folders.create_folder(get_uuid(), CreateFolderParent(id='0'))
+parent_client.folders.create_folder(get_uuid(), CreateFolderParent(id="0"))
 ```
 
 ### Arguments
@@ -268,7 +268,9 @@ See the endpoint docs at
 <!-- sample post_folders_id_copy -->
 
 ```python
-client.folders.copy_folder(folder_origin.id, CopyFolderParent(id='0'), name=copied_folder_name)
+client.folders.copy_folder(
+    folder_origin.id, CopyFolderParent(id="0"), name=copied_folder_name
+)
 ```
 
 ### Arguments

@@ -90,7 +90,9 @@ See the endpoint docs at
 <!-- sample post_group_memberships -->
 
 ```python
-client.memberships.create_group_membership(CreateGroupMembershipUser(id=user.id), CreateGroupMembershipGroup(id=group.id))
+client.memberships.create_group_membership(
+    CreateGroupMembershipUser(id=user.id), CreateGroupMembershipGroup(id=group.id)
+)
 ```
 
 ### Arguments
@@ -160,7 +162,9 @@ See the endpoint docs at
 <!-- sample put_group_memberships_id -->
 
 ```python
-client.memberships.update_group_membership_by_id(group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value)
+client.memberships.update_group_membership_by_id(
+    group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value
+)
 ```
 
 ### Arguments

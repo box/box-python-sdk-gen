@@ -52,7 +52,10 @@ See the endpoint docs at
 <!-- sample post_folder_locks -->
 
 ```python
-client.folder_locks.create_folder_lock(CreateFolderLockFolder(id=folder.id, type='folder'), locked_operations=CreateFolderLockLockedOperations(move=True, delete=True))
+client.folder_locks.create_folder_lock(
+    CreateFolderLockFolder(id=folder.id, type="folder"),
+    locked_operations=CreateFolderLockLockedOperations(move=True, delete=True),
+)
 ```
 
 ### Arguments

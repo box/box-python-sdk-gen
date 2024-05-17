@@ -49,7 +49,9 @@ See the endpoint docs at
 <!-- sample put_collaborations_id -->
 
 ```python
-client.user_collaborations.update_collaboration_by_id(collaboration_id, UpdateCollaborationByIdRole.VIEWER.value)
+client.user_collaborations.update_collaboration_by_id(
+    collaboration_id, UpdateCollaborationByIdRole.VIEWER.value
+)
 ```
 
 ### Arguments
@@ -130,7 +132,16 @@ See the endpoint docs at
 <!-- sample post_collaborations -->
 
 ```python
-client.user_collaborations.create_collaboration(CreateCollaborationItem(type=CreateCollaborationItemTypeField.FILE.value, id=file.id), CreateCollaborationAccessibleBy(type=CreateCollaborationAccessibleByTypeField.USER.value, id=get_env_var('USER_ID')), CreateCollaborationRole.EDITOR.value)
+client.user_collaborations.create_collaboration(
+    CreateCollaborationItem(
+        type=CreateCollaborationItemTypeField.FILE.value, id=file.id
+    ),
+    CreateCollaborationAccessibleBy(
+        type=CreateCollaborationAccessibleByTypeField.USER.value,
+        id=get_env_var("USER_ID"),
+    ),
+    CreateCollaborationRole.EDITOR.value,
+)
 ```
 
 ### Arguments

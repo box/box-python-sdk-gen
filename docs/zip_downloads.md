@@ -32,7 +32,16 @@ See the endpoint docs at
 <!-- sample post_zip_downloads -->
 
 ```python
-client.zip_downloads.create_zip_download([CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), CreateZipDownloadItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.create_zip_download(
+    [
+        CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
+        CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
+        CreateZipDownloadItems(
+            id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
+        ),
+    ],
+    download_file_name="zip",
+)
 ```
 
 ### Arguments
@@ -139,7 +148,14 @@ Creates a zip and downloads its content
 This operation is performed by calling function `download_zip`.
 
 ```python
-client.zip_downloads.download_zip([DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value), DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value)], download_file_name='zip')
+client.zip_downloads.download_zip(
+    [
+        DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
+        DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
+        DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value),
+    ],
+    download_file_name="zip",
+)
 ```
 
 ### Arguments

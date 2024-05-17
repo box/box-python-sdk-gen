@@ -65,7 +65,7 @@ from box_sdk_gen.internal.utils import Hash
 from box_sdk_gen.internal.utils import buffer_length
 
 
-class PartAccumulator:
+class _PartAccumulator:
     def __init__(
         self,
         last_index: int,
@@ -468,7 +468,7 @@ class ChunkedUploadsManager:
         )
         return deserialize(response.data, Files)
 
-    def _reducer(self, acc: PartAccumulator, chunk: ByteStream) -> PartAccumulator:
+    def _reducer(self, acc: _PartAccumulator, chunk: ByteStream) -> _PartAccumulator:
         last_index: int = acc.last_index
         parts: List[UploadPart] = acc.parts
         chunk_buffer: Buffer = read_byte_stream(chunk)
@@ -501,7 +501,7 @@ class ChunkedUploadsManager:
         assert part.size == chunk_size
         assert part.offset == bytes_start
         acc.file_hash.update_hash(chunk_buffer)
-        return PartAccumulator(
+        return _PartAccumulator(
             last_index=bytes_end,
             parts=parts + [part],
             file_size=acc.file_size,
@@ -533,10 +533,10 @@ class ChunkedUploadsManager:
         assert upload_session.num_parts_processed == 0
         file_hash: Hash = Hash(algorithm=HashName.SHA1.value)
         chunks_iterator: Iterator = iterate_chunks(file, part_size)
-        results: PartAccumulator = reduce_iterator(
+        results: _PartAccumulator = reduce_iterator(
             chunks_iterator,
             self._reducer,
-            PartAccumulator(
+            _PartAccumulator(
                 last_index=-1,
                 parts=[],
                 file_size=file_size,

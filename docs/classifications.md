@@ -55,7 +55,20 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#add -->
 
 ```python
-client.classifications.add_classification([AddClassificationRequestBody(data=AddClassificationRequestBodyDataField(key=get_uuid(), static_config=AddClassificationRequestBodyDataStaticConfigField(classification=AddClassificationRequestBodyDataStaticConfigClassificationField(color_id=4, classification_definition='Other description'))))])
+client.classifications.add_classification(
+    [
+        AddClassificationRequestBody(
+            data=AddClassificationRequestBodyDataField(
+                key=get_uuid(),
+                static_config=AddClassificationRequestBodyDataStaticConfigField(
+                    classification=AddClassificationRequestBodyDataStaticConfigClassificationField(
+                        color_id=4, classification_definition="Other description"
+                    )
+                ),
+            )
+        )
+    ]
+)
 ```
 
 ### Arguments
@@ -90,7 +103,22 @@ See the endpoint docs at
 <!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#update -->
 
 ```python
-client.classifications.update_classification([UpdateClassificationRequestBody(enum_option_key=classification.key, data=UpdateClassificationRequestBodyDataField(key=updated_classification_name, static_config=UpdateClassificationRequestBodyDataStaticConfigField(classification=UpdateClassificationRequestBodyDataStaticConfigClassificationField(color_id=2, classification_definition=updated_classification_description))))])
+client.classifications.update_classification(
+    [
+        UpdateClassificationRequestBody(
+            enum_option_key=classification.key,
+            data=UpdateClassificationRequestBodyDataField(
+                key=updated_classification_name,
+                static_config=UpdateClassificationRequestBodyDataStaticConfigField(
+                    classification=UpdateClassificationRequestBodyDataStaticConfigClassificationField(
+                        color_id=2,
+                        classification_definition=updated_classification_description,
+                    )
+                ),
+            ),
+        )
+    ]
+)
 ```
 
 ### Arguments

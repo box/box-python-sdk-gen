@@ -18,7 +18,9 @@ See the endpoint docs at
 <!-- sample get_legal_hold_policy_assignments -->
 
 ```python
-client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(legal_hold_policy_id)
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(
+    legal_hold_policy_id
+)
 ```
 
 ### Arguments
@@ -56,7 +58,12 @@ See the endpoint docs at
 <!-- sample post_legal_hold_policy_assignments -->
 
 ```python
-client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(legal_hold_policy_id, CreateLegalHoldPolicyAssignmentAssignTo(type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE.value, id=file_id))
+client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(
+    legal_hold_policy_id,
+    CreateLegalHoldPolicyAssignmentAssignTo(
+        type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE.value, id=file_id
+    ),
+)
 ```
 
 ### Arguments
@@ -86,7 +93,9 @@ See the endpoint docs at
 <!-- sample get_legal_hold_policy_assignments_id -->
 
 ```python
-client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(legal_hold_policy_assignment_id)
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(
+    legal_hold_policy_assignment_id
+)
 ```
 
 ### Arguments
@@ -117,7 +126,9 @@ See the endpoint docs at
 <!-- sample delete_legal_hold_policy_assignments_id -->
 
 ```python
-client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(legal_hold_policy_assignment_id)
+client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
+    legal_hold_policy_assignment_id
+)
 ```
 
 ### Arguments
@@ -161,7 +172,9 @@ See the endpoint docs at
 <!-- sample get_legal_hold_policy_assignments_id_files_on_hold -->
 
 ```python
-client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_hold(legal_hold_policy_assignment_id)
+client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_hold(
+    legal_hold_policy_assignment_id
+)
 ```
 
 ### Arguments

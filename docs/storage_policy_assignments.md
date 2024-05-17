@@ -18,7 +18,9 @@ See the endpoint docs at
 <!-- sample get_storage_policy_assignments -->
 
 ```python
-client.storage_policy_assignments.get_storage_policy_assignments(GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id)
+client.storage_policy_assignments.get_storage_policy_assignments(
+    GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id
+)
 ```
 
 ### Arguments
@@ -51,7 +53,12 @@ See the endpoint docs at
 <!-- sample post_storage_policy_assignments -->
 
 ```python
-client.storage_policy_assignments.create_storage_policy_assignment(CreateStoragePolicyAssignmentStoragePolicy(id=policy_id), CreateStoragePolicyAssignmentAssignedTo(id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value))
+client.storage_policy_assignments.create_storage_policy_assignment(
+    CreateStoragePolicyAssignmentStoragePolicy(id=policy_id),
+    CreateStoragePolicyAssignmentAssignedTo(
+        id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value
+    ),
+)
 ```
 
 ### Arguments
@@ -81,7 +88,9 @@ See the endpoint docs at
 <!-- sample get_storage_policy_assignments_id -->
 
 ```python
-client.storage_policy_assignments.get_storage_policy_assignment_by_id(storage_policy_assignment.id)
+client.storage_policy_assignments.get_storage_policy_assignment_by_id(
+    storage_policy_assignment.id
+)
 ```
 
 ### Arguments
@@ -109,7 +118,10 @@ See the endpoint docs at
 <!-- sample put_storage_policy_assignments_id -->
 
 ```python
-client.storage_policy_assignments.update_storage_policy_assignment_by_id(storage_policy_assignment.id, UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id))
+client.storage_policy_assignments.update_storage_policy_assignment_by_id(
+    storage_policy_assignment.id,
+    UpdateStoragePolicyAssignmentByIdStoragePolicy(id=storage_policy_2.id),
+)
 ```
 
 ### Arguments
@@ -146,7 +158,9 @@ See the endpoint docs at
 <!-- sample delete_storage_policy_assignments_id -->
 
 ```python
-client.storage_policy_assignments.delete_storage_policy_assignment_by_id(storage_policy_assignment.id)
+client.storage_policy_assignments.delete_storage_policy_assignment_by_id(
+    storage_policy_assignment.id
+)
 ```
 
 ### Arguments

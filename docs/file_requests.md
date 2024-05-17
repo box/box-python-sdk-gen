@@ -46,7 +46,9 @@ See the endpoint docs at
 <!-- sample put_file_requests_id -->
 
 ```python
-client.file_requests.update_file_request_by_id(copied_file_request.id, title='updated title', description='updated description')
+client.file_requests.update_file_request_by_id(
+    copied_file_request.id, title="updated title", description="updated description"
+)
 ```
 
 ### Arguments
@@ -118,7 +120,13 @@ See the endpoint docs at
 <!-- sample post_file_requests_id_copy -->
 
 ```python
-client.file_requests.create_file_request_copy(file_request_id, CreateFileRequestCopyFolder(id=file_request.folder.id, type=CreateFileRequestCopyFolderTypeField.FOLDER.value))
+client.file_requests.create_file_request_copy(
+    file_request_id,
+    CreateFileRequestCopyFolder(
+        id=file_request.folder.id,
+        type=CreateFileRequestCopyFolderTypeField.FOLDER.value,
+    ),
+)
 ```
 
 ### Arguments

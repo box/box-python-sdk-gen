@@ -15,7 +15,7 @@ To change this number you can set `client.network.MAX_ATTEMPTS` field.
 ```python
 from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
-auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
+auth = BoxDeveloperTokenAuth(token="DEVELOPER_TOKEN_GOES_HERE")
 client = BoxClient(auth=auth)
 client.network_session.MAX_ATTEMPTS = 6
 ```

@@ -46,7 +46,9 @@ See the endpoint docs at
 <!-- sample put_users_id_folders_0 -->
 
 ```python
-client.transfer.transfer_owned_folder(new_user.id, TransferOwnedFolderOwnedBy(id=current_user.id), notify=False)
+client.transfer.transfer_owned_folder(
+    new_user.id, TransferOwnedFolderOwnedBy(id=current_user.id), notify=False
+)
 ```
 
 ### Arguments

@@ -46,7 +46,14 @@ See the endpoint docs at
 <!-- sample post_users_id_avatar -->
 
 ```python
-client.avatars.create_user_avatar(user.id, decode_base_64_byte_stream('iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=='), pic_file_name='avatar.png', pic_content_type='image/png')
+client.avatars.create_user_avatar(
+    user.id,
+    decode_base_64_byte_stream(
+        "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEW10NBjBBbqAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAvg0hAAABmmDh1QAAAABJRU5ErkJggg=="
+    ),
+    pic_file_name="avatar.png",
+    pic_content_type="image/png",
+)
 ```
 
 ### Arguments

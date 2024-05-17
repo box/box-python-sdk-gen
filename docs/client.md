@@ -33,7 +33,7 @@ All calls made with the new client will be made in context of the impersonated u
 <!-- sample x_auth init_with_as_user_header -->
 
 ```python
-user_client = client.with_as_user_header(user_id='1234567')
+user_client = client.with_as_user_header(user_id="1234567")
 ```
 
 ## Suppress notifications
@@ -60,7 +60,7 @@ You can also specify the custom set of headers, which will be included in every 
 Calling the `client.with_extra_headers()` method creates a new client, leaving the original client unmodified.
 
 ```python
-new_client = client.with_extra_headers(extra_headers={'customHeader': 'customValue'})
+new_client = client.with_extra_headers(extra_headers={"customHeader": "customValue"})
 ```
 
 # Custom Base URLs
@@ -69,9 +69,11 @@ You can also specify the custom base URLs, which will be used for API calls made
 Calling the `client.with_custom_base_urls()` method creates a new client, leaving the original client unmodified.
 
 ```python
-new_client = client.with_custom_base_urls(base_urls=BaseUrls(
-  base_url='https://api.box.com',
-  upload_url='https://upload.box.com/api',
-  oauth_2_url='https://account.box.com/api/oauth2',
-))
+new_client = client.with_custom_base_urls(
+    base_urls=BaseUrls(
+        base_url="https://api.box.com",
+        upload_url="https://upload.box.com/api",
+        oauth_2_url="https://account.box.com/api/oauth2",
+    )
+)
 ```

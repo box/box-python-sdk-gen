@@ -21,8 +21,10 @@ To get the full content of the file in `bytes` format just call `read()` method 
 ```python
 from io import BufferedIOBase
 
-file_content_stream: BufferedIOBase = client.downloads.download_file(file_id='123456789')
-print('File content: ', file_content_stream.read())
+file_content_stream: BufferedIOBase = client.downloads.download_file(
+    file_id="123456789"
+)
+print("File content: ", file_content_stream.read())
 ```
 
 To save downloaded file to your local disk you can use e.g. `shutil.copyfileobj()` method:
@@ -33,8 +35,10 @@ To save downloaded file to your local disk you can use e.g. `shutil.copyfileobj(
 import shutil
 from io import BufferedIOBase
 
-file_content_stream: BufferedIOBase = client.downloads.download_file(file_id='123456789')
-with open('file.pdf', 'wb') as f:
+file_content_stream: BufferedIOBase = client.downloads.download_file(
+    file_id="123456789"
+)
+with open("file.pdf", "wb") as f:
     shutil.copyfileobj(file_content_stream, f)
 print('File was successfully downloaded as "file.pdf"')
 ```
