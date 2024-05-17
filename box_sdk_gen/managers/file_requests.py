@@ -118,7 +118,7 @@ class FileRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_requests/',
+                    '/2.0/file_requests/',
                     to_string(file_request_id),
                 ]
             ),
@@ -230,7 +230,7 @@ class FileRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_requests/',
+                    '/2.0/file_requests/',
                     to_string(file_request_id),
                 ]
             ),
@@ -273,7 +273,7 @@ class FileRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_requests/',
+                    '/2.0/file_requests/',
                     to_string(file_request_id),
                 ]
             ),
@@ -378,7 +378,7 @@ class FileRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/file_requests/',
+                    '/2.0/file_requests/',
                     to_string(file_request_id),
                     '/copy',
                 ]

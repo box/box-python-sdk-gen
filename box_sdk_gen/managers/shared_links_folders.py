@@ -294,7 +294,9 @@ class SharedLinksFoldersManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/shared_items#folders']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/shared_items#folders']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -341,7 +343,7 @@ class SharedLinksFoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '#get_shared_link',
                 ]
@@ -399,7 +401,7 @@ class SharedLinksFoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '#add_shared_link',
                 ]
@@ -456,7 +458,7 @@ class SharedLinksFoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '#update_shared_link',
                 ]
@@ -514,7 +516,7 @@ class SharedLinksFoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '#remove_shared_link',
                 ]

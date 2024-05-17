@@ -415,7 +415,7 @@ class FoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                 ]
             ),
@@ -560,7 +560,7 @@ class FoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                 ]
             ),
@@ -628,7 +628,7 @@ class FoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                 ]
             ),
@@ -782,7 +782,7 @@ class FoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/items',
                 ]
@@ -850,7 +850,7 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/folders']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/folders']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -923,7 +923,7 @@ class FoldersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/copy',
                 ]

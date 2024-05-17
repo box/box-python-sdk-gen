@@ -135,7 +135,7 @@ class TermsOfServiceUserStatusesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/terms_of_service_user_statuses',
+                    '/2.0/terms_of_service_user_statuses',
                 ]
             ),
             FetchOptions(
@@ -176,7 +176,7 @@ class TermsOfServiceUserStatusesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/terms_of_service_user_statuses',
+                    '/2.0/terms_of_service_user_statuses',
                 ]
             ),
             FetchOptions(
@@ -216,7 +216,7 @@ class TermsOfServiceUserStatusesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/terms_of_service_user_statuses/',
+                    '/2.0/terms_of_service_user_statuses/',
                     to_string(terms_of_service_user_status_id),
                 ]
             ),

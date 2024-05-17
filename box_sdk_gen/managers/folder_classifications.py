@@ -130,7 +130,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -198,7 +198,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -257,7 +257,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]
@@ -313,7 +313,7 @@ class FolderClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/enterprise/securityClassification-6VMVochwUWo',
                 ]

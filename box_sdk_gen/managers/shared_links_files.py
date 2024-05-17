@@ -304,7 +304,7 @@ class SharedLinksFilesManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/shared_items']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/shared_items']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -348,7 +348,7 @@ class SharedLinksFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '#get_shared_link',
                 ]
@@ -402,7 +402,7 @@ class SharedLinksFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '#add_shared_link',
                 ]
@@ -456,7 +456,7 @@ class SharedLinksFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '#update_shared_link',
                 ]
@@ -511,7 +511,7 @@ class SharedLinksFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '#remove_shared_link',
                 ]

@@ -306,7 +306,11 @@ class FilesManager:
         )
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/files/',
+                    to_string(file_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -430,7 +434,11 @@ class FilesManager:
         )
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/files/',
+                    to_string(file_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -490,7 +498,11 @@ class FilesManager:
         )
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/files/',
+                    to_string(file_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',
@@ -557,7 +569,7 @@ class FilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/copy',
                 ]
@@ -644,7 +656,7 @@ class FilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/thumbnail.',
                     to_string(extension),

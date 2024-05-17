@@ -227,7 +227,7 @@ class SearchManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_queries/execute_read',
+                    '/2.0/metadata_queries/execute_read',
                 ]
             ),
             FetchOptions(
@@ -543,7 +543,7 @@ class SearchManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/search']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/search']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

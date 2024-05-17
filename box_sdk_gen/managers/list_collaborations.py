@@ -111,7 +111,7 @@ class ListCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/collaborations',
                 ]
@@ -172,7 +172,7 @@ class ListCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/collaborations',
                 ]
@@ -234,7 +234,7 @@ class ListCollaborationsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/collaborations']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/collaborations']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -289,7 +289,7 @@ class ListCollaborationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/groups/',
+                    '/2.0/groups/',
                     to_string(group_id),
                     '/collaborations',
                 ]

@@ -168,7 +168,7 @@ class FolderMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata',
                 ]
@@ -224,7 +224,7 @@ class FolderMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/',
                     to_string(scope),
@@ -301,7 +301,7 @@ class FolderMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/',
                     to_string(scope),
@@ -377,7 +377,7 @@ class FolderMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/',
                     to_string(scope),
@@ -435,7 +435,7 @@ class FolderMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folders/',
+                    '/2.0/folders/',
                     to_string(folder_id),
                     '/metadata/',
                     to_string(scope),

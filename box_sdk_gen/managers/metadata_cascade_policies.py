@@ -112,7 +112,10 @@ class MetadataCascadePoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/metadata_cascade_policies']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/metadata_cascade_policies',
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -183,7 +186,10 @@ class MetadataCascadePoliciesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/metadata_cascade_policies']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/metadata_cascade_policies',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -218,7 +224,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_cascade_policies/',
+                    '/2.0/metadata_cascade_policies/',
                     to_string(metadata_cascade_policy_id),
                 ]
             ),
@@ -253,7 +259,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_cascade_policies/',
+                    '/2.0/metadata_cascade_policies/',
                     to_string(metadata_cascade_policy_id),
                 ]
             ),
@@ -307,7 +313,7 @@ class MetadataCascadePoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_cascade_policies/',
+                    '/2.0/metadata_cascade_policies/',
                     to_string(metadata_cascade_policy_id),
                     '/apply',
                 ]

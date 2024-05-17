@@ -111,7 +111,7 @@ class FolderLocksManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/folder_locks']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/folder_locks']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -155,7 +155,7 @@ class FolderLocksManager:
         request_body: Dict = {'locked_operations': locked_operations, 'folder': folder}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/folder_locks']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/folder_locks']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -195,7 +195,7 @@ class FolderLocksManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/folder_locks/',
+                    '/2.0/folder_locks/',
                     to_string(folder_lock_id),
                 ]
             ),

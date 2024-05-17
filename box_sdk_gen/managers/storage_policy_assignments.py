@@ -162,7 +162,10 @@ class StoragePolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/storage_policy_assignments']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/storage_policy_assignments',
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -202,7 +205,10 @@ class StoragePolicyAssignmentsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/storage_policy_assignments']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/storage_policy_assignments',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -237,7 +243,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/storage_policy_assignments/',
+                    '/2.0/storage_policy_assignments/',
                     to_string(storage_policy_assignment_id),
                 ]
             ),
@@ -277,7 +283,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/storage_policy_assignments/',
+                    '/2.0/storage_policy_assignments/',
                     to_string(storage_policy_assignment_id),
                 ]
             ),
@@ -329,7 +335,7 @@ class StoragePolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/storage_policy_assignments/',
+                    '/2.0/storage_policy_assignments/',
                     to_string(storage_policy_assignment_id),
                 ]
             ),

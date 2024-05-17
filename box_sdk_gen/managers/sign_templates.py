@@ -71,7 +71,7 @@ class SignTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/sign_templates']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/sign_templates']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -104,7 +104,7 @@ class SignTemplatesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/sign_templates/',
+                    '/2.0/sign_templates/',
                     to_string(template_id),
                 ]
             ),

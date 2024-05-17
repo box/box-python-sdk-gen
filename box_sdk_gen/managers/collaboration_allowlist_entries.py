@@ -91,7 +91,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_entries',
+                    '/2.0/collaboration_whitelist_entries',
                 ]
             ),
             FetchOptions(
@@ -132,7 +132,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_entries',
+                    '/2.0/collaboration_whitelist_entries',
                 ]
             ),
             FetchOptions(
@@ -171,7 +171,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_entries/',
+                    '/2.0/collaboration_whitelist_entries/',
                     to_string(collaboration_whitelist_entry_id),
                 ]
             ),
@@ -209,7 +209,7 @@ class CollaborationAllowlistEntriesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/collaboration_whitelist_entries/',
+                    '/2.0/collaboration_whitelist_entries/',
                     to_string(collaboration_whitelist_entry_id),
                 ]
             ),

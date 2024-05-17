@@ -159,7 +159,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policies/',
+                    '/2.0/retention_policies/',
                     to_string(retention_policy_id),
                     '/assignments',
                 ]
@@ -218,7 +218,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policy_assignments',
+                    '/2.0/retention_policy_assignments',
                 ]
             ),
             FetchOptions(
@@ -266,7 +266,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policy_assignments/',
+                    '/2.0/retention_policy_assignments/',
                     to_string(retention_policy_assignment_id),
                 ]
             ),
@@ -305,7 +305,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policy_assignments/',
+                    '/2.0/retention_policy_assignments/',
                     to_string(retention_policy_assignment_id),
                 ]
             ),
@@ -352,7 +352,7 @@ class RetentionPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/retention_policy_assignments/',
+                    '/2.0/retention_policy_assignments/',
                     to_string(retention_policy_assignment_id),
                     '/files_under_retention',
                 ]

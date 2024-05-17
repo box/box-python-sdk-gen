@@ -92,7 +92,9 @@ class TermsOfServicesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/terms_of_services']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -134,7 +136,9 @@ class TermsOfServicesManager:
         request_body: Dict = {'status': status, 'tos_type': tos_type, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/terms_of_services']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
+            ),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -168,7 +172,7 @@ class TermsOfServicesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/terms_of_services/',
+                    '/2.0/terms_of_services/',
                     to_string(terms_of_service_id),
                 ]
             ),
@@ -212,7 +216,7 @@ class TermsOfServicesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/terms_of_services/',
+                    '/2.0/terms_of_services/',
                     to_string(terms_of_service_id),
                 ]
             ),

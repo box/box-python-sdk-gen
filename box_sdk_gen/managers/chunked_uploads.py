@@ -122,7 +122,10 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.upload_url, '/files/upload_sessions']
+                [
+                    self.network_session.base_urls.upload_url,
+                    '/2.0/files/upload_sessions',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -170,7 +173,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/upload_sessions',
                 ]
@@ -208,7 +211,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/upload_sessions/',
+                    '/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -280,7 +283,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/upload_sessions/',
+                    '/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -320,7 +323,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/upload_sessions/',
+                    '/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -371,7 +374,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/upload_sessions/',
+                    '/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                     '/parts',
                 ]
@@ -448,7 +451,7 @@ class ChunkedUploadsManager:
             ''.join(
                 [
                     self.network_session.base_urls.upload_url,
-                    '/files/upload_sessions/',
+                    '/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                     '/commit',
                 ]

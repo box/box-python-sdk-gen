@@ -163,7 +163,7 @@ class AiManager:
         request_body: Dict = {'mode': mode, 'prompt': prompt, 'items': items}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/ai/ask']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -204,7 +204,7 @@ class AiManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/ai/text_gen']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/ai/text_gen']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

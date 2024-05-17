@@ -323,7 +323,7 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/oauth2/token']),
+            ''.join([self.network_session.base_urls.base_url, '/oauth2/token']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -368,7 +368,7 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/oauth2/token#refresh']),
+            ''.join([self.network_session.base_urls.base_url, '/oauth2/token#refresh']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,
@@ -414,7 +414,7 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(['https://api.box.com/oauth2/revoke']),
+            ''.join([self.network_session.base_urls.base_url, '/oauth2/revoke']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

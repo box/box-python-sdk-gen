@@ -515,7 +515,7 @@ class ClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema',
+                    '/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema',
                 ]
             ),
             FetchOptions(
@@ -560,7 +560,7 @@ class ClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add',
+                    '/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#add',
                 ]
             ),
             FetchOptions(
@@ -607,7 +607,7 @@ class ClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update',
+                    '/2.0/metadata_templates/enterprise/securityClassification-6VMVochwUWo/schema#update',
                 ]
             ),
             FetchOptions(
@@ -689,7 +689,7 @@ class ClassificationsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/metadata_templates/schema#classifications',
+                    '/2.0/metadata_templates/schema#classifications',
                 ]
             ),
             FetchOptions(

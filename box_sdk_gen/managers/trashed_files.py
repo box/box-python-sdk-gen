@@ -109,7 +109,11 @@ class TrashedFilesManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/files/', to_string(file_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/files/',
+                    to_string(file_id),
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -187,7 +191,7 @@ class TrashedFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/trash',
                 ]
@@ -230,7 +234,7 @@ class TrashedFilesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/trash',
                 ]

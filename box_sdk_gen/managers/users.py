@@ -200,7 +200,7 @@ class UsersManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/users']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/users']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -330,7 +330,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/users']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/users']),
             FetchOptions(
                 method='POST',
                 params=query_params_map,
@@ -388,7 +388,7 @@ class UsersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/users/me']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/users/me']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -455,7 +455,11 @@ class UsersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/users/',
+                    to_string(user_id),
+                ]
             ),
             FetchOptions(
                 method='GET',
@@ -613,7 +617,11 @@ class UsersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/users/',
+                    to_string(user_id),
+                ]
             ),
             FetchOptions(
                 method='PUT',
@@ -667,7 +675,11 @@ class UsersManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/users/', to_string(user_id)]
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/users/',
+                    to_string(user_id),
+                ]
             ),
             FetchOptions(
                 method='DELETE',

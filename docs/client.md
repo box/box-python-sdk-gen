@@ -70,8 +70,8 @@ Calling the `client.with_custom_base_urls()` method creates a new client, leavin
 
 ```python
 new_client = client.with_custom_base_urls(base_urls=BaseUrls(
-  base_url='https://api.box.com/2.0',
-  upload_url='https://upload.box.com/api/2.0',
+  base_url='https://api.box.com',
+  upload_url='https://upload.box.com/api',
   oauth_2_url='https://account.box.com/api/oauth2',
 ))
 ```

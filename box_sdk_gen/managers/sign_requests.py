@@ -88,7 +88,7 @@ class SignRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/sign_requests/',
+                    '/2.0/sign_requests/',
                     to_string(sign_request_id),
                     '/cancel',
                 ]
@@ -124,7 +124,7 @@ class SignRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/sign_requests/',
+                    '/2.0/sign_requests/',
                     to_string(sign_request_id),
                     '/resend',
                 ]
@@ -160,7 +160,7 @@ class SignRequestsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/sign_requests/',
+                    '/2.0/sign_requests/',
                     to_string(sign_request_id),
                 ]
             ),
@@ -203,7 +203,7 @@ class SignRequestsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/sign_requests']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/sign_requests']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -304,7 +304,7 @@ class SignRequestsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/sign_requests']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/sign_requests']),
             FetchOptions(
                 method='POST',
                 headers=headers_map,

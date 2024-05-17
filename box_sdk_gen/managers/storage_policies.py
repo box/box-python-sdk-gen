@@ -88,7 +88,7 @@ class StoragePoliciesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/storage_policies']),
+            ''.join([self.network_session.base_urls.base_url, '/2.0/storage_policies']),
             FetchOptions(
                 method='GET',
                 params=query_params_map,
@@ -121,7 +121,7 @@ class StoragePoliciesManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/storage_policies/',
+                    '/2.0/storage_policies/',
                     to_string(storage_policy_id),
                 ]
             ),

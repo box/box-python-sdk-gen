@@ -73,7 +73,7 @@ class DevicePinnersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/device_pinners/',
+                    '/2.0/device_pinners/',
                     to_string(device_pinner_id),
                 ]
             ),
@@ -108,7 +108,7 @@ class DevicePinnersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/device_pinners/',
+                    '/2.0/device_pinners/',
                     to_string(device_pinner_id),
                 ]
             ),
@@ -169,7 +169,7 @@ class DevicePinnersManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/enterprises/',
+                    '/2.0/enterprises/',
                     to_string(enterprise_id),
                     '/device_pinners',
                 ]

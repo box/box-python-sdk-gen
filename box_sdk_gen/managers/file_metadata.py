@@ -159,7 +159,7 @@ class FileMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata',
                 ]
@@ -212,7 +212,7 @@ class FileMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/',
                     to_string(scope),
@@ -277,7 +277,7 @@ class FileMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/',
                     to_string(scope),
@@ -350,7 +350,7 @@ class FileMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/',
                     to_string(scope),
@@ -405,7 +405,7 @@ class FileMetadataManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/files/',
+                    '/2.0/files/',
                     to_string(file_id),
                     '/metadata/',
                     to_string(scope),

@@ -152,7 +152,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barrier_segment_restrictions/',
+                    '/2.0/shield_information_barrier_segment_restrictions/',
                     to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
@@ -190,7 +190,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barrier_segment_restrictions/',
+                    '/2.0/shield_information_barrier_segment_restrictions/',
                     to_string(shield_information_barrier_segment_restriction_id),
                 ]
             ),
@@ -245,7 +245,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barrier_segment_restrictions',
+                    '/2.0/shield_information_barrier_segment_restrictions',
                 ]
             ),
             FetchOptions(
@@ -298,7 +298,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/shield_information_barrier_segment_restrictions',
+                    '/2.0/shield_information_barrier_segment_restrictions',
                 ]
             ),
             FetchOptions(

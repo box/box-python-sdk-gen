@@ -151,7 +151,9 @@ class TrashedItemsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/folders/trash/items']),
+            ''.join(
+                [self.network_session.base_urls.base_url, '/2.0/folders/trash/items']
+            ),
             FetchOptions(
                 method='GET',
                 params=query_params_map,

@@ -144,7 +144,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/legal_hold_policy_assignments',
+                    '/2.0/legal_hold_policy_assignments',
                 ]
             ),
             FetchOptions(
@@ -182,7 +182,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/legal_hold_policy_assignments',
+                    '/2.0/legal_hold_policy_assignments',
                 ]
             ),
             FetchOptions(
@@ -218,7 +218,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/legal_hold_policy_assignments/',
+                    '/2.0/legal_hold_policy_assignments/',
                     to_string(legal_hold_policy_assignment_id),
                 ]
             ),
@@ -259,7 +259,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/legal_hold_policy_assignments/',
+                    '/2.0/legal_hold_policy_assignments/',
                     to_string(legal_hold_policy_assignment_id),
                 ]
             ),
@@ -357,7 +357,7 @@ class LegalHoldPolicyAssignmentsManager:
             ''.join(
                 [
                     self.network_session.base_urls.base_url,
-                    '/legal_hold_policy_assignments/',
+                    '/2.0/legal_hold_policy_assignments/',
                     to_string(legal_hold_policy_assignment_id),
                     '/files_on_hold',
                 ]

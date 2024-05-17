@@ -74,7 +74,10 @@ class SessionTerminationManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/users/terminate_sessions']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/users/terminate_sessions',
+                ]
             ),
             FetchOptions(
                 method='POST',
@@ -116,7 +119,10 @@ class SessionTerminationManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join(
-                [self.network_session.base_urls.base_url, '/groups/terminate_sessions']
+                [
+                    self.network_session.base_urls.base_url,
+                    '/2.0/groups/terminate_sessions',
+                ]
             ),
             FetchOptions(
                 method='POST',
