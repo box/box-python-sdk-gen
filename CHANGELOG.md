@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/box/box-codegen/compare/v0.6.5...v1.0.0) (2024-05-20)
+
+
+### Bug Fixes
+
+* Change base urls (box/box-codegen[#491](https://github.com/box/box-codegen/issues/491)) ([#167](https://github.com/box/box-codegen/issues/167)) ([7f7cb20](https://github.com/box/box-codegen/commit/7f7cb201720bf04efd25c21c1fb131b9f38e5f77))
+* Fix schemas for updating classification on a file and folder (box/box-openapi[#423](https://github.com/box/box-codegen/issues/423)) ([#156](https://github.com/box/box-codegen/issues/156)) ([1c4bee1](https://github.com/box/box-codegen/commit/1c4bee1874dcf7f164cbe85ae200883bd4e81ea2))
+* Make `PartAccumulator` class internal ([#169](https://github.com/box/box-codegen/issues/169)) ([16726e7](https://github.com/box/box-codegen/commit/16726e7324820572da50c3079b2fe449b103173d))
+
+
+### New Features and Enhancements
+
+* Add `suppressNotifications` and `externalSystemName` fields for Box Sign (box/box-openapi[#425](https://github.com/box/box-codegen/issues/425)) ([#165](https://github.com/box/box-codegen/issues/165)) ([34ea7c2](https://github.com/box/box-codegen/commit/34ea7c2275017a2d3256361de277272f36859974))
+* Move schemas to separate modules (box/box-codegen[#483](https://github.com/box/box-codegen/issues/483)) ([#149](https://github.com/box/box-codegen/issues/149)) ([0ba0142](https://github.com/box/box-codegen/commit/0ba01427e8cffb3fa72892afbf281b11dac4f1ed))
+* support excluding endpoints and schemas in parser (box/box-codegen[#487](https://github.com/box/box-codegen/issues/487)) ([#150](https://github.com/box/box-codegen/issues/150)) ([13308c4](https://github.com/box/box-codegen/commit/13308c48700528bd870ca97035d0c3f04e66c299))
+
 ### [0.6.5](https://github.com/box/box-codegen/compare/v0.6.4...v0.6.5) (2024-05-09)
 
 
