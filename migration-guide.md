@@ -8,6 +8,7 @@
 - [Key differences](#key-differences)
   - [Manager approach](#manager-approach)
   - [Explicitly defined schemas](#explicitly-defined-schemas)
+  - [Immutable design](#immutable-design)
 - [Authentication](#authentication)
   - [Developer Token](#developer-token)
   - [JWT Auth](#jwt-auth)
@@ -22,6 +23,11 @@
     - [Get Authorization URL](#get-authorization-url)
     - [Authenticate](#authenticate)
   - [Store token and retrieve token callbacks](#store-token-and-retrieve-token-callbacks)
+  - [Downscope token](#downscope-token)
+  - [Revoke token](#revoke-token)
+- [Configuration](#configuration)
+  - [As-User header](#as-user-header)
+  - [Custom Base URLs](#custom-base-urls)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -78,8 +84,10 @@ updated_user = user.update_info(data={'name': 'New User Name'})
 
 In the new SDK the API methods are grouped into dedicated manager classes, e.g. `User` object
 has dedicated `UserManager` class. Each manager class instance is available in `BoxClient` object.
-So if you want to perform any operation connected with a `User` you need to call a respective method of `UserManager`.
-E.g. to get info about existing user you need to call:
+The fields storing references to the managers are named in the plural form of the resource that the
+manager handles - `client.users` for `UsersManager`. If you want to perform any operation
+connected with a `User` you need to call a respective method of `UserManager`.
+For example, to get info about existing user you need to call:
 
 ```python
 user = client.users.get_user_by_id(user_id='123456')
@@ -93,7 +101,7 @@ user = client.users.create_user(name='Some User')
 
 The `User` object returned by both of these methods is a data class - it does not contain any methods to call.
 To perform any action on `User` object, you need to still use a `UserManager` method for that.
-Usually these methods have a first argument, which accepts an id of the object you want to access,
+Usually these methods have a first argument, which accepts id of the object you want to access,
 e.g. to update a user name, call method:
 
 ```python
@@ -121,11 +129,26 @@ actually making a call. For example `FileBase` class is defined this way:
 
 ```python
 class FileBase(BaseObject):
-    def __init__(self, id: str, type: FileBaseTypeField, etag: Optional[str] = None, **kwargs):
+    def __init__(self, id: str, *, etag: Optional[str] = None, type: FileBaseTypeField = FileBaseTypeField.FILE.value, **kwargs):
         super().__init__(**kwargs)
         self.id = id
         self.type = type
         self.etag = etag
+```
+
+### Immutable design
+
+The new SDK is designed to be mostly immutable. This means that methods,
+which used to modify the existing object in old SDK now return a new instance of the class with the modified state.
+This design pattern is used to avoid side effects and make the code more predictable and easier to reason about.
+Methods, which returns a new modified instance of an object, will always have a prefix `with_` in their names, e.g.
+
+**New (`box-sdk-gen`)**
+
+```python
+from box_sdk_gen import BoxClient
+
+as_user_client: BoxClient = client.with_as_user_header('USER_ID')
 ```
 
 ## Authentication
@@ -134,9 +157,6 @@ The Box Python SDK GENERATED library offers the same authentication methods as t
 Let's see the differences of their usage:
 
 ### Developer Token
-
-The new SDK provides a convenient `BoxDeveloperTokenAuth`, which allows authenticating
-using developer token without necessity to provide a Client ID and Client Secret
 
 **Old (`boxsdk`)**
 
@@ -151,10 +171,13 @@ auth = OAuth2(
 client = Client(auth)
 ```
 
+The new SDK provides a convenient `BoxDeveloperTokenAuth`, which allows authenticating
+using developer token without necessity to provide a Client ID and Client Secret
+
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen import Client, BoxDeveloperTokenAuth
+from box_sdk_gen import BoxClient, BoxDeveloperTokenAuth
 
 auth = BoxDeveloperTokenAuth(token='DEVELOPER_TOKEN_GOES_HERE')
 client = BoxClient(auth=auth)
@@ -209,7 +232,7 @@ auth = JWTAuth(
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen import BoxJWTAuth, JWTConfig
+from box_sdk_gen import BoxJWTAuth, JWTConfig, JwtAlgorithm
 
 jwt_config = JWTConfig(
     client_id='YOUR_CLIENT_ID',
@@ -219,17 +242,17 @@ jwt_config = JWTConfig(
     jwt_key_id='YOUR_JWT_KEY_ID',
     private_key='YOUR_PRIVATE_KEY',
     private_key_passphrase='PASSPHRASE',
-    jwt_algorithm='RS256',
+    algorithm=JwtAlgorithm.RS256,
 )
 auth = BoxJWTAuth(config=jwt_config)
 ```
 
 #### Authenticate user
 
-To authenticate as user you need to call `as_user(user_id: str)` method with id of the user to authenticate.
-In old SDK this method was named `authenticate_user(self, user: Union[str, 'User'] = None) -> str` and
-was accepting both user object and User ID or was using User ID provided in `JWTAuth` class if none provided in
-this method call. The new method `as_user(user_id: str)` accepts only User ID, which is required.
+In old SDK method for user authentication was named `authenticate_user(self, user: Union[str, 'User'] = None) -> str`
+and was accepting either user object or user id. If none provided, user ID stored in `JWTAuth` class instance was used.
+The `authenticate_user` method was modifying existing `BoxJWTAuth` class, which was exchanging the existing token with
+the one with the user access.
 
 **Old (`boxsdk`)**
 
@@ -245,8 +268,17 @@ auth.authenticate_user('USER_ID')
 
 **New (`box-sdk-gen`)**
 
+In new SDK, to authenticate as user you need to call
+`with_user_subject(self, user_id: str, *, token_storage: TokenStorage = None) -> BoxJWTAuth` method with id of the user
+to authenticate. The method returns a new instance of `BoxJWTAuth` class, which will perform authentication call
+in scope of the user on the first API call. The `token_storage` parameter is optional and allows to provide a custom
+token storage for the new instance of `BoxJWTAuth` class. The new auth instance can be used to create a new user client
+instance.
+
 ```python
-auth.as_user('USER_ID')
+from box_sdk_gen import BoxJWTAuth, BoxClient
+user_auth: BoxJWTAuth = auth.with_user_subject('USER_ID')
+user_client: BoxClient = BoxClient(auth=user_auth)
 ```
 
 ### Client Credentials Grant
@@ -286,7 +318,8 @@ client = BoxClient(auth=auth)
 
 #### Obtaining User token
 
-In old SDK `CCGAuth` was accepting both user object and User ID. The new constructor accepts only User ID instead.
+In old SDK `CCGAuth` was accepting both user object and User ID. In the box-sdk-gen the `BoxCCGAuth` constructor accepts
+only User ID instead.
 
 **Old (`boxsdk`)**
 
@@ -315,7 +348,8 @@ auth = BoxCCGAuth(config=ccg_config)
 
 ### Switching between Service Account and User
 
-The method responsible for switching to Service Account got changed:
+In old SDK there were two methods which allowed to switch between using service and user account. Calling these methods
+were modifying existing state of `CCGAuth` class, which was fetching a new token on the next API call.
 
 **Old (`boxsdk`)**
 
@@ -323,39 +357,44 @@ The method responsible for switching to Service Account got changed:
 auth.authenticate_enterprise('ENTERPRISE_ID')
 ```
 
-**New (`box-sdk-gen`)**
-
-```python
-auth.as_enterprise(enterprise_id='YOUR_ENTERPRISE_ID')
-```
-
-And the one to switch to a User:
-
-**Old (`boxsdk`)**
-
 ```python
 auth.authenticate_user('USER_ID')
 ```
 
+In the new SDK, to keep the immutability design, the methods switching authenticated subject were replaced with methods
+returning a new instance of `BoxCCGAuth` class. The new instance will fetch a new token on the next API call.
+The new auth instance can be used to create a new client instance. You can also specify `token_storage` parameter
+to provide a custom token storage for the new instance.
+The old instance of `BoxCCGAuth` class will remain unchanged and will still use the old token.
+
 **New (`box-sdk-gen`)**
 
 ```python
-auth.as_user(user_id='USER_ID')
+from box_sdk_gen import BoxCCGAuth, BoxClient
+enterprise_auth: BoxCCGAuth = auth.with_enterprise_subject(enterprise_id='ENTERPRISE_ID')
+enterprise_client: BoxClient = BoxClient(auth=enterprise_auth)
 ```
 
-Note that the new method accepts only User ID, while the old one was accepting both User object and User ID.
+```python
+from box_sdk_gen import BoxCCGAuth, BoxClient
+user_auth: BoxCCGAuth = auth.with_user_subject(user_id='USER_ID')
+user_client: BoxClient = BoxClient(auth=user_auth)
+```
+
+Note that the new methods accept only user id or enterprise id, while the old ones were accepting
+user and enterprise object too.
 
 ### OAuth 2.0 Auth
 
 #### Get Authorization URL
 
-To get authorization url in the new SDK, you need to first create the `OAuth` class (previously `OAuth2`) using
+To get authorization url in the new SDK, you need to first create the `BoxOAuth` class (previously `OAuth2`) using
 `OAuthConfig` class. Then to get authorization url, call
-`get_authorize_url(self, options: Optional[GetAuthorizeUrlOptions] = None) -> str` instead of
+`get_authorize_url(self, *, options: GetAuthorizeUrlOptions = None) -> str` instead of
 `get_authorization_url(self, redirect_url: Optional[str]) -> Tuple[str, str]`. Note that this method
 now accepts the instance of `GetAuthorizeUrlOptions` class, which allows specifying extra options to API call.
-The new function returns only the authentication url string,
-while the old one returns tuple of authentication url and csrf_token.
+The new function returns only the authentication url string, while the old one returns tuple of
+authentication url and csrf_token.
 
 **Old (`boxsdk`)**
 
@@ -388,8 +427,9 @@ auth_url = auth.get_authorize_url(options=GetAuthorizeUrlOptions(redirect_uri='h
 
 The signature of method for authenticating with obtained auth code got changed from:
 `authenticate(self, auth_code: Optional[str]) -> Tuple[str, str]` to
-`def get_tokens_authorization_code_grant(self, authorization_code: str, network_session: Optional[NetworkSession] = None) -> str`.
-The method now returns only access token, while the old one was returning a tuple of access token and refresh token.
+`get_tokens_authorization_code_grant(self, authorization_code: str, *, network_session: Optional[NetworkSession] = None) -> AccessToken`.
+The method now returns an AccessToken object with `access_token` and `refresh_token` fields,
+while the old one was returning a tuple of access token and refresh token.
 
 **Old (`boxsdk`)**
 
@@ -402,9 +442,9 @@ client = Client(auth)
 **New (`box-sdk-gen`)**
 
 ```python
-from box_sdk_gen import BoxClient
+from box_sdk_gen import BoxClient, AccessToken
 
-access_token = auth.get_tokens_authorization_code_grant('YOUR_AUTH_CODE')
+access_token: AccessToken = auth.get_tokens_authorization_code_grant('YOUR_AUTH_CODE')
 client = BoxClient(auth)
 ```
 
@@ -422,6 +462,7 @@ token to perform an API call. To provide that, it was required to use `Cooperati
 ```python
 from typing import Tuple
 from boxsdk.auth import CooperativelyManagedOAuth2
+from boxsdk import Client
 
 def retrieve_tokens() -> Tuple[str, str]:
     # retrieve access_token and refresh_token
@@ -443,14 +484,14 @@ client = Client(auth)
 ```
 
 In the new SDK you can define your own class delegated for storing and retrieving a token. It has to inherit from
-`TokenStorage` and implement all of its abstract methods. Then, pass an instance of this class to the
+`TokenStorage` and implement all of its abstract methods. Next step would be to pass an instance of this class to the
 AuthConfig constructor.
 
 **New (`box-sdk-gen`)**
 
 ```python
 from typing import Optional
-from box_sdk_gen import BoxOAuth, OAuthConfig, FileWithInMemoryCacheTokenStorage, TokenStorage, AccessToken
+from box_sdk_gen import BoxOAuth, OAuthConfig, TokenStorage, AccessToken
 
 class MyCustomTokenStorage(TokenStorage):
   def store(self, token: AccessToken) -> None:
@@ -487,4 +528,127 @@ auth = BoxOAuth(
     token_storage=FileWithInMemoryCacheTokenStorage()
   )
 )
+```
+
+### Downscope token
+
+The process of downscoping token in the new SDK is similar to the old one. The main difference is that the new method
+accepts the full resource path instead of file object.
+
+**Old (`boxsdk`)**
+
+```python
+from boxsdk import Client, OAuth2
+
+target_file = client.file(file_id='FILE_ID_HERE')
+token_info = client.downscope_token(['item_preview'], target_file)
+downscoped_auth = OAuth2(
+  client_id=None,
+  client_secret=None,
+  access_token=token_info.access_token
+)
+downscoped_client = Client(downscoped_auth)
+```
+
+**New (`box-sdk-gen`)**
+
+```python
+from box_sdk_gen import BoxDeveloperTokenAuth, AccessToken, BoxClient
+
+resource = 'https://api.box.com/2.0/files/123456789'
+downscoped_token: AccessToken = auth.downscope_token(
+    scopes=['item_preview'],
+    resource=resource,
+)
+downscoped_auth = BoxDeveloperTokenAuth(token=downscoped_token.access_token)
+client = BoxClient(auth=downscoped_auth)
+```
+
+### Revoke token
+
+To revoke current client's tokens in the new SDK, you need to call `revoke_token` method of the auth class instead of
+`revoke` method.
+
+**Old (`boxsdk`)**
+
+```python
+oauth.revoke()
+```
+
+**New (`box-sdk-gen`)**
+
+```python
+client.auth.revoke_token()
+```
+
+## Configuration
+
+### As-User header
+
+The As-User header is used by enterprise admins to make API calls on behalf of their enterprise's users.
+This requires the API request to pass an `As-User: USER-ID` header. The following examples assume that the client has
+been instantiated with an access token with appropriate privileges to make As-User calls.
+
+In old SDK you could call client `as_user(self, user: User)` method to create a new client to impersonate the provided user.
+
+**Old (`boxsdk`)**
+
+```python
+from boxsdk import Client
+
+user_to_impersonate = client.user(user_id='USER_ID')
+user_client: Client = client.as_user(user_to_impersonate)
+```
+
+**New (`box-sdk-gen`)**
+
+In the new SDK the method was renamed to `with_as_user_header(self, user_id: str) -> BoxClient`
+and returns a new instance of `BoxClient` class with the As-User header appended to all API calls made by the client.
+The method accepts only user id as a parameter.
+
+```python
+from box_sdk_gen import BoxClient
+
+user_client: BoxClient = client.with_as_user_header(user_id='USER_ID')
+```
+
+Additionally `BoxClient` offers a `with_extra_headers(self, *, extra_headers: Dict[str, str] = None) -> BoxClient`
+method, which allows you to specify the custom set of headers, which will be included in every API call made by client.
+Calling the `client.with_extra_headers()` method creates a new client, leaving the original client unmodified.
+
+```python
+from box_sdk_gen import BoxClient
+
+new_client: BoxClient = client.with_extra_headers(extra_headers={'customHeader': 'customValue'})
+```
+
+### Custom Base URLs
+
+**Old (`boxsdk`)**
+
+In old SDK you could specify the custom base URLs, which will be used for API calls made by setting
+the new values of static variables of the `API` class.
+
+```python
+from boxsdk.config import API
+
+API.BASE_API_URL = 'https://new-base-url.com'
+API.OAUTH2_API_URL = 'https://my-company.com/oauth2'
+API.UPLOAD_URL = 'https://my-company-upload-url.com'
+```
+
+**New (`box-sdk-gen`)**
+
+In the new SDK this functionality has been implemented as part of the `BoxClient` class.
+By calling the `client.with_custom_base_urls()` method, you can specify the custom base URLs that will be used for API
+calls made by client. Following the immutability pattern, this call creates a new client, leaving the original client unmodified.
+
+```python
+from box_sdk_gen import BoxClient, BaseUrls
+
+new_client: BoxClient = client.with_custom_base_urls(base_urls=BaseUrls(
+  base_url='https://new-base-url.com',
+  upload_url='https://my-company-upload-url.com',
+  oauth_2_url='https://my-company.com/oauth2',
+))
 ```
