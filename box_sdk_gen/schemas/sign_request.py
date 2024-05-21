@@ -104,8 +104,10 @@ class SignRequest(SignRequestBase):
                 :param id: Box Sign request ID., defaults to None
                 :type id: Optional[str], optional
                 :param prepare_url: This URL is returned if `is_document_preparation_needed` is
-        set to `true` for Box Sign request. It is used to prepare a signature request
-        using the UI. The signature request is not sent until the preparation
+        set to `true` in the request. The parameter is used to prepare
+        the signature request
+        using the UI. The signature request is not
+        sent until the preparation
         phase is complete., defaults to None
                 :type prepare_url: Optional[str], optional
                 :param status: Describes the status of the signature request., defaults to None
@@ -142,7 +144,7 @@ class SignRequest(SignRequestBase):
                 :type is_phone_verification_required_to_view: Optional[bool], optional
                 :param template_id: When a signature request is created from a template this field will indicate the id of that template., defaults to None
                 :type template_id: Optional[str], optional
-                :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`, defaults to None
+                :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned the `embed_url_external_id`., defaults to None
                 :type external_system_name: Optional[str], optional
         """
         super().__init__(

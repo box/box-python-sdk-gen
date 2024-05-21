@@ -161,6 +161,9 @@ latest file version held in the newly developed architecture. The `GET
 /file_version_legal_holds` API can be used to fetch current and past versions
 of files held within the legacy architecture.
 
+This endpoint does not support returning any content that is on hold due to
+a Custodian collaborating on a Hub.
+
 The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
 find a list of policy assignments for a given policy ID.
 

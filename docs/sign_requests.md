@@ -178,7 +178,7 @@ client.sign_requests.create_sign_request(
 - template_id `Optional[str]`
   - When a signature request is created from a template this field will indicate the id of that template.
 - external_system_name `Optional[str]`
-  - Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`
+  - Used as an optional system name to appear in the signature log next to the signers who have been assigned the `embed_url_external_id`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

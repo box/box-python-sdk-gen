@@ -275,7 +275,7 @@ class SignRequestsManager:
         :type is_phone_verification_required_to_view: Optional[bool], optional
         :param template_id: When a signature request is created from a template this field will indicate the id of that template., defaults to None
         :type template_id: Optional[str], optional
-        :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned an `embed_url_external_id`, defaults to None
+        :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned the `embed_url_external_id`., defaults to None
         :type external_system_name: Optional[str], optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
