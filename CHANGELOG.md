@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/box/box-codegen/compare/v1.0.0...v1.0.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* Fix CI for auto update pull requests (box/box-codegen[#506](https://github.com/box/box-codegen/issues/506)) ([#187](https://github.com/box/box-codegen/issues/187)) ([5e59f69](https://github.com/box/box-codegen/commit/5e59f69591e01cd2caf0033e0023061093989aa5))
+
 ## [1.0.0](https://github.com/box/box-codegen/compare/v0.6.5...v1.0.0) (2024-05-20)
 
 
