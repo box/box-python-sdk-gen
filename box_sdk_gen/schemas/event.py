@@ -18,6 +18,8 @@ from box_sdk_gen.schemas.file import File
 
 from box_sdk_gen.schemas.folder import Folder
 
+from box_sdk_gen.schemas.app_item_event_source import AppItemEventSource
+
 from box_sdk_gen.internal.utils import DateTime
 
 
@@ -191,7 +193,9 @@ class Event(BaseObject):
         created_by: Optional[UserMini] = None,
         event_type: Optional[EventEventTypeField] = None,
         session_id: Optional[str] = None,
-        source: Optional[Union[User, EventSource, File, Folder, Dict]] = None,
+        source: Optional[
+            Union[User, EventSource, File, Folder, Dict, AppItemEventSource]
+        ] = None,
         additional_details: Optional[EventAdditionalDetailsField] = None,
         **kwargs
     ):

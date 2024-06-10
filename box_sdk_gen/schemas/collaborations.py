@@ -37,14 +37,24 @@ class Collaborations(BaseObject):
     def __init__(
         self,
         *,
-        total_count: Optional[int] = None,
         limit: Optional[int] = None,
+        next_marker: Optional[str] = None,
+        prev_marker: Optional[str] = None,
+        total_count: Optional[int] = None,
         offset: Optional[int] = None,
         order: Optional[List[CollaborationsOrderField]] = None,
         entries: Optional[List[Collaboration]] = None,
         **kwargs
     ):
         """
+                :param limit: The limit that was used for these entries. This will be the same as the
+        `limit` query parameter unless that value exceeded the maximum value
+        allowed. The maximum value varies by API., defaults to None
+                :type limit: Optional[int], optional
+                :param next_marker: The marker for the start of the next page of results., defaults to None
+                :type next_marker: Optional[str], optional
+                :param prev_marker: The marker for the start of the previous page of results., defaults to None
+                :type prev_marker: Optional[str], optional
                 :param total_count: One greater than the offset of the last entry in the entire collection.
         The total number of entries in the collection may be less than
         `total_count`.
@@ -52,10 +62,6 @@ class Collaborations(BaseObject):
         This field is only returned for calls that use offset-based pagination.
         For marker-based paginated APIs, this field will be omitted., defaults to None
                 :type total_count: Optional[int], optional
-                :param limit: The limit that was used for these entries. This will be the same as the
-        `limit` query parameter unless that value exceeded the maximum value
-        allowed. The maximum value varies by API., defaults to None
-                :type limit: Optional[int], optional
                 :param offset: The 0-based offset of the first entry in this set. This will be the same
         as the `offset` query parameter.
 
@@ -71,8 +77,10 @@ class Collaborations(BaseObject):
                 :type entries: Optional[List[Collaboration]], optional
         """
         super().__init__(**kwargs)
-        self.total_count = total_count
         self.limit = limit
+        self.next_marker = next_marker
+        self.prev_marker = prev_marker
+        self.total_count = total_count
         self.offset = offset
         self.order = order
         self.entries = entries

@@ -170,6 +170,8 @@ from box_sdk_gen.schemas.user_collaborations import *
 
 from box_sdk_gen.schemas.user_mini import *
 
+from box_sdk_gen.schemas.app_item_event_source import *
+
 from box_sdk_gen.schemas.event_source import *
 
 from box_sdk_gen.schemas.user import *
