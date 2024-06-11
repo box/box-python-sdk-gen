@@ -28,9 +28,9 @@ class AiAskItemsField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The id of the item
+        :param id: The id of the item.
         :type id: str
-        :param type: The type of the item, defaults to AiAskItemsTypeField.FILE.value
+        :param type: The type of the item., defaults to AiAskItemsTypeField.FILE.value
         :type type: AiAskItemsTypeField, optional
         :param content: The content of the item, often the text representation., defaults to None
         :type content: Optional[str], optional
@@ -46,12 +46,16 @@ class AiAsk(BaseObject):
         self, mode: AiAskModeField, prompt: str, items: List[AiAskItemsField], **kwargs
     ):
         """
-        :param mode: The mode specifies if this request is for a single or multiple items.
-        :type mode: AiAskModeField
-        :param prompt: The prompt provided by the client to be answered by the LLM.
-        :type prompt: str
-        :param items: The items to be processed by the LLM, often files.
-        :type items: List[AiAskItemsField]
+                :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
+                :type mode: AiAskModeField
+                :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
+                :type prompt: str
+                :param items: The items to be processed by the LLM, often files.
+
+        **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first.
+        If the file size exceeds 1MB, the first 1MB of text representation will be processed.
+        If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
+                :type items: List[AiAskItemsField]
         """
         super().__init__(**kwargs)
         self.mode = mode
