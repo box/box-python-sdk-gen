@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.realtime_servers import RealtimeServers
 
 from box_sdk_gen.schemas.realtime_server import RealtimeServer
 
+from box_sdk_gen.internal.utils import DateTime
+
 from test.commons import get_default_client
 
 from box_sdk_gen.schemas.event_source import EventSource
@@ -23,6 +25,8 @@ from box_sdk_gen.schemas.file import File
 from box_sdk_gen.schemas.folder import Folder
 
 from box_sdk_gen.schemas.user import User
+
+from box_sdk_gen.internal.utils import date_time_from_string
 
 client: BoxClient = get_default_client()
 
@@ -81,3 +85,15 @@ def testGetEventsWithLongPolling():
     server: RealtimeServer = servers.entries[0]
     assert to_string(server.type) == 'realtime_server'
     assert not server.url == ''
+
+
+def testGetEventsWithDateFilters():
+    created_after_date: DateTime = date_time_from_string('2024-06-09T00:00:00Z')
+    created_before_date: DateTime = date_time_from_string('2025-06-09T00:00:00Z')
+    servers: Events = client.events.get_events(
+        stream_type=GetEventsStreamType.ADMIN_LOGS.value,
+        limit=1,
+        created_after=created_after_date,
+        created_before=created_before_date,
+    )
+    assert len(servers.entries) == 1
