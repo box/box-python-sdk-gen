@@ -67,6 +67,18 @@ class FileVersionRetentionsManager:
     ) -> FileVersionRetentions:
         """
                 Retrieves all file version retentions for the given enterprise.
+
+                **Note**:
+
+
+                File retention API is now **deprecated**.
+
+
+                To get information about files and file versions under retention,
+
+
+                see [files under retention](e://get-retention-policy-assignments-id-files-under-retention) or [file versions under retention](e://get-retention-policy-assignments-id-file-versions-under-retention) endpoints.
+
                 :param file_id: Filters results by files with this ID., defaults to None
                 :type file_id: Optional[str], optional
                 :param file_version_id: Filters results by file versions with this ID., defaults to None
@@ -133,6 +145,18 @@ class FileVersionRetentionsManager:
     ) -> FileVersionRetention:
         """
                 Returns information about a file version retention.
+
+                **Note**:
+
+
+                File retention API is now **deprecated**.
+
+
+                To get information about files and file versions under retention,
+
+
+                see [files under retention](e://get-retention-policy-assignments-id-files-under-retention) or [file versions under retention](e://get-retention-policy-assignments-id-file-versions-under-retention) endpoints.
+
                 :param file_version_retention_id: The ID of the file version retention
         Example: "3424234"
                 :type file_version_retention_id: str
