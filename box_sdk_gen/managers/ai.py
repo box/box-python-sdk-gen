@@ -62,9 +62,9 @@ class CreateAiAskItems(BaseObject):
         **kwargs
     ):
         """
-        :param id: The id of the item
+        :param id: The id of the item.
         :type id: str
-        :param type: The type of the item, defaults to CreateAiAskItemsTypeField.FILE.value
+        :param type: The type of the item., defaults to CreateAiAskItemsTypeField.FILE.value
         :type type: CreateAiAskItemsTypeField, optional
         :param content: The content of the item, often the text representation., defaults to None
         :type content: Optional[str], optional
@@ -148,15 +148,19 @@ class AiManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
-        Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
-        :param mode: The mode specifies if this request is for a single or multiple items.
-        :type mode: CreateAiAskMode
-        :param prompt: The prompt provided by the client to be answered by the LLM.
-        :type prompt: str
-        :param items: The items to be processed by the LLM, often files.
-        :type items: List[CreateAiAskItems]
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
+                :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
+                :type mode: CreateAiAskMode
+                :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
+                :type prompt: str
+                :param items: The items to be processed by the LLM, often files.
+
+        **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first.
+        If the file size exceeds 1MB, the first 1MB of text representation will be processed.
+        If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
+                :type items: List[CreateAiAskItems]
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -185,15 +189,19 @@ class AiManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
-        Sends an AI request to supported LLMs and returns an answer specifically focused on the creation of new text.
-        :param prompt: The prompt provided by the client to be answered by the LLM.
-        :type prompt: str
-        :param items: The items to be processed by the LLM, often files.
-        :type items: List[CreateAiTextGenItems]
-        :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
-        :type dialogue_history: Optional[List[CreateAiTextGenDialogueHistory]], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Sends an AI request to supported LLMs and returns an answer specifically focused on the creation of new text.
+                :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
+                :type prompt: str
+                :param items: The items to be processed by the LLM, often files.
+        The array can include **exactly one** element.
+
+        **Note**: Box AI handles documents with text representations up to 1MB in size.
+        If the file size exceeds 1MB, the first 1MB of text representation will be processed.
+                :type items: List[CreateAiTextGenItems]
+                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
+                :type dialogue_history: Optional[List[CreateAiTextGenDialogueHistory]], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
