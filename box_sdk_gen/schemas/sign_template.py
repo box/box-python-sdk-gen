@@ -183,7 +183,13 @@ class SignTemplate(BaseObject):
                 :type are_email_settings_locked: Optional[bool], optional
                 :param are_files_locked: Indicates if the template files are editable or not. This includes deleting or renaming template files., defaults to None
                 :type are_files_locked: Optional[bool], optional
-                :param signers: Array of signers for the template., defaults to None
+                :param signers: Array of signers for the template.
+
+        **Note**: It may happen that some signers specified in the template belong to conflicting [segments](r://shield-information-barrier-segment-member) (user groups).
+        This means that due to the security policies, users are assigned to segments to prevent exchanges or communication that could lead to ethical conflicts.
+        In such a case, an attempt to send a sign request based on a template that lists signers in conflicting segments will result in an error.
+
+        Read more about [segments and ethical walls](https://support.box.com/hc/en-us/articles/9920431507603-Understanding-Information-Barriers#h_01GFVJEHQA06N7XEZ4GCZ9GFAQ)., defaults to None
                 :type signers: Optional[List[TemplateSigner]], optional
                 :param additional_info: Additional information on which fields are required and which fields are not editable., defaults to None
                 :type additional_info: Optional[SignTemplateAdditionalInfoField], optional
