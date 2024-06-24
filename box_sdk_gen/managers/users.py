@@ -615,6 +615,9 @@ class UsersManager:
         }
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        json_body: SerializedData = serialize(request_body)
+        if request_body['enterprise'] == 'null':
+            json_body['enterprise'] = None
         response: FetchResponse = fetch(
             ''.join(
                 [
@@ -627,7 +630,7 @@ class UsersManager:
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
-                data=serialize(request_body),
+                data=json_body,
                 content_type='application/json',
                 response_format='json',
                 auth=self.auth,
