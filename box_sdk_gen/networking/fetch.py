@@ -8,6 +8,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Optional, Dict, List, Union
 from sys import version_info as py_version
+from http import HTTPStatus
 
 import requests
 from requests import RequestException, Session, Response
@@ -116,7 +117,10 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
         if response.network_response is not None:
             network_response = response.network_response
-            if network_response.ok:
+            accepted_with_retry_after = (
+                network_response.status_code == HTTPStatus.ACCEPTED
+            ) and response.get_header('Retry-After', None)
+            if network_response.ok and not accepted_with_retry_after:
                 if options.response_format == 'binary':
                     return FetchResponse(
                         status=network_response.status_code,
@@ -139,7 +143,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
             if (
                 not (response.reauthentication_needed and options.auth)
-                and network_response.status_code != 429
+                and network_response.status_code != HTTPStatus.TOO_MANY_REQUESTS
+                and not accepted_with_retry_after
                 and network_response.status_code < 500
             ):
                 __raise_on_unsuccessful_request(request=request, response=response)
@@ -243,7 +248,9 @@ def __make_request(request: APIRequest, session: Session) -> APIResponse:
             params=request.params,
             stream=True,
         )
-        reauthentication_needed = network_response.status_code == 401
+        reauthentication_needed = (
+            network_response.status_code == HTTPStatus.UNAUTHORIZED
+        )
     except RequestException as request_exc:
         raised_exception = request_exc
         network_response = None
