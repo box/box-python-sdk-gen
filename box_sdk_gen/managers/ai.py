@@ -41,11 +41,6 @@ from box_sdk_gen.networking.fetch import fetch
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
 
-class CreateAiAskMode(str, Enum):
-    MULTIPLE_ITEM_QA = 'multiple_item_qa'
-    SINGLE_ITEM_QA = 'single_item_qa'
-
-
 class CreateAiAskItemsTypeField(str, Enum):
     FILE = 'file'
 
@@ -141,7 +136,6 @@ class AiManager:
 
     def create_ai_ask(
         self,
-        mode: CreateAiAskMode,
         prompt: str,
         items: List[CreateAiAskItems],
         *,
@@ -149,8 +143,6 @@ class AiManager:
     ) -> AiResponse:
         """
                 Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
-                :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
-                :type mode: CreateAiAskMode
                 :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
                 :type prompt: str
                 :param items: The items to be processed by the LLM, often files.
@@ -164,7 +156,7 @@ class AiManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: Dict = {'mode': mode, 'prompt': prompt, 'items': items}
+        request_body: Dict = {'prompt': prompt, 'items': items}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
