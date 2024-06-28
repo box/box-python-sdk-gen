@@ -35,6 +35,26 @@ def mock_byte_stream():
 
 
 @pytest.fixture
+def response_202():
+    response = Mock(Response)
+    response.status_code = 202
+    response.ok = True
+    response.headers = {
+        'content-type': 'text/html',
+    }
+    return response
+
+
+@pytest.fixture
+def response_202_with_retry_after():
+    response = Mock(Response)
+    response.status_code = 202
+    response.ok = True
+    response.headers = {'Retry-After': '0'}
+    return response
+
+
+@pytest.fixture
 def response_500():
     response = Mock(Response)
     response.status_code = 500
@@ -417,6 +437,43 @@ def test_retryable_status_codes(
     assert mock_requests_session.request.call_count == 3
 
 
+def test_status_code_202(mock_requests_session, network_session_mock, response_202):
+    response_202.text = None
+    response_202.content = None
+    response_202.headers = {'content-type': 'text/html'}
+    mock_requests_session.request.return_value = response_202
+
+    fetch_response = fetch(
+        "https://example.com", FetchOptions(network_session=network_session_mock)
+    )
+    assert fetch_response.status == 202
+    assert fetch_response.data == None
+
+
+def test_retryable_status_code_202(
+    mock_requests_session,
+    network_session_mock,
+    response_202_with_retry_after,
+    response_200,
+):
+    response_200.text = '{"id": "123456"}'
+    response_200.headers = {'Retry-After': '0'}
+    mock_requests_session.request.side_effect = [
+        response_202_with_retry_after,
+        response_202_with_retry_after,
+        response_200,
+    ]
+
+    with patch('time.sleep'):
+        fetch_response = fetch(
+            "https://example.com", FetchOptions(network_session=network_session_mock)
+        )
+
+    assert fetch_response.status == 200
+    assert fetch_response.data == {'id': '123456'}
+    assert mock_requests_session.request.call_count == 3
+
+
 @pytest.mark.parametrize('not_retryable_status_code', [404, 403, 400])
 def test_not_retryable_status_codes(
     mock_requests_session,
@@ -523,6 +580,17 @@ def test_not_retrying_401_when_auth_not_provided(
         data=None,
         stream=True,
     )
+
+
+def test_reaching_retry_limit(
+    mock_requests_session, network_session_mock, response_202_with_retry_after
+):
+    network_session_mock.MAX_ATTEMPTS = 5
+    mock_requests_session.request.return_value = response_202_with_retry_after
+
+    with pytest.raises(BoxSDKError, match='Status code: 202'):
+        fetch("https://example.com", FetchOptions(network_session=network_session_mock))
+    assert mock_requests_session.request.call_count == 5
 
 
 def test_reaching_retry_limit(
