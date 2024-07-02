@@ -2,8 +2,6 @@ from box_sdk_gen.internal.utils import to_string
 
 import pytest
 
-from typing import Dict
-
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
@@ -89,9 +87,11 @@ def testMetadataCascadePolicies():
             cascade_policy_id,
             ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
         )
-    data: Dict[str, str] = {'testName': 'xyz'}
     client.folder_metadata.create_folder_metadata_by_id(
-        folder.id, CreateFolderMetadataByIdScope.ENTERPRISE.value, template_key, data
+        folder.id,
+        CreateFolderMetadataByIdScope.ENTERPRISE.value,
+        template_key,
+        {'testName': 'xyz'},
     )
     client.metadata_cascade_policies.apply_metadata_cascade_policy(
         cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value
