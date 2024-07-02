@@ -18,6 +18,8 @@ from box_sdk_gen.managers.collaboration_allowlist_entries import (
 
 from test.commons import get_default_client
 
+from box_sdk_gen.internal.utils import get_uuid
+
 client: BoxClient = get_default_client()
 
 
@@ -26,7 +28,7 @@ def testCollaborationAllowlistEntries():
         client.collaboration_allowlist_entries.get_collaboration_whitelist_entries()
     )
     assert len(allowlist.entries) >= 0
-    domain: str = 'example.com'
+    domain: str = ''.join([get_uuid(), 'example.com'])
     new_entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
             domain, CreateCollaborationWhitelistEntryDirection.INBOUND.value
