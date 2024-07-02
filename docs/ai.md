@@ -16,6 +16,7 @@ See the endpoint docs at
 
 ```python
 client.ai.create_ai_ask(
+    CreateAiAskMode.MULTIPLE_ITEM_QA.value,
     "Which direction sun rises?",
     [
         CreateAiAskItems(
@@ -34,6 +35,8 @@ client.ai.create_ai_ask(
 
 ### Arguments
 
+- mode `CreateAiAskMode`
+  - The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
 - prompt `str`
   - The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
 - items `List[CreateAiAskItems]`

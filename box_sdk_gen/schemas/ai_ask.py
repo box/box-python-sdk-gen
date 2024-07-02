@@ -7,6 +7,11 @@ from box_sdk_gen.internal.base_object import BaseObject
 from typing import List
 
 
+class AiAskModeField(str, Enum):
+    MULTIPLE_ITEM_QA = 'multiple_item_qa'
+    SINGLE_ITEM_QA = 'single_item_qa'
+
+
 class AiAskItemsTypeField(str, Enum):
     FILE = 'file'
 
@@ -37,8 +42,12 @@ class AiAskItemsField(BaseObject):
 
 
 class AiAsk(BaseObject):
-    def __init__(self, prompt: str, items: List[AiAskItemsField], **kwargs):
+    def __init__(
+        self, mode: AiAskModeField, prompt: str, items: List[AiAskItemsField], **kwargs
+    ):
         """
+                :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
+                :type mode: AiAskModeField
                 :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
                 :type prompt: str
                 :param items: The items to be processed by the LLM, often files.
@@ -49,5 +58,6 @@ class AiAsk(BaseObject):
                 :type items: List[AiAskItemsField]
         """
         super().__init__(**kwargs)
+        self.mode = mode
         self.prompt = prompt
         self.items = items

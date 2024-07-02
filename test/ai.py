@@ -4,6 +4,8 @@ from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.schemas.ai_response import AiResponse
 
+from box_sdk_gen.managers.ai import CreateAiAskMode
+
 from box_sdk_gen.managers.ai import CreateAiAskItems
 
 from box_sdk_gen.managers.ai import CreateAiAskItemsTypeField
@@ -32,6 +34,7 @@ client: BoxClient = get_default_client()
 def testAskAISingleItem():
     file_to_ask: FileFull = upload_new_file()
     response: AiResponse = client.ai.create_ai_ask(
+        CreateAiAskMode.SINGLE_ITEM_QA.value,
         'which direction sun rises',
         [
             CreateAiAskItems(
@@ -50,6 +53,7 @@ def testAskAIMultipleItems():
     file_to_ask_1: FileFull = upload_new_file()
     file_to_ask_2: FileFull = upload_new_file()
     response: AiResponse = client.ai.create_ai_ask(
+        CreateAiAskMode.MULTIPLE_ITEM_QA.value,
         'Which direction sun rises?',
         [
             CreateAiAskItems(
