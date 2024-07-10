@@ -19,17 +19,17 @@ def testGetTermsOfServices():
     tos: TermsOfService = get_or_create_terms_of_services()
     updated_tos_1: TermsOfService = (
         client.terms_of_services.update_terms_of_service_by_id(
-            tos.id, UpdateTermsOfServiceByIdStatus.ENABLED.value, 'Enabled TOS'
+            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'TOS'
         )
     )
-    assert to_string(updated_tos_1.status) == 'enabled'
-    assert updated_tos_1.text == 'Enabled TOS'
+    assert to_string(updated_tos_1.status) == 'disabled'
+    assert updated_tos_1.text == 'TOS'
     updated_tos_2: TermsOfService = (
         client.terms_of_services.update_terms_of_service_by_id(
-            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'Disabled TOS'
+            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'Updated TOS'
         )
     )
     assert to_string(updated_tos_2.status) == 'disabled'
-    assert updated_tos_2.text == 'Disabled TOS'
+    assert updated_tos_2.text == 'Updated TOS'
     list_tos: TermsOfServices = client.terms_of_services.get_terms_of_service()
     assert list_tos.total_count > 0
