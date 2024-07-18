@@ -549,10 +549,6 @@ class ChunkedUploadsManager:
             upload_session_id
         )
         assert processed_session_parts.total_count == total_parts
-        processed_session: UploadSession = self.get_file_upload_session_by_id(
-            upload_session_id
-        )
-        assert processed_session.num_parts_processed == total_parts
         sha_1: str = file_hash.digest_hash('base64')
         digest: str = ''.join(['sha=', sha_1])
         committed_session: Files = self.create_file_upload_session_commit(

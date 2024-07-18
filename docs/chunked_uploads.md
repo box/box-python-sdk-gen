@@ -80,11 +80,7 @@ This operation is performed by calling function `get_file_upload_session_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-upload-sessions-id/).
 
-<!-- sample get_files_upload_sessions_id -->
-
-```python
-self.get_file_upload_session_by_id(upload_session_id)
-```
+_Currently we don't have an example for calling `get_file_upload_session_by_id` in integration tests_
 
 ### Arguments
 
