@@ -152,7 +152,9 @@ Iterator = Iterable[T]
 Accumulator = TypeVar('Accumulator')
 
 
-def iterate_chunks(stream: ByteStream, chunk_size: int) -> Iterable[ByteStream]:
+def iterate_chunks(
+    stream: ByteStream, chunk_size: int, file_size: int
+) -> Iterable[ByteStream]:
     stream_is_finished = False
     while not stream_is_finished:
         copied_length = 0

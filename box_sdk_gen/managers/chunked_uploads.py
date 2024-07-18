@@ -532,7 +532,7 @@ class ChunkedUploadsManager:
         assert part_size * total_parts >= file_size
         assert upload_session.num_parts_processed == 0
         file_hash: Hash = Hash(algorithm=HashName.SHA1.value)
-        chunks_iterator: Iterator = iterate_chunks(file, part_size)
+        chunks_iterator: Iterator = iterate_chunks(file, part_size, file_size)
         results: _PartAccumulator = reduce_iterator(
             chunks_iterator,
             self._reducer,
