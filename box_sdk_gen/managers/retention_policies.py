@@ -318,7 +318,7 @@ class RetentionPoliciesManager:
         which will lift the retention policy from the content,
         allowing it to be deleted by users,
         once the retention policy has expired.
-        You can use "null" if you don't want to change `disposition_action`., defaults to None
+        You can use `null` if you don't want to change `disposition_action`., defaults to None
                 :type disposition_action: Optional[str], optional
                 :param retention_type: Specifies the retention type:
 

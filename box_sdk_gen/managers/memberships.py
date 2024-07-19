@@ -223,7 +223,7 @@ class MembershipsManager:
         Setting these permissions overwrites the default
         access levels of an admin.
 
-        Specifying a value of "null" for this object will disable
+        Specifying a value of `null` for this object will disable
         all configurable permissions. Specifying permissions will set
         them accordingly, omitted permissions will be enabled by default., defaults to None
                 :type configurable_permissions: Optional[Dict[str, bool]], optional
@@ -350,7 +350,7 @@ class MembershipsManager:
         Setting these permissions overwrites the default
         access levels of an admin.
 
-        Specifying a value of "null" for this object will disable
+        Specifying a value of `null` for this object will disable
         all configurable permissions. Specifying permissions will set
         them accordingly, omitted permissions will be enabled by default., defaults to None
                 :type configurable_permissions: Optional[Dict[str, bool]], optional

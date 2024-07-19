@@ -2,6 +2,7 @@
 
 - [Send AI question request](#send-ai-question-request)
 - [Send AI request to generate text](#send-ai-request-to-generate-text)
+- [Get AI agent default configuration](#get-ai-agent-default-configuration)
 
 ## Send AI question request
 
@@ -41,6 +42,8 @@ client.ai.create_ai_ask(
   - The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
 - items `List[CreateAiAskItems]`
   - The items to be processed by the LLM, often files. **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first. If the file size exceeds 1MB, the first 1MB of text representation will be processed. If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
+- ai_agent `Optional[AiAgentAsk]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -94,6 +97,8 @@ client.ai.create_ai_text_gen(
   - The items to be processed by the LLM, often files. The array can include **exactly one** element. **Note**: Box AI handles documents with text representations up to 1MB in size. If the file size exceeds 1MB, the first 1MB of text representation will be processed.
 - dialogue_history `Optional[List[CreateAiTextGenDialogueHistory]]`
   - The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response.
+- ai_agent `Optional[AiAgentTextGen]`
+  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -102,3 +107,34 @@ client.ai.create_ai_text_gen(
 This function returns a value of type `AiResponse`.
 
 A successful response including the answer from the LLM.
+
+## Get AI agent default configuration
+
+Get the AI agent default config
+
+This operation is performed by calling function `get_ai_agent_default`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-ai-agent-default/).
+
+_Currently we don't have an example for calling `get_ai_agent_default` in integration tests_
+
+### Arguments
+
+- mode `GetAiAgentDefaultMode`
+  - The mode to filter the agent config to return.
+- language `Optional[str]`
+  - The ISO language code to return the agent config for. If the language is not supported the default agent config is returned.
+- model `Optional[str]`
+  - The model to return the default agent config for.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `Union[AiAgentAskResponse, AiAgentTextGenResponse]`.
+
+A successful response including the default agent configuration.
+This response can be one of the following two objects:
+AI agent for questions and AI agent for text generation. The response
+depends on the agent configuration requested in this endpoint.
