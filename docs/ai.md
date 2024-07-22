@@ -132,7 +132,7 @@ _Currently we don't have an example for calling `get_ai_agent_default` in integr
 
 ### Returns
 
-This function returns a value of type `Union[AiAgentAskResponse, AiAgentTextGenResponse]`.
+This function returns a value of type `Union[AiAgentAsk, AiAgentTextGen]`.
 
 A successful response including the default agent configuration.
 This response can be one of the following two objects:

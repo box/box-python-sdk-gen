@@ -18,10 +18,6 @@ from typing import Union
 
 from box_sdk_gen.internal.utils import DateTime
 
-from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
-
-from box_sdk_gen.schemas.ai_agent_text_gen import AiAgentTextGen
-
 from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -30,9 +26,9 @@ from box_sdk_gen.schemas.ai_ask import AiAsk
 
 from box_sdk_gen.schemas.ai_text_gen import AiTextGen
 
-from box_sdk_gen.schemas.ai_agent_ask_response import AiAgentAskResponse
+from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
 
-from box_sdk_gen.schemas.ai_agent_text_gen_response import AiAgentTextGenResponse
+from box_sdk_gen.schemas.ai_agent_text_gen import AiAgentTextGen
 
 from box_sdk_gen.networking.auth import Authentication
 
@@ -259,7 +255,7 @@ class AiManager:
         language: Optional[str] = None,
         model: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Union[AiAgentAskResponse, AiAgentTextGenResponse]:
+    ) -> Union[AiAgentAsk, AiAgentTextGen]:
         """
                 Get the AI agent default config
                 :param mode: The mode to filter the agent config to return.
@@ -293,6 +289,4 @@ class AiManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(
-            response.data, Union[AiAgentAskResponse, AiAgentTextGenResponse]
-        )
+        return deserialize(response.data, Union[AiAgentAsk, AiAgentTextGen])

@@ -338,15 +338,11 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool import *
 
 from box_sdk_gen.schemas.ai_agent_basic_gen_tool import *
 
-from box_sdk_gen.schemas.ai_agent_text_gen_response import *
-
 from box_sdk_gen.schemas.ai_agent_text_gen import *
 
 from box_sdk_gen.schemas.ai_text_gen import *
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_ask import *
-
-from box_sdk_gen.schemas.ai_agent_ask_response import *
 
 from box_sdk_gen.schemas.ai_agent_ask import *
 
