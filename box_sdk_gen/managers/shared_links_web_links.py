@@ -14,6 +14,10 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.schemas.web_link import WebLink
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -452,7 +456,9 @@ class SharedLinksWebLinksManager:
         web_link_id: str,
         fields: str,
         *,
-        shared_link: Optional[RemoveSharedLinkFromWebLinkSharedLink] = None,
+        shared_link: Union[
+            Optional[RemoveSharedLinkFromWebLinkSharedLink], NullValue
+        ] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> WebLink:
         """
@@ -465,7 +471,7 @@ class SharedLinksWebLinksManager:
                 :type fields: str
                 :param shared_link: By setting this value to `null`, the shared link
         is removed from the web link., defaults to None
-                :type shared_link: Optional[RemoveSharedLinkFromWebLinkSharedLink], optional
+                :type shared_link: Union[Optional[RemoveSharedLinkFromWebLinkSharedLink], NullValue], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

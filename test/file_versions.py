@@ -20,12 +20,14 @@ from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import generate_byte_stream
 
+from box_sdk_gen.internal.utils import create_null
+
 from test.commons import get_default_client
 
 client: BoxClient = get_default_client()
 
 
-def testCreateListGetRestoreDeleteFileVersion():
+def testCreateListGetPromoteFileVersion():
     old_name: str = get_uuid()
     new_name: str = get_uuid()
     files: Files = client.uploads.upload_file(
@@ -54,14 +56,60 @@ def testCreateListGetRestoreDeleteFileVersion():
         id=file_versions.entries[0].id,
         type=PromoteFileVersionType.FILE_VERSION.value,
     )
-    file_restored: FileFull = client.files.get_file_by_id(file.id)
-    assert file_restored.name == old_name
-    assert file_restored.size == 10
-    file_versions_restored: FileVersions = client.file_versions.get_file_versions(
-        file.id
+    file_with_promoted_version: FileFull = client.files.get_file_by_id(file.id)
+    assert file_with_promoted_version.name == old_name
+    assert file_with_promoted_version.size == 10
+    client.file_versions.delete_file_version_by_id(file.id, file_version.id)
+    client.files.delete_file_by_id(file.id)
+
+
+def testRemoveAndRestoreFileVersion():
+    old_name: str = get_uuid()
+    new_name: str = get_uuid()
+    files: Files = client.uploads.upload_file(
+        UploadFileAttributes(
+            name=old_name, parent=UploadFileAttributesParentField(id='0')
+        ),
+        generate_byte_stream(10),
     )
-    client.file_versions.delete_file_version_by_id(
-        file.id, file_versions_restored.entries[0].id
+    file: FileFull = files.entries[0]
+    client.uploads.upload_file_version(
+        file.id, UploadFileVersionAttributes(name=new_name), generate_byte_stream(20)
     )
-    client.file_versions.get_file_versions(file.id)
+    file_versions: FileVersions = client.file_versions.get_file_versions(file.id)
+    assert file_versions.total_count == 1
+    file_version: FileVersionFull = client.file_versions.get_file_version_by_id(
+        file.id,
+        file_versions.entries[0].id,
+        fields=['trashed_at', 'trashed_by', 'restored_at', 'restored_by'],
+    )
+    assert file_version.trashed_at == None
+    assert file_version.trashed_by == None
+    assert file_version.restored_at == None
+    assert file_version.restored_by == None
+    client.file_versions.delete_file_version_by_id(file.id, file_version.id)
+    deleted_file_version: FileVersionFull = client.file_versions.get_file_version_by_id(
+        file.id,
+        file_versions.entries[0].id,
+        fields=['trashed_at', 'trashed_by', 'restored_at', 'restored_by'],
+    )
+    assert not deleted_file_version.trashed_at == None
+    assert not deleted_file_version.trashed_by == None
+    assert deleted_file_version.restored_at == None
+    assert deleted_file_version.restored_by == None
+    client.file_versions.update_file_version_by_id(
+        file.id, file_version.id, trashed_at=create_null()
+    )
+    restored_file_version: FileVersionFull = (
+        client.file_versions.get_file_version_by_id(
+            file.id,
+            file_versions.entries[0].id,
+            fields=['trashed_at', 'trashed_by', 'restored_at', 'restored_by'],
+        )
+    )
+    assert restored_file_version.trashed_at == None
+    assert restored_file_version.trashed_by == None
+    assert not restored_file_version.restored_at == None
+    assert not restored_file_version.restored_by == None
+    client.file_versions.delete_file_version_by_id(file.id, file_version.id)
     client.files.delete_file_by_id(file.id)

@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from enum import EnumMeta, Enum
 from typing import get_args, get_origin, Union, Optional
+from .null_value import NullValue
 
 
 class BaseObject:
@@ -27,7 +28,9 @@ class BaseObject:
         for k, v in vars(self).items():
             if v is None:
                 continue
-            if type(v) is list:
+            if isinstance(v, NullValue):
+                value = None
+            elif type(v) is list:
                 value = [
                     item.to_dict() if isinstance(item, BaseObject) else item
                     for item in v

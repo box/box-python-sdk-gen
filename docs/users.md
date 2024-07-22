@@ -216,7 +216,7 @@ See the endpoint docs at
 <!-- sample put_users_id -->
 
 ```python
-client.users.update_user_by_id(user.id, name=updated_user_name)
+client.users.update_user_by_id(user.id, notification_email=create_null())
 ```
 
 ### Arguments

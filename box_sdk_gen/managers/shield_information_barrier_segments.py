@@ -6,6 +6,10 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.schemas.shield_information_barrier_segment import (
@@ -95,7 +99,7 @@ class ShieldInformationBarrierSegmentsManager:
         shield_information_barrier_segment_id: str,
         *,
         name: Optional[str] = None,
-        description: Optional[str] = None,
+        description: Union[Optional[str], NullValue] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegment:
         """
@@ -107,7 +111,7 @@ class ShieldInformationBarrierSegmentsManager:
                 :type name: Optional[str], optional
                 :param description: The updated description for
         the shield information barrier segment., defaults to None
-                :type description: Optional[str], optional
+                :type description: Union[Optional[str], NullValue], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

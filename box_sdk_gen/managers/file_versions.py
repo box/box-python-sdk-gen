@@ -10,6 +10,10 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.schemas.file_versions import FileVersions
@@ -200,7 +204,7 @@ class FileVersionsManager:
         file_id: str,
         file_version_id: str,
         *,
-        trashed_at: Optional[str] = None,
+        trashed_at: Union[Optional[str], NullValue] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileVersionFull:
         """
@@ -228,7 +232,7 @@ class FileVersionsManager:
                 :type file_version_id: str
                 :param trashed_at: Set this to `null` to clear
         the date and restore the file., defaults to None
-                :type trashed_at: Optional[str], optional
+                :type trashed_at: Union[Optional[str], NullValue], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

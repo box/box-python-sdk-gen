@@ -14,6 +14,10 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.schemas.users import Users
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -476,7 +480,7 @@ class UsersManager:
         self,
         user_id: str,
         *,
-        enterprise: Optional[str] = None,
+        enterprise: Union[Optional[str], NullValue] = None,
         notify: Optional[bool] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
@@ -495,7 +499,9 @@ class UsersManager:
         is_password_reset_required: Optional[bool] = None,
         status: Optional[UpdateUserByIdStatus] = None,
         space_amount: Optional[int] = None,
-        notification_email: Optional[UpdateUserByIdNotificationEmail] = None,
+        notification_email: Union[
+            Optional[UpdateUserByIdNotificationEmail], NullValue
+        ] = None,
         external_app_user_id: Optional[str] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -513,7 +519,7 @@ class UsersManager:
                 :type user_id: str
                 :param enterprise: Set this to `null` to roll the user out of the enterprise
         and make them a free user, defaults to None
-                :type enterprise: Optional[str], optional
+                :type enterprise: Union[Optional[str], NullValue], optional
                 :param notify: Whether the user should receive an email when they
         are rolled out of an enterprise, defaults to None
                 :type notify: Optional[bool], optional
@@ -567,7 +573,7 @@ class UsersManager:
         to the primary email address.
 
         Set this value to `null` to remove the notification email., defaults to None
-                :type notification_email: Optional[UpdateUserByIdNotificationEmail], optional
+                :type notification_email: Union[Optional[UpdateUserByIdNotificationEmail], NullValue], optional
                 :param external_app_user_id: An external identifier for an app user, which can be used to look
         up the user. This can be used to tie user IDs from external
         identity providers to Box users.
