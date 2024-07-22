@@ -57,7 +57,11 @@ See the endpoint docs at
 <!-- sample get_files_id_versions_id -->
 
 ```python
-client.file_versions.get_file_version_by_id(file.id, file_versions.entries[0].id)
+client.file_versions.get_file_version_by_id(
+    file.id,
+    file_versions.entries[0].id,
+    fields=["trashed_at", "trashed_by", "restored_at", "restored_by"],
+)
 ```
 
 ### Arguments
@@ -93,7 +97,13 @@ This operation is performed by calling function `update_file_version_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-files-id-versions-id/).
 
-_Currently we don't have an example for calling `update_file_version_by_id` in integration tests_
+<!-- sample put_files_id_versions_id -->
+
+```python
+client.file_versions.update_file_version_by_id(
+    file.id, file_version.id, trashed_at=create_null()
+)
+```
 
 ### Arguments
 
@@ -126,9 +136,7 @@ See the endpoint docs at
 <!-- sample delete_files_id_versions_id -->
 
 ```python
-client.file_versions.delete_file_version_by_id(
-    file.id, file_versions_restored.entries[0].id
-)
+client.file_versions.delete_file_version_by_id(file.id, file_version.id)
 ```
 
 ### Arguments

@@ -12,6 +12,10 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.schemas.folder_full import FolderFull
@@ -440,10 +444,14 @@ class FoldersManager:
         can_non_owners_invite: Optional[bool] = None,
         parent: Optional[UpdateFolderByIdParent] = None,
         shared_link: Optional[UpdateFolderByIdSharedLink] = None,
-        folder_upload_email: Optional[UpdateFolderByIdFolderUploadEmail] = None,
+        folder_upload_email: Union[
+            Optional[UpdateFolderByIdFolderUploadEmail], NullValue
+        ] = None,
         tags: Optional[List[str]] = None,
         is_collaboration_restricted_to_enterprise: Optional[bool] = None,
-        collections: Optional[List[UpdateFolderByIdCollections]] = None,
+        collections: Union[
+            Optional[List[UpdateFolderByIdCollections]], NullValue
+        ] = None,
         can_non_owners_view_collaborators: Optional[bool] = None,
         fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
@@ -504,7 +512,7 @@ class FoldersManager:
         the folder from all collections.
 
         [1]: e://get-collections, defaults to None
-                :type collections: Optional[List[UpdateFolderByIdCollections]], optional
+                :type collections: Union[Optional[List[UpdateFolderByIdCollections]], NullValue], optional
                 :param can_non_owners_view_collaborators: Restricts collaborators who are not the owner of
         this folder from viewing other collaborations on
         this folder.

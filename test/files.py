@@ -14,6 +14,10 @@ from box_sdk_gen.managers.files import GetFileThumbnailByIdExtension
 
 from box_sdk_gen.schemas.trash_file import TrashFile
 
+from box_sdk_gen.managers.files import UpdateFileByIdLock
+
+from box_sdk_gen.managers.files import UpdateFileByIdLockAccessField
+
 from box_sdk_gen.managers.files import CopyFileParent
 
 from box_sdk_gen.internal.utils import get_uuid
@@ -25,6 +29,8 @@ from box_sdk_gen.internal.utils import read_byte_stream
 from box_sdk_gen.internal.utils import buffer_equals
 
 from box_sdk_gen.internal.utils import ByteStream
+
+from box_sdk_gen.internal.utils import create_null
 
 from test.commons import upload_new_file
 
@@ -103,6 +109,21 @@ def testUpdateFile():
     assert updated_file.name == updated_name
     assert updated_file.description == 'Updated description'
     client.files.delete_file_by_id(updated_file.id)
+
+
+def testFileLock():
+    file: FileFull = upload_new_file()
+    file_with_lock: FileFull = client.files.update_file_by_id(
+        file.id,
+        lock=UpdateFileByIdLock(access=UpdateFileByIdLockAccessField.LOCK.value),
+        fields=['lock'],
+    )
+    assert not file_with_lock.lock == None
+    file_without_lock: FileFull = client.files.update_file_by_id(
+        file.id, lock=create_null(), fields=['lock']
+    )
+    assert file_without_lock.lock == None
+    client.files.delete_file_by_id(file.id)
 
 
 def testCopyFile():

@@ -10,6 +10,10 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from typing import List
 
 from box_sdk_gen.serialization.json.serializer import serialize
@@ -201,7 +205,7 @@ class MembershipsManager:
         group: CreateGroupMembershipGroup,
         *,
         role: Optional[CreateGroupMembershipRole] = None,
-        configurable_permissions: Optional[Dict[str, bool]] = None,
+        configurable_permissions: Union[Optional[Dict[str, bool]], NullValue] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMembership:
@@ -226,7 +230,7 @@ class MembershipsManager:
         Specifying a value of `null` for this object will disable
         all configurable permissions. Specifying permissions will set
         them accordingly, omitted permissions will be enabled by default., defaults to None
-                :type configurable_permissions: Optional[Dict[str, bool]], optional
+                :type configurable_permissions: Union[Optional[Dict[str, bool]], NullValue], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are
         not normally returned in a standard response.
@@ -326,7 +330,7 @@ class MembershipsManager:
         group_membership_id: str,
         *,
         role: Optional[UpdateGroupMembershipByIdRole] = None,
-        configurable_permissions: Optional[Dict[str, bool]] = None,
+        configurable_permissions: Union[Optional[Dict[str, bool]], NullValue] = None,
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> GroupMembership:
@@ -353,7 +357,7 @@ class MembershipsManager:
         Specifying a value of `null` for this object will disable
         all configurable permissions. Specifying permissions will set
         them accordingly, omitted permissions will be enabled by default., defaults to None
-                :type configurable_permissions: Optional[Dict[str, bool]], optional
+                :type configurable_permissions: Union[Optional[Dict[str, bool]], NullValue], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are
         not normally returned in a standard response.

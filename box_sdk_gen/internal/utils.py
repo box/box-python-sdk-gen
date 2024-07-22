@@ -18,6 +18,7 @@ except ImportError:
 from .base_object import BaseObject
 from ..serialization.json.json_data import sd_to_json
 from ..serialization.json.serializer import serialize
+from .null_value import null
 
 ByteStream = BufferedIOBase
 Buffer = bytes
@@ -304,3 +305,7 @@ def date_time_to_string(date_time: DateTime) -> str:
 
 def date_time_from_string(date_time: str) -> DateTime:
     return DateTime.fromisoformat(date_time.replace('Z', '+00:00'))
+
+
+def create_null():
+    return null

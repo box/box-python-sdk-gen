@@ -14,6 +14,10 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -479,7 +483,9 @@ class SharedLinksFilesManager:
         file_id: str,
         fields: str,
         *,
-        shared_link: Optional[RemoveSharedLinkFromFileSharedLink] = None,
+        shared_link: Union[
+            Optional[RemoveSharedLinkFromFileSharedLink], NullValue
+        ] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
         """
@@ -498,7 +504,7 @@ class SharedLinksFilesManager:
                 :type fields: str
                 :param shared_link: By setting this value to `null`, the shared link
         is removed from the file., defaults to None
-                :type shared_link: Optional[RemoveSharedLinkFromFileSharedLink], optional
+                :type shared_link: Union[Optional[RemoveSharedLinkFromFileSharedLink], NullValue], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

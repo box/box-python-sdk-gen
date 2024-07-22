@@ -12,6 +12,10 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.schemas.retention_policies import RetentionPolicies
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -291,15 +295,17 @@ class RetentionPoliciesManager:
         self,
         retention_policy_id: str,
         *,
-        policy_name: Optional[str] = None,
-        description: Optional[str] = None,
+        policy_name: Union[Optional[str], NullValue] = None,
+        description: Union[Optional[str], NullValue] = None,
         disposition_action: Optional[str] = None,
-        retention_type: Optional[str] = None,
+        retention_type: Union[Optional[str], NullValue] = None,
         retention_length: Optional[str] = None,
-        status: Optional[str] = None,
-        can_owner_extend_retention: Optional[bool] = None,
-        are_owners_notified: Optional[bool] = None,
-        custom_notification_recipients: Optional[List[UserBase]] = None,
+        status: Union[Optional[str], NullValue] = None,
+        can_owner_extend_retention: Union[Optional[bool], NullValue] = None,
+        are_owners_notified: Union[Optional[bool], NullValue] = None,
+        custom_notification_recipients: Union[
+            Optional[List[UserBase]], NullValue
+        ] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RetentionPolicy:
         """
@@ -308,9 +314,9 @@ class RetentionPoliciesManager:
         Example: "982312"
                 :type retention_policy_id: str
                 :param policy_name: The name for the retention policy, defaults to None
-                :type policy_name: Optional[str], optional
+                :type policy_name: Union[Optional[str], NullValue], optional
                 :param description: The additional text description of the retention policy., defaults to None
-                :type description: Optional[str], optional
+                :type description: Union[Optional[str], NullValue], optional
                 :param disposition_action: The disposition action of the retention policy.
         This action can be `permanently_delete`, which
         will cause the content retained by the policy
@@ -339,7 +345,7 @@ class RetentionPoliciesManager:
         `non-modifiable` type only. You can convert a
         `modifiable` policy to `non-modifiable`, but
         not the other way around., defaults to None
-                :type retention_type: Optional[str], optional
+                :type retention_type: Union[Optional[str], NullValue], optional
                 :param retention_length: The length of the retention policy. This value
         specifies the duration in days that the retention
         policy will be active for after being assigned to
@@ -351,17 +357,17 @@ class RetentionPoliciesManager:
 
         If not retiring a policy, do not include this parameter
         or set it to `null`., defaults to None
-                :type status: Optional[str], optional
+                :type status: Union[Optional[str], NullValue], optional
                 :param can_owner_extend_retention: Determines if the owner of items under the policy
         can extend the retention when the original retention
         duration is about to end., defaults to None
-                :type can_owner_extend_retention: Optional[bool], optional
+                :type can_owner_extend_retention: Union[Optional[bool], NullValue], optional
                 :param are_owners_notified: Determines if owners and co-owners of items
         under the policy are notified when
         the retention duration is about to end., defaults to None
-                :type are_owners_notified: Optional[bool], optional
+                :type are_owners_notified: Union[Optional[bool], NullValue], optional
                 :param custom_notification_recipients: A list of users notified when the retention duration is about to end., defaults to None
-                :type custom_notification_recipients: Optional[List[UserBase]], optional
+                :type custom_notification_recipients: Union[Optional[List[UserBase]], NullValue], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """

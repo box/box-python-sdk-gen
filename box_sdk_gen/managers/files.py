@@ -12,6 +12,10 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.null_value import NullValue
+
+from typing import Union
+
 from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.schemas.file_full import FileFull
@@ -330,11 +334,11 @@ class FilesManager:
         name: Optional[str] = None,
         description: Optional[str] = None,
         parent: Optional[UpdateFileByIdParent] = None,
-        shared_link: Optional[UpdateFileByIdSharedLink] = None,
-        lock: Optional[UpdateFileByIdLock] = None,
+        shared_link: Union[Optional[UpdateFileByIdSharedLink], NullValue] = None,
+        lock: Union[Optional[UpdateFileByIdLock], NullValue] = None,
         disposition_at: Optional[DateTime] = None,
         permissions: Optional[UpdateFileByIdPermissions] = None,
-        collections: Optional[List[UpdateFileByIdCollections]] = None,
+        collections: Union[Optional[List[UpdateFileByIdCollections]], NullValue] = None,
         tags: Optional[List[str]] = None,
         fields: Optional[List[str]] = None,
         if_match: Optional[str] = None,
@@ -367,7 +371,7 @@ class FilesManager:
         who created the lock.
 
         Set this to `null` to remove the lock., defaults to None
-                :type lock: Optional[UpdateFileByIdLock], optional
+                :type lock: Union[Optional[UpdateFileByIdLock], NullValue], optional
                 :param disposition_at: The retention expiration timestamp for the given file. This
         date cannot be shortened once set on a file., defaults to None
                 :type disposition_at: Optional[DateTime], optional
@@ -384,7 +388,7 @@ class FilesManager:
         the file from all collections.
 
         [1]: e://get-collections, defaults to None
-                :type collections: Optional[List[UpdateFileByIdCollections]], optional
+                :type collections: Union[Optional[List[UpdateFileByIdCollections]], NullValue], optional
                 :param tags: The tags for this item. These tags are shown in
         the Box web app and mobile apps next to an item.
 
