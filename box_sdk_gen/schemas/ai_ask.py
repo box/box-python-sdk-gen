@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
+
 
 class AiAskModeField(str, Enum):
     MULTIPLE_ITEM_QA = 'multiple_item_qa'
@@ -43,7 +45,13 @@ class AiAskItemsField(BaseObject):
 
 class AiAsk(BaseObject):
     def __init__(
-        self, mode: AiAskModeField, prompt: str, items: List[AiAskItemsField], **kwargs
+        self,
+        mode: AiAskModeField,
+        prompt: str,
+        items: List[AiAskItemsField],
+        *,
+        ai_agent: Optional[AiAgentAsk] = None,
+        **kwargs
     ):
         """
                 :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
@@ -61,3 +69,4 @@ class AiAsk(BaseObject):
         self.mode = mode
         self.prompt = prompt
         self.items = items
+        self.ai_agent = ai_agent

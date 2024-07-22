@@ -31,7 +31,7 @@ class AppItemEventSource(BaseObject):
                 :type id: str
                 :param app_item_type: The type of the `AppItem`
                 :type app_item_type: str
-                :param type: The type of the source that this event represents. Can be only `app_item`.
+                :param type: The type of the source that this event represents. Can only be `app_item`.
         , defaults to AppItemEventSourceTypeField.APP_ITEM.value
                 :type type: AppItemEventSourceTypeField, optional
         """

@@ -12,6 +12,10 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.internal.utils import to_string
+
+from typing import Union
+
 from box_sdk_gen.internal.utils import DateTime
 
 from box_sdk_gen.schemas.ai_response import AiResponse
@@ -21,6 +25,10 @@ from box_sdk_gen.schemas.client_error import ClientError
 from box_sdk_gen.schemas.ai_ask import AiAsk
 
 from box_sdk_gen.schemas.ai_text_gen import AiTextGen
+
+from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
+
+from box_sdk_gen.schemas.ai_agent_text_gen import AiAgentTextGen
 
 from box_sdk_gen.networking.auth import Authentication
 
@@ -39,6 +47,8 @@ from box_sdk_gen.networking.fetch import FetchResponse
 from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
+
+from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 
 class CreateAiAskMode(str, Enum):
@@ -127,6 +137,11 @@ class CreateAiTextGenDialogueHistory(BaseObject):
         self.created_at = created_at
 
 
+class GetAiAgentDefaultConfigMode(str, Enum):
+    ASK = 'ask'
+    TEXT_GEN = 'text_gen'
+
+
 class AiManager:
     def __init__(
         self,
@@ -145,6 +160,7 @@ class AiManager:
         prompt: str,
         items: List[CreateAiAskItems],
         *,
+        ai_agent: Optional[AiAgentAsk] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
@@ -164,7 +180,12 @@ class AiManager:
         """
         if extra_headers is None:
             extra_headers = {}
-        request_body: Dict = {'mode': mode, 'prompt': prompt, 'items': items}
+        request_body: Dict = {
+            'mode': mode,
+            'prompt': prompt,
+            'items': items,
+            'ai_agent': ai_agent,
+        }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             ''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
@@ -186,6 +207,7 @@ class AiManager:
         items: List[CreateAiTextGenItems],
         *,
         dialogue_history: Optional[List[CreateAiTextGenDialogueHistory]] = None,
+        ai_agent: Optional[AiAgentTextGen] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
@@ -209,6 +231,7 @@ class AiManager:
             'prompt': prompt,
             'items': items,
             'dialogue_history': dialogue_history,
+            'ai_agent': ai_agent,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
@@ -224,3 +247,46 @@ class AiManager:
             ),
         )
         return deserialize(response.data, AiResponse)
+
+    def get_ai_agent_default_config(
+        self,
+        mode: GetAiAgentDefaultConfigMode,
+        *,
+        language: Optional[str] = None,
+        model: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Union[AiAgentAsk, AiAgentTextGen]:
+        """
+                Get the AI agent default config
+                :param mode: The mode to filter the agent config to return.
+                :type mode: GetAiAgentDefaultConfigMode
+                :param language: The ISO language code to return the agent config for.
+        If the language is not supported the default agent config is returned., defaults to None
+                :type language: Optional[str], optional
+                :param model: The model to return the default agent config for., defaults to None
+                :type model: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'mode': to_string(mode),
+                'language': to_string(language),
+                'model': to_string(model),
+            }
+        )
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            ''.join([self.network_session.base_urls.base_url, '/2.0/ai_agent_default']),
+            FetchOptions(
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            ),
+        )
+        return deserialize(response.data, Union[AiAgentAsk, AiAgentTextGen])

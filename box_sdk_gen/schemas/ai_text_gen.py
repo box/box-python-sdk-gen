@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.schemas.ai_agent_text_gen import AiAgentTextGen
+
 from box_sdk_gen.internal.utils import DateTime
 
 
@@ -68,6 +70,7 @@ class AiTextGen(BaseObject):
         items: List[AiTextGenItemsField],
         *,
         dialogue_history: Optional[List[AiTextGenDialogueHistoryField]] = None,
+        ai_agent: Optional[AiAgentTextGen] = None,
         **kwargs
     ):
         """
@@ -86,3 +89,4 @@ class AiTextGen(BaseObject):
         self.prompt = prompt
         self.items = items
         self.dialogue_history = dialogue_history
+        self.ai_agent = ai_agent
