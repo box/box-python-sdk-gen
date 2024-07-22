@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from typing import Union
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import AiLlmEndpointParamsOpenAi
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_google import AiLlmEndpointParamsGoogle

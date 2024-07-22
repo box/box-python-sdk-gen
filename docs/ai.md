@@ -86,6 +86,7 @@ client.ai.create_ai_text_gen(
             created_at=date_time_from_string("2021-01-01T00:00:00Z"),
         ),
     ],
+    ai_agent=ai_text_gen_agent_config,
 )
 ```
 
@@ -112,16 +113,22 @@ A successful response including the answer from the LLM.
 
 Get the AI agent default config
 
-This operation is performed by calling function `get_ai_agent_default`.
+This operation is performed by calling function `get_ai_agent_default_config`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-ai-agent-default/).
 
-_Currently we don't have an example for calling `get_ai_agent_default` in integration tests_
+<!-- sample get_ai_agent_default -->
+
+```python
+client.ai.get_ai_agent_default_config(
+    GetAiAgentDefaultConfigMode.TEXT_GEN.value, language="en-US"
+)
+```
 
 ### Arguments
 
-- mode `GetAiAgentDefaultMode`
+- mode `GetAiAgentDefaultConfigMode`
   - The mode to filter the agent config to return.
 - language `Optional[str]`
   - The ISO language code to return the agent config for. If the language is not supported the default agent config is returned.

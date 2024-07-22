@@ -137,7 +137,7 @@ class CreateAiTextGenDialogueHistory(BaseObject):
         self.created_at = created_at
 
 
-class GetAiAgentDefaultMode(str, Enum):
+class GetAiAgentDefaultConfigMode(str, Enum):
     ASK = 'ask'
     TEXT_GEN = 'text_gen'
 
@@ -248,9 +248,9 @@ class AiManager:
         )
         return deserialize(response.data, AiResponse)
 
-    def get_ai_agent_default(
+    def get_ai_agent_default_config(
         self,
-        mode: GetAiAgentDefaultMode,
+        mode: GetAiAgentDefaultConfigMode,
         *,
         language: Optional[str] = None,
         model: Optional[str] = None,
@@ -259,7 +259,7 @@ class AiManager:
         """
                 Get the AI agent default config
                 :param mode: The mode to filter the agent config to return.
-                :type mode: GetAiAgentDefaultMode
+                :type mode: GetAiAgentDefaultConfigMode
                 :param language: The ISO language code to return the agent config for.
         If the language is not supported the default agent config is returned., defaults to None
                 :type language: Optional[str], optional
