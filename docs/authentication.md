@@ -296,7 +296,7 @@ AUTH = BoxOAuth(
 @app.route("/")
 def get_auth():
     auth_url = AUTH.get_authorize_url(
-        GetAuthorizeUrlOptions(redirect_uri="YOUR_REDIRECT_URL")
+        options=GetAuthorizeUrlOptions(redirect_uri="YOUR_REDIRECT_URL")
     )
     return redirect(auth_url, code=302)
 
