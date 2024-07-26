@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/box/box-codegen/compare/v1.1.0...v1.2.0) (2024-07-26)
+
+
+### Bug Fixes
+
+* Improve chunked upload reliability ([#224](https://github.com/box/box-codegen/issues/224)) ([05f0353](https://github.com/box/box-codegen/commit/05f035354a76dac0d71849523e4a28641ac92aee))
+
+
+### New Features and Enhancements
+
+* Add `is_active` parameter to user collaboration (box/box-openapi[#437](https://github.com/box/box-codegen/issues/437)) ([#222](https://github.com/box/box-codegen/issues/222)) ([2b7bbe4](https://github.com/box/box-codegen/commit/2b7bbe41ed23e50c6717148fa5e9e2c24a3f5897))
+* Retry request with status code `202` `(box/box-codegen[#511](https://github.com/box/box-codegen/issues/511))` ([#204](https://github.com/box/box-codegen/issues/204)) ([f50ad6e](https://github.com/box/box-codegen/commit/f50ad6e236003901792eb333738020cbdd8c8ae3))
+* Support AI Agent API (box/box-codegen[#531](https://github.com/box/box-codegen/issues/531)) ([#229](https://github.com/box/box-codegen/issues/229)) ([c565383](https://github.com/box/box-codegen/commit/c5653839e1a150377e7d5c4764d4c2a7b7d07c4a))
+* Support sending fields with `null` value (box/box-codegen[#528](https://github.com/box/box-codegen/issues/528)) ([#230](https://github.com/box/box-codegen/issues/230)) ([f91076e](https://github.com/box/box-codegen/commit/f91076e1bfbccae4a0dff4b66d7bafb5357858c5)), closes [#202](https://github.com/box/box-codegen/issues/202)
+
 ## [1.2.0](https://github.com/box/box-codegen/compare/v1.1.0...v1.2.0) (2024-07-25)
 
 
