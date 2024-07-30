@@ -146,9 +146,6 @@ class UploadsManager:
                 using the Chunk Upload APIs.
 
 
-                # Request body order
-
-
                 The `attributes` part of the body must come **before** the
 
 
@@ -281,9 +278,6 @@ class UploadsManager:
                 Uploads a small file to Box. For file sizes over 50MB we recommend
 
                 using the Chunk Upload APIs.
-
-
-                # Request body order
 
 
                 The `attributes` part of the body must come **before** the
