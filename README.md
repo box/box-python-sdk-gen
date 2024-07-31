@@ -54,7 +54,7 @@ Supported Python versions are Python 3.8 and above.
 To install also extra dependencies required for JWT authentication, use command:
 
 ```console
-pip install box-sdk-gen[jwt]
+pip install "box-sdk-gen[jwt]"
 ```
 
 # Getting Started
