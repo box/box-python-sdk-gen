@@ -79,9 +79,6 @@ class TrashedFoldersManager:
                 original folder has been deleted.
 
 
-                # Folder locking
-
-
                 During this operation, part of the file tree will be locked, mainly
 
 
