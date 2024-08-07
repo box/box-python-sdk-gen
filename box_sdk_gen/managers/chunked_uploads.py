@@ -198,6 +198,9 @@ class ChunkedUploadsManager:
     ) -> UploadSession:
         """
                 Return information about an upload session.
+
+                The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions) endpoint.
+
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
                 :type upload_session_id: str
@@ -210,8 +213,7 @@ class ChunkedUploadsManager:
         response: FetchResponse = fetch(
             ''.join(
                 [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
+                    'https://{box-upload-server}/api/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -235,7 +237,13 @@ class ChunkedUploadsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> UploadedPart:
         """
-                Updates a chunk of an upload session for a file.
+                Uploads a chunk of a file for an upload session.
+
+                The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+
+
+                and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
+
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
                 :type upload_session_id: str
@@ -282,8 +290,7 @@ class ChunkedUploadsManager:
         response: FetchResponse = fetch(
             ''.join(
                 [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
+                    'https://{box-upload-server}/api/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -310,6 +317,12 @@ class ChunkedUploadsManager:
 
                 This cannot be reversed.
 
+
+                The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+
+
+                and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
+
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
                 :type upload_session_id: str
@@ -322,8 +335,7 @@ class ChunkedUploadsManager:
         response: FetchResponse = fetch(
             ''.join(
                 [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
+                    'https://{box-upload-server}/api/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                 ]
             ),
@@ -346,9 +358,12 @@ class ChunkedUploadsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> UploadParts:
         """
-                Return a list of the chunks uploaded to the upload
+                Return a list of the chunks uploaded to the upload session so far.
 
-                session so far.
+                The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+
+
+                and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
@@ -373,8 +388,7 @@ class ChunkedUploadsManager:
         response: FetchResponse = fetch(
             ''.join(
                 [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
+                    'https://{box-upload-server}/api/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                     '/parts',
                 ]
@@ -401,9 +415,12 @@ class ChunkedUploadsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Files:
         """
-                Close an upload session and create a file from the
+                Close an upload session and create a file from the uploaded chunks.
 
-                uploaded chunks.
+                The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+
+
+                and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
@@ -450,8 +467,7 @@ class ChunkedUploadsManager:
         response: FetchResponse = fetch(
             ''.join(
                 [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
+                    'https://{box-upload-server}/api/2.0/files/upload_sessions/',
                     to_string(upload_session_id),
                     '/commit',
                 ]
