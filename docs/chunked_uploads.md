@@ -75,6 +75,8 @@ Returns a new upload session.
 
 Return information about an upload session.
 
+The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions) endpoint.
+
 This operation is performed by calling function `get_file_upload_session_by_id`.
 
 See the endpoint docs at
@@ -97,7 +99,10 @@ Returns an upload session object.
 
 ## Upload part of file
 
-Updates a chunk of an upload session for a file.
+Uploads a chunk of a file for an upload session.
+
+The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `upload_file_part`.
 
@@ -140,6 +145,9 @@ Abort an upload session and discard all data uploaded.
 
 This cannot be reversed.
 
+The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
+
 This operation is performed by calling function `delete_file_upload_session_by_id`.
 
 See the endpoint docs at
@@ -163,8 +171,10 @@ successfully aborted.
 
 ## List parts
 
-Return a list of the chunks uploaded to the upload
-session so far.
+Return a list of the chunks uploaded to the upload session so far.
+
+The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `get_file_upload_session_parts`.
 
@@ -196,8 +206,10 @@ Returns a list of parts that have been uploaded.
 
 ## Commit upload session
 
-Close an upload session and create a file from the
-uploaded chunks.
+Close an upload session and create a file from the uploaded chunks.
+
+The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions)
+and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `create_file_upload_session_commit`.
 
