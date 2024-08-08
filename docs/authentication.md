@@ -55,7 +55,7 @@ print(f"My user ID is {me.id}")
 Authenticating with a JWT requires some extra dependencies. To get them, use
 
 ```
-pip install box-sdk-gen[jwt]
+pip install "box-sdk-gen[jwt]"
 ```
 
 Before using JWT Auth make sure you set up correctly your Box App.
