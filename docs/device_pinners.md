@@ -10,11 +10,6 @@ Retrieves information about an individual device pin.
 
 This operation is performed by calling function `get_device_pinner_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-device-pinners-id/).
-
-<!-- sample get_device_pinners_id -->
-
 ```python
 client.device_pinners.get_device_pinner_by_id(device_pinner_id)
 ```
@@ -37,11 +32,6 @@ Returns information about a single device pin.
 Deletes an individual device pin.
 
 This operation is performed by calling function `delete_device_pinner_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-device-pinners-id/).
-
-<!-- sample delete_device_pinners_id -->
 
 ```python
 client.device_pinners.delete_device_pinner_by_id(device_pinner_id)
@@ -68,11 +58,6 @@ The user must have admin privileges, and the application
 needs the "manage enterprise" scope to make this call.
 
 This operation is performed by calling function `get_enterprise_device_pinners`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-enterprises-id-device-pinners/).
-
-<!-- sample get_enterprises_id_device_pinners -->
 
 ```python
 client.device_pinners.get_enterprise_device_pinners(

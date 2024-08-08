@@ -12,11 +12,6 @@ domain restrictions.
 
 This operation is performed by calling function `get_collaboration_whitelist_exempt_targets`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets/).
-
-<!-- sample get_collaboration_whitelist_exempt_targets -->
-
 ```python
 client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_targets()
 ```
@@ -42,11 +37,6 @@ Exempts a user from the restrictions set out by the allowed list of domains
 for collaborations.
 
 This operation is performed by calling function `create_collaboration_whitelist_exempt_target`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-collaboration-whitelist-exempt-targets/).
-
-<!-- sample post_collaboration_whitelist_exempt_targets -->
 
 ```python
 client.collaboration_allowlist_exempt_targets.create_collaboration_whitelist_exempt_target(
@@ -74,11 +64,6 @@ domain restrictions.
 
 This operation is performed by calling function `get_collaboration_whitelist_exempt_target_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-collaboration-whitelist-exempt-targets-id/).
-
-<!-- sample get_collaboration_whitelist_exempt_targets_id -->
-
 ```python
 client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(
     exempt_target.id
@@ -104,11 +89,6 @@ Removes a user's exemption from the restrictions set out by the allowed list
 of domains for collaborations.
 
 This operation is performed by calling function `delete_collaboration_whitelist_exempt_target_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-exempt-targets-id/).
-
-<!-- sample delete_collaboration_whitelist_exempt_targets_id -->
 
 ```python
 client.collaboration_allowlist_exempt_targets.delete_collaboration_whitelist_exempt_target_by_id(

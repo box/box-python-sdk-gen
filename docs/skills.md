@@ -12,11 +12,6 @@ List the Box Skills metadata cards that are attached to a file.
 
 This operation is performed by calling function `get_box_skill_cards_on_file`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-metadata-global-box-skills-cards/).
-
-<!-- sample get_files_id_metadata_global_boxSkillsCards -->
-
 ```python
 client.skills.get_box_skill_cards_on_file(file.id)
 ```
@@ -42,11 +37,6 @@ all of the metadata associated to the file.
 Applies one or more Box Skills metadata cards to a file.
 
 This operation is performed by calling function `create_box_skill_cards_on_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-files-id-metadata-global-box-skills-cards/).
-
-<!-- sample post_files_id_metadata_global_boxSkillsCards -->
 
 ```python
 client.skills.create_box_skill_cards_on_file(
@@ -92,11 +82,6 @@ including the data that was applied to the template.
 Updates one or more Box Skills metadata cards to a file.
 
 This operation is performed by calling function `update_box_skill_cards_on_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-metadata-global-box-skills-cards/).
-
-<!-- sample put_files_id_metadata_global_boxSkillsCards -->
 
 ```python
 client.skills.update_box_skill_cards_on_file(
@@ -147,11 +132,6 @@ Removes any Box Skills cards metadata from a file.
 
 This operation is performed by calling function `delete_box_skill_cards_from_file`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id-metadata-global-box-skills-cards/).
-
-<!-- sample delete_files_id_metadata_global_boxSkillsCards -->
-
 ```python
 client.skills.delete_box_skill_cards_from_file(file.id)
 ```
@@ -176,9 +156,6 @@ An alternative method that can be used to overwrite and update all Box Skill
 metadata cards on a file.
 
 This operation is performed by calling function `update_all_skill_cards_on_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-skill-invocations-id/).
 
 _Currently we don't have an example for calling `update_all_skill_cards_on_file` in integration tests_
 

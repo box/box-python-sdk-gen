@@ -9,11 +9,6 @@ Gets Box Sign templates created by a user.
 
 This operation is performed by calling function `get_sign_templates`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-sign-templates/).
-
-<!-- sample get_sign_templates -->
-
 ```python
 client.sign_templates.get_sign_templates(limit=2)
 ```
@@ -38,11 +33,6 @@ Returns a collection of templates.
 Fetches details of a specific Box Sign template.
 
 This operation is performed by calling function `get_sign_template_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-sign-templates-id/).
-
-<!-- sample get_sign_templates_id -->
 
 ```python
 client.sign_templates.get_sign_template_by_id(sign_templates.entries[0].id)

@@ -9,11 +9,6 @@ Fetches all the storage policies in the enterprise.
 
 This operation is performed by calling function `get_storage_policies`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-storage-policies/).
-
-<!-- sample get_storage_policies -->
-
 ```python
 client.storage_policies.get_storage_policies()
 ```
@@ -40,11 +35,6 @@ Returns a collection of storage policies.
 Fetches a specific storage policy.
 
 This operation is performed by calling function `get_storage_policy_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-storage-policies-id/).
-
-<!-- sample get_storage_policies_id -->
 
 ```python
 client.storage_policies.get_storage_policy_by_id(storage_policy.id)

@@ -17,11 +17,6 @@ scope `manage enterprise properties` checked.
 
 This operation is performed by calling function `get_events`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-events/).
-
-<!-- sample get_events -->
-
 ```python
 client.events.get_events(
     stream_type=GetEventsStreamType.ADMIN_LOGS.value,
@@ -97,11 +92,6 @@ real-time server, you should start over by making a call to this endpoint
 first.
 
 This operation is performed by calling function `get_events_with_long_polling`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/options-events/).
-
-<!-- sample options_events -->
 
 ```python
 client.events.get_events_with_long_polling()

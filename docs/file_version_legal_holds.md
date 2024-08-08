@@ -10,11 +10,6 @@ assigned to a file version.
 
 This operation is performed by calling function `get_file_version_legal_hold_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-file-version-legal-holds-id/).
-
-<!-- sample get_file_version_legal_holds_id -->
-
 ```python
 client.file_version_legal_holds.get_file_version_legal_hold_by_id(
     file_version_legal_hold_id
@@ -58,11 +53,6 @@ find a list of policy assignments for a given policy ID.
 Once the re-architecture is completed this API will be deprecated.
 
 This operation is performed by calling function `get_file_version_legal_holds`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-file-version-legal-holds/).
-
-<!-- sample get_file_version_legal_holds -->
 
 ```python
 client.file_version_legal_holds.get_file_version_legal_holds(policy_id)

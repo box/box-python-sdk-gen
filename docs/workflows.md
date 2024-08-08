@@ -13,11 +13,6 @@ scope within the developer console in to use this endpoint.
 
 This operation is performed by calling function `get_workflows`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-workflows/).
-
-<!-- sample get_workflows -->
-
 ```python
 admin_client.workflows.get_workflows(workflow_folder_id)
 ```
@@ -49,11 +44,6 @@ You application must be authorized to use the `Manage Box Relay` application
 scope within the developer console.
 
 This operation is performed by calling function `start_workflow`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-workflows-id-start/).
-
-<!-- sample post_workflows_id_start -->
 
 ```python
 admin_client.workflows.start_workflow(

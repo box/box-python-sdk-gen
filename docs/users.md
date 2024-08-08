@@ -18,11 +18,6 @@ enterprise.
 
 This operation is performed by calling function `get_users`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-users/).
-
-<!-- sample get_users -->
-
 ```python
 client.users.get_users()
 ```
@@ -61,11 +56,6 @@ is only available to users and applications with the right
 admin permissions.
 
 This operation is performed by calling function `create_user`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-users/).
-
-<!-- sample post_users -->
 
 ```python
 client.users.create_user(user_name, is_platform_access_only=True)
@@ -135,11 +125,6 @@ Use the `As-User` header to change who this API call is made on behalf of.
 
 This operation is performed by calling function `get_user_me`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-users-me/).
-
-<!-- sample get_users_me -->
-
 ```python
 client.users.get_user_me()
 ```
@@ -173,11 +158,6 @@ null instead.
 
 This operation is performed by calling function `get_user_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-users-id/).
-
-<!-- sample get_users_id -->
-
 ```python
 client.users.get_user_by_id(user.id)
 ```
@@ -209,11 +189,6 @@ is only available to users and applications with the right
 admin permissions.
 
 This operation is performed by calling function `update_user_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-users-id/).
-
-<!-- sample put_users_id -->
 
 ```python
 client.users.update_user_by_id(user.id, notification_email=create_null())
@@ -284,11 +259,6 @@ before proceeding, or use the `force` field to delete
 the user and their files.
 
 This operation is performed by calling function `delete_user_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-users-id/).
-
-<!-- sample delete_users_id -->
 
 ```python
 client.users.delete_user_by_id(created_user.id)

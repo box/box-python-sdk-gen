@@ -12,11 +12,6 @@ Retrieves all of the retention policies for an enterprise.
 
 This operation is performed by calling function `get_retention_policies`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-retention-policies/).
-
-<!-- sample get_retention_policies -->
-
 ```python
 client.retention_policies.get_retention_policies()
 ```
@@ -49,11 +44,6 @@ Returns a list retention policies in the enterprise.
 Creates a retention policy.
 
 This operation is performed by calling function `create_retention_policy`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-retention-policies/).
-
-<!-- sample post_retention_policies -->
 
 ```python
 client.retention_policies.create_retention_policy(
@@ -102,11 +92,6 @@ Retrieves a retention policy.
 
 This operation is performed by calling function `get_retention_policy_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-retention-policies-id/).
-
-<!-- sample get_retention_policies_id -->
-
 ```python
 client.retention_policies.get_retention_policy_by_id(retention_policy.id)
 ```
@@ -131,11 +116,6 @@ Returns the retention policy object.
 Updates a retention policy.
 
 This operation is performed by calling function `update_retention_policy_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-retention-policies-id/).
-
-<!-- sample put_retention_policies_id -->
 
 ```python
 client.retention_policies.update_retention_policy_by_id(
@@ -179,11 +159,6 @@ Returns the updated retention policy object.
 Permanently deletes a retention policy.
 
 This operation is performed by calling function `delete_retention_policy_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-retention-policies-id/).
-
-<!-- sample delete_retention_policies_id -->
 
 ```python
 client.retention_policies.delete_retention_policy_by_id(retention_policy.id)
