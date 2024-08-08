@@ -12,11 +12,6 @@ Retrieves shield information barrier segment based on provided ID..
 
 This operation is performed by calling function `get_shield_information_barrier_segment_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segments-id/).
-
-<!-- sample get_shield_information_barrier_segments_id -->
-
 ```python
 client.shield_information_barrier_segments.get_shield_information_barrier_segment_by_id(
     segment_id
@@ -41,11 +36,6 @@ Returns the shield information barrier segment object.
 Updates the shield information barrier segment based on provided ID..
 
 This operation is performed by calling function `update_shield_information_barrier_segment_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-shield-information-barrier-segments-id/).
-
-<!-- sample put_shield_information_barrier_segments_id -->
 
 ```python
 client.shield_information_barrier_segments.update_shield_information_barrier_segment_by_id(
@@ -77,11 +67,6 @@ based on provided ID.
 
 This operation is performed by calling function `delete_shield_information_barrier_segment_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segments-id/).
-
-<!-- sample delete_shield_information_barrier_segments_id -->
-
 ```python
 client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
     segment.id
@@ -107,11 +92,6 @@ Retrieves a list of shield information barrier segment objects
 for the specified Information Barrier ID.
 
 This operation is performed by calling function `get_shield_information_barrier_segments`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segments/).
-
-<!-- sample get_shield_information_barrier_segments -->
 
 ```python
 client.shield_information_barrier_segments.get_shield_information_barrier_segments(
@@ -141,11 +121,6 @@ Returns a paginated list of shield information barrier segment objects.
 Creates a shield information barrier segment.
 
 This operation is performed by calling function `create_shield_information_barrier_segment`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-shield-information-barrier-segments/).
-
-<!-- sample post_shield_information_barrier_segments -->
 
 ```python
 client.shield_information_barrier_segments.create_shield_information_barrier_segment(

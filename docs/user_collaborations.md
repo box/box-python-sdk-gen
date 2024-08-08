@@ -11,11 +11,6 @@ Retrieves a single collaboration.
 
 This operation is performed by calling function `get_collaboration_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-collaborations-id/).
-
-<!-- sample get_collaborations_id -->
-
 ```python
 client.user_collaborations.get_collaboration_by_id(collaboration_id)
 ```
@@ -42,11 +37,6 @@ Can be used to change the owner of an item, or to
 accept collaboration invites.
 
 This operation is performed by calling function `update_collaboration_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-collaborations-id/).
-
-<!-- sample put_collaborations_id -->
 
 ```python
 client.user_collaborations.update_collaboration_by_id(
@@ -82,11 +72,6 @@ the old collaboration will be a `co-owner` on the new collaboration.
 Deletes a single collaboration.
 
 This operation is performed by calling function `delete_collaboration_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-collaborations-id/).
-
-<!-- sample delete_collaborations_id -->
 
 ```python
 client.user_collaborations.delete_collaboration_by_id(group_collaboration.id)
@@ -125,11 +110,6 @@ are redacted:
 - `name` is hidden if a collaboration was created using `login`.
 
 This operation is performed by calling function `create_collaboration`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-collaborations/).
-
-<!-- sample post_collaborations -->
 
 ```python
 client.user_collaborations.create_collaboration(

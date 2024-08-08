@@ -12,11 +12,6 @@ the terms and when.
 
 This operation is performed by calling function `get_terms_of_service_user_statuses`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-terms-of-service-user-statuses/).
-
-<!-- sample get_terms_of_service_user_statuses -->
-
 ```python
 client.terms_of_service_user_statuses.get_terms_of_service_user_statuses(
     tos.id, user_id=user.id
@@ -43,11 +38,6 @@ Returns a list of terms of service statuses.
 Sets the status for a terms of service for a user.
 
 This operation is performed by calling function `create_terms_of_service_status_for_user`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-terms-of-service-user-statuses/).
-
-<!-- sample post_terms_of_service_user_statuses -->
 
 ```python
 client.terms_of_service_user_statuses.create_terms_of_service_status_for_user(
@@ -79,11 +69,6 @@ Returns a terms of service status object.
 Updates the status for a terms of service for a user.
 
 This operation is performed by calling function `update_terms_of_service_status_for_user_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-terms-of-service-user-statuses-id/).
-
-<!-- sample put_terms_of_service_user_statuses_id -->
 
 ```python
 client.terms_of_service_user_statuses.update_terms_of_service_status_for_user_by_id(

@@ -12,11 +12,6 @@ segment member by its ID.
 
 This operation is performed by calling function `get_shield_information_barrier_segment_member_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-members-id/).
-
-<!-- sample get_shield_information_barrier_segment_members_id -->
-
 ```python
 client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_member_by_id(
     segment_member.id
@@ -42,11 +37,6 @@ Deletes a shield information barrier
 segment member based on provided ID.
 
 This operation is performed by calling function `delete_shield_information_barrier_segment_member_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segment-members-id/).
-
-<!-- sample delete_shield_information_barrier_segment_members_id -->
 
 ```python
 client.shield_information_barrier_segment_members.delete_shield_information_barrier_segment_member_by_id(
@@ -74,11 +64,6 @@ Lists shield information barrier segment members
 based on provided segment IDs.
 
 This operation is performed by calling function `get_shield_information_barrier_segment_members`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-members/).
-
-<!-- sample get_shield_information_barrier_segment_members -->
 
 ```python
 client.shield_information_barrier_segment_members.get_shield_information_barrier_segment_members(
@@ -109,11 +94,6 @@ shield information barrier segment member objects.
 Creates a new shield information barrier segment member.
 
 This operation is performed by calling function `create_shield_information_barrier_segment_member`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-shield-information-barrier-segment-members/).
-
-<!-- sample post_shield_information_barrier_segment_members -->
 
 ```python
 client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(

@@ -40,11 +40,6 @@ Admins will receive an email when the operation is completed.
 
 This operation is performed by calling function `transfer_owned_folder`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-users-id-folders-0/).
-
-<!-- sample put_users_id_folders_0 -->
-
 ```python
 client.transfer.transfer_owned_folder(
     new_user.id, TransferOwnedFolderOwnedBy(id=current_user.id), notify=False

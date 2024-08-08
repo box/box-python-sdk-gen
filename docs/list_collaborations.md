@@ -13,11 +13,6 @@ or have been invited to the file.
 
 This operation is performed by calling function `get_file_collaborations`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-collaborations/).
-
-<!-- sample get_files_id_collaborations -->
-
 ```python
 client.list_collaborations.get_file_collaborations(file.id)
 ```
@@ -54,11 +49,6 @@ or have been invited to the folder.
 
 This operation is performed by calling function `get_folder_collaborations`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folders-id-collaborations/).
-
-<!-- sample get_folders_id_collaborations -->
-
 ```python
 client.list_collaborations.get_folder_collaborations(folder.id)
 ```
@@ -88,11 +78,6 @@ yet accepted.
 Retrieves all pending collaboration invites for this user.
 
 This operation is performed by calling function `get_collaborations`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-collaborations/).
-
-<!-- sample get_collaborations -->
 
 ```python
 client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING.value)
@@ -129,11 +114,6 @@ Each collaboration object has details on which files or
 folders the group has access to and with what role.
 
 This operation is performed by calling function `get_group_collaborations`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-groups-id-collaborations/).
-
-<!-- sample get_groups_id_collaborations -->
 
 ```python
 client.list_collaborations.get_group_collaborations(group.id)

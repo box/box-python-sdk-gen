@@ -16,11 +16,6 @@ template.
 
 This operation is performed by calling function `get_metadata_templates_by_instance_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates/).
-
-<!-- sample get_metadata_templates -->
-
 ```python
 client.metadata_templates.get_metadata_templates_by_instance_id(
     created_metadata_instance.id
@@ -49,11 +44,6 @@ To find the `scope` and `templateKey` for a template, list all templates for
 an enterprise or globally, or list all templates applied to a file or folder.
 
 This operation is performed by calling function `get_metadata_template`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates-id-id-schema/).
-
-<!-- sample get_metadata_templates_id_id_schema -->
 
 ```python
 client.metadata_templates.get_metadata_template(
@@ -88,11 +78,6 @@ The update is applied atomically. If any errors occur during the
 application of the operations, the metadata template will not be changed.
 
 This operation is performed by calling function `update_metadata_template`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-metadata-templates-id-id-schema/).
-
-<!-- sample put_metadata_templates_id_id_schema -->
 
 ```python
 client.metadata_templates.update_metadata_template(
@@ -133,11 +118,6 @@ This deletion is permanent and can not be reversed.
 
 This operation is performed by calling function `delete_metadata_template`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-metadata-templates-id-id-schema/).
-
-<!-- sample delete_metadata_templates_id_id_schema -->
-
 ```python
 client.metadata_templates.delete_metadata_template(
     DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
@@ -166,11 +146,6 @@ Retrieves a metadata template by its ID.
 
 This operation is performed by calling function `get_metadata_template_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates-id/).
-
-<!-- sample get_metadata_templates_id -->
-
 ```python
 client.metadata_templates.get_metadata_template_by_id(template.id)
 ```
@@ -194,11 +169,6 @@ Used to retrieve all generic, global metadata templates available to all
 enterprises using Box.
 
 This operation is performed by calling function `get_global_metadata_templates`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates-global/).
-
-<!-- sample get_metadata_templates_global -->
 
 ```python
 client.metadata_templates.get_global_metadata_templates()
@@ -227,11 +197,6 @@ the user's enterprise
 
 This operation is performed by calling function `get_enterprise_metadata_templates`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise/).
-
-<!-- sample get_metadata_templates_enterprise -->
-
 ```python
 client.metadata_templates.get_enterprise_metadata_templates()
 ```
@@ -258,11 +223,6 @@ Creates a new metadata template that can be applied to
 files and folders.
 
 This operation is performed by calling function `create_metadata_template`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-metadata-templates-schema/).
-
-<!-- sample post_metadata_templates_schema -->
 
 ```python
 client.metadata_templates.create_metadata_template(

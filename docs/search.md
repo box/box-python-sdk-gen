@@ -14,11 +14,6 @@ of the metadata, use the `fields` attribute in the query.
 
 This operation is performed by calling function `search_by_metadata_query`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-metadata-queries-execute-read/).
-
-<!-- sample post_metadata_queries_execute_read -->
-
 ```python
 client.search.search_by_metadata_query(
     search_from, "0", query="testName >= :value", query_params={"value": "0.0"}
@@ -58,11 +53,6 @@ Searches for files, folders, web links, and shared files across the
 users content or across the entire enterprise.
 
 This operation is performed by calling function `search_for_content`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-search/).
-
-<!-- sample get_search -->
 
 ```python
 client.search.search_for_content(

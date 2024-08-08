@@ -10,11 +10,6 @@ Sends an AI request to supported LLMs and returns an answer specifically focused
 
 This operation is performed by calling function `create_ai_ask`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-ai-ask/).
-
-<!-- sample post_ai_ask -->
-
 ```python
 client.ai.create_ai_ask(
     CreateAiAskMode.MULTIPLE_ITEM_QA.value,
@@ -58,11 +53,6 @@ A successful response including the answer from the LLM.
 Sends an AI request to supported LLMs and returns an answer specifically focused on the creation of new text.
 
 This operation is performed by calling function `create_ai_text_gen`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-ai-text-gen/).
-
-<!-- sample post_ai_text_gen -->
 
 ```python
 client.ai.create_ai_text_gen(
@@ -114,11 +104,6 @@ A successful response including the answer from the LLM.
 Get the AI agent default config
 
 This operation is performed by calling function `get_ai_agent_default_config`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-ai-agent-default/).
-
-<!-- sample get_ai_agent_default -->
 
 ```python
 client.ai.get_ai_agent_default_config(

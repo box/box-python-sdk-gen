@@ -10,11 +10,6 @@ by a user, either in the last 90 days or up to the last
 
 This operation is performed by calling function `get_recent_items`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-recent-items/).
-
-<!-- sample get_recent_items -->
-
 ```python
 client.recent_items.get_recent_items()
 ```

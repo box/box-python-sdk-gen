@@ -15,11 +15,6 @@ use this API.
 
 This operation is performed by calling function `get_user_memberships`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-users-id-memberships/).
-
-<!-- sample get_users_id_memberships -->
-
 ```python
 client.memberships.get_user_memberships(user.id)
 ```
@@ -50,11 +45,6 @@ use this API.
 
 This operation is performed by calling function `get_group_memberships`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-groups-id-memberships/).
-
-<!-- sample get_groups_id_memberships -->
-
 ```python
 client.memberships.get_group_memberships(group.id)
 ```
@@ -83,11 +73,6 @@ Creates a group membership. Only users with
 admin-level permissions will be able to use this API.
 
 This operation is performed by calling function `create_group_membership`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-group-memberships/).
-
-<!-- sample post_group_memberships -->
 
 ```python
 client.memberships.create_group_membership(
@@ -124,11 +109,6 @@ use this API.
 
 This operation is performed by calling function `get_group_membership_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-group-memberships-id/).
-
-<!-- sample get_group_memberships_id -->
-
 ```python
 client.memberships.get_group_membership_by_id(group_membership.id)
 ```
@@ -155,11 +135,6 @@ group or users with admin-level permissions will be able to
 use this API.
 
 This operation is performed by calling function `update_group_membership_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-group-memberships-id/).
-
-<!-- sample put_group_memberships_id -->
 
 ```python
 client.memberships.update_group_membership_by_id(
@@ -193,11 +168,6 @@ group or users with admin-level permissions will be able to
 use this API.
 
 This operation is performed by calling function `delete_group_membership_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-group-memberships-id/).
-
-<!-- sample delete_group_memberships_id -->
 
 ```python
 client.memberships.delete_group_membership_by_id(group_membership.id)

@@ -16,11 +16,6 @@ URL explicitly, for example
 
 This operation is performed by calling function `get_classification_template`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema/).
-
-<!-- sample get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema -->
-
 ```python
 client.classifications.get_classification_template()
 ```
@@ -48,11 +43,6 @@ URL explicitly, for example
 `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
 This operation is performed by calling function `add_classification`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-add/).
-
-<!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#add -->
 
 ```python
 client.classifications.add_classification(
@@ -96,11 +86,6 @@ URL explicitly, for example
 `/metadata_templates/enterprise_12345/securityClassification-6VMVochwUWo/schema`.
 
 This operation is performed by calling function `update_classification`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-metadata-templates-enterprise-security-classification-6-vm-vochw-u-wo-schema-update/).
-
-<!-- sample put_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema#update -->
 
 ```python
 client.classifications.update_classification(
@@ -147,9 +132,6 @@ exist and instead an API call should be made to add additional
 classifications.
 
 This operation is performed by calling function `create_classification_template`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-metadata-templates-schema-classifications/).
 
 _Currently we don't have an example for calling `create_classification_template` in integration tests_
 
