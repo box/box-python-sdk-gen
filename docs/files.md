@@ -12,11 +12,6 @@ Retrieves the details about a file.
 
 This operation is performed by calling function `get_file_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id/).
-
-<!-- sample get_files_id -->
-
 ```python
 client.files.get_file_by_id(file.id)
 ```
@@ -52,11 +47,6 @@ Updates a file. This can be used to rename or move a file,
 create a shared link, or lock a file.
 
 This operation is performed by calling function `update_file_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id/).
-
-<!-- sample put_files_id -->
 
 ```python
 downscoped_client.files.update_file_by_id(file.id, name=get_uuid())
@@ -111,11 +101,6 @@ be permanently deleted from Box or moved to the trash.
 
 This operation is performed by calling function `delete_file_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id/).
-
-<!-- sample delete_files_id -->
-
 ```python
 parent_client.files.delete_file_by_id(file.id)
 ```
@@ -141,11 +126,6 @@ deleted.
 Creates a copy of a file.
 
 This operation is performed by calling function `copy_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-files-id-copy/).
-
-<!-- sample post_files_id_copy -->
 
 ```python
 client.files.copy_file(file_origin.id, CopyFileParent(id="0"), name=copied_file_name)
@@ -190,11 +170,6 @@ Thumbnails can be generated for the image and video file formats listed
 [1]: https://community.box.com/t5/Migrating-and-Previewing-Content/File-Types-and-Fonts-Supported-in-Box-Content-Preview/ta-p/327
 
 This operation is performed by calling function `get_file_thumbnail_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-thumbnail-id/).
-
-<!-- sample get_files_id_thumbnail_id -->
 
 ```python
 client.files.get_file_thumbnail_by_id(

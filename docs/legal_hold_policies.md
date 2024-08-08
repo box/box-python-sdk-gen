@@ -13,11 +13,6 @@ an enterprise.
 
 This operation is performed by calling function `get_legal_hold_policies`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-legal-hold-policies/).
-
-<!-- sample get_legal_hold_policies -->
-
 ```python
 client.legal_hold_policies.get_legal_hold_policies()
 ```
@@ -46,11 +41,6 @@ Returns a list of legal hold policies.
 Create a new legal hold policy.
 
 This operation is performed by calling function `create_legal_hold_policy`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-legal-hold-policies/).
-
-<!-- sample post_legal_hold_policies -->
 
 ```python
 client.legal_hold_policies.create_legal_hold_policy(
@@ -89,11 +79,6 @@ Retrieve a legal hold policy.
 
 This operation is performed by calling function `get_legal_hold_policy_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-legal-hold-policies-id/).
-
-<!-- sample get_legal_hold_policies_id -->
-
 ```python
 client.legal_hold_policies.get_legal_hold_policy_by_id(legal_hold_policy_id)
 ```
@@ -116,11 +101,6 @@ Returns a legal hold policy object.
 Update legal hold policy.
 
 This operation is performed by calling function `update_legal_hold_policy_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-legal-hold-policies-id/).
-
-<!-- sample put_legal_hold_policies_id -->
 
 ```python
 client.legal_hold_policies.update_legal_hold_policy_by_id(
@@ -155,11 +135,6 @@ This is an asynchronous process. The policy will not be
 fully deleted yet when the response returns.
 
 This operation is performed by calling function `delete_legal_hold_policy_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-legal-hold-policies-id/).
-
-<!-- sample delete_legal_hold_policies_id -->
 
 ```python
 client.legal_hold_policies.delete_legal_hold_policy_by_id(legal_hold_policy.id)

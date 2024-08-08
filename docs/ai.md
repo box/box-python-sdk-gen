@@ -10,11 +10,6 @@ Sends an AI request to supported LLMs and returns an answer specifically focused
 
 This operation is performed by calling function `create_ai_ask`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-ai-ask/).
-
-<!-- sample post_ai_ask -->
-
 ```python
 client.ai.create_ai_ask(
     CreateAiAskMode.MULTIPLE_ITEM_QA.value,
@@ -42,6 +37,10 @@ client.ai.create_ai_ask(
   - The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
 - items `List[CreateAiAskItems]`
   - The items to be processed by the LLM, often files. **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first. If the file size exceeds 1MB, the first 1MB of text representation will be processed. If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
+- dialogue_history `Optional[List[AiDialogueHistory]]`
+  - The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response.
+- include_citations `Optional[bool]`
+  - A flag to indicate whether citations should be returned.
 - ai_agent `Optional[AiAgentAsk]`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -49,7 +48,7 @@ client.ai.create_ai_ask(
 
 ### Returns
 
-This function returns a value of type `AiResponse`.
+This function returns a value of type `AiAskResponse`.
 
 A successful response including the answer from the LLM.
 
@@ -58,11 +57,6 @@ A successful response including the answer from the LLM.
 Sends an AI request to supported LLMs and returns an answer specifically focused on the creation of new text.
 
 This operation is performed by calling function `create_ai_text_gen`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-ai-text-gen/).
-
-<!-- sample post_ai_text_gen -->
 
 ```python
 client.ai.create_ai_text_gen(
@@ -75,12 +69,12 @@ client.ai.create_ai_text_gen(
         )
     ],
     dialogue_history=[
-        CreateAiTextGenDialogueHistory(
+        AiDialogueHistory(
             prompt="What does the earth go around?",
             answer="The sun",
             created_at=date_time_from_string("2021-01-01T00:00:00Z"),
         ),
-        CreateAiTextGenDialogueHistory(
+        AiDialogueHistory(
             prompt="On Earth, where does the sun rise?",
             answer="East",
             created_at=date_time_from_string("2021-01-01T00:00:00Z"),
@@ -96,7 +90,7 @@ client.ai.create_ai_text_gen(
   - The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
 - items `List[CreateAiTextGenItems]`
   - The items to be processed by the LLM, often files. The array can include **exactly one** element. **Note**: Box AI handles documents with text representations up to 1MB in size. If the file size exceeds 1MB, the first 1MB of text representation will be processed.
-- dialogue_history `Optional[List[CreateAiTextGenDialogueHistory]]`
+- dialogue_history `Optional[List[AiDialogueHistory]]`
   - The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response.
 - ai_agent `Optional[AiAgentTextGen]`
   -
@@ -114,11 +108,6 @@ A successful response including the answer from the LLM.
 Get the AI agent default config
 
 This operation is performed by calling function `get_ai_agent_default_config`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-ai-agent-default/).
-
-<!-- sample get_ai_agent_default -->
 
 ```python
 client.ai.get_ai_agent_default_config(

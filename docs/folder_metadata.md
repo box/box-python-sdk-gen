@@ -13,11 +13,6 @@ folder with ID `0`.
 
 This operation is performed by calling function `get_folder_metadata`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folders-id-metadata/).
-
-<!-- sample get_folders_id_metadata -->
-
 ```python
 client.folder_metadata.get_folder_metadata(folder.id)
 ```
@@ -44,11 +39,6 @@ Retrieves the instance of a metadata template that has been applied to a
 folder. This can not be used on the root folder with ID `0`.
 
 This operation is performed by calling function `get_folder_metadata_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folders-id-metadata-id-id/).
-
-<!-- sample get_folders_id_metadata_id_id -->
 
 ```python
 client.folder_metadata.get_folder_metadata_by_id(
@@ -88,11 +78,6 @@ configured to enable **Cascading Folder Level Metadata** for the user in the
 admin console.
 
 This operation is performed by calling function `create_folder_metadata_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-folders-id-metadata-id-id/).
-
-<!-- sample post_folders_id_metadata_id_id -->
 
 ```python
 client.folder_metadata.create_folder_metadata_by_id(
@@ -142,11 +127,6 @@ application of the operations, the metadata instance will not be changed.
 
 This operation is performed by calling function `update_folder_metadata_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-folders-id-metadata-id-id/).
-
-<!-- sample put_folders_id_metadata_id_id -->
-
 ```python
 client.folder_metadata.update_folder_metadata_by_id(
     folder.id,
@@ -187,11 +167,6 @@ custom template data included.
 Deletes a piece of folder metadata.
 
 This operation is performed by calling function `delete_folder_metadata_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-folders-id-metadata-id-id/).
-
-<!-- sample delete_folders_id_metadata_id_id -->
 
 ```python
 client.folder_metadata.delete_folder_metadata_by_id(

@@ -26,11 +26,6 @@ total size does not exceed 25GB.
 
 This operation is performed by calling function `create_zip_download`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-zip-downloads/).
-
-<!-- sample post_zip_downloads -->
-
 ```python
 client.zip_downloads.create_zip_download(
     [
@@ -79,11 +74,6 @@ this endpoint.
 
 This operation is performed by calling function `get_zip_download_content`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-zip-downloads-id-content/).
-
-<!-- sample get_zip_downloads_id_content -->
-
 ```python
 client.zip_downloads.get_zip_download_content(zip_download.download_url)
 ```
@@ -118,11 +108,6 @@ the [Create zip download](e://post_zip_downloads) API to request to create a
 this endpoint.
 
 This operation is performed by calling function `get_zip_download_status`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-zip-downloads-id-status/).
-
-<!-- sample get_zip_downloads_id_status -->
 
 ```python
 client.zip_downloads.get_zip_download_status(zip_download.status_url)

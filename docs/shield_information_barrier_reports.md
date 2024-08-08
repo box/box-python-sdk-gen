@@ -10,11 +10,6 @@ Lists shield information barrier reports.
 
 This operation is performed by calling function `get_shield_information_barrier_reports`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-reports/).
-
-<!-- sample get_shield_information_barrier_reports -->
-
 ```python
 client.shield_information_barrier_reports.get_shield_information_barrier_reports(
     barrier_id
@@ -44,11 +39,6 @@ Creates a shield information barrier report for a given barrier.
 
 This operation is performed by calling function `create_shield_information_barrier_report`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-shield-information-barrier-reports/).
-
-<!-- sample post_shield_information_barrier_reports -->
-
 ```python
 client.shield_information_barrier_reports.create_shield_information_barrier_report(
     shield_information_barrier=ShieldInformationBarrierBase(
@@ -76,11 +66,6 @@ Returns the shield information barrier report information object.
 Retrieves a shield information barrier report by its ID.
 
 This operation is performed by calling function `get_shield_information_barrier_report_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shield-information-barrier-reports-id/).
-
-<!-- sample get_shield_information_barrier_reports_id -->
 
 ```python
 client.shield_information_barrier_reports.get_shield_information_barrier_report_by_id(

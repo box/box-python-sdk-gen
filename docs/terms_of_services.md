@@ -12,11 +12,6 @@ for the enterprise.
 
 This operation is performed by calling function `get_terms_of_service`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-terms-of-services/).
-
-<!-- sample get_terms_of_services -->
-
 ```python
 client.terms_of_services.get_terms_of_service()
 ```
@@ -41,11 +36,6 @@ Creates a terms of service for a given enterprise
 and type of user.
 
 This operation is performed by calling function `create_terms_of_service`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-terms-of-services/).
-
-<!-- sample post_terms_of_services -->
 
 ```python
 client.terms_of_services.create_terms_of_service(
@@ -78,9 +68,6 @@ Fetches a specific terms of service.
 
 This operation is performed by calling function `get_terms_of_service_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-terms-of-services-id/).
-
 _Currently we don't have an example for calling `get_terms_of_service_by_id` in integration tests_
 
 ### Arguments
@@ -101,11 +88,6 @@ Returns a terms of service object.
 Updates a specific terms of service.
 
 This operation is performed by calling function `update_terms_of_service_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-terms-of-services-id/).
-
-<!-- sample put_terms_of_services_id -->
 
 ```python
 client.terms_of_services.update_terms_of_service_by_id(

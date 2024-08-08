@@ -15,11 +15,6 @@ of the current version of a file, use the `GET /file/:id` API.
 
 This operation is performed by calling function `get_file_versions`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-versions/).
-
-<!-- sample get_files_id_versions -->
-
 ```python
 client.file_versions.get_file_versions(file.id)
 ```
@@ -50,11 +45,6 @@ Retrieve a specific version of a file.
 Versions are only tracked for Box users with premium accounts.
 
 This operation is performed by calling function `get_file_version_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-versions-id/).
-
-<!-- sample get_files_id_versions_id -->
 
 ```python
 client.file_versions.get_file_version_by_id(
@@ -94,11 +84,6 @@ PPTX or similar.
 
 This operation is performed by calling function `update_file_version_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-versions-id/).
-
-<!-- sample put_files_id_versions_id -->
-
 ```python
 client.file_versions.update_file_version_by_id(
     file.id, file_version.id, trashed_at=create_null()
@@ -129,11 +114,6 @@ Move a file version to the trash.
 Versions are only tracked for Box users with premium accounts.
 
 This operation is performed by calling function `delete_file_version_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id-versions-id/).
-
-<!-- sample delete_files_id_versions_id -->
 
 ```python
 client.file_versions.delete_file_version_by_id(file.id, file_version.id)
@@ -177,11 +157,6 @@ as it works with file formats such as PDF, DOC,
 PPTX or similar.
 
 This operation is performed by calling function `promote_file_version`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-files-id-versions-current/).
-
-<!-- sample post_files_id_versions_current -->
 
 ```python
 client.file_versions.promote_file_version(

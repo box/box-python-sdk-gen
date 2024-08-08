@@ -11,8 +11,6 @@ Restores a folder that has been moved to the trash.
 An optional new parent ID can be provided to restore the folder to in case the
 original folder has been deleted.
 
-# Folder locking
-
 During this operation, part of the file tree will be locked, mainly
 the source folder and all of its descendants, as well as the destination
 folder.
@@ -21,11 +19,6 @@ For the duration of the operation, no other move, copy, delete, or restore
 operation can performed on any of the locked folders.
 
 This operation is performed by calling function `restore_folder_from_trash`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-folders-id/).
-
-<!-- sample post_folders_id -->
 
 ```python
 client.trashed_folders.restore_folder_from_trash(folder.id)
@@ -66,11 +59,6 @@ API.
 
 This operation is performed by calling function `get_trashed_folder_by_id`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folders-id-trash/).
-
-<!-- sample get_folders_id_trash -->
-
 ```python
 client.trashed_folders.get_trashed_folder_by_id(folder.id)
 ```
@@ -98,11 +86,6 @@ Permanently deletes a folder that is in the trash.
 This action cannot be undone.
 
 This operation is performed by calling function `delete_trashed_folder_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-folders-id-trash/).
-
-<!-- sample delete_folders_id_trash -->
 
 ```python
 client.trashed_folders.delete_trashed_folder_by_id(folder.id)

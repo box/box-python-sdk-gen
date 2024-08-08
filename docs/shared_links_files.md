@@ -21,11 +21,6 @@ by requesting it in the `fields` query parameter.
 
 This operation is performed by calling function `find_file_for_shared_link`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shared-items/).
-
-<!-- sample get_shared_items -->
-
 ```python
 user_client.shared_links_files.find_file_for_shared_link(
     "".join(
@@ -62,11 +57,6 @@ Gets the information for a shared link on a file.
 
 This operation is performed by calling function `get_shared_link_for_file`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-get-shared-link/).
-
-<!-- sample get_files_id#get_shared_link -->
-
 ```python
 client.shared_links_files.get_shared_link_for_file(file_id, "shared_link")
 ```
@@ -92,11 +82,6 @@ additional shared link information.
 Adds a shared link to a file.
 
 This operation is performed by calling function `add_share_link_to_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-add-shared-link/).
-
-<!-- sample put_files_id#add_shared_link -->
 
 ```python
 client.shared_links_files.add_share_link_to_file(
@@ -132,11 +117,6 @@ Updates a shared link on a file.
 
 This operation is performed by calling function `update_shared_link_on_file`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-update-shared-link/).
-
-<!-- sample put_files_id#update_shared_link -->
-
 ```python
 client.shared_links_files.update_shared_link_on_file(
     file_id,
@@ -170,9 +150,6 @@ link attached.
 Removes a shared link from a file.
 
 This operation is performed by calling function `remove_shared_link_from_file`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-remove-shared-link/).
 
 _Currently we don't have an example for calling `remove_shared_link_from_file` in integration tests_
 

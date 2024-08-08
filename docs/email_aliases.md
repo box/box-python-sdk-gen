@@ -11,11 +11,6 @@ does not include the primary login for the user.
 
 This operation is performed by calling function `get_user_email_aliases`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-users-id-email-aliases/).
-
-<!-- sample get_users_id_email_aliases -->
-
 ```python
 client.email_aliases.get_user_email_aliases(new_user.id)
 ```
@@ -38,11 +33,6 @@ Returns a collection of email aliases.
 Adds a new email alias to a user account..
 
 This operation is performed by calling function `create_user_email_alias`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-users-id-email-aliases/).
-
-<!-- sample post_users_id_email_aliases -->
 
 ```python
 client.email_aliases.create_user_email_alias(new_user.id, new_alias_email)
@@ -68,11 +58,6 @@ Returns the newly created email alias object.
 Removes an email alias from a user.
 
 This operation is performed by calling function `delete_user_email_alias_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-users-id-email-aliases-id/).
-
-<!-- sample delete_users_id_email_aliases_id -->
 
 ```python
 client.email_aliases.delete_user_email_alias_by_id(new_user.id, new_alias.id)

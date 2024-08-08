@@ -13,11 +13,6 @@ use this endpoint.
 
 This operation is performed by calling function `get_folder_locks`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folder-locks/).
-
-<!-- sample get_folder_locks -->
-
 ```python
 client.folder_locks.get_folder_locks(folder.id)
 ```
@@ -45,11 +40,6 @@ You must be authenticated as the owner or co-owner of the folder to
 use this endpoint.
 
 This operation is performed by calling function `create_folder_lock`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-folder-locks/).
-
-<!-- sample post_folder_locks -->
 
 ```python
 client.folder_locks.create_folder_lock(
@@ -82,11 +72,6 @@ You must be authenticated as the owner or co-owner of the folder to
 use this endpoint.
 
 This operation is performed by calling function `delete_folder_lock_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-folder-locks-id/).
-
-<!-- sample delete_folder_locks_id -->
 
 ```python
 client.folder_locks.delete_folder_lock_by_id(folder_lock.id)

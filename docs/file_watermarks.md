@@ -10,11 +10,6 @@ Retrieve the watermark for a file.
 
 This operation is performed by calling function `get_file_watermark`.
 
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-watermark/).
-
-<!-- sample get_files_id_watermark -->
-
 ```python
 client.file_watermarks.get_file_watermark(file.id)
 ```
@@ -38,11 +33,6 @@ watermark associated for to this file.
 Applies or update a watermark on a file.
 
 This operation is performed by calling function `update_file_watermark`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-watermark/).
-
-<!-- sample put_files_id_watermark -->
 
 ```python
 client.file_watermarks.update_file_watermark(
@@ -75,11 +65,6 @@ this file yet.
 Removes the watermark from a file.
 
 This operation is performed by calling function `delete_file_watermark`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id-watermark/).
-
-<!-- sample delete_files_id_watermark -->
 
 ```python
 client.file_watermarks.delete_file_watermark(file.id)
