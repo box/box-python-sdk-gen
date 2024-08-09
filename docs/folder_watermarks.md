@@ -10,6 +10,11 @@ Retrieve the watermark for a folder.
 
 This operation is performed by calling function `get_folder_watermark`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-folders-id-watermark/).
+
+<!-- sample get_folders_id_watermark -->
+
 ```python
 client.folder_watermarks.get_folder_watermark(folder.id)
 ```
@@ -33,6 +38,11 @@ watermark associated for to this folder.
 Applies or update a watermark on a folder.
 
 This operation is performed by calling function `update_folder_watermark`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-folders-id-watermark/).
+
+<!-- sample put_folders_id_watermark -->
 
 ```python
 client.folder_watermarks.update_folder_watermark(
@@ -65,6 +75,11 @@ this folder yet.
 Removes the watermark from a folder.
 
 This operation is performed by calling function `delete_folder_watermark`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-folders-id-watermark/).
+
+<!-- sample delete_folders_id_watermark -->
 
 ```python
 client.folder_watermarks.delete_folder_watermark(folder.id)

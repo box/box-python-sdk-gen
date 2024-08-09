@@ -16,6 +16,11 @@ uploading the file will receive a HTTP `400` error with a
 
 This operation is performed by calling function `upload_file_version`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-id-content/).
+
+<!-- sample post_files_id_content -->
+
 ```python
 client.uploads.upload_file_version(
     file.id, UploadFileVersionAttributes(name=file.name), generate_byte_stream(20)
@@ -61,6 +66,11 @@ uploading the file will receive a HTTP `400` error with a
 
 This operation is performed by calling function `upload_file`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-content/).
+
+<!-- sample post_files_content -->
+
 ```python
 parent_client.uploads.upload_file(
     UploadFileAttributes(
@@ -99,6 +109,9 @@ Performs a check to verify that a file will be accepted by Box
 before you upload the entire file.
 
 This operation is performed by calling function `preflight_file_upload_check`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/options-files-content/).
 
 _Currently we don't have an example for calling `preflight_file_upload_check` in integration tests_
 

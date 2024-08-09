@@ -17,6 +17,11 @@ the application, which can be enabled within the developer console.
 
 This operation is performed by calling function `create_invite`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-invites/).
+
+<!-- sample post_invites -->
+
 ```python
 client.invites.create_invite(
     CreateInviteEnterprise(id=current_user.enterprise.id),
@@ -46,6 +51,11 @@ Returns a new invite object.
 Returns the status of a user invite.
 
 This operation is performed by calling function `get_invite_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-invites-id/).
+
+<!-- sample get_invites_id -->
 
 ```python
 client.invites.get_invite_by_id(invitation.id)

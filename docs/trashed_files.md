@@ -13,6 +13,11 @@ original folder has been deleted.
 
 This operation is performed by calling function `restore_file_from_trash`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-id/).
+
+<!-- sample post_files_id -->
+
 ```python
 client.trashed_files.restore_file_from_trash(file.id)
 ```
@@ -52,6 +57,11 @@ API.
 
 This operation is performed by calling function `get_trashed_file_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id-trash/).
+
+<!-- sample get_files_id_trash -->
+
 ```python
 client.trashed_files.get_trashed_file_by_id(uploaded_file.id)
 ```
@@ -79,6 +89,11 @@ Permanently deletes a file that is in the trash.
 This action cannot be undone.
 
 This operation is performed by calling function `delete_trashed_file_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-id-trash/).
+
+<!-- sample delete_files_id_trash -->
 
 ```python
 client.trashed_files.delete_trashed_file_by_id(file.id)

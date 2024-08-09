@@ -11,6 +11,11 @@ Retrieves the information about a file request.
 
 This operation is performed by calling function `get_file_request_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-file-requests-id/).
+
+<!-- sample get_file_requests_id -->
+
 ```python
 client.file_requests.get_file_request_by_id(updated_file_request.id)
 ```
@@ -34,6 +39,11 @@ Updates a file request. This can be used to activate or
 deactivate a file request.
 
 This operation is performed by calling function `update_file_request_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-file-requests-id/).
+
+<!-- sample put_file_requests_id -->
 
 ```python
 client.file_requests.update_file_request_by_id(
@@ -74,6 +84,11 @@ Deletes a file request permanently.
 
 This operation is performed by calling function `delete_file_request_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-file-requests-id/).
+
+<!-- sample delete_file_requests_id -->
+
 ```python
 client.file_requests.delete_file_request_by_id(updated_file_request.id)
 ```
@@ -98,6 +113,11 @@ Copies an existing file request that is already present on one folder,
 and applies it to another folder.
 
 This operation is performed by calling function `create_file_request_copy`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-file-requests-id-copy/).
+
+<!-- sample post_file_requests_id_copy -->
 
 ```python
 client.file_requests.create_file_request_copy(

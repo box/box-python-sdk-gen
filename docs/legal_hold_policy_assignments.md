@@ -12,6 +12,11 @@ Retrieves a list of items a legal hold policy has been assigned to.
 
 This operation is performed by calling function `get_legal_hold_policy_assignments`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments/).
+
+<!-- sample get_legal_hold_policy_assignments -->
+
 ```python
 client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(
     legal_hold_policy_id
@@ -47,6 +52,11 @@ Assign a legal hold to a file, file version, folder, or user.
 
 This operation is performed by calling function `create_legal_hold_policy_assignment`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-legal-hold-policy-assignments/).
+
+<!-- sample post_legal_hold_policy_assignments -->
+
 ```python
 client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(
     legal_hold_policy_id,
@@ -77,6 +87,11 @@ Retrieve a legal hold policy assignment.
 
 This operation is performed by calling function `get_legal_hold_policy_assignment_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id/).
+
+<!-- sample get_legal_hold_policy_assignments_id -->
+
 ```python
 client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(
     legal_hold_policy_assignment_id
@@ -104,6 +119,11 @@ This is an asynchronous process. The policy will not be
 fully removed yet when the response returns.
 
 This operation is performed by calling function `delete_legal_hold_policy_assignment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-legal-hold-policy-assignments-id/).
+
+<!-- sample delete_legal_hold_policy_assignments_id -->
 
 ```python
 client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
@@ -148,6 +168,11 @@ The `GET /legal_hold_policy_assignments?policy_id={id}` API can be used to
 find a list of policy assignments for a given policy ID.
 
 This operation is performed by calling function `get_legal_hold_policy_assignment_file_on_hold`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-legal-hold-policy-assignments-id-files-on-hold/).
+
+<!-- sample get_legal_hold_policy_assignments_id_files_on_hold -->
 
 ```python
 client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_hold(

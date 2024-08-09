@@ -17,6 +17,11 @@ vice versa.
 
 This operation is performed by calling function `get_webhooks`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-webhooks/).
+
+<!-- sample get_webhooks -->
+
 ```python
 client.webhooks.get_webhooks()
 ```
@@ -41,6 +46,11 @@ Returns a list of webhooks.
 Creates a webhook.
 
 This operation is performed by calling function `create_webhook`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-webhooks/).
+
+<!-- sample post_webhooks -->
 
 ```python
 client.webhooks.create_webhook(
@@ -73,6 +83,11 @@ Retrieves a specific webhook
 
 This operation is performed by calling function `get_webhook_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-webhooks-id/).
+
+<!-- sample get_webhooks_id -->
+
 ```python
 client.webhooks.get_webhook_by_id(webhook.id)
 ```
@@ -95,6 +110,11 @@ Returns a webhook object
 Updates a webhook.
 
 This operation is performed by calling function `update_webhook_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-webhooks-id/).
+
+<!-- sample put_webhooks_id -->
 
 ```python
 client.webhooks.update_webhook_by_id(
@@ -126,6 +146,11 @@ Returns the new webhook object.
 Deletes a webhook.
 
 This operation is performed by calling function `delete_webhook_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-webhooks-id/).
+
+<!-- sample delete_webhooks_id -->
 
 ```python
 client.webhooks.delete_webhook_by_id(webhook.id)

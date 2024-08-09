@@ -14,6 +14,11 @@ folder with ID `0`.
 
 This operation is performed by calling function `get_metadata_cascade_policies`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-metadata-cascade-policies/).
+
+<!-- sample get_metadata_cascade_policies -->
+
 ```python
 client.metadata_cascade_policies.get_metadata_cascade_policies(folder.id)
 ```
@@ -48,6 +53,11 @@ be applied to the folder the policy is to be applied to.
 
 This operation is performed by calling function `create_metadata_cascade_policy`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-metadata-cascade-policies/).
+
+<!-- sample post_metadata_cascade_policies -->
+
 ```python
 client.metadata_cascade_policies.create_metadata_cascade_policy(
     folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key
@@ -77,6 +87,11 @@ Retrieve a specific metadata cascade policy assigned to a folder.
 
 This operation is performed by calling function `get_metadata_cascade_policy_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-metadata-cascade-policies-id/).
+
+<!-- sample get_metadata_cascade_policies_id -->
+
 ```python
 client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(cascade_policy_id)
 ```
@@ -99,6 +114,11 @@ Returns a metadata cascade policy
 Deletes a metadata cascade policy.
 
 This operation is performed by calling function `delete_metadata_cascade_policy_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-metadata-cascade-policies-id/).
+
+<!-- sample delete_metadata_cascade_policies_id -->
 
 ```python
 client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(cascade_policy_id)
@@ -126,6 +146,11 @@ enforce the metadata to be cascaded down to all existing files within that
 folder.
 
 This operation is performed by calling function `apply_metadata_cascade_policy`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-metadata-cascade-policies-id-apply/).
+
+<!-- sample post_metadata_cascade_policies_id_apply -->
 
 ```python
 client.metadata_cascade_policies.apply_metadata_cascade_policy(

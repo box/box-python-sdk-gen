@@ -16,6 +16,11 @@ URL explicitly, for example
 
 This operation is performed by calling function `get_classification_on_folder`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+<!-- sample get_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
 ```python
 client.folder_classifications.get_classification_on_folder(folder.id)
 ```
@@ -46,6 +51,11 @@ URL explicitly, for example
 `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
 This operation is performed by calling function `add_classification_to_folder`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+<!-- sample post_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
 client.folder_classifications.add_classification_to_folder(
@@ -79,6 +89,11 @@ defined for the enterprise will be accepted.
 
 This operation is performed by calling function `update_classification_on_folder`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+<!-- sample put_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
+
 ```python
 client.folder_classifications.update_classification_on_folder(
     folder.id,
@@ -110,6 +125,11 @@ URL explicitly, for example
 `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
 
 This operation is performed by calling function `delete_classification_from_folder`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-folders-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+
+<!-- sample delete_folders_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
 ```python
 client.folder_classifications.delete_classification_from_folder(folder.id)

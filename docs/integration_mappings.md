@@ -14,6 +14,11 @@ use this endpoint.
 
 This operation is performed by calling function `get_slack_integration_mapping`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-integration-mappings-slack/).
+
+<!-- sample get_integration_mappings_slack -->
+
 ```python
 user_client.integration_mappings.get_slack_integration_mapping()
 ```
@@ -53,6 +58,11 @@ use this endpoint.
 
 This operation is performed by calling function `create_slack_integration_mapping`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-integration-mappings-slack/).
+
+<!-- sample post_integration_mappings_slack -->
+
 ```python
 user_client.integration_mappings.create_slack_integration_mapping(
     IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id),
@@ -87,6 +97,9 @@ use this endpoint.
 
 This operation is performed by calling function `update_slack_integration_mapping_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-integration-mappings-slack-id/).
+
 _Currently we don't have an example for calling `update_slack_integration_mapping_by_id` in integration tests_
 
 ### Arguments
@@ -114,6 +127,9 @@ You need Admin or Co-Admin role to
 use this endpoint.
 
 This operation is performed by calling function `delete_slack_integration_mapping_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-integration-mappings-slack-id/).
 
 _Currently we don't have an example for calling `delete_slack_integration_mapping_by_id` in integration tests_
 

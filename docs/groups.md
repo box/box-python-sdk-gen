@@ -13,6 +13,11 @@ must have admin permissions to inspect enterprise's groups.
 
 This operation is performed by calling function `get_groups`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-groups/).
+
+<!-- sample get_groups -->
+
 ```python
 client.groups.get_groups()
 ```
@@ -43,6 +48,11 @@ Creates a new group of users in an enterprise. Only users with admin
 permissions can create new groups.
 
 This operation is performed by calling function `create_group`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-groups/).
+
+<!-- sample post_groups -->
 
 ```python
 client.groups.create_group(group_name, description=group_description)
@@ -81,6 +91,11 @@ use this API.
 
 This operation is performed by calling function `get_group_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-groups-id/).
+
+<!-- sample get_groups_id -->
+
 ```python
 client.groups.get_group_by_id(group.id)
 ```
@@ -107,6 +122,11 @@ group or users with admin-level permissions will be able to
 use this API.
 
 This operation is performed by calling function `update_group_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-groups-id/).
+
+<!-- sample put_groups_id -->
 
 ```python
 client.groups.update_group_by_id(group.id, name=updated_group_name)
@@ -145,6 +165,11 @@ Permanently deletes a group. Only users with
 admin-level permissions will be able to use this API.
 
 This operation is performed by calling function `delete_group_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-groups-id/).
+
+<!-- sample delete_groups_id -->
 
 ```python
 client.groups.delete_group_by_id(group.id)

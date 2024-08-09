@@ -12,6 +12,11 @@ for within the current enterprise.
 
 This operation is performed by calling function `get_collaboration_whitelist_entries`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries/).
+
+<!-- sample get_collaboration_whitelist_entries -->
+
 ```python
 client.collaboration_allowlist_entries.get_collaboration_whitelist_entries()
 ```
@@ -37,6 +42,11 @@ Creates a new entry in the list of allowed domains to allow
 collaboration for.
 
 This operation is performed by calling function `create_collaboration_whitelist_entry`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-collaboration-whitelist-entries/).
+
+<!-- sample post_collaboration_whitelist_entries -->
 
 ```python
 client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
@@ -66,6 +76,11 @@ for within the current enterprise.
 
 This operation is performed by calling function `get_collaboration_whitelist_entry_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-collaboration-whitelist-entries-id/).
+
+<!-- sample get_collaboration_whitelist_entries_id -->
+
 ```python
 client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(entry.id)
 ```
@@ -89,6 +104,11 @@ Removes a domain from the list of domains that have been deemed safe to create
 collaborations for within the current enterprise.
 
 This operation is performed by calling function `delete_collaboration_whitelist_entry_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-collaboration-whitelist-entries-id/).
+
+<!-- sample delete_collaboration_whitelist_entries_id -->
 
 ```python
 client.collaboration_allowlist_entries.delete_collaboration_whitelist_entry_by_id(

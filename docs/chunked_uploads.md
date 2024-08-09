@@ -22,6 +22,11 @@ Creates an upload session for a new file.
 
 This operation is performed by calling function `create_file_upload_session`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-upload-sessions/).
+
+<!-- sample post_files_upload_sessions -->
+
 ```python
 client.chunked_uploads.create_file_upload_session(
     parent_folder_id, file_size, file_name
@@ -51,6 +56,9 @@ Creates an upload session for an existing file.
 
 This operation is performed by calling function `create_file_upload_session_for_existing_file`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-id-upload-sessions/).
+
 _Currently we don't have an example for calling `create_file_upload_session_for_existing_file` in integration tests_
 
 ### Arguments
@@ -78,6 +86,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 
 This operation is performed by calling function `get_file_upload_session_by_url`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-upload-sessions-id/).
+
+<!-- sample get_files_upload_sessions_id -->
+
 ```python
 client.chunked_uploads.get_file_upload_session_by_url(status_url)
 ```
@@ -102,6 +115,11 @@ Return information about an upload session.
 The actual endpoint URL is returned by the [`Create upload session`](e://post-files-upload-sessions) endpoint.
 
 This operation is performed by calling function `get_file_upload_session_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-upload-sessions-id/).
+
+<!-- sample get_files_upload_sessions_id -->
 
 ```python
 client.chunked_uploads.get_file_upload_session_by_id(upload_session_id)
@@ -128,6 +146,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `upload_file_part_by_url`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-upload-sessions-id/).
+
+<!-- sample put_files_upload_sessions_id -->
 
 ```python
 client.chunked_uploads.upload_file_part_by_url(
@@ -165,6 +188,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `upload_file_part`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-upload-sessions-id/).
+
+<!-- sample put_files_upload_sessions_id -->
 
 ```python
 client.chunked_uploads.upload_file_part(
@@ -205,6 +233,11 @@ and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `delete_file_upload_session_by_url`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-upload-sessions-id/).
+
+<!-- sample delete_files_upload_sessions_id -->
+
 ```python
 client.chunked_uploads.delete_file_upload_session_by_url(abort_url)
 ```
@@ -234,6 +267,11 @@ and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `delete_file_upload_session_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-upload-sessions-id/).
+
+<!-- sample delete_files_upload_sessions_id -->
+
 ```python
 client.chunked_uploads.delete_file_upload_session_by_id(upload_session_id)
 ```
@@ -260,6 +298,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `get_file_upload_session_parts_by_url`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-upload-sessions-id-parts/).
+
+<!-- sample get_files_upload_sessions_id_parts -->
 
 ```python
 client.chunked_uploads.get_file_upload_session_parts_by_url(list_parts_url)
@@ -291,6 +334,11 @@ and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `get_file_upload_session_parts`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-upload-sessions-id-parts/).
+
+<!-- sample get_files_upload_sessions_id_parts -->
+
 ```python
 client.chunked_uploads.get_file_upload_session_parts(upload_session_id)
 ```
@@ -320,6 +368,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `create_file_upload_session_commit_by_url`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-upload-sessions-id-commit/).
+
+<!-- sample post_files_upload_sessions_id_commit -->
 
 ```python
 client.chunked_uploads.create_file_upload_session_commit_by_url(
@@ -360,6 +413,11 @@ The actual endpoint URL is returned by the [`Create upload session`](e://post-fi
 and [`Get upload session`](e://get-files-upload-sessions-id) endpoints.
 
 This operation is performed by calling function `create_file_upload_session_commit`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-upload-sessions-id-commit/).
+
+<!-- sample post_files_upload_sessions_id_commit -->
 
 ```python
 client.chunked_uploads.create_file_upload_session_commit(

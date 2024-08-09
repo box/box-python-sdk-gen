@@ -11,6 +11,11 @@ Creates a web link object within a folder.
 
 This operation is performed by calling function `create_web_link`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-web-links/).
+
+<!-- sample post_web_links -->
+
 ```python
 client.web_links.create_web_link(
     "https://www.box.com",
@@ -45,6 +50,11 @@ Retrieve information about a web link.
 
 This operation is performed by calling function `get_web_link_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-web-links-id/).
+
+<!-- sample get_web_links_id -->
+
 ```python
 client.web_links.get_web_link_by_id(weblink.id)
 ```
@@ -69,6 +79,11 @@ Returns the web link object.
 Updates a web link object.
 
 This operation is performed by calling function `update_web_link_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-web-links-id/).
+
+<!-- sample put_web_links_id -->
 
 ```python
 client.web_links.update_web_link_by_id(
@@ -108,6 +123,11 @@ Returns the updated web link object.
 Deletes a web link.
 
 This operation is performed by calling function `delete_web_link_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-web-links-id/).
+
+<!-- sample delete_web_links_id -->
 
 ```python
 client.web_links.delete_web_link_by_id(web_link_id)

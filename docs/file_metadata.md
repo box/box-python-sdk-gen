@@ -12,6 +12,11 @@ Retrieves all metadata for a given file.
 
 This operation is performed by calling function `get_file_metadata`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id-metadata/).
+
+<!-- sample get_files_id_metadata -->
+
 ```python
 client.file_metadata.get_file_metadata(file.id)
 ```
@@ -38,6 +43,11 @@ Retrieves the instance of a metadata template that has been applied to a
 file.
 
 This operation is performed by calling function `get_file_metadata_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id-metadata-id-id/).
+
+<!-- sample get_files_id_metadata_id_id -->
 
 ```python
 client.file_metadata.get_file_metadata_by_id(
@@ -73,6 +83,11 @@ will be accepted, except for the `global.properties` template which accepts
 any key-value pair.
 
 This operation is performed by calling function `create_file_metadata_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-files-id-metadata-id-id/).
+
+<!-- sample post_files_id_metadata_id_id -->
 
 ```python
 client.file_metadata.create_file_metadata_by_id(
@@ -122,6 +137,11 @@ application of the operations, the metadata instance will not be changed.
 
 This operation is performed by calling function `update_file_metadata_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-files-id-metadata-id-id/).
+
+<!-- sample put_files_id_metadata_id_id -->
+
 ```python
 client.file_metadata.update_file_metadata_by_id(
     file.id,
@@ -162,6 +182,11 @@ custom template data included.
 Deletes a piece of file metadata.
 
 This operation is performed by calling function `delete_file_metadata_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-id-metadata-id-id/).
+
+<!-- sample delete_files_id_metadata_id_id -->
 
 ```python
 client.file_metadata.delete_file_metadata_by_id(

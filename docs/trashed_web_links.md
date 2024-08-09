@@ -13,6 +13,11 @@ the original folder has been deleted.
 
 This operation is performed by calling function `restore_weblink_from_trash`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-web-links-id/).
+
+<!-- sample post_web_links_id -->
+
 ```python
 client.trashed_web_links.restore_weblink_from_trash(weblink.id)
 ```
@@ -42,6 +47,11 @@ Retrieves a web link that has been moved to the trash.
 
 This operation is performed by calling function `get_trashed_web_link_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-web-links-id-trash/).
+
+<!-- sample get_web_links_id_trash -->
+
 ```python
 client.trashed_web_links.get_trashed_web_link_by_id(weblink.id)
 ```
@@ -69,6 +79,11 @@ Permanently deletes a web link that is in the trash.
 This action cannot be undone.
 
 This operation is performed by calling function `delete_trashed_web_link_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-web-links-id-trash/).
+
+<!-- sample delete_web_links_id_trash -->
 
 ```python
 client.trashed_web_links.delete_trashed_web_link_by_id(weblink.id)

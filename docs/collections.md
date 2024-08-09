@@ -12,6 +12,11 @@ is supported.
 
 This operation is performed by calling function `get_collections`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-collections/).
+
+<!-- sample get_collections -->
+
 ```python
 client.collections.get_collections()
 ```
@@ -39,6 +44,11 @@ Retrieves the files and/or folders contained within
 this collection.
 
 This operation is performed by calling function `get_collection_items`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-collections-id-items/).
+
+<!-- sample get_collections_id_items -->
 
 ```python
 client.collections.get_collection_items(favourite_collection.id)

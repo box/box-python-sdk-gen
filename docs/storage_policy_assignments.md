@@ -12,6 +12,11 @@ Fetches all the storage policy assignment for an enterprise or user.
 
 This operation is performed by calling function `get_storage_policy_assignments`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-storage-policy-assignments/).
+
+<!-- sample get_storage_policy_assignments -->
+
 ```python
 client.storage_policy_assignments.get_storage_policy_assignments(
     GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id
@@ -41,6 +46,11 @@ the enterprise or user.
 Creates a storage policy assignment for an enterprise or user.
 
 This operation is performed by calling function `create_storage_policy_assignment`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-storage-policy-assignments/).
+
+<!-- sample post_storage_policy_assignments -->
 
 ```python
 client.storage_policy_assignments.create_storage_policy_assignment(
@@ -72,6 +82,11 @@ Fetches a specific storage policy assignment.
 
 This operation is performed by calling function `get_storage_policy_assignment_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-storage-policy-assignments-id/).
+
+<!-- sample get_storage_policy_assignments_id -->
+
 ```python
 client.storage_policy_assignments.get_storage_policy_assignment_by_id(
     storage_policy_assignment.id
@@ -96,6 +111,11 @@ Returns a storage policy assignment object.
 Updates a specific storage policy assignment.
 
 This operation is performed by calling function `update_storage_policy_assignment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-storage-policy-assignments-id/).
+
+<!-- sample put_storage_policy_assignments_id -->
 
 ```python
 client.storage_policy_assignments.update_storage_policy_assignment_by_id(
@@ -131,6 +151,11 @@ There is a rate limit for calling this endpoint of only
 twice per user in a 24 hour time frame.
 
 This operation is performed by calling function `delete_storage_policy_assignment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-storage-policy-assignments-id/).
+
+<!-- sample delete_storage_policy_assignments_id -->
 
 ```python
 client.storage_policy_assignments.delete_storage_policy_assignment_by_id(

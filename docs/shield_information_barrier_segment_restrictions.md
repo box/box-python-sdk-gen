@@ -12,6 +12,11 @@ restriction based on provided ID.
 
 This operation is performed by calling function `get_shield_information_barrier_segment_restriction_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-restrictions-id/).
+
+<!-- sample get_shield_information_barrier_segment_restrictions_id -->
+
 ```python
 client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restriction_by_id(
     segment_restriction_id
@@ -39,6 +44,11 @@ based on provided ID.
 
 This operation is performed by calling function `delete_shield_information_barrier_segment_restriction_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segment-restrictions-id/).
+
+<!-- sample delete_shield_information_barrier_segment_restrictions_id -->
+
 ```python
 client.shield_information_barrier_segment_restrictions.delete_shield_information_barrier_segment_restriction_by_id(
     segment_restriction_id
@@ -64,6 +74,11 @@ Lists shield information barrier segment restrictions
 based on provided segment ID.
 
 This operation is performed by calling function `get_shield_information_barrier_segment_restrictions`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-shield-information-barrier-segment-restrictions/).
+
+<!-- sample get_shield_information_barrier_segment_restrictions -->
 
 ```python
 client.shield_information_barrier_segment_restrictions.get_shield_information_barrier_segment_restrictions(
@@ -95,6 +110,11 @@ Creates a shield information barrier
 segment restriction object.
 
 This operation is performed by calling function `create_shield_information_barrier_segment_restriction`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-shield-information-barrier-segment-restrictions/).
+
+<!-- sample post_shield_information_barrier_segment_restrictions -->
 
 ```python
 client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(

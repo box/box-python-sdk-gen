@@ -10,6 +10,11 @@ Retrieves an image of a the user's avatar.
 
 This operation is performed by calling function `get_user_avatar`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-users-id-avatar/).
+
+<!-- sample get_users_id_avatar -->
+
 ```python
 client.avatars.get_user_avatar(user.id)
 ```
@@ -34,6 +39,11 @@ response.
 Adds or updates a user avatar.
 
 This operation is performed by calling function `create_user_avatar`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-users-id-avatar/).
+
+<!-- sample post_users_id_avatar -->
 
 ```python
 client.avatars.create_user_avatar(
@@ -73,6 +83,11 @@ Removes an existing user avatar.
 You cannot reverse this operation.
 
 This operation is performed by calling function `delete_user_avatar`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-users-id-avatar/).
+
+<!-- sample delete_users_id_avatar -->
 
 ```python
 client.avatars.delete_user_avatar(user.id)

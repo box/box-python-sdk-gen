@@ -12,6 +12,11 @@ Lists all of the assignments for a given task.
 
 This operation is performed by calling function `get_task_assignments`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-tasks-id-assignments/).
+
+<!-- sample get_tasks_id_assignments -->
+
 ```python
 client.task_assignments.get_task_assignments(task.id)
 ```
@@ -38,6 +43,11 @@ A task can be assigned to more than one user by creating multiple
 assignments.
 
 This operation is performed by calling function `create_task_assignment`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-task-assignments/).
+
+<!-- sample post_task_assignments -->
 
 ```python
 client.task_assignments.create_task_assignment(
@@ -69,6 +79,11 @@ Retrieves information about a task assignment.
 
 This operation is performed by calling function `get_task_assignment_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-task-assignments-id/).
+
+<!-- sample get_task_assignments_id -->
+
 ```python
 client.task_assignments.get_task_assignment_by_id(task_assignment.id)
 ```
@@ -93,6 +108,11 @@ Updates a task assignment. This endpoint can be
 used to update the state of a task assigned to a user.
 
 This operation is performed by calling function `update_task_assignment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-task-assignments-id/).
+
+<!-- sample put_task_assignments_id -->
 
 ```python
 client.task_assignments.update_task_assignment_by_id(
@@ -124,6 +144,11 @@ Returns the updated task assignment object.
 Deletes a specific task assignment.
 
 This operation is performed by calling function `delete_task_assignment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-task-assignments-id/).
+
+<!-- sample delete_task_assignments_id -->
 
 ```python
 client.task_assignments.delete_task_assignment_by_id(task_assignment.id)

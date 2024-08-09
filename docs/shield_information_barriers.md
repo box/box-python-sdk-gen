@@ -11,6 +11,11 @@ Get shield information barrier based on provided ID.
 
 This operation is performed by calling function `get_shield_information_barrier_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-shield-information-barriers-id/).
+
+<!-- sample get_shield_information_barriers_id -->
+
 ```python
 client.shield_information_barriers.get_shield_information_barrier_by_id(barrier_id)
 ```
@@ -33,6 +38,11 @@ Returns the shield information barrier object.
 Change status of shield information barrier with the specified ID.
 
 This operation is performed by calling function `update_shield_information_barrier_status`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-shield-information-barriers-change-status/).
+
+<!-- sample post_shield_information_barriers_change_status -->
 
 ```python
 client.shield_information_barriers.update_shield_information_barrier_status(
@@ -62,6 +72,11 @@ for the enterprise of JWT.
 
 This operation is performed by calling function `get_shield_information_barriers`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-shield-information-barriers/).
+
+<!-- sample get_shield_information_barriers -->
+
 ```python
 client.shield_information_barriers.get_shield_information_barriers()
 ```
@@ -90,6 +105,11 @@ separate individuals/groups within the same
 firm and prevents confidential information passing between them.
 
 This operation is performed by calling function `create_shield_information_barrier`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-shield-information-barriers/).
+
+<!-- sample post_shield_information_barriers -->
 
 ```python
 client.shield_information_barriers.create_shield_information_barrier(

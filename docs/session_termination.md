@@ -12,6 +12,11 @@ Returns the status for the POST request.
 
 This operation is performed by calling function `terminate_users_sessions`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-users-terminate-sessions/).
+
+<!-- sample post_users_terminate_sessions -->
+
 ```python
 client.session_termination.terminate_users_sessions(
     [get_env_var("USER_ID")], [user.login]
@@ -41,6 +46,11 @@ to terminate the group's sessions.
 Returns the status for the POST request.
 
 This operation is performed by calling function `terminate_groups_sessions`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-groups-terminate-sessions/).
+
+<!-- sample post_groups_terminate_sessions -->
 
 ```python
 client.session_termination.terminate_groups_sessions([group.id])

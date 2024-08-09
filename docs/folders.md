@@ -22,6 +22,11 @@ To fetch more items within the folder, use the
 
 This operation is performed by calling function `get_folder_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-folders-id/).
+
+<!-- sample get_folders_id -->
+
 ```python
 client.folders.get_folder_by_id(new_folder.id)
 ```
@@ -69,6 +74,11 @@ Updates a folder. This can be also be used to move the folder,
 create shared links, update collaborations, and more.
 
 This operation is performed by calling function `update_folder_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-folders-id/).
+
+<!-- sample put_folders_id -->
 
 ```python
 downscoped_client.folders.update_folder_by_id(folder.id, name=get_uuid())
@@ -129,6 +139,11 @@ the trash.
 
 This operation is performed by calling function `delete_folder_by_id`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-folders-id/).
+
+<!-- sample delete_folders_id -->
+
 ```python
 parent_client.folders.delete_folder_by_id(folder.id)
 ```
@@ -160,6 +175,11 @@ To request more information about the folder itself, like its size,
 use the [Get a folder](#get-folders-id) endpoint instead.
 
 This operation is performed by calling function `get_folder_items`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-folders-id-items/).
+
+<!-- sample get_folders_id_items -->
 
 ```python
 client.folders.get_folder_items(folder_origin.id)
@@ -200,6 +220,11 @@ Creates a new empty folder within the specified parent folder.
 
 This operation is performed by calling function `create_folder`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-folders/).
+
+<!-- sample post_folders -->
+
 ```python
 parent_client.folders.create_folder(get_uuid(), CreateFolderParent(id="0"))
 ```
@@ -236,6 +261,11 @@ Creates a copy of a folder within a destination folder.
 The original folder will not be changed.
 
 This operation is performed by calling function `copy_folder`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-folders-id-copy/).
+
+<!-- sample post_folders_id_copy -->
 
 ```python
 client.folders.copy_folder(

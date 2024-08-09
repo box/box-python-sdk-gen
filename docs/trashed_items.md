@@ -16,6 +16,11 @@ marker-based pagination using the `marker` parameter.
 
 This operation is performed by calling function `get_trashed_items`.
 
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-folders-trash-items/).
+
+<!-- sample get_folders_trash_items -->
+
 ```python
 client.trashed_items.get_trashed_items()
 ```
