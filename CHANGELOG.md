@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/box/box-codegen/compare/v1.2.0...v1.3.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* Fix fetch method for multipart request (box/box-codegen[#545](https://github.com/box/box-codegen/issues/545)) ([#266](https://github.com/box/box-codegen/issues/266)) ([08a0818](https://github.com/box/box-codegen/commit/08a0818995d64995c3e2720a459f9221c9ca1dea))
+
+
+### New Features and Enhancements
+
+* parametrise chunked uploads endpoint urls (box/box-openapi[#444](https://github.com/box/box-codegen/issues/444)) ([#264](https://github.com/box/box-codegen/issues/264)) ([b5bce24](https://github.com/box/box-codegen/commit/b5bce24478c70ae6bb997adc773a0e2a76223568))
+
 ## [1.2.0](https://github.com/box/box-codegen/compare/v1.1.0...v1.2.0) (2024-07-25)
 
 
