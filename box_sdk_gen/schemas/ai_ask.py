@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
+
 from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
 
 
@@ -50,6 +52,8 @@ class AiAsk(BaseObject):
         prompt: str,
         items: List[AiAskItemsField],
         *,
+        dialogue_history: Optional[List[AiDialogueHistory]] = None,
+        include_citations: Optional[bool] = None,
         ai_agent: Optional[AiAgentAsk] = None,
         **kwargs
     ):
@@ -64,9 +68,15 @@ class AiAsk(BaseObject):
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
         If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
                 :type items: List[AiAskItemsField]
+                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
+                :type dialogue_history: Optional[List[AiDialogueHistory]], optional
+                :param include_citations: A flag to indicate whether citations should be returned., defaults to None
+                :type include_citations: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.mode = mode
         self.prompt = prompt
         self.items = items
+        self.dialogue_history = dialogue_history
+        self.include_citations = include_citations
         self.ai_agent = ai_agent
