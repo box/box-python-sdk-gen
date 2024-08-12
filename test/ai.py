@@ -130,7 +130,6 @@ def testGettingAIAskAgentConfig():
     assert ai_ask_config.type == 'ai_agent_ask'
     assert not ai_ask_config.basic_text.model == ''
     assert not ai_ask_config.basic_text.prompt_template == ''
-    assert not ai_ask_config.basic_text.system_message == ''
     assert ai_ask_config.basic_text.num_tokens_for_completion > -1
     assert not ai_ask_config.basic_text.llm_endpoint_params == None
     assert not ai_ask_config.basic_text_multi.model == ''
@@ -139,7 +138,6 @@ def testGettingAIAskAgentConfig():
     assert not ai_ask_config.basic_text_multi.llm_endpoint_params == None
     assert not ai_ask_config.long_text.model == ''
     assert not ai_ask_config.long_text.prompt_template == ''
-    assert not ai_ask_config.long_text.system_message == ''
     assert ai_ask_config.long_text.num_tokens_for_completion > -1
     assert not ai_ask_config.long_text.embeddings.model == ''
     assert not ai_ask_config.long_text.embeddings.strategy.id == ''
@@ -162,7 +160,6 @@ def testGettingAITextGenAgentConfig():
     assert not ai_text_gen_config.basic_gen.llm_endpoint_params == None
     assert not ai_text_gen_config.basic_gen.model == ''
     assert not ai_text_gen_config.basic_gen.prompt_template == ''
-    assert not ai_text_gen_config.basic_gen.system_message == ''
     assert ai_text_gen_config.basic_gen.num_tokens_for_completion > -1
     assert not ai_text_gen_config.basic_gen.content_template == ''
     assert not ai_text_gen_config.basic_gen.embeddings.model == ''
