@@ -122,7 +122,7 @@ def testAITextGenWithDialogueHistory():
 def testGettingAIAskAgentConfig():
     ai_ask_config: Union[AiAgentAsk, AiAgentTextGen] = (
         client.ai.get_ai_agent_default_config(
-            GetAiAgentDefaultConfigMode.ASK.value, language='ja-JP'
+            GetAiAgentDefaultConfigMode.ASK.value, language='en-US'
         )
     )
     assert ai_ask_config.type == 'ai_agent_ask'
