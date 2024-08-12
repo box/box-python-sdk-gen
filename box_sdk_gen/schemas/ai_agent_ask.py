@@ -19,7 +19,7 @@ class AiAgentAsk(BaseObject):
     def __init__(
         self,
         *,
-        type: Optional[AiAgentAskTypeField] = None,
+        type: AiAgentAskTypeField = AiAgentAskTypeField.AI_AGENT_ASK.value,
         long_text: Optional[AiAgentLongTextTool] = None,
         basic_text: Optional[AiAgentBasicTextToolAsk] = None,
         long_text_multi: Optional[AiAgentLongTextTool] = None,
@@ -27,8 +27,8 @@ class AiAgentAsk(BaseObject):
         **kwargs
     ):
         """
-        :param type: The type of AI agent used to handle queries., defaults to None
-        :type type: Optional[AiAgentAskTypeField], optional
+        :param type: The type of AI agent used to handle queries., defaults to AiAgentAskTypeField.AI_AGENT_ASK.value
+        :type type: AiAgentAskTypeField, optional
         """
         super().__init__(**kwargs)
         self.type = type
