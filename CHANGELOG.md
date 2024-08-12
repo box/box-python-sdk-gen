@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### New Features and Enhancements
 
-* parametrise chunked uploads endpoint urls (box/box-openapi[#444](https://github.com/box/box-codegen/issues/444)) ([#264](https://github.com/box/box-codegen/issues/264)) ([b5bce24](https://github.com/box/box-codegen/commit/b5bce24478c70ae6bb997adc773a0e2a76223568))
+* Parametrise chunked uploads endpoint urls (box/box-openapi[#444](https://github.com/box/box-codegen/issues/444)) ([#264](https://github.com/box/box-codegen/issues/264)) ([b5bce24](https://github.com/box/box-codegen/commit/b5bce24478c70ae6bb997adc773a0e2a76223568))
 
 ## [1.2.0](https://github.com/box/box-codegen/compare/v1.1.0...v1.2.0) (2024-07-25)
 
