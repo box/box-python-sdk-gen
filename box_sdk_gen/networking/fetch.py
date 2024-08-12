@@ -159,6 +159,8 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
             )
         )
 
+        if options.file_stream and options.file_stream.seekable():
+            options.file_stream.seek(0)
         attempt_nr += 1
 
     __raise_on_unsuccessful_request(request=request, response=response)
