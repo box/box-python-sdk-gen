@@ -16,15 +16,13 @@ from box_sdk_gen.internal.utils import to_string
 
 from typing import Union
 
-from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
+from box_sdk_gen.internal.utils import DateTime
 
-from box_sdk_gen.schemas.ai_ask_response import AiAskResponse
+from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.ai_ask import AiAsk
-
-from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.ai_text_gen import AiTextGen
 
@@ -116,6 +114,29 @@ class CreateAiTextGenItems(BaseObject):
         self.content = content
 
 
+class CreateAiTextGenDialogueHistory(BaseObject):
+    def __init__(
+        self,
+        *,
+        prompt: Optional[str] = None,
+        answer: Optional[str] = None,
+        created_at: Optional[DateTime] = None,
+        **kwargs
+    ):
+        """
+        :param prompt: The prompt previously provided by the client and answered by the LLM., defaults to None
+        :type prompt: Optional[str], optional
+        :param answer: The answer previously provided by the LLM., defaults to None
+        :type answer: Optional[str], optional
+        :param created_at: The ISO date formatted timestamp of when the previous answer to the prompt was created., defaults to None
+        :type created_at: Optional[DateTime], optional
+        """
+        super().__init__(**kwargs)
+        self.prompt = prompt
+        self.answer = answer
+        self.created_at = created_at
+
+
 class GetAiAgentDefaultConfigMode(str, Enum):
     ASK = 'ask'
     TEXT_GEN = 'text_gen'
@@ -139,11 +160,9 @@ class AiManager:
         prompt: str,
         items: List[CreateAiAskItems],
         *,
-        dialogue_history: Optional[List[AiDialogueHistory]] = None,
-        include_citations: Optional[bool] = None,
         ai_agent: Optional[AiAgentAsk] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> AiAskResponse:
+    ) -> AiResponse:
         """
                 Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
                 :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
@@ -156,10 +175,6 @@ class AiManager:
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
         If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
                 :type items: List[CreateAiAskItems]
-                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
-                :type dialogue_history: Optional[List[AiDialogueHistory]], optional
-                :param include_citations: A flag to indicate whether citations should be returned., defaults to None
-                :type include_citations: Optional[bool], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -169,8 +184,6 @@ class AiManager:
             'mode': mode,
             'prompt': prompt,
             'items': items,
-            'dialogue_history': dialogue_history,
-            'include_citations': include_citations,
             'ai_agent': ai_agent,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
@@ -186,14 +199,14 @@ class AiManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, AiAskResponse)
+        return deserialize(response.data, AiResponse)
 
     def create_ai_text_gen(
         self,
         prompt: str,
         items: List[CreateAiTextGenItems],
         *,
-        dialogue_history: Optional[List[AiDialogueHistory]] = None,
+        dialogue_history: Optional[List[CreateAiTextGenDialogueHistory]] = None,
         ai_agent: Optional[AiAgentTextGen] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
@@ -208,7 +221,7 @@ class AiManager:
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
                 :type items: List[CreateAiTextGenItems]
                 :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
-                :type dialogue_history: Optional[List[AiDialogueHistory]], optional
+                :type dialogue_history: Optional[List[CreateAiTextGenDialogueHistory]], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
