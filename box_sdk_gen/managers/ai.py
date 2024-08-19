@@ -18,7 +18,7 @@ from typing import Union
 
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
-from box_sdk_gen.schemas.ai_ask_response import AiAskResponse
+from box_sdk_gen.schemas.ai_response_full import AiResponseFull
 
 from box_sdk_gen.schemas.client_error import ClientError
 
@@ -143,7 +143,7 @@ class AiManager:
         include_citations: Optional[bool] = None,
         ai_agent: Optional[AiAgentAsk] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> AiAskResponse:
+    ) -> AiResponseFull:
         """
                 Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
                 :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
@@ -186,7 +186,7 @@ class AiManager:
                 network_session=self.network_session,
             ),
         )
-        return deserialize(response.data, AiAskResponse)
+        return deserialize(response.data, AiResponseFull)
 
     def create_ai_text_gen(
         self,
