@@ -1,33 +1,30 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.internal.base_object import BaseObject
 
 
-class IntegrationMappingBaseIntegrationTypeField(str, Enum):
-    SLACK = 'slack'
+class IntegrationMappingBaseTypeField(str, Enum):
+    INTEGRATION_MAPPING = 'integration_mapping'
 
 
 class IntegrationMappingBase(BaseObject):
+    _discriminator = 'type', {'integration_mapping'}
+
     def __init__(
         self,
+        id: str,
         *,
-        id: Optional[str] = None,
-        integration_type: Optional[IntegrationMappingBaseIntegrationTypeField] = None,
+        type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value,
         **kwargs
     ):
         """
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
-        with `integration_type`), defaults to None
-                :type id: Optional[str], optional
-                :param integration_type: Identifies the Box partner app,
-        with which the mapping is associated.
-        Currently only supports Slack.
-        (part of the composite key together with `id`), defaults to None
-                :type integration_type: Optional[IntegrationMappingBaseIntegrationTypeField], optional
+        with `integration_type`)
+                :type id: str
+                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value
+                :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(**kwargs)
         self.id = id
-        self.integration_type = integration_type
+        self.type = type

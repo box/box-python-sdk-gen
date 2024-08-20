@@ -66,8 +66,6 @@ from box_sdk_gen.schemas.generic_source import *
 
 from box_sdk_gen.schemas.integration_mapping_base import *
 
-from box_sdk_gen.schemas.integration_mapping_mini import *
-
 from box_sdk_gen.schemas.group_base import *
 
 from box_sdk_gen.schemas.group_mini import *

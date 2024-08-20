@@ -1,7 +1,7 @@
 # IntegrationMappingsManager
 
 - [List Slack integration mappings](#list-slack-integration-mappings)
-- [Create integration mapping](#create-integration-mapping)
+- [Create Slack integration mapping](#create-slack-integration-mapping)
 - [Update Slack integration mapping](#update-slack-integration-mapping)
 - [Delete Slack integration mapping](#delete-slack-integration-mapping)
 
@@ -48,7 +48,7 @@ This function returns a value of type `IntegrationMappings`.
 
 Returns a collection of integration mappings
 
-## Create integration mapping
+## Create Slack integration mapping
 
 Creates a [Slack integration mapping](https://support.box.com/hc/en-us/articles/4415585987859-Box-as-the-Content-Layer-for-Slack)
 by mapping a Slack channel to a Box item.
@@ -65,18 +65,20 @@ See the endpoint docs at
 
 ```python
 user_client.integration_mappings.create_slack_integration_mapping(
-    IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id),
     IntegrationMappingBoxItemSlack(id=folder.id),
+    partner_item=IntegrationMappingPartnerItemSlack(
+        id=partner_item_id, slack_org_id=slack_org_id
+    ),
 )
 ```
 
 ### Arguments
 
-- partner_item `IntegrationMappingPartnerItemSlack`
-  -
 - box_item `IntegrationMappingBoxItemSlack`
   -
 - options `Optional[IntegrationMappingSlackOptions]`
+  -
+- partner_item `Optional[IntegrationMappingPartnerItemSlack]`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
