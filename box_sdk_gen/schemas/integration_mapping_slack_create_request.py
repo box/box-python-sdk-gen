@@ -19,12 +19,12 @@ class IntegrationMappingSlackCreateRequest(BaseObject):
     def __init__(
         self,
         box_item: IntegrationMappingBoxItemSlack,
+        partner_item: IntegrationMappingPartnerItemSlack,
         *,
         options: Optional[IntegrationMappingSlackOptions] = None,
-        partner_item: Optional[IntegrationMappingPartnerItemSlack] = None,
         **kwargs
     ):
         super().__init__(**kwargs)
         self.box_item = box_item
-        self.options = options
         self.partner_item = partner_item
+        self.options = options

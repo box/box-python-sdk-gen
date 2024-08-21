@@ -1,8 +1,8 @@
-from typing import Optional
-
 from box_sdk_gen.internal.base_object import BaseObject
 
 from enum import Enum
+
+from typing import Optional
 
 from typing import List
 
@@ -42,13 +42,12 @@ class FileFullPermissionsField(BaseObject):
         can_rename: bool,
         can_set_share_access: bool,
         can_share: bool,
-        *,
-        can_annotate: Optional[bool] = None,
-        can_comment: Optional[bool] = None,
-        can_preview: Optional[bool] = None,
-        can_upload: Optional[bool] = None,
-        can_view_annotations_all: Optional[bool] = None,
-        can_view_annotations_self: Optional[bool] = None,
+        can_annotate: bool,
+        can_comment: bool,
+        can_preview: bool,
+        can_upload: bool,
+        can_view_annotations_all: bool,
+        can_view_annotations_self: bool,
         **kwargs
     ):
         """
@@ -68,19 +67,19 @@ class FileFullPermissionsField(BaseObject):
                 :type can_set_share_access: bool
                 :param can_share: Specifies if the user can create a shared link for this item.
                 :type can_share: bool
-                :param can_annotate: Specifies if the user can place annotations on this file., defaults to None
-                :type can_annotate: Optional[bool], optional
-                :param can_comment: Specifies if the user can place comments on this file., defaults to None
-                :type can_comment: Optional[bool], optional
-                :param can_preview: Specifies if the user can preview this file., defaults to None
-                :type can_preview: Optional[bool], optional
-                :param can_upload: Specifies if the user can upload a new version of this file., defaults to None
-                :type can_upload: Optional[bool], optional
-                :param can_view_annotations_all: Specifies if the user view all annotations placed on this file, defaults to None
-                :type can_view_annotations_all: Optional[bool], optional
+                :param can_annotate: Specifies if the user can place annotations on this file.
+                :type can_annotate: bool
+                :param can_comment: Specifies if the user can place comments on this file.
+                :type can_comment: bool
+                :param can_preview: Specifies if the user can preview this file.
+                :type can_preview: bool
+                :param can_upload: Specifies if the user can upload a new version of this file.
+                :type can_upload: bool
+                :param can_view_annotations_all: Specifies if the user view all annotations placed on this file
+                :type can_view_annotations_all: bool
                 :param can_view_annotations_self: Specifies if the user view annotations placed by themselves
-        on this file, defaults to None
-                :type can_view_annotations_self: Optional[bool], optional
+        on this file
+                :type can_view_annotations_self: bool
         """
         super().__init__(**kwargs)
         self.can_delete = can_delete

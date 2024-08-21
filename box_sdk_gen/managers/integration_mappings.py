@@ -148,9 +148,9 @@ class IntegrationMappingsManager:
     def create_slack_integration_mapping(
         self,
         box_item: IntegrationMappingBoxItemSlack,
+        partner_item: IntegrationMappingPartnerItemSlack,
         *,
         options: Optional[IntegrationMappingSlackOptions] = None,
-        partner_item: Optional[IntegrationMappingPartnerItemSlack] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMapping:
         """

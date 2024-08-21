@@ -40,7 +40,7 @@ def testIntegrationMappings():
     with pytest.raises(Exception):
         user_client.integration_mappings.create_slack_integration_mapping(
             IntegrationMappingBoxItemSlack(id=folder.id),
-            partner_item=IntegrationMappingPartnerItemSlack(
+            IntegrationMappingPartnerItemSlack(
                 id=partner_item_id, slack_org_id=slack_org_id
             ),
         )
