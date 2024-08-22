@@ -96,17 +96,17 @@ class CreateAiTextGenItems(BaseObject):
 
     def __init__(
         self,
+        id: str,
         *,
-        id: Optional[str] = None,
-        type: Optional[CreateAiTextGenItemsTypeField] = None,
+        type: CreateAiTextGenItemsTypeField = CreateAiTextGenItemsTypeField.FILE.value,
         content: Optional[str] = None,
         **kwargs
     ):
         """
-        :param id: The id of the item., defaults to None
-        :type id: Optional[str], optional
-        :param type: The type of the item., defaults to None
-        :type type: Optional[CreateAiTextGenItemsTypeField], optional
+        :param id: The ID of the item.
+        :type id: str
+        :param type: The type of the item., defaults to CreateAiTextGenItemsTypeField.FILE.value
+        :type type: CreateAiTextGenItemsTypeField, optional
         :param content: The content to use as context for generating new text or editing existing text., defaults to None
         :type content: Optional[str], optional
         """
@@ -207,7 +207,7 @@ class AiManager:
         **Note**: Box AI handles documents with text representations up to 1MB in size.
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
                 :type items: List[CreateAiTextGenItems]
-                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
+                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This parameter provides the additional context to the LLM when generating the response., defaults to None
                 :type dialogue_history: Optional[List[AiDialogueHistory]], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
