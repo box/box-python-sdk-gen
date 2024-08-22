@@ -147,8 +147,8 @@ class IntegrationMappingsManager:
 
     def create_slack_integration_mapping(
         self,
-        partner_item: IntegrationMappingPartnerItemSlack,
         box_item: IntegrationMappingBoxItemSlack,
+        partner_item: IntegrationMappingPartnerItemSlack,
         *,
         options: Optional[IntegrationMappingSlackOptions] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -170,9 +170,9 @@ class IntegrationMappingsManager:
         if extra_headers is None:
             extra_headers = {}
         request_body: Dict = {
-            'partner_item': partner_item,
             'box_item': box_item,
             'options': options,
+            'partner_item': partner_item,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(

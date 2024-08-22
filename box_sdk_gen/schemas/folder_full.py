@@ -1,8 +1,8 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.internal.base_object import BaseObject
+
+from typing import Optional
 
 from typing import List
 
@@ -46,8 +46,7 @@ class FolderFullPermissionsField(BaseObject):
         can_rename: bool,
         can_set_share_access: bool,
         can_share: bool,
-        *,
-        can_upload: Optional[bool] = None,
+        can_upload: bool,
         **kwargs
     ):
         """
@@ -67,8 +66,8 @@ class FolderFullPermissionsField(BaseObject):
                 :type can_set_share_access: bool
                 :param can_share: Specifies if the user can create a shared link for this item.
                 :type can_share: bool
-                :param can_upload: Specifies if the user can upload into this folder., defaults to None
-                :type can_upload: Optional[bool], optional
+                :param can_upload: Specifies if the user can upload into this folder.
+                :type can_upload: bool
         """
         super().__init__(**kwargs)
         self.can_delete = can_delete
