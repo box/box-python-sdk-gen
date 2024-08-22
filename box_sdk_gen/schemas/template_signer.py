@@ -25,6 +25,8 @@ class TemplateSigner(BaseObject):
         is_in_person: Optional[bool] = None,
         order: Optional[int] = None,
         signer_group_id: Optional[str] = None,
+        label: Optional[str] = None,
+        public_id: Optional[str] = None,
         **kwargs
     ):
         """
@@ -46,6 +48,10 @@ class TemplateSigner(BaseObject):
         A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used
         within Box Sign requests created from it., defaults to None
                 :type signer_group_id: Optional[str], optional
+                :param label: A placeholder label for the signer set by the template creator to differentiate between signers., defaults to None
+                :type label: Optional[str], optional
+                :param public_id: An identifier for the signer. This can be used to identify a signer within the template., defaults to None
+                :type public_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.inputs = inputs
@@ -54,3 +60,5 @@ class TemplateSigner(BaseObject):
         self.is_in_person = is_in_person
         self.order = order
         self.signer_group_id = signer_group_id
+        self.label = label
+        self.public_id = public_id

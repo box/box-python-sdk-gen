@@ -101,7 +101,7 @@ client.ai.create_ai_text_gen(
 - items `List[CreateAiTextGenItems]`
   - The items to be processed by the LLM, often files. The array can include **exactly one** element. **Note**: Box AI handles documents with text representations up to 1MB in size. If the file size exceeds 1MB, the first 1MB of text representation will be processed.
 - dialogue_history `Optional[List[AiDialogueHistory]]`
-  - The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response.
+  - The history of prompts and answers previously passed to the LLM. This parameter provides the additional context to the LLM when generating the response.
 - ai_agent `Optional[AiAgentTextGen]`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`

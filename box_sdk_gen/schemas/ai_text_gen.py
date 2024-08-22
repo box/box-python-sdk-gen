@@ -20,17 +20,17 @@ class AiTextGenItemsField(BaseObject):
 
     def __init__(
         self,
+        id: str,
         *,
-        id: Optional[str] = None,
-        type: Optional[AiTextGenItemsTypeField] = None,
+        type: AiTextGenItemsTypeField = AiTextGenItemsTypeField.FILE.value,
         content: Optional[str] = None,
         **kwargs
     ):
         """
-        :param id: The id of the item., defaults to None
-        :type id: Optional[str], optional
-        :param type: The type of the item., defaults to None
-        :type type: Optional[AiTextGenItemsTypeField], optional
+        :param id: The ID of the item.
+        :type id: str
+        :param type: The type of the item., defaults to AiTextGenItemsTypeField.FILE.value
+        :type type: AiTextGenItemsTypeField, optional
         :param content: The content to use as context for generating new text or editing existing text., defaults to None
         :type content: Optional[str], optional
         """
@@ -59,7 +59,7 @@ class AiTextGen(BaseObject):
         **Note**: Box AI handles documents with text representations up to 1MB in size.
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
                 :type items: List[AiTextGenItemsField]
-                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
+                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This parameter provides the additional context to the LLM when generating the response., defaults to None
                 :type dialogue_history: Optional[List[AiDialogueHistory]], optional
         """
         super().__init__(**kwargs)

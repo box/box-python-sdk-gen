@@ -6,7 +6,7 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
 
-from box_sdk_gen.schemas.ai_agent_basic_text_tool_ask import AiAgentBasicTextToolAsk
+from box_sdk_gen.schemas.ai_agent_basic_text_tool import AiAgentBasicTextTool
 
 
 class AiAgentAskTypeField(str, Enum):
@@ -21,9 +21,9 @@ class AiAgentAsk(BaseObject):
         *,
         type: AiAgentAskTypeField = AiAgentAskTypeField.AI_AGENT_ASK.value,
         long_text: Optional[AiAgentLongTextTool] = None,
-        basic_text: Optional[AiAgentBasicTextToolAsk] = None,
+        basic_text: Optional[AiAgentBasicTextTool] = None,
         long_text_multi: Optional[AiAgentLongTextTool] = None,
-        basic_text_multi: Optional[AiAgentBasicTextToolAsk] = None,
+        basic_text_multi: Optional[AiAgentBasicTextTool] = None,
         **kwargs
     ):
         """

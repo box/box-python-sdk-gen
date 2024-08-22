@@ -65,18 +65,18 @@ See the endpoint docs at
 
 ```python
 user_client.integration_mappings.create_slack_integration_mapping(
-    IntegrationMappingBoxItemSlack(id=folder.id),
     IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id),
+    IntegrationMappingBoxItemSlack(id=folder.id),
 )
 ```
 
 ### Arguments
 
+- partner_item `IntegrationMappingPartnerItemSlack`
+  -
 - box_item `IntegrationMappingBoxItemSlack`
   -
 - options `Optional[IntegrationMappingSlackOptions]`
-  -
-- partner_item `IntegrationMappingPartnerItemSlack`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.

@@ -1,5 +1,7 @@
 from typing import Optional
 
+from box_sdk_gen.internal.base_object import BaseObject
+
 from typing import Union
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import AiLlmEndpointParamsOpenAi
@@ -12,20 +14,47 @@ from box_sdk_gen.schemas.ai_agent_basic_text_tool_text_gen import (
     AiAgentBasicTextToolTextGen,
 )
 
-from box_sdk_gen.schemas.ai_agent_long_text_tool_text_gen import (
-    AiAgentLongTextToolTextGenEmbeddingsField,
-)
 
-from box_sdk_gen.schemas.ai_agent_long_text_tool_text_gen import (
-    AiAgentLongTextToolTextGen,
-)
-
-
-class AiAgentBasicGenTool(AiAgentLongTextToolTextGen):
+class AiAgentLongTextToolTextGenEmbeddingsStrategyField(BaseObject):
     def __init__(
         self,
         *,
-        content_template: Optional[str] = None,
+        id: Optional[str] = None,
+        num_tokens_per_chunk: Optional[int] = None,
+        **kwargs
+    ):
+        """
+        :param id: The strategy used for the AI Agent for calculating embeddings., defaults to None
+        :type id: Optional[str], optional
+        :param num_tokens_per_chunk: The number of tokens per chunk., defaults to None
+        :type num_tokens_per_chunk: Optional[int], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+        self.num_tokens_per_chunk = num_tokens_per_chunk
+
+
+class AiAgentLongTextToolTextGenEmbeddingsField(BaseObject):
+    def __init__(
+        self,
+        *,
+        model: Optional[str] = None,
+        strategy: Optional[AiAgentLongTextToolTextGenEmbeddingsStrategyField] = None,
+        **kwargs
+    ):
+        """
+        :param model: The model used for the AI Agent for calculating embeddings., defaults to None
+        :type model: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.model = model
+        self.strategy = strategy
+
+
+class AiAgentLongTextToolTextGen(AiAgentBasicTextToolTextGen):
+    def __init__(
+        self,
+        *,
         embeddings: Optional[AiAgentLongTextToolTextGenEmbeddingsField] = None,
         system_message: Optional[str] = None,
         prompt_template: Optional[str] = None,
@@ -37,9 +66,6 @@ class AiAgentBasicGenTool(AiAgentLongTextToolTextGen):
         **kwargs
     ):
         """
-                :param content_template: How the content should be included in a request to the LLM.
-        Input for `{content}` is optional, depending on the use., defaults to None
-                :type content_template: Optional[str], optional
                 :param system_message: System messages try to help the LLM "understand" its role and what it is supposed to do.
         Input for `{current_date}` is optional, depending on the use., defaults to None
                 :type system_message: Optional[str], optional
@@ -56,7 +82,6 @@ class AiAgentBasicGenTool(AiAgentLongTextToolTextGen):
                 :type llm_endpoint_params: Optional[Union[AiLlmEndpointParamsOpenAi, AiLlmEndpointParamsGoogle]], optional
         """
         super().__init__(
-            embeddings=embeddings,
             system_message=system_message,
             prompt_template=prompt_template,
             model=model,
@@ -64,4 +89,4 @@ class AiAgentBasicGenTool(AiAgentLongTextToolTextGen):
             llm_endpoint_params=llm_endpoint_params,
             **kwargs
         )
-        self.content_template = content_template
+        self.embeddings = embeddings

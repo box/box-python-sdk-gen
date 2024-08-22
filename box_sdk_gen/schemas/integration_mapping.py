@@ -8,6 +8,10 @@ from box_sdk_gen.schemas.integration_mapping_base import IntegrationMappingBaseT
 
 from box_sdk_gen.schemas.integration_mapping_base import IntegrationMappingBase
 
+from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
+    IntegrationMappingPartnerItemSlack,
+)
+
 from box_sdk_gen.schemas.folder_mini import FolderMini
 
 from box_sdk_gen.schemas.integration_mapping_slack_options import (
@@ -15,10 +19,6 @@ from box_sdk_gen.schemas.integration_mapping_slack_options import (
 )
 
 from box_sdk_gen.schemas.user_integration_mappings import UserIntegrationMappings
-
-from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
-    IntegrationMappingPartnerItemSlack,
-)
 
 from box_sdk_gen.internal.utils import DateTime
 
@@ -30,30 +30,35 @@ class IntegrationMappingIntegrationTypeField(str, Enum):
 class IntegrationMapping(IntegrationMappingBase):
     def __init__(
         self,
-        box_item: FolderMini,
         partner_item: Union[IntegrationMappingPartnerItemSlack],
+        box_item: FolderMini,
         id: str,
         *,
+        integration_type: Optional[IntegrationMappingIntegrationTypeField] = None,
         is_manually_created: Optional[bool] = None,
         options: Optional[IntegrationMappingSlackOptions] = None,
         created_by: Optional[UserIntegrationMappings] = None,
         modified_by: Optional[UserIntegrationMappings] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
-        integration_type: Optional[IntegrationMappingIntegrationTypeField] = None,
         type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value,
         **kwargs
     ):
         """
+                :param partner_item: Mapped item object for Slack or Teams
+                :type partner_item: Union[IntegrationMappingPartnerItemSlack]
                 :param box_item: The Box folder, to which the object from the
         partner app domain (referenced in `partner_item_id`) is mapped
                 :type box_item: FolderMini
-                :param partner_item: Mapped item object for Slack or Teams
-                :type partner_item: Union[IntegrationMappingPartnerItemSlack]
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
         with `integration_type`)
                 :type id: str
+                :param integration_type: Identifies the Box partner app,
+        with which the mapping is associated.
+        Currently only supports Slack.
+        (part of the composite key together with `id`), defaults to None
+                :type integration_type: Optional[IntegrationMappingIntegrationTypeField], optional
                 :param is_manually_created: Identifies whether the mapping has
         been manually set
         (as opposed to being automatically created), defaults to None
@@ -68,21 +73,16 @@ class IntegrationMapping(IntegrationMappingBase):
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the integration mapping object was last modified, defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param integration_type: Identifies the Box partner app,
-        with which the mapping is associated.
-        Currently only supports Slack.
-        (part of the composite key together with `id`), defaults to None
-                :type integration_type: Optional[IntegrationMappingIntegrationTypeField], optional
                 :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)
-        self.box_item = box_item
         self.partner_item = partner_item
+        self.box_item = box_item
+        self.integration_type = integration_type
         self.is_manually_created = is_manually_created
         self.options = options
         self.created_by = created_by
         self.modified_by = modified_by
         self.created_at = created_at
         self.modified_at = modified_at
-        self.integration_type = integration_type
