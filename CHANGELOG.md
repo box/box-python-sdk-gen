@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/box/box-codegen/compare/v1.3.0...v1.4.0) (2024-08-23)
+
+
+### Bug Fixes
+
+* Add missing fields to Sign Template Signer and fix AI schema (box/box-openapi[#451](https://github.com/box/box-codegen/issues/451)) ([#281](https://github.com/box/box-codegen/issues/281)) ([0708351](https://github.com/box/box-codegen/commit/0708351171eca1fe4914b823a4257bbabd3cd075))
+* Fix `IntegrationMapping` schemas (box/box-codegen[#551](https://github.com/box/box-codegen/issues/551)) ([#279](https://github.com/box/box-codegen/issues/279)) ([0337e06](https://github.com/box/box-codegen/commit/0337e06c6bf6d35dd51409c429b7fef295f5a406))
+
+
+### New Features and Enhancements
+
+* Add new parameters to Box AI methods and introduce `AiResponseFull` variant (box/box-openapi[#446](https://github.com/box/box-codegen/issues/446)) ([#277](https://github.com/box/box-codegen/issues/277)) ([1267a21](https://github.com/box/box-codegen/commit/1267a215fbc8292059603665a53b0159d7a1242c))
+* Include URL into `FetchOptions` (box/box-codegen[#549](https://github.com/box/box-codegen/issues/549)) ([#283](https://github.com/box/box-codegen/issues/283)) ([dd05b1c](https://github.com/box/box-codegen/commit/dd05b1c2b1687d8647f4116c022dbf1890984adc))
+
 ## [1.3.0](https://github.com/box/box-codegen/compare/v1.2.0...v1.3.0) (2024-08-12)
 
 
