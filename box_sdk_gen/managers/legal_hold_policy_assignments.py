@@ -141,20 +141,20 @@ class LegalHoldPolicyAssignmentsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/legal_hold_policy_assignments',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/legal_hold_policy_assignments',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, LegalHoldPolicyAssignments)
 
@@ -179,13 +179,13 @@ class LegalHoldPolicyAssignmentsManager:
         request_body: Dict = {'policy_id': policy_id, 'assign_to': assign_to}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/legal_hold_policy_assignments',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/legal_hold_policy_assignments',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -193,7 +193,7 @@ class LegalHoldPolicyAssignmentsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, LegalHoldPolicyAssignment)
 
@@ -215,20 +215,20 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/legal_hold_policy_assignments/',
+                        to_string(legal_hold_policy_assignment_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, LegalHoldPolicyAssignment)
 
@@ -256,20 +256,20 @@ class LegalHoldPolicyAssignmentsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/legal_hold_policy_assignments/',
+                        to_string(legal_hold_policy_assignment_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -360,21 +360,21 @@ class LegalHoldPolicyAssignmentsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/legal_hold_policy_assignments/',
-                    to_string(legal_hold_policy_assignment_id),
-                    '/files_on_hold',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/legal_hold_policy_assignments/',
+                        to_string(legal_hold_policy_assignment_id),
+                        '/files_on_hold',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FilesOnHold)

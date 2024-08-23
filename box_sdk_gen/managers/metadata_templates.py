@@ -251,17 +251,17 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [self.network_session.base_urls.base_url, '/2.0/metadata_templates']
-            ),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/metadata_templates']
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplates)
 
@@ -293,23 +293,23 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                        '/schema',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplate)
 
@@ -350,17 +350,17 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                        '/schema',
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -368,7 +368,7 @@ class MetadataTemplatesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplate)
 
@@ -397,23 +397,23 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                    '/schema',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                        '/schema',
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -435,20 +435,20 @@ class MetadataTemplatesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/',
-                    to_string(template_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/',
+                        to_string(template_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplate)
 
@@ -481,20 +481,20 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/global',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/global',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplates)
 
@@ -527,20 +527,20 @@ class MetadataTemplatesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/enterprise',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/enterprise',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplates)
 
@@ -602,13 +602,13 @@ class MetadataTemplatesManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_templates/schema',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_templates/schema',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -616,6 +616,6 @@ class MetadataTemplatesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataTemplate)

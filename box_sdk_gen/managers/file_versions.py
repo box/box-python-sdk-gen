@@ -117,22 +117,22 @@ class FileVersionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/versions',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FileVersions)
 
@@ -179,23 +179,23 @@ class FileVersionsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions/',
+                        to_string(file_version_id),
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FileVersionFull)
 
@@ -241,16 +241,16 @@ class FileVersionsManager:
         request_body: Dict = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions/',
+                        to_string(file_version_id),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -258,7 +258,7 @@ class FileVersionsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FileVersionFull)
 
@@ -304,22 +304,22 @@ class FileVersionsManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/versions/',
-                    to_string(file_version_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions/',
+                        to_string(file_version_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -399,15 +399,15 @@ class FileVersionsManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/versions/current',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions/current',
+                    ]
+                ),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
@@ -416,6 +416,6 @@ class FileVersionsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FileVersionFull)

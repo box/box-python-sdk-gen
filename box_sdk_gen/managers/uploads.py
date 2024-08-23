@@ -231,15 +231,15 @@ class UploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/content',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/content',
+                    ]
+                ),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
@@ -259,7 +259,7 @@ class UploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Files)
 
@@ -344,8 +344,10 @@ class UploadsManager:
             {'content-md5': to_string(content_md_5), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.upload_url, '/2.0/files/content']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.upload_url, '/2.0/files/content']
+                ),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
@@ -365,7 +367,7 @@ class UploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Files)
 
@@ -394,8 +396,10 @@ class UploadsManager:
         request_body: Dict = {'name': name, 'size': size, 'parent': parent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/files/content']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/files/content']
+                ),
                 method='OPTIONS',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -403,6 +407,6 @@ class UploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadUrl)

@@ -92,17 +92,17 @@ class TermsOfServicesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
-            ),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfServices)
 
@@ -136,10 +136,10 @@ class TermsOfServicesManager:
         request_body: Dict = {'status': status, 'tos_type': tos_type, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
-            ),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/terms_of_services']
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -147,7 +147,7 @@ class TermsOfServicesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfService)
 
@@ -169,20 +169,20 @@ class TermsOfServicesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/terms_of_services/',
-                    to_string(terms_of_service_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/terms_of_services/',
+                        to_string(terms_of_service_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfService)
 
@@ -213,14 +213,14 @@ class TermsOfServicesManager:
         request_body: Dict = {'status': status, 'text': text}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/terms_of_services/',
-                    to_string(terms_of_service_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/terms_of_services/',
+                        to_string(terms_of_service_id),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -228,6 +228,6 @@ class TermsOfServicesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfService)

@@ -175,8 +175,8 @@ class AiManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -184,7 +184,7 @@ class AiManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, AiResponseFull)
 
@@ -222,8 +222,10 @@ class AiManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/ai/text_gen']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/ai/text_gen']
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -231,7 +233,7 @@ class AiManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, AiResponse)
 
@@ -266,14 +268,16 @@ class AiManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/ai_agent_default']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/ai_agent_default']
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Union[AiAgentAsk, AiAgentTextGen])

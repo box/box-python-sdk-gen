@@ -121,13 +121,13 @@ class ChunkedUploadsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -135,7 +135,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadSession)
 
@@ -170,15 +170,15 @@ class ChunkedUploadsManager:
         request_body: Dict = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/upload_sessions',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/upload_sessions',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -186,7 +186,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadSession)
 
@@ -213,14 +213,14 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            url,
             FetchOptions(
+                url=url,
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadSession)
 
@@ -245,20 +245,20 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions/',
+                        to_string(upload_session_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadSession)
 
@@ -328,8 +328,8 @@ class ChunkedUploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            url,
             FetchOptions(
+                url=url,
                 method='PUT',
                 headers=headers_map,
                 file_stream=request_body,
@@ -337,7 +337,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadedPart)
 
@@ -402,14 +402,14 @@ class ChunkedUploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions/',
+                        to_string(upload_session_id),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 file_stream=request_body,
@@ -417,7 +417,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadedPart)
 
@@ -450,14 +450,14 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            url,
             FetchOptions(
+                url=url,
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -488,20 +488,20 @@ class ChunkedUploadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions/',
+                        to_string(upload_session_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -547,15 +547,15 @@ class ChunkedUploadsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            url,
             FetchOptions(
+                url=url,
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadParts)
 
@@ -596,22 +596,22 @@ class ChunkedUploadsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                    '/parts',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions/',
+                        to_string(upload_session_id),
+                        '/parts',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UploadParts)
 
@@ -681,8 +681,8 @@ class ChunkedUploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            url,
             FetchOptions(
+                url=url,
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -690,7 +690,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Files)
 
@@ -755,15 +755,15 @@ class ChunkedUploadsManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.upload_url,
-                    '/2.0/files/upload_sessions/',
-                    to_string(upload_session_id),
-                    '/commit',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/upload_sessions/',
+                        to_string(upload_session_id),
+                        '/commit',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -771,7 +771,7 @@ class ChunkedUploadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Files)
 

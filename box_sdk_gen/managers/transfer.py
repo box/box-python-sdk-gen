@@ -166,15 +166,15 @@ class TransferManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/folders/0',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/folders/0',
+                    ]
+                ),
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
@@ -183,6 +183,6 @@ class TransferManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
