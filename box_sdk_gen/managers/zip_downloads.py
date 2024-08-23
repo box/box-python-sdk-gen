@@ -157,8 +157,10 @@ class ZipDownloadsManager:
         request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/zip_downloads']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/zip_downloads']
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -166,7 +168,7 @@ class ZipDownloadsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, ZipDownload)
 
@@ -218,14 +220,14 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            download_url,
             FetchOptions(
+                url=download_url,
                 method='GET',
                 headers=headers_map,
                 response_format='binary',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return response.content
 
@@ -274,14 +276,14 @@ class ZipDownloadsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            status_url,
             FetchOptions(
+                url=status_url,
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, ZipDownloadStatus)
 

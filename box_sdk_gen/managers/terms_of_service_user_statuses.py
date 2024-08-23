@@ -132,20 +132,20 @@ class TermsOfServiceUserStatusesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/terms_of_service_user_statuses',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/terms_of_service_user_statuses',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfServiceUserStatuses)
 
@@ -173,13 +173,13 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'tos': tos, 'user': user, 'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/terms_of_service_user_statuses',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/terms_of_service_user_statuses',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -187,7 +187,7 @@ class TermsOfServiceUserStatusesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfServiceUserStatus)
 
@@ -213,14 +213,14 @@ class TermsOfServiceUserStatusesManager:
         request_body: Dict = {'is_accepted': is_accepted}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/terms_of_service_user_statuses/',
-                    to_string(terms_of_service_user_status_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/terms_of_service_user_statuses/',
+                        to_string(terms_of_service_user_status_id),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -228,6 +228,6 @@ class TermsOfServiceUserStatusesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, TermsOfServiceUserStatus)

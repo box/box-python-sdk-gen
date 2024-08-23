@@ -298,17 +298,20 @@ class SharedLinksFoldersManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [self.network_session.base_urls.base_url, '/2.0/shared_items#folders']
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/shared_items#folders',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -344,22 +347,22 @@ class SharedLinksFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '#get_shared_link',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '#get_shared_link',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -402,15 +405,15 @@ class SharedLinksFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '#add_shared_link',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '#add_shared_link',
+                    ]
+                ),
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
@@ -419,7 +422,7 @@ class SharedLinksFoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -459,15 +462,15 @@ class SharedLinksFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '#update_shared_link',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '#update_shared_link',
+                    ]
+                ),
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
@@ -476,7 +479,7 @@ class SharedLinksFoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -519,15 +522,15 @@ class SharedLinksFoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '#remove_shared_link',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '#remove_shared_link',
+                    ]
+                ),
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
@@ -536,6 +539,6 @@ class SharedLinksFoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)

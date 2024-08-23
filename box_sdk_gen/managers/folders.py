@@ -416,21 +416,21 @@ class FoldersManager:
             }
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -565,14 +565,14 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                    ]
+                ),
                 method='PUT',
                 params=query_params_map,
                 headers=headers_map,
@@ -581,7 +581,7 @@ class FoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -633,21 +633,21 @@ class FoldersManager:
             {'if-match': to_string(if_match), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                    ]
+                ),
                 method='DELETE',
                 params=query_params_map,
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -787,22 +787,22 @@ class FoldersManager:
             {'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/items',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/items',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Items)
 
@@ -858,8 +858,8 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/folders']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/folders']),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
@@ -868,7 +868,7 @@ class FoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)
 
@@ -928,15 +928,15 @@ class FoldersManager:
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/copy',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/copy',
+                    ]
+                ),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
@@ -945,6 +945,6 @@ class FoldersManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, FolderFull)

@@ -165,21 +165,21 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Metadatas)
 
@@ -221,24 +221,24 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataFull)
 
@@ -298,18 +298,18 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -317,7 +317,7 @@ class FolderMetadataManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataFull)
 
@@ -374,18 +374,18 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -393,7 +393,7 @@ class FolderMetadataManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataFull)
 
@@ -432,23 +432,23 @@ class FolderMetadataManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/',
-                    to_string(scope),
-                    '/',
-                    to_string(template_key),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/',
+                        to_string(scope),
+                        '/',
+                        to_string(template_key),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
