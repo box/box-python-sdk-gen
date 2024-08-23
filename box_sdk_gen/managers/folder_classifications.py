@@ -127,21 +127,21 @@ class FolderClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/enterprise/securityClassification-6VMVochwUWo',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Classification)
 
@@ -195,15 +195,15 @@ class FolderClassificationsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/enterprise/securityClassification-6VMVochwUWo',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -211,7 +211,7 @@ class FolderClassificationsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Classification)
 
@@ -254,15 +254,15 @@ class FolderClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/enterprise/securityClassification-6VMVochwUWo',
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -270,7 +270,7 @@ class FolderClassificationsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Classification)
 
@@ -310,20 +310,20 @@ class FolderClassificationsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/folders/',
-                    to_string(folder_id),
-                    '/metadata/enterprise/securityClassification-6VMVochwUWo',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/folders/',
+                        to_string(folder_id),
+                        '/metadata/enterprise/securityClassification-6VMVochwUWo',
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

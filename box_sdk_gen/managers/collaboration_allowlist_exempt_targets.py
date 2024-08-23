@@ -92,20 +92,20 @@ class CollaborationAllowlistExemptTargetsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_exempt_targets',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_exempt_targets',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistExemptTargets)
 
@@ -130,13 +130,13 @@ class CollaborationAllowlistExemptTargetsManager:
         request_body: Dict = {'user': user}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_exempt_targets',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_exempt_targets',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -144,7 +144,7 @@ class CollaborationAllowlistExemptTargetsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistExemptTarget)
 
@@ -169,20 +169,20 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_exempt_targets/',
-                    to_string(collaboration_whitelist_exempt_target_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_exempt_targets/',
+                        to_string(collaboration_whitelist_exempt_target_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistExemptTarget)
 
@@ -207,19 +207,19 @@ class CollaborationAllowlistExemptTargetsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_exempt_targets/',
-                    to_string(collaboration_whitelist_exempt_target_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_exempt_targets/',
+                        to_string(collaboration_whitelist_exempt_target_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

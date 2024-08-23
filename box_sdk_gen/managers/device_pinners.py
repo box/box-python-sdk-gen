@@ -70,20 +70,20 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/device_pinners/',
-                    to_string(device_pinner_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/device_pinners/',
+                        to_string(device_pinner_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, DevicePinner)
 
@@ -105,20 +105,20 @@ class DevicePinnersManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/device_pinners/',
-                    to_string(device_pinner_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/device_pinners/',
+                        to_string(device_pinner_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -166,21 +166,21 @@ class DevicePinnersManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/enterprises/',
-                    to_string(enterprise_id),
-                    '/device_pinners',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/enterprises/',
+                        to_string(enterprise_id),
+                        '/device_pinners',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, DevicePinners)

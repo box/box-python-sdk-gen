@@ -48,6 +48,7 @@ class MultipartItem:
 
 @dataclass
 class FetchOptions:
+    url: str
     method: str = "GET"
     params: Dict[str, str] = None
     headers: Dict[str, str] = None
@@ -92,7 +93,7 @@ class APIResponse:
             return default_value
 
 
-def fetch(url: str, options: FetchOptions) -> FetchResponse:
+def fetch(options: FetchOptions) -> FetchResponse:
     if options.network_session:
         max_attempts = options.network_session.MAX_ATTEMPTS
         requests_session = options.network_session.requests_session
@@ -105,7 +106,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
     while True:
         request: APIRequest = __prepare_request(
-            url=url, options=options, reauthenticate=response.reauthentication_needed
+            options=options, reauthenticate=response.reauthentication_needed
         )
         response: APIResponse = __make_request(
             request=request, session=requests_session
@@ -167,7 +168,7 @@ def fetch(url: str, options: FetchOptions) -> FetchResponse:
 
 
 def __prepare_request(
-    url: str, options: FetchOptions, reauthenticate: bool = False
+    options: FetchOptions, reauthenticate: bool = False
 ) -> APIRequest:
     headers = __prepare_headers(options, reauthenticate)
     params = options.params or {}
@@ -196,7 +197,11 @@ def __prepare_request(
             headers['Content-Type'] = options.content_type
 
     return APIRequest(
-        method=options.method, url=url, headers=headers, params=params, data=data
+        method=options.method,
+        url=options.url,
+        headers=headers,
+        params=params,
+        data=data,
     )
 
 

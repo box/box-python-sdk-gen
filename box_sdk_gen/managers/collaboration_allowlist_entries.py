@@ -88,20 +88,20 @@ class CollaborationAllowlistEntriesManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_entries',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_entries',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistEntries)
 
@@ -129,13 +129,13 @@ class CollaborationAllowlistEntriesManager:
         request_body: Dict = {'domain': domain, 'direction': direction}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_entries',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_entries',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -143,7 +143,7 @@ class CollaborationAllowlistEntriesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistEntry)
 
@@ -168,20 +168,20 @@ class CollaborationAllowlistEntriesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_entries/',
-                    to_string(collaboration_whitelist_entry_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_entries/',
+                        to_string(collaboration_whitelist_entry_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, CollaborationAllowlistEntry)
 
@@ -206,19 +206,19 @@ class CollaborationAllowlistEntriesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collaboration_whitelist_entries/',
-                    to_string(collaboration_whitelist_entry_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collaboration_whitelist_entries/',
+                        to_string(collaboration_whitelist_entry_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

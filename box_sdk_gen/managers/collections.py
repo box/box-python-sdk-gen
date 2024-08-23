@@ -95,15 +95,17 @@ class CollectionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/collections']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/collections']
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Collections)
 
@@ -156,21 +158,21 @@ class CollectionsManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/collections/',
-                    to_string(collection_id),
-                    '/items',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collections/',
+                        to_string(collection_id),
+                        '/items',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Items)

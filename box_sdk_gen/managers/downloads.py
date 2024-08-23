@@ -91,21 +91,21 @@ class DownloadsManager:
             {'range': to_string(range), 'boxapi': to_string(boxapi), **extra_headers}
         )
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/content',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/content',
+                    ]
+                ),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='binary',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return response.content

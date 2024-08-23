@@ -224,13 +224,13 @@ class SearchManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/metadata_queries/execute_read',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/metadata_queries/execute_read',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -238,7 +238,7 @@ class SearchManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, MetadataQueryResults)
 
@@ -543,15 +543,15 @@ class SearchManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/search']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/search']),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(
             response.data, Union[SearchResults, SearchResultsWithSharedLinks]

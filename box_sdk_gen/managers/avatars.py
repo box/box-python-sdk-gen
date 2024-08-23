@@ -60,21 +60,21 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/avatar',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/avatar',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='binary',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return response.content
 
@@ -108,15 +108,15 @@ class AvatarsManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/avatar',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/avatar',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 multipart_data=[
@@ -131,7 +131,7 @@ class AvatarsManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, UserAvatar)
 
@@ -153,20 +153,20 @@ class AvatarsManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/avatar',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/avatar',
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

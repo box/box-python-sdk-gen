@@ -122,21 +122,21 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/files/',
-                    to_string(file_id),
-                    '/tasks',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/tasks',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Tasks)
 
@@ -190,8 +190,8 @@ class TasksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/2.0/tasks']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/tasks']),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -199,7 +199,7 @@ class TasksManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Task)
 
@@ -218,20 +218,20 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/tasks/',
-                    to_string(task_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/tasks/',
+                        to_string(task_id),
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Task)
 
@@ -284,14 +284,14 @@ class TasksManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/tasks/',
-                    to_string(task_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/tasks/',
+                        to_string(task_id),
+                    ]
+                ),
                 method='PUT',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -299,7 +299,7 @@ class TasksManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, Task)
 
@@ -318,19 +318,19 @@ class TasksManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/tasks/',
-                    to_string(task_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/tasks/',
+                        to_string(task_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

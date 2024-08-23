@@ -65,21 +65,21 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/email_aliases',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/email_aliases',
+                    ]
+                ),
                 method='GET',
                 headers=headers_map,
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, EmailAliases)
 
@@ -111,15 +111,15 @@ class EmailAliasesManager:
         request_body: Dict = {'email': email}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/email_aliases',
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/email_aliases',
+                    ]
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -127,7 +127,7 @@ class EmailAliasesManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, EmailAlias)
 
@@ -153,21 +153,21 @@ class EmailAliasesManager:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join(
-                [
-                    self.network_session.base_urls.base_url,
-                    '/2.0/users/',
-                    to_string(user_id),
-                    '/email_aliases/',
-                    to_string(email_alias_id),
-                ]
-            ),
             FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/users/',
+                        to_string(user_id),
+                        '/email_aliases/',
+                        to_string(email_alias_id),
+                    ]
+                ),
                 method='DELETE',
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None

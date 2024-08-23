@@ -169,15 +169,15 @@ class AuthorizationManager:
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.oauth_2_url, '/authorize']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.oauth_2_url, '/authorize']),
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
 
@@ -323,8 +323,8 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/oauth2/token']),
             FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/oauth2/token']),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -332,7 +332,7 @@ class AuthorizationManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, AccessToken)
 
@@ -368,8 +368,10 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/oauth2/token#refresh']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/oauth2/token#refresh']
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -377,7 +379,7 @@ class AuthorizationManager:
                 response_format='json',
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return deserialize(response.data, AccessToken)
 
@@ -414,8 +416,10 @@ class AuthorizationManager:
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
-            ''.join([self.network_session.base_urls.base_url, '/oauth2/revoke']),
             FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/oauth2/revoke']
+                ),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -423,6 +427,6 @@ class AuthorizationManager:
                 response_format=None,
                 auth=self.auth,
                 network_session=self.network_session,
-            ),
+            )
         )
         return None
