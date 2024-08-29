@@ -5,7 +5,7 @@ import os
 import uuid
 from time import time
 from enum import Enum
-from io import SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
+from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
 
 try:
@@ -26,41 +26,73 @@ Buffer = bytes
 
 class ResponseByteStream(ByteStream):
     def __init__(self, request_iterator):
-        self._bytes = BytesIO()
         self._iterator = request_iterator
+        self._buffer = b''
+        self._position = 0
+        self._eos = False
 
-    def _load_all(self):
-        self._bytes.seek(0, SEEK_END)
-        for chunk in self._iterator:
-            self._bytes.write(chunk)
+    def _read_from_iterator(self, size):
+        """
+        Read up to `size` bytes from the iterator into the buffer
+        :param size: Number of bytes to read. If None, read the entire stream.
+        """
+        if self._eos:
+            return
 
-    def _load_until(self, goal_position):
-        current_position = self._bytes.seek(0, SEEK_END)
-        while current_position < goal_position:
+        while len(self._buffer) < size:
             try:
-                current_position += self._bytes.write(next(self._iterator))
+                chunk = next(self._iterator)
+                self._buffer += chunk
             except StopIteration:
+                self._eos = True
                 break
 
     def tell(self):
-        return self._bytes.tell()
+        """
+        Returns the current position in the stream
+        :return:
+        """
+        return self._position
 
     def read(self, size=None):
-        left_off_at = self._bytes.tell()
+        """
+        Reads up to `size` bytes from the stream
+        :param size: Read up to `size` bytes from the stream. If None read the entire stream.
+        :return: Bytes read from the stream
+        """
         if size is None:
-            self._load_all()
-        else:
-            goal_position = left_off_at + size
-            self._load_until(goal_position)
+            # Read everything remaining in the stream.
+            result = self._buffer + b''.join(self._iterator)
+            self._buffer = b''
+            self._position += len(result)
+            self._eos = True
+            return result
 
-        self._bytes.seek(left_off_at)
-        return self._bytes.read(size)
+        self._read_from_iterator(size)
+        result = self._buffer[:size]
+        self._buffer = self._buffer[size:]
+        self._position += len(result)
+        return result
 
     def seek(self, position, whence=SEEK_SET):
-        if whence == SEEK_END:
-            self._load_all()
+        """
+        Move the stream to given position
+        :param position: Position to move to
+        :param whence: One of SEEK_SET = 0, SEEK_CUR = 1 or SEEK_END = 2
+        :return: The new position in the stream
+        """
+        if whence == SEEK_SET:
+            if position < self._position:
+                raise ValueError('Cannot seek backwards in a stream')
+            self.read(position - self._position)
+        elif whence == SEEK_CUR:
+            self.read(position)
+        elif whence == SEEK_END:
+            raise NotImplementedError('SEEK_END is not supported for streams')
         else:
-            self._bytes.seek(position, whence)
+            raise ValueError('Invalid value for `whence`')
+
+        return self._position
 
 
 def get_env_var(name: str) -> str:
