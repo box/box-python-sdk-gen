@@ -106,7 +106,7 @@ class FolderClassificationsManager:
                 URL explicitly, for example
 
 
-                `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
+                `/folders/:id/enterprise_12345/securityClassification-6VMVochwUWo`.
 
                 :param folder_id: The unique identifier that represent a folder.
 
@@ -164,7 +164,7 @@ class FolderClassificationsManager:
                 URL explicitly, for example
 
 
-                `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
+                `/folders/:id/enterprise_12345/securityClassification-6VMVochwUWo`.
 
                 :param folder_id: The unique identifier that represent a folder.
 
@@ -289,7 +289,7 @@ class FolderClassificationsManager:
                 URL explicitly, for example
 
 
-                `/folders/:id//enterprise_12345/securityClassification-6VMVochwUWo`.
+                `/folders/:id/enterprise_12345/securityClassification-6VMVochwUWo`.
 
                 :param folder_id: The unique identifier that represent a folder.
 
