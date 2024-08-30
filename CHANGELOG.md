@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/box/box-codegen/compare/v1.4.0...v1.4.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* Do not store data in-memory during download process in Python (box/box-codegen[#557](https://github.com/box/box-codegen/issues/557)) ([#294](https://github.com/box/box-codegen/issues/294)) ([7c645ae](https://github.com/box/box-codegen/commit/7c645aea9fa8575531e0b40ffc997a0f65b6e409))
+
 ## [1.4.0](https://github.com/box/box-codegen/compare/v1.3.0...v1.4.0) (2024-08-23)
 
 
