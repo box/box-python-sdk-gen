@@ -159,6 +159,7 @@ class FolderFull(Folder):
         is_accessible_via_shared_link: Optional[bool] = None,
         can_non_owners_view_collaborators: Optional[bool] = None,
         classification: Optional[FolderFullClassificationField] = None,
+        is_associated_with_app_item: Optional[bool] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
         description: Optional[str] = None,
@@ -216,6 +217,11 @@ class FolderFull(Folder):
         It also restricts non-owners from inviting new
         collaborators., defaults to None
                 :type can_non_owners_view_collaborators: Optional[bool], optional
+                :param is_associated_with_app_item: This field will return true if the folder or any ancestor of the
+        folder is associated with at least one app item. Note that this will
+        return true even if the context user does not have access to the
+        app item(s) associated with the folder., defaults to None
+                :type is_associated_with_app_item: Optional[bool], optional
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash
         folder., defaults to None
@@ -303,3 +309,4 @@ class FolderFull(Folder):
         self.is_accessible_via_shared_link = is_accessible_via_shared_link
         self.can_non_owners_view_collaborators = can_non_owners_view_collaborators
         self.classification = classification
+        self.is_associated_with_app_item = is_associated_with_app_item

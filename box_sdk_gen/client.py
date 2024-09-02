@@ -6,6 +6,8 @@ from box_sdk_gen.managers.files import FilesManager
 
 from box_sdk_gen.managers.trashed_files import TrashedFilesManager
 
+from box_sdk_gen.managers.app_item_associations import AppItemAssociationsManager
+
 from box_sdk_gen.managers.downloads import DownloadsManager
 
 from box_sdk_gen.managers.uploads import UploadsManager
@@ -180,6 +182,9 @@ class BoxClient:
         )
         self.files = FilesManager(auth=self.auth, network_session=self.network_session)
         self.trashed_files = TrashedFilesManager(
+            auth=self.auth, network_session=self.network_session
+        )
+        self.app_item_associations = AppItemAssociationsManager(
             auth=self.auth, network_session=self.network_session
         )
         self.downloads = DownloadsManager(

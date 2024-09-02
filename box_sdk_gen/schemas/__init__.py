@@ -18,6 +18,8 @@ from box_sdk_gen.schemas.o_auth_2_error import *
 
 from box_sdk_gen.schemas.ai_response import *
 
+from box_sdk_gen.schemas.app_item import *
+
 from box_sdk_gen.schemas.classification import *
 
 from box_sdk_gen.schemas.classification_template import *
@@ -313,6 +315,10 @@ from box_sdk_gen.schemas.collaboration import *
 from box_sdk_gen.schemas.collaborations import *
 
 from box_sdk_gen.schemas.webhook_invocation import *
+
+from box_sdk_gen.schemas.app_item_association import *
+
+from box_sdk_gen.schemas.app_item_associations import *
 
 from box_sdk_gen.schemas.workflow_mini import *
 

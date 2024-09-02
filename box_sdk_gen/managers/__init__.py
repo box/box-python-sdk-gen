@@ -4,6 +4,8 @@ from box_sdk_gen.managers.files import *
 
 from box_sdk_gen.managers.trashed_files import *
 
+from box_sdk_gen.managers.app_item_associations import *
+
 from box_sdk_gen.managers.downloads import *
 
 from box_sdk_gen.managers.uploads import *

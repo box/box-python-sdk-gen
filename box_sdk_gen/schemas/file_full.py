@@ -420,6 +420,7 @@ class FileFull(File):
         shared_link_permission_options: Optional[
             List[FileFullSharedLinkPermissionOptionsField]
         ] = None,
+        is_associated_with_app_item: Optional[bool] = None,
         description: Optional[str] = None,
         size: Optional[int] = None,
         path_collection: Optional[FilePathCollectionField] = None,
@@ -481,6 +482,11 @@ class FileFull(File):
                 :param shared_link_permission_options: A list of the types of roles that user can be invited at
         when sharing this file., defaults to None
                 :type shared_link_permission_options: Optional[List[FileFullSharedLinkPermissionOptionsField]], optional
+                :param is_associated_with_app_item: This field will return true if the file or any ancestor of the file
+        is associated with at least one app item. Note that this will return
+        true even if the context user does not have access to the app item(s)
+        associated with the file., defaults to None
+                :type is_associated_with_app_item: Optional[bool], optional
                 :param description: The optional description of this file.
         If the description exceeds 255 characters, the first 255 characters
         are set as a file description and the rest of it is ignored., defaults to None
@@ -566,3 +572,4 @@ class FileFull(File):
         self.uploader_display_name = uploader_display_name
         self.disposition_at = disposition_at
         self.shared_link_permission_options = shared_link_permission_options
+        self.is_associated_with_app_item = is_associated_with_app_item
