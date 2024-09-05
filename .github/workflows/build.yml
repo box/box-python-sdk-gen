@@ -39,6 +39,8 @@ jobs:
           ENTERPRISE_ID: ${{ secrets.ENTERPRISE_ID }}
           BOX_FILE_REQUEST_ID: ${{ secrets.BOX_FILE_REQUEST_ID }}
           BOX_EXTERNAL_USER_EMAIL: ${{ secrets.BOX_EXTERNAL_USER_EMAIL }}
+          APP_ITEM_ASSOCIATION_FILE_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FILE_ID }}
+          APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}
           WORKFLOW_FOLDER_ID: ${{ secrets.WORKFLOW_FOLDER_ID }}
         run: |
           tox
@@ -73,3 +75,5 @@ jobs:
           BOX_FILE_REQUEST_ID: ${{ secrets.BOX_FILE_REQUEST_ID }}
           BOX_EXTERNAL_USER_EMAIL: ${{ secrets.BOX_EXTERNAL_USER_EMAIL }}
           WORKFLOW_FOLDER_ID: ${{ secrets.WORKFLOW_FOLDER_ID }}
+          APP_ITEM_ASSOCIATION_FILE_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FILE_ID }}
+          APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}

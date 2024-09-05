@@ -16,7 +16,11 @@ This operation is performed by calling function `get_file_app_item_associations`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-files-id-app-item-associations/).
 
-_Currently we don't have an example for calling `get_file_app_item_associations` in integration tests_
+<!-- sample get_files_id_app_item_associations -->
+
+```python
+client.app_item_associations.get_file_app_item_associations(file_id)
+```
 
 ### Arguments
 
@@ -52,7 +56,11 @@ This operation is performed by calling function `get_folder_app_item_association
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-folders-id-app-item-associations/).
 
-_Currently we don't have an example for calling `get_folder_app_item_associations` in integration tests_
+<!-- sample get_folders_id_app_item_associations -->
+
+```python
+client.app_item_associations.get_folder_app_item_associations(folder_id)
+```
 
 ### Arguments
 
