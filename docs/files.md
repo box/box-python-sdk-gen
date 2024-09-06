@@ -18,7 +18,7 @@ See the endpoint docs at
 <!-- sample get_files_id -->
 
 ```python
-client.files.get_file_by_id(file.id)
+client.files.get_file_by_id(file_id, fields=["is_associated_with_app_item"])
 ```
 
 ### Arguments

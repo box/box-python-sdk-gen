@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.folder import Folder
 
 from box_sdk_gen.schemas.web_link import WebLink
 
+from box_sdk_gen.schemas.app_item import AppItem
+
 from box_sdk_gen.schemas.user_collaborations import UserCollaborations
 
 from box_sdk_gen.schemas.group_mini import GroupMini
@@ -151,6 +153,7 @@ class Collaboration(BaseObject):
         *,
         type: CollaborationTypeField = CollaborationTypeField.COLLABORATION.value,
         item: Optional[Union[File, Folder, WebLink]] = None,
+        app_item: Optional[AppItem] = None,
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
         invite_email: Optional[str] = None,
         role: Optional[CollaborationRoleField] = None,
@@ -200,6 +203,7 @@ class Collaboration(BaseObject):
         self.id = id
         self.type = type
         self.item = item
+        self.app_item = app_item
         self.accessible_by = accessible_by
         self.invite_email = invite_email
         self.role = role

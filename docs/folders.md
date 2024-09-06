@@ -28,7 +28,7 @@ See the endpoint docs at
 <!-- sample get_folders_id -->
 
 ```python
-client.folders.get_folder_by_id(new_folder.id)
+client.folders.get_folder_by_id(folder_id, fields=["is_associated_with_app_item"])
 ```
 
 ### Arguments
