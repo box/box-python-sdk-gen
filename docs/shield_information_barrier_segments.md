@@ -1,8 +1,8 @@
 # ShieldInformationBarrierSegmentsManager
 
 - [Get shield information barrier segment with specified ID](#get-shield-information-barrier-segment-with-specified-id)
-- [Update shield information barrier segment with specified ID](#update-shield-information-barrier-segment-with-specified-id)
 - [Delete shield information barrier segment](#delete-shield-information-barrier-segment)
+- [Update shield information barrier segment with specified ID](#update-shield-information-barrier-segment-with-specified-id)
 - [List shield information barrier segments](#list-shield-information-barrier-segments)
 - [Create shield information barrier segment](#create-shield-information-barrier-segment)
 
@@ -35,6 +35,37 @@ client.shield_information_barrier_segments.get_shield_information_barrier_segmen
 This function returns a value of type `ShieldInformationBarrierSegment`.
 
 Returns the shield information barrier segment object.
+
+## Delete shield information barrier segment
+
+Deletes the shield information barrier segment
+based on provided ID.
+
+This operation is performed by calling function `delete_shield_information_barrier_segment_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segments-id/).
+
+<!-- sample delete_shield_information_barrier_segments_id -->
+
+```python
+client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
+    segment.id
+)
+```
+
+### Arguments
+
+- shield_information_barrier_segment_id `str`
+  - The ID of the shield information barrier segment. Example: "3423"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `None`.
+
+Empty body in response
 
 ## Update shield information barrier segment with specified ID
 
@@ -69,37 +100,6 @@ client.shield_information_barrier_segments.update_shield_information_barrier_seg
 This function returns a value of type `ShieldInformationBarrierSegment`.
 
 Returns the updated shield information barrier segment object.
-
-## Delete shield information barrier segment
-
-Deletes the shield information barrier segment
-based on provided ID.
-
-This operation is performed by calling function `delete_shield_information_barrier_segment_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-shield-information-barrier-segments-id/).
-
-<!-- sample delete_shield_information_barrier_segments_id -->
-
-```python
-client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
-    segment.id
-)
-```
-
-### Arguments
-
-- shield_information_barrier_segment_id `str`
-  - The ID of the shield information barrier segment. Example: "3423"
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `None`.
-
-Empty body in response
 
 ## List shield information barrier segments
 

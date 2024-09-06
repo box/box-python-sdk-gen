@@ -2,19 +2,19 @@ from enum import Enum
 
 from typing import Optional
 
-from typing import List
-
 from typing import Dict
-
-from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
-from box_sdk_gen.schemas.events import Events
+from typing import List
+
+from box_sdk_gen.internal.utils import to_string
+
+from box_sdk_gen.schemas.realtime_servers import RealtimeServers
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas.realtime_servers import RealtimeServers
+from box_sdk_gen.schemas.events import Events
 
 from box_sdk_gen.networking.auth import Authentication
 
@@ -26,10 +26,6 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.internal.utils import DateTime
-
-from box_sdk_gen.serialization.json.json_data import sd_to_json
-
 from box_sdk_gen.networking.fetch import FetchOptions
 
 from box_sdk_gen.networking.fetch import FetchResponse
@@ -37,6 +33,10 @@ from box_sdk_gen.networking.fetch import FetchResponse
 from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
+
+from box_sdk_gen.internal.utils import DateTime
+
+from box_sdk_gen.serialization.json.json_data import sd_to_json
 
 
 class GetEventsStreamType(str, Enum):
@@ -191,6 +191,101 @@ class EventsManager:
         self.auth = auth
         self.network_session = network_session
 
+    def get_events_with_long_polling(
+        self, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> RealtimeServers:
+        """
+        Returns a list of real-time servers that can be used for long-polling updates
+
+        to the [event stream](#get-events).
+
+
+        Long polling is the concept where a HTTP request is kept open until the
+
+
+        server sends a response, then repeating the process over and over to receive
+
+
+        updated responses.
+
+
+        Long polling the event stream can only be used for user events, not for
+
+
+        enterprise events.
+
+
+        To use long polling, first use this endpoint to retrieve a list of long poll
+
+
+        URLs. Next, make a long poll request to any of the provided URLs.
+
+
+        When an event occurs in monitored account a response with the value
+
+
+        `new_change` will be sent. The response contains no other details as
+
+
+        it only serves as a prompt to take further action such as sending a
+
+
+        request to the [events endpoint](#get-events) with the last known
+
+
+        `stream_position`.
+
+
+        After the server sends this response it closes the connection. You must now
+
+
+        repeat the long poll process to begin listening for events again.
+
+
+        If no events occur for a while and the connection times out you will
+
+
+        receive a response with the value `reconnect`. When you receive this response
+
+
+        you’ll make another call to this endpoint to restart the process.
+
+
+        If you receive no events in `retry_timeout` seconds then you will need to
+
+
+        make another request to the real-time server (one of the URLs in the response
+
+
+        for this endpoint). This might be necessary due to network errors.
+
+
+        Finally, if you receive a `max_retries` error when making a request to the
+
+
+        real-time server, you should start over by making a call to this endpoint
+
+
+        first.
+
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/events']),
+                method='OPTIONS',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, RealtimeServers)
+
     def get_events(
         self,
         *,
@@ -300,98 +395,3 @@ class EventsManager:
             )
         )
         return deserialize(response.data, Events)
-
-    def get_events_with_long_polling(
-        self, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> RealtimeServers:
-        """
-        Returns a list of real-time servers that can be used for long-polling updates
-
-        to the [event stream](#get-events).
-
-
-        Long polling is the concept where a HTTP request is kept open until the
-
-
-        server sends a response, then repeating the process over and over to receive
-
-
-        updated responses.
-
-
-        Long polling the event stream can only be used for user events, not for
-
-
-        enterprise events.
-
-
-        To use long polling, first use this endpoint to retrieve a list of long poll
-
-
-        URLs. Next, make a long poll request to any of the provided URLs.
-
-
-        When an event occurs in monitored account a response with the value
-
-
-        `new_change` will be sent. The response contains no other details as
-
-
-        it only serves as a prompt to take further action such as sending a
-
-
-        request to the [events endpoint](#get-events) with the last known
-
-
-        `stream_position`.
-
-
-        After the server sends this response it closes the connection. You must now
-
-
-        repeat the long poll process to begin listening for events again.
-
-
-        If no events occur for a while and the connection times out you will
-
-
-        receive a response with the value `reconnect`. When you receive this response
-
-
-        you’ll make another call to this endpoint to restart the process.
-
-
-        If you receive no events in `retry_timeout` seconds then you will need to
-
-
-        make another request to the real-time server (one of the URLs in the response
-
-
-        for this endpoint). This might be necessary due to network errors.
-
-
-        Finally, if you receive a `max_retries` error when making a request to the
-
-
-        real-time server, you should start over by making a call to this endpoint
-
-
-        first.
-
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            FetchOptions(
-                url=''.join([self.network_session.base_urls.base_url, '/2.0/events']),
-                method='OPTIONS',
-                headers=headers_map,
-                response_format='json',
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, RealtimeServers)

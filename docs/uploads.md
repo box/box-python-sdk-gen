@@ -1,8 +1,8 @@
 # UploadsManager
 
 - [Upload file version](#upload-file-version)
-- [Upload file](#upload-file)
 - [Preflight check before upload](#preflight-check-before-upload)
+- [Upload file](#upload-file)
 
 ## Upload file version
 
@@ -54,6 +54,36 @@ This function returns a value of type `Files`.
 
 Returns the new file object in a list.
 
+## Preflight check before upload
+
+Performs a check to verify that a file will be accepted by Box
+before you upload the entire file.
+
+This operation is performed by calling function `preflight_file_upload_check`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/options-files-content/).
+
+_Currently we don't have an example for calling `preflight_file_upload_check` in integration tests_
+
+### Arguments
+
+- name `Optional[str]`
+  - The name for the file
+- size `Optional[int]`
+  - The size of the file in bytes
+- parent `Optional[PreflightFileUploadCheckParent]`
+  -
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `UploadUrl`.
+
+If the check passed, the response will include a session URL that
+can be used to upload the file to.
+
 ## Upload file
 
 Uploads a small file to Box. For file sizes over 50MB we recommend
@@ -102,33 +132,3 @@ parent_client.uploads.upload_file(
 This function returns a value of type `Files`.
 
 Returns the new file object in a list.
-
-## Preflight check before upload
-
-Performs a check to verify that a file will be accepted by Box
-before you upload the entire file.
-
-This operation is performed by calling function `preflight_file_upload_check`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/options-files-content/).
-
-_Currently we don't have an example for calling `preflight_file_upload_check` in integration tests_
-
-### Arguments
-
-- name `Optional[str]`
-  - The name for the file
-- size `Optional[int]`
-  - The size of the file in bytes
-- parent `Optional[PreflightFileUploadCheckParent]`
-  -
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `UploadUrl`.
-
-If the check passed, the response will include a session URL that
-can be used to upload the file to.

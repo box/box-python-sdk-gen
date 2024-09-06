@@ -63,6 +63,16 @@ class UploadFileVersionAttributes(BaseObject):
         self.content_modified_at = content_modified_at
 
 
+class PreflightFileUploadCheckParent(BaseObject):
+    def __init__(self, *, id: Optional[str] = None, **kwargs):
+        """
+        :param id: The ID of parent item, defaults to None
+        :type id: Optional[str], optional
+        """
+        super().__init__(**kwargs)
+        self.id = id
+
+
 class UploadFileAttributesParentField(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
@@ -103,16 +113,6 @@ class UploadFileAttributes(BaseObject):
         self.parent = parent
         self.content_created_at = content_created_at
         self.content_modified_at = content_modified_at
-
-
-class PreflightFileUploadCheckParent(BaseObject):
-    def __init__(self, *, id: Optional[str] = None, **kwargs):
-        """
-        :param id: The ID of parent item, defaults to None
-        :type id: Optional[str], optional
-        """
-        super().__init__(**kwargs)
-        self.id = id
 
 
 class UploadsManager:
@@ -263,6 +263,46 @@ class UploadsManager:
         )
         return deserialize(response.data, Files)
 
+    def preflight_file_upload_check(
+        self,
+        *,
+        name: Optional[str] = None,
+        size: Optional[int] = None,
+        parent: Optional[PreflightFileUploadCheckParent] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> UploadUrl:
+        """
+        Performs a check to verify that a file will be accepted by Box
+
+        before you upload the entire file.
+
+        :param name: The name for the file, defaults to None
+        :type name: Optional[str], optional
+        :param size: The size of the file in bytes, defaults to None
+        :type size: Optional[int], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'name': name, 'size': size, 'parent': parent}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join(
+                    [self.network_session.base_urls.base_url, '/2.0/files/content']
+                ),
+                method='OPTIONS',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, UploadUrl)
+
     def upload_file(
         self,
         attributes: UploadFileAttributes,
@@ -370,43 +410,3 @@ class UploadsManager:
             )
         )
         return deserialize(response.data, Files)
-
-    def preflight_file_upload_check(
-        self,
-        *,
-        name: Optional[str] = None,
-        size: Optional[int] = None,
-        parent: Optional[PreflightFileUploadCheckParent] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> UploadUrl:
-        """
-        Performs a check to verify that a file will be accepted by Box
-
-        before you upload the entire file.
-
-        :param name: The name for the file, defaults to None
-        :type name: Optional[str], optional
-        :param size: The size of the file in bytes, defaults to None
-        :type size: Optional[int], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        request_body: Dict = {'name': name, 'size': size, 'parent': parent}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            FetchOptions(
-                url=''.join(
-                    [self.network_session.base_urls.base_url, '/2.0/files/content']
-                ),
-                method='OPTIONS',
-                headers=headers_map,
-                data=serialize(request_body),
-                content_type='application/json',
-                response_format='json',
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return deserialize(response.data, UploadUrl)
