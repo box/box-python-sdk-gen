@@ -34,9 +34,9 @@ client: BoxClient = get_default_client()
 def testEvents():
     events: Events = client.events.get_events()
     assert len(events.entries) > 0
-    event: Event = events.entries[0]
-    assert to_string(event.created_by.type) == 'user'
-    assert not to_string(event.event_type) == ''
+    first_event: Event = events.entries[0]
+    assert to_string(first_event.created_by.type) == 'user'
+    assert not to_string(first_event.event_type) == ''
 
 
 def testEventUpload():
@@ -45,9 +45,9 @@ def testEventUpload():
         event_type=[GetEventsEventType.UPLOAD.value],
     )
     assert len(events.entries) > 0
-    event: Event = events.entries[0]
-    assert to_string(event.event_type) == 'UPLOAD'
-    source: EventSource = event.source
+    first_event: Event = events.entries[0]
+    assert to_string(first_event.event_type) == 'UPLOAD'
+    source: EventSource = first_event.source
     assert (
         to_string(source.item_type) == 'file' or to_string(source.item_type) == 'folder'
     )
@@ -61,9 +61,9 @@ def testEventDeleteUser():
         event_type=[GetEventsEventType.DELETE_USER.value],
     )
     assert len(events.entries) > 0
-    event: Event = events.entries[0]
-    assert to_string(event.event_type) == 'DELETE_USER'
-    source: User = event.source
+    first_event: Event = events.entries[0]
+    assert to_string(first_event.event_type) == 'DELETE_USER'
+    source: User = first_event.source
     assert to_string(source.type) == 'user'
     assert not source.id == ''
 
@@ -73,8 +73,8 @@ def testEventSourceFileOrFolder():
         stream_type=GetEventsStreamType.CHANGES.value
     )
     assert len(events.entries) > 0
-    event: Event = events.entries[0]
-    source: File = event.source
+    first_event: Event = events.entries[0]
+    source: File = first_event.source
     assert to_string(source.type) == 'file' or to_string(source.type) == 'folder'
     assert not source.id == ''
 
