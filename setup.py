@@ -24,6 +24,7 @@ def main():
         version=__version__,
         description='Official Box Python Generated SDK',
         url='https://github.com/box/box-python-sdk-gen.git',
+        licence='Apache-2.0, http://www.apache.org/licenses/LICENSE-2.0',
         author='Box',
         long_description_content_type='text/markdown',
         long_description=open(
