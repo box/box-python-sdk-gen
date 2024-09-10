@@ -234,7 +234,8 @@ class UploadsManager:
             FetchOptions(
                 url=''.join(
                     [
-                        'https://upload.box.com/2.0/files/',
+                        self.network_session.base_urls.upload_url,
+                        '/2.0/files/',
                         to_string(file_id),
                         '/content',
                     ]
@@ -384,7 +385,9 @@ class UploadsManager:
         )
         response: FetchResponse = fetch(
             FetchOptions(
-                url=''.join(['https://upload.box.com/2.0/files/content']),
+                url=''.join(
+                    [self.network_session.base_urls.upload_url, '/2.0/files/content']
+                ),
                 method='POST',
                 params=query_params_map,
                 headers=headers_map,
