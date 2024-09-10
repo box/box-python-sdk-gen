@@ -28,7 +28,7 @@ from box_sdk_gen.schemas.items import Items
 
 from box_sdk_gen.schemas.folder import Folder
 
-from box_sdk_gen.schemas.metadata import Metadata
+from box_sdk_gen.schemas.metadata_full import MetadataFull
 
 
 class FolderFullSyncStateField(str, Enum):
