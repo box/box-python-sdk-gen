@@ -282,8 +282,6 @@ from box_sdk_gen.schemas.items import *
 
 from box_sdk_gen.schemas.folder import *
 
-from box_sdk_gen.schemas.metadata_query_results import *
-
 from box_sdk_gen.schemas.legal_hold_policy_assignment import *
 
 from box_sdk_gen.schemas.legal_hold_policy_assignments import *
@@ -303,6 +301,8 @@ from box_sdk_gen.schemas.search_results import *
 from box_sdk_gen.schemas.recent_item import *
 
 from box_sdk_gen.schemas.recent_items import *
+
+from box_sdk_gen.schemas.metadata_query_results import *
 
 from box_sdk_gen.schemas.event import *
 

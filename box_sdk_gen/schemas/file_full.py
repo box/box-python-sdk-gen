@@ -28,7 +28,7 @@ from box_sdk_gen.schemas.user_mini import UserMini
 
 from box_sdk_gen.schemas.file_or_folder_scope import FileOrFolderScope
 
-from box_sdk_gen.schemas.metadata import Metadata
+from box_sdk_gen.schemas.metadata_full import MetadataFull
 
 from box_sdk_gen.internal.utils import DateTime
 
