@@ -21,7 +21,7 @@ class AiAgentBasicTextToolBase(BaseObject):
         **kwargs
     ):
         """
-        :param model: The model used for the AI Agent for basic text., defaults to None
+        :param model: The model used for the AI Agent for basic text. For specific model values, see the [available models list](g://box-ai/supported-models)., defaults to None
         :type model: Optional[str], optional
         :param num_tokens_for_completion: The number of tokens for completion., defaults to None
         :type num_tokens_for_completion: Optional[int], optional

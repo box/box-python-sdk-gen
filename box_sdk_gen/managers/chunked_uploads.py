@@ -122,12 +122,7 @@ class ChunkedUploadsManager:
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/upload_sessions',
-                    ]
-                ),
+                url=''.join(['https://upload.box.com/2.0/files/upload_sessions']),
                 method='POST',
                 headers=headers_map,
                 data=serialize(request_body),
@@ -173,8 +168,7 @@ class ChunkedUploadsManager:
             FetchOptions(
                 url=''.join(
                     [
-                        self.network_session.base_urls.upload_url,
-                        '/2.0/files/',
+                        'https://upload.box.com/2.0/files/',
                         to_string(file_id),
                         '/upload_sessions',
                     ]
