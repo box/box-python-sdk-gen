@@ -6,11 +6,13 @@ divided across resource managers.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Client](#client)
 - [Additional headers](#additional-headers)
   - [As-User header](#as-user-header)
   - [Suppress notifications](#suppress-notifications)
   - [Custom headers](#custom-headers)
 - [Custom Base URLs](#custom-base-urls)
+- [Use Proxy for API calls](#use-proxy-for-api-calls)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -75,5 +77,17 @@ new_client = client.with_custom_base_urls(
         upload_url="https://upload.box.com/api",
         oauth_2_url="https://account.box.com/api/oauth2",
     )
+)
+```
+
+# Use Proxy for API calls
+
+In order to use a proxy for API calls, calling the `client.with_proxy(proxyConfig)` method creates a new client, leaving the original client unmodified, with the username and password being optional.
+
+**Note:** We are only supporting http/s proxies with basic authentication. NTLM and other authentication methods are not supported.
+
+```python
+new_client = client.with_proxy(
+    ProxyConfig(url="http://proxy.com", username="username", password="password")
 )
 ```

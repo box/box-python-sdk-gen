@@ -6,7 +6,13 @@ from unittest import mock
 from unittest.mock import Mock, patch
 from requests import Session, Response, RequestException
 
-from box_sdk_gen import NetworkSession, BoxAPIError, Authentication, BoxSDKError
+from box_sdk_gen import (
+    NetworkSession,
+    BoxAPIError,
+    Authentication,
+    BoxSDKError,
+    BoxClient,
+)
 from box_sdk_gen.networking.fetch import (
     fetch,
     FetchOptions,
@@ -22,6 +28,7 @@ from box_sdk_gen.networking.fetch import (
     APIResponse,
     MultipartItem,
 )
+from box_sdk_gen.networking.proxy_config import ProxyConfig
 
 
 @pytest.fixture
@@ -810,3 +817,13 @@ def test_raising_exception_raised_by_network_layer():
         assert e.message == "Something went wrong"
         assert e.error == requests_exception
         assert e.name == 'BoxSDKError'
+
+
+def test_proxy_config():
+    client = BoxClient(auth=None).with_proxy(
+        ProxyConfig(url="http://127.0.0.1:3128/", username="user", password="pass")
+    )
+    assert client.network_session.proxy_url == 'http://user:pass@127.0.0.1:3128/'
+    requests_session = client.network_session.requests_session
+    assert requests_session.proxies['http'] == 'http://user:pass@127.0.0.1:3128/'
+    assert requests_session.proxies['https'] == 'http://user:pass@127.0.0.1:3128/'

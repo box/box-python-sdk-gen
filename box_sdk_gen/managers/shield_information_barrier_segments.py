@@ -94,6 +94,44 @@ class ShieldInformationBarrierSegmentsManager:
         )
         return deserialize(response.data, ShieldInformationBarrierSegment)
 
+    def delete_shield_information_barrier_segment_by_id(
+        self,
+        shield_information_barrier_segment_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
+        """
+                Deletes the shield information barrier segment
+
+                based on provided ID.
+
+                :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
+        Example: "3423"
+                :type shield_information_barrier_segment_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/shield_information_barrier_segments/',
+                        to_string(shield_information_barrier_segment_id),
+                    ]
+                ),
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return None
+
     def update_shield_information_barrier_segment_by_id(
         self,
         shield_information_barrier_segment_id: str,
@@ -138,44 +176,6 @@ class ShieldInformationBarrierSegmentsManager:
             )
         )
         return deserialize(response.data, ShieldInformationBarrierSegment)
-
-    def delete_shield_information_barrier_segment_by_id(
-        self,
-        shield_information_barrier_segment_id: str,
-        *,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> None:
-        """
-                Deletes the shield information barrier segment
-
-                based on provided ID.
-
-                :param shield_information_barrier_segment_id: The ID of the shield information barrier segment.
-        Example: "3423"
-                :type shield_information_barrier_segment_id: str
-                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/shield_information_barrier_segments/',
-                        to_string(shield_information_barrier_segment_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=None,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
 
     def get_shield_information_barrier_segments(
         self,

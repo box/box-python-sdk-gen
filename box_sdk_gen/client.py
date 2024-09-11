@@ -170,6 +170,8 @@ from box_sdk_gen.networking.network import NetworkSession
 
 from box_sdk_gen.networking.base_urls import BaseUrls
 
+from box_sdk_gen.networking.proxy_config import ProxyConfig
+
 
 class BoxClient:
     def __init__(self, auth: Authentication, *, network_session: NetworkSession = None):
@@ -438,4 +440,12 @@ class BoxClient:
         return BoxClient(
             auth=self.auth,
             network_session=self.network_session.with_custom_base_urls(base_urls),
+        )
+
+    def with_proxy(self, config: ProxyConfig) -> 'BoxClient':
+        """
+        Create a new client with a custom proxy that will be used for every API call
+        """
+        return BoxClient(
+            auth=self.auth, network_session=self.network_session.with_proxy(config)
         )

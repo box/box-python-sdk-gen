@@ -199,6 +199,67 @@ class FileVersionsManager:
         )
         return deserialize(response.data, FileVersionFull)
 
+    def delete_file_version_by_id(
+        self,
+        file_id: str,
+        file_version_id: str,
+        *,
+        if_match: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
+        """
+                Move a file version to the trash.
+
+                Versions are only tracked for Box users with premium accounts.
+
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param file_version_id: The ID of the file version
+        Example: "1234"
+                :type file_version_id: str
+                :param if_match: Ensures this item hasn't recently changed before
+        making changes.
+
+        Pass in the item's last observed `etag` value
+        into this header and the endpoint will fail
+        with a `412 Precondition Failed` if it
+        has changed since., defaults to None
+                :type if_match: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params(
+            {'if-match': to_string(if_match), **extra_headers}
+        )
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/versions/',
+                        to_string(file_version_id),
+                    ]
+                ),
+                method='DELETE',
+                headers=headers_map,
+                response_format=None,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return None
+
     def update_file_version_by_id(
         self,
         file_id: str,
@@ -261,67 +322,6 @@ class FileVersionsManager:
             )
         )
         return deserialize(response.data, FileVersionFull)
-
-    def delete_file_version_by_id(
-        self,
-        file_id: str,
-        file_version_id: str,
-        *,
-        if_match: Optional[str] = None,
-        extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> None:
-        """
-                Move a file version to the trash.
-
-                Versions are only tracked for Box users with premium accounts.
-
-                :param file_id: The unique identifier that represents a file.
-
-        The ID for any file can be determined
-        by visiting a file in the web application
-        and copying the ID from the URL. For example,
-        for the URL `https://*.app.box.com/files/123`
-        the `file_id` is `123`.
-        Example: "12345"
-                :type file_id: str
-                :param file_version_id: The ID of the file version
-        Example: "1234"
-                :type file_version_id: str
-                :param if_match: Ensures this item hasn't recently changed before
-        making changes.
-
-        Pass in the item's last observed `etag` value
-        into this header and the endpoint will fail
-        with a `412 Precondition Failed` if it
-        has changed since., defaults to None
-                :type if_match: Optional[str], optional
-                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
-        """
-        if extra_headers is None:
-            extra_headers = {}
-        headers_map: Dict[str, str] = prepare_params(
-            {'if-match': to_string(if_match), **extra_headers}
-        )
-        response: FetchResponse = fetch(
-            FetchOptions(
-                url=''.join(
-                    [
-                        self.network_session.base_urls.base_url,
-                        '/2.0/files/',
-                        to_string(file_id),
-                        '/versions/',
-                        to_string(file_version_id),
-                    ]
-                ),
-                method='DELETE',
-                headers=headers_map,
-                response_format=None,
-                auth=self.auth,
-                network_session=self.network_session,
-            )
-        )
-        return None
 
     def promote_file_version(
         self,

@@ -2,8 +2,8 @@
 
 - [List all file versions](#list-all-file-versions)
 - [Get file version](#get-file-version)
-- [Restore file version](#restore-file-version)
 - [Remove file version](#remove-file-version)
+- [Restore file version](#restore-file-version)
 - [Promote file version](#promote-file-version)
 
 ## List all file versions
@@ -85,6 +85,41 @@ Not all available fields are returned by default. Use the
 [fields](#param-fields) query parameter to explicitly request
 any specific fields.
 
+## Remove file version
+
+Move a file version to the trash.
+
+Versions are only tracked for Box users with premium accounts.
+
+This operation is performed by calling function `delete_file_version_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-files-id-versions-id/).
+
+<!-- sample delete_files_id_versions_id -->
+
+```python
+client.file_versions.delete_file_version_by_id(file.id, file_version.id)
+```
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- file_version_id `str`
+  - The ID of the file version Example: "1234"
+- if_match `Optional[str]`
+  - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `None`.
+
+Returns an empty response when the file has been successfully
+deleted.
+
 ## Restore file version
 
 Restores a specific version of a file after it was deleted.
@@ -121,41 +156,6 @@ client.file_versions.update_file_version_by_id(
 This function returns a value of type `FileVersionFull`.
 
 Returns a restored file version object.
-
-## Remove file version
-
-Move a file version to the trash.
-
-Versions are only tracked for Box users with premium accounts.
-
-This operation is performed by calling function `delete_file_version_by_id`.
-
-See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id-versions-id/).
-
-<!-- sample delete_files_id_versions_id -->
-
-```python
-client.file_versions.delete_file_version_by_id(file.id, file_version.id)
-```
-
-### Arguments
-
-- file_id `str`
-  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
-- file_version_id `str`
-  - The ID of the file version Example: "1234"
-- if_match `Optional[str]`
-  - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
-- extra_headers `Optional[Dict[str, Optional[str]]]`
-  - Extra headers that will be included in the HTTP request.
-
-### Returns
-
-This function returns a value of type `None`.
-
-Returns an empty response when the file has been successfully
-deleted.
 
 ## Promote file version
 
