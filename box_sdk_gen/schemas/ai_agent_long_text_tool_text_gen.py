@@ -24,7 +24,7 @@ class AiAgentLongTextToolTextGenEmbeddingsStrategyField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The strategy used for the AI Agent for calculating embeddings., defaults to None
+        :param id: The strategy used for the AI agent for calculating embeddings., defaults to None
         :type id: Optional[str], optional
         :param num_tokens_per_chunk: The number of tokens per chunk., defaults to None
         :type num_tokens_per_chunk: Optional[int], optional
@@ -43,7 +43,7 @@ class AiAgentLongTextToolTextGenEmbeddingsField(BaseObject):
         **kwargs
     ):
         """
-        :param model: The model used for the AI Agent for calculating embeddings., defaults to None
+        :param model: The model used for the AI agent for calculating embeddings., defaults to None
         :type model: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -66,15 +66,15 @@ class AiAgentLongTextToolTextGen(AiAgentBasicTextToolTextGen):
         **kwargs
     ):
         """
-                :param system_message: System messages try to help the LLM "understand" its role and what it is supposed to do.
-        Input for `{current_date}` is optional, depending on the use., defaults to None
+                :param system_message: System messages aim at helping the LLM understand its role and what it is supposed to do.
+        The input for `{current_date}` is optional, depending on the use., defaults to None
                 :type system_message: Optional[str], optional
                 :param prompt_template: The prompt template contains contextual information of the request and the user prompt.
 
         When using the `prompt_template` parameter, you **must include** input for `{user_question}`.
         Inputs for `{current_date}` and `{content}` are optional, depending on the use., defaults to None
                 :type prompt_template: Optional[str], optional
-                :param model: The model used for the AI Agent for basic text. For specific model values, see the [available models list](g://box-ai/supported-models)., defaults to None
+                :param model: The model used for the AI agent for basic text. For specific model values, see the [available models list](g://box-ai/supported-models)., defaults to None
                 :type model: Optional[str], optional
                 :param num_tokens_for_completion: The number of tokens for completion., defaults to None
                 :type num_tokens_for_completion: Optional[int], optional

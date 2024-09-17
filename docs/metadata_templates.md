@@ -140,7 +140,7 @@ See the endpoint docs at
 
 ```python
 client.metadata_templates.delete_metadata_template(
-    DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
+    DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
 )
 ```
 
@@ -271,38 +271,34 @@ client.metadata_templates.create_metadata_template(
     template_key=template_key,
     fields=[
         CreateMetadataTemplateFields(
+            key="firstName",
+            display_name="First name",
+            description="Person first name",
             type=CreateMetadataTemplateFieldsTypeField.STRING.value,
-            key="name",
-            display_name="name",
         ),
         CreateMetadataTemplateFields(
-            type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
-            key="age",
-            display_name="age",
+            key="lastName",
+            display_name="Last name",
+            description="Person last name",
+            type=CreateMetadataTemplateFieldsTypeField.STRING.value,
         ),
         CreateMetadataTemplateFields(
+            key="dateOfBirth",
+            display_name="Birth date",
+            description="Person date of birth",
             type=CreateMetadataTemplateFieldsTypeField.DATE.value,
-            key="birthDate",
-            display_name="birthDate",
         ),
         CreateMetadataTemplateFields(
-            type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
-            key="countryCode",
-            display_name="countryCode",
-            options=[
-                CreateMetadataTemplateFieldsOptionsField(key="US"),
-                CreateMetadataTemplateFieldsOptionsField(key="CA"),
-            ],
+            key="age",
+            display_name="Age",
+            description="Person age",
+            type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
         ),
         CreateMetadataTemplateFields(
+            key="hobby",
+            display_name="Hobby",
+            description="Person hobby",
             type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
-            key="sports",
-            display_name="sports",
-            options=[
-                CreateMetadataTemplateFieldsOptionsField(key="basketball"),
-                CreateMetadataTemplateFieldsOptionsField(key="football"),
-                CreateMetadataTemplateFieldsOptionsField(key="tennis"),
-            ],
         ),
     ],
 )

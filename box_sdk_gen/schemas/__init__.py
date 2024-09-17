@@ -18,6 +18,8 @@ from box_sdk_gen.schemas.o_auth_2_error import *
 
 from box_sdk_gen.schemas.ai_response import *
 
+from box_sdk_gen.schemas.ai_extract_response import *
+
 from box_sdk_gen.schemas.app_item import *
 
 from box_sdk_gen.schemas.classification import *
@@ -332,6 +334,8 @@ from box_sdk_gen.schemas.zip_download import *
 
 from box_sdk_gen.schemas.zip_download_status import *
 
+from box_sdk_gen.schemas.ai_item_base import *
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params_google import *
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import *
@@ -349,6 +353,14 @@ from box_sdk_gen.schemas.ai_agent_text_gen import *
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import *
 
 from box_sdk_gen.schemas.ai_agent_long_text_tool import *
+
+from box_sdk_gen.schemas.ai_agent_extract_structured import *
+
+from box_sdk_gen.schemas.ai_extract_structured import *
+
+from box_sdk_gen.schemas.ai_agent_extract import *
+
+from box_sdk_gen.schemas.ai_extract import *
 
 from box_sdk_gen.schemas.ai_agent_ask import *
 
