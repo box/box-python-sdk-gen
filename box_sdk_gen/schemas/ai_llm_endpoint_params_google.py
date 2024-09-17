@@ -25,11 +25,9 @@ class AiLlmEndpointParamsGoogle(BaseObject):
                 :param type: The type of the AI LLM endpoint params object for Google.
         This parameter is **required**., defaults to AiLlmEndpointParamsGoogleTypeField.GOOGLE_PARAMS.value
                 :type type: AiLlmEndpointParamsGoogleTypeField, optional
-                :param temperature: The temperature is used for sampling during response generation, which occurs when `top-P` and `top-K` are applied.
-        Temperature controls the degree of randomness in token selection., defaults to None
+                :param temperature: The temperature is used for sampling during response generation, which occurs when `top-P` and `top-K` are applied. Temperature controls the degree of randomness in the token selection., defaults to None
                 :type temperature: Optional[float], optional
-                :param top_p: `Top-P` changes how the model selects tokens for output. Tokens are selected from the most (see `top-K`) to least probable
-        until the sum of their probabilities equals the `top-P` value., defaults to None
+                :param top_p: `Top-P` changes how the model selects tokens for output. Tokens are selected from the most (see `top-K`) to least probable until the sum of their probabilities equals the `top-P` value., defaults to None
                 :type top_p: Optional[float], optional
                 :param top_k: `Top-K` changes how the model selects tokens for output. A `top-K` of 1 means the next selected token is
         the most probable among all tokens in the model's vocabulary (also called greedy decoding),

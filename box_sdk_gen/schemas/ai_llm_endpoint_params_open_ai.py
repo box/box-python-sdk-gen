@@ -35,11 +35,10 @@ class AiLlmEndpointParamsOpenAi(BaseObject):
         of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability
         mass are considered. We generally recommend altering this or temperature but not both., defaults to None
                 :type top_p: Optional[float], optional
-                :param frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the
+                :param frequency_penalty: A number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the
         text so far, decreasing the model's likelihood to repeat the same line verbatim., defaults to None
                 :type frequency_penalty: Optional[float], optional
-                :param presence_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
-        increasing the model's likelihood to talk about new topics., defaults to None
+                :param presence_penalty: A number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics., defaults to None
                 :type presence_penalty: Optional[float], optional
                 :param stop: Up to 4 sequences where the API will stop generating further tokens., defaults to None
                 :type stop: Optional[str], optional

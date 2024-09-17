@@ -10,9 +10,9 @@ from box_sdk_gen.schemas.ai_response_full import AiResponseFull
 
 from box_sdk_gen.managers.ai import CreateAiAskMode
 
-from box_sdk_gen.managers.ai import CreateAiAskItems
+from box_sdk_gen.schemas.ai_item_base import AiItemBase
 
-from box_sdk_gen.managers.ai import CreateAiAskItemsTypeField
+from box_sdk_gen.schemas.ai_item_base import AiItemBaseTypeField
 
 from box_sdk_gen.schemas.ai_response import AiResponse
 
@@ -21,6 +21,10 @@ from box_sdk_gen.managers.ai import CreateAiTextGenItems
 from box_sdk_gen.managers.ai import CreateAiTextGenItemsTypeField
 
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
+
+from box_sdk_gen.schemas.ai_agent_extract import AiAgentExtract
+
+from box_sdk_gen.schemas.ai_agent_extract_structured import AiAgentExtractStructured
 
 from test.commons import get_default_client
 
@@ -50,9 +54,9 @@ def testAskAISingleItem():
         CreateAiAskMode.SINGLE_ITEM_QA.value,
         'which direction sun rises',
         [
-            CreateAiAskItems(
+            AiItemBase(
                 id=file_to_ask.id,
-                type=CreateAiAskItemsTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE.value,
                 content='Sun rises in the East',
             )
         ],
@@ -70,14 +74,14 @@ def testAskAIMultipleItems():
         CreateAiAskMode.MULTIPLE_ITEM_QA.value,
         'Which direction sun rises?',
         [
-            CreateAiAskItems(
+            AiItemBase(
                 id=file_to_ask_1.id,
-                type=CreateAiAskItemsTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE.value,
                 content='Earth goes around the sun',
             ),
-            CreateAiAskItems(
+            AiItemBase(
                 id=file_to_ask_2.id,
-                type=CreateAiAskItemsTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE.value,
                 content='Sun rises in the East in the morning',
             ),
         ],
@@ -122,10 +126,10 @@ def testAITextGenWithDialogueHistory():
 
 
 def testGettingAIAskAgentConfig():
-    ai_ask_config: Union[AiAgentAsk, AiAgentTextGen] = (
-        client.ai.get_ai_agent_default_config(
-            GetAiAgentDefaultConfigMode.ASK.value, language='en-US'
-        )
+    ai_ask_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
+        GetAiAgentDefaultConfigMode.ASK.value, language='en-US'
     )
     assert ai_ask_config.type == 'ai_agent_ask'
     assert not ai_ask_config.basic_text.model == ''
@@ -151,10 +155,10 @@ def testGettingAIAskAgentConfig():
 
 
 def testGettingAITextGenAgentConfig():
-    ai_text_gen_config: Union[AiAgentAsk, AiAgentTextGen] = (
-        client.ai.get_ai_agent_default_config(
-            GetAiAgentDefaultConfigMode.TEXT_GEN.value, language='en-US'
-        )
+    ai_text_gen_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
+        GetAiAgentDefaultConfigMode.TEXT_GEN.value, language='en-US'
     )
     assert ai_text_gen_config.type == 'ai_agent_text_gen'
     assert not ai_text_gen_config.basic_gen.llm_endpoint_params == None
