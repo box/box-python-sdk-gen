@@ -128,7 +128,7 @@ See the endpoint docs at
 
 ```python
 client.ai.get_ai_agent_default_config(
-    GetAiAgentDefaultConfigMode.TEXT_GEN.value, language="en-US"
+    GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED.value, language="en-US"
 )
 ```
 
@@ -166,7 +166,15 @@ This operation is performed by calling function `create_ai_extract`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-ai-extract/).
 
-_Currently we don't have an example for calling `create_ai_extract` in integration tests_
+<!-- sample post_ai_extract -->
+
+```python
+client.ai.create_ai_extract(
+    "firstName, lastName, location, yearOfBirth, company",
+    [AiItemBase(id=file.id)],
+    ai_agent=ai_extract_agent_config,
+)
+```
 
 ### Arguments
 
@@ -197,7 +205,16 @@ This operation is performed by calling function `create_ai_extract_structured`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-ai-extract-structured/).
 
-_Currently we don't have an example for calling `create_ai_extract_structured` in integration tests_
+<!-- sample post_ai_extract_structured -->
+
+```python
+client.ai.create_ai_extract_structured(
+    [AiItemBase(id=file.id)],
+    metadata_template=CreateAiExtractStructuredMetadataTemplate(
+        template_key=template_key, scope="enterprise"
+    ),
+)
+```
 
 ### Arguments
 

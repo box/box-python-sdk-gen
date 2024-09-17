@@ -3,7 +3,7 @@ import datetime
 import hashlib
 import os
 import uuid
-from time import time
+import time
 from enum import Enum
 from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
@@ -131,6 +131,10 @@ def decode_base_64_byte_stream(value: str) -> ByteStream:
     return BytesIO(base64.b64decode(value))
 
 
+def string_to_byte_stream(value: str) -> ByteStream:
+    return BytesIO(bytes(value, 'utf-8'))
+
+
 def read_byte_stream(byte_stream: ByteStream) -> Buffer:
     return Buffer(byte_stream.read())
 
@@ -230,7 +234,7 @@ def is_browser() -> bool:
 
 
 def get_epoch_time_in_seconds() -> int:
-    return int(time())
+    return int(time.time())
 
 
 class JwtAlgorithm(str, Enum):
@@ -337,6 +341,10 @@ def date_time_to_string(date_time: DateTime) -> str:
 
 def date_time_from_string(date_time: str) -> DateTime:
     return DateTime.fromisoformat(date_time.replace('Z', '+00:00'))
+
+
+def delay_in_seconds(seconds: int):
+    time.sleep(seconds)
 
 
 def create_null():
