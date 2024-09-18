@@ -237,6 +237,10 @@ def get_epoch_time_in_seconds() -> int:
     return int(time.time())
 
 
+def get_value_from_object_raw_data(obj: BaseObject, key: str) -> Any:
+    return obj.raw_data.get(key, None)
+
+
 class JwtAlgorithm(str, Enum):
     HS256 = 'HS256'
     HS384 = 'HS384'

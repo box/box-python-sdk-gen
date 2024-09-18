@@ -10,6 +10,7 @@ class BaseObject:
     _fields_to_json_mapping = {}
 
     def __init__(self, **kwargs):
+        self._raw_data: dict = {}
         self.__dict__.update(kwargs)
 
     @classmethod
@@ -23,9 +24,20 @@ class BaseObject:
             )
         return cls(**unpacked_attributes)
 
+    @property
+    def raw_data(self):
+        """
+        Returns the raw json representation returned by the API
+        :return: dict with the raw json data
+        """
+        return self._raw_data
+
     def to_dict(self) -> dict:
         result_dict = {}
         for k, v in vars(self).items():
+            # Skip private and protected attributes
+            if k.startswith("_"):
+                continue
             if v is None:
                 continue
             if isinstance(v, NullValue):
