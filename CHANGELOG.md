@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/box/box-codegen/compare/v1.4.1...v1.5.0) (2024-09-18)
+
+
+### Bug Fixes
+
+* Add the missing license to `setup.py` (box/box-codegen[#562](https://github.com/box/box-codegen/issues/562)) ([#307](https://github.com/box/box-codegen/issues/307)) ([679d789](https://github.com/box/box-codegen/commit/679d7891b2a20e7407b8c9f00bd95c3b294ab861))
+* Fix variants in metadata query results (box/box-openapi[#456](https://github.com/box/box-codegen/issues/456)) ([#313](https://github.com/box/box-codegen/issues/313)) ([8830303](https://github.com/box/box-codegen/commit/883030335e2a3c12a5e0b01d8a82df30ccce16a6))
+
+
+### New Features and Enhancements
+
+* Add support for proxy (box/box-codegen[#559](https://github.com/box/box-codegen/issues/559)) ([#302](https://github.com/box/box-codegen/issues/302)) ([3d881ac](https://github.com/box/box-codegen/commit/3d881acdebf2b18e2f0f82211f5abdcc32d1ddb0))
+* Introduce `raw_data` field for storing raw `json` response (box/box-codegen[#566](https://github.com/box/box-codegen/issues/566)) ([#319](https://github.com/box/box-codegen/issues/319)) ([3776dc3](https://github.com/box/box-codegen/commit/3776dc3d44bc09eb68da99f45e36e058dca2607e))
+* Support `ai/extract` and `ai/extract_structured` endpoints (box/box-codegen[#564](https://github.com/box/box-codegen/issues/564)) ([#317](https://github.com/box/box-codegen/issues/317)) ([b3d8da4](https://github.com/box/box-codegen/commit/b3d8da41007a9d47b73b699fd84da6f9540866d2))
+* Support App item associations (box/box-codegen[#561](https://github.com/box/box-codegen/issues/561)) ([#299](https://github.com/box/box-codegen/issues/299)) ([8b6ea0b](https://github.com/box/box-codegen/commit/8b6ea0bbec719a36eb11b6d214c08801c4f1a40b))
+
 ### [1.4.1](https://github.com/box/box-codegen/compare/v1.4.0...v1.4.1) (2024-08-30)
 
 
