@@ -20,5 +20,6 @@ def serialize(obj: Union[BaseObject, dict, list]) -> SerializedData:
 def deserialize(value: SerializedData, type: Type[BaseObject]):
     if get_origin(type) == Union:
         type = BaseObject._deserialize_union('', value, type)
-
-    return type.from_dict(value)
+    obj = type.from_dict(value)
+    obj._raw_data = value
+    return obj

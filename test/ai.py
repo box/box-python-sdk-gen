@@ -58,6 +58,8 @@ from box_sdk_gen.internal.utils import date_time_from_string
 
 from box_sdk_gen.internal.utils import date_time_to_string
 
+from box_sdk_gen.internal.utils import get_value_from_object_raw_data
+
 from test.commons import upload_new_file
 
 from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
@@ -210,7 +212,7 @@ def testAIExtract():
         ),
     )
     file: FileFull = uploaded_files.entries[0]
-    delay_in_seconds(1)
+    delay_in_seconds(2)
     response: AiResponse = client.ai.create_ai_extract(
         'firstName, lastName, location, yearOfBirth, company',
         [AiItemBase(id=file.id)],
@@ -240,7 +242,7 @@ def testAIExtractStructuredWithFields():
         ),
     )
     file: FileFull = uploaded_files.entries[0]
-    delay_in_seconds(1)
+    delay_in_seconds(2)
     response: AiExtractResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         fields=[
@@ -282,11 +284,11 @@ def testAIExtractStructuredWithFields():
         ],
         ai_agent=ai_extract_structured_agent_config,
     )
-    assert response.firstName == 'John'
-    assert response.lastName == 'Doe'
-    assert response.dateOfBirth == '1990-07-04'
-    assert response.age == 34
-    assert response.hobby == ['guitar', 'books']
+    assert get_value_from_object_raw_data(response, 'firstName') == 'John'
+    assert get_value_from_object_raw_data(response, 'lastName') == 'Doe'
+    assert get_value_from_object_raw_data(response, 'dateOfBirth') == '1990-07-04'
+    assert get_value_from_object_raw_data(response, 'age') == 34
+    assert get_value_from_object_raw_data(response, 'hobby') == ['guitar', 'books']
     client.files.delete_file_by_id(file.id)
 
 
@@ -345,11 +347,11 @@ def testAIExtractStructuredWithMetadataTemplate():
             template_key=template_key, scope='enterprise'
         ),
     )
-    assert response.firstName == 'John'
-    assert response.lastName == 'Doe'
-    assert response.dateOfBirth == '1990-07-04'
-    assert response.age == 34
-    assert response.hobby == ['guitar', 'books']
+    assert get_value_from_object_raw_data(response, 'firstName') == 'John'
+    assert get_value_from_object_raw_data(response, 'lastName') == 'Doe'
+    assert get_value_from_object_raw_data(response, 'dateOfBirth') == '1990-07-04'
+    assert get_value_from_object_raw_data(response, 'age') == 34
+    assert get_value_from_object_raw_data(response, 'hobby') == ['guitar', 'books']
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
     )
