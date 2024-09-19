@@ -64,7 +64,7 @@ class NetworkSession:
         proxy_auth = (
             f'{config.username}:{config.password}@'
             if config.username and config.password
-            else None
+            else ''
         )
         proxy_url = f'http://{proxy_auth}{proxy_host}'
         return NetworkSession(self.additional_headers, self.base_urls, proxy_url)
