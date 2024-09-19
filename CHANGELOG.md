@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/box/box-codegen/compare/v1.5.0...v1.5.1) (2024-09-19)
+
+
+### Bug Fixes
+
+* Fix proxy `url` without proxy credentials (box/box-codegen[#568](https://github.com/box/box-codegen/issues/568)) ([#322](https://github.com/box/box-codegen/issues/322)) ([fb19160](https://github.com/box/box-codegen/commit/fb19160307b58d5f08bb12e0f846d71ff936ad6a)), closes [#318](https://github.com/box/box-codegen/issues/318)
+* Stop sending last empty chunk for chunk upload (box/box-codegen[#569](https://github.com/box/box-codegen/issues/569)) ([#324](https://github.com/box/box-codegen/issues/324)) ([1605f04](https://github.com/box/box-codegen/commit/1605f0495994b333e735bc98f28fa714324b75f5)), closes [#321](https://github.com/box/box-codegen/issues/321)
+
 ## [1.5.0](https://github.com/box/box-codegen/compare/v1.4.1...v1.5.0) (2024-09-18)
 
 
