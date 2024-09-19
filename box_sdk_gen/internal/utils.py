@@ -208,7 +208,8 @@ def iterate_chunks(
                 break
             chunk += bytes_read
             copied_length += len(bytes_read)
-        yield BytesIO(chunk)
+        if chunk:
+            yield BytesIO(chunk)
 
 
 def reduce_iterator(
