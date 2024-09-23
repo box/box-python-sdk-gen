@@ -1,5 +1,7 @@
 from typing import Union
 
+from box_sdk_gen.internal.utils import to_string
+
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.managers.ai import GetAiAgentDefaultConfigMode
@@ -212,7 +214,7 @@ def testAIExtract():
         ),
     )
     file: FileFull = uploaded_files.entries[0]
-    delay_in_seconds(2)
+    delay_in_seconds(5)
     response: AiResponse = client.ai.create_ai_extract(
         'firstName, lastName, location, yearOfBirth, company',
         [AiItemBase(id=file.id)],
@@ -242,7 +244,7 @@ def testAIExtractStructuredWithFields():
         ),
     )
     file: FileFull = uploaded_files.entries[0]
-    delay_in_seconds(2)
+    delay_in_seconds(5)
     response: AiExtractResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         fields=[
@@ -284,11 +286,16 @@ def testAIExtractStructuredWithFields():
         ],
         ai_agent=ai_extract_structured_agent_config,
     )
-    assert get_value_from_object_raw_data(response, 'firstName') == 'John'
-    assert get_value_from_object_raw_data(response, 'lastName') == 'Doe'
-    assert get_value_from_object_raw_data(response, 'dateOfBirth') == '1990-07-04'
-    assert get_value_from_object_raw_data(response, 'age') == 34
-    assert get_value_from_object_raw_data(response, 'hobby') == ['guitar', 'books']
+    assert to_string(get_value_from_object_raw_data(response, 'firstName')) == 'John'
+    assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'dateOfBirth'))
+        == '1990-07-04'
+    )
+    assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
+    assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
+        ['guitar', 'books']
+    )
     client.files.delete_file_by_id(file.id)
 
 
@@ -303,6 +310,7 @@ def testAIExtractStructuredWithMetadataTemplate():
         ),
     )
     file: FileFull = uploaded_files.entries[0]
+    delay_in_seconds(5)
     template_key: str = ''.join(['key', get_uuid()])
     template: MetadataTemplate = client.metadata_templates.create_metadata_template(
         'enterprise',
@@ -347,11 +355,16 @@ def testAIExtractStructuredWithMetadataTemplate():
             template_key=template_key, scope='enterprise'
         ),
     )
-    assert get_value_from_object_raw_data(response, 'firstName') == 'John'
-    assert get_value_from_object_raw_data(response, 'lastName') == 'Doe'
-    assert get_value_from_object_raw_data(response, 'dateOfBirth') == '1990-07-04'
-    assert get_value_from_object_raw_data(response, 'age') == 34
-    assert get_value_from_object_raw_data(response, 'hobby') == ['guitar', 'books']
+    assert to_string(get_value_from_object_raw_data(response, 'firstName')) == 'John'
+    assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'dateOfBirth'))
+        == '1990-07-04'
+    )
+    assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
+    assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
+        ['guitar', 'books']
+    )
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
     )
