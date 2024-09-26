@@ -816,7 +816,7 @@ class FoldersManager:
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderFull:
-        """
+        r"""
                 Creates a new empty folder within the specified parent folder.
                 :param name: The name for the new folder.
 
@@ -881,7 +881,7 @@ class FoldersManager:
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderFull:
-        """
+        r"""
                 Creates a copy of a folder within a destination folder.
 
                 The original folder will not be changed.

@@ -528,7 +528,7 @@ class FilesManager:
         fields: Optional[List[str]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FileFull:
-        """
+        r"""
                 Creates a copy of a file.
                 :param file_id: The unique identifier that represents a file.
 
