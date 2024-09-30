@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: $
+          token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
 
       - name: Set up Git
         run: |
@@ -24,7 +24,7 @@ jobs:
 
       - name: Auto update pull requests
         run: |
-          PR_LIST=$(curl -s -H "Authorization: Bearer $" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
+          PR_LIST=$(curl -s -H "Authorization: Bearer ${{ secrets.DISPATCH_ACCESS_TOKEN }}" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls?state=open" | jq -r '.[] | .head.ref')
           for pr_branch in $PR_LIST; do
             git checkout "$pr_branch"
             if git merge origin/main; then
