@@ -24,6 +24,10 @@ from box_sdk_gen.networking.fetch import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
+from box_sdk_gen.internal.utils import write_input_stream_to_output_stream
+
+from box_sdk_gen.internal.utils import OutputStream
+
 
 class DownloadsManager:
     def __init__(
@@ -109,3 +113,62 @@ class DownloadsManager:
             )
         )
         return response.content
+
+    def download_file_to_output_stream(
+        self,
+        file_id: str,
+        output_stream: OutputStream,
+        *,
+        version: Optional[str] = None,
+        access_token: Optional[str] = None,
+        range: Optional[str] = None,
+        boxapi: Optional[str] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
+        """
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param output_stream: Download file to a given output stream
+                :type output_stream: OutputStream
+                :param version: The file version to download, defaults to None
+                :type version: Optional[str], optional
+                :param access_token: An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication.
+        When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders., defaults to None
+                :type access_token: Optional[str], optional
+                :param range: The byte range of the content to download.
+
+        The format `bytes={start_byte}-{end_byte}` can be used to specify
+        what section of the file to download., defaults to None
+                :type range: Optional[str], optional
+                :param boxapi: The URL, and optional password, for the shared link of this item.
+
+        This header can be used to access items that have not been
+        explicitly shared with a user.
+
+        Use the format `shared_link=[link]` or if a password is required then
+        use `shared_link=[link]&shared_link_password=[password]`.
+
+        This header can be used on the file or folder shared, as well as on any files
+        or folders nested within the item., defaults to None
+                :type boxapi: Optional[str], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        download_stream: ByteStream = self.download_file(
+            file_id,
+            version=version,
+            access_token=access_token,
+            range=range,
+            boxapi=boxapi,
+            extra_headers=extra_headers,
+        )
+        write_input_stream_to_output_stream(download_stream, output_stream)

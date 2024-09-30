@@ -2,11 +2,12 @@ import base64
 import datetime
 import hashlib
 import os
+import shutil
 import uuid
 import time
 from enum import Enum
 from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
-from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, Optional, TypeVar, BinaryIO
 
 try:
     import jwt
@@ -21,6 +22,7 @@ from ..serialization.json.serializer import serialize
 from .null_value import null
 
 ByteStream = BufferedIOBase
+OutputStream = BinaryIO
 Buffer = bytes
 
 
@@ -137,6 +139,25 @@ def string_to_byte_stream(value: str) -> ByteStream:
 
 def read_byte_stream(byte_stream: ByteStream) -> Buffer:
     return Buffer(byte_stream.read())
+
+
+def write_input_stream_to_output_stream(
+    input_stream: ByteStream, output_stream: OutputStream
+):
+    shutil.copyfileobj(input_stream, output_stream)
+
+
+def get_file_output_stream(file_path: str) -> OutputStream:
+    return open(file_path, 'wb')
+
+
+def close_file_output_stream(file_output_stream: OutputStream):
+    file_output_stream.close()
+
+
+def read_buffer_from_file(path: str) -> bytes:
+    with open(path, 'rb') as file:
+        return file.read()
 
 
 def prepare_params(map: Dict[str, Optional[str]]) -> Dict[str, str]:
