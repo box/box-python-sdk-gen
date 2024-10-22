@@ -8,17 +8,17 @@ from box_sdk_gen.schemas.integration_mapping_base import IntegrationMappingBaseT
 
 from box_sdk_gen.schemas.integration_mapping_base import IntegrationMappingBase
 
-from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
-    IntegrationMappingPartnerItemSlack,
-)
-
-from box_sdk_gen.schemas.folder_mini import FolderMini
-
 from box_sdk_gen.schemas.integration_mapping_slack_options import (
     IntegrationMappingSlackOptions,
 )
 
 from box_sdk_gen.schemas.user_integration_mappings import UserIntegrationMappings
+
+from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
+    IntegrationMappingPartnerItemSlack,
+)
+
+from box_sdk_gen.schemas.folder_mini import FolderMini
 
 from box_sdk_gen.internal.utils import DateTime
 
@@ -45,7 +45,7 @@ class IntegrationMapping(IntegrationMappingBase):
         **kwargs
     ):
         """
-                :param partner_item: Mapped item object for Slack or Teams
+                :param partner_item: Mapped item object for Slack
                 :type partner_item: Union[IntegrationMappingPartnerItemSlack]
                 :param box_item: The Box folder, to which the object from the
         partner app domain (referenced in `partner_item_id`) is mapped

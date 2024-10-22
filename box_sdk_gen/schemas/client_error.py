@@ -1,8 +1,8 @@
 from enum import Enum
 
-from typing import Optional
-
 from box_sdk_gen.internal.base_object import BaseObject
+
+from typing import Optional
 
 
 class ClientErrorTypeField(str, Enum):
@@ -30,13 +30,8 @@ class ClientErrorCodeField(str, Enum):
 
 
 class ClientErrorContextInfoField(BaseObject):
-    def __init__(self, *, message: Optional[str] = None, **kwargs):
-        """
-        :param message: More details on the error., defaults to None
-        :type message: Optional[str], optional
-        """
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.message = message
 
 
 class ClientError(BaseObject):
