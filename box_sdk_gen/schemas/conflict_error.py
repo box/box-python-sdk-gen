@@ -8,8 +8,6 @@ from box_sdk_gen.schemas.client_error import ClientErrorTypeField
 
 from box_sdk_gen.schemas.client_error import ClientErrorCodeField
 
-from box_sdk_gen.schemas.client_error import ClientErrorContextInfoField
-
 from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.file_conflict import FileConflict
@@ -33,7 +31,7 @@ class ConflictError(ClientError):
         status: Optional[int] = None,
         code: Optional[ClientErrorCodeField] = None,
         message: Optional[str] = None,
-        context_info: Optional[ClientErrorContextInfoField] = None,
+        context_info: Optional[Dict] = None,
         help_url: Optional[str] = None,
         request_id: Optional[str] = None,
         **kwargs
@@ -50,7 +48,7 @@ class ConflictError(ClientError):
                 :param context_info: A free-form object that contains additional context
         about the error. The possible fields are defined on
         a per-endpoint basis. `message` is only one example., defaults to None
-                :type context_info: Optional[ClientErrorContextInfoField], optional
+                :type context_info: Optional[Dict], optional
                 :param help_url: A URL that links to more information about why this error occurred., defaults to None
                 :type help_url: Optional[str], optional
                 :param request_id: A unique identifier for this response, which can be used
