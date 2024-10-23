@@ -4,6 +4,8 @@ from typing import List
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from typing import Dict
+
 from box_sdk_gen.schemas.client_error import ClientErrorTypeField
 
 from box_sdk_gen.schemas.client_error import ClientErrorCodeField
