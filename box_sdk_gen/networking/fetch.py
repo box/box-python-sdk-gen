@@ -182,8 +182,8 @@ def __prepare_request(
                     fields[part.part_name] = sd_to_json(part.data)
                 else:
                     file_stream = part.file_stream
-                    file_stream_position = file_stream.tell()
-                    file_stream.seek(file_stream_position)
+                    if file_stream.tell() != 0:
+                        file_stream.seek(0)
                     fields[part.part_name] = (
                         part.file_name or '',
                         file_stream,
