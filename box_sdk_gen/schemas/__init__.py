@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.ai_extract_response import *
 
 from box_sdk_gen.schemas.ai_item_base import *
 
+from box_sdk_gen.schemas.ai_llm_endpoint_params_aws import *
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params_google import *
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import *

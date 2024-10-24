@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import AiLlmEndpointPara
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_google import AiLlmEndpointParamsGoogle
 
+from box_sdk_gen.schemas.ai_llm_endpoint_params_aws import AiLlmEndpointParamsAws
+
 
 class AiAgentBasicTextToolBase(BaseObject):
     def __init__(
@@ -16,7 +18,11 @@ class AiAgentBasicTextToolBase(BaseObject):
         model: Optional[str] = None,
         num_tokens_for_completion: Optional[int] = None,
         llm_endpoint_params: Optional[
-            Union[AiLlmEndpointParamsOpenAi, AiLlmEndpointParamsGoogle]
+            Union[
+                AiLlmEndpointParamsOpenAi,
+                AiLlmEndpointParamsGoogle,
+                AiLlmEndpointParamsAws,
+            ]
         ] = None,
         **kwargs
     ):
@@ -26,7 +32,7 @@ class AiAgentBasicTextToolBase(BaseObject):
         :param num_tokens_for_completion: The number of tokens for completion., defaults to None
         :type num_tokens_for_completion: Optional[int], optional
         :param llm_endpoint_params: The parameters for the LLM endpoint specific to OpenAI / Google models., defaults to None
-        :type llm_endpoint_params: Optional[Union[AiLlmEndpointParamsOpenAi, AiLlmEndpointParamsGoogle]], optional
+        :type llm_endpoint_params: Optional[Union[AiLlmEndpointParamsOpenAi, AiLlmEndpointParamsGoogle, AiLlmEndpointParamsAws]], optional
         """
         super().__init__(**kwargs)
         self.model = model
