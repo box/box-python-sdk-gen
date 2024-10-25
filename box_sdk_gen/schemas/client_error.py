@@ -1,8 +1,10 @@
 from enum import Enum
 
-from box_sdk_gen.internal.base_object import BaseObject
-
 from typing import Optional
+
+from typing import Dict
+
+from box_sdk_gen.internal.base_object import BaseObject
 
 
 class ClientErrorTypeField(str, Enum):
@@ -29,11 +31,6 @@ class ClientErrorCodeField(str, Enum):
     INSUFFICIENT_SCOPE = 'insufficient_scope'
 
 
-class ClientErrorContextInfoField(BaseObject):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-
 class ClientError(BaseObject):
     _discriminator = 'type', {'error'}
 
@@ -44,7 +41,7 @@ class ClientError(BaseObject):
         status: Optional[int] = None,
         code: Optional[ClientErrorCodeField] = None,
         message: Optional[str] = None,
-        context_info: Optional[ClientErrorContextInfoField] = None,
+        context_info: Optional[Dict] = None,
         help_url: Optional[str] = None,
         request_id: Optional[str] = None,
         **kwargs
@@ -61,7 +58,7 @@ class ClientError(BaseObject):
                 :param context_info: A free-form object that contains additional context
         about the error. The possible fields are defined on
         a per-endpoint basis. `message` is only one example., defaults to None
-                :type context_info: Optional[ClientErrorContextInfoField], optional
+                :type context_info: Optional[Dict], optional
                 :param help_url: A URL that links to more information about why this error occurred., defaults to None
                 :type help_url: Optional[str], optional
                 :param request_id: A unique identifier for this response, which can be used
