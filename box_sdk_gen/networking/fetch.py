@@ -104,6 +104,9 @@ def fetch(options: FetchOptions) -> FetchResponse:
     attempt_nr = 1
     response = APIResponse()
 
+    options_stream_position = __get_options_stream_position(options)
+    multipart_streams_positions = __get_multipart_stream_positions(options)
+
     while True:
         request: APIRequest = __prepare_request(
             options=options, reauthenticate=response.reauthentication_needed
@@ -160,8 +163,13 @@ def fetch(options: FetchOptions) -> FetchResponse:
             )
         )
 
-        if options.file_stream and options.file_stream.seekable():
-            options.file_stream.seek(0)
+        __reset_options_stream(
+            options, options_stream_position, response.raised_exception
+        )
+        __reset_multipart_streams(
+            options, multipart_streams_positions, response.raised_exception
+        )
+
         attempt_nr += 1
 
     __raise_on_unsuccessful_request(request=request, response=response)
@@ -181,12 +189,9 @@ def __prepare_request(
                 if part.data:
                     fields[part.part_name] = sd_to_json(part.data)
                 else:
-                    file_stream = part.file_stream
-                    if file_stream.tell() != 0:
-                        file_stream.seek(0)
                     fields[part.part_name] = (
                         part.file_name or '',
-                        file_stream,
+                        part.file_stream,
                         part.content_type,
                     )
 
@@ -322,3 +327,70 @@ def __get_retry_after_time(
     ) + min_randomization
     exponential = math.pow(2, attempt_number)
     return exponential * _RETRY_BASE_INTERVAL * randomization
+
+
+def __get_multipart_stream_positions(options: FetchOptions) -> dict:
+    multipart_streams_positions = {}
+    if options.multipart_data:
+        for part in options.multipart_data:
+            if part.file_stream and part.file_stream.seekable():
+                multipart_streams_positions[part.part_name] = part.file_stream.tell()
+    return multipart_streams_positions
+
+
+def __get_options_stream_position(options: FetchOptions) -> int:
+    filestream_position = 0
+    if options.file_stream and options.file_stream.seekable():
+        filestream_position = options.file_stream.tell()
+    return filestream_position
+
+
+def __validate_seekable(stream: ByteStream, raised_exception: Optional[Exception]):
+    if not stream.seekable():
+        raise BoxSDKError(
+            message='Request with non-seekable stream cannot be retried',
+            error=raised_exception,
+        )
+
+
+def __reset_stream(
+    stream: ByteStream, original_position: int, raised_exception: Optional[Exception]
+):
+    __validate_seekable(stream, raised_exception)
+    stream.seek(original_position)
+
+
+def __reset_options_stream(
+    options: FetchOptions,
+    filestream_position: int,
+    raised_exception: Optional[Exception],
+):
+    if options.file_stream:
+        __reset_stream(options.file_stream, filestream_position, raised_exception)
+
+
+def __reset_multipart_streams(
+    options: FetchOptions,
+    multipart_streams_positions: dict,
+    raised_exception: Optional[Exception],
+):
+    if not options.multipart_data:
+        return
+
+    for part in options.multipart_data:
+        if not part.file_stream:
+            continue
+
+        position = multipart_streams_positions.get(part.part_name)
+        # we didn't get position before sending request hence the stream must be non-seekable
+        if position is None:
+            raise BoxSDKError(
+                message='Request with non-seekable stream cannot be retried',
+                error=raised_exception,
+            )
+
+        __reset_stream(
+            part.file_stream,
+            multipart_streams_positions[part.part_name],
+            raised_exception,
+        )

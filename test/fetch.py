@@ -1,7 +1,7 @@
 import pytest
 import json
 from collections import OrderedDict
-from io import BytesIO
+from io import BytesIO, RawIOBase, UnsupportedOperation, SEEK_SET
 from unittest import mock
 from unittest.mock import Mock, patch
 from requests import Session, Response, RequestException
@@ -23,6 +23,10 @@ from box_sdk_gen.networking.fetch import (
     __raise_on_unsuccessful_request,
     __get_retry_after_time,
     USER_AGENT_HEADER,
+    __get_options_stream_position,
+    __get_multipart_stream_positions,
+    __reset_options_stream,
+    __reset_multipart_streams,
     X_BOX_UA_HEADER,
     APIRequest,
     APIResponse,
@@ -39,6 +43,25 @@ def mock_requests_session():
 @pytest.fixture
 def mock_byte_stream():
     return BytesIO(b'123')
+
+
+@pytest.fixture
+def mock_non_seekable_stream():
+    return NonSeekableStream(b'123')
+
+
+class NonSeekableStream(RawIOBase):
+    def __init__(self, data: bytes):
+        self._buffer = BytesIO(data)
+
+    def read(self, size=-1):
+        return self._buffer.read(size)
+
+    def seekable(self) -> bool:
+        return False
+
+    def seek(self, offset, whence=SEEK_SET):
+        raise UnsupportedOperation("Stream is not seekable")
 
 
 @pytest.fixture
@@ -827,3 +850,125 @@ def test_proxy_config():
     requests_session = client.network_session.requests_session
     assert requests_session.proxies['http'] == 'http://user:pass@127.0.0.1:3128/'
     assert requests_session.proxies['https'] == 'http://user:pass@127.0.0.1:3128/'
+
+
+def test_get_options_stream_position(mock_byte_stream):
+    mock_byte_stream.seek(1)
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        file_stream=mock_byte_stream,
+    )
+
+    assert __get_options_stream_position(options) == 1
+
+
+def test_get_multipart_stream_position(mock_byte_stream):
+    mock_byte_stream.seek(1)
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        multipart_data=[
+            MultipartItem(part_name='attributes', data={'name': 'file.pdf'}),
+            MultipartItem(
+                part_name='file', file_stream=mock_byte_stream, file_name='file.pdf'
+            ),
+        ],
+    )
+
+    assert __get_multipart_stream_positions(options) == {'file': 1}
+
+
+def test_get_multipart_stream_position_empty():
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        multipart_data=[
+            MultipartItem(part_name='attributes', data={'name': 'file.pdf'}),
+        ],
+    )
+
+    assert __get_multipart_stream_positions(options) == {}
+
+
+def test_reset_options_stream(mock_byte_stream):
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        file_stream=mock_byte_stream,
+    )
+
+    mock_byte_stream.seek(1)
+    original_position = __get_options_stream_position(options)
+    mock_byte_stream.seek(2)
+
+    __reset_options_stream(options, original_position, None)
+
+    assert options.file_stream.tell() == 1
+
+
+def test_reset_options_stream_non_seekable_stream(mock_non_seekable_stream):
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        file_stream=mock_non_seekable_stream,
+    )
+
+    original_position = __get_options_stream_position(options)
+
+    with pytest.raises(BoxSDKError):
+        __reset_options_stream(options, original_position, None)
+
+
+def test_reset_multipart_stream(mock_byte_stream):
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        multipart_data=[
+            MultipartItem(part_name='attributes', data={'name': 'file.pdf'}),
+            MultipartItem(
+                part_name='file', file_stream=mock_byte_stream, file_name='file.pdf'
+            ),
+        ],
+    )
+
+    mock_byte_stream.seek(1)
+    original_positions = __get_multipart_stream_positions(options)
+    mock_byte_stream.seek(2)
+
+    __reset_multipart_streams(options, original_positions, None)
+
+    assert options.multipart_data[1].file_stream.tell() == 1
+
+
+def test_reset_multipart_non_seekable_stream(mock_non_seekable_stream):
+    options = FetchOptions(
+        url="https://example.com",
+        method="POST",
+        data={'key': 'value'},
+        content_type='multipart/form-data',
+        multipart_data=[
+            MultipartItem(part_name='attributes', data={'name': 'file.pdf'}),
+            MultipartItem(
+                part_name='file',
+                file_stream=mock_non_seekable_stream,
+                file_name='file.pdf',
+            ),
+        ],
+    )
+
+    original_positions = __get_multipart_stream_positions(options)
+
+    with pytest.raises(BoxSDKError):
+        __reset_multipart_streams(options, original_positions, None)
