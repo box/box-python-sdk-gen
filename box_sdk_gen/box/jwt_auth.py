@@ -372,12 +372,12 @@ class BoxJWTAuth(Authentication):
         return new_auth
 
     def with_enterprise_subject(
-        self, user_id: str, *, token_storage: TokenStorage = None
+        self, enterprise_id: str, *, token_storage: TokenStorage = None
     ) -> 'BoxJWTAuth':
         """
         Create a new BoxJWTAuth instance that uses the provided enterprise ID as the subject of the JWT assertion.
-        :param user_id: The id of the enterprise to authenticate
-        :type user_id: str
+        :param enterprise_id: The id of the enterprise to authenticate
+        :type enterprise_id: str
         :param token_storage: Object responsible for storing token in newly created BoxJWTAuth. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: TokenStorage, optional
         """
@@ -386,7 +386,7 @@ class BoxJWTAuth(Authentication):
         new_config: JWTConfig = JWTConfig(
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
-            enterprise_id=user_id,
+            enterprise_id=enterprise_id,
             user_id=None,
             jwt_key_id=self.config.jwt_key_id,
             private_key=self.config.private_key,
