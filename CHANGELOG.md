@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/box/box-codegen/compare/v1.5.1...v1.6.0) (2024-10-30)
+
+
+### Bug Fixes
+
+* Set stream position to 0 for multipart requests (box/box-codegen[#581](https://github.com/box/box-codegen/issues/581)) ([#348](https://github.com/box/box-codegen/issues/348)) ([fa6942c](https://github.com/box/box-codegen/commit/fa6942c231024947250955ccc52f352744ab5f38))
+* Update client error schema (box/box-openapi[#467](https://github.com/box/box-codegen/issues/467)) ([#347](https://github.com/box/box-codegen/issues/347)) ([a42a253](https://github.com/box/box-codegen/commit/a42a2532337c79d20b6524fda0acf717d9ccbd5f))
+* Use original stream position when retrying requests (box/box-codegen[#583](https://github.com/box/box-codegen/issues/583)) ([#358](https://github.com/box/box-codegen/issues/358)) ([060b4dc](https://github.com/box/box-codegen/commit/060b4dc2b8bbbc1e17cce0fc049394e0527952b7))
+* use raw `docstrings` when comments contain backslash (box/box-codegen[#571](https://github.com/box/box-codegen/issues/571)) ([#330](https://github.com/box/box-codegen/issues/330)) ([8dd8cb7](https://github.com/box/box-codegen/commit/8dd8cb71105c200bd03f5f894a4dbfb42baf0865))
+
+
+### New Features and Enhancements
+
+* Add `download_file_to_output_stream` method to `DownloadsManager` (box/box-codegen[#575](https://github.com/box/box-codegen/issues/575)) ([#334](https://github.com/box/box-codegen/issues/334)) ([6820d08](https://github.com/box/box-codegen/commit/6820d08f37c5c0605a580391bef2dc4f2a384c00))
+* add AI LLM endpoint AWS `params` (box/box-openapi[#478](https://github.com/box/box-codegen/issues/478)) ([#354](https://github.com/box/box-codegen/issues/354)) ([c8fa2c1](https://github.com/box/box-codegen/commit/c8fa2c1131154d07a500290db6a7b34b06005c2b))
+
 ### [1.5.1](https://github.com/box/box-codegen/compare/v1.5.0...v1.5.1) (2024-09-19)
 
 
