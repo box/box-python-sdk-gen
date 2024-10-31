@@ -134,7 +134,7 @@ class SearchManager:
         ancestor_folder_id: str,
         *,
         query: Optional[str] = None,
-        query_params: Optional[Dict[str, str]] = None,
+        query_params: Optional[Dict] = None,
         order_by: Optional[List[SearchByMetadataQueryOrderBy]] = None,
         limit: Optional[int] = None,
         marker: Optional[str] = None,
@@ -176,7 +176,7 @@ class SearchManager:
                 :param query_params: Set of arguments corresponding to the parameters specified in the
         `query`. The type of each parameter used in the `query_params` must match
         the type of the corresponding metadata template field., defaults to None
-                :type query_params: Optional[Dict[str, str]], optional
+                :type query_params: Optional[Dict], optional
                 :param order_by: A list of template fields and directions to sort the metadata query
         results by.
 

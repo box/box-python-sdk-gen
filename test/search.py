@@ -12,6 +12,10 @@ from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsTypeField,
 )
 
+from box_sdk_gen.managers.metadata_templates import (
+    CreateMetadataTemplateFieldsOptionsField,
+)
+
 from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.managers.uploads import UploadFileAttributes
@@ -35,10 +39,6 @@ from box_sdk_gen.schemas.search_results_with_shared_links import (
 )
 
 from box_sdk_gen.managers.search import SearchForContentTrashContent
-
-from box_sdk_gen.managers.metadata_templates import (
-    CreateMetadataTemplateFieldsOptionsField,
-)
 
 from box_sdk_gen.schemas.metadata_filter import MetadataFilter
 
@@ -71,9 +71,14 @@ def testCreateMetaDataQueryExecuteRead():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
-                key='testName',
-                display_name='testName',
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                key='testColor',
+                display_name='testColor',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='red'),
+                    CreateMetadataTemplateFieldsOptionsField(key='green'),
+                    CreateMetadataTemplateFieldsOptionsField(key='blue'),
+                ],
             )
         ],
     )
@@ -89,13 +94,16 @@ def testCreateMetaDataQueryExecuteRead():
         file.id,
         CreateFileMetadataByIdScope.ENTERPRISE.value,
         template_key,
-        {'testName': 1},
+        {'testColor': ['red', 'blue']},
     )
     assert metadata.template == template_key
     assert metadata.scope == template.scope
     search_from: str = ''.join([template.scope, '.', template.template_key])
     query: MetadataQueryResults = client.search.search_by_metadata_query(
-        search_from, '0', query='testName >= :value', query_params={'value': '0.0'}
+        search_from,
+        '0',
+        query='testColor = :value',
+        query_params={'value': ['red', 'blue']},
     )
     assert len(query.entries) >= 0
     client.metadata_templates.delete_metadata_template(
