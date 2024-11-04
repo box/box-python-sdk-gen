@@ -21,7 +21,10 @@ See the endpoint docs at
 
 ```python
 client.search.search_by_metadata_query(
-    search_from, "0", query="testName >= :value", query_params={"value": "0.0"}
+    search_from,
+    "0",
+    query="testColor = :value",
+    query_params={"value": ["red", "blue"]},
 )
 ```
 
@@ -31,7 +34,7 @@ client.search.search_by_metadata_query(
   - Specifies the template used in the query. Must be in the form `scope.templateKey`. Not all templates can be used in this field, most notably the built-in, Box-provided classification templates can not be used in a query.
 - query `Optional[str]`
   - The query to perform. A query is a logical expression that is very similar to a SQL `SELECT` statement. Values in the search query can be turned into parameters specified in the `query_param` arguments list to prevent having to manually insert search values into the query string. For example, a value of `:amount` would represent the `amount` value in `query_params` object.
-- query_params `Optional[Dict[str, str]]`
+- query_params `Optional[Dict]`
   - Set of arguments corresponding to the parameters specified in the `query`. The type of each parameter used in the `query_params` must match the type of the corresponding metadata template field.
 - ancestor_folder_id `str`
   - The ID of the folder that you are restricting the query to. A value of zero will return results from all folders you have access to. A non-zero value will only return results found in the folder corresponding to the ID or in any of its subfolders.
