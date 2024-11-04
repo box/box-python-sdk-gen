@@ -83,7 +83,11 @@ This operation is performed by calling function `get_collection_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-collections-id/).
 
-_Currently we don't have an example for calling `get_collection_by_id` in integration tests_
+<!-- sample get_collections_id -->
+
+```python
+client.collections.get_collection_by_id(collections.entries[0].id)
+```
 
 ### Arguments
 
