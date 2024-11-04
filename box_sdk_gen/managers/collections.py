@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.items import Items
 
+from box_sdk_gen.schemas.collection import Collection
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -176,3 +178,38 @@ class CollectionsManager:
             )
         )
         return deserialize(response.data, Items)
+
+    def get_collection_by_id(
+        self,
+        collection_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> Collection:
+        """
+                Retrieves a collection by its ID.
+                :param collection_id: The ID of the collection.
+        Example: "926489"
+                :type collection_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/collections/',
+                        to_string(collection_id),
+                    ]
+                ),
+                method='GET',
+                headers=headers_map,
+                response_format='json',
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, Collection)

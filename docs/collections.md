@@ -2,6 +2,7 @@
 
 - [List all collections](#list-all-collections)
 - [List collection items](#list-collection-items)
+- [Get collection by ID](#get-collection-by-id)
 
 ## List all collections
 
@@ -70,5 +71,29 @@ client.collections.get_collection_items(favourite_collection.id)
 ### Returns
 
 This function returns a value of type `Items`.
+
+Returns an array of items in the collection.
+
+## Get collection by ID
+
+Retrieves a collection by its ID.
+
+This operation is performed by calling function `get_collection_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-collections-id/).
+
+_Currently we don't have an example for calling `get_collection_by_id` in integration tests_
+
+### Arguments
+
+- collection_id `str`
+  - The ID of the collection. Example: "926489"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `Collection`.
 
 Returns an array of items in the collection.
