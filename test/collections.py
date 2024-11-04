@@ -1,3 +1,5 @@
+from box_sdk_gen.internal.utils import to_string
+
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas.collections import Collections
@@ -21,7 +23,11 @@ client: BoxClient = get_default_client()
 
 def testCollections():
     collections: Collections = client.collections.get_collections()
-    favourite_collection: Collection = collections.entries[0]
+    favourite_collection: Collection = client.collections.get_collection_by_id(
+        collections.entries[0].id
+    )
+    assert to_string(favourite_collection.type) == 'collection'
+    assert to_string(favourite_collection.collection_type) == 'favorites'
     collection_items: Items = client.collections.get_collection_items(
         favourite_collection.id
     )
