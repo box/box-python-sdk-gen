@@ -397,7 +397,7 @@ client.chunked_uploads.create_file_upload_session_commit_by_url(
 
 ### Returns
 
-This function returns a value of type `Files`.
+This function returns a value of type `Optional[Files]`.
 
 Returns the file object in a list.Returns when all chunks have been uploaded but not yet processed.
 
@@ -442,7 +442,7 @@ client.chunked_uploads.create_file_upload_session_commit(
 
 ### Returns
 
-This function returns a value of type `Files`.
+This function returns a value of type `Optional[Files]`.
 
 Returns the file object in a list.Returns when all chunks have been uploaded but not yet processed.
 

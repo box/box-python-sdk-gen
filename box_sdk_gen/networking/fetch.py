@@ -124,7 +124,9 @@ def fetch(options: FetchOptions) -> FetchResponse:
             accepted_with_retry_after = (
                 network_response.status_code == HTTPStatus.ACCEPTED
             ) and response.get_header('Retry-After', None)
-            if network_response.ok and not accepted_with_retry_after:
+            if network_response.ok and (
+                not accepted_with_retry_after or attempt_nr >= max_attempts
+            ):
                 if options.response_format == 'binary':
                     return FetchResponse(
                         status=network_response.status_code,

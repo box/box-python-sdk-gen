@@ -71,7 +71,7 @@ client.user_collaborations.update_collaboration_by_id(
 
 ### Returns
 
-This function returns a value of type `Collaboration`.
+This function returns a value of type `Optional[Collaboration]`.
 
 Returns an updated collaboration object unless the owner has changed.If the role is changed to `owner`, the collaboration is deleted
 and a new collaboration is created. The previous `owner` of

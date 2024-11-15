@@ -50,7 +50,7 @@ class DownloadsManager:
         range: Optional[str] = None,
         boxapi: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> ByteStream:
+    ) -> Optional[ByteStream]:
         """
                 Returns the contents of a file in binary format.
                 :param file_id: The unique identifier that represents a file.
@@ -112,6 +112,8 @@ class DownloadsManager:
                 network_session=self.network_session,
             )
         )
+        if to_string(response.status) == '202':
+            return None
         return response.content
 
     def download_file_to_output_stream(

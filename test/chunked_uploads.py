@@ -2,6 +2,8 @@ from typing import List
 
 from box_sdk_gen.internal.utils import to_string
 
+from typing import Optional
+
 from box_sdk_gen.internal.utils import Buffer
 
 from box_sdk_gen.internal.utils import HashName
@@ -147,8 +149,10 @@ def testChunkedManualProcessById():
     assert processed_session.id == upload_session_id
     sha_1: str = file_hash.digest_hash('base64')
     digest: str = ''.join(['sha=', sha_1])
-    committed_session: Files = client.chunked_uploads.create_file_upload_session_commit(
-        upload_session_id, parts, digest
+    committed_session: Optional[Files] = (
+        client.chunked_uploads.create_file_upload_session_commit(
+            upload_session_id, parts, digest
+        )
     )
     assert committed_session.entries[0].name == file_name
     client.chunked_uploads.delete_file_upload_session_by_id(upload_session_id)
@@ -240,7 +244,7 @@ def testChunkedManualProcessByUrl():
     assert processed_session.id == upload_session_id
     sha_1: str = file_hash.digest_hash('base64')
     digest: str = ''.join(['sha=', sha_1])
-    committed_session: Files = (
+    committed_session: Optional[Files] = (
         client.chunked_uploads.create_file_upload_session_commit_by_url(
             commit_url, parts, digest
         )

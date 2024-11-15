@@ -1,3 +1,5 @@
+from typing import Optional
+
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.internal.utils import Buffer
@@ -50,7 +52,7 @@ def test_download_file():
         file_content_stream,
     )
     uploaded_file: FileFull = uploaded_files.entries[0]
-    downloaded_file_content: ByteStream = client.downloads.download_file(
+    downloaded_file_content: Optional[ByteStream] = client.downloads.download_file(
         uploaded_file.id
     )
     assert buffer_equals(read_byte_stream(downloaded_file_content), file_buffer)

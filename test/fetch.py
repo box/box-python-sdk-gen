@@ -481,7 +481,9 @@ def test_retryable_status_codes(
     assert mock_requests_session.request.call_count == 3
 
 
-def test_status_code_202(mock_requests_session, network_session_mock, response_202):
+def test_status_code_202_with_no_retry_after_header(
+    mock_requests_session, network_session_mock, response_202
+):
     response_202.text = None
     response_202.content = None
     response_202.headers = {'content-type': 'text/html'}
@@ -518,6 +520,26 @@ def test_retryable_status_code_202(
     assert fetch_response.status == 200
     assert fetch_response.data == {'id': '123456'}
     assert mock_requests_session.request.call_count == 3
+
+
+def test_202_should_be_returned_if_retry_limit_is_reached(
+    mock_requests_session, network_session_mock, response_202_with_retry_after
+):
+    network_session_mock.MAX_ATTEMPTS = 5
+    response_202.text = None
+    response_202.content = None
+    response_200.headers = {'Retry-After': '0'}
+    mock_requests_session.request.return_value = response_202_with_retry_after
+
+    with patch('time.sleep'):
+        fetch_response = fetch(
+            FetchOptions(
+                url="https://example.com", network_session=network_session_mock
+            )
+        )
+
+    assert fetch_response.status == 202
+    assert fetch_response.data == None
 
 
 @pytest.mark.parametrize('not_retryable_status_code', [404, 403, 400])
