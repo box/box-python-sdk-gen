@@ -71,15 +71,39 @@ def testCreateMetaDataQueryExecuteRead():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
-                key='testColor',
-                display_name='testColor',
+                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                key='name',
+                display_name='name',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                key='age',
+                display_name='age',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                key='birthDate',
+                display_name='birthDate',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                key='countryCode',
+                display_name='countryCode',
                 options=[
-                    CreateMetadataTemplateFieldsOptionsField(key='red'),
-                    CreateMetadataTemplateFieldsOptionsField(key='green'),
-                    CreateMetadataTemplateFieldsOptionsField(key='blue'),
+                    CreateMetadataTemplateFieldsOptionsField(key='US'),
+                    CreateMetadataTemplateFieldsOptionsField(key='CA'),
                 ],
-            )
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                key='sports',
+                display_name='sports',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='basketball'),
+                    CreateMetadataTemplateFieldsOptionsField(key='football'),
+                    CreateMetadataTemplateFieldsOptionsField(key='tennis'),
+                ],
+            ),
         ],
     )
     assert template.template_key == template_key
@@ -94,7 +118,13 @@ def testCreateMetaDataQueryExecuteRead():
         file.id,
         CreateFileMetadataByIdScope.ENTERPRISE.value,
         template_key,
-        {'testColor': ['red', 'blue']},
+        {
+            'name': 'John',
+            'age': 23,
+            'birthDate': '2001-01-03T02:20:50.520Z',
+            'countryCode': 'US',
+            'sports': ['basketball', 'tennis'],
+        },
     )
     assert metadata.template == template_key
     assert metadata.scope == template.scope
@@ -102,10 +132,16 @@ def testCreateMetaDataQueryExecuteRead():
     query: MetadataQueryResults = client.search.search_by_metadata_query(
         search_from,
         '0',
-        query='testColor = :value',
-        query_params={'value': ['red', 'blue']},
+        query='name = :name AND age < :age AND birthDate >= :birthDate AND countryCode = :countryCode AND sports = :sports',
+        query_params={
+            'name': 'John',
+            'age': 50,
+            'birthDate': '2001-01-01T02:20:10.120Z',
+            'countryCode': 'US',
+            'sports': ['basketball', 'tennis'],
+        },
     )
-    assert len(query.entries) >= 0
+    assert len(query.entries) >= 1
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
     )

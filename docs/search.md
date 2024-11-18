@@ -23,8 +23,14 @@ See the endpoint docs at
 client.search.search_by_metadata_query(
     search_from,
     "0",
-    query="testColor = :value",
-    query_params={"value": ["red", "blue"]},
+    query="name = :name AND age < :age AND birthDate >= :birthDate AND countryCode = :countryCode AND sports = :sports",
+    query_params={
+        "name": "John",
+        "age": 50,
+        "birthDate": "2001-01-01T02:20:10.120Z",
+        "countryCode": "US",
+        "sports": ["basketball", "tennis"],
+    },
 )
 ```
 

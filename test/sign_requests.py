@@ -130,6 +130,7 @@ def testCreateSignRequestWithSignerGroupId():
         parent_folder=FolderMini(id=destination_folder.id),
     )
     assert len(created_sign_request.signers) == 3
+    assert not created_sign_request.signers[1].signer_group_id == None
     assert (
         created_sign_request.signers[1].signer_group_id
         == created_sign_request.signers[2].signer_group_id
