@@ -12,7 +12,7 @@ from box_sdk_gen.schemas.collections import Collections
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.schemas.items import Items
+from box_sdk_gen.schemas.items_offset_paginated import ItemsOffsetPaginated
 
 from box_sdk_gen.schemas.collection import Collection
 
@@ -119,7 +119,7 @@ class CollectionsManager:
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Items:
+    ) -> ItemsOffsetPaginated:
         """
                 Retrieves the files and/or folders contained within
 
@@ -177,7 +177,7 @@ class CollectionsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Items)
+        return deserialize(response.data, ItemsOffsetPaginated)
 
     def get_collection_by_id(
         self,

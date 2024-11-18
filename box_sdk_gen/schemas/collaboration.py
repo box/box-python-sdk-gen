@@ -78,11 +78,12 @@ class CollaborationAcceptanceRequirementsStatusStrongPasswordRequirementField(
     ):
         """
                 :param enterprise_has_strong_password_required_for_external_users: Whether or not the enterprise that owns the content requires
-        a strong password to collaborate on the content., defaults to None
+        a strong password to collaborate on the content, or enforces
+        an exposed password detection for the external collaborators., defaults to None
                 :type enterprise_has_strong_password_required_for_external_users: Optional[bool], optional
-                :param user_has_strong_password: Whether or not the user has a strong password set for their
-        account. The field is `null` when a strong password is not
-        required., defaults to None
+                :param user_has_strong_password: Whether or not the user has a strong and not exposed password set
+        for their account. The field is `null` when a strong password is
+        not required., defaults to None
                 :type user_has_strong_password: Optional[bool], optional
         """
         super().__init__(**kwargs)

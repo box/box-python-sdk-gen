@@ -69,6 +69,10 @@ client.list_collaborations.get_folder_collaborations(folder.id)
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. Example: "12345"
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -113,7 +117,7 @@ client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING.va
 
 ### Returns
 
-This function returns a value of type `Collaborations`.
+This function returns a value of type `CollaborationsOffsetPaginated`.
 
 Returns a collection of pending collaboration objects.
 
@@ -152,7 +156,7 @@ client.list_collaborations.get_group_collaborations(group.id)
 
 ### Returns
 
-This function returns a value of type `Collaborations`.
+This function returns a value of type `CollaborationsOffsetPaginated`.
 
 Returns a collection of collaboration objects. If there are no
 collaborations, an empty collection will be returned.

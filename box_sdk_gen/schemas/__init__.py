@@ -386,6 +386,8 @@ from box_sdk_gen.schemas.web_link_mini import *
 
 from box_sdk_gen.schemas.web_link import *
 
+from box_sdk_gen.schemas.items_offset_paginated import *
+
 from box_sdk_gen.schemas.items import *
 
 from box_sdk_gen.schemas.folder import *
@@ -419,6 +421,8 @@ from box_sdk_gen.schemas.skill_invocation import *
 from box_sdk_gen.schemas.events import *
 
 from box_sdk_gen.schemas.collaboration import *
+
+from box_sdk_gen.schemas.collaborations_offset_paginated import *
 
 from box_sdk_gen.schemas.collaborations import *
 
