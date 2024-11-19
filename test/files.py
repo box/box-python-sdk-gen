@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from box_sdk_gen.client import BoxClient
@@ -55,14 +57,12 @@ def testGetFileThumbnail():
     thumbnail_file: FileFull = upload_file(
         thumbnail_file_name, thumbnail_content_stream
     )
+    thumbnail: Optional[ByteStream] = client.files.get_file_thumbnail_by_id(
+        thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value
+    )
     assert (
         not buffer_equals(
-            read_byte_stream(
-                client.files.get_file_thumbnail_by_id(
-                    thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value
-                )
-            ),
-            read_byte_stream(thumbnail_content_stream),
+            read_byte_stream(thumbnail), read_byte_stream(thumbnail_content_stream)
         )
         == True
     )

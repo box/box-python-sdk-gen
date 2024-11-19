@@ -601,7 +601,7 @@ class FilesManager:
         max_height: Optional[int] = None,
         max_width: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> ByteStream:
+    ) -> Optional[ByteStream]:
         """
                 Retrieves a thumbnail, or smaller image representation, of a file.
 
@@ -675,4 +675,6 @@ class FilesManager:
                 network_session=self.network_session,
             )
         )
+        if to_string(response.status) == '202':
+            return None
         return response.content

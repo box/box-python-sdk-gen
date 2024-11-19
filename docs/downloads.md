@@ -35,7 +35,7 @@ client.downloads.download_file(uploaded_file.id)
 
 ### Returns
 
-This function returns a value of type `ByteStream`.
+This function returns a value of type `Optional[ByteStream]`.
 
 Returns the requested file if the client has the **follow
 redirects** setting enabled to automatically

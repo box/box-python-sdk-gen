@@ -199,7 +199,7 @@ class UserCollaborationsManager:
         expires_at: Optional[DateTime] = None,
         can_view_path: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Collaboration:
+    ) -> Optional[Collaboration]:
         """
                 Updates a collaboration.
 
@@ -275,7 +275,9 @@ class UserCollaborationsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Collaboration)
+        if to_string(response.status) == '204':
+            return None
+        return deserialize(response.data, Optional[Collaboration])
 
     def delete_collaboration_by_id(
         self,

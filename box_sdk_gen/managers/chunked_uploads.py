@@ -624,7 +624,7 @@ class ChunkedUploadsManager:
         if_match: Optional[str] = None,
         if_none_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Files:
+    ) -> Optional[Files]:
         """
                 Using this method with urls provided in response when creating a new upload session is preferred to use over CreateFileUploadSessionCommit method.
 
@@ -692,7 +692,9 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Files)
+        if to_string(response.status) == '202':
+            return None
+        return deserialize(response.data, Optional[Files])
 
     def create_file_upload_session_commit(
         self,
@@ -703,7 +705,7 @@ class ChunkedUploadsManager:
         if_match: Optional[str] = None,
         if_none_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Files:
+    ) -> Optional[Files]:
         """
                 Close an upload session and create a file from the uploaded chunks.
 
@@ -773,7 +775,9 @@ class ChunkedUploadsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Files)
+        if to_string(response.status) == '202':
+            return None
+        return deserialize(response.data, Optional[Files])
 
     def _reducer(self, acc: _PartAccumulator, chunk: ByteStream) -> _PartAccumulator:
         last_index: int = acc.last_index
@@ -860,7 +864,7 @@ class ChunkedUploadsManager:
         assert processed_session_parts.total_count == total_parts
         sha_1: str = file_hash.digest_hash('base64')
         digest: str = ''.join(['sha=', sha_1])
-        committed_session: Files = self.create_file_upload_session_commit_by_url(
-            commit_url, parts, digest
+        committed_session: Optional[Files] = (
+            self.create_file_upload_session_commit_by_url(commit_url, parts, digest)
         )
         return committed_session.entries[0]
