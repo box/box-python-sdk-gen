@@ -14,6 +14,10 @@ from box_sdk_gen.schemas.collaborations import Collaborations
 
 from box_sdk_gen.schemas.client_error import ClientError
 
+from box_sdk_gen.schemas.collaborations_offset_paginated import (
+    CollaborationsOffsetPaginated,
+)
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -132,6 +136,8 @@ class ListCollaborationsManager:
         folder_id: str,
         *,
         fields: Optional[List[str]] = None,
+        limit: Optional[int] = None,
+        marker: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Collaborations:
         """
@@ -161,12 +167,25 @@ class ListCollaborationsManager:
         fields for the mini representation are returned, additional
         to the fields requested., defaults to None
                 :type fields: Optional[List[str]], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
-        query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'fields': to_string(fields),
+                'limit': to_string(limit),
+                'marker': to_string(marker),
+            }
+        )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
             FetchOptions(
@@ -196,7 +215,7 @@ class ListCollaborationsManager:
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Collaborations:
+    ) -> CollaborationsOffsetPaginated:
         """
                 Retrieves all pending collaboration invites for this user.
                 :param status: The status of the collaborations to retrieve
@@ -246,7 +265,7 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Collaborations)
+        return deserialize(response.data, CollaborationsOffsetPaginated)
 
     def get_group_collaborations(
         self,
@@ -255,7 +274,7 @@ class ListCollaborationsManager:
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> Collaborations:
+    ) -> CollaborationsOffsetPaginated:
         """
                 Retrieves all the collaborations for a group. The user
 
@@ -305,4 +324,4 @@ class ListCollaborationsManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, Collaborations)
+        return deserialize(response.data, CollaborationsOffsetPaginated)

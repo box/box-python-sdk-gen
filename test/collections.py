@@ -6,7 +6,7 @@ from box_sdk_gen.schemas.collections import Collections
 
 from box_sdk_gen.schemas.collection import Collection
 
-from box_sdk_gen.schemas.items import Items
+from box_sdk_gen.schemas.items_offset_paginated import ItemsOffsetPaginated
 
 from box_sdk_gen.schemas.folder_full import FolderFull
 
@@ -28,7 +28,7 @@ def testCollections():
     )
     assert to_string(favourite_collection.type) == 'collection'
     assert to_string(favourite_collection.collection_type) == 'favorites'
-    collection_items: Items = client.collections.get_collection_items(
+    collection_items: ItemsOffsetPaginated = client.collections.get_collection_items(
         favourite_collection.id
     )
     folder: FolderFull = client.folders.create_folder(
@@ -37,15 +37,15 @@ def testCollections():
     client.folders.update_folder_by_id(
         folder.id, collections=[UpdateFolderByIdCollections(id=favourite_collection.id)]
     )
-    collection_items_after_update: Items = client.collections.get_collection_items(
-        favourite_collection.id
+    collection_items_after_update: ItemsOffsetPaginated = (
+        client.collections.get_collection_items(favourite_collection.id)
     )
     assert (
         len(collection_items_after_update.entries) == len(collection_items.entries) + 1
     )
     client.folders.update_folder_by_id(folder.id, collections=[])
-    collection_items_after_remove: Items = client.collections.get_collection_items(
-        favourite_collection.id
+    collection_items_after_remove: ItemsOffsetPaginated = (
+        client.collections.get_collection_items(favourite_collection.id)
     )
     assert len(collection_items_after_remove.entries) == len(collection_items.entries)
     client.folders.delete_folder_by_id(folder.id)

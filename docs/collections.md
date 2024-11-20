@@ -70,7 +70,7 @@ client.collections.get_collection_items(favourite_collection.id)
 
 ### Returns
 
-This function returns a value of type `Items`.
+This function returns a value of type `ItemsOffsetPaginated`.
 
 Returns an array of items in the collection.
 

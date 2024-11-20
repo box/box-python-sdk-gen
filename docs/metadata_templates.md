@@ -31,6 +31,10 @@ client.metadata_templates.get_metadata_templates_by_instance_id(
 
 - metadata_instance_id `str`
   - The ID of an instance of the metadata template to find.
+- marker `Optional[str]`
+  - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
+- limit `Optional[int]`
+  - The maximum number of items to return per page.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

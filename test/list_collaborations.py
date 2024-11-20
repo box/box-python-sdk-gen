@@ -24,6 +24,10 @@ from box_sdk_gen.managers.user_collaborations import CreateCollaborationRole
 
 from box_sdk_gen.schemas.collaborations import Collaborations
 
+from box_sdk_gen.schemas.collaborations_offset_paginated import (
+    CollaborationsOffsetPaginated,
+)
+
 from box_sdk_gen.managers.list_collaborations import GetCollaborationsStatus
 
 from box_sdk_gen.internal.utils import get_uuid
@@ -73,13 +77,13 @@ def testListCollaborations():
         client.list_collaborations.get_folder_collaborations(folder.id)
     )
     assert len(folder_collaborations.entries) > 0
-    pending_collaborations: Collaborations = (
+    pending_collaborations: CollaborationsOffsetPaginated = (
         client.list_collaborations.get_collaborations(
             GetCollaborationsStatus.PENDING.value
         )
     )
     assert len(pending_collaborations.entries) >= 0
-    group_collaborations: Collaborations = (
+    group_collaborations: CollaborationsOffsetPaginated = (
         client.list_collaborations.get_group_collaborations(group.id)
     )
     assert len(group_collaborations.entries) > 0

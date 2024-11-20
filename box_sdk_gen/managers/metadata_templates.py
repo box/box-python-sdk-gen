@@ -232,22 +232,35 @@ class MetadataTemplatesManager:
         self,
         metadata_instance_id: str,
         *,
+        marker: Optional[str] = None,
+        limit: Optional[int] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> MetadataTemplates:
         """
-        Finds a metadata template by searching for the ID of an instance of the
+                Finds a metadata template by searching for the ID of an instance of the
 
-        template.
+                template.
 
-        :param metadata_instance_id: The ID of an instance of the metadata template to find.
-        :type metadata_instance_id: str
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param metadata_instance_id: The ID of an instance of the metadata template to find.
+                :type metadata_instance_id: str
+                :param marker: Defines the position marker at which to begin returning results. This is
+        used when paginating using marker-based pagination.
+
+        This requires `usemarker` to be set to `true`., defaults to None
+                :type marker: Optional[str], optional
+                :param limit: The maximum number of items to return per page., defaults to None
+                :type limit: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {'metadata_instance_id': to_string(metadata_instance_id)}
+            {
+                'metadata_instance_id': to_string(metadata_instance_id),
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+            }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = fetch(
