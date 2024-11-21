@@ -48,7 +48,7 @@ See the endpoint docs at
 client.file_watermarks.update_file_watermark(
     file.id,
     UpdateFileWatermarkWatermark(
-        imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
+        imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT
     ),
 )
 ```

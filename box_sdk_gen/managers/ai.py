@@ -81,14 +81,14 @@ class CreateAiTextGenItems(BaseObject):
         self,
         id: str,
         *,
-        type: CreateAiTextGenItemsTypeField = CreateAiTextGenItemsTypeField.FILE.value,
+        type: CreateAiTextGenItemsTypeField = CreateAiTextGenItemsTypeField.FILE,
         content: Optional[str] = None,
         **kwargs
     ):
         """
         :param id: The ID of the item.
         :type id: str
-        :param type: The type of the item., defaults to CreateAiTextGenItemsTypeField.FILE.value
+        :param type: The type of the item., defaults to CreateAiTextGenItemsTypeField.FILE
         :type type: CreateAiTextGenItemsTypeField, optional
         :param content: The content to use as context for generating new text or editing existing text., defaults to None
         :type content: Optional[str], optional

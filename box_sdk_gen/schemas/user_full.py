@@ -90,7 +90,7 @@ class UserFull(User):
         notification_email: Optional[UserNotificationEmailField] = None,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        type: UserBaseTypeField = UserBaseTypeField.USER.value,
+        type: UserBaseTypeField = UserBaseTypeField.USER,
         **kwargs
     ):
         """
@@ -160,7 +160,7 @@ class UserFull(User):
                 :type name: Optional[str], optional
                 :param login: The primary email address of this user, defaults to None
                 :type login: Optional[str], optional
-                :param type: `user`, defaults to UserBaseTypeField.USER.value
+                :param type: `user`, defaults to UserBaseTypeField.USER
                 :type type: UserBaseTypeField, optional
         """
         super().__init__(

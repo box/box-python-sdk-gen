@@ -63,7 +63,7 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         filter_started_at: Optional[DateTime] = None,
         filter_ended_at: Optional[DateTime] = None,
         release_notes: Optional[str] = None,
-        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value,
+        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY,
         **kwargs
     ):
         """
@@ -102,7 +102,7 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
                 :type filter_ended_at: Optional[DateTime], optional
                 :param release_notes: Optional notes about why the policy was created., defaults to None
                 :type release_notes: Optional[str], optional
-                :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value
+                :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
                 :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

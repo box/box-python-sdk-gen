@@ -231,7 +231,7 @@ class Folder(FolderMini):
         sequence_id: Optional[str] = None,
         name: Optional[str] = None,
         etag: Optional[str] = None,
-        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER.value,
+        type: FolderBaseTypeField = FolderBaseTypeField.FOLDER,
         **kwargs
     ):
         """
@@ -286,7 +286,7 @@ class Folder(FolderMini):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER.value
+                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER
                 :type type: FolderBaseTypeField, optional
         """
         super().__init__(

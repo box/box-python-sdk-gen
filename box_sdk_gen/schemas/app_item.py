@@ -15,7 +15,7 @@ class AppItem(BaseObject):
         id: str,
         application_type: str,
         *,
-        type: AppItemTypeField = AppItemTypeField.APP_ITEM.value,
+        type: AppItemTypeField = AppItemTypeField.APP_ITEM,
         **kwargs
     ):
         """
@@ -23,7 +23,7 @@ class AppItem(BaseObject):
         :type id: str
         :param application_type: The type of the app that owns this app item.
         :type application_type: str
-        :param type: `app_item`, defaults to AppItemTypeField.APP_ITEM.value
+        :param type: `app_item`, defaults to AppItemTypeField.APP_ITEM
         :type type: AppItemTypeField, optional
         """
         super().__init__(**kwargs)

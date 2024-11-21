@@ -49,8 +49,7 @@ def testSharedLinksFiles():
         file_id,
         'shared_link',
         shared_link=AddShareLinkToFileSharedLink(
-            access=AddShareLinkToFileSharedLinkAccessField.OPEN.value,
-            password='Secret123@',
+            access=AddShareLinkToFileSharedLinkAccessField.OPEN, password='Secret123@'
         ),
     )
     file_from_api: FileFull = client.shared_links_files.get_shared_link_for_file(
@@ -85,7 +84,7 @@ def testSharedLinksFiles():
         file_id,
         'shared_link',
         shared_link=UpdateSharedLinkOnFileSharedLink(
-            access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS.value
+            access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS
         ),
     )
     assert to_string(updated_file.shared_link.access) == 'collaborators'

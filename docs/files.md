@@ -198,7 +198,7 @@ See the endpoint docs at
 
 ```python
 client.files.get_file_thumbnail_by_id(
-    thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value
+    thumbnail_file.id, GetFileThumbnailByIdExtension.PNG
 )
 ```
 

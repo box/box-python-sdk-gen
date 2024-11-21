@@ -15,7 +15,7 @@ class AiLlmEndpointParamsGoogle(BaseObject):
     def __init__(
         self,
         *,
-        type: AiLlmEndpointParamsGoogleTypeField = AiLlmEndpointParamsGoogleTypeField.GOOGLE_PARAMS.value,
+        type: AiLlmEndpointParamsGoogleTypeField = AiLlmEndpointParamsGoogleTypeField.GOOGLE_PARAMS,
         temperature: Optional[float] = None,
         top_p: Optional[float] = None,
         top_k: Optional[float] = None,
@@ -23,7 +23,7 @@ class AiLlmEndpointParamsGoogle(BaseObject):
     ):
         """
                 :param type: The type of the AI LLM endpoint params object for Google.
-        This parameter is **required**., defaults to AiLlmEndpointParamsGoogleTypeField.GOOGLE_PARAMS.value
+        This parameter is **required**., defaults to AiLlmEndpointParamsGoogleTypeField.GOOGLE_PARAMS
                 :type type: AiLlmEndpointParamsGoogleTypeField, optional
                 :param temperature: The temperature is used for sampling during response generation, which occurs when `top-P` and `top-K` are applied. Temperature controls the degree of randomness in the token selection., defaults to None
                 :type temperature: Optional[float], optional

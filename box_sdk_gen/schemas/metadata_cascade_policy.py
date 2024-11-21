@@ -76,7 +76,7 @@ class MetadataCascadePolicy(BaseObject):
         self,
         id: str,
         *,
-        type: MetadataCascadePolicyTypeField = MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY.value,
+        type: MetadataCascadePolicyTypeField = MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY,
         owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField] = None,
         parent: Optional[MetadataCascadePolicyParentField] = None,
         scope: Optional[str] = None,
@@ -86,7 +86,7 @@ class MetadataCascadePolicy(BaseObject):
         """
                 :param id: The ID of the metadata cascade policy object
                 :type id: str
-                :param type: `metadata_cascade_policy`, defaults to MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY.value
+                :param type: `metadata_cascade_policy`, defaults to MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY
                 :type type: MetadataCascadePolicyTypeField, optional
                 :param owner_enterprise: The enterprise that owns this policy., defaults to None
                 :type owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField], optional

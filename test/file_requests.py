@@ -27,8 +27,7 @@ def testGetCopyUpdateDeleteFileRequest():
     copied_file_request: FileRequest = client.file_requests.create_file_request_copy(
         file_request_id,
         CreateFileRequestCopyFolder(
-            id=file_request.folder.id,
-            type=CreateFileRequestCopyFolderTypeField.FOLDER.value,
+            id=file_request.folder.id, type=CreateFileRequestCopyFolderTypeField.FOLDER
         ),
     )
     assert not copied_file_request.id == file_request_id

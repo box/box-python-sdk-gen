@@ -71,22 +71,22 @@ def testCreateMetaDataQueryExecuteRead():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='name',
                 display_name='name',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
                 key='age',
                 display_name='age',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
                 key='birthDate',
                 display_name='birthDate',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                type=CreateMetadataTemplateFieldsTypeField.ENUM,
                 key='countryCode',
                 display_name='countryCode',
                 options=[
@@ -95,7 +95,7 @@ def testCreateMetaDataQueryExecuteRead():
                 ],
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
                 key='sports',
                 display_name='sports',
                 options=[
@@ -116,7 +116,7 @@ def testCreateMetaDataQueryExecuteRead():
     file: FileFull = files.entries[0]
     metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file.id,
-        CreateFileMetadataByIdScope.ENTERPRISE.value,
+        CreateFileMetadataByIdScope.ENTERPRISE,
         template_key,
         {
             'name': 'John',
@@ -143,7 +143,7 @@ def testCreateMetaDataQueryExecuteRead():
     )
     assert len(query.entries) >= 1
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     client.files.delete_file_by_id(file.id)
 
@@ -154,7 +154,7 @@ def testGetSearch():
         client.search.search_for_content(
             query=keyword,
             ancestor_folder_ids=['0'],
-            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY.value,
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
         )
     )
     assert len(search.entries) >= 0
@@ -163,7 +163,7 @@ def testGetSearch():
         client.search.search_for_content(
             query=keyword,
             ancestor_folder_ids=['0'],
-            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY.value,
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
             include_recent_shared_links=True,
         )
     )
@@ -179,22 +179,22 @@ def testMetadataFilters():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
                 key='floatField',
                 display_name='floatField',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='stringField',
                 display_name='stringField',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
                 key='dateField',
                 display_name='dateField',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                type=CreateMetadataTemplateFieldsTypeField.ENUM,
                 key='enumField',
                 display_name='enumField',
                 options=[
@@ -203,7 +203,7 @@ def testMetadataFilters():
                 ],
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
                 key='multiSelectField',
                 display_name='multiSelectField',
                 options=[
@@ -222,7 +222,7 @@ def testMetadataFilters():
     file: FileFull = files.entries[0]
     metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file.id,
-        CreateFileMetadataByIdScope.ENTERPRISE.value,
+        CreateFileMetadataByIdScope.ENTERPRISE,
         template_key,
         {
             'floatField': 10,
@@ -247,7 +247,7 @@ def testMetadataFilters():
                         'enumField': 'enumValue2',
                         'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
                     },
-                    scope=MetadataFilterScopeField.ENTERPRISE.value,
+                    scope=MetadataFilterScopeField.ENTERPRISE,
                     template_key=template_key,
                 )
             ],
@@ -255,6 +255,6 @@ def testMetadataFilters():
     )
     assert len(query.entries) >= 0
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     client.files.delete_file_by_id(file.id)

@@ -127,9 +127,9 @@ class BoxDeveloperTokenAuth(Authentication):
             )
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE,
             subject_token=token.access_token,
-            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN,
             resource=resource,
             scope=' '.join(scopes),
             box_shared_link=shared_link,

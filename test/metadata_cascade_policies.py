@@ -51,7 +51,7 @@ def testMetadataCascadePolicies():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='testName',
                 display_name='testName',
             )
@@ -61,7 +61,7 @@ def testMetadataCascadePolicies():
     enterprise_id: str = get_env_var('ENTERPRISE_ID')
     cascade_policy: MetadataCascadePolicy = (
         client.metadata_cascade_policies.create_metadata_cascade_policy(
-            folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key
+            folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE, template_key
         )
     )
     assert to_string(cascade_policy.type) == 'metadata_cascade_policy'
@@ -84,17 +84,16 @@ def testMetadataCascadePolicies():
     assert len(policies.entries) == 1
     with pytest.raises(Exception):
         client.metadata_cascade_policies.apply_metadata_cascade_policy(
-            cascade_policy_id,
-            ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value,
+            cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE
         )
     client.folder_metadata.create_folder_metadata_by_id(
         folder.id,
-        CreateFolderMetadataByIdScope.ENTERPRISE.value,
+        CreateFolderMetadataByIdScope.ENTERPRISE,
         template_key,
         {'testName': 'xyz'},
     )
     client.metadata_cascade_policies.apply_metadata_cascade_policy(
-        cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value
+        cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE
     )
     client.metadata_cascade_policies.delete_metadata_cascade_policy_by_id(
         cascade_policy_id
@@ -104,6 +103,6 @@ def testMetadataCascadePolicies():
             cascade_policy_id
         )
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template_key
     )
     client.folders.delete_folder_by_id(folder.id)

@@ -19,7 +19,7 @@ See the endpoint docs at
 
 ```python
 client.storage_policy_assignments.get_storage_policy_assignments(
-    GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id
+    GetStoragePolicyAssignmentsResolvedForType.USER, user_id
 )
 ```
 
@@ -56,7 +56,7 @@ See the endpoint docs at
 client.storage_policy_assignments.create_storage_policy_assignment(
     CreateStoragePolicyAssignmentStoragePolicy(id=policy_id),
     CreateStoragePolicyAssignmentAssignedTo(
-        id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value
+        id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER
     ),
 )
 ```

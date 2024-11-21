@@ -70,14 +70,14 @@ class StatusSkillCardSkillField(BaseObject):
         self,
         id: str,
         *,
-        type: StatusSkillCardSkillTypeField = StatusSkillCardSkillTypeField.SERVICE.value,
+        type: StatusSkillCardSkillTypeField = StatusSkillCardSkillTypeField.SERVICE,
         **kwargs
     ):
         """
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to StatusSkillCardSkillTypeField.SERVICE.value
+                :param type: `service`, defaults to StatusSkillCardSkillTypeField.SERVICE
                 :type type: StatusSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -96,7 +96,7 @@ class StatusSkillCardInvocationField(BaseObject):
         self,
         id: str,
         *,
-        type: StatusSkillCardInvocationTypeField = StatusSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        type: StatusSkillCardInvocationTypeField = StatusSkillCardInvocationTypeField.SKILL_INVOCATION,
         **kwargs
     ):
         """
@@ -106,7 +106,7 @@ class StatusSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to StatusSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :param type: `skill_invocation`, defaults to StatusSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: StatusSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -124,8 +124,8 @@ class StatusSkillCard(BaseObject):
         invocation: StatusSkillCardInvocationField,
         *,
         created_at: Optional[DateTime] = None,
-        type: StatusSkillCardTypeField = StatusSkillCardTypeField.SKILL_CARD.value,
-        skill_card_type: StatusSkillCardSkillCardTypeField = StatusSkillCardSkillCardTypeField.STATUS.value,
+        type: StatusSkillCardTypeField = StatusSkillCardTypeField.SKILL_CARD,
+        skill_card_type: StatusSkillCardSkillCardTypeField = StatusSkillCardSkillCardTypeField.STATUS,
         skill_card_title: Optional[StatusSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
@@ -139,9 +139,9 @@ class StatusSkillCard(BaseObject):
                 :type invocation: StatusSkillCardInvocationField
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to StatusSkillCardTypeField.SKILL_CARD.value
+                :param type: `skill_card`, defaults to StatusSkillCardTypeField.SKILL_CARD
                 :type type: StatusSkillCardTypeField, optional
-                :param skill_card_type: `status`, defaults to StatusSkillCardSkillCardTypeField.STATUS.value
+                :param skill_card_type: `status`, defaults to StatusSkillCardSkillCardTypeField.STATUS
                 :type skill_card_type: StatusSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[StatusSkillCardSkillCardTitleField], optional

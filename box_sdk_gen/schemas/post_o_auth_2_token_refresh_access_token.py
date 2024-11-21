@@ -14,7 +14,7 @@ class PostOAuth2TokenRefreshAccessToken(BaseObject):
         client_secret: str,
         refresh_token: str,
         *,
-        grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField = PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN.value,
+        grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField = PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN,
         **kwargs
     ):
         """
@@ -24,7 +24,7 @@ class PostOAuth2TokenRefreshAccessToken(BaseObject):
         :type client_secret: str
         :param refresh_token: The refresh token to refresh.
         :type refresh_token: str
-        :param grant_type: The type of request being made, in this case a refresh request., defaults to PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN.value
+        :param grant_type: The type of request being made, in this case a refresh request., defaults to PostOAuth2TokenRefreshAccessTokenGrantTypeField.REFRESH_TOKEN
         :type grant_type: PostOAuth2TokenRefreshAccessTokenGrantTypeField, optional
         """
         super().__init__(**kwargs)

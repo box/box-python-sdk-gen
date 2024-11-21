@@ -50,7 +50,7 @@ def testMemberships():
     assert get_group_membership.id == group_membership.id
     updated_group_membership: GroupMembership = (
         client.memberships.update_group_membership_by_id(
-            group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value
+            group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN
         )
     )
     assert updated_group_membership.id == group_membership.id

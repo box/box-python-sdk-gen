@@ -14,13 +14,13 @@ class StoragePolicyMini(BaseObject):
         self,
         id: str,
         *,
-        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY.value,
+        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY,
         **kwargs
     ):
         """
         :param id: The unique identifier for this storage policy
         :type id: str
-        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY.value
+        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
         :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)

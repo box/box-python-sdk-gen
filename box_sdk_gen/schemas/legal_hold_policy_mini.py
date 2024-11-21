@@ -14,13 +14,13 @@ class LegalHoldPolicyMini(BaseObject):
         self,
         id: str,
         *,
-        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value,
+        type: LegalHoldPolicyMiniTypeField = LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY,
         **kwargs
     ):
         """
         :param id: The unique identifier for this legal hold policy
         :type id: str
-        :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY.value
+        :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
         :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)

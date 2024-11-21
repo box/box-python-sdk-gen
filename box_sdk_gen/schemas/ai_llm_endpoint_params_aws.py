@@ -15,14 +15,14 @@ class AiLlmEndpointParamsAws(BaseObject):
     def __init__(
         self,
         *,
-        type: AiLlmEndpointParamsAwsTypeField = AiLlmEndpointParamsAwsTypeField.AWS_PARAMS.value,
+        type: AiLlmEndpointParamsAwsTypeField = AiLlmEndpointParamsAwsTypeField.AWS_PARAMS,
         temperature: Optional[float] = None,
         top_p: Optional[float] = None,
         **kwargs
     ):
         """
                 :param type: The type of the AI LLM endpoint params object for AWS.
-        This parameter is **required**., defaults to AiLlmEndpointParamsAwsTypeField.AWS_PARAMS.value
+        This parameter is **required**., defaults to AiLlmEndpointParamsAwsTypeField.AWS_PARAMS
                 :type type: AiLlmEndpointParamsAwsTypeField, optional
                 :param temperature: What sampling temperature to use, between 0 and 1. Higher values like 0.8 will make the output more random,
         while lower values like 0.2 will make it more focused and deterministic.

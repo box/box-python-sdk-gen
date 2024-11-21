@@ -163,7 +163,7 @@ See the endpoint docs at
 
 ```python
 client.memberships.update_group_membership_by_id(
-    group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN.value
+    group_membership.id, role=UpdateGroupMembershipByIdRole.ADMIN
 )
 ```
 

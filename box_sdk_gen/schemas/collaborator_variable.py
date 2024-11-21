@@ -24,13 +24,13 @@ class CollaboratorVariableVariableValueField(BaseObject):
         self,
         id: str,
         *,
-        type: CollaboratorVariableVariableValueTypeField = CollaboratorVariableVariableValueTypeField.USER.value,
+        type: CollaboratorVariableVariableValueTypeField = CollaboratorVariableVariableValueTypeField.USER,
         **kwargs
     ):
         """
         :param id: User's ID.
         :type id: str
-        :param type: The object type., defaults to CollaboratorVariableVariableValueTypeField.USER.value
+        :param type: The object type., defaults to CollaboratorVariableVariableValueTypeField.USER
         :type type: CollaboratorVariableVariableValueTypeField, optional
         """
         super().__init__(**kwargs)
@@ -45,8 +45,8 @@ class CollaboratorVariable(BaseObject):
         self,
         variable_value: List[CollaboratorVariableVariableValueField],
         *,
-        type: CollaboratorVariableTypeField = CollaboratorVariableTypeField.VARIABLE.value,
-        variable_type: CollaboratorVariableVariableTypeField = CollaboratorVariableVariableTypeField.USER_LIST.value,
+        type: CollaboratorVariableTypeField = CollaboratorVariableTypeField.VARIABLE,
+        variable_type: CollaboratorVariableVariableTypeField = CollaboratorVariableVariableTypeField.USER_LIST,
         **kwargs
     ):
         """
@@ -54,12 +54,12 @@ class CollaboratorVariable(BaseObject):
                 :type variable_value: List[CollaboratorVariableVariableValueField]
                 :param type: Collaborator
         object type.
-        , defaults to CollaboratorVariableTypeField.VARIABLE.value
+        , defaults to CollaboratorVariableTypeField.VARIABLE
                 :type type: CollaboratorVariableTypeField, optional
                 :param variable_type: Variable type
         for the Collaborator
         object.
-        , defaults to CollaboratorVariableVariableTypeField.USER_LIST.value
+        , defaults to CollaboratorVariableVariableTypeField.USER_LIST
                 :type variable_type: CollaboratorVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

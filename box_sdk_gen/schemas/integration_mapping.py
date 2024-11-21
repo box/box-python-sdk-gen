@@ -41,7 +41,7 @@ class IntegrationMapping(IntegrationMappingBase):
         modified_by: Optional[UserIntegrationMappings] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
-        type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value,
+        type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING,
         **kwargs
     ):
         """
@@ -73,7 +73,7 @@ class IntegrationMapping(IntegrationMappingBase):
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the integration mapping object was last modified, defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value
+                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

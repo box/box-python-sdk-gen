@@ -49,7 +49,7 @@ def testMetadataTemplates():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='testName',
                 display_name='testName',
             )
@@ -62,11 +62,11 @@ def testMetadataTemplates():
     assert template.fields[0].display_name == 'testName'
     updated_template: MetadataTemplate = (
         client.metadata_templates.update_metadata_template(
-            UpdateMetadataTemplateScope.ENTERPRISE.value,
+            UpdateMetadataTemplateScope.ENTERPRISE,
             template_key,
             [
                 UpdateMetadataTemplateRequestBody(
-                    op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD.value,
+                    op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD,
                     field_key='newfieldname',
                     data={'type': 'string', 'displayName': 'newFieldName'},
                 )
@@ -82,7 +82,7 @@ def testMetadataTemplates():
     assert get_metadata_template.id == template.id
     get_metadata_template_schema: MetadataTemplate = (
         client.metadata_templates.get_metadata_template(
-            GetMetadataTemplateScope.ENTERPRISE.value, template.template_key
+            GetMetadataTemplateScope.ENTERPRISE, template.template_key
         )
     )
     assert get_metadata_template_schema.id == template.id
@@ -95,11 +95,11 @@ def testMetadataTemplates():
     )
     assert len(global_metadata_templates.entries) > 0
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     with pytest.raises(Exception):
         client.metadata_templates.delete_metadata_template(
-            DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+            DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
         )
 
 
@@ -112,7 +112,7 @@ def testGetMetadataTemplateByInstance():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='testName',
                 display_name='testName',
             )
@@ -121,7 +121,7 @@ def testGetMetadataTemplateByInstance():
     created_metadata_instance: MetadataFull = (
         client.file_metadata.create_file_metadata_by_id(
             file.id,
-            CreateFileMetadataByIdScope.ENTERPRISE.value,
+            CreateFileMetadataByIdScope.ENTERPRISE,
             template_key,
             {'testName': 'xyz'},
         )
@@ -135,9 +135,9 @@ def testGetMetadataTemplateByInstance():
     assert metadata_templates.entries[0].display_name == template_key
     assert metadata_templates.entries[0].template_key == template_key
     client.file_metadata.delete_file_metadata_by_id(
-        file.id, DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key
+        file.id, DeleteFileMetadataByIdScope.ENTERPRISE, template_key
     )
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     client.files.delete_file_by_id(file.id)

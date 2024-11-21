@@ -11,16 +11,12 @@ class UserBase(BaseObject):
     _discriminator = 'type', {'user'}
 
     def __init__(
-        self,
-        id: str,
-        *,
-        type: UserBaseTypeField = UserBaseTypeField.USER.value,
-        **kwargs
+        self, id: str, *, type: UserBaseTypeField = UserBaseTypeField.USER, **kwargs
     ):
         """
         :param id: The unique identifier for this user
         :type id: str
-        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :param type: `user`, defaults to UserBaseTypeField.USER
         :type type: UserBaseTypeField, optional
         """
         super().__init__(**kwargs)

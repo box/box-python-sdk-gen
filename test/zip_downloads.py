@@ -41,11 +41,9 @@ def testZipDownload():
     folder_1: FolderFull = create_new_folder()
     zip_stream: ByteStream = client.zip_downloads.download_zip(
         [
-            DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
-            DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
-            DownloadZipItems(
-                id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
-            ),
+            DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE),
+            DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE),
+            DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER),
         ],
         download_file_name='zip',
     )
@@ -63,14 +61,10 @@ def testManualZipDownloadAndCheckStatus():
     folder_1: FolderFull = create_new_folder()
     zip_download: ZipDownload = client.zip_downloads.create_zip_download(
         [
+            CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE),
+            CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE),
             CreateZipDownloadItems(
-                id=file_1.id, type=DownloadZipItemsTypeField.FILE.value
-            ),
-            CreateZipDownloadItems(
-                id=file_2.id, type=DownloadZipItemsTypeField.FILE.value
-            ),
-            CreateZipDownloadItems(
-                id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
+                id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER
             ),
         ],
         download_file_name='zip',

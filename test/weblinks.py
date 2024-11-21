@@ -40,7 +40,7 @@ def test_createGetDeleteWeblink():
         weblink.id,
         name=updated_name,
         shared_link=UpdateWebLinkByIdSharedLink(
-            access=UpdateWebLinkByIdSharedLinkAccessField.OPEN.value, password=password
+            access=UpdateWebLinkByIdSharedLinkAccessField.OPEN, password=password
         ),
     )
     assert updated_weblink.name == updated_name

@@ -88,7 +88,7 @@ client.search.search_for_content(
                 "enumField": "enumValue2",
                 "multiSelectField": ["multiSelectValue1", "multiSelectValue2"],
             },
-            scope=MetadataFilterScopeField.ENTERPRISE.value,
+            scope=MetadataFilterScopeField.ENTERPRISE,
             template_key=template_key,
         )
     ],

@@ -20,7 +20,7 @@ class RetentionPolicyMini(RetentionPolicyBase):
         policy_name: Optional[str] = None,
         retention_length: Optional[str] = None,
         disposition_action: Optional[RetentionPolicyMiniDispositionActionField] = None,
-        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY.value,
+        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY,
         **kwargs
     ):
         """
@@ -43,7 +43,7 @@ class RetentionPolicyMini(RetentionPolicyBase):
         allowing it to be deleted by users,
         once the retention policy has expired., defaults to None
                 :type disposition_action: Optional[RetentionPolicyMiniDispositionActionField], optional
-                :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY.value
+                :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
                 :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

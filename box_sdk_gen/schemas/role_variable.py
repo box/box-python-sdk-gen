@@ -28,17 +28,17 @@ class RoleVariable(BaseObject):
         self,
         variable_value: RoleVariableVariableValueField,
         *,
-        type: RoleVariableTypeField = RoleVariableTypeField.VARIABLE.value,
-        variable_type: RoleVariableVariableTypeField = RoleVariableVariableTypeField.COLLABORATOR_ROLE.value,
+        type: RoleVariableTypeField = RoleVariableTypeField.VARIABLE,
+        variable_type: RoleVariableVariableTypeField = RoleVariableVariableTypeField.COLLABORATOR_ROLE,
         **kwargs
     ):
         """
                 :param type: Role object type.
-        , defaults to RoleVariableTypeField.VARIABLE.value
+        , defaults to RoleVariableTypeField.VARIABLE
                 :type type: RoleVariableTypeField, optional
                 :param variable_type: The variable type used
         by the object.
-        , defaults to RoleVariableVariableTypeField.COLLABORATOR_ROLE.value
+        , defaults to RoleVariableVariableTypeField.COLLABORATOR_ROLE
                 :type variable_type: RoleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

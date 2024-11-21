@@ -125,7 +125,7 @@ class MetadataTemplate(BaseObject):
         self,
         id: str,
         *,
-        type: MetadataTemplateTypeField = MetadataTemplateTypeField.METADATA_TEMPLATE.value,
+        type: MetadataTemplateTypeField = MetadataTemplateTypeField.METADATA_TEMPLATE,
         scope: Optional[str] = None,
         template_key: Optional[str] = None,
         display_name: Optional[str] = None,
@@ -137,7 +137,7 @@ class MetadataTemplate(BaseObject):
         """
                 :param id: The ID of the metadata template.
                 :type id: str
-                :param type: `metadata_template`, defaults to MetadataTemplateTypeField.METADATA_TEMPLATE.value
+                :param type: `metadata_template`, defaults to MetadataTemplateTypeField.METADATA_TEMPLATE
                 :type type: MetadataTemplateTypeField, optional
                 :param scope: The scope of the metadata template can either be `global` or
         `enterprise_*`. The `global` scope is used for templates that are

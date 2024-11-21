@@ -94,7 +94,7 @@ class TrashFolder(BaseObject):
         item_status: TrashFolderItemStatusField,
         *,
         etag: Optional[str] = None,
-        type: TrashFolderTypeField = TrashFolderTypeField.FOLDER.value,
+        type: TrashFolderTypeField = TrashFolderTypeField.FOLDER,
         sequence_id: Optional[str] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
@@ -133,7 +133,7 @@ class TrashFolder(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to TrashFolderTypeField.FOLDER.value
+                :param type: `folder`, defaults to TrashFolderTypeField.FOLDER
                 :type type: TrashFolderTypeField, optional
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash

@@ -52,11 +52,11 @@ See the endpoint docs at
 
 ```python
 client.tasks.create_task(
-    CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
-    action=CreateTaskAction.REVIEW.value,
+    CreateTaskItem(type=CreateTaskItemTypeField.FILE, id=file.id),
+    action=CreateTaskAction.REVIEW,
     message="test message",
     due_at=date,
-    completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
+    completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES,
 )
 ```
 

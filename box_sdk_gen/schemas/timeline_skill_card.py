@@ -41,14 +41,14 @@ class TimelineSkillCardSkillField(BaseObject):
         self,
         id: str,
         *,
-        type: TimelineSkillCardSkillTypeField = TimelineSkillCardSkillTypeField.SERVICE.value,
+        type: TimelineSkillCardSkillTypeField = TimelineSkillCardSkillTypeField.SERVICE,
         **kwargs
     ):
         """
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to TimelineSkillCardSkillTypeField.SERVICE.value
+                :param type: `service`, defaults to TimelineSkillCardSkillTypeField.SERVICE
                 :type type: TimelineSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -67,7 +67,7 @@ class TimelineSkillCardInvocationField(BaseObject):
         self,
         id: str,
         *,
-        type: TimelineSkillCardInvocationTypeField = TimelineSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        type: TimelineSkillCardInvocationTypeField = TimelineSkillCardInvocationTypeField.SKILL_INVOCATION,
         **kwargs
     ):
         """
@@ -77,7 +77,7 @@ class TimelineSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to TimelineSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :param type: `skill_invocation`, defaults to TimelineSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: TimelineSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -144,8 +144,8 @@ class TimelineSkillCard(BaseObject):
         entries: List[TimelineSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
-        type: TimelineSkillCardTypeField = TimelineSkillCardTypeField.SKILL_CARD.value,
-        skill_card_type: TimelineSkillCardSkillCardTypeField = TimelineSkillCardSkillCardTypeField.TIMELINE.value,
+        type: TimelineSkillCardTypeField = TimelineSkillCardTypeField.SKILL_CARD,
+        skill_card_type: TimelineSkillCardSkillCardTypeField = TimelineSkillCardSkillCardTypeField.TIMELINE,
         skill_card_title: Optional[TimelineSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
@@ -160,9 +160,9 @@ class TimelineSkillCard(BaseObject):
                 :type entries: List[TimelineSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to TimelineSkillCardTypeField.SKILL_CARD.value
+                :param type: `skill_card`, defaults to TimelineSkillCardTypeField.SKILL_CARD
                 :type type: TimelineSkillCardTypeField, optional
-                :param skill_card_type: `timeline`, defaults to TimelineSkillCardSkillCardTypeField.TIMELINE.value
+                :param skill_card_type: `timeline`, defaults to TimelineSkillCardSkillCardTypeField.TIMELINE
                 :type skill_card_type: TimelineSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TimelineSkillCardSkillCardTitleField], optional

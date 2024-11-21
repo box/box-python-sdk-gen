@@ -56,7 +56,7 @@ def testGlobalFolderMetadata():
     created_metadata: MetadataFull = (
         client.folder_metadata.create_folder_metadata_by_id(
             folder.id,
-            CreateFolderMetadataByIdScope.GLOBAL.value,
+            CreateFolderMetadataByIdScope.GLOBAL,
             'properties',
             {'abc': 'xyz'},
         )
@@ -65,17 +65,17 @@ def testGlobalFolderMetadata():
     assert to_string(created_metadata.scope) == 'global'
     assert created_metadata.version == 0
     received_metadata: MetadataFull = client.folder_metadata.get_folder_metadata_by_id(
-        folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
+        folder.id, GetFolderMetadataByIdScope.GLOBAL, 'properties'
     )
     assert to_string(received_metadata.extra_data['abc']) == 'xyz'
     new_value: str = 'bar'
     client.folder_metadata.update_folder_metadata_by_id(
         folder.id,
-        UpdateFolderMetadataByIdScope.GLOBAL.value,
+        UpdateFolderMetadataByIdScope.GLOBAL,
         'properties',
         [
             UpdateFolderMetadataByIdRequestBody(
-                op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
+                op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
                 path='/abc',
                 value=new_value,
             )
@@ -83,16 +83,16 @@ def testGlobalFolderMetadata():
     )
     received_updated_metadata: MetadataFull = (
         client.folder_metadata.get_folder_metadata_by_id(
-            folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
+            folder.id, GetFolderMetadataByIdScope.GLOBAL, 'properties'
         )
     )
     assert to_string(received_updated_metadata.extra_data['abc']) == new_value
     client.folder_metadata.delete_folder_metadata_by_id(
-        folder.id, DeleteFolderMetadataByIdScope.GLOBAL.value, 'properties'
+        folder.id, DeleteFolderMetadataByIdScope.GLOBAL, 'properties'
     )
     with pytest.raises(Exception):
         client.folder_metadata.get_folder_metadata_by_id(
-            folder.id, GetFolderMetadataByIdScope.GLOBAL.value, 'properties'
+            folder.id, GetFolderMetadataByIdScope.GLOBAL, 'properties'
         )
     client.folders.delete_folder_by_id(folder.id)
 
@@ -106,22 +106,22 @@ def testEnterpriseFolderMetadata():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='name',
                 display_name='name',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
                 key='age',
                 display_name='age',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
                 key='birthDate',
                 display_name='birthDate',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                type=CreateMetadataTemplateFieldsTypeField.ENUM,
                 key='countryCode',
                 display_name='countryCode',
                 options=[
@@ -130,7 +130,7 @@ def testEnterpriseFolderMetadata():
                 ],
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
                 key='sports',
                 display_name='sports',
                 options=[
@@ -144,7 +144,7 @@ def testEnterpriseFolderMetadata():
     created_metadata: MetadataFull = (
         client.folder_metadata.create_folder_metadata_by_id(
             folder.id,
-            CreateFolderMetadataByIdScope.ENTERPRISE.value,
+            CreateFolderMetadataByIdScope.ENTERPRISE,
             template_key,
             {
                 'name': 'John',
@@ -167,9 +167,9 @@ def testEnterpriseFolderMetadata():
     assert sports[0] == 'basketball'
     assert sports[1] == 'tennis'
     client.folder_metadata.delete_folder_metadata_by_id(
-        folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE.value, template_key
+        folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE, template_key
     )
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template_key
     )
     client.folders.delete_folder_by_id(folder.id)

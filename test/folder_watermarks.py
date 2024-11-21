@@ -29,7 +29,7 @@ def testCreateGetDeleteFolderWatermark():
     created_watermark: Watermark = client.folder_watermarks.update_folder_watermark(
         folder.id,
         UpdateFolderWatermarkWatermark(
-            imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value
+            imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT
         ),
     )
     watermark: Watermark = client.folder_watermarks.get_folder_watermark(folder.id)

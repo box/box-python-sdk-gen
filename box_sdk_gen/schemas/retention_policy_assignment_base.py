@@ -14,13 +14,13 @@ class RetentionPolicyAssignmentBase(BaseObject):
         self,
         id: str,
         *,
-        type: RetentionPolicyAssignmentBaseTypeField = RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT.value,
+        type: RetentionPolicyAssignmentBaseTypeField = RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT,
         **kwargs
     ):
         """
         :param id: The unique identifier that represents a file version.
         :type id: str
-        :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT.value
+        :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT
         :type type: RetentionPolicyAssignmentBaseTypeField, optional
         """
         super().__init__(**kwargs)

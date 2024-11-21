@@ -23,8 +23,8 @@ class CompletionRuleVariable(BaseObject):
         self,
         variable_value: CompletionRuleVariableVariableValueField,
         *,
-        type: CompletionRuleVariableTypeField = CompletionRuleVariableTypeField.VARIABLE.value,
-        variable_type: CompletionRuleVariableVariableTypeField = CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE.value,
+        type: CompletionRuleVariableTypeField = CompletionRuleVariableTypeField.VARIABLE,
+        variable_type: CompletionRuleVariableVariableTypeField = CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE,
         **kwargs
     ):
         """
@@ -35,12 +35,12 @@ class CompletionRuleVariable(BaseObject):
                 :type variable_value: CompletionRuleVariableVariableValueField
                 :param type: Completion
         Rule object type.
-        , defaults to CompletionRuleVariableTypeField.VARIABLE.value
+        , defaults to CompletionRuleVariableTypeField.VARIABLE
                 :type type: CompletionRuleVariableTypeField, optional
                 :param variable_type: Variable type
         for the Completion
         Rule object.
-        , defaults to CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE.value
+        , defaults to CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE
                 :type variable_type: CompletionRuleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

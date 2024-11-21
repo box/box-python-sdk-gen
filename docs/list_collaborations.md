@@ -99,7 +99,7 @@ See the endpoint docs at
 <!-- sample get_collaborations -->
 
 ```python
-client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING.value)
+client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING)
 ```
 
 ### Arguments

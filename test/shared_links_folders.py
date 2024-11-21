@@ -41,8 +41,7 @@ def testSharedLinksFolders():
         folder.id,
         'shared_link',
         shared_link=AddShareLinkToFolderSharedLink(
-            access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value,
-            password='Secret123@',
+            access=AddShareLinkToFolderSharedLinkAccessField.OPEN, password='Secret123@'
         ),
     )
     folder_from_api: FolderFull = (
@@ -78,7 +77,7 @@ def testSharedLinksFolders():
             folder.id,
             'shared_link',
             shared_link=UpdateSharedLinkOnFolderSharedLink(
-                access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value
+                access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS
             ),
         )
     )

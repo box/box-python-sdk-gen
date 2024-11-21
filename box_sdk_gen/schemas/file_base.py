@@ -17,7 +17,7 @@ class FileBase(BaseObject):
         id: str,
         *,
         etag: Optional[str] = None,
-        type: FileBaseTypeField = FileBaseTypeField.FILE.value,
+        type: FileBaseTypeField = FileBaseTypeField.FILE,
         **kwargs
     ):
         """
@@ -33,7 +33,7 @@ class FileBase(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to FileBaseTypeField.FILE.value
+                :param type: `file`, defaults to FileBaseTypeField.FILE
                 :type type: FileBaseTypeField, optional
         """
         super().__init__(**kwargs)

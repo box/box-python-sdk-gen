@@ -50,13 +50,13 @@ class CreateTaskAssignmentTask(BaseObject):
         self,
         id: str,
         *,
-        type: CreateTaskAssignmentTaskTypeField = CreateTaskAssignmentTaskTypeField.TASK.value,
+        type: CreateTaskAssignmentTaskTypeField = CreateTaskAssignmentTaskTypeField.TASK,
         **kwargs
     ):
         """
         :param id: The ID of the task
         :type id: str
-        :param type: The type of the item to assign., defaults to CreateTaskAssignmentTaskTypeField.TASK.value
+        :param type: The type of the item to assign., defaults to CreateTaskAssignmentTaskTypeField.TASK
         :type type: CreateTaskAssignmentTaskTypeField, optional
         """
         super().__init__(**kwargs)

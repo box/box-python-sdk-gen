@@ -116,9 +116,9 @@ def get_or_create_terms_of_services() -> TermsOfService:
         if to_string(second_tos.tos_type) == 'managed':
             return second_tos
     return client.terms_of_services.create_terms_of_service(
-        CreateTermsOfServiceStatus.DISABLED.value,
+        CreateTermsOfServiceStatus.DISABLED,
         'Test TOS',
-        tos_type=CreateTermsOfServiceTosType.MANAGED.value,
+        tos_type=CreateTermsOfServiceTosType.MANAGED,
     )
 
 

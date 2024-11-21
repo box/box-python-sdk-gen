@@ -33,7 +33,7 @@ class StoragePolicyAssignment(BaseObject):
         self,
         id: str,
         *,
-        type: StoragePolicyAssignmentTypeField = StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT.value,
+        type: StoragePolicyAssignmentTypeField = StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT,
         storage_policy: Optional[StoragePolicyMini] = None,
         assigned_to: Optional[StoragePolicyAssignmentAssignedToField] = None,
         **kwargs
@@ -41,7 +41,7 @@ class StoragePolicyAssignment(BaseObject):
         """
         :param id: The unique identifier for a storage policy assignment.
         :type id: str
-        :param type: `storage_policy_assignment`, defaults to StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT.value
+        :param type: `storage_policy_assignment`, defaults to StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT
         :type type: StoragePolicyAssignmentTypeField, optional
         """
         super().__init__(**kwargs)

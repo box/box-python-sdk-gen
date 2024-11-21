@@ -119,7 +119,7 @@ See the endpoint docs at
 client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(
     CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(
         id=segment.id,
-        type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
+        type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT,
     ),
     UserBase(id=get_env_var("USER_ID")),
 )

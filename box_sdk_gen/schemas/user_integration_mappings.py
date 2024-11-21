@@ -12,7 +12,7 @@ class UserIntegrationMappings(UserBase):
         *,
         name: Optional[str] = None,
         login: Optional[str] = None,
-        type: UserBaseTypeField = UserBaseTypeField.USER.value,
+        type: UserBaseTypeField = UserBaseTypeField.USER,
         **kwargs
     ):
         """
@@ -22,7 +22,7 @@ class UserIntegrationMappings(UserBase):
         :type name: Optional[str], optional
         :param login: The primary email address of this user, defaults to None
         :type login: Optional[str], optional
-        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :param type: `user`, defaults to UserBaseTypeField.USER
         :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

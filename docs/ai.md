@@ -19,17 +19,17 @@ See the endpoint docs at
 
 ```python
 client.ai.create_ai_ask(
-    CreateAiAskMode.MULTIPLE_ITEM_QA.value,
+    CreateAiAskMode.MULTIPLE_ITEM_QA,
     "Which direction sun rises?",
     [
         AiItemBase(
             id=file_to_ask_1.id,
-            type=AiItemBaseTypeField.FILE.value,
+            type=AiItemBaseTypeField.FILE,
             content="Earth goes around the sun",
         ),
         AiItemBase(
             id=file_to_ask_2.id,
-            type=AiItemBaseTypeField.FILE.value,
+            type=AiItemBaseTypeField.FILE,
             content="Sun rises in the East in the morning",
         ),
     ],
@@ -76,7 +76,7 @@ client.ai.create_ai_text_gen(
     [
         CreateAiTextGenItems(
             id=file_to_ask.id,
-            type=CreateAiTextGenItemsTypeField.FILE.value,
+            type=CreateAiTextGenItemsTypeField.FILE,
             content="The Earth goes around the sun. Sun rises in the East in the morning.",
         )
     ],
@@ -128,7 +128,7 @@ See the endpoint docs at
 
 ```python
 client.ai.get_ai_agent_default_config(
-    GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED.value, language="en-US"
+    GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language="en-US"
 )
 ```
 

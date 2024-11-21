@@ -19,13 +19,13 @@ class AiAgentExtractStructured(BaseObject):
     def __init__(
         self,
         *,
-        type: AiAgentExtractStructuredTypeField = AiAgentExtractStructuredTypeField.AI_AGENT_EXTRACT_STRUCTURED.value,
+        type: AiAgentExtractStructuredTypeField = AiAgentExtractStructuredTypeField.AI_AGENT_EXTRACT_STRUCTURED,
         long_text: Optional[AiAgentLongTextTool] = None,
         basic_text: Optional[AiAgentBasicTextTool] = None,
         **kwargs
     ):
         """
-        :param type: The type of AI agent to be used for extraction., defaults to AiAgentExtractStructuredTypeField.AI_AGENT_EXTRACT_STRUCTURED.value
+        :param type: The type of AI agent to be used for extraction., defaults to AiAgentExtractStructuredTypeField.AI_AGENT_EXTRACT_STRUCTURED
         :type type: AiAgentExtractStructuredTypeField, optional
         """
         super().__init__(**kwargs)

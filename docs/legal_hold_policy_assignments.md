@@ -61,7 +61,7 @@ See the endpoint docs at
 client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(
     legal_hold_policy_id,
     CreateLegalHoldPolicyAssignmentAssignTo(
-        type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE.value, id=file_id
+        type=CreateLegalHoldPolicyAssignmentAssignToTypeField.FILE, id=file_id
     ),
 )
 ```

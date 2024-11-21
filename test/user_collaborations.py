@@ -46,12 +46,12 @@ def testUserCollaborations():
     folder: FolderFull = create_new_folder()
     collaboration: Collaboration = client.user_collaborations.create_collaboration(
         CreateCollaborationItem(
-            type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
+            type=CreateCollaborationItemTypeField.FOLDER, id=folder.id
         ),
         CreateCollaborationAccessibleBy(
-            type=CreateCollaborationAccessibleByTypeField.USER.value, id=user.id
+            type=CreateCollaborationAccessibleByTypeField.USER, id=user.id
         ),
-        CreateCollaborationRole.EDITOR.value,
+        CreateCollaborationRole.EDITOR,
     )
     assert to_string(collaboration.role) == 'editor'
     collaboration_id: str = collaboration.id
@@ -64,7 +64,7 @@ def testUserCollaborations():
     assert collaboration_from_api.invite_email == None
     updated_collaboration: Optional[Collaboration] = (
         client.user_collaborations.update_collaboration_by_id(
-            collaboration_id, UpdateCollaborationByIdRole.VIEWER.value
+            collaboration_id, UpdateCollaborationByIdRole.VIEWER
         )
     )
     assert to_string(updated_collaboration.role) == 'viewer'
@@ -84,17 +84,17 @@ def testConvertingUserCollaborationToOwnership():
     folder: FolderFull = create_new_folder()
     collaboration: Collaboration = client.user_collaborations.create_collaboration(
         CreateCollaborationItem(
-            type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
+            type=CreateCollaborationItemTypeField.FOLDER, id=folder.id
         ),
         CreateCollaborationAccessibleBy(
-            type=CreateCollaborationAccessibleByTypeField.USER.value, id=user.id
+            type=CreateCollaborationAccessibleByTypeField.USER, id=user.id
         ),
-        CreateCollaborationRole.EDITOR.value,
+        CreateCollaborationRole.EDITOR,
     )
     assert to_string(collaboration.role) == 'editor'
     owner_collaboration: Optional[Collaboration] = (
         client.user_collaborations.update_collaboration_by_id(
-            collaboration.id, UpdateCollaborationByIdRole.OWNER.value
+            collaboration.id, UpdateCollaborationByIdRole.OWNER
         )
     )
     assert owner_collaboration == None
@@ -115,12 +115,12 @@ def testExternalUserCollaborations():
     folder: FolderFull = create_new_folder()
     collaboration: Collaboration = client.user_collaborations.create_collaboration(
         CreateCollaborationItem(
-            type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
+            type=CreateCollaborationItemTypeField.FOLDER, id=folder.id
         ),
         CreateCollaborationAccessibleBy(
-            type=CreateCollaborationAccessibleByTypeField.USER.value, login=user_login
+            type=CreateCollaborationAccessibleByTypeField.USER, login=user_login
         ),
-        CreateCollaborationRole.EDITOR.value,
+        CreateCollaborationRole.EDITOR,
     )
     assert to_string(collaboration.role) == 'editor'
     collaboration_id: str = collaboration.id
@@ -133,7 +133,7 @@ def testExternalUserCollaborations():
     assert collaboration_from_api.invite_email == user_login
     updated_collaboration: Optional[Collaboration] = (
         client.user_collaborations.update_collaboration_by_id(
-            collaboration_id, UpdateCollaborationByIdRole.VIEWER.value
+            collaboration_id, UpdateCollaborationByIdRole.VIEWER
         )
     )
     assert to_string(updated_collaboration.role) == 'viewer'

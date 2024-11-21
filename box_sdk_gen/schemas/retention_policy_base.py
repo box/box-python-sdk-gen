@@ -14,13 +14,13 @@ class RetentionPolicyBase(BaseObject):
         self,
         id: str,
         *,
-        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY.value,
+        type: RetentionPolicyBaseTypeField = RetentionPolicyBaseTypeField.RETENTION_POLICY,
         **kwargs
     ):
         """
         :param id: The unique identifier that represents a retention policy.
         :type id: str
-        :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY.value
+        :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
         :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(**kwargs)

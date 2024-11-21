@@ -52,13 +52,13 @@ class CreateTermsOfServiceStatusForUserTos(BaseObject):
         self,
         id: str,
         *,
-        type: CreateTermsOfServiceStatusForUserTosTypeField = CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value,
+        type: CreateTermsOfServiceStatusForUserTosTypeField = CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE,
         **kwargs
     ):
         """
         :param id: The ID of terms of service
         :type id: str
-        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE.value
+        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE
         :type type: CreateTermsOfServiceStatusForUserTosTypeField, optional
         """
         super().__init__(**kwargs)
@@ -77,13 +77,13 @@ class CreateTermsOfServiceStatusForUserUser(BaseObject):
         self,
         id: str,
         *,
-        type: CreateTermsOfServiceStatusForUserUserTypeField = CreateTermsOfServiceStatusForUserUserTypeField.USER.value,
+        type: CreateTermsOfServiceStatusForUserUserTypeField = CreateTermsOfServiceStatusForUserUserTypeField.USER,
         **kwargs
     ):
         """
         :param id: The ID of user
         :type id: str
-        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserUserTypeField.USER.value
+        :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserUserTypeField.USER
         :type type: CreateTermsOfServiceStatusForUserUserTypeField, optional
         """
         super().__init__(**kwargs)

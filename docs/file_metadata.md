@@ -51,7 +51,7 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.get_file_metadata_by_id(
-    file.id, GetFileMetadataByIdScope.GLOBAL.value, "properties"
+    file.id, GetFileMetadataByIdScope.GLOBAL, "properties"
 )
 ```
 
@@ -92,7 +92,7 @@ See the endpoint docs at
 ```python
 client.file_metadata.create_file_metadata_by_id(
     file.id,
-    CreateFileMetadataByIdScope.ENTERPRISE.value,
+    CreateFileMetadataByIdScope.ENTERPRISE,
     template_key,
     {
         "name": "John",
@@ -145,11 +145,11 @@ See the endpoint docs at
 ```python
 client.file_metadata.update_file_metadata_by_id(
     file.id,
-    UpdateFileMetadataByIdScope.GLOBAL.value,
+    UpdateFileMetadataByIdScope.GLOBAL,
     "properties",
     [
         UpdateFileMetadataByIdRequestBody(
-            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value,
+            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
             path="/abc",
             value=new_value,
         )
@@ -190,7 +190,7 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.delete_file_metadata_by_id(
-    file.id, DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key
+    file.id, DeleteFileMetadataByIdScope.ENTERPRISE, template_key
 )
 ```
 

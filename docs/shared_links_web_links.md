@@ -100,8 +100,7 @@ client.shared_links_web_links.add_share_link_to_web_link(
     web_link_id,
     "shared_link",
     shared_link=AddShareLinkToWebLinkSharedLink(
-        access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value,
-        password="Secret123@",
+        access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN, password="Secret123@"
     ),
 )
 ```
@@ -140,7 +139,7 @@ client.shared_links_web_links.update_shared_link_on_web_link(
     web_link_id,
     "shared_link",
     shared_link=UpdateSharedLinkOnWebLinkSharedLink(
-        access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value
+        access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS
     ),
 )
 ```

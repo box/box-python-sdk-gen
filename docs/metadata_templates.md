@@ -61,7 +61,7 @@ See the endpoint docs at
 
 ```python
 client.metadata_templates.get_metadata_template(
-    GetMetadataTemplateScope.ENTERPRISE.value, template.template_key
+    GetMetadataTemplateScope.ENTERPRISE, template.template_key
 )
 ```
 
@@ -100,11 +100,11 @@ See the endpoint docs at
 
 ```python
 client.metadata_templates.update_metadata_template(
-    UpdateMetadataTemplateScope.ENTERPRISE.value,
+    UpdateMetadataTemplateScope.ENTERPRISE,
     template_key,
     [
         UpdateMetadataTemplateRequestBody(
-            op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD.value,
+            op=UpdateMetadataTemplateRequestBodyOpField.ADDFIELD,
             field_key="newfieldname",
             data={"type": "string", "displayName": "newFieldName"},
         )
@@ -144,7 +144,7 @@ See the endpoint docs at
 
 ```python
 client.metadata_templates.delete_metadata_template(
-    DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+    DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
 )
 ```
 
@@ -278,31 +278,31 @@ client.metadata_templates.create_metadata_template(
             key="firstName",
             display_name="First name",
             description="Person first name",
-            type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+            type=CreateMetadataTemplateFieldsTypeField.STRING,
         ),
         CreateMetadataTemplateFields(
             key="lastName",
             display_name="Last name",
             description="Person last name",
-            type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+            type=CreateMetadataTemplateFieldsTypeField.STRING,
         ),
         CreateMetadataTemplateFields(
             key="dateOfBirth",
             display_name="Birth date",
             description="Person date of birth",
-            type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+            type=CreateMetadataTemplateFieldsTypeField.DATE,
         ),
         CreateMetadataTemplateFields(
             key="age",
             display_name="Age",
             description="Person age",
-            type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+            type=CreateMetadataTemplateFieldsTypeField.FLOAT,
         ),
         CreateMetadataTemplateFields(
             key="hobby",
             display_name="Hobby",
             description="Person hobby",
-            type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+            type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
         ),
     ],
 )

@@ -53,17 +53,17 @@ client.skills.create_box_skill_cards_on_file(
     file.id,
     [
         KeywordSkillCard(
-            type=KeywordSkillCardTypeField.SKILL_CARD.value,
-            skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value,
+            type=KeywordSkillCardTypeField.SKILL_CARD,
+            skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD,
             skill_card_title=KeywordSkillCardSkillCardTitleField(
                 code="license-plates", message=title_message
             ),
             skill=KeywordSkillCardSkillField(
-                id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value
+                id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE
             ),
             invocation=KeywordSkillCardInvocationField(
                 id=invocation_id,
-                type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+                type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION,
             ),
             entries=[KeywordSkillCardEntriesField(text="DN86 BOX")],
         )
@@ -103,20 +103,20 @@ client.skills.update_box_skill_cards_on_file(
     file.id,
     [
         UpdateBoxSkillCardsOnFileRequestBody(
-            op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE.value,
+            op=UpdateBoxSkillCardsOnFileRequestBodyOpField.REPLACE,
             path="/cards/0",
             value=KeywordSkillCard(
-                type=KeywordSkillCardTypeField.SKILL_CARD.value,
-                skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD.value,
+                type=KeywordSkillCardTypeField.SKILL_CARD,
+                skill_card_type=KeywordSkillCardSkillCardTypeField.KEYWORD,
                 skill_card_title=KeywordSkillCardSkillCardTitleField(
                     code="license-plates", message=updated_title_message
                 ),
                 skill=KeywordSkillCardSkillField(
-                    id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE.value
+                    id=skill_id, type=KeywordSkillCardSkillTypeField.SERVICE
                 ),
                 invocation=KeywordSkillCardInvocationField(
                     id=invocation_id,
-                    type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+                    type=KeywordSkillCardInvocationTypeField.SKILL_INVOCATION,
                 ),
                 entries=[KeywordSkillCardEntriesField(text="DN86 BOX")],
             ),

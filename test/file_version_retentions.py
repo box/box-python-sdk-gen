@@ -54,11 +54,11 @@ def testCreateUpdateGetDeleteRetentionPolicy():
     retention_policy: RetentionPolicy = (
         client.retention_policies.create_retention_policy(
             get_uuid(),
-            CreateRetentionPolicyPolicyType.FINITE.value,
-            CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value,
+            CreateRetentionPolicyPolicyType.FINITE,
+            CreateRetentionPolicyDispositionAction.REMOVE_RETENTION,
             description=description,
             retention_length='1',
-            retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value,
+            retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE,
             can_owner_extend_retention=False,
         )
     )
@@ -71,7 +71,7 @@ def testCreateUpdateGetDeleteRetentionPolicy():
             retention_policy.id,
             CreateRetentionPolicyAssignmentAssignTo(
                 id=folder.id,
-                type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER.value,
+                type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER,
             ),
         )
     )

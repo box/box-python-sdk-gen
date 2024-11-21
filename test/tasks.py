@@ -45,11 +45,11 @@ def testCreateUpdateGetDeleteTask():
     file: FileFull = files.entries[0]
     date_time: DateTime = date_time_from_string('2035-01-01T00:00:00Z')
     task: Task = client.tasks.create_task(
-        CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
-        action=CreateTaskAction.REVIEW.value,
+        CreateTaskItem(type=CreateTaskItemTypeField.FILE, id=file.id),
+        action=CreateTaskAction.REVIEW,
         message='test message',
         due_at=date_time,
-        completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
+        completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES,
     )
     assert task.message == 'test message'
     assert task.item.id == file.id

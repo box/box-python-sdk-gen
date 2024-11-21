@@ -22,7 +22,7 @@ class TermsOfServiceUserStatus(BaseObject):
         self,
         id: str,
         *,
-        type: TermsOfServiceUserStatusTypeField = TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS.value,
+        type: TermsOfServiceUserStatusTypeField = TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS,
         tos: Optional[TermsOfServiceBase] = None,
         user: Optional[UserMini] = None,
         is_accepted: Optional[bool] = None,
@@ -33,7 +33,7 @@ class TermsOfServiceUserStatus(BaseObject):
         """
         :param id: The unique identifier for this terms of service user status
         :type id: str
-        :param type: `terms_of_service_user_status`, defaults to TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS.value
+        :param type: `terms_of_service_user_status`, defaults to TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS
         :type type: TermsOfServiceUserStatusTypeField, optional
         :param is_accepted: If the user has accepted the terms of services, defaults to None
         :type is_accepted: Optional[bool], optional

@@ -22,7 +22,7 @@ class FileVersionMini(FileVersionBase):
         id: str,
         *,
         sha_1: Optional[str] = None,
-        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION,
         **kwargs
     ):
         """
@@ -30,7 +30,7 @@ class FileVersionMini(FileVersionBase):
         :type id: str
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
-        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION
         :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

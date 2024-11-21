@@ -22,14 +22,14 @@ class AiTextGenItemsField(BaseObject):
         self,
         id: str,
         *,
-        type: AiTextGenItemsTypeField = AiTextGenItemsTypeField.FILE.value,
+        type: AiTextGenItemsTypeField = AiTextGenItemsTypeField.FILE,
         content: Optional[str] = None,
         **kwargs
     ):
         """
         :param id: The ID of the item.
         :type id: str
-        :param type: The type of the item., defaults to AiTextGenItemsTypeField.FILE.value
+        :param type: The type of the item., defaults to AiTextGenItemsTypeField.FILE
         :type type: AiTextGenItemsTypeField, optional
         :param content: The content to use as context for generating new text or editing existing text., defaults to None
         :type content: Optional[str], optional

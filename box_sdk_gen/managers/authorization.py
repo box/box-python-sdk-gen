@@ -342,7 +342,7 @@ class AuthorizationManager:
         client_secret: str,
         refresh_token: str,
         *,
-        grant_type: RefreshAccessTokenGrantType = RefreshAccessTokenGrantType.REFRESH_TOKEN.value,
+        grant_type: RefreshAccessTokenGrantType = RefreshAccessTokenGrantType.REFRESH_TOKEN,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AccessToken:
         """
@@ -353,7 +353,7 @@ class AuthorizationManager:
         :type client_secret: str
         :param refresh_token: The refresh token to refresh.
         :type refresh_token: str
-        :param grant_type: The type of request being made, in this case a refresh request., defaults to RefreshAccessTokenGrantType.REFRESH_TOKEN.value
+        :param grant_type: The type of request being made, in this case a refresh request., defaults to RefreshAccessTokenGrantType.REFRESH_TOKEN
         :type grant_type: RefreshAccessTokenGrantType, optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional

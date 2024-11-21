@@ -21,7 +21,7 @@ def testDevicePinners():
     assert len(device_pinners.entries) >= 0
     device_pinners_in_desc_direction: DevicePinners = (
         client.device_pinners.get_enterprise_device_pinners(
-            enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC.value
+            enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC
         )
     )
     assert len(device_pinners_in_desc_direction.entries) >= 0
