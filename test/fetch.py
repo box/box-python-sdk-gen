@@ -69,6 +69,8 @@ def response_202():
     response = Mock(Response)
     response.status_code = 202
     response.ok = True
+    response.text = None
+    response.content = None
     response.headers = {
         'content-type': 'text/html',
     }
@@ -80,6 +82,8 @@ def response_202_with_retry_after():
     response = Mock(Response)
     response.status_code = 202
     response.ok = True
+    response.text = None
+    response.content = None
     response.headers = {'Retry-After': '0'}
     return response
 
@@ -484,9 +488,6 @@ def test_retryable_status_codes(
 def test_status_code_202_with_no_retry_after_header(
     mock_requests_session, network_session_mock, response_202
 ):
-    response_202.text = None
-    response_202.content = None
-    response_202.headers = {'content-type': 'text/html'}
     mock_requests_session.request.return_value = response_202
 
     fetch_response = fetch(
@@ -526,9 +527,6 @@ def test_202_should_be_returned_if_retry_limit_is_reached(
     mock_requests_session, network_session_mock, response_202_with_retry_after
 ):
     network_session_mock.MAX_ATTEMPTS = 5
-    response_202.text = None
-    response_202.content = None
-    response_200.headers = {'Retry-After': '0'}
     mock_requests_session.request.return_value = response_202_with_retry_after
 
     with patch('time.sleep'):
