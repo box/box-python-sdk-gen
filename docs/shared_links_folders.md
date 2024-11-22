@@ -100,8 +100,7 @@ client.shared_links_folders.add_share_link_to_folder(
     folder.id,
     "shared_link",
     shared_link=AddShareLinkToFolderSharedLink(
-        access=AddShareLinkToFolderSharedLinkAccessField.OPEN.value,
-        password="Secret123@",
+        access=AddShareLinkToFolderSharedLinkAccessField.OPEN, password="Secret123@"
     ),
 )
 ```
@@ -140,7 +139,7 @@ client.shared_links_folders.update_shared_link_on_folder(
     folder.id,
     "shared_link",
     shared_link=UpdateSharedLinkOnFolderSharedLink(
-        access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS.value
+        access=UpdateSharedLinkOnFolderSharedLinkAccessField.COLLABORATORS
     ),
 )
 ```

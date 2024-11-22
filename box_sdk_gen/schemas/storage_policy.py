@@ -11,7 +11,7 @@ class StoragePolicy(StoragePolicyMini):
         id: str,
         *,
         name: Optional[str] = None,
-        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY.value,
+        type: StoragePolicyMiniTypeField = StoragePolicyMiniTypeField.STORAGE_POLICY,
         **kwargs
     ):
         """
@@ -19,7 +19,7 @@ class StoragePolicy(StoragePolicyMini):
         :type id: str
         :param name: A descriptive name of the region, defaults to None
         :type name: Optional[str], optional
-        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY.value
+        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
         :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

@@ -15,7 +15,7 @@ class AiLlmEndpointParamsOpenAi(BaseObject):
     def __init__(
         self,
         *,
-        type: AiLlmEndpointParamsOpenAiTypeField = AiLlmEndpointParamsOpenAiTypeField.OPENAI_PARAMS.value,
+        type: AiLlmEndpointParamsOpenAiTypeField = AiLlmEndpointParamsOpenAiTypeField.OPENAI_PARAMS,
         temperature: Optional[float] = None,
         top_p: Optional[float] = None,
         frequency_penalty: Optional[float] = None,
@@ -25,7 +25,7 @@ class AiLlmEndpointParamsOpenAi(BaseObject):
     ):
         """
                 :param type: The type of the AI LLM endpoint params object for OpenAI.
-        This parameter is **required**., defaults to AiLlmEndpointParamsOpenAiTypeField.OPENAI_PARAMS.value
+        This parameter is **required**., defaults to AiLlmEndpointParamsOpenAiTypeField.OPENAI_PARAMS
                 :type type: AiLlmEndpointParamsOpenAiTypeField, optional
                 :param temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
         while lower values like 0.2 will make it more focused and deterministic.

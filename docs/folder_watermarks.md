@@ -48,7 +48,7 @@ See the endpoint docs at
 client.folder_watermarks.update_folder_watermark(
     folder.id,
     UpdateFolderWatermarkWatermark(
-        imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT.value
+        imprint=UpdateFolderWatermarkWatermarkImprintField.DEFAULT
     ),
 )
 ```

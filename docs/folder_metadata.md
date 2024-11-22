@@ -52,7 +52,7 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.get_folder_metadata_by_id(
-    folder.id, GetFolderMetadataByIdScope.GLOBAL.value, "properties"
+    folder.id, GetFolderMetadataByIdScope.GLOBAL, "properties"
 )
 ```
 
@@ -97,7 +97,7 @@ See the endpoint docs at
 ```python
 client.folder_metadata.create_folder_metadata_by_id(
     folder.id,
-    CreateFolderMetadataByIdScope.ENTERPRISE.value,
+    CreateFolderMetadataByIdScope.ENTERPRISE,
     template_key,
     {
         "name": "John",
@@ -150,11 +150,11 @@ See the endpoint docs at
 ```python
 client.folder_metadata.update_folder_metadata_by_id(
     folder.id,
-    UpdateFolderMetadataByIdScope.GLOBAL.value,
+    UpdateFolderMetadataByIdScope.GLOBAL,
     "properties",
     [
         UpdateFolderMetadataByIdRequestBody(
-            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE.value,
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
             path="/abc",
             value=new_value,
         )
@@ -195,7 +195,7 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.delete_folder_metadata_by_id(
-    folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE.value, template_key
+    folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE, template_key
 )
 ```
 

@@ -54,7 +54,7 @@ def testCreateListGetPromoteFileVersion():
     client.file_versions.promote_file_version(
         file.id,
         id=file_versions.entries[0].id,
-        type=PromoteFileVersionType.FILE_VERSION.value,
+        type=PromoteFileVersionType.FILE_VERSION,
     )
     file_with_promoted_version: FileFull = client.files.get_file_by_id(file.id)
     assert file_with_promoted_version.name == old_name

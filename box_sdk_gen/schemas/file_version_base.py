@@ -14,13 +14,13 @@ class FileVersionBase(BaseObject):
         self,
         id: str,
         *,
-        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION.value,
+        type: FileVersionBaseTypeField = FileVersionBaseTypeField.FILE_VERSION,
         **kwargs
     ):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION.value
+        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION
         :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(**kwargs)

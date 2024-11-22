@@ -16,14 +16,14 @@ class AiItemBase(BaseObject):
         self,
         id: str,
         *,
-        type: AiItemBaseTypeField = AiItemBaseTypeField.FILE.value,
+        type: AiItemBaseTypeField = AiItemBaseTypeField.FILE,
         content: Optional[str] = None,
         **kwargs
     ):
         """
         :param id: The ID of the file.
         :type id: str
-        :param type: The type of the item. Currently the value can be `file` only., defaults to AiItemBaseTypeField.FILE.value
+        :param type: The type of the item. Currently the value can be `file` only., defaults to AiItemBaseTypeField.FILE
         :type type: AiItemBaseTypeField, optional
         :param content: The content of the item, often the text representation., defaults to None
         :type content: Optional[str], optional

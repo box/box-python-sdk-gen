@@ -14,13 +14,13 @@ class IntegrationMappingBoxItemSlack(BaseObject):
         self,
         id: str,
         *,
-        type: IntegrationMappingBoxItemSlackTypeField = IntegrationMappingBoxItemSlackTypeField.FOLDER.value,
+        type: IntegrationMappingBoxItemSlackTypeField = IntegrationMappingBoxItemSlackTypeField.FOLDER,
         **kwargs
     ):
         """
         :param id: ID of the mapped item (of type referenced in `type`)
         :type id: str
-        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingBoxItemSlackTypeField.FOLDER.value
+        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingBoxItemSlackTypeField.FOLDER
         :type type: IntegrationMappingBoxItemSlackTypeField, optional
         """
         super().__init__(**kwargs)

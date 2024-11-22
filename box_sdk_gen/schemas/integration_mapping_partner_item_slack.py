@@ -16,7 +16,7 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
         self,
         id: str,
         *,
-        type: IntegrationMappingPartnerItemSlackTypeField = IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value,
+        type: IntegrationMappingPartnerItemSlackTypeField = IntegrationMappingPartnerItemSlackTypeField.CHANNEL,
         slack_workspace_id: Optional[str] = None,
         slack_org_id: Optional[str] = None,
         **kwargs
@@ -24,7 +24,7 @@ class IntegrationMappingPartnerItemSlack(BaseObject):
         """
         :param id: ID of the mapped item (of type referenced in `type`)
         :type id: str
-        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingPartnerItemSlackTypeField.CHANNEL.value
+        :param type: Type of the mapped item referenced in `id`, defaults to IntegrationMappingPartnerItemSlackTypeField.CHANNEL
         :type type: IntegrationMappingPartnerItemSlackTypeField, optional
         :param slack_workspace_id: ID of the Slack workspace with which the item is associated. Use this parameter if Box for Slack is installed at a workspace level. Do not use `slack_org_id` at the same time., defaults to None
         :type slack_workspace_id: Optional[str], optional

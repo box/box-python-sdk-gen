@@ -51,7 +51,7 @@ def testCreateGetCancelAndListSignRequest():
                 is_in_person=False,
                 login_required=False,
                 password='password',
-                role=SignRequestCreateSignerRoleField.SIGNER.value,
+                role=SignRequestCreateSignerRoleField.SIGNER,
             )
         ],
         source_files=[FileBase(id=file_to_sign.id)],

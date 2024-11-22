@@ -46,7 +46,7 @@ def get_or_create_storage_policy_assignment(
 ) -> StoragePolicyAssignment:
     storage_policy_assignments: StoragePolicyAssignments = (
         client.storage_policy_assignments.get_storage_policy_assignments(
-            GetStoragePolicyAssignmentsResolvedForType.USER.value, user_id
+            GetStoragePolicyAssignmentsResolvedForType.USER, user_id
         )
     )
     if len(storage_policy_assignments.entries) > 0:
@@ -56,8 +56,7 @@ def get_or_create_storage_policy_assignment(
         client.storage_policy_assignments.create_storage_policy_assignment(
             CreateStoragePolicyAssignmentStoragePolicy(id=policy_id),
             CreateStoragePolicyAssignmentAssignedTo(
-                id=user_id,
-                type=CreateStoragePolicyAssignmentAssignedToTypeField.USER.value,
+                id=user_id, type=CreateStoragePolicyAssignmentAssignedToTypeField.USER
             ),
         )
     )

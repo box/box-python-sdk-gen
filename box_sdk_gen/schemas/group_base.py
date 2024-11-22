@@ -11,16 +11,12 @@ class GroupBase(BaseObject):
     _discriminator = 'type', {'group'}
 
     def __init__(
-        self,
-        id: str,
-        *,
-        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
-        **kwargs
+        self, id: str, *, type: GroupBaseTypeField = GroupBaseTypeField.GROUP, **kwargs
     ):
         """
         :param id: The unique identifier for this object
         :type id: str
-        :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+        :param type: `group`, defaults to GroupBaseTypeField.GROUP
         :type type: GroupBaseTypeField, optional
         """
         super().__init__(**kwargs)

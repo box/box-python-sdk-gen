@@ -103,7 +103,7 @@ client.shared_links_files.add_share_link_to_file(
     file_id,
     "shared_link",
     shared_link=AddShareLinkToFileSharedLink(
-        access=AddShareLinkToFileSharedLinkAccessField.OPEN.value, password="Secret123@"
+        access=AddShareLinkToFileSharedLinkAccessField.OPEN, password="Secret123@"
     ),
 )
 ```
@@ -142,7 +142,7 @@ client.shared_links_files.update_shared_link_on_file(
     file_id,
     "shared_link",
     shared_link=UpdateSharedLinkOnFileSharedLink(
-        access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS.value
+        access=UpdateSharedLinkOnFileSharedLinkAccessField.COLLABORATORS
     ),
 )
 ```

@@ -264,7 +264,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         shield_information_barrier_segment: CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment,
         restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment,
         *,
-        type: CreateShieldInformationBarrierSegmentRestrictionType = CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value,
+        type: CreateShieldInformationBarrierSegmentRestrictionType = CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION,
         shield_information_barrier: Optional[ShieldInformationBarrierBase] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> ShieldInformationBarrierSegmentRestriction:
@@ -280,7 +280,7 @@ class ShieldInformationBarrierSegmentRestrictionsManager:
         shield information barrier segment.
                 :type restricted_segment: CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment
                 :param type: The type of the shield barrier segment
-        restriction for this member., defaults to CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value
+        restriction for this member., defaults to CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION
                 :type type: CreateShieldInformationBarrierSegmentRestrictionType, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

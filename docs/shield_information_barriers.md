@@ -46,7 +46,7 @@ See the endpoint docs at
 
 ```python
 client.shield_information_barriers.update_shield_information_barrier_status(
-    barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED.value
+    barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED
 )
 ```
 

@@ -49,7 +49,7 @@ def testShieldInformationBarrierReports():
         client.shield_information_barrier_reports.create_shield_information_barrier_report(
             shield_information_barrier=ShieldInformationBarrierBase(
                 id=barrier_id,
-                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
             )
         )
     )

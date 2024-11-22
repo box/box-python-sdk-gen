@@ -19,14 +19,14 @@ def testGetTermsOfServices():
     tos: TermsOfService = get_or_create_terms_of_services()
     updated_tos_1: TermsOfService = (
         client.terms_of_services.update_terms_of_service_by_id(
-            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'TOS'
+            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED, 'TOS'
         )
     )
     assert to_string(updated_tos_1.status) == 'disabled'
     assert updated_tos_1.text == 'TOS'
     updated_tos_2: TermsOfService = (
         client.terms_of_services.update_terms_of_service_by_id(
-            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, 'Updated TOS'
+            tos.id, UpdateTermsOfServiceByIdStatus.DISABLED, 'Updated TOS'
         )
     )
     assert to_string(updated_tos_2.status) == 'disabled'

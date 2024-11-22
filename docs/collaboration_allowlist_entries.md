@@ -50,7 +50,7 @@ See the endpoint docs at
 
 ```python
 client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
-    domain, CreateCollaborationWhitelistEntryDirection.INBOUND.value
+    domain, CreateCollaborationWhitelistEntryDirection.INBOUND
 )
 ```
 

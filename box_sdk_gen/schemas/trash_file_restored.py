@@ -66,7 +66,7 @@ class TrashFileRestored(BaseObject):
         item_status: TrashFileRestoredItemStatusField,
         *,
         etag: Optional[str] = None,
-        type: TrashFileRestoredTypeField = TrashFileRestoredTypeField.FILE.value,
+        type: TrashFileRestoredTypeField = TrashFileRestoredTypeField.FILE,
         name: Optional[str] = None,
         file_version: Optional[FileVersionMini] = None,
         trashed_at: Optional[str] = None,
@@ -109,7 +109,7 @@ class TrashFileRestored(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to TrashFileRestoredTypeField.FILE.value
+                :param type: `file`, defaults to TrashFileRestoredTypeField.FILE
                 :type type: TrashFileRestoredTypeField, optional
                 :param name: The name of the file, defaults to None
                 :type name: Optional[str], optional

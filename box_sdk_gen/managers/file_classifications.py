@@ -52,8 +52,8 @@ class UpdateClassificationOnFileRequestBody(BaseObject):
         self,
         value: str,
         *,
-        op: UpdateClassificationOnFileRequestBodyOpField = UpdateClassificationOnFileRequestBodyOpField.REPLACE.value,
-        path: UpdateClassificationOnFileRequestBodyPathField = UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
+        op: UpdateClassificationOnFileRequestBodyOpField = UpdateClassificationOnFileRequestBodyOpField.REPLACE,
+        path: UpdateClassificationOnFileRequestBodyPathField = UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY,
         **kwargs
     ):
         """
@@ -64,10 +64,10 @@ class UpdateClassificationOnFileRequestBody(BaseObject):
         [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
         which lists all available classification keys.
                 :type value: str
-                :param op: `replace`, defaults to UpdateClassificationOnFileRequestBodyOpField.REPLACE.value
+                :param op: `replace`, defaults to UpdateClassificationOnFileRequestBodyOpField.REPLACE
                 :type op: UpdateClassificationOnFileRequestBodyOpField, optional
                 :param path: Defines classifications
-        available in the enterprise., defaults to UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value
+        available in the enterprise., defaults to UpdateClassificationOnFileRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY
                 :type path: UpdateClassificationOnFileRequestBodyPathField, optional
         """
         super().__init__(**kwargs)

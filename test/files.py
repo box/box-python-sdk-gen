@@ -58,7 +58,7 @@ def testGetFileThumbnail():
         thumbnail_file_name, thumbnail_content_stream
     )
     thumbnail: Optional[ByteStream] = client.files.get_file_thumbnail_by_id(
-        thumbnail_file.id, GetFileThumbnailByIdExtension.PNG.value
+        thumbnail_file.id, GetFileThumbnailByIdExtension.PNG
     )
     assert (
         not buffer_equals(
@@ -115,7 +115,7 @@ def testFileLock():
     file: FileFull = upload_new_file()
     file_with_lock: FileFull = client.files.update_file_by_id(
         file.id,
-        lock=UpdateFileByIdLock(access=UpdateFileByIdLockAccessField.LOCK.value),
+        lock=UpdateFileByIdLock(access=UpdateFileByIdLockAccessField.LOCK),
         fields=['lock'],
     )
     assert not file_with_lock.lock == None

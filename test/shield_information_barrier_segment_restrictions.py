@@ -64,7 +64,7 @@ def testShieldInformationBarrierSegmentRestrictions():
         client.shield_information_barrier_segments.create_shield_information_barrier_segment(
             ShieldInformationBarrierBase(
                 id=barrier_id,
-                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
             ),
             get_uuid(),
             description='barrier segment description',
@@ -75,7 +75,7 @@ def testShieldInformationBarrierSegmentRestrictions():
         client.shield_information_barrier_segments.create_shield_information_barrier_segment(
             ShieldInformationBarrierBase(
                 id=barrier_id,
-                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
             ),
             get_uuid(),
             description='barrier segment description',
@@ -86,13 +86,13 @@ def testShieldInformationBarrierSegmentRestrictions():
         client.shield_information_barrier_segment_restrictions.create_shield_information_barrier_segment_restriction(
             CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegment(
                 id=segment_id,
-                type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
+                type=CreateShieldInformationBarrierSegmentRestrictionShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT,
             ),
             CreateShieldInformationBarrierSegmentRestrictionRestrictedSegment(
                 id=segment_to_restrict_id,
-                type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
+                type=CreateShieldInformationBarrierSegmentRestrictionRestrictedSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT,
             ),
-            type=CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION.value,
+            type=CreateShieldInformationBarrierSegmentRestrictionType.SHIELD_INFORMATION_BARRIER_SEGMENT_RESTRICTION,
         )
     )
     segment_restriction_id: str = segment_restriction.id

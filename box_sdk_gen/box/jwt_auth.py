@@ -160,7 +160,7 @@ class JWTConfig:
         *,
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
-        algorithm: Optional[JwtAlgorithm] = JwtAlgorithm.RS256.value,
+        algorithm: Optional[JwtAlgorithm] = JwtAlgorithm.RS256,
         token_storage: TokenStorage = None
     ):
         """
@@ -285,7 +285,7 @@ class BoxJWTAuth(Authentication):
         alg: JwtAlgorithm = (
             self.config.algorithm
             if not self.config.algorithm == None
-            else JwtAlgorithm.RS256.value
+            else JwtAlgorithm.RS256
         )
         claims: Dict = {
             'exp': get_epoch_time_in_seconds() + 30,
@@ -309,7 +309,7 @@ class BoxJWTAuth(Authentication):
             )
         )
         token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_JWT_BEARER,
             assertion=assertion,
             client_id=self.config.client_id,
             client_secret=self.config.client_secret,
@@ -426,9 +426,9 @@ class BoxJWTAuth(Authentication):
             )
         )
         downscoped_token: AccessToken = auth_manager.request_access_token(
-            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE.value,
+            PostOAuth2TokenGrantTypeField.URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE,
             subject_token=token.access_token,
-            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN.value,
+            subject_token_type=PostOAuth2TokenSubjectTokenTypeField.URN_IETF_PARAMS_OAUTH_TOKEN_TYPE_ACCESS_TOKEN,
             resource=resource,
             scope=' '.join(scopes),
             box_shared_link=shared_link,

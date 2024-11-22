@@ -49,9 +49,9 @@ See the endpoint docs at
 
 ```python
 client.terms_of_services.create_terms_of_service(
-    CreateTermsOfServiceStatus.DISABLED.value,
+    CreateTermsOfServiceStatus.DISABLED,
     "Test TOS",
-    tos_type=CreateTermsOfServiceTosType.MANAGED.value,
+    tos_type=CreateTermsOfServiceTosType.MANAGED,
 )
 ```
 
@@ -109,7 +109,7 @@ See the endpoint docs at
 
 ```python
 client.terms_of_services.update_terms_of_service_by_id(
-    tos.id, UpdateTermsOfServiceByIdStatus.DISABLED.value, "Updated TOS"
+    tos.id, UpdateTermsOfServiceByIdStatus.DISABLED, "Updated TOS"
 )
 ```
 

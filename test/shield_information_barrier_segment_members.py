@@ -55,7 +55,7 @@ def testShieldInformationBarrierSegmentMembers():
         client.shield_information_barrier_segments.create_shield_information_barrier_segment(
             ShieldInformationBarrierBase(
                 id=barrier_id,
-                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
             ),
             segment_name,
         )
@@ -65,7 +65,7 @@ def testShieldInformationBarrierSegmentMembers():
         client.shield_information_barrier_segment_members.create_shield_information_barrier_segment_member(
             CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment(
                 id=segment.id,
-                type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT.value,
+                type=CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField.SHIELD_INFORMATION_BARRIER_SEGMENT,
             ),
             UserBase(id=get_env_var('USER_ID')),
         )

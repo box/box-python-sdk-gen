@@ -21,7 +21,7 @@ class AppItemEventSource(BaseObject):
         id: str,
         app_item_type: str,
         *,
-        type: AppItemEventSourceTypeField = AppItemEventSourceTypeField.APP_ITEM.value,
+        type: AppItemEventSourceTypeField = AppItemEventSourceTypeField.APP_ITEM,
         user: Optional[UserMini] = None,
         group: Optional[GroupMini] = None,
         **kwargs
@@ -32,7 +32,7 @@ class AppItemEventSource(BaseObject):
                 :param app_item_type: The type of the `AppItem`
                 :type app_item_type: str
                 :param type: The type of the source that this event represents. Can only be `app_item`.
-        , defaults to AppItemEventSourceTypeField.APP_ITEM.value
+        , defaults to AppItemEventSourceTypeField.APP_ITEM
                 :type type: AppItemEventSourceTypeField, optional
         """
         super().__init__(**kwargs)

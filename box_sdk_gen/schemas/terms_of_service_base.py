@@ -14,13 +14,13 @@ class TermsOfServiceBase(BaseObject):
         self,
         id: str,
         *,
-        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value,
+        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE,
         **kwargs
     ):
         """
         :param id: The unique identifier for this terms of service.
         :type id: str
-        :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value
+        :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
         :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(**kwargs)

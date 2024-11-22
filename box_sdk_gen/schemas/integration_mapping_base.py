@@ -14,7 +14,7 @@ class IntegrationMappingBase(BaseObject):
         self,
         id: str,
         *,
-        type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value,
+        type: IntegrationMappingBaseTypeField = IntegrationMappingBaseTypeField.INTEGRATION_MAPPING,
         **kwargs
     ):
         """
@@ -22,7 +22,7 @@ class IntegrationMappingBase(BaseObject):
         (part of a composite key together
         with `integration_type`)
                 :type id: str
-                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING.value
+                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(**kwargs)

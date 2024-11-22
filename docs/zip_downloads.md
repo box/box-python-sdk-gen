@@ -34,11 +34,9 @@ See the endpoint docs at
 ```python
 client.zip_downloads.create_zip_download(
     [
-        CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
-        CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
-        CreateZipDownloadItems(
-            id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value
-        ),
+        CreateZipDownloadItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE),
+        CreateZipDownloadItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE),
+        CreateZipDownloadItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER),
     ],
     download_file_name="zip",
 )
@@ -150,9 +148,9 @@ This operation is performed by calling function `download_zip`.
 ```python
 client.zip_downloads.download_zip(
     [
-        DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE.value),
-        DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE.value),
-        DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER.value),
+        DownloadZipItems(id=file_1.id, type=DownloadZipItemsTypeField.FILE),
+        DownloadZipItems(id=file_2.id, type=DownloadZipItemsTypeField.FILE),
+        DownloadZipItems(id=folder_1.id, type=DownloadZipItemsTypeField.FOLDER),
     ],
     download_file_name="zip",
 )

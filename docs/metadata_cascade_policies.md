@@ -60,7 +60,7 @@ See the endpoint docs at
 
 ```python
 client.metadata_cascade_policies.create_metadata_cascade_policy(
-    folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE.value, template_key
+    folder.id, CreateMetadataCascadePolicyScope.ENTERPRISE, template_key
 )
 ```
 
@@ -154,7 +154,7 @@ See the endpoint docs at
 
 ```python
 client.metadata_cascade_policies.apply_metadata_cascade_policy(
-    cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE.value
+    cascade_policy_id, ApplyMetadataCascadePolicyConflictResolution.OVERWRITE
 )
 ```
 

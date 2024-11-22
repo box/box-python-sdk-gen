@@ -50,7 +50,7 @@ See the endpoint docs at
 
 ```python
 client.user_collaborations.update_collaboration_by_id(
-    collaboration_id, UpdateCollaborationByIdRole.VIEWER.value
+    collaboration_id, UpdateCollaborationByIdRole.VIEWER
 )
 ```
 
@@ -133,14 +133,11 @@ See the endpoint docs at
 
 ```python
 client.user_collaborations.create_collaboration(
-    CreateCollaborationItem(
-        type=CreateCollaborationItemTypeField.FILE.value, id=file.id
-    ),
+    CreateCollaborationItem(type=CreateCollaborationItemTypeField.FILE, id=file.id),
     CreateCollaborationAccessibleBy(
-        type=CreateCollaborationAccessibleByTypeField.USER.value,
-        id=get_env_var("USER_ID"),
+        type=CreateCollaborationAccessibleByTypeField.USER, id=get_env_var("USER_ID")
     ),
-    CreateCollaborationRole.EDITOR.value,
+    CreateCollaborationRole.EDITOR,
 )
 ```
 

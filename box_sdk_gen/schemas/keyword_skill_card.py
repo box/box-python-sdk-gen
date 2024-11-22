@@ -41,14 +41,14 @@ class KeywordSkillCardSkillField(BaseObject):
         self,
         id: str,
         *,
-        type: KeywordSkillCardSkillTypeField = KeywordSkillCardSkillTypeField.SERVICE.value,
+        type: KeywordSkillCardSkillTypeField = KeywordSkillCardSkillTypeField.SERVICE,
         **kwargs
     ):
         """
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to KeywordSkillCardSkillTypeField.SERVICE.value
+                :param type: `service`, defaults to KeywordSkillCardSkillTypeField.SERVICE
                 :type type: KeywordSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -67,7 +67,7 @@ class KeywordSkillCardInvocationField(BaseObject):
         self,
         id: str,
         *,
-        type: KeywordSkillCardInvocationTypeField = KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        type: KeywordSkillCardInvocationTypeField = KeywordSkillCardInvocationTypeField.SKILL_INVOCATION,
         **kwargs
     ):
         """
@@ -77,7 +77,7 @@ class KeywordSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to KeywordSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :param type: `skill_invocation`, defaults to KeywordSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: KeywordSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -105,8 +105,8 @@ class KeywordSkillCard(BaseObject):
         entries: List[KeywordSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
-        type: KeywordSkillCardTypeField = KeywordSkillCardTypeField.SKILL_CARD.value,
-        skill_card_type: KeywordSkillCardSkillCardTypeField = KeywordSkillCardSkillCardTypeField.KEYWORD.value,
+        type: KeywordSkillCardTypeField = KeywordSkillCardTypeField.SKILL_CARD,
+        skill_card_type: KeywordSkillCardSkillCardTypeField = KeywordSkillCardSkillCardTypeField.KEYWORD,
         skill_card_title: Optional[KeywordSkillCardSkillCardTitleField] = None,
         **kwargs
     ):
@@ -120,9 +120,9 @@ class KeywordSkillCard(BaseObject):
                 :type entries: List[KeywordSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to KeywordSkillCardTypeField.SKILL_CARD.value
+                :param type: `skill_card`, defaults to KeywordSkillCardTypeField.SKILL_CARD
                 :type type: KeywordSkillCardTypeField, optional
-                :param skill_card_type: `keyword`, defaults to KeywordSkillCardSkillCardTypeField.KEYWORD.value
+                :param skill_card_type: `keyword`, defaults to KeywordSkillCardSkillCardTypeField.KEYWORD
                 :type skill_card_type: KeywordSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[KeywordSkillCardSkillCardTitleField], optional

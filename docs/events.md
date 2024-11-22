@@ -83,7 +83,7 @@ See the endpoint docs at
 
 ```python
 client.events.get_events(
-    stream_type=GetEventsStreamType.ADMIN_LOGS.value,
+    stream_type=GetEventsStreamType.ADMIN_LOGS,
     limit=1,
     created_after=created_after_date,
     created_before=created_before_date,

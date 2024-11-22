@@ -61,7 +61,7 @@ class TermsOfService(TermsOfServiceBase):
         text: Optional[str] = None,
         created_at: Optional[DateTime] = None,
         modified_at: Optional[DateTime] = None,
-        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value,
+        type: TermsOfServiceBaseTypeField = TermsOfServiceBaseTypeField.TERMS_OF_SERVICE,
         **kwargs
     ):
         """
@@ -78,7 +78,7 @@ class TermsOfService(TermsOfServiceBase):
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal item was modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE.value
+                :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
                 :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

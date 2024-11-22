@@ -783,7 +783,7 @@ class ChunkedUploadsManager:
         last_index: int = acc.last_index
         parts: List[UploadPart] = acc.parts
         chunk_buffer: Buffer = read_byte_stream(chunk)
-        hash: Hash = Hash(algorithm=HashName.SHA1.value)
+        hash: Hash = Hash(algorithm=HashName.SHA1)
         hash.update_hash(chunk_buffer)
         sha_1: str = hash.digest_hash('base64')
         digest: str = ''.join(['sha=', sha_1])
@@ -844,7 +844,7 @@ class ChunkedUploadsManager:
         total_parts: int = upload_session.total_parts
         assert part_size * total_parts >= file_size
         assert upload_session.num_parts_processed == 0
-        file_hash: Hash = Hash(algorithm=HashName.SHA1.value)
+        file_hash: Hash = Hash(algorithm=HashName.SHA1)
         chunks_iterator: Iterator = iterate_chunks(file, part_size, file_size)
         results: _PartAccumulator = reduce_iterator(
             chunks_iterator,

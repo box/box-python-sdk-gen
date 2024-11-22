@@ -49,23 +49,21 @@ def testListCollaborations():
     group_collaboration: Collaboration = (
         client.user_collaborations.create_collaboration(
             CreateCollaborationItem(
-                type=CreateCollaborationItemTypeField.FOLDER.value, id=folder.id
+                type=CreateCollaborationItemTypeField.FOLDER, id=folder.id
             ),
             CreateCollaborationAccessibleBy(
-                type=CreateCollaborationAccessibleByTypeField.GROUP.value, id=group.id
+                type=CreateCollaborationAccessibleByTypeField.GROUP, id=group.id
             ),
-            CreateCollaborationRole.EDITOR.value,
+            CreateCollaborationRole.EDITOR,
         )
     )
     file_collaboration: Collaboration = client.user_collaborations.create_collaboration(
-        CreateCollaborationItem(
-            type=CreateCollaborationItemTypeField.FILE.value, id=file.id
-        ),
+        CreateCollaborationItem(type=CreateCollaborationItemTypeField.FILE, id=file.id),
         CreateCollaborationAccessibleBy(
-            type=CreateCollaborationAccessibleByTypeField.USER.value,
+            type=CreateCollaborationAccessibleByTypeField.USER,
             id=get_env_var('USER_ID'),
         ),
-        CreateCollaborationRole.EDITOR.value,
+        CreateCollaborationRole.EDITOR,
     )
     assert to_string(group_collaboration.role) == 'editor'
     assert to_string(group_collaboration.type) == 'collaboration'
@@ -78,9 +76,7 @@ def testListCollaborations():
     )
     assert len(folder_collaborations.entries) > 0
     pending_collaborations: CollaborationsOffsetPaginated = (
-        client.list_collaborations.get_collaborations(
-            GetCollaborationsStatus.PENDING.value
-        )
+        client.list_collaborations.get_collaborations(GetCollaborationsStatus.PENDING)
     )
     assert len(pending_collaborations.entries) >= 0
     group_collaborations: CollaborationsOffsetPaginated = (

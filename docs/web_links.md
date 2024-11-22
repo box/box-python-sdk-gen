@@ -90,7 +90,7 @@ client.web_links.update_web_link_by_id(
     weblink.id,
     name=updated_name,
     shared_link=UpdateWebLinkByIdSharedLink(
-        access=UpdateWebLinkByIdSharedLinkAccessField.OPEN.value, password=password
+        access=UpdateWebLinkByIdSharedLinkAccessField.OPEN, password=password
     ),
 )
 ```

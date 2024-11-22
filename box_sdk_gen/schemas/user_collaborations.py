@@ -13,7 +13,7 @@ class UserCollaborations(UserBase):
         name: Optional[str] = None,
         login: Optional[str] = None,
         is_active: Optional[bool] = None,
-        type: UserBaseTypeField = UserBaseTypeField.USER.value,
+        type: UserBaseTypeField = UserBaseTypeField.USER,
         **kwargs
     ):
         """
@@ -25,7 +25,7 @@ class UserCollaborations(UserBase):
         :type login: Optional[str], optional
         :param is_active: If set to `false`, the user is either deactivated or deleted., defaults to None
         :type is_active: Optional[bool], optional
-        :param type: `user`, defaults to UserBaseTypeField.USER.value
+        :param type: `user`, defaults to UserBaseTypeField.USER
         :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

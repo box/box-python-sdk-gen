@@ -77,16 +77,16 @@ client: BoxClient = get_default_client()
 
 def testAskAISingleItem():
     ai_ask_agent_config: AiAgentAsk = client.ai.get_ai_agent_default_config(
-        GetAiAgentDefaultConfigMode.ASK.value, language='en-US'
+        GetAiAgentDefaultConfigMode.ASK, language='en-US'
     )
     file_to_ask: FileFull = upload_new_file()
     response: AiResponseFull = client.ai.create_ai_ask(
-        CreateAiAskMode.SINGLE_ITEM_QA.value,
+        CreateAiAskMode.SINGLE_ITEM_QA,
         'which direction sun rises',
         [
             AiItemBase(
                 id=file_to_ask.id,
-                type=AiItemBaseTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE,
                 content='Sun rises in the East',
             )
         ],
@@ -101,17 +101,17 @@ def testAskAIMultipleItems():
     file_to_ask_1: FileFull = upload_new_file()
     file_to_ask_2: FileFull = upload_new_file()
     response: AiResponseFull = client.ai.create_ai_ask(
-        CreateAiAskMode.MULTIPLE_ITEM_QA.value,
+        CreateAiAskMode.MULTIPLE_ITEM_QA,
         'Which direction sun rises?',
         [
             AiItemBase(
                 id=file_to_ask_1.id,
-                type=AiItemBaseTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE,
                 content='Earth goes around the sun',
             ),
             AiItemBase(
                 id=file_to_ask_2.id,
-                type=AiItemBaseTypeField.FILE.value,
+                type=AiItemBaseTypeField.FILE,
                 content='Sun rises in the East in the morning',
             ),
         ],
@@ -125,14 +125,14 @@ def testAskAIMultipleItems():
 def testAITextGenWithDialogueHistory():
     file_to_ask: FileFull = upload_new_file()
     ai_text_gen_agent_config: AiAgentTextGen = client.ai.get_ai_agent_default_config(
-        GetAiAgentDefaultConfigMode.TEXT_GEN.value, language='en-US'
+        GetAiAgentDefaultConfigMode.TEXT_GEN, language='en-US'
     )
     response: AiResponse = client.ai.create_ai_text_gen(
         'Parapharse the document.s',
         [
             CreateAiTextGenItems(
                 id=file_to_ask.id,
-                type=CreateAiTextGenItemsTypeField.FILE.value,
+                type=CreateAiTextGenItemsTypeField.FILE,
                 content='The Earth goes around the sun. Sun rises in the East in the morning.',
             )
         ],
@@ -159,7 +159,7 @@ def testGettingAIAskAgentConfig():
     ai_ask_config: Union[
         AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
     ] = client.ai.get_ai_agent_default_config(
-        GetAiAgentDefaultConfigMode.ASK.value, language='en-US'
+        GetAiAgentDefaultConfigMode.ASK, language='en-US'
     )
     assert ai_ask_config.type == 'ai_agent_ask'
     assert not ai_ask_config.basic_text.model == ''
@@ -188,7 +188,7 @@ def testGettingAITextGenAgentConfig():
     ai_text_gen_config: Union[
         AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
     ] = client.ai.get_ai_agent_default_config(
-        GetAiAgentDefaultConfigMode.TEXT_GEN.value, language='en-US'
+        GetAiAgentDefaultConfigMode.TEXT_GEN, language='en-US'
     )
     assert ai_text_gen_config.type == 'ai_agent_text_gen'
     assert not ai_text_gen_config.basic_gen.llm_endpoint_params == None
@@ -202,7 +202,7 @@ def testGettingAITextGenAgentConfig():
 
 def testAIExtract():
     ai_extract_agent_config: AiAgentExtract = client.ai.get_ai_agent_default_config(
-        GetAiAgentDefaultConfigMode.EXTRACT.value, language='en-US'
+        GetAiAgentDefaultConfigMode.EXTRACT, language='en-US'
     )
     uploaded_files: Files = client.uploads.upload_file(
         UploadFileAttributes(
@@ -231,7 +231,7 @@ def testAIExtract():
 def testAIExtractStructuredWithFields():
     ai_extract_structured_agent_config: AiAgentExtractStructured = (
         client.ai.get_ai_agent_default_config(
-            GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED.value, language='en-US'
+            GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language='en-US'
         )
     )
     uploaded_files: Files = client.uploads.upload_file(
@@ -321,31 +321,31 @@ def testAIExtractStructuredWithMetadataTemplate():
                 key='firstName',
                 display_name='First name',
                 description='Person first name',
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
             ),
             CreateMetadataTemplateFields(
                 key='lastName',
                 display_name='Last name',
                 description='Person last name',
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
             ),
             CreateMetadataTemplateFields(
                 key='dateOfBirth',
                 display_name='Birth date',
                 description='Person date of birth',
-                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
             ),
             CreateMetadataTemplateFields(
                 key='age',
                 display_name='Age',
                 description='Person age',
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
             ),
             CreateMetadataTemplateFields(
                 key='hobby',
                 display_name='Hobby',
                 description='Person hobby',
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
             ),
         ],
     )
@@ -366,6 +366,6 @@ def testAIExtractStructuredWithMetadataTemplate():
         ['guitar', 'books']
     )
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template.template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     client.files.delete_file_by_id(file.id)

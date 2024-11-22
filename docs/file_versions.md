@@ -185,9 +185,7 @@ See the endpoint docs at
 
 ```python
 client.file_versions.promote_file_version(
-    file.id,
-    id=file_versions.entries[0].id,
-    type=PromoteFileVersionType.FILE_VERSION.value,
+    file.id, id=file_versions.entries[0].id, type=PromoteFileVersionType.FILE_VERSION
 )
 ```
 

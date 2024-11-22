@@ -59,15 +59,11 @@ See the endpoint docs at
 admin_client.workflows.start_workflow(
     workflow_to_run.id,
     StartWorkflowFlow(type="flow", id=workflow_to_run.flows[0].id),
-    [
-        StartWorkflowFiles(
-            type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id
-        )
-    ],
+    [StartWorkflowFiles(type=StartWorkflowFilesTypeField.FILE, id=workflow_file_id)],
     StartWorkflowFolder(
-        type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id
+        type=StartWorkflowFolderTypeField.FOLDER, id=workflow_folder_id
     ),
-    type=StartWorkflowType.WORKFLOW_PARAMETERS.value,
+    type=StartWorkflowType.WORKFLOW_PARAMETERS,
 )
 ```
 

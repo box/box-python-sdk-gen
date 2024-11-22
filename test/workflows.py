@@ -73,11 +73,11 @@ def testWorkflows():
         StartWorkflowFlow(type='flow', id=workflow_to_run.flows[0].id),
         [
             StartWorkflowFiles(
-                type=StartWorkflowFilesTypeField.FILE.value, id=workflow_file_id
+                type=StartWorkflowFilesTypeField.FILE, id=workflow_file_id
             )
         ],
         StartWorkflowFolder(
-            type=StartWorkflowFolderTypeField.FOLDER.value, id=workflow_folder_id
+            type=StartWorkflowFolderTypeField.FOLDER, id=workflow_folder_id
         ),
-        type=StartWorkflowType.WORKFLOW_PARAMETERS.value,
+        type=StartWorkflowType.WORKFLOW_PARAMETERS,
     )

@@ -41,14 +41,14 @@ class TranscriptSkillCardSkillField(BaseObject):
         self,
         id: str,
         *,
-        type: TranscriptSkillCardSkillTypeField = TranscriptSkillCardSkillTypeField.SERVICE.value,
+        type: TranscriptSkillCardSkillTypeField = TranscriptSkillCardSkillTypeField.SERVICE,
         **kwargs
     ):
         """
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to TranscriptSkillCardSkillTypeField.SERVICE.value
+                :param type: `service`, defaults to TranscriptSkillCardSkillTypeField.SERVICE
                 :type type: TranscriptSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -67,7 +67,7 @@ class TranscriptSkillCardInvocationField(BaseObject):
         self,
         id: str,
         *,
-        type: TranscriptSkillCardInvocationTypeField = TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION.value,
+        type: TranscriptSkillCardInvocationTypeField = TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION,
         **kwargs
     ):
         """
@@ -77,7 +77,7 @@ class TranscriptSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION.value
+                :param type: `skill_invocation`, defaults to TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: TranscriptSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -127,8 +127,8 @@ class TranscriptSkillCard(BaseObject):
         entries: List[TranscriptSkillCardEntriesField],
         *,
         created_at: Optional[DateTime] = None,
-        type: TranscriptSkillCardTypeField = TranscriptSkillCardTypeField.SKILL_CARD.value,
-        skill_card_type: TranscriptSkillCardSkillCardTypeField = TranscriptSkillCardSkillCardTypeField.TRANSCRIPT.value,
+        type: TranscriptSkillCardTypeField = TranscriptSkillCardTypeField.SKILL_CARD,
+        skill_card_type: TranscriptSkillCardSkillCardTypeField = TranscriptSkillCardSkillCardTypeField.TRANSCRIPT,
         skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField] = None,
         duration: Optional[int] = None,
         **kwargs
@@ -144,9 +144,9 @@ class TranscriptSkillCard(BaseObject):
                 :type entries: List[TranscriptSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to TranscriptSkillCardTypeField.SKILL_CARD.value
+                :param type: `skill_card`, defaults to TranscriptSkillCardTypeField.SKILL_CARD
                 :type type: TranscriptSkillCardTypeField, optional
-                :param skill_card_type: `transcript`, defaults to TranscriptSkillCardSkillCardTypeField.TRANSCRIPT.value
+                :param skill_card_type: `transcript`, defaults to TranscriptSkillCardSkillCardTypeField.TRANSCRIPT
                 :type skill_card_type: TranscriptSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField], optional

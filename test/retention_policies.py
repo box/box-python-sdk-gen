@@ -25,11 +25,11 @@ def testCreateUpdateGetDeleteRetentionPolicy():
     retention_policy: RetentionPolicy = (
         client.retention_policies.create_retention_policy(
             retention_policy_name,
-            CreateRetentionPolicyPolicyType.FINITE.value,
-            CreateRetentionPolicyDispositionAction.REMOVE_RETENTION.value,
+            CreateRetentionPolicyPolicyType.FINITE,
+            CreateRetentionPolicyDispositionAction.REMOVE_RETENTION,
             description=retention_description,
             retention_length='1',
-            retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE.value,
+            retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE,
             can_owner_extend_retention=True,
             are_owners_notified=True,
         )

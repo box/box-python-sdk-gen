@@ -42,5 +42,5 @@ def testShieldInformationBarriers():
     assert len(barriers.entries) == 1
     with pytest.raises(Exception):
         client.shield_information_barriers.update_shield_information_barrier_status(
-            barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED.value
+            barrier_id, UpdateShieldInformationBarrierStatusStatus.DISABLED
         )

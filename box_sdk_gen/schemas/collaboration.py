@@ -152,7 +152,7 @@ class Collaboration(BaseObject):
         self,
         id: str,
         *,
-        type: CollaborationTypeField = CollaborationTypeField.COLLABORATION.value,
+        type: CollaborationTypeField = CollaborationTypeField.COLLABORATION,
         item: Optional[Union[File, Folder, WebLink]] = None,
         app_item: Optional[AppItem] = None,
         accessible_by: Optional[Union[UserCollaborations, GroupMini]] = None,
@@ -173,7 +173,7 @@ class Collaboration(BaseObject):
         """
                 :param id: The unique identifier for this collaboration.
                 :type id: str
-                :param type: `collaboration`, defaults to CollaborationTypeField.COLLABORATION.value
+                :param type: `collaboration`, defaults to CollaborationTypeField.COLLABORATION
                 :type type: CollaborationTypeField, optional
                 :param invite_email: The email address used to invite an unregistered collaborator, if
         they are not a registered user., defaults to None

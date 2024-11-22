@@ -39,7 +39,7 @@ def testCreateGetDeleteFileWatermark():
     created_watermark: Watermark = client.file_watermarks.update_file_watermark(
         file.id,
         UpdateFileWatermarkWatermark(
-            imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
+            imprint=UpdateFileWatermarkWatermarkImprintField.DEFAULT
         ),
     )
     watermark: Watermark = client.file_watermarks.get_file_watermark(file.id)

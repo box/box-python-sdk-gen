@@ -47,18 +47,18 @@ def testCreateUpdateGetDeleteTaskAssignment():
     file: FileFull = upload_new_file()
     date: DateTime = date_time_from_string('2035-01-01T00:00:00Z')
     task: Task = client.tasks.create_task(
-        CreateTaskItem(type=CreateTaskItemTypeField.FILE.value, id=file.id),
-        action=CreateTaskAction.REVIEW.value,
+        CreateTaskItem(type=CreateTaskItemTypeField.FILE, id=file.id),
+        action=CreateTaskAction.REVIEW,
         message='test message',
         due_at=date,
-        completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES.value,
+        completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES,
     )
     assert task.message == 'test message'
     assert task.item.id == file.id
     current_user: UserFull = client.users.get_user_me()
     task_assignment: TaskAssignment = client.task_assignments.create_task_assignment(
         CreateTaskAssignmentTask(
-            type=CreateTaskAssignmentTaskTypeField.TASK.value, id=task.id
+            type=CreateTaskAssignmentTaskTypeField.TASK, id=task.id
         ),
         CreateTaskAssignmentAssignTo(id=current_user.id),
     )
@@ -76,7 +76,7 @@ def testCreateUpdateGetDeleteTaskAssignment():
         client.task_assignments.update_task_assignment_by_id(
             task_assignment.id,
             message='updated message',
-            resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED.value,
+            resolution_state=UpdateTaskAssignmentByIdResolutionState.APPROVED,
         )
     )
     assert updated_task_assignment.message == 'updated message'

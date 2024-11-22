@@ -20,7 +20,7 @@ class Group(GroupMini):
         modified_at: Optional[DateTime] = None,
         name: Optional[str] = None,
         group_type: Optional[GroupMiniGroupTypeField] = None,
-        type: GroupBaseTypeField = GroupBaseTypeField.GROUP.value,
+        type: GroupBaseTypeField = GroupBaseTypeField.GROUP,
         **kwargs
     ):
         """
@@ -34,7 +34,7 @@ class Group(GroupMini):
         :type name: Optional[str], optional
         :param group_type: The type of the group., defaults to None
         :type group_type: Optional[GroupMiniGroupTypeField], optional
-        :param type: `group`, defaults to GroupBaseTypeField.GROUP.value
+        :param type: `group`, defaults to GroupBaseTypeField.GROUP
         :type type: GroupBaseTypeField, optional
         """
         super().__init__(id=id, name=name, group_type=group_type, type=type, **kwargs)

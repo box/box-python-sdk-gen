@@ -31,7 +31,7 @@ def testCollaborationAllowlistEntries():
     domain: str = ''.join([get_uuid(), 'example.com'])
     new_entry: CollaborationAllowlistEntry = (
         client.collaboration_allowlist_entries.create_collaboration_whitelist_entry(
-            domain, CreateCollaborationWhitelistEntryDirection.INBOUND.value
+            domain, CreateCollaborationWhitelistEntryDirection.INBOUND
         )
     )
     assert to_string(new_entry.type) == 'collaboration_whitelist_entry'

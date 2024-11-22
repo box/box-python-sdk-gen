@@ -44,7 +44,7 @@ def testShieldInformationBarrierSegments():
         client.shield_information_barrier_segments.create_shield_information_barrier_segment(
             ShieldInformationBarrierBase(
                 id=barrier_id,
-                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER.value,
+                type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
             ),
             segment_name,
             description=segment_description,

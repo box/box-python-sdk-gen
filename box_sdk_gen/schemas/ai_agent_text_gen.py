@@ -17,12 +17,12 @@ class AiAgentTextGen(BaseObject):
     def __init__(
         self,
         *,
-        type: AiAgentTextGenTypeField = AiAgentTextGenTypeField.AI_AGENT_TEXT_GEN.value,
+        type: AiAgentTextGenTypeField = AiAgentTextGenTypeField.AI_AGENT_TEXT_GEN,
         basic_gen: Optional[AiAgentBasicGenTool] = None,
         **kwargs
     ):
         """
-        :param type: The type of AI agent used for generating text., defaults to AiAgentTextGenTypeField.AI_AGENT_TEXT_GEN.value
+        :param type: The type of AI agent used for generating text., defaults to AiAgentTextGenTypeField.AI_AGENT_TEXT_GEN
         :type type: AiAgentTextGenTypeField, optional
         """
         super().__init__(**kwargs)

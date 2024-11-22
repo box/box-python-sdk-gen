@@ -49,7 +49,7 @@ class Invite(BaseObject):
         self,
         id: str,
         *,
-        type: InviteTypeField = InviteTypeField.INVITE.value,
+        type: InviteTypeField = InviteTypeField.INVITE,
         invited_to: Optional[InviteInvitedToField] = None,
         actionable_by: Optional[UserMini] = None,
         invited_by: Optional[UserMini] = None,
@@ -61,7 +61,7 @@ class Invite(BaseObject):
         """
         :param id: The unique identifier for this invite
         :type id: str
-        :param type: `invite`, defaults to InviteTypeField.INVITE.value
+        :param type: `invite`, defaults to InviteTypeField.INVITE
         :type type: InviteTypeField, optional
         :param invited_to: A representation of a Box enterprise, defaults to None
         :type invited_to: Optional[InviteInvitedToField], optional

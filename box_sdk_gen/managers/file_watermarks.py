@@ -45,13 +45,13 @@ class UpdateFileWatermarkWatermark(BaseObject):
     def __init__(
         self,
         *,
-        imprint: UpdateFileWatermarkWatermarkImprintField = UpdateFileWatermarkWatermarkImprintField.DEFAULT.value,
+        imprint: UpdateFileWatermarkWatermarkImprintField = UpdateFileWatermarkWatermarkImprintField.DEFAULT,
         **kwargs
     ):
         """
                 :param imprint: The type of watermark to apply.
 
-        Currently only supports one option., defaults to UpdateFileWatermarkWatermarkImprintField.DEFAULT.value
+        Currently only supports one option., defaults to UpdateFileWatermarkWatermarkImprintField.DEFAULT
                 :type imprint: UpdateFileWatermarkWatermarkImprintField, optional
         """
         super().__init__(**kwargs)

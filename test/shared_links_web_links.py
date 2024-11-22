@@ -50,7 +50,7 @@ def testSharedLinksWebLinks():
         web_link_id,
         'shared_link',
         shared_link=AddShareLinkToWebLinkSharedLink(
-            access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN.value,
+            access=AddShareLinkToWebLinkSharedLinkAccessField.OPEN,
             password='Secret123@',
         ),
     )
@@ -89,7 +89,7 @@ def testSharedLinksWebLinks():
             web_link_id,
             'shared_link',
             shared_link=UpdateSharedLinkOnWebLinkSharedLink(
-                access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS.value
+                access=UpdateSharedLinkOnWebLinkSharedLinkAccessField.COLLABORATORS
             ),
         )
     )

@@ -43,17 +43,14 @@ def testComments():
     assert comments.total_count == 0
     message: str = 'Hello there!'
     new_comment: CommentFull = client.comments.create_comment(
-        message,
-        CreateCommentItem(id=file_id, type=CreateCommentItemTypeField.FILE.value),
+        message, CreateCommentItem(id=file_id, type=CreateCommentItemTypeField.FILE)
     )
     assert new_comment.message == message
     assert new_comment.is_reply_comment == False
     assert new_comment.item.id == file_id
     new_reply_comment: CommentFull = client.comments.create_comment(
         message,
-        CreateCommentItem(
-            id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value
-        ),
+        CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT),
     )
     assert new_reply_comment.message == message
     assert new_reply_comment.is_reply_comment == True

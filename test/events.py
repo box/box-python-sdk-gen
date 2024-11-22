@@ -41,8 +41,8 @@ def testEvents():
 
 def testEventUpload():
     events: Events = client.events.get_events(
-        stream_type=GetEventsStreamType.ADMIN_LOGS.value,
-        event_type=[GetEventsEventType.UPLOAD.value],
+        stream_type=GetEventsStreamType.ADMIN_LOGS,
+        event_type=[GetEventsEventType.UPLOAD],
     )
     assert len(events.entries) > 0
     first_event: Event = events.entries[0]
@@ -57,8 +57,8 @@ def testEventUpload():
 
 def testEventDeleteUser():
     events: Events = client.events.get_events(
-        stream_type=GetEventsStreamType.ADMIN_LOGS.value,
-        event_type=[GetEventsEventType.DELETE_USER.value],
+        stream_type=GetEventsStreamType.ADMIN_LOGS,
+        event_type=[GetEventsEventType.DELETE_USER],
     )
     assert len(events.entries) > 0
     first_event: Event = events.entries[0]
@@ -69,9 +69,7 @@ def testEventDeleteUser():
 
 
 def testEventSourceFileOrFolder():
-    events: Events = client.events.get_events(
-        stream_type=GetEventsStreamType.CHANGES.value
-    )
+    events: Events = client.events.get_events(stream_type=GetEventsStreamType.CHANGES)
     assert len(events.entries) > 0
     first_event: Event = events.entries[0]
     source: File = first_event.source
@@ -91,7 +89,7 @@ def testGetEventsWithDateFilters():
     created_after_date: DateTime = date_time_from_string('2024-06-09T00:00:00Z')
     created_before_date: DateTime = date_time_from_string('2025-06-09T00:00:00Z')
     servers: Events = client.events.get_events(
-        stream_type=GetEventsStreamType.ADMIN_LOGS.value,
+        stream_type=GetEventsStreamType.ADMIN_LOGS,
         limit=1,
         created_after=created_after_date,
         created_before=created_before_date,

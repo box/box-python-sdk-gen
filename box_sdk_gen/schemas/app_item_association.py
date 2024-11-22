@@ -26,13 +26,13 @@ class AppItemAssociation(BaseObject):
         app_item: AppItem,
         item: Union[FileBase, FolderBase, WebLinkBase],
         *,
-        type: AppItemAssociationTypeField = AppItemAssociationTypeField.APP_ITEM_ASSOCIATION.value,
+        type: AppItemAssociationTypeField = AppItemAssociationTypeField.APP_ITEM_ASSOCIATION,
         **kwargs
     ):
         """
         :param id: The unique identifier for this app item association.
         :type id: str
-        :param type: `app_item_association`, defaults to AppItemAssociationTypeField.APP_ITEM_ASSOCIATION.value
+        :param type: `app_item_association`, defaults to AppItemAssociationTypeField.APP_ITEM_ASSOCIATION
         :type type: AppItemAssociationTypeField, optional
         """
         super().__init__(**kwargs)

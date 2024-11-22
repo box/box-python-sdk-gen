@@ -123,8 +123,7 @@ See the endpoint docs at
 client.file_requests.create_file_request_copy(
     file_request_id,
     CreateFileRequestCopyFolder(
-        id=file_request.folder.id,
-        type=CreateFileRequestCopyFolderTypeField.FOLDER.value,
+        id=file_request.folder.id, type=CreateFileRequestCopyFolderTypeField.FOLDER
     ),
 )
 ```

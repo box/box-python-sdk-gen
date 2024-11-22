@@ -52,8 +52,8 @@ class UpdateClassificationOnFolderRequestBody(BaseObject):
         self,
         value: str,
         *,
-        op: UpdateClassificationOnFolderRequestBodyOpField = UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value,
-        path: UpdateClassificationOnFolderRequestBodyPathField = UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value,
+        op: UpdateClassificationOnFolderRequestBodyOpField = UpdateClassificationOnFolderRequestBodyOpField.REPLACE,
+        path: UpdateClassificationOnFolderRequestBodyPathField = UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY,
         **kwargs
     ):
         """
@@ -64,10 +64,10 @@ class UpdateClassificationOnFolderRequestBody(BaseObject):
         [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
         which lists all available classification keys.
                 :type value: str
-                :param op: `replace`, defaults to UpdateClassificationOnFolderRequestBodyOpField.REPLACE.value
+                :param op: `replace`, defaults to UpdateClassificationOnFolderRequestBodyOpField.REPLACE
                 :type op: UpdateClassificationOnFolderRequestBodyOpField, optional
                 :param path: Defines classifications
-        available in the enterprise., defaults to UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY.value
+        available in the enterprise., defaults to UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY
                 :type path: UpdateClassificationOnFolderRequestBodyPathField, optional
         """
         super().__init__(**kwargs)

@@ -147,7 +147,7 @@ See the endpoint docs at
 ```python
 client.comments.create_comment(
     message,
-    CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT.value),
+    CreateCommentItem(id=new_comment.id, type=CreateCommentItemTypeField.COMMENT),
 )
 ```
 

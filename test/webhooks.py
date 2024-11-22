@@ -30,11 +30,9 @@ def testWebhooksCRUD():
         get_uuid(), CreateFolderParent(id='0')
     )
     webhook: Webhook = client.webhooks.create_webhook(
-        CreateWebhookTarget(
-            id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value
-        ),
+        CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER),
         'https://example.com/new-webhook',
-        [CreateWebhookTriggers.FILE_UPLOADED.value],
+        [CreateWebhookTriggers.FILE_UPLOADED],
     )
     assert webhook.target.id == folder.id
     assert to_string(webhook.target.type) == 'folder'

@@ -69,7 +69,7 @@ class RetentionPolicyAssignment(BaseObject):
         self,
         id: str,
         *,
-        type: RetentionPolicyAssignmentTypeField = RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT.value,
+        type: RetentionPolicyAssignmentTypeField = RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT,
         retention_policy: Optional[RetentionPolicyMini] = None,
         assigned_to: Optional[RetentionPolicyAssignmentAssignedToField] = None,
         filter_fields: Optional[
@@ -83,7 +83,7 @@ class RetentionPolicyAssignment(BaseObject):
         """
                 :param id: The unique identifier for a retention policy assignment.
                 :type id: str
-                :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT.value
+                :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentTypeField.RETENTION_POLICY_ASSIGNMENT
                 :type type: RetentionPolicyAssignmentTypeField, optional
                 :param assigned_to: The `type` and `id` of the content that is under
         retention. The `type` can either be `folder`

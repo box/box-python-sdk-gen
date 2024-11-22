@@ -52,23 +52,23 @@ def testGlobalFileMetadata():
     file_metadata: Metadatas = client.file_metadata.get_file_metadata(file.id)
     assert len(file_metadata.entries) == 0
     created_metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
-        file.id, CreateFileMetadataByIdScope.GLOBAL.value, 'properties', {'abc': 'xyz'}
+        file.id, CreateFileMetadataByIdScope.GLOBAL, 'properties', {'abc': 'xyz'}
     )
     assert to_string(created_metadata.template) == 'properties'
     assert to_string(created_metadata.scope) == 'global'
     assert created_metadata.version == 0
     received_metadata: MetadataFull = client.file_metadata.get_file_metadata_by_id(
-        file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
+        file.id, GetFileMetadataByIdScope.GLOBAL, 'properties'
     )
     assert to_string(received_metadata.extra_data['abc']) == 'xyz'
     new_value: str = 'bar'
     client.file_metadata.update_file_metadata_by_id(
         file.id,
-        UpdateFileMetadataByIdScope.GLOBAL.value,
+        UpdateFileMetadataByIdScope.GLOBAL,
         'properties',
         [
             UpdateFileMetadataByIdRequestBody(
-                op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE.value,
+                op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
                 path='/abc',
                 value=new_value,
             )
@@ -76,16 +76,16 @@ def testGlobalFileMetadata():
     )
     received_updated_metadata: MetadataFull = (
         client.file_metadata.get_file_metadata_by_id(
-            file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
+            file.id, GetFileMetadataByIdScope.GLOBAL, 'properties'
         )
     )
     assert to_string(received_updated_metadata.extra_data['abc']) == new_value
     client.file_metadata.delete_file_metadata_by_id(
-        file.id, DeleteFileMetadataByIdScope.GLOBAL.value, 'properties'
+        file.id, DeleteFileMetadataByIdScope.GLOBAL, 'properties'
     )
     with pytest.raises(Exception):
         client.file_metadata.get_file_metadata_by_id(
-            file.id, GetFileMetadataByIdScope.GLOBAL.value, 'properties'
+            file.id, GetFileMetadataByIdScope.GLOBAL, 'properties'
         )
     client.files.delete_file_by_id(file.id)
 
@@ -99,22 +99,22 @@ def testEnterpriseFileMetadata():
         template_key=template_key,
         fields=[
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.STRING.value,
+                type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='name',
                 display_name='name',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.FLOAT.value,
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
                 key='age',
                 display_name='age',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.DATE.value,
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
                 key='birthDate',
                 display_name='birthDate',
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.ENUM.value,
+                type=CreateMetadataTemplateFieldsTypeField.ENUM,
                 key='countryCode',
                 display_name='countryCode',
                 options=[
@@ -123,7 +123,7 @@ def testEnterpriseFileMetadata():
                 ],
             ),
             CreateMetadataTemplateFields(
-                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT.value,
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
                 key='sports',
                 display_name='sports',
                 options=[
@@ -136,7 +136,7 @@ def testEnterpriseFileMetadata():
     )
     created_metadata: MetadataFull = client.file_metadata.create_file_metadata_by_id(
         file.id,
-        CreateFileMetadataByIdScope.ENTERPRISE.value,
+        CreateFileMetadataByIdScope.ENTERPRISE,
         template_key,
         {
             'name': 'John',
@@ -158,9 +158,9 @@ def testEnterpriseFileMetadata():
     assert sports[0] == 'basketball'
     assert sports[1] == 'tennis'
     client.file_metadata.delete_file_metadata_by_id(
-        file.id, DeleteFileMetadataByIdScope.ENTERPRISE.value, template_key
+        file.id, DeleteFileMetadataByIdScope.ENTERPRISE, template_key
     )
     client.metadata_templates.delete_metadata_template(
-        DeleteMetadataTemplateScope.ENTERPRISE.value, template_key
+        DeleteMetadataTemplateScope.ENTERPRISE, template_key
     )
     client.files.delete_file_by_id(file.id)

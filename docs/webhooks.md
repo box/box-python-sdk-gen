@@ -54,9 +54,9 @@ See the endpoint docs at
 
 ```python
 client.webhooks.create_webhook(
-    CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER.value),
+    CreateWebhookTarget(id=folder.id, type=CreateWebhookTargetTypeField.FOLDER),
     "https://example.com/new-webhook",
-    [CreateWebhookTriggers.FILE_UPLOADED.value],
+    [CreateWebhookTriggers.FILE_UPLOADED],
 )
 ```
 
