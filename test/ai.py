@@ -359,7 +359,7 @@ def testAIExtractStructuredWithMetadataTemplate():
     assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
     assert (
         to_string(get_value_from_object_raw_data(response, 'dateOfBirth'))
-        == '1990-07-04'
+        == '1990-07-04T00:00:00Z'
     )
     assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
     assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
