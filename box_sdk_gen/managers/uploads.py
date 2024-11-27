@@ -12,6 +12,8 @@ from box_sdk_gen.serialization.json.serializer import serialize
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -34,13 +36,13 @@ from box_sdk_gen.internal.utils import DateTime
 
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
-from box_sdk_gen.networking.fetch import MultipartItem
+from box_sdk_gen.networking.fetch_options import MultipartItem
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
@@ -256,7 +258,7 @@ class UploadsManager:
                     ),
                 ],
                 content_type='multipart/form-data',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -296,7 +298,7 @@ class UploadsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -404,7 +406,7 @@ class UploadsManager:
                     ),
                 ],
                 content_type='multipart/form-data',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )

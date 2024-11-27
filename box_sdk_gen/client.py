@@ -172,6 +172,12 @@ from box_sdk_gen.networking.base_urls import BaseUrls
 
 from box_sdk_gen.networking.proxy_config import ProxyConfig
 
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
+
+from box_sdk_gen.networking.fetch import fetch
+
 
 class BoxClient:
     def __init__(self, auth: Authentication, *, network_session: NetworkSession = None):
@@ -391,6 +397,35 @@ class BoxClient:
             auth=self.auth, network_session=self.network_session
         )
         self.ai = AiManager(auth=self.auth, network_session=self.network_session)
+
+    def make_request(self, fetch_options: FetchOptions) -> FetchResponse:
+        """
+        Make a custom http request using the client authentication and network session.
+        :param fetch_options: Options to be passed to the fetch call
+        :type fetch_options: FetchOptions
+        """
+        auth: Authentication = (
+            self.auth if fetch_options.auth == None else fetch_options.auth
+        )
+        network_session: NetworkSession = (
+            self.network_session
+            if fetch_options.network_session == None
+            else fetch_options.network_session
+        )
+        enriched_fetch_options: FetchOptions = FetchOptions(
+            auth=auth,
+            network_session=network_session,
+            url=fetch_options.url,
+            method=fetch_options.method,
+            params=fetch_options.params,
+            headers=fetch_options.headers,
+            data=fetch_options.data,
+            file_stream=fetch_options.file_stream,
+            multipart_data=fetch_options.multipart_data,
+            content_type=fetch_options.content_type,
+            response_format=fetch_options.response_format,
+        )
+        return fetch(enriched_fetch_options)
 
     def with_as_user_header(self, user_id: str) -> 'BoxClient':
         """

@@ -15,3 +15,7 @@ def sd_to_json(data: SerializedData) -> str:
 
 def sd_to_url_params(data: SerializedData) -> str:
     return urlencode(data)
+
+
+def get_sd_value_by_key(data: SerializedData, key: str):
+    return data.get(key)

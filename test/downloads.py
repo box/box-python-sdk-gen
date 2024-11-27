@@ -34,9 +34,9 @@ from box_sdk_gen.internal.utils import read_buffer_from_file
 
 from test.commons import get_default_client
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 client: BoxClient = get_default_client()
 

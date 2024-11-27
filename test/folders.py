@@ -1,3 +1,5 @@
+from box_sdk_gen.internal.utils import to_string
+
 import pytest
 
 from box_sdk_gen.client import BoxClient
@@ -23,6 +25,7 @@ def test_get_folder_info():
     root_folder: FolderFull = client.folders.get_folder_by_id('0')
     assert root_folder.id == '0'
     assert root_folder.name == 'All Files'
+    assert to_string(root_folder.type) == 'folder'
 
 
 def test_get_folder_full_info_with_extra_fields():

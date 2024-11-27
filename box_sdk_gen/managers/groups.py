@@ -12,6 +12,8 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.serialization.json.serializer import serialize
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.schemas.groups import Groups
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -30,9 +32,9 @@ from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
@@ -130,7 +132,7 @@ class GroupsManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -233,7 +235,7 @@ class GroupsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -287,7 +289,7 @@ class GroupsManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -405,7 +407,7 @@ class GroupsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -440,7 +442,7 @@ class GroupsManager:
                 ),
                 method='DELETE',
                 headers=headers_map,
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )
