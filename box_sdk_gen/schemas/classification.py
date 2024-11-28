@@ -6,6 +6,8 @@ from typing import Dict
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ClassificationTemplateField(str, Enum):
     SECURITYCLASSIFICATION_6VMVOCHWUWO = 'securityClassification-6VMVochwUWo'

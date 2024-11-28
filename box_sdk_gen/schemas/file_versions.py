@@ -8,6 +8,8 @@ from typing import List
 
 from box_sdk_gen.schemas.file_version_full import FileVersionFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionsOrderDirectionField(str, Enum):
     ASC = 'ASC'

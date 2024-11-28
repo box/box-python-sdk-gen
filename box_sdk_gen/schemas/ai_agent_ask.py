@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import AiAgentBasicTextTool
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentAskTypeField(str, Enum):
     AI_AGENT_ASK = 'ai_agent_ask'

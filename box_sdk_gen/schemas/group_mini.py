@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.group_base import GroupBaseTypeField
 
 from box_sdk_gen.schemas.group_base import GroupBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class GroupMiniGroupTypeField(str, Enum):
     MANAGED_GROUP = 'managed_group'

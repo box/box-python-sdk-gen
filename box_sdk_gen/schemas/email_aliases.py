@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.email_alias import EmailAlias
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class EmailAliases(BaseObject):
     def __init__(

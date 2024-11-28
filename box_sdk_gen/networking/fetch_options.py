@@ -8,7 +8,7 @@ from typing import List
 
 from box_sdk_gen.networking.auth import Authentication
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 from box_sdk_gen.networking.network import NetworkSession
 

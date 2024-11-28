@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.storage_policy import StoragePolicy
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class StoragePolicies(BaseObject):
     def __init__(

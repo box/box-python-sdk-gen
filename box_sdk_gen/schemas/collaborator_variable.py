@@ -4,6 +4,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class CollaboratorVariableTypeField(str, Enum):
     VARIABLE = 'variable'

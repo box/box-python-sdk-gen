@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.integration_mapping_slack_options import (
     IntegrationMappingSlackOptions,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class IntegrationMappingSlackCreateRequest(BaseObject):
     def __init__(

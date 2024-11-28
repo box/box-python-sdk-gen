@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.collaboration import Collaboration
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Collaborations(BaseObject):
     def __init__(

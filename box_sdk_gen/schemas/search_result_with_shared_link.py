@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.schemas.web_link import WebLink
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SearchResultWithSharedLink(BaseObject):
     def __init__(

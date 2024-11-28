@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.file_base import FileBase
 
 from box_sdk_gen.schemas.file_version_mini import FileVersionMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileMini(FileBase):
     _fields_to_json_mapping: Dict[str, str] = {

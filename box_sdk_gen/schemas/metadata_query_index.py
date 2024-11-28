@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataQueryIndexStatusField(str, Enum):
     BUILDING = 'building'

@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.file_mini import FileMini
 
 from box_sdk_gen.schemas.file_version_mini import FileVersionMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileConflict(FileMini):
     def __init__(

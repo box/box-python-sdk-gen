@@ -20,6 +20,8 @@ from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
 
 from box_sdk_gen.schemas.folder_mini import FolderMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.file_version_retention import FileVersionRetention
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionRetentions(BaseObject):
     def __init__(

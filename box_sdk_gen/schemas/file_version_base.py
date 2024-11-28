@@ -2,6 +2,8 @@ from enum import Enum
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionBaseTypeField(str, Enum):
     FILE_VERSION = 'file_version'

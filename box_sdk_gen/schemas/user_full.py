@@ -22,6 +22,8 @@ from box_sdk_gen.schemas.user import User
 
 from box_sdk_gen.schemas.tracking_code import TrackingCode
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class UserFullRoleField(str, Enum):
     ADMIN = 'admin'

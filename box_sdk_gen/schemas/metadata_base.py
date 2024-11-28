@@ -4,6 +4,8 @@ from typing import Dict
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataBase(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {

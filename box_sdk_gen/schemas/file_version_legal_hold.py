@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.file_mini import FileMini
 
 from box_sdk_gen.schemas.legal_hold_policy_assignment import LegalHoldPolicyAssignment
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.ai_llm_endpoint_params_aws import AiLlmEndpointParamsAw
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_base import AiAgentBasicTextToolBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentBasicTextTool(AiAgentBasicTextToolBase):
     def __init__(

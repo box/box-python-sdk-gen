@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.terms_of_service_user_status import TermsOfServiceUserStatus
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class TermsOfServiceUserStatuses(BaseObject):
     def __init__(

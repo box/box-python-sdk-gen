@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.collaboration_allowlist_exempt_target import (
     CollaborationAllowlistExemptTarget,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class CollaborationAllowlistExemptTargets(BaseObject):
     def __init__(

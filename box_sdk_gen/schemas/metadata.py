@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.schemas.metadata_base import MetadataBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Metadata(MetadataBase):
     def __init__(

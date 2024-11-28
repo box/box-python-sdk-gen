@@ -6,6 +6,8 @@ from typing import List
 
 from typing import Optional
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ZipDownloadRequestItemsTypeField(str, Enum):
     FILE = 'file'

@@ -1,14 +1,14 @@
-from box_sdk_gen.networking.fetch import *
+from box_sdk_gen.networking.proxy_config import *
 
 from box_sdk_gen.networking.network import *
-
-from box_sdk_gen.networking.proxy_config import *
 
 from box_sdk_gen.networking.auth import *
 
 from box_sdk_gen.networking.fetch_options import *
 
 from box_sdk_gen.networking.fetch_response import *
+
+from box_sdk_gen.networking.fetch import *
 
 from box_sdk_gen.networking.base_urls import *
 

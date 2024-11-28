@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.sign_request_prefill_tag import SignRequestPrefillTag
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SignRequestBase(BaseObject):
     def __init__(

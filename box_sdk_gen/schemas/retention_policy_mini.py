@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.retention_policy_base import RetentionPolicyBaseTypeFie
 
 from box_sdk_gen.schemas.retention_policy_base import RetentionPolicyBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class RetentionPolicyMiniDispositionActionField(str, Enum):
     PERMANENTLY_DELETE = 'permanently_delete'

@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.file_mini import FileMini
 
 from box_sdk_gen.schemas.template_signer import TemplateSigner
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SignTemplateTypeField(str, Enum):
     SIGN_TEMPLATE = 'sign-template'

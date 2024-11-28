@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.enterprise_base import EnterpriseBase
 
 from box_sdk_gen.schemas.user_base import UserBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

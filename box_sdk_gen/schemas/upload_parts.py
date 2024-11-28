@@ -8,6 +8,8 @@ from typing import List
 
 from box_sdk_gen.schemas.upload_part import UploadPart
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class UploadPartsOrderDirectionField(str, Enum):
     ASC = 'ASC'

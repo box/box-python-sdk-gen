@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.file_version_legal_hold import FileVersionLegalHold
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionLegalHolds(BaseObject):
     def __init__(

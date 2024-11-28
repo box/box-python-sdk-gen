@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.file_version_base import FileVersionBaseTypeField
 
 from box_sdk_gen.schemas.file_version_base import FileVersionBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionMini(FileVersionBase):
     _fields_to_json_mapping: Dict[str, str] = {

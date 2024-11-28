@@ -2,6 +2,8 @@ from enum import Enum
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class TermsOfServiceBaseTypeField(str, Enum):
     TERMS_OF_SERVICE = 'terms_of_service'

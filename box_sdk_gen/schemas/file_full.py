@@ -30,6 +30,8 @@ from box_sdk_gen.schemas.file_or_folder_scope import FileOrFolderScope
 
 from box_sdk_gen.schemas.metadata_full import MetadataFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

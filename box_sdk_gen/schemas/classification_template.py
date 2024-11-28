@@ -8,6 +8,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import List
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ClassificationTemplateTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'

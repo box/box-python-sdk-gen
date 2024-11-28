@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.search_result_with_shared_link import (
     SearchResultWithSharedLink,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SearchResultsWithSharedLinksTypeField(str, Enum):
     SEARCH_RESULTS_WITH_SHARED_LINKS = 'search_results_with_shared_links'

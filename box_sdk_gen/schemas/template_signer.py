@@ -8,6 +8,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.template_signer_input import TemplateSignerInput
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class TemplateSignerRoleField(str, Enum):
     SIGNER = 'signer'

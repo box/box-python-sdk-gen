@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import Dict
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataCascadePolicyTypeField(str, Enum):
     METADATA_CASCADE_POLICY = 'metadata_cascade_policy'

@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.app_item_association import AppItemAssociation
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AppItemAssociations(BaseObject):
     def __init__(

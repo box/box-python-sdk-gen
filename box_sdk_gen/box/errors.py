@@ -1,24 +1,23 @@
 import pprint
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
-from typing import Dict
+from ..internal.errors import GeneratedCodeError
 
 
-class BoxSDKError(Exception):
+class BoxSDKError(GeneratedCodeError):
     def __init__(
         self,
         message: str,
         timestamp: Optional[datetime] = None,
         error: Optional[Exception] = None,
-        name: Optional[str] = 'BoxSDKError',
         **kwargs,
     ):
-        super().__init__(message)
+        super().__init__(message, **kwargs)
+        self.name = 'BoxSDKError'
         self.message = message
         self.timestamp = timestamp if timestamp is not None else datetime.now()
         self.error = error
-        self.name = name
 
     def __str__(self):
         return ''.join(
@@ -113,12 +112,10 @@ class BoxAPIError(BoxSDKError):
         message: str,
         timestamp: Optional[datetime] = None,
         error: Optional[str] = None,
-        name: Optional[str] = 'BoxAPIError',
         **kwargs,
     ):
-        super().__init__(
-            message=message, timestamp=timestamp, error=error, name=name, **kwargs
-        )
+        super().__init__(message=message, timestamp=timestamp, error=error, **kwargs)
+        self.name = 'BoxAPIError'
         self.request_info = request_info
         self.response_info = response_info
 

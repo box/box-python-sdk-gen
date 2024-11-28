@@ -8,6 +8,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.file_or_folder_scope import FileOrFolderScope
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AccessTokenTokenTypeField(str, Enum):
     BEARER = 'bearer'

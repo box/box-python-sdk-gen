@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.ai_agent_basic_text_tool_base import AiAgentBasicTextTo
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import AiAgentBasicTextTool
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentLongTextToolEmbeddingsStrategyField(BaseObject):
     def __init__(

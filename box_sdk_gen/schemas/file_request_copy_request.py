@@ -12,6 +12,8 @@ from box_sdk_gen.internal.utils import DateTime
 
 from box_sdk_gen.schemas.file_request_update_request import FileRequestUpdateRequest
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileRequestCopyRequestFolderTypeField(str, Enum):
     FOLDER = 'folder'

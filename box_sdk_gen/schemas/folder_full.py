@@ -30,6 +30,8 @@ from box_sdk_gen.schemas.folder import Folder
 
 from box_sdk_gen.schemas.metadata_full import MetadataFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FolderFullSyncStateField(str, Enum):
     SYNCED = 'synced'

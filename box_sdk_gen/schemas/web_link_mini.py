@@ -4,6 +4,8 @@ from box_sdk_gen.schemas.web_link_base import WebLinkBaseTypeField
 
 from box_sdk_gen.schemas.web_link_base import WebLinkBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class WebLinkMini(WebLinkBase):
     def __init__(

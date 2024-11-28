@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.shield_information_barrier_base import (
     ShieldInformationBarrierBase,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierReference(BaseObject):
     def __init__(

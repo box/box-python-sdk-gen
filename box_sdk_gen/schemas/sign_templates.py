@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.sign_template import SignTemplate
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SignTemplates(BaseObject):
     def __init__(

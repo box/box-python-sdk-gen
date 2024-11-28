@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.schemas.web_link import WebLink
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SearchResultsTypeField(str, Enum):
     SEARCH_RESULTS_ITEMS = 'search_results_items'

@@ -8,6 +8,8 @@ from typing import Dict
 
 from typing import List
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataQueryOrderByDirectionField(str, Enum):
     ASC = 'ASC'

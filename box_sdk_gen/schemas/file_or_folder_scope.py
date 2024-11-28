@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.folder_mini import FolderMini
 
 from box_sdk_gen.schemas.file_mini import FileMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileOrFolderScopeScopeField(str, Enum):
     ANNOTATION_EDIT = 'annotation_edit'

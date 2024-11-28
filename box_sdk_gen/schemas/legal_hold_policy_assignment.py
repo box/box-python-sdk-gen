@@ -20,6 +20,8 @@ from box_sdk_gen.schemas.web_link import WebLink
 
 from box_sdk_gen.schemas.user_mini import UserMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

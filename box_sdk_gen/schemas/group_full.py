@@ -16,6 +16,8 @@ from box_sdk_gen.internal.utils import DateTime
 
 from box_sdk_gen.schemas.group import Group
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class GroupFullInvitabilityLevelField(str, Enum):
     ADMINS_ONLY = 'admins_only'

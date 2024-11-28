@@ -4,6 +4,8 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class TrackingCodeTypeField(str, Enum):
     TRACKING_CODE = 'tracking_code'

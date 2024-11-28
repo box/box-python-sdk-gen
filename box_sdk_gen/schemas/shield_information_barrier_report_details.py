@@ -2,6 +2,8 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
     def __init__(self, *, folder_id: Optional[str] = None, **kwargs):

@@ -4,13 +4,13 @@ from typing import Dict
 
 from box_sdk_gen.internal.utils import to_string
 
-from box_sdk_gen.serialization.json.serializer import deserialize
+from box_sdk_gen.serialization.json import deserialize
 
 from box_sdk_gen.internal.null_value import NullValue
 
 from typing import Union
 
-from box_sdk_gen.serialization.json.serializer import serialize
+from box_sdk_gen.serialization.json import serialize
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
@@ -19,6 +19,8 @@ from box_sdk_gen.schemas.shield_information_barrier_segment import (
 )
 
 from box_sdk_gen.schemas.client_error import ClientError
+
+from box_sdk_gen.box.errors import BoxSDKError
 
 from box_sdk_gen.schemas.shield_information_barrier_segments import (
     ShieldInformationBarrierSegments,
@@ -44,9 +46,9 @@ from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
-from box_sdk_gen.serialization.json.json_data import sd_to_json
+from box_sdk_gen.serialization.json import sd_to_json
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 
 class ShieldInformationBarrierSegmentsManager:

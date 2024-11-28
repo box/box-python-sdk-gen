@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.file_full import FileFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Files(BaseObject):
     def __init__(

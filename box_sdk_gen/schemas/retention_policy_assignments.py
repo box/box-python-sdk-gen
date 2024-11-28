@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.retention_policy_assignment import RetentionPolicyAssignment
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class RetentionPolicyAssignments(BaseObject):
     def __init__(

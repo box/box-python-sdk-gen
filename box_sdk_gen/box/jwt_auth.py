@@ -4,7 +4,7 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from typing import Optional
 
-from box_sdk_gen.serialization.json.serializer import deserialize
+from box_sdk_gen.serialization.json import deserialize
 
 from typing import List
 
@@ -26,9 +26,9 @@ from box_sdk_gen.box.token_storage import TokenStorage
 
 from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
-from box_sdk_gen.serialization.json.json_data import json_to_serialized_data
+from box_sdk_gen.serialization.json import json_to_serialized_data
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 from box_sdk_gen.internal.utils import get_uuid
 
