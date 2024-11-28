@@ -6,6 +6,8 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json.serializer import deserialize
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.user_avatar import UserAvatar
@@ -20,15 +22,15 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.networking.fetch import MultipartItem
+from box_sdk_gen.networking.fetch_options import MultipartItem
 
 from box_sdk_gen.serialization.json.json_data import SerializedData
 
@@ -71,7 +73,7 @@ class AvatarsManager:
                 ),
                 method='GET',
                 headers=headers_map,
-                response_format='binary',
+                response_format=ResponseFormat.BINARY,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -128,7 +130,7 @@ class AvatarsManager:
                     )
                 ],
                 content_type='multipart/form-data',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -164,7 +166,7 @@ class AvatarsManager:
                 ),
                 method='DELETE',
                 headers=headers_map,
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )

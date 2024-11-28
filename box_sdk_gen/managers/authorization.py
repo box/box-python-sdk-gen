@@ -16,6 +16,8 @@ from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2TokenSubjectTokenT
 
 from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2TokenBoxSubjectTypeField
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.schemas.access_token import AccessToken
 
 from box_sdk_gen.schemas.o_auth_2_error import OAuth2Error
@@ -40,9 +42,9 @@ from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json.json_data import sd_to_json
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
@@ -174,7 +176,7 @@ class AuthorizationManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -329,7 +331,7 @@ class AuthorizationManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/x-www-form-urlencoded',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -376,7 +378,7 @@ class AuthorizationManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/x-www-form-urlencoded',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -424,7 +426,7 @@ class AuthorizationManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/x-www-form-urlencoded',
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )

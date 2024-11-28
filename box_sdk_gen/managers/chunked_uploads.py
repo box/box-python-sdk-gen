@@ -10,6 +10,8 @@ from box_sdk_gen.serialization.json.serializer import deserialize
 
 from box_sdk_gen.internal.utils import to_string
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.internal.utils import Buffer
 
 from box_sdk_gen.internal.utils import HashName
@@ -40,9 +42,9 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
@@ -132,7 +134,7 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -183,7 +185,7 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -217,7 +219,7 @@ class ChunkedUploadsManager:
                 url=url,
                 method='GET',
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -255,7 +257,7 @@ class ChunkedUploadsManager:
                 ),
                 method='GET',
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -334,7 +336,7 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 file_stream=request_body,
                 content_type='application/octet-stream',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -414,7 +416,7 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 file_stream=request_body,
                 content_type='application/octet-stream',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -454,7 +456,7 @@ class ChunkedUploadsManager:
                 url=url,
                 method='DELETE',
                 headers=headers_map,
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -498,7 +500,7 @@ class ChunkedUploadsManager:
                 ),
                 method='DELETE',
                 headers=headers_map,
-                response_format=None,
+                response_format=ResponseFormat.NO_CONTENT,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -552,7 +554,7 @@ class ChunkedUploadsManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -608,7 +610,7 @@ class ChunkedUploadsManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -687,14 +689,14 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
         )
         if to_string(response.status) == '202':
             return None
-        return deserialize(response.data, Optional[Files])
+        return deserialize(response.data, Files)
 
     def create_file_upload_session_commit(
         self,
@@ -770,14 +772,14 @@ class ChunkedUploadsManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
         )
         if to_string(response.status) == '202':
             return None
-        return deserialize(response.data, Optional[Files])
+        return deserialize(response.data, Files)
 
     def _reducer(self, acc: _PartAccumulator, chunk: ByteStream) -> _PartAccumulator:
         last_index: int = acc.last_index

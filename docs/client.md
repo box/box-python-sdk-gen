@@ -6,7 +6,10 @@ divided across resource managers.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Client](#client)
+- [Make custom HTTP request](#make-custom-http-request)
+  - [JSON request](#json-request)
+  - [Multi-part request](#multi-part-request)
+  - [Binary response](#binary-response)
 - [Additional headers](#additional-headers)
   - [As-User header](#as-user-header)
   - [Suppress notifications](#suppress-notifications)
@@ -15,6 +18,76 @@ divided across resource managers.
 - [Use Proxy for API calls](#use-proxy-for-api-calls)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Make custom HTTP request
+
+You can make custom HTTP requests using the `client.make_request()` method.
+This method allows you to make any HTTP request to the Box API. It will automatically use authentication and
+network configuration settings from the client.
+The method accepts a `FetchOptions` object as an argument and returns a `FetchResponse` object.
+
+## JSON request
+
+The following example demonstrates how to make a custom POST request to create a new folder in the root folder.
+
+```python
+from box_sdk_gen import FetchResponse, FetchOptions
+
+response: FetchResponse = client.make_request(
+    FetchOptions(
+        method="POST",
+        url="https://api.box.com/2.0/folders",
+        data={"name": "new_folder_name", "parent": {"id": "0"}},
+    )
+)
+print("Received status code: ", response.status)
+print("Created folder name: ", response.data["name"])
+```
+
+## Multi-part request
+
+The following example demonstrates how to make a custom multipart request that uploads a file to a folder.
+
+```python
+from box_sdk_gen import FetchResponse, FetchOptions, MultipartItem
+
+response: FetchResponse = client.make_request(
+    FetchOptions(
+        method="POST",
+        url="https://upload.box.com/api/2.0/files/content",
+        content_type="multipart/form-data",
+        multipart_data=[
+            MultipartItem(
+                part_name="attributes",
+                data={"name": "new_folder_name", "parent": {"id": "0"}},
+            ),
+            MultipartItem(part_name="file", file_stream=open("file.txt", "rb")),
+        ],
+    )
+)
+print("Received status code: ", response.status)
+```
+
+## Binary response
+
+The following example demonstrates how to make a custom request that expects a binary response.
+It is required to specify the `response_format` parameter in the `FetchOptions` object to `ResponseFormat.BINARY`.
+
+```python
+from box_sdk_gen import FetchResponse, FetchOptions, ResponseFormat
+
+file_id = "1234567"
+response: FetchResponse = client.make_request(
+    FetchOptions(
+        method="GET",
+        url="".join(["https://api.box.com/2.0/files/", file_id, "/content"]),
+        response_format=ResponseFormat.BINARY,
+    )
+)
+print("Received status code: ", response.status)
+with open("file.txt", "wb") as file:
+    file.write(response.content)
+```
 
 # Additional headers
 

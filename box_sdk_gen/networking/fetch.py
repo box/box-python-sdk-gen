@@ -1,5 +1,4 @@
 import io
-from datetime import datetime
 
 import math
 import random
@@ -14,12 +13,11 @@ import requests
 from requests import RequestException, Session, Response
 from requests_toolbelt import MultipartEncoder
 
-from .network import NetworkSession
+from .fetch_options import FetchOptions
+from .fetch_response import FetchResponse
 from ..box.errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
-from .auth import Authentication
 from ..internal.utils import ByteStream, ResponseByteStream
 from ..serialization.json.json_data import (
-    SerializedData,
     sd_to_json,
     sd_to_url_params,
     json_to_serialized_data,
@@ -35,38 +33,6 @@ X_BOX_UA_HEADER = (
     f'agent=box-python-generated-sdk/{SDK_VERSION}; '
     f'env=python/{py_version.major}.{py_version.minor}.{py_version.micro}'
 )
-
-
-@dataclass
-class MultipartItem:
-    part_name: str
-    data: SerializedData = None
-    file_stream: ByteStream = None
-    file_name: str = ''
-    content_type: str = None
-
-
-@dataclass
-class FetchOptions:
-    url: str
-    method: str = "GET"
-    params: Dict[str, str] = None
-    headers: Dict[str, str] = None
-    data: SerializedData = None
-    file_stream: ByteStream = None
-    multipart_data: List[MultipartItem] = None
-    content_type: str = "application/json"
-    response_format: Optional[str] = None
-    auth: Authentication = None
-    network_session: NetworkSession = None
-
-
-@dataclass
-class FetchResponse:
-    status: int
-    headers: Dict[str, str]
-    data: Optional[SerializedData] = None
-    content: Optional[ByteStream] = None
 
 
 @dataclass

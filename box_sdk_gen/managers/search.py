@@ -16,6 +16,8 @@ from box_sdk_gen.internal.utils import to_string
 
 from typing import Union
 
+from box_sdk_gen.networking.fetch_options import ResponseFormat
+
 from box_sdk_gen.schemas.metadata_query_results import MetadataQueryResults
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -40,9 +42,9 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.networking.fetch import FetchOptions
+from box_sdk_gen.networking.fetch_options import FetchOptions
 
-from box_sdk_gen.networking.fetch import FetchResponse
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.fetch import fetch
 
@@ -235,7 +237,7 @@ class SearchManager:
                 headers=headers_map,
                 data=serialize(request_body),
                 content_type='application/json',
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )
@@ -548,7 +550,7 @@ class SearchManager:
                 method='GET',
                 params=query_params_map,
                 headers=headers_map,
-                response_format='json',
+                response_format=ResponseFormat.JSON,
                 auth=self.auth,
                 network_session=self.network_session,
             )

@@ -6,8 +6,6 @@ from box_sdk_gen.schemas.folder_full import FolderFull
 
 from box_sdk_gen.managers.folders import CreateFolderParent
 
-from box_sdk_gen.schemas.file_full import FileFull
-
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.schemas.files import Files
@@ -57,6 +55,8 @@ from box_sdk_gen.internal.utils import generate_byte_stream
 from box_sdk_gen.client import BoxClient
 
 from box_sdk_gen.schemas.classification_template import ClassificationTemplate
+
+from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.schemas.terms_of_service import TermsOfService
 
