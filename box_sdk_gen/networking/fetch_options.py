@@ -64,7 +64,8 @@ class FetchOptions:
         content_type: str = 'application/json',
         response_format: ResponseFormat = ResponseFormat.JSON,
         auth: Optional[Authentication] = None,
-        network_session: Optional[NetworkSession] = None
+        network_session: Optional[NetworkSession] = None,
+        follow_redirects: Optional[bool] = True
     ):
         """
         :param url: URL of the request
@@ -89,6 +90,8 @@ class FetchOptions:
         :type auth: Optional[Authentication], optional
         :param network_session: Network session object, defaults to None
         :type network_session: Optional[NetworkSession], optional
+        :param follow_redirects: A boolean value indicate if the request should follow redirects. Defaults to True. Not supported in Browser environment., defaults to True
+        :type follow_redirects: Optional[bool], optional
         """
         self.url = url
         self.method = method
@@ -101,3 +104,4 @@ class FetchOptions:
         self.response_format = response_format
         self.auth = auth
         self.network_session = network_session
+        self.follow_redirects = follow_redirects

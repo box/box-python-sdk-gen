@@ -13,6 +13,7 @@ class FetchResponse:
         status: int,
         headers: Dict[str, str],
         *,
+        url: Optional[str] = None,
         data: Optional[SerializedData] = None,
         content: Optional[ByteStream] = None
     ):
@@ -21,6 +22,8 @@ class FetchResponse:
         :type status: int
         :param headers: HTTP headers of the response
         :type headers: Dict[str, str]
+        :param url: URL of the response, defaults to None
+        :type url: Optional[str], optional
         :param data: Response body of the response, defaults to None
         :type data: Optional[SerializedData], optional
         :param content: Streamed content of the response, defaults to None
@@ -28,5 +31,6 @@ class FetchResponse:
         """
         self.status = status
         self.headers = headers
+        self.url = url
         self.data = data
         self.content = content

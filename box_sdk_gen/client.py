@@ -424,6 +424,7 @@ class BoxClient:
             multipart_data=fetch_options.multipart_data,
             content_type=fetch_options.content_type,
             response_format=fetch_options.response_format,
+            follow_redirects=fetch_options.follow_redirects,
         )
         return fetch(enriched_fetch_options)
 

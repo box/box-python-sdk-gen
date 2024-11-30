@@ -42,6 +42,7 @@ class APIRequest:
     headers: Dict[str, str]
     params: Dict[str, str]
     data: Optional[Union[str, ByteStream, MultipartEncoder]]
+    allow_redirects: bool = True
 
 
 @dataclass
@@ -95,6 +96,7 @@ def fetch(options: FetchOptions) -> FetchResponse:
             ):
                 if options.response_format == 'binary':
                     return FetchResponse(
+                        url=network_response.url,
                         status=network_response.status_code,
                         headers=dict(response.network_response.headers),
                         content=ResponseByteStream(
@@ -103,6 +105,7 @@ def fetch(options: FetchOptions) -> FetchResponse:
                     )
                 else:
                     return FetchResponse(
+                        url=network_response.url,
                         status=network_response.status_code,
                         headers=dict(response.network_response.headers),
                         data=(
@@ -149,6 +152,7 @@ def __prepare_request(
     headers = __prepare_headers(options, reauthenticate)
     params = options.params or {}
     data = __prepare_body(options.content_type, options.file_stream or options.data)
+    allow_redirects = options.follow_redirects
 
     if options.content_type:
         if options.content_type == 'multipart/form-data':
@@ -175,6 +179,7 @@ def __prepare_request(
         headers=headers,
         params=params,
         data=data,
+        allow_redirects=allow_redirects,
     )
 
 
@@ -226,6 +231,7 @@ def __make_request(request: APIRequest, session: Session) -> APIResponse:
             headers=request.headers,
             data=request.data,
             params=request.params,
+            allow_redirects=request.allow_redirects,
             stream=True,
         )
         reauthentication_needed = (

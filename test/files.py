@@ -12,6 +12,8 @@ from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
+from box_sdk_gen.managers.files import GetFileThumbnailUrlExtension
+
 from box_sdk_gen.managers.files import GetFileThumbnailByIdExtension
 
 from box_sdk_gen.schemas.trash_file import TrashFile
@@ -49,6 +51,20 @@ def upload_file(file_name: str, file_stream: ByteStream) -> FileFull:
         file_stream,
     )
     return uploaded_files.entries[0]
+
+
+def testGetFileThumbnailUrl():
+    thumbnail_file_name: str = get_uuid()
+    thumbnail_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
+    thumbnail_file: FileFull = upload_file(
+        thumbnail_file_name, thumbnail_content_stream
+    )
+    download_url: str = client.files.get_file_thumbnail_url(
+        thumbnail_file.id, GetFileThumbnailUrlExtension.PNG
+    )
+    assert not download_url == None
+    assert 'https://' in download_url
+    client.files.delete_file_by_id(thumbnail_file.id)
 
 
 def testGetFileThumbnail():

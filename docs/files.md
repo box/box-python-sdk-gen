@@ -4,6 +4,7 @@
 - [Update file](#update-file)
 - [Delete file](#delete-file)
 - [Copy file](#copy-file)
+- [Get file thumbnail URL](#get-file-thumbnail-url)
 - [Get file thumbnail](#get-file-thumbnail)
 
 ## Get file information
@@ -175,6 +176,52 @@ Returns a new file object representing the copied file.
 Not all available fields are returned by default. Use the
 [fields](#param-fields) query parameter to explicitly request
 any specific fields.
+
+## Get file thumbnail URL
+
+Get the download URL without downloading the content.
+
+This operation is performed by calling function `get_file_thumbnail_url`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-files-id-thumbnail-id/).
+
+<!-- sample get_files_id_thumbnail_id -->
+
+```python
+client.files.get_file_thumbnail_url(thumbnail_file.id, GetFileThumbnailUrlExtension.PNG)
+```
+
+### Arguments
+
+- file_id `str`
+  - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
+- extension `GetFileThumbnailUrlExtension`
+  - The file format for the thumbnail Example: "png"
+- min_height `Optional[int]`
+  - The minimum height of the thumbnail
+- min_width `Optional[int]`
+  - The minimum width of the thumbnail
+- max_height `Optional[int]`
+  - The maximum height of the thumbnail
+- max_width `Optional[int]`
+  - The maximum width of the thumbnail
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `str`.
+
+When a thumbnail can be created the thumbnail data will be
+returned in the body of the response.Sometimes generating a thumbnail can take a few seconds. In these
+situations the API returns a `Location`-header pointing to a
+placeholder graphic for this file type.
+
+The placeholder graphic can be used in a user interface until the
+thumbnail generation has completed. The `Retry-After`-header indicates
+when to the thumbnail will be ready. At that time, retry this endpoint
+to retrieve the thumbnail.
 
 ## Get file thumbnail
 
