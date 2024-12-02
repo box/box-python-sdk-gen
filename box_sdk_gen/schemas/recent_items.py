@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.recent_item import RecentItem
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class RecentItems(BaseObject):
     def __init__(

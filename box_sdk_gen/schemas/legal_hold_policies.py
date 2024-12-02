@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.legal_hold_policy import LegalHoldPolicy
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class LegalHoldPolicies(BaseObject):
     def __init__(

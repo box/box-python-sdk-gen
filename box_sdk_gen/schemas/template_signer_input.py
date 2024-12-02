@@ -10,6 +10,8 @@ from box_sdk_gen.internal.utils import Date
 
 from box_sdk_gen.schemas.sign_request_prefill_tag import SignRequestPrefillTag
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class TemplateSignerInputTypeField(str, Enum):
     SIGNATURE = 'signature'

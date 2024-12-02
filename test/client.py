@@ -4,7 +4,7 @@ import pytest
 
 from box_sdk_gen.client import BoxClient
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 from box_sdk_gen.schemas.folder_full import FolderFull
 
@@ -48,9 +48,9 @@ from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.networking.base_urls import BaseUrls
 
-from box_sdk_gen.serialization.json.json_data import json_to_serialized_data
+from box_sdk_gen.serialization.json import json_to_serialized_data
 
-from box_sdk_gen.serialization.json.json_data import get_sd_value_by_key
+from box_sdk_gen.serialization.json import get_sd_value_by_key
 
 client: BoxClient = get_default_client()
 

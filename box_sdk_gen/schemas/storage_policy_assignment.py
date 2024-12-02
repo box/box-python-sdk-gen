@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.storage_policy_mini import StoragePolicyMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class StoragePolicyAssignmentTypeField(str, Enum):
     STORAGE_POLICY_ASSIGNMENT = 'storage_policy_assignment'

@@ -8,6 +8,8 @@ from typing import List
 
 from box_sdk_gen.schemas.group_full import GroupFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class GroupsOrderDirectionField(str, Enum):
     ASC = 'ASC'

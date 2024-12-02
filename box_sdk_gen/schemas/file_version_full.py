@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.user_mini import UserMini
 
 from box_sdk_gen.schemas.file_version import FileVersion
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FileVersionFull(FileVersion):
     def __init__(

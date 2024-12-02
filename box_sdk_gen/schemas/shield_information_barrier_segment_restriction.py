@@ -26,6 +26,8 @@ from box_sdk_gen.schemas.shield_information_barrier_base import (
 
 from box_sdk_gen.schemas.user_base import UserBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

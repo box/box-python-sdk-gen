@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.metadata_cascade_policy import MetadataCascadePolicy
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataCascadePolicies(BaseObject):
     def __init__(

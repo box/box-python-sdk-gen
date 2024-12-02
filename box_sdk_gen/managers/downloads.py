@@ -8,6 +8,8 @@ from box_sdk_gen.networking.fetch_options import ResponseFormat
 
 from box_sdk_gen.schemas.client_error import ClientError
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -18,7 +20,7 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
 
-from box_sdk_gen.serialization.json.json_data import sd_to_json
+from box_sdk_gen.serialization.json import sd_to_json
 
 from box_sdk_gen.networking.fetch_options import FetchOptions
 

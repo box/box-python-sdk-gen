@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 from box_sdk_gen.internal.utils import ByteStream
 

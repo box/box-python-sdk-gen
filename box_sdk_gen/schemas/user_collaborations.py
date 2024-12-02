@@ -4,6 +4,8 @@ from box_sdk_gen.schemas.user_base import UserBaseTypeField
 
 from box_sdk_gen.schemas.user_base import UserBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class UserCollaborations(UserBase):
     def __init__(

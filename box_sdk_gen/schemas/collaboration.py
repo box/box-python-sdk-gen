@@ -20,6 +20,8 @@ from box_sdk_gen.schemas.group_mini import GroupMini
 
 from box_sdk_gen.schemas.terms_of_service_base import TermsOfServiceBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

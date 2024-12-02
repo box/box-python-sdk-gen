@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.user_mini import UserMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class DevicePinnerTypeField(str, Enum):
     DEVICE_PINNER = 'device_pinner'

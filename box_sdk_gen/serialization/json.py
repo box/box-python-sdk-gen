@@ -1,7 +1,26 @@
-from typing import get_origin, Union, Type
+import json
+from typing import Dict, get_origin, Union, Type
+from urllib.parse import urlencode
 
-from ...internal.base_object import BaseObject
-from .json_data import SerializedData
+from ..internal.base_object import BaseObject
+
+SerializedData = Dict
+
+
+def json_to_serialized_data(data: str) -> SerializedData:
+    return json.loads(data)
+
+
+def sd_to_json(data: SerializedData) -> str:
+    return json.dumps(data)
+
+
+def sd_to_url_params(data: SerializedData) -> str:
+    return urlencode(data)
+
+
+def get_sd_value_by_key(data: SerializedData, key: str):
+    return data.get(key)
 
 
 def serialize(obj: Union[BaseObject, dict, list]) -> SerializedData:

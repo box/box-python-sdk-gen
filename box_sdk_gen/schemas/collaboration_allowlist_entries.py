@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.collaboration_allowlist_entry import (
     CollaborationAllowlistEntry,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class CollaborationAllowlistEntries(BaseObject):
     def __init__(

@@ -18,6 +18,8 @@ from box_sdk_gen.schemas.file_mini import FileMini
 
 from box_sdk_gen.schemas.folder_mini import FolderMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

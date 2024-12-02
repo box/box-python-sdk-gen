@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.folder_mini import FolderMini
 
 from box_sdk_gen.schemas.web_link import WebLink
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ItemsOrderDirectionField(str, Enum):
     ASC = 'ASC'

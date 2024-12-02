@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.folder import Folder
 
 from box_sdk_gen.schemas.event import Event
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

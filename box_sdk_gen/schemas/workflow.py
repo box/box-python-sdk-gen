@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.workflow_mini import WorkflowMini
 
 from box_sdk_gen.schemas.user_base import UserBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

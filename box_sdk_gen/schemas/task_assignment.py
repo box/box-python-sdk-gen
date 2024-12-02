@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.file_mini import FileMini
 
 from box_sdk_gen.schemas.user_mini import UserMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.internal.utils import DateTime
 
 

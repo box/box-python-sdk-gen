@@ -4,6 +4,8 @@ from box_sdk_gen.schemas.storage_policy_mini import StoragePolicyMiniTypeField
 
 from box_sdk_gen.schemas.storage_policy_mini import StoragePolicyMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class StoragePolicy(StoragePolicyMini):
     def __init__(

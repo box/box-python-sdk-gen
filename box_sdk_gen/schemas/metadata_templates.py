@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.metadata_template import MetadataTemplate
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataTemplates(BaseObject):
     def __init__(

@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.file_conflict import FileConflict
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ConflictErrorContextInfoField(BaseObject):
     def __init__(self, *, conflicts: Optional[List[FileConflict]] = None, **kwargs):

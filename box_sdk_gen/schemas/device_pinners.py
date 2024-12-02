@@ -8,6 +8,8 @@ from typing import List
 
 from box_sdk_gen.schemas.device_pinner import DevicePinner
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class DevicePinnersOrderByField(str, Enum):
     ID = 'id'

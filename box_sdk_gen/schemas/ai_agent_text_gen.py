@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.ai_agent_basic_gen_tool import AiAgentBasicGenTool
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentTextGenTypeField(str, Enum):
     AI_AGENT_TEXT_GEN = 'ai_agent_text_gen'

@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.folder_base import FolderBase
 
 from box_sdk_gen.schemas.web_link_base import WebLinkBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AppItemAssociationTypeField(str, Enum):
     APP_ITEM_ASSOCIATION = 'app_item_association'

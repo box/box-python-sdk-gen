@@ -16,6 +16,8 @@ from box_sdk_gen.schemas.transcript_skill_card import TranscriptSkillCard
 
 from box_sdk_gen.schemas.status_skill_card import StatusSkillCard
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SkillCardsMetadata(BaseObject):
     _fields_to_json_mapping: Dict[str, str] = {

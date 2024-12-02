@@ -8,6 +8,8 @@ from typing import List
 
 from box_sdk_gen.schemas.comment_full import CommentFull
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class CommentsOrderDirectionField(str, Enum):
     ASC = 'ASC'

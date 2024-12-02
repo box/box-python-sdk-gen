@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_item_base import AiItemBase
 
 from box_sdk_gen.schemas.ai_agent_extract import AiAgentExtract
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiExtract(BaseObject):
     def __init__(

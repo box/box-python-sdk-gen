@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
 from box_sdk_gen.schemas.ai_agent_text_gen import AiAgentTextGen
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiTextGenItemsTypeField(str, Enum):
     FILE = 'file'

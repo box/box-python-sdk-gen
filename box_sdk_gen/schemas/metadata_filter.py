@@ -18,6 +18,8 @@ from box_sdk_gen.schemas.metadata_field_filter_date_range import (
     MetadataFieldFilterDateRange,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataFilterScopeField(str, Enum):
     GLOBAL = 'global'

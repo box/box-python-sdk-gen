@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import AiAgentBasicTextTool
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentExtractStructuredTypeField(str, Enum):
     AI_AGENT_EXTRACT_STRUCTURED = 'ai_agent_extract_structured'

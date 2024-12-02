@@ -4,6 +4,8 @@ from typing import Dict
 
 from box_sdk_gen.schemas.upload_part_mini import UploadPartMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class UploadPart(UploadPartMini):
     _fields_to_json_mapping: Dict[str, str] = {

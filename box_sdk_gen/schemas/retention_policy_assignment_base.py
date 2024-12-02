@@ -2,6 +2,8 @@ from enum import Enum
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class RetentionPolicyAssignmentBaseTypeField(str, Enum):
     RETENTION_POLICY_ASSIGNMENT = 'retention_policy_assignment'

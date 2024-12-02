@@ -10,6 +10,8 @@ from box_sdk_gen.schemas.shield_information_barrier_segment_member_base import (
 
 from box_sdk_gen.schemas.user_base import UserBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierSegmentMemberMini(
     ShieldInformationBarrierSegmentMemberBase

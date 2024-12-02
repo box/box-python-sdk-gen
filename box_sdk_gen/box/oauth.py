@@ -2,7 +2,7 @@ from typing import Optional
 
 from typing import Dict
 
-from box_sdk_gen.serialization.json.serializer import serialize
+from box_sdk_gen.serialization.json import serialize
 
 from typing import List
 
@@ -26,13 +26,13 @@ from box_sdk_gen.box.token_storage import TokenStorage
 
 from box_sdk_gen.box.token_storage import InMemoryTokenStorage
 
-from box_sdk_gen.serialization.json.json_data import sd_to_url_params
+from box_sdk_gen.serialization.json import sd_to_url_params
 
 from box_sdk_gen.internal.utils import prepare_params
 
 from box_sdk_gen.box.errors import BoxSDKError
 
-from box_sdk_gen.serialization.json.json_data import SerializedData
+from box_sdk_gen.serialization.json import SerializedData
 
 
 class OAuthConfig:

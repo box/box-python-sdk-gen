@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.shield_information_barrier_report import (
     ShieldInformationBarrierReport,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierReports(BaseObject):
     def __init__(

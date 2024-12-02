@@ -6,6 +6,8 @@ from box_sdk_gen.schemas.metadata_base import MetadataBase
 
 from box_sdk_gen.schemas.metadata import Metadata
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataFull(Metadata):
     _fields_to_json_mapping: Dict[str, str] = {

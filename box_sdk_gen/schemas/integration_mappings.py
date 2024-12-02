@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.integration_mapping import IntegrationMapping
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class IntegrationMappings(BaseObject):
     def __init__(

@@ -14,6 +14,8 @@ from box_sdk_gen.schemas.sign_request_create_signer import SignRequestCreateSign
 
 from box_sdk_gen.schemas.folder_mini import FolderMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class SignRequestCreateRequestSignatureColorField(str, Enum):
     BLUE = 'blue'

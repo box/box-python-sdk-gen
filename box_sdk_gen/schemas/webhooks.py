@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.webhook_mini import WebhookMini
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Webhooks(BaseObject):
     def __init__(

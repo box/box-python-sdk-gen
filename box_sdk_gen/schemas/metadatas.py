@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.metadata import Metadata
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Metadatas(BaseObject):
     def __init__(

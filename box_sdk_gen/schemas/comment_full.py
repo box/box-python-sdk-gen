@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.comment import CommentItemField
 
 from box_sdk_gen.schemas.comment import Comment
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class CommentFull(Comment):
     def __init__(

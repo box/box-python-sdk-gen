@@ -4,6 +4,8 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierReportBaseTypeField(str, Enum):
     SHIELD_INFORMATION_BARRIER_REPORT = 'shield_information_barrier_report'

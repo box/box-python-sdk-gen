@@ -4,6 +4,8 @@ from box_sdk_gen.schemas.folder_base import FolderBaseTypeField
 
 from box_sdk_gen.schemas.folder_base import FolderBase
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class FolderMini(FolderBase):
     def __init__(

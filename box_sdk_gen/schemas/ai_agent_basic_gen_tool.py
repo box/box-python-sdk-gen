@@ -22,6 +22,8 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool_text_gen import (
     AiAgentLongTextToolTextGen,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAgentBasicGenTool(AiAgentLongTextToolTextGen):
     def __init__(

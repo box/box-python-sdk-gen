@@ -17,7 +17,7 @@ from .fetch_options import FetchOptions
 from .fetch_response import FetchResponse
 from ..box.errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
 from ..internal.utils import ByteStream, ResponseByteStream
-from ..serialization.json.json_data import (
+from ..serialization.json import (
     sd_to_json,
     sd_to_url_params,
     json_to_serialized_data,

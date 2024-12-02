@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.completion_rule_variable import CompletionRuleVariable
 
 from box_sdk_gen.schemas.role_variable import RoleVariable
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Outcome(BaseObject):
     def __init__(

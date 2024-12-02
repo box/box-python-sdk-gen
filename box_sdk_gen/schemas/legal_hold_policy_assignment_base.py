@@ -4,6 +4,8 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class LegalHoldPolicyAssignmentBaseTypeField(str, Enum):
     LEGAL_HOLD_POLICY_ASSIGNMENT = 'legal_hold_policy_assignment'

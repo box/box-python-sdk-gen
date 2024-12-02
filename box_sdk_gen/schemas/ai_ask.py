@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
 from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiAskModeField(str, Enum):
     MULTIPLE_ITEM_QA = 'multiple_item_qa'

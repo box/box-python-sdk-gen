@@ -12,6 +12,8 @@ from box_sdk_gen.schemas.shield_information_barrier_segment_restriction_base imp
     ShieldInformationBarrierSegmentRestrictionBase,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentTypeField(
     str, Enum

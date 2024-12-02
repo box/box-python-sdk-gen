@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.shield_information_barrier_segment_restriction import (
     ShieldInformationBarrierSegmentRestriction,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class ShieldInformationBarrierSegmentRestrictions(BaseObject):
     def __init__(

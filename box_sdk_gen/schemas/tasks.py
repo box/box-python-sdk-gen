@@ -6,6 +6,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.task import Task
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Tasks(BaseObject):
     def __init__(

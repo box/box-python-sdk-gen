@@ -8,6 +8,8 @@ from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.event import Event
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class Events(BaseObject):
     def __init__(

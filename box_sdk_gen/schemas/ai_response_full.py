@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.ai_citation import AiCitation
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class AiResponseFull(AiResponse):
     def __init__(

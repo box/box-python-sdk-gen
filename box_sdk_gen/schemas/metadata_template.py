@@ -8,6 +8,8 @@ from typing import List
 
 from typing import Dict
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 
 class MetadataTemplateTypeField(str, Enum):
     METADATA_TEMPLATE = 'metadata_template'
