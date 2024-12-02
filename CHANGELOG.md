@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/box/box-python-sdk-gen/compare/v1.7.0...v1.8.0) (2024-12-02)
+
+
+### Bug Fixes
+
+* Fix enums usage (box/box-codegen[#615](https://github.com/box/box-python-sdk-gen/issues/615)) ([#387](https://github.com/box/box-python-sdk-gen/issues/387)) ([a9abccb](https://github.com/box/box-python-sdk-gen/commit/a9abccb8e552c971774ea1a9fa2096395a40317b)), closes [#385](https://github.com/box/box-python-sdk-gen/issues/385)
+* Support status codes with no content (box/box-codegen[#604](https://github.com/box/box-python-sdk-gen/issues/604)) ([#378](https://github.com/box/box-python-sdk-gen/issues/378)) ([051716c](https://github.com/box/box-python-sdk-gen/commit/051716c84b4f0ab32b82608f94e3cf3ba09b390b))
+* update collaboration, metadata and collection resources (box/box-openapi[#483](https://github.com/box/box-python-sdk-gen/issues/483)) ([#380](https://github.com/box/box-python-sdk-gen/issues/380)) ([0d45fed](https://github.com/box/box-python-sdk-gen/commit/0d45fedc0b7b96234ef3901f412f259b1cae4c1a))
+
+
+### New Features and Enhancements
+
+* Expose method for making custom HTTP requests (box/box-codegen[#610](https://github.com/box/box-python-sdk-gen/issues/610)) ([#393](https://github.com/box/box-python-sdk-gen/issues/393)) ([55a23d9](https://github.com/box/box-python-sdk-gen/commit/55a23d9d6840642c248ab3b967ad5c2635484c8c))
+* Support getting file download URL and file thumbnail URL (box/box-codegen[#617](https://github.com/box/box-python-sdk-gen/issues/617)) ([#397](https://github.com/box/box-python-sdk-gen/issues/397)) ([fd609ab](https://github.com/box/box-python-sdk-gen/commit/fd609ab9fe94da43b1a71815597c49471e157bb8))
+
 ## [1.7.0](https://github.com/box/box-codegen/compare/v1.6.0...v1.7.0) (2024-11-04)
 
 
