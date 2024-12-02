@@ -207,6 +207,11 @@ class CopyFileParent(BaseObject):
         self.id = id
 
 
+class GetFileThumbnailUrlExtension(str, Enum):
+    PNG = 'png'
+    JPG = 'jpg'
+
+
 class GetFileThumbnailByIdExtension(str, Enum):
     PNG = 'png'
     JPG = 'jpg'
@@ -594,6 +599,95 @@ class FilesManager:
             )
         )
         return deserialize(response.data, FileFull)
+
+    def get_file_thumbnail_url(
+        self,
+        file_id: str,
+        extension: GetFileThumbnailUrlExtension,
+        *,
+        min_height: Optional[int] = None,
+        min_width: Optional[int] = None,
+        max_height: Optional[int] = None,
+        max_width: Optional[int] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> str:
+        """
+                Retrieves a thumbnail, or smaller image representation, of a file.
+
+                Sizes of `32x32`,`64x64`, `128x128`, and `256x256` can be returned in
+
+
+                the `.png` format and sizes of `32x32`, `160x160`, and `320x320`
+
+
+                can be returned in the `.jpg` format.
+
+
+                Thumbnails can be generated for the image and video file formats listed
+
+
+                [found on our community site][1].
+
+
+                [1]: https://community.box.com/t5/Migrating-and-Previewing-Content/File-Types-and-Fonts-Supported-in-Box-Content-Preview/ta-p/327
+
+                :param file_id: The unique identifier that represents a file.
+
+        The ID for any file can be determined
+        by visiting a file in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/files/123`
+        the `file_id` is `123`.
+        Example: "12345"
+                :type file_id: str
+                :param extension: The file format for the thumbnail
+        Example: "png"
+                :type extension: GetFileThumbnailUrlExtension
+                :param min_height: The minimum height of the thumbnail, defaults to None
+                :type min_height: Optional[int], optional
+                :param min_width: The minimum width of the thumbnail, defaults to None
+                :type min_width: Optional[int], optional
+                :param max_height: The maximum height of the thumbnail, defaults to None
+                :type max_height: Optional[int], optional
+                :param max_width: The maximum width of the thumbnail, defaults to None
+                :type max_width: Optional[int], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'min_height': to_string(min_height),
+                'min_width': to_string(min_width),
+                'max_height': to_string(max_height),
+                'max_width': to_string(max_width),
+            }
+        )
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/files/',
+                        to_string(file_id),
+                        '/thumbnail.',
+                        to_string(extension),
+                    ]
+                ),
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format=ResponseFormat.NO_CONTENT,
+                auth=self.auth,
+                network_session=self.network_session,
+                follow_redirects=False,
+            )
+        )
+        if response.headers['location'] == None:
+            raise BoxSDKError(message='No location header in response')
+        return response.headers['location']
 
     def get_file_thumbnail_by_id(
         self,

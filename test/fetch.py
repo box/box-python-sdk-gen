@@ -66,6 +66,7 @@ class NonSeekableStream(RawIOBase):
 @pytest.fixture
 def response_202():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 202
     response.ok = True
     response.text = None
@@ -79,6 +80,7 @@ def response_202():
 @pytest.fixture
 def response_202_with_retry_after():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 202
     response.ok = True
     response.text = None
@@ -90,6 +92,7 @@ def response_202_with_retry_after():
 @pytest.fixture
 def response_500():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 500
     response.ok = False
     response.headers = {"Retry-After": "0"}
@@ -99,6 +102,7 @@ def response_500():
 @pytest.fixture
 def response_401():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 401
     response.ok = False
     response.headers = {}
@@ -108,6 +112,7 @@ def response_401():
 @pytest.fixture
 def response_429():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 429
     response.ok = False
     response.headers = {}
@@ -117,6 +122,7 @@ def response_429():
 @pytest.fixture
 def response_200():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.status_code = 200
     response.ok = True
     response.headers = {}
@@ -126,8 +132,24 @@ def response_200():
 
 
 @pytest.fixture
+def response_302():
+    response = Mock(Response)
+    response.url = 'https://example.com'
+    response.status_code = 302
+    response.ok = True
+    response.headers = {
+        "location": "https://example.com/redirected",
+        "content-length": "0",
+    }
+    response.text = ""
+    response.content = None
+    return response
+
+
+@pytest.fixture
 def response_failure_no_status():
     response = Mock(Response)
+    response.url = 'https://example.com'
     response.ok = False
     response.headers = {"Retry-After": "0"}
     return response
@@ -328,6 +350,7 @@ def test_make_request(mock_requests_session, response_200):
         },
         "params": {"param": "value"},
         "data": '{"key": "value"}',
+        "allow_redirects": True,
     }
     mock_requests_session.request.return_value = response_200
     api_request = APIRequest(**request_params)
@@ -621,6 +644,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
                 params={},
                 data=None,
                 stream=True,
+                allow_redirects=True,
             ),
             mock.call(
                 method="GET",
@@ -634,6 +658,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
                 params={},
                 data=None,
                 stream=True,
+                allow_redirects=True,
             ),
         ],
     )
@@ -671,6 +696,7 @@ def test_not_retrying_401_when_auth_not_provided(
         params={},
         data=None,
         stream=True,
+        allow_redirects=True,
     )
 
 
@@ -1017,3 +1043,33 @@ def test_reset_multipart_non_seekable_stream(mock_non_seekable_stream):
 
     with pytest.raises(BoxSDKError):
         __reset_multipart_streams(options, original_positions, None)
+
+
+def test_disable_follow_redirects(
+    mock_requests_session, network_session_mock, response_302, response_200
+):
+    mock_requests_session.request.side_effect = [response_302, response_200]
+
+    fetch(
+        FetchOptions(
+            url="https://example.com",
+            method="GET",
+            network_session=network_session_mock,
+            follow_redirects=False,
+        )
+    )
+
+    assert mock_requests_session.request.call_count == 1
+    mock_requests_session.request.assert_called_once_with(
+        method="GET",
+        url="https://example.com",
+        headers={
+            "User-Agent": USER_AGENT_HEADER,
+            "X-Box-UA": X_BOX_UA_HEADER,
+            "Content-Type": "application/json",
+        },
+        params={},
+        data=None,
+        stream=True,
+        allow_redirects=False,
+    )

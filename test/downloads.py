@@ -34,6 +34,8 @@ from box_sdk_gen.internal.utils import read_buffer_from_file
 
 from test.commons import get_default_client
 
+from test.commons import upload_new_file
+
 from box_sdk_gen.networking.fetch_options import FetchOptions
 
 from box_sdk_gen.networking.fetch_response import FetchResponse
@@ -56,6 +58,14 @@ def test_download_file():
         uploaded_file.id
     )
     assert buffer_equals(read_byte_stream(downloaded_file_content), file_buffer)
+    client.files.delete_file_by_id(uploaded_file.id)
+
+
+def test_get_download_url():
+    uploaded_file: FileFull = upload_new_file()
+    download_url: str = client.downloads.get_download_file_url(uploaded_file.id)
+    assert not download_url == None
+    assert 'https://' in download_url
     client.files.delete_file_by_id(uploaded_file.id)
 
 
