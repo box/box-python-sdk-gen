@@ -4,6 +4,8 @@ from typing import List
 
 from box_sdk_gen.internal.utils import DateTime
 
+from box_sdk_gen.schemas.ai_agent_info import AiAgentInfo
+
 from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.ai_citation import AiCitation
@@ -19,6 +21,7 @@ class AiResponseFull(AiResponse):
         *,
         citations: Optional[List[AiCitation]] = None,
         completion_reason: Optional[str] = None,
+        ai_agent_info: Optional[AiAgentInfo] = None,
         **kwargs
     ):
         """
@@ -35,6 +38,7 @@ class AiResponseFull(AiResponse):
             answer=answer,
             created_at=created_at,
             completion_reason=completion_reason,
+            ai_agent_info=ai_agent_info,
             **kwargs
         )
         self.citations = citations
