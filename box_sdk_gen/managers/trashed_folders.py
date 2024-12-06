@@ -44,13 +44,18 @@ from box_sdk_gen.serialization.json import SerializedData
 
 
 class RestoreFolderFromTrashParent(BaseObject):
-    def __init__(self, *, id: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, id: Optional[str] = None, user_id: Optional[str] = None, **kwargs
+    ):
         """
         :param id: The ID of parent item, defaults to None
         :type id: Optional[str], optional
+        :param user_id: The input for `{user_id}` is optional. Moving to non-root folder is not allowed when `{user_id}` is present. Parent folder id should be zero when `{user_id}` is provided., defaults to None
+        :type user_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
+        self.user_id = user_id
 
 
 class TrashedFoldersManager:

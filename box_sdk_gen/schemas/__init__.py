@@ -1,4 +1,10 @@
+from box_sdk_gen.schemas.ai_agent_info import *
+
+from box_sdk_gen.schemas.ai_response import *
+
 from box_sdk_gen.schemas.ai_citation import *
+
+from box_sdk_gen.schemas.ai_response_full import *
 
 from box_sdk_gen.schemas.ai_dialogue_history import *
 
@@ -39,10 +45,6 @@ from box_sdk_gen.schemas.ai_extract import *
 from box_sdk_gen.schemas.ai_agent_ask import *
 
 from box_sdk_gen.schemas.ai_ask import *
-
-from box_sdk_gen.schemas.ai_response import *
-
-from box_sdk_gen.schemas.ai_response_full import *
 
 from box_sdk_gen.schemas.app_item import *
 
