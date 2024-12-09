@@ -60,7 +60,7 @@ class UpdateWebLinkByIdParent(BaseObject):
         """
         :param id: The ID of parent item, defaults to None
         :type id: Optional[str], optional
-        :param user_id: The input for `{user_id}` is optional. Moving to non-root folder is not allowed when `{user_id}` is present. Parent folder id should be zero when `{user_id}` is provided., defaults to None
+        :param user_id: The input for `user_id` is optional. Moving to non-root folder is not allowed when `user_id` is present. Parent folder id should be zero when `user_id` is provided., defaults to None
         :type user_id: Optional[str], optional
         """
         super().__init__(**kwargs)
