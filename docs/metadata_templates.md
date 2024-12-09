@@ -303,6 +303,10 @@ client.metadata_templates.create_metadata_template(
             display_name="Hobby",
             description="Person hobby",
             type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
+            options=[
+                CreateMetadataTemplateFieldsOptionsField(key="guitar"),
+                CreateMetadataTemplateFieldsOptionsField(key="books"),
+            ],
         ),
     ],
 )

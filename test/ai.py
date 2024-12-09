@@ -34,12 +34,18 @@ from box_sdk_gen.schemas.ai_extract_response import AiExtractResponse
 
 from box_sdk_gen.managers.ai import CreateAiExtractStructuredFields
 
+from box_sdk_gen.managers.ai import CreateAiExtractStructuredFieldsOptionsField
+
 from box_sdk_gen.schemas.metadata_template import MetadataTemplate
 
 from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
 from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsTypeField,
+)
+
+from box_sdk_gen.managers.metadata_templates import (
+    CreateMetadataTemplateFieldsOptionsField,
 )
 
 from box_sdk_gen.managers.ai import CreateAiExtractStructuredMetadataTemplate
@@ -240,7 +246,7 @@ def testAIExtractStructuredWithFields():
             parent=UploadFileAttributesParentField(id='0'),
         ),
         string_to_byte_stream(
-            'My name is John Doe. I was born in 4th July 1990. I am 34 years old. My hobby is guitar and books.'
+            'My name is John Doe. I was born in 4th July 1990. I am 34 years old. My hobby is guitar.'
         ),
     )
     file: FileFull = uploaded_files.entries[0]
@@ -282,6 +288,10 @@ def testAIExtractStructuredWithFields():
                 description='Person hobby',
                 prompt='What is your hobby?',
                 type='multiSelect',
+                options=[
+                    CreateAiExtractStructuredFieldsOptionsField(key='guitar'),
+                    CreateAiExtractStructuredFieldsOptionsField(key='books'),
+                ],
             ),
         ],
         ai_agent=ai_extract_structured_agent_config,
@@ -294,7 +304,7 @@ def testAIExtractStructuredWithFields():
     )
     assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
     assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
-        ['guitar', 'books']
+        ['guitar']
     )
     client.files.delete_file_by_id(file.id)
 
@@ -306,7 +316,7 @@ def testAIExtractStructuredWithMetadataTemplate():
             parent=UploadFileAttributesParentField(id='0'),
         ),
         string_to_byte_stream(
-            'My name is John Doe. I was born in 4th July 1990. I am 34 years old. My hobby is guitar and books.'
+            'My name is John Doe. I was born in 4th July 1990. I am 34 years old. My hobby is guitar.'
         ),
     )
     file: FileFull = uploaded_files.entries[0]
@@ -346,6 +356,10 @@ def testAIExtractStructuredWithMetadataTemplate():
                 display_name='Hobby',
                 description='Person hobby',
                 type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='guitar'),
+                    CreateMetadataTemplateFieldsOptionsField(key='books'),
+                ],
             ),
         ],
     )
@@ -363,7 +377,7 @@ def testAIExtractStructuredWithMetadataTemplate():
     )
     assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
     assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
-        ['guitar', 'books']
+        ['guitar']
     )
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
