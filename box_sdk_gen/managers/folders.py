@@ -70,13 +70,18 @@ class UpdateFolderByIdSyncState(str, Enum):
 
 
 class UpdateFolderByIdParent(BaseObject):
-    def __init__(self, *, id: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, id: Optional[str] = None, user_id: Optional[str] = None, **kwargs
+    ):
         """
-        :param id: The ID of the new parent folder, defaults to None
+        :param id: The ID of parent item, defaults to None
         :type id: Optional[str], optional
+        :param user_id: The input for `user_id` is optional. Moving to non-root folder is not allowed when `user_id` is present. Parent folder id should be zero when `user_id` is provided., defaults to None
+        :type user_id: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.id = id
+        self.user_id = user_id
 
 
 class UpdateFolderByIdSharedLinkAccessField(str, Enum):
@@ -489,9 +494,6 @@ class FoldersManager:
                 :param can_non_owners_invite: Specifies if users who are not the owner
         of the folder can invite new collaborators to the folder., defaults to None
                 :type can_non_owners_invite: Optional[bool], optional
-                :param parent: The parent folder for this folder. Use this to move
-        the folder or to restore it out of the trash., defaults to None
-                :type parent: Optional[UpdateFolderByIdParent], optional
                 :param tags: The tags for this item. These tags are shown in
         the Box web app and mobile apps next to an item.
 

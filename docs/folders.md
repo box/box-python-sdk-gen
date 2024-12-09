@@ -97,7 +97,7 @@ downscoped_client.folders.update_folder_by_id(folder.id, name=get_uuid())
 - can_non_owners_invite `Optional[bool]`
   - Specifies if users who are not the owner of the folder can invite new collaborators to the folder.
 - parent `Optional[UpdateFolderByIdParent]`
-  - The parent folder for this folder. Use this to move the folder or to restore it out of the trash.
+  -
 - shared_link `Optional[UpdateFolderByIdSharedLink]`
   -
 - folder_upload_email `Optional[UpdateFolderByIdFolderUploadEmail]`
