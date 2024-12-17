@@ -173,8 +173,6 @@ client.sign_requests.create_sign_request(
   - Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire.
 - external_id `Optional[str]`
   - This can be used to reference an ID in an external system that the sign request is related to.
-- is_phone_verification_required_to_view `Optional[bool]`
-  - Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them.
 - template_id `Optional[str]`
   - When a signature request is created from a template this field will indicate the id of that template.
 - external_system_name `Optional[str]`
