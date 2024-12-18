@@ -245,7 +245,6 @@ class SignRequestsManager:
         prefill_tags: Optional[List[SignRequestPrefillTag]] = None,
         days_valid: Union[Optional[int], NullValue] = None,
         external_id: Union[Optional[str], NullValue] = None,
-        is_phone_verification_required_to_view: Union[Optional[bool], NullValue] = None,
         template_id: Union[Optional[str], NullValue] = None,
         external_system_name: Union[Optional[str], NullValue] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
@@ -290,8 +289,6 @@ class SignRequestsManager:
                 :type days_valid: Union[Optional[int], NullValue], optional
                 :param external_id: This can be used to reference an ID in an external system that the sign request is related to., defaults to None
                 :type external_id: Union[Optional[str], NullValue], optional
-                :param is_phone_verification_required_to_view: Forces signers to verify a text message prior to viewing the document. You must specify the phone number of signers to have this setting apply to them., defaults to None
-                :type is_phone_verification_required_to_view: Union[Optional[bool], NullValue], optional
                 :param template_id: When a signature request is created from a template this field will indicate the id of that template., defaults to None
                 :type template_id: Union[Optional[str], NullValue], optional
                 :param external_system_name: Used as an optional system name to appear in the signature log next to the signers who have been assigned the `embed_url_external_id`., defaults to None
@@ -317,7 +314,6 @@ class SignRequestsManager:
             'prefill_tags': prefill_tags,
             'days_valid': days_valid,
             'external_id': external_id,
-            'is_phone_verification_required_to_view': is_phone_verification_required_to_view,
             'template_id': template_id,
             'external_system_name': external_system_name,
         }

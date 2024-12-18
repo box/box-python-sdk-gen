@@ -71,7 +71,6 @@ def testCreateGetCancelAndListSignRequest():
         ],
         days_valid=30,
         external_id='123',
-        is_phone_verification_required_to_view=False,
         external_system_name='BoxSignIntegration',
     )
     assert created_sign_request.are_reminders_enabled == True
@@ -83,7 +82,6 @@ def testCreateGetCancelAndListSignRequest():
     assert created_sign_request.external_id == '123'
     assert created_sign_request.external_system_name == 'BoxSignIntegration'
     assert created_sign_request.is_document_preparation_needed == False
-    assert created_sign_request.is_phone_verification_required_to_view == False
     assert created_sign_request.name == 'Sign Request'
     assert created_sign_request.redirect_url == 'https://www.box.com'
     assert created_sign_request.sign_files.files[0].name == file_to_sign.name
