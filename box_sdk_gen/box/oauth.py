@@ -161,7 +161,7 @@ class BoxOAuth(Authentication):
         self, *, network_session: Optional[NetworkSession] = None
     ) -> AccessToken:
         """
-        Get a new access token for the app user.
+        Get a new access token for the platform app user.
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
