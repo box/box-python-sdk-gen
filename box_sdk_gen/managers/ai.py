@@ -28,8 +28,6 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.ai_ask import AiAsk
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.ai_response import AiResponse
 
 from box_sdk_gen.schemas.ai_text_gen import AiTextGen
@@ -48,21 +46,21 @@ from box_sdk_gen.schemas.ai_extract_response import AiExtractResponse
 
 from box_sdk_gen.schemas.ai_extract_structured import AiExtractStructured
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
 from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -251,7 +249,7 @@ class AiManager:
             'ai_agent': ai_agent,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join([self.network_session.base_urls.base_url, '/2.0/ai/ask']),
                 method='POST',
@@ -298,7 +296,7 @@ class AiManager:
             'ai_agent': ai_agent,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/2.0/ai/text_gen']
@@ -344,7 +342,7 @@ class AiManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/2.0/ai_agent_default']
@@ -389,7 +387,7 @@ class AiManager:
             extra_headers = {}
         request_body: Dict = {'prompt': prompt, 'items': items, 'ai_agent': ai_agent}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/2.0/ai/extract']
@@ -448,7 +446,7 @@ class AiManager:
             'ai_agent': ai_agent,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [

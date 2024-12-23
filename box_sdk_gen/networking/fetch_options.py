@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from enum import Enum
 
 from typing import Optional
@@ -6,11 +10,13 @@ from typing import Dict
 
 from typing import List
 
-from box_sdk_gen.networking.auth import Authentication
+if TYPE_CHECKING:
+    from box_sdk_gen.networking.auth import Authentication
+
+if TYPE_CHECKING:
+    from box_sdk_gen.networking.network import NetworkSession
 
 from box_sdk_gen.serialization.json import SerializedData
-
-from box_sdk_gen.networking.network import NetworkSession
 
 from box_sdk_gen.internal.utils import ByteStream
 
@@ -29,7 +35,7 @@ class MultipartItem:
         data: Optional[SerializedData] = None,
         file_stream: Optional[ByteStream] = None,
         file_name: Optional[str] = None,
-        content_type: Optional[str] = None
+        content_type: Optional[str] = None,
     ):
         """
         :param part_name: Name of the part
@@ -65,7 +71,7 @@ class FetchOptions:
         response_format: ResponseFormat = ResponseFormat.JSON,
         auth: Optional[Authentication] = None,
         network_session: Optional[NetworkSession] = None,
-        follow_redirects: Optional[bool] = True
+        follow_redirects: Optional[bool] = True,
     ):
         """
         :param url: URL of the request

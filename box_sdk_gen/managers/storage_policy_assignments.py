@@ -18,13 +18,17 @@ from box_sdk_gen.schemas.storage_policy_assignments import StoragePolicyAssignme
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.storage_policy_assignment import StoragePolicyAssignment
+
+from box_sdk_gen.box.errors import BoxSDKError
 
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
@@ -33,12 +37,6 @@ from box_sdk_gen.internal.utils import to_string
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json import sd_to_json
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -164,7 +162,7 @@ class StoragePolicyAssignmentsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -207,7 +205,7 @@ class StoragePolicyAssignmentsManager:
             'assigned_to': assigned_to,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -243,7 +241,7 @@ class StoragePolicyAssignmentsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -283,7 +281,7 @@ class StoragePolicyAssignmentsManager:
             extra_headers = {}
         request_body: Dict = {'storage_policy': storage_policy}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -335,7 +333,7 @@ class StoragePolicyAssignmentsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
