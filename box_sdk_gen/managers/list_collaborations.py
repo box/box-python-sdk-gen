@@ -16,15 +16,19 @@ from box_sdk_gen.schemas.collaborations import Collaborations
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.collaborations_offset_paginated import (
     CollaborationsOffsetPaginated,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
@@ -33,12 +37,6 @@ from box_sdk_gen.internal.utils import to_string
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json import sd_to_json
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -115,7 +113,7 @@ class ListCollaborationsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -191,7 +189,7 @@ class ListCollaborationsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -256,7 +254,7 @@ class ListCollaborationsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/2.0/collaborations']
@@ -310,7 +308,7 @@ class ListCollaborationsManager:
             {'limit': to_string(limit), 'offset': to_string(offset)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [

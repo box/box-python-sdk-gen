@@ -168,15 +168,15 @@ from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
 
-from box_sdk_gen.networking.base_urls import BaseUrls
-
-from box_sdk_gen.networking.proxy_config import ProxyConfig
+from box_sdk_gen.box.errors import BoxSDKError
 
 from box_sdk_gen.networking.fetch_options import FetchOptions
 
 from box_sdk_gen.networking.fetch_response import FetchResponse
 
-from box_sdk_gen.networking.fetch import fetch
+from box_sdk_gen.networking.base_urls import BaseUrls
+
+from box_sdk_gen.networking.proxy_config import ProxyConfig
 
 
 class BoxClient:
@@ -426,7 +426,7 @@ class BoxClient:
             response_format=fetch_options.response_format,
             follow_redirects=fetch_options.follow_redirects,
         )
-        return fetch(enriched_fetch_options)
+        return network_session.network_client.fetch(enriched_fetch_options)
 
     def with_as_user_header(self, user_id: str) -> 'BoxClient':
         """
