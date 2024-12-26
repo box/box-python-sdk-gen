@@ -16,6 +16,8 @@ from box_sdk_gen.serialization.json import serialize
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
+from box_sdk_gen.internal.utils import DateTime
+
 from box_sdk_gen.schemas.webhooks import Webhooks
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -41,6 +43,14 @@ from box_sdk_gen.internal.utils import ByteStream
 from box_sdk_gen.serialization.json import sd_to_json
 
 from box_sdk_gen.serialization.json import SerializedData
+
+from box_sdk_gen.internal.utils import compute_webhook_signature
+
+from box_sdk_gen.internal.utils import date_time_from_string
+
+from box_sdk_gen.internal.utils import get_epoch_time_in_seconds
+
+from box_sdk_gen.internal.utils import date_time_to_epoch_seconds
 
 
 class CreateWebhookTargetTypeField(str, Enum):
@@ -406,3 +416,48 @@ class WebhooksManager:
             )
         )
         return None
+
+    @staticmethod
+    def validate_message(
+        body: str,
+        headers: Dict[str, str],
+        primary_key: str,
+        *,
+        secondary_key: Optional[str] = None,
+        max_age: Optional[int] = 600
+    ) -> bool:
+        """
+        Validate a webhook message by verifying the signature and the delivery timestamp
+        :param body: The request body of the webhook message
+        :type body: str
+        :param headers: The headers of the webhook message
+        :type headers: Dict[str, str]
+        :param primary_key: The primary signature to verify the message with
+        :type primary_key: str
+        :param secondary_key: The secondary signature to verify the message with, defaults to None
+        :type secondary_key: Optional[str], optional
+        :param max_age: The maximum age of the message in seconds, defaults to 10 minutes, defaults to 600
+        :type max_age: Optional[int], optional
+        """
+        delivery_timestamp: DateTime = date_time_from_string(
+            headers['box-delivery-timestamp']
+        )
+        current_epoch: int = get_epoch_time_in_seconds()
+        if (
+            current_epoch - max_age > date_time_to_epoch_seconds(delivery_timestamp)
+            or date_time_to_epoch_seconds(delivery_timestamp) > current_epoch
+        ):
+            return False
+        if (
+            primary_key
+            and compute_webhook_signature(body, headers, primary_key)
+            == headers['box-signature-primary']
+        ):
+            return True
+        if (
+            secondary_key
+            and compute_webhook_signature(body, headers, secondary_key)
+            == headers['box-signature-secondary']
+        ):
+            return True
+        return False
