@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/box/box-python-sdk-gen/compare/v1.8.0...v1.9.0) (2024-12-30)
+
+
+### Bug Fixes
+
+* Remove unused parameter from `SignRequest` (box/box-openapi[#489](https://github.com/box/box-python-sdk-gen/issues/489)) ([#411](https://github.com/box/box-python-sdk-gen/issues/411)) ([578d9b4](https://github.com/box/box-python-sdk-gen/commit/578d9b48da7e55d2e3e4736c871400dc90d826b1))
+
+
+### New Features and Enhancements
+
+* Add `ai_agent` info to `AiResponse` (box/box-openapi[#485](https://github.com/box/box-python-sdk-gen/issues/485)) ([#402](https://github.com/box/box-python-sdk-gen/issues/402)) ([351a5b8](https://github.com/box/box-python-sdk-gen/commit/351a5b8dfbc8a0095bafbbf0245d8575217fc3c9))
+* Add support for replacing the network client implementation (box/box-codegen[#629](https://github.com/box/box-python-sdk-gen/issues/629)) ([#415](https://github.com/box/box-python-sdk-gen/issues/415)) ([fb118dd](https://github.com/box/box-python-sdk-gen/commit/fb118ddb1cbfb1d6a72e657bed57088fdff1ec02))
+* Allow for customizing retry strategy (box/box-codegen[#635](https://github.com/box/box-python-sdk-gen/issues/635)) ([#418](https://github.com/box/box-python-sdk-gen/issues/418)) ([8dfb3ed](https://github.com/box/box-python-sdk-gen/commit/8dfb3ed13196de37a78a53325079e284c7e921d5))
+* Support optional `userId` parameter for updating files, folders and web links (box/box-openapi[#488](https://github.com/box/box-python-sdk-gen/issues/488)) ([#406](https://github.com/box/box-python-sdk-gen/issues/406)) ([d9cff4c](https://github.com/box/box-python-sdk-gen/commit/d9cff4c6adc9c5cc9ce1edf73dffe8ac5979ce71))
+* Support webhook message validation (box/box-codegen[#631](https://github.com/box/box-python-sdk-gen/issues/631)) ([#416](https://github.com/box/box-python-sdk-gen/issues/416)) ([0fec20b](https://github.com/box/box-python-sdk-gen/commit/0fec20b281fe195f0dd6aaf8f164bdd414587fc4))
+
 ## [1.8.0](https://github.com/box/box-python-sdk-gen/compare/v1.7.0...v1.8.0) (2024-12-02)
 
 
