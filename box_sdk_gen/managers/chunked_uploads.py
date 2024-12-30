@@ -24,8 +24,6 @@ from box_sdk_gen.schemas.upload_session import UploadSession
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.uploaded_part import UploadedPart
 
 from box_sdk_gen.schemas.upload_parts import UploadParts
@@ -34,21 +32,21 @@ from box_sdk_gen.schemas.files import Files
 
 from box_sdk_gen.schemas.upload_part import UploadPart
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
 from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.internal.utils import ByteStream
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -124,7 +122,7 @@ class ChunkedUploadsManager:
             'file_name': file_name,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -173,7 +171,7 @@ class ChunkedUploadsManager:
             extra_headers = {}
         request_body: Dict = {'file_size': file_size, 'file_name': file_name}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -216,7 +214,7 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=url,
                 method='GET',
@@ -248,7 +246,7 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -331,7 +329,7 @@ class ChunkedUploadsManager:
                 **extra_headers,
             }
         )
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=url,
                 method='PUT',
@@ -405,7 +403,7 @@ class ChunkedUploadsManager:
                 **extra_headers,
             }
         )
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -453,7 +451,7 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=url,
                 method='DELETE',
@@ -491,7 +489,7 @@ class ChunkedUploadsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -550,7 +548,7 @@ class ChunkedUploadsManager:
             {'offset': to_string(offset), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=url,
                 method='GET',
@@ -599,7 +597,7 @@ class ChunkedUploadsManager:
             {'offset': to_string(offset), 'limit': to_string(limit)}
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -684,7 +682,7 @@ class ChunkedUploadsManager:
                 **extra_headers,
             }
         )
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=url,
                 method='POST',
@@ -760,7 +758,7 @@ class ChunkedUploadsManager:
                 **extra_headers,
             }
         )
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [

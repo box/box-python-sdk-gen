@@ -18,8 +18,6 @@ from box_sdk_gen.schemas.post_o_auth_2_token import PostOAuth2TokenBoxSubjectTyp
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.access_token import AccessToken
 
 from box_sdk_gen.schemas.o_auth_2_error import OAuth2Error
@@ -32,9 +30,15 @@ from box_sdk_gen.schemas.post_o_auth_2_token_refresh_access_token import (
 
 from box_sdk_gen.schemas.post_o_auth_2_revoke import PostOAuth2Revoke
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
@@ -43,12 +47,6 @@ from box_sdk_gen.internal.utils import to_string
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json import sd_to_json
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -172,7 +170,7 @@ class AuthorizationManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join([self.network_session.base_urls.oauth_2_url, '/authorize']),
                 method='GET',
@@ -326,7 +324,7 @@ class AuthorizationManager:
             'box_shared_link': box_shared_link,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join([self.network_session.base_urls.base_url, '/oauth2/token']),
                 method='POST',
@@ -371,7 +369,7 @@ class AuthorizationManager:
             'refresh_token': refresh_token,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/oauth2/token#refresh']
@@ -419,7 +417,7 @@ class AuthorizationManager:
             'token': token,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [self.network_session.base_urls.base_url, '/oauth2/revoke']

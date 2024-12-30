@@ -20,8 +20,6 @@ from box_sdk_gen.schemas.integration_mappings import IntegrationMappings
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.integration_mapping import IntegrationMapping
 
 from box_sdk_gen.schemas.integration_mapping_slack_create_request import (
@@ -36,9 +34,15 @@ from box_sdk_gen.schemas.integration_mapping_slack_options import (
     IntegrationMappingSlackOptions,
 )
 
+from box_sdk_gen.box.errors import BoxSDKError
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
@@ -47,12 +51,6 @@ from box_sdk_gen.internal.utils import to_string
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json import sd_to_json
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -131,7 +129,7 @@ class IntegrationMappingsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -179,7 +177,7 @@ class IntegrationMappingsManager:
             'options': options,
         }
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -227,7 +225,7 @@ class IntegrationMappingsManager:
             extra_headers = {}
         request_body: Dict = {'box_item': box_item, 'options': options}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -270,7 +268,7 @@ class IntegrationMappingsManager:
         if extra_headers is None:
             extra_headers = {}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [

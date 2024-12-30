@@ -58,7 +58,7 @@ Authenticating with a JWT requires some extra dependencies. To get them, use
 pip install "box-sdk-gen[jwt]"
 ```
 
-Before using JWT Auth make sure you set up correctly your Box App.
+Before using JWT Auth make sure you set up correctly your Box platform app.
 The guide with all required steps can be found here: [Setup with JWT][jwt_guide]
 
 ### Authenticate Enterprise
@@ -154,7 +154,7 @@ user_client = BoxClient(auth=auth)
 
 ## Client Credentials Grant
 
-Before using Client Credentials Grant Auth make sure you set up correctly your Box App.
+Before using Client Credentials Grant Auth make sure you set up correctly your Box platform app.
 The guide with all required steps can be found here: [Setup with Client Credentials Grant][ccg_guide]
 
 Client Credentials Grant Auth method allows you to obtain an access token by having client credentials

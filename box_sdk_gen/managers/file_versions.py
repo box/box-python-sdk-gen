@@ -22,13 +22,17 @@ from box_sdk_gen.schemas.file_versions import FileVersions
 
 from box_sdk_gen.schemas.client_error import ClientError
 
-from box_sdk_gen.box.errors import BoxSDKError
-
 from box_sdk_gen.schemas.file_version_full import FileVersionFull
+
+from box_sdk_gen.box.errors import BoxSDKError
 
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
+
+from box_sdk_gen.networking.fetch_options import FetchOptions
+
+from box_sdk_gen.networking.fetch_response import FetchResponse
 
 from box_sdk_gen.internal.utils import prepare_params
 
@@ -37,12 +41,6 @@ from box_sdk_gen.internal.utils import to_string
 from box_sdk_gen.internal.utils import ByteStream
 
 from box_sdk_gen.serialization.json import sd_to_json
-
-from box_sdk_gen.networking.fetch_options import FetchOptions
-
-from box_sdk_gen.networking.fetch_response import FetchResponse
-
-from box_sdk_gen.networking.fetch import fetch
 
 from box_sdk_gen.serialization.json import SerializedData
 
@@ -120,7 +118,7 @@ class FileVersionsManager:
             }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -182,7 +180,7 @@ class FileVersionsManager:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -244,7 +242,7 @@ class FileVersionsManager:
         headers_map: Dict[str, str] = prepare_params(
             {'if-match': to_string(if_match), **extra_headers}
         )
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -305,7 +303,7 @@ class FileVersionsManager:
             extra_headers = {}
         request_body: Dict = {'trashed_at': trashed_at}
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [
@@ -402,7 +400,7 @@ class FileVersionsManager:
         request_body: Dict = {'id': id, 'type': type}
         query_params_map: Dict[str, str] = prepare_params({'fields': to_string(fields)})
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
-        response: FetchResponse = fetch(
+        response: FetchResponse = self.network_session.network_client.fetch(
             FetchOptions(
                 url=''.join(
                     [

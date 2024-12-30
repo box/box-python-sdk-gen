@@ -13,19 +13,9 @@ from box_sdk_gen import (
     BoxSDKError,
     BoxClient,
 )
-from box_sdk_gen.networking.fetch import (
-    fetch,
-    __prepare_headers,
-    __prepare_body,
-    __prepare_request,
-    __make_request,
-    __raise_on_unsuccessful_request,
-    __get_retry_after_time,
+from box_sdk_gen.networking.box_network_client import (
+    BoxNetworkClient,
     USER_AGENT_HEADER,
-    __get_options_stream_position,
-    __get_multipart_stream_positions,
-    __reset_options_stream,
-    __reset_multipart_streams,
     X_BOX_UA_HEADER,
     APIRequest,
     APIResponse,
@@ -94,6 +84,7 @@ def response_500():
     response = Mock(Response)
     response.url = 'https://example.com'
     response.status_code = 500
+    response.text = ""
     response.ok = False
     response.headers = {"Retry-After": "0"}
     return response
@@ -172,6 +163,11 @@ def network_session_mock(mock_requests_session):
     return network_session
 
 
+@pytest.fixture
+def network_client(mock_requests_session):
+    return BoxNetworkClient(mock_requests_session)
+
+
 def reauthenticate_mock(auth, token):
     auth.retrieve_authorization_header.return_value = f"Bearer {token}"
 
@@ -185,7 +181,7 @@ def authentication_mock(token_mock, token2_mock):
 
 
 def test_use_session_and_max_attempts_from_network_session(
-    network_session_mock, mock_requests_session, response_500
+    network_client, network_session_mock, mock_requests_session, response_500
 ):
     mock_requests_session.request.return_value = response_500
 
@@ -198,25 +194,25 @@ def test_use_session_and_max_attempts_from_network_session(
     )
 
     with pytest.raises(BoxAPIError):
-        fetch(options)
+        network_client.fetch(options)
 
     assert mock_requests_session.request.call_count == 3
 
 
 def test_use_default_session_and_max_attempts_when_network_session_not_provided(
-    mock_requests_session, response_500
+    network_client, mock_requests_session, response_500
 ):
     mock_requests_session.request.return_value = response_500
     with patch("requests.Session", return_value=mock_requests_session):
         options = FetchOptions(url="https://example.com", method="GET")
 
         with pytest.raises(BoxAPIError):
-            fetch(options)
+            network_client.fetch(options)
 
         assert mock_requests_session.request.call_count == 5
 
 
-def test_prepare_headers(authentication_mock, token_mock):
+def test_prepare_headers(network_client, authentication_mock, token_mock):
     network_session = NetworkSession(additional_headers={"additional_header": "test"})
     options = FetchOptions(
         url="https://example.com",
@@ -226,7 +222,7 @@ def test_prepare_headers(authentication_mock, token_mock):
         auth=authentication_mock,
     )
 
-    headers = __prepare_headers(options)
+    headers = network_client._prepare_headers(options)
 
     assert headers == {
         "Authorization": f"Bearer {token_mock}",
@@ -237,7 +233,9 @@ def test_prepare_headers(authentication_mock, token_mock):
     }
 
 
-def test_prepare_headers_reauthenticate(authentication_mock, token2_mock):
+def test_prepare_headers_reauthenticate(
+    network_client, authentication_mock, token2_mock
+):
     network_session = NetworkSession(additional_headers={"additional_header": "test"})
     options = FetchOptions(
         url="https://example.com",
@@ -247,7 +245,7 @@ def test_prepare_headers_reauthenticate(authentication_mock, token2_mock):
         auth=authentication_mock,
     )
 
-    headers = __prepare_headers(options, reauthenticate=True)
+    headers = network_client._prepare_headers(options, reauthenticate=True)
 
     assert headers == {
         "Authorization": f"Bearer {token2_mock}",
@@ -269,18 +267,18 @@ def test_prepare_headers_reauthenticate(authentication_mock, token2_mock):
     ],
 )
 def test_prepare_body_valid_content_type(
-    content_type, data, expected_body, mock_byte_stream
+    network_client, content_type, data, expected_body, mock_byte_stream
 ):
-    body = __prepare_body(content_type, data)
+    body = network_client._prepare_body(content_type, data)
     assert body == expected_body
 
 
-def test_prepare_body_invalid_content_type():
+def test_prepare_body_invalid_content_type(network_client):
     with pytest.raises(Exception):
-        __prepare_body("invalid_content_type", {})
+        network_client._prepare_body("invalid_content_type", {})
 
 
-def test_prepare_json_request():
+def test_prepare_json_request(network_client):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -290,7 +288,7 @@ def test_prepare_json_request():
         content_type="application/json",
     )
 
-    api_request = __prepare_request(options=options)
+    api_request = network_client._prepare_request(options=options)
 
     assert api_request == APIRequest(
         method="POST",
@@ -306,7 +304,7 @@ def test_prepare_json_request():
     )
 
 
-def test_prepare_multipart_request(mock_byte_stream):
+def test_prepare_multipart_request(network_client, mock_byte_stream):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -320,7 +318,7 @@ def test_prepare_multipart_request(mock_byte_stream):
         ],
     )
 
-    api_request = __prepare_request(options=options)
+    api_request = network_client._prepare_request(options=options)
 
     assert api_request.method == "POST"
     assert api_request.url == "https://example.com"
@@ -338,7 +336,7 @@ def test_prepare_multipart_request(mock_byte_stream):
     )
 
 
-def test_make_request(mock_requests_session, response_200):
+def test_make_request(network_client, mock_requests_session, response_200):
     request_params = {
         "method": "POST",
         "url": "https://example.com",
@@ -355,7 +353,7 @@ def test_make_request(mock_requests_session, response_200):
     mock_requests_session.request.return_value = response_200
     api_request = APIRequest(**request_params)
 
-    api_response = __make_request(api_request, mock_requests_session)
+    api_response = network_client._make_request(api_request)
 
     assert api_response == APIResponse(
         network_response=response_200,
@@ -366,12 +364,12 @@ def test_make_request(mock_requests_session, response_200):
     mock_requests_session.request.assert_called_once_with(**request_params, stream=True)
 
 
-def test_make_request_unauthorised(mock_requests_session, response_401):
+def test_make_request_unauthorised(network_client, mock_requests_session, response_401):
     mock_requests_session.request.return_value = response_401
     api_request = APIRequest(
         "GET", "https://example.com", headers={}, params={}, data=""
     )
-    api_response = __make_request(api_request, mock_requests_session)
+    api_response = network_client._make_request(api_request)
 
     assert api_response == APIResponse(
         network_response=response_401,
@@ -396,14 +394,14 @@ def test_make_request_unauthorised(mock_requests_session, response_401):
     ],
 )
 def test_make_request_network_exception(
-    mock_requests_session, exc_message, expected_reauthentication_needed
+    network_client, mock_requests_session, exc_message, expected_reauthentication_needed
 ):
     requests_exception = RequestException(exc_message)
     mock_requests_session.request.side_effect = [requests_exception]
     api_request = APIRequest(
         "GET", "https://example.com", headers={}, params={}, data=""
     )
-    api_response = __make_request(api_request, mock_requests_session)
+    api_response = network_client._make_request(api_request)
 
     assert api_response == APIResponse(
         network_response=None,
@@ -413,13 +411,13 @@ def test_make_request_network_exception(
 
 
 def test_fetch_successfully_retry_network_exception(
-    mock_requests_session, network_session_mock, response_200
+    network_client, mock_requests_session, network_session_mock, response_200
 ):
     requests_exception = RequestException("Connection cancelled")
     mock_requests_session.request.side_effect = [requests_exception, response_200]
 
     with patch("time.sleep"):
-        response = fetch(
+        response = network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -430,14 +428,14 @@ def test_fetch_successfully_retry_network_exception(
 
 
 def test_fetch_make_only_one_retry_for_network_exception(
-    mock_requests_session, network_session_mock
+    network_client, mock_requests_session, network_session_mock
 ):
     requests_exception = RequestException("Connection cancelled")
     mock_requests_session.request.side_effect = [requests_exception, requests_exception]
 
     with patch("time.sleep"):
         with pytest.raises(BoxSDKError, match="Connection cancelled"):
-            fetch(
+            network_client.fetch(
                 FetchOptions(
                     method="get",
                     url="https://example.com",
@@ -449,12 +447,12 @@ def test_fetch_make_only_one_retry_for_network_exception(
 
 
 def test_fetch_get_json_format_response_success(
-    mock_requests_session, network_session_mock, response_200
+    network_client, mock_requests_session, network_session_mock, response_200
 ):
     response_200.text = '{"id": "123456"}'
     mock_requests_session.request.return_value = response_200
 
-    fetch_response = fetch(
+    fetch_response = network_client.fetch(
         FetchOptions(
             method="get",
             url="https://example.com",
@@ -469,13 +467,13 @@ def test_fetch_get_json_format_response_success(
 
 
 def test_fetch_get_binary_format_response_success(
-    mock_requests_session, network_session_mock, response_200
+    network_client, mock_requests_session, network_session_mock, response_200
 ):
     content = b"binary data"
     response_200.iter_content.return_value = BytesIO(content)
     mock_requests_session.request.return_value = response_200
 
-    fetch_response = fetch(
+    fetch_response = network_client.fetch(
         FetchOptions(
             method="get",
             url="https://example.com",
@@ -491,6 +489,7 @@ def test_fetch_get_binary_format_response_success(
 
 @pytest.mark.parametrize("retryable_status_code", [429, 500, 503])
 def test_retryable_status_codes(
+    network_client,
     mock_requests_session,
     network_session_mock,
     response_200,
@@ -505,7 +504,7 @@ def test_retryable_status_codes(
         response_200,
     ]
 
-    fetch_response = fetch(
+    fetch_response = network_client.fetch(
         FetchOptions(
             method="get",
             url="https://example.com",
@@ -518,11 +517,11 @@ def test_retryable_status_codes(
 
 
 def test_status_code_202_with_no_retry_after_header(
-    mock_requests_session, network_session_mock, response_202
+    network_client, mock_requests_session, network_session_mock, response_202
 ):
     mock_requests_session.request.return_value = response_202
 
-    fetch_response = fetch(
+    fetch_response = network_client.fetch(
         FetchOptions(
             method="get",
             url="https://example.com",
@@ -534,6 +533,7 @@ def test_status_code_202_with_no_retry_after_header(
 
 
 def test_retryable_status_code_202(
+    network_client,
     mock_requests_session,
     network_session_mock,
     response_202_with_retry_after,
@@ -548,7 +548,7 @@ def test_retryable_status_code_202(
     ]
 
     with patch("time.sleep"):
-        fetch_response = fetch(
+        fetch_response = network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -562,13 +562,16 @@ def test_retryable_status_code_202(
 
 
 def test_202_should_be_returned_if_retry_limit_is_reached(
-    mock_requests_session, network_session_mock, response_202_with_retry_after
+    network_client,
+    mock_requests_session,
+    network_session_mock,
+    response_202_with_retry_after,
 ):
     network_session_mock.MAX_ATTEMPTS = 5
     mock_requests_session.request.return_value = response_202_with_retry_after
 
     with patch("time.sleep"):
-        fetch_response = fetch(
+        fetch_response = network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -582,6 +585,7 @@ def test_202_should_be_returned_if_retry_limit_is_reached(
 
 @pytest.mark.parametrize("not_retryable_status_code", [404, 403, 400])
 def test_not_retryable_status_codes(
+    network_client,
     mock_requests_session,
     network_session_mock,
     not_retryable_status_code,
@@ -596,7 +600,7 @@ def test_not_retryable_status_codes(
     ]
 
     with pytest.raises(BoxSDKError, match=f"Status code: {not_retryable_status_code}"):
-        fetch(
+        network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -608,6 +612,7 @@ def test_not_retryable_status_codes(
 
 
 def test_retrying_401_response_with_new_token_and_auth_provided(
+    network_client,
     mock_requests_session,
     network_session_mock,
     response_401,
@@ -620,7 +625,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
     mock_requests_session.request.side_effect = [response_401, response_200]
 
     with patch("time.sleep"):
-        fetch_response = fetch(
+        fetch_response = network_client.fetch(
             FetchOptions(
                 url="https://example.com",
                 method="GET",
@@ -667,6 +672,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
 
 
 def test_not_retrying_401_when_auth_not_provided(
+    network_client,
     mock_requests_session,
     network_session_mock,
     response_401,
@@ -676,7 +682,7 @@ def test_not_retrying_401_when_auth_not_provided(
     mock_requests_session.request.side_effect = [response_401, response_200]
 
     with pytest.raises(BoxSDKError, match="Status code: 401"):
-        fetch(
+        network_client.fetch(
             FetchOptions(
                 url="https://example.com",
                 method="GET",
@@ -701,13 +707,16 @@ def test_not_retrying_401_when_auth_not_provided(
 
 
 def test_reaching_retry_limit(
-    mock_requests_session, network_session_mock, response_202_with_retry_after
+    network_client,
+    mock_requests_session,
+    network_session_mock,
+    response_202_with_retry_after,
 ):
     network_session_mock.MAX_ATTEMPTS = 5
     mock_requests_session.request.return_value = response_202_with_retry_after
 
     with pytest.raises(BoxSDKError, match="Status code: 202"):
-        fetch(
+        network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -718,13 +727,13 @@ def test_reaching_retry_limit(
 
 
 def test_reaching_retry_limit(
-    mock_requests_session, network_session_mock, response_500
+    network_client, mock_requests_session, network_session_mock, response_500
 ):
     network_session_mock.MAX_ATTEMPTS = 5
     mock_requests_session.request.return_value = response_500
 
     with pytest.raises(BoxSDKError, match="Status code: 500"):
-        fetch(
+        network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -734,26 +743,30 @@ def test_reaching_retry_limit(
     assert mock_requests_session.request.call_count == 5
 
 
-def test_get_retry_after_time_use_retry_after_header_value():
+def test_get_retry_after_time_use_retry_after_header_value(network_client):
     for attempt_number in range(1, 5):
-        sleep_time = __get_retry_after_time(attempt_number, "213")
+        sleep_time = network_client._get_retry_after_time(attempt_number, "213")
         assert sleep_time == 213
 
 
-def test_get_retry_after_time_use_exponential_backoff():
+def test_get_retry_after_time_use_exponential_backoff(network_client):
     for attempt_number in range(1, 5):
-        sleep_time = __get_retry_after_time(attempt_number)
+        sleep_time = network_client._get_retry_after_time(attempt_number)
         assert sleep_time > 0
 
 
 def test_pass_retry_after_header_to_get_retry_after_time_method(
-    mock_requests_session, network_session_mock, response_429, response_200
+    network_client,
+    mock_requests_session,
+    network_session_mock,
+    response_429,
+    response_200,
 ):
     response_429.headers = {"Retry-After": "123"}
     mock_requests_session.request.side_effect = [response_429, response_200]
 
     with patch("time.sleep") as sleep_mock:
-        fetch(
+        network_client.fetch(
             FetchOptions(
                 method="get",
                 url="https://example.com",
@@ -764,7 +777,7 @@ def test_pass_retry_after_header_to_get_retry_after_time_method(
         sleep_mock.assert_called_once_with(123)
 
 
-def test_raising_api_error_with_valid_json_body():
+def test_raising_api_error_with_valid_json_body(network_client):
     client_error_response = Mock(Response)
     client_error_response.status_code = 400
     client_error_response.ok = False
@@ -801,7 +814,7 @@ def test_raising_api_error_with_valid_json_body():
         raised_exception=None,
     )
     try:
-        __raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response)
     except BoxAPIError as e:
         assert e.request_info.method == request.method
         assert e.request_info.url == request.url
@@ -834,7 +847,7 @@ def test_raising_api_error_with_valid_json_body():
         assert e.name == "BoxAPIError"
 
 
-def test_raising_api_error_without_valid_json_body():
+def test_raising_api_error_without_valid_json_body(network_client):
     client_error_response = Mock(Response)
     client_error_response.status_code = 400
     client_error_response.ok = False
@@ -863,7 +876,7 @@ def test_raising_api_error_without_valid_json_body():
         raised_exception=None,
     )
     try:
-        __raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response)
     except BoxAPIError as e:
         assert e.request_info.method == request.method
         assert e.request_info.url == request.url
@@ -884,7 +897,7 @@ def test_raising_api_error_without_valid_json_body():
         assert e.name == "BoxAPIError"
 
 
-def test_raising_exception_raised_by_network_layer():
+def test_raising_exception_raised_by_network_layer(network_client):
     requests_exception = RequestException("Something went wrong")
     request = APIRequest(
         method="POST",
@@ -906,7 +919,7 @@ def test_raising_exception_raised_by_network_layer():
     )
 
     try:
-        __raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response)
     except BoxSDKError as e:
         assert e.message == "Something went wrong"
         assert e.error == requests_exception
@@ -923,7 +936,7 @@ def test_proxy_config():
     assert requests_session.proxies["https"] == "http://user:pass@127.0.0.1:3128/"
 
 
-def test_get_options_stream_position(mock_byte_stream):
+def test_get_options_stream_position(network_client, mock_byte_stream):
     mock_byte_stream.seek(1)
     options = FetchOptions(
         url="https://example.com",
@@ -932,10 +945,10 @@ def test_get_options_stream_position(mock_byte_stream):
         file_stream=mock_byte_stream,
     )
 
-    assert __get_options_stream_position(options) == 1
+    assert network_client._get_options_stream_position(options) == 1
 
 
-def test_get_multipart_stream_position(mock_byte_stream):
+def test_get_multipart_stream_position(network_client, mock_byte_stream):
     mock_byte_stream.seek(1)
     options = FetchOptions(
         url="https://example.com",
@@ -950,10 +963,10 @@ def test_get_multipart_stream_position(mock_byte_stream):
         ],
     )
 
-    assert __get_multipart_stream_positions(options) == {"file": 1}
+    assert network_client._get_multipart_stream_positions(options) == {"file": 1}
 
 
-def test_get_multipart_stream_position_empty():
+def test_get_multipart_stream_position_empty(network_client):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -964,10 +977,10 @@ def test_get_multipart_stream_position_empty():
         ],
     )
 
-    assert __get_multipart_stream_positions(options) == {}
+    assert network_client._get_multipart_stream_positions(options) == {}
 
 
-def test_reset_options_stream(mock_byte_stream):
+def test_reset_options_stream(network_client, mock_byte_stream):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -977,15 +990,17 @@ def test_reset_options_stream(mock_byte_stream):
     )
 
     mock_byte_stream.seek(1)
-    original_position = __get_options_stream_position(options)
+    original_position = network_client._get_options_stream_position(options)
     mock_byte_stream.seek(2)
 
-    __reset_options_stream(options, original_position, None)
+    network_client._reset_options_stream(options, original_position, None)
 
     assert options.file_stream.tell() == 1
 
 
-def test_reset_options_stream_non_seekable_stream(mock_non_seekable_stream):
+def test_reset_options_stream_non_seekable_stream(
+    network_client, mock_non_seekable_stream
+):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -994,13 +1009,13 @@ def test_reset_options_stream_non_seekable_stream(mock_non_seekable_stream):
         file_stream=mock_non_seekable_stream,
     )
 
-    original_position = __get_options_stream_position(options)
+    original_position = network_client._get_options_stream_position(options)
 
     with pytest.raises(BoxSDKError):
-        __reset_options_stream(options, original_position, None)
+        network_client._reset_options_stream(options, original_position, None)
 
 
-def test_reset_multipart_stream(mock_byte_stream):
+def test_reset_multipart_stream(network_client, mock_byte_stream):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -1015,15 +1030,15 @@ def test_reset_multipart_stream(mock_byte_stream):
     )
 
     mock_byte_stream.seek(1)
-    original_positions = __get_multipart_stream_positions(options)
+    original_positions = network_client._get_multipart_stream_positions(options)
     mock_byte_stream.seek(2)
 
-    __reset_multipart_streams(options, original_positions, None)
+    network_client._reset_multipart_streams(options, original_positions, None)
 
     assert options.multipart_data[1].file_stream.tell() == 1
 
 
-def test_reset_multipart_non_seekable_stream(mock_non_seekable_stream):
+def test_reset_multipart_non_seekable_stream(network_client, mock_non_seekable_stream):
     options = FetchOptions(
         url="https://example.com",
         method="POST",
@@ -1039,18 +1054,22 @@ def test_reset_multipart_non_seekable_stream(mock_non_seekable_stream):
         ],
     )
 
-    original_positions = __get_multipart_stream_positions(options)
+    original_positions = network_client._get_multipart_stream_positions(options)
 
     with pytest.raises(BoxSDKError):
-        __reset_multipart_streams(options, original_positions, None)
+        network_client._reset_multipart_streams(options, original_positions, None)
 
 
 def test_disable_follow_redirects(
-    mock_requests_session, network_session_mock, response_302, response_200
+    network_client,
+    mock_requests_session,
+    network_session_mock,
+    response_302,
+    response_200,
 ):
     mock_requests_session.request.side_effect = [response_302, response_200]
 
-    fetch(
+    network_client.fetch(
         FetchOptions(
             url="https://example.com",
             method="GET",
