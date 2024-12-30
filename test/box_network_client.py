@@ -20,7 +20,12 @@ from box_sdk_gen.networking.box_network_client import (
     APIRequest,
     APIResponse,
 )
-from box_sdk_gen.networking import FetchOptions, MultipartItem
+from box_sdk_gen.networking import (
+    FetchOptions,
+    MultipartItem,
+    FetchResponse,
+    BoxRetryStrategy,
+)
 from box_sdk_gen.networking.proxy_config import ProxyConfig
 
 
@@ -59,7 +64,7 @@ def response_202():
     response.url = 'https://example.com'
     response.status_code = 202
     response.ok = True
-    response.text = None
+    response.text = ""
     response.content = None
     response.headers = {
         "content-type": "text/html",
@@ -73,8 +78,8 @@ def response_202_with_retry_after():
     response.url = 'https://example.com'
     response.status_code = 202
     response.ok = True
-    response.text = None
-    response.content = None
+    response.text = ""
+    response.content = b''
     response.headers = {"Retry-After": "0"}
     return response
 
@@ -84,8 +89,9 @@ def response_500():
     response = Mock(Response)
     response.url = 'https://example.com'
     response.status_code = 500
-    response.text = ""
     response.ok = False
+    response.text = ""
+    response.content = b''
     response.headers = {"Retry-After": "0"}
     return response
 
@@ -96,6 +102,8 @@ def response_401():
     response.url = 'https://example.com'
     response.status_code = 401
     response.ok = False
+    response.text = ""
+    response.content = b''
     response.headers = {}
     return response
 
@@ -106,6 +114,8 @@ def response_429():
     response.url = 'https://example.com'
     response.status_code = 429
     response.ok = False
+    response.text = ""
+    response.content = b''
     response.headers = {}
     return response
 
@@ -118,7 +128,7 @@ def response_200():
     response.ok = True
     response.headers = {}
     response.text = ""
-    response.content = None
+    response.content = b''
     return response
 
 
@@ -133,7 +143,7 @@ def response_302():
         "content-length": "0",
     }
     response.text = ""
-    response.content = None
+    response.content = b''
     return response
 
 
@@ -142,6 +152,8 @@ def response_failure_no_status():
     response = Mock(Response)
     response.url = 'https://example.com'
     response.ok = False
+    response.text = ""
+    response.content = b''
     response.headers = {"Retry-After": "0"}
     return response
 
@@ -157,10 +169,8 @@ def token2_mock():
 
 
 @pytest.fixture
-def network_session_mock(mock_requests_session):
-    network_session = NetworkSession()
-    network_session.requests_session = mock_requests_session
-    return network_session
+def network_session_mock():
+    return NetworkSession()
 
 
 @pytest.fixture
@@ -181,16 +191,16 @@ def authentication_mock(token_mock, token2_mock):
 
 
 def test_use_session_and_max_attempts_from_network_session(
-    network_client, network_session_mock, mock_requests_session, response_500
+    network_client, mock_requests_session, response_500
 ):
     mock_requests_session.request.return_value = response_500
 
-    network_session_mock.MAX_ATTEMPTS = 3
+    network_session = NetworkSession(retry_strategy=BoxRetryStrategy(max_attempts=3))
 
     options = FetchOptions(
         url="https://example.com",
         method="GET",
-        network_session=network_session_mock,
+        network_session=network_session,
     )
 
     with pytest.raises(BoxAPIError):
@@ -200,7 +210,7 @@ def test_use_session_and_max_attempts_from_network_session(
 
 
 def test_use_default_session_and_max_attempts_when_network_session_not_provided(
-    network_client, mock_requests_session, response_500
+    network_client, mock_requests_session, response_500, network_session_mock
 ):
     mock_requests_session.request.return_value = response_500
     with patch("requests.Session", return_value=mock_requests_session):
@@ -373,7 +383,7 @@ def test_make_request_unauthorised(network_client, mock_requests_session, respon
 
     assert api_response == APIResponse(
         network_response=response_401,
-        reauthentication_needed=True,
+        reauthentication_needed=False,
         raised_exception=None,
     )
     assert mock_requests_session.request.call_count == 1
@@ -743,15 +753,27 @@ def test_reaching_retry_limit(
     assert mock_requests_session.request.call_count == 5
 
 
-def test_get_retry_after_time_use_retry_after_header_value(network_client):
+def test_get_retry_after_time_use_retry_after_header_value(network_session_mock):
+    fetch_options = FetchOptions(
+        url="example.com", method="GET", network_session=network_session_mock
+    )
+    fetch_response = FetchResponse(status=200, headers={'Retry-After': '213'})
     for attempt_number in range(1, 5):
-        sleep_time = network_client._get_retry_after_time(attempt_number, "213")
+        sleep_time = network_session_mock.retry_strategy.retry_after(
+            fetch_options, fetch_response, attempt_number
+        )
         assert sleep_time == 213
 
 
-def test_get_retry_after_time_use_exponential_backoff(network_client):
+def test_get_retry_after_time_use_exponential_backoff(network_session_mock):
+    fetch_options = FetchOptions(
+        url="example.com", method="GET", network_session=network_session_mock
+    )
+    fetch_response = FetchResponse(status=200, headers={})
     for attempt_number in range(1, 5):
-        sleep_time = network_client._get_retry_after_time(attempt_number)
+        sleep_time = network_session_mock.retry_strategy.retry_after(
+            fetch_options, fetch_response, attempt_number
+        )
         assert sleep_time > 0
 
 

@@ -5,15 +5,15 @@ from .network_client import NetworkClient
 from .box_network_client import BoxNetworkClient
 from .proxy_config import ProxyConfig
 from .base_urls import BaseUrls
+from .retries import RetryStrategy, BoxRetryStrategy
 
 
 class NetworkSession:
-    MAX_ATTEMPTS = 5
-
     def __init__(
         self,
         *,
         network_client: NetworkClient = None,
+        retry_strategy: RetryStrategy = None,
         additional_headers: Dict[str, str] = None,
         base_urls: BaseUrls = None,
         proxy_url: str = None,
@@ -22,6 +22,8 @@ class NetworkSession:
             additional_headers = {}
         if base_urls is None:
             base_urls = BaseUrls()
+        if retry_strategy is None:
+            retry_strategy = BoxRetryStrategy()
         if network_client is None:
             network_client = BoxNetworkClient()
         self.requests_session = requests.Session()
@@ -29,6 +31,7 @@ class NetworkSession:
         self.base_urls = base_urls
         self.proxy_url = proxy_url
         self.network_client = network_client
+        self.retry_strategy = retry_strategy
 
         proxies = {'http': proxy_url, 'https': proxy_url} if proxy_url else {}
         self.requests_session.proxies = proxies
@@ -47,6 +50,7 @@ class NetworkSession:
             additional_headers={**self.additional_headers, **additional_headers},
             base_urls=self.base_urls,
             proxy_url=self.proxy_url,
+            retry_strategy=self.retry_strategy,
         )
 
     def with_custom_base_urls(self, base_urls: BaseUrls) -> 'NetworkSession':
@@ -61,6 +65,7 @@ class NetworkSession:
             additional_headers=self.additional_headers,
             base_urls=base_urls,
             proxy_url=self.proxy_url,
+            retry_strategy=self.retry_strategy,
         )
 
     def with_proxy(self, config: ProxyConfig) -> 'NetworkSession':
@@ -85,6 +90,7 @@ class NetworkSession:
             additional_headers=self.additional_headers,
             base_urls=self.base_urls,
             proxy_url=proxy_url,
+            retry_strategy=self.retry_strategy,
         )
 
     def with_network_client(self, network_client: NetworkClient) -> 'NetworkSession':
@@ -99,4 +105,20 @@ class NetworkSession:
             additional_headers=self.additional_headers,
             base_urls=self.base_urls,
             proxy_url=self.proxy_url,
+            retry_strategy=self.retry_strategy,
+        )
+
+    def with_retry_strategy(self, retry_strategy: RetryStrategy) -> 'NetworkSession':
+        """
+        Generate a fresh network session by duplicating the existing configuration and network parameters,
+        while also including a new retry options to be used for each API call.
+        :param retry_options: RetryOptions object, which contains the retry logic
+        :return: a new instance of NetworkSession
+        """
+        return NetworkSession(
+            network_client=self.network_client,
+            additional_headers=self.additional_headers,
+            base_urls=self.base_urls,
+            proxy_url=self.proxy_url,
+            retry_strategy=retry_strategy,
         )

@@ -440,7 +440,7 @@ class WebhooksManager:
         :type max_age: Optional[int], optional
         """
         delivery_timestamp: DateTime = date_time_from_string(
-            headers['box-delivery-timestamp']
+            headers.get('box-delivery-timestamp')
         )
         current_epoch: int = get_epoch_time_in_seconds()
         if (
@@ -448,16 +448,12 @@ class WebhooksManager:
             or date_time_to_epoch_seconds(delivery_timestamp) > current_epoch
         ):
             return False
-        if (
-            primary_key
-            and compute_webhook_signature(body, headers, primary_key)
-            == headers['box-signature-primary']
-        ):
+        if primary_key and compute_webhook_signature(
+            body, headers, primary_key
+        ) == headers.get('box-signature-primary'):
             return True
-        if (
-            secondary_key
-            and compute_webhook_signature(body, headers, secondary_key)
-            == headers['box-signature-secondary']
-        ):
+        if secondary_key and compute_webhook_signature(
+            body, headers, secondary_key
+        ) == headers.get('box-signature-secondary'):
             return True
         return False
