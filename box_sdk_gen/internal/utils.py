@@ -2,9 +2,11 @@ import base64
 import datetime
 import hashlib
 import os
+import re
 import shutil
 import uuid
 import time
+import hmac
 from enum import Enum
 from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar, BinaryIO
@@ -289,7 +291,7 @@ class JwtSignOptions(BaseObject):
         subject: Optional[str] = None,
         jwtid: Optional[str] = None,
         keyid: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(**kwargs)
         if headers is None:
@@ -369,9 +371,72 @@ def date_time_from_string(date_time: str) -> DateTime:
     return DateTime.fromisoformat(date_time.replace('Z', '+00:00'))
 
 
+def date_time_to_epoch_seconds(date_time: DateTime) -> int:
+    return int(date_time.timestamp())
+
+
+def epoch_seconds_to_date_time(epoch_seconds: int) -> DateTime:
+    return DateTime.fromtimestamp(epoch_seconds, datetime.timezone.utc)
+
+
 def delay_in_seconds(seconds: int):
     time.sleep(seconds)
 
 
 def create_null():
     return null
+
+
+def escape_unicode(value: str) -> str:
+    def replace_char(match):
+        char = match.group(0)
+        code_point = ord(char)
+        if char == '\n':
+            return '\\n'
+        elif char == '\r':
+            return '\\r'
+        elif char == '\t':
+            return '\\t'
+        elif char == '\\':
+            return '\\\\'
+        elif code_point <= 0xFFFF:  # Basic Multilingual Plane (BMP)
+            return f"\\u{code_point:04x}"
+        else:  # Supplementary Plane (Surrogate Pair)
+            code_point -= 0x10000
+            high_surrogate = 0xD800 + (code_point >> 10)
+            low_surrogate = 0xDC00 + (code_point & 0x3FF)
+            return f"\\u{high_surrogate:04x}\\u{low_surrogate:04x}"
+
+    # Match special characters, non-ASCII characters, and backslashes
+    return re.sub(r'[^\x20-\x7e]|[\n\r\t\\]', replace_char, value)
+
+
+def compute_webhook_signature(
+    body: str, headers: Dict[str, str], signature_key: str
+) -> str:
+    """
+    Computes the Hmac for the webhook notification given one signature key.
+
+    :param body:
+        The encoded webhook body.
+    :param headers:
+        The headers for the `Webhook` notification.
+    :param signature_key:
+        The `Webhook` signature key for this application.
+    :return:
+        An Hmac signature.
+    """
+    if signature_key is None:
+        return None
+    if headers.get('box-signature-version') != '1':
+        return None
+    if headers.get('box-signature-algorithm') != 'HmacSHA256':
+        return None
+    encoded_body = escape_unicode(body).encode('utf-8')
+    encoded_signature_key = signature_key.encode('utf-8')
+    encoded_delivery_time_stamp = headers.get('box-delivery-timestamp').encode('utf-8')
+    new_hmac = hmac.new(encoded_signature_key, digestmod=hashlib.sha256)
+    new_hmac.update(encoded_body)
+    new_hmac.update(encoded_delivery_time_stamp)
+    signature = base64.b64encode(new_hmac.digest()).decode()
+    return signature

@@ -5,6 +5,7 @@
 - [Get webhook](#get-webhook)
 - [Update webhook](#update-webhook)
 - [Remove webhook](#remove-webhook)
+- [Validate a webhook message](#validate-a-webhook-message)
 
 ## List all webhooks
 
@@ -169,3 +170,32 @@ This function returns a value of type `None`.
 
 An empty response will be returned when the webhook
 was successfully deleted.
+
+## Validate a webhook message
+
+Validate a webhook message by verifying the signature and the delivery timestamp
+
+This operation is performed by calling function `validate_message`.
+
+```python
+WebhooksManager.validate_message(
+    body_with_japanese, headers_with_japanese, primary_key, secondary_key=secondary_key
+)
+```
+
+### Arguments
+
+- body `str`
+  - The request body of the webhook message
+- headers `Dict[str, str]`
+  - The headers of the webhook message
+- primary_key `str`
+  - The primary signature to verify the message with
+- secondary_key `Optional[str]`
+  - The secondary signature to verify the message with
+- max_age `Optional[int]`
+  - The maximum age of the message in seconds, defaults to 10 minutes
+
+### Returns
+
+This function returns a value of type `bool`.
