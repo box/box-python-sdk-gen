@@ -164,34 +164,24 @@ def testWebhookValidation():
         **headers,
         'box-signature-algorithm': 'HmacSHA1',
     }
-    assert (
-        compute_webhook_signature(body, headers, primary_key)
-        == headers['box-signature-primary']
+    assert compute_webhook_signature(body, headers, primary_key) == headers.get(
+        'box-signature-primary'
     )
-    assert (
-        compute_webhook_signature(body, headers, secondary_key)
-        == headers['box-signature-secondary']
+    assert compute_webhook_signature(body, headers, secondary_key) == headers.get(
+        'box-signature-secondary'
     )
-    assert (
-        not compute_webhook_signature(body, headers, incorrect_key)
-        == headers['box-signature-primary']
+    assert not compute_webhook_signature(body, headers, incorrect_key) == headers.get(
+        'box-signature-primary'
     )
-    assert (
-        compute_webhook_signature(
-            body_with_japanese, headers_with_japanese, primary_key
-        )
-        == headers_with_japanese['box-signature-primary']
-    )
-    assert (
-        compute_webhook_signature(body_with_emoji, headers_with_emoji, primary_key)
-        == headers_with_emoji['box-signature-primary']
-    )
-    assert (
-        compute_webhook_signature(
-            body_with_carriage_return, headers_with_carriage_return, primary_key
-        )
-        == headers_with_carriage_return['box-signature-primary']
-    )
+    assert compute_webhook_signature(
+        body_with_japanese, headers_with_japanese, primary_key
+    ) == headers_with_japanese.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body_with_emoji, headers_with_emoji, primary_key
+    ) == headers_with_emoji.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body_with_carriage_return, headers_with_carriage_return, primary_key
+    ) == headers_with_carriage_return.get('box-signature-primary')
     assert WebhooksManager.validate_message(
         body, headers_with_correct_datetime, primary_key, secondary_key=secondary_key
     )

@@ -67,7 +67,7 @@ def testGlobalFolderMetadata():
     received_metadata: MetadataFull = client.folder_metadata.get_folder_metadata_by_id(
         folder.id, GetFolderMetadataByIdScope.GLOBAL, 'properties'
     )
-    assert to_string(received_metadata.extra_data['abc']) == 'xyz'
+    assert to_string(received_metadata.extra_data.get('abc')) == 'xyz'
     new_value: str = 'bar'
     client.folder_metadata.update_folder_metadata_by_id(
         folder.id,
@@ -86,7 +86,7 @@ def testGlobalFolderMetadata():
             folder.id, GetFolderMetadataByIdScope.GLOBAL, 'properties'
         )
     )
-    assert to_string(received_updated_metadata.extra_data['abc']) == new_value
+    assert to_string(received_updated_metadata.extra_data.get('abc')) == new_value
     client.folder_metadata.delete_folder_metadata_by_id(
         folder.id, DeleteFolderMetadataByIdScope.GLOBAL, 'properties'
     )
@@ -156,14 +156,14 @@ def testEnterpriseFolderMetadata():
         )
     )
     assert to_string(created_metadata.template) == template_key
-    assert to_string(created_metadata.extra_data['name']) == 'John'
-    assert to_string(created_metadata.extra_data['age']) == '23'
+    assert to_string(created_metadata.extra_data.get('name')) == 'John'
+    assert to_string(created_metadata.extra_data.get('age')) == '23'
     assert (
-        to_string(created_metadata.extra_data['birthDate'])
+        to_string(created_metadata.extra_data.get('birthDate'))
         == '2001-01-03T02:20:50.520Z'
     )
-    assert to_string(created_metadata.extra_data['countryCode']) == 'US'
-    sports: List[str] = created_metadata.extra_data['sports']
+    assert to_string(created_metadata.extra_data.get('countryCode')) == 'US'
+    sports: List[str] = created_metadata.extra_data.get('sports')
     assert sports[0] == 'basketball'
     assert sports[1] == 'tennis'
     client.folder_metadata.delete_folder_metadata_by_id(

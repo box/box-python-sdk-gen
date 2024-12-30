@@ -248,13 +248,13 @@ class UploadsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='attributes',
-                        data=serialize(request_body['attributes']),
+                        data=serialize(request_body.get('attributes')),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body['file'],
-                        file_name=request_body['file_file_name'],
-                        content_type=request_body['file_content_type'],
+                        file_stream=request_body.get('file'),
+                        file_name=request_body.get('file_file_name'),
+                        content_type=request_body.get('file_content_type'),
                     ),
                 ],
                 content_type='multipart/form-data',
@@ -396,13 +396,13 @@ class UploadsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='attributes',
-                        data=serialize(request_body['attributes']),
+                        data=serialize(request_body.get('attributes')),
                     ),
                     MultipartItem(
                         part_name='file',
-                        file_stream=request_body['file'],
-                        file_name=request_body['file_file_name'],
-                        content_type=request_body['file_content_type'],
+                        file_stream=request_body.get('file'),
+                        file_name=request_body.get('file_file_name'),
+                        content_type=request_body.get('file_content_type'),
                     ),
                 ],
                 content_type='multipart/form-data',

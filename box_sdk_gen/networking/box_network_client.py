@@ -1,18 +1,16 @@
 import io
 
-import math
-import random
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Optional, Dict, Union
 from sys import version_info as py_version
-from http import HTTPStatus
 
 import requests
 from requests import RequestException, Session, Response
 from requests_toolbelt import MultipartEncoder
 
+from .retries import BoxRetryStrategy
 from ..networking.fetch_options import FetchOptions
 from ..networking.fetch_response import FetchResponse
 from ..box.errors import BoxAPIError, BoxSDKError, RequestInfo, ResponseInfo
@@ -25,9 +23,6 @@ from ..serialization.json import (
 )
 from ..networking.version import __version__
 
-DEFAULT_MAX_ATTEMPTS = 5
-_RETRY_RANDOMIZATION_FACTOR = 0.5
-_RETRY_BASE_INTERVAL = 1
 SDK_VERSION = __version__
 USER_AGENT_HEADER = f'box-python-generated-sdk-{SDK_VERSION}'
 X_BOX_UA_HEADER = (
@@ -67,10 +62,11 @@ class BoxNetworkClient(NetworkClient):
         self.requests_session = requests_session or requests.Session()
 
     def fetch(self, options: 'FetchOptions') -> FetchResponse:
-        if options.network_session:
-            max_attempts = options.network_session.MAX_ATTEMPTS
-        else:
-            max_attempts = DEFAULT_MAX_ATTEMPTS
+        retry_strategy = (
+            options.network_session.retry_strategy
+            if options.network_session
+            else BoxRetryStrategy()
+        )
 
         attempt_nr = 1
         response = APIResponse()
@@ -90,53 +86,50 @@ class BoxNetworkClient(NetworkClient):
 
             if response.network_response is not None:
                 network_response = response.network_response
-                accepted_with_retry_after = (
-                    network_response.status_code == HTTPStatus.ACCEPTED
-                ) and response.get_header('Retry-After', None)
-                if network_response.ok and (
-                    not accepted_with_retry_after or attempt_nr >= max_attempts
-                ):
-                    if options.response_format == 'binary':
-                        return FetchResponse(
-                            url=network_response.url,
-                            status=network_response.status_code,
-                            headers=dict(response.network_response.headers),
-                            content=ResponseByteStream(
-                                response.network_response.iter_content(chunk_size=1024)
-                            ),
-                        )
-                    else:
-                        return FetchResponse(
-                            url=network_response.url,
-                            status=network_response.status_code,
-                            headers=dict(response.network_response.headers),
-                            data=(
-                                json_to_serialized_data(network_response.text)
-                                if network_response.text
-                                else None
-                            ),
-                            content=io.BytesIO(network_response.content),
-                        )
 
-                if (
-                    not (response.reauthentication_needed and options.auth)
-                    and network_response.status_code != HTTPStatus.TOO_MANY_REQUESTS
-                    and not accepted_with_retry_after
-                    and network_response.status_code < 500
-                ):
-                    self._raise_on_unsuccessful_request(
-                        request=request, response=response
+                if options.response_format == 'binary':
+                    fetch_response = FetchResponse(
+                        url=network_response.url,
+                        status=network_response.status_code,
+                        headers=dict(response.network_response.headers),
+                        content=ResponseByteStream(
+                            response.network_response.iter_content(chunk_size=1024)
+                        ),
+                    )
+                else:
+                    fetch_response = FetchResponse(
+                        url=network_response.url,
+                        status=network_response.status_code,
+                        headers=dict(response.network_response.headers),
+                        data=(
+                            json_to_serialized_data(network_response.text)
+                            if network_response.text
+                            else None
+                        ),
+                        content=io.BytesIO(network_response.content),
                     )
 
-            if attempt_nr >= max_attempts:
-                break
-
-            time.sleep(
-                self._get_retry_after_time(
+                should_retry = retry_strategy.should_retry(
+                    fetch_options=options,
+                    fetch_response=fetch_response,
                     attempt_number=attempt_nr,
-                    retry_after_header=response.get_header('Retry-After', None),
                 )
-            )
+
+                if should_retry:
+                    time.sleep(
+                        retry_strategy.retry_after(
+                            fetch_options=options,
+                            fetch_response=fetch_response,
+                            attempt_number=attempt_nr,
+                        )
+                    )
+                    attempt_nr += 1
+                    continue
+
+                if 200 <= fetch_response.status < 400:
+                    return fetch_response
+
+                self._raise_on_unsuccessful_request(request=request, response=response)
 
             self._reset_options_stream(
                 options, options_stream_position, response.raised_exception
@@ -238,9 +231,6 @@ class BoxNetworkClient(NetworkClient):
                 allow_redirects=request.allow_redirects,
                 stream=True,
             )
-            reauthentication_needed = (
-                network_response.status_code == HTTPStatus.UNAUTHORIZED
-            )
         except RequestException as request_exc:
             raised_exception = request_exc
             network_response = None
@@ -290,23 +280,6 @@ class BoxNetworkClient(NetworkClient):
                 help_url=response_json.get("help_url", None),
             ),
         )
-
-    @staticmethod
-    def _get_retry_after_time(
-        attempt_number: int, retry_after_header: Optional[str] = None
-    ) -> float:
-        if retry_after_header is not None:
-            try:
-                return int(retry_after_header)
-            except (ValueError, TypeError):
-                pass
-        min_randomization = 1 - _RETRY_RANDOMIZATION_FACTOR
-        max_randomization = 1 + _RETRY_RANDOMIZATION_FACTOR
-        randomization = (
-            random.uniform(0, 1) * (max_randomization - min_randomization)
-        ) + min_randomization
-        exponential = math.pow(2, attempt_number)
-        return exponential * _RETRY_BASE_INTERVAL * randomization
 
     @staticmethod
     def _get_multipart_stream_positions(options: 'FetchOptions') -> dict:

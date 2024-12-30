@@ -7,6 +7,7 @@ import shutil
 import uuid
 import time
 import hmac
+from random import uniform
 from enum import Enum
 from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar, BinaryIO
@@ -440,3 +441,7 @@ def compute_webhook_signature(
     new_hmac.update(encoded_delivery_time_stamp)
     signature = base64.b64encode(new_hmac.digest()).decode()
     return signature
+
+
+def random(min: float, max: float) -> float:
+    return uniform(min, max)
