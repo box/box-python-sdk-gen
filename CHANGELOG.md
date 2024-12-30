@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* remove unused parameter from `SignRequest` (box/box-openapi[#489](https://github.com/box/box-python-sdk-gen/issues/489)) ([#411](https://github.com/box/box-python-sdk-gen/issues/411)) ([578d9b4](https://github.com/box/box-python-sdk-gen/commit/578d9b48da7e55d2e3e4736c871400dc90d826b1))
+* Remove unused parameter from `SignRequest` (box/box-openapi[#489](https://github.com/box/box-python-sdk-gen/issues/489)) ([#411](https://github.com/box/box-python-sdk-gen/issues/411)) ([578d9b4](https://github.com/box/box-python-sdk-gen/commit/578d9b48da7e55d2e3e4736c871400dc90d826b1))
 
 
 ### New Features and Enhancements
