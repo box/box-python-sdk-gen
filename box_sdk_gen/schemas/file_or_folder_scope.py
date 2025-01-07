@@ -27,6 +27,7 @@ class FileOrFolderScopeScopeField(str, Enum):
     ITEM_RENAME = 'item_rename'
     ITEM_SHARE = 'item_share'
     ITEM_UPLOAD = 'item_upload'
+    ITEM_READ = 'item_read'
 
 
 class FileOrFolderScope(BaseObject):
