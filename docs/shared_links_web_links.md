@@ -19,7 +19,7 @@ shared web link when only given a shared link.
 This operation is performed by calling function `find_web_link_for_shared_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shared-items-web-links/).
+[API Reference](https://developer.box.com/reference/get-shared-items--web-links/).
 
 <!-- sample get_shared_items#web_links -->
 
@@ -60,7 +60,7 @@ Gets the information for a shared link on a web link.
 This operation is performed by calling function `get_shared_link_for_web_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-web-links-id-get-shared-link/).
+[API Reference](https://developer.box.com/reference/get-web-links-id--get-shared-link/).
 
 <!-- sample get_web_links_id#get_shared_link -->
 
@@ -91,7 +91,7 @@ Adds a shared link to a web link.
 This operation is performed by calling function `add_share_link_to_web_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-web-links-id-add-shared-link/).
+[API Reference](https://developer.box.com/reference/put-web-links-id--add-shared-link/).
 
 <!-- sample put_web_links_id#add_shared_link -->
 
@@ -130,7 +130,7 @@ Updates a shared link on a web link.
 This operation is performed by calling function `update_shared_link_on_web_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-web-links-id-update-shared-link/).
+[API Reference](https://developer.box.com/reference/put-web-links-id--update-shared-link/).
 
 <!-- sample put_web_links_id#update_shared_link -->
 
@@ -169,7 +169,7 @@ Removes a shared link from a web link.
 This operation is performed by calling function `remove_shared_link_from_web_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-web-links-id-remove-shared-link/).
+[API Reference](https://developer.box.com/reference/put-web-links-id--remove-shared-link/).
 
 _Currently we don't have an example for calling `remove_shared_link_from_web_link` in integration tests_
 

@@ -17,7 +17,7 @@ URL explicitly, for example
 This operation is performed by calling function `get_classification_on_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+[API Reference](https://developer.box.com/reference/get-files-id-metadata-enterprise-securityClassification-6VMVochwUWo/).
 
 <!-- sample get_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
@@ -53,7 +53,7 @@ URL explicitly, for example
 This operation is performed by calling function `add_classification_to_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/post-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+[API Reference](https://developer.box.com/reference/post-files-id-metadata-enterprise-securityClassification-6VMVochwUWo/).
 
 <!-- sample post_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
@@ -90,7 +90,7 @@ defined for the enterprise will be accepted.
 This operation is performed by calling function `update_classification_on_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+[API Reference](https://developer.box.com/reference/put-files-id-metadata-enterprise-securityClassification-6VMVochwUWo/).
 
 <!-- sample put_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 
@@ -126,7 +126,7 @@ URL explicitly, for example
 This operation is performed by calling function `delete_classification_from_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/delete-files-id-metadata-enterprise-security-classification-6-vm-vochw-u-wo/).
+[API Reference](https://developer.box.com/reference/delete-files-id-metadata-enterprise-securityClassification-6VMVochwUWo/).
 
 <!-- sample delete_files_id_metadata_enterprise_securityClassification-6VMVochwUWo -->
 

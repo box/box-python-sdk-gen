@@ -19,7 +19,7 @@ shared folder when only given a shared link.
 This operation is performed by calling function `find_folder_for_shared_link`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-shared-items-folders/).
+[API Reference](https://developer.box.com/reference/get-shared-items--folders/).
 
 <!-- sample get_shared_items#folders -->
 
@@ -60,7 +60,7 @@ Gets the information for a shared link on a folder.
 This operation is performed by calling function `get_shared_link_for_folder`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-folders-id-get-shared-link/).
+[API Reference](https://developer.box.com/reference/get-folders-id--get-shared-link/).
 
 <!-- sample get_folders_id#get_shared_link -->
 
@@ -91,7 +91,7 @@ Adds a shared link to a folder.
 This operation is performed by calling function `add_share_link_to_folder`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-folders-id-add-shared-link/).
+[API Reference](https://developer.box.com/reference/put-folders-id--add-shared-link/).
 
 <!-- sample put_folders_id#add_shared_link -->
 
@@ -130,7 +130,7 @@ Updates a shared link on a folder.
 This operation is performed by calling function `update_shared_link_on_folder`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-folders-id-update-shared-link/).
+[API Reference](https://developer.box.com/reference/put-folders-id--update-shared-link/).
 
 <!-- sample put_folders_id#update_shared_link -->
 
@@ -169,7 +169,7 @@ Removes a shared link from a folder.
 This operation is performed by calling function `remove_shared_link_from_folder`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-folders-id-remove-shared-link/).
+[API Reference](https://developer.box.com/reference/put-folders-id--remove-shared-link/).
 
 _Currently we don't have an example for calling `remove_shared_link_from_folder` in integration tests_
 
