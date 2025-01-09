@@ -63,7 +63,7 @@ Gets the information for a shared link on a file.
 This operation is performed by calling function `get_shared_link_for_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/get-files-id-get-shared-link/).
+[API Reference](https://developer.box.com/reference/get-files-id--get-shared-link/).
 
 <!-- sample get_files_id#get_shared_link -->
 
@@ -94,7 +94,7 @@ Adds a shared link to a file.
 This operation is performed by calling function `add_share_link_to_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-add-shared-link/).
+[API Reference](https://developer.box.com/reference/put-files-id--add-shared-link/).
 
 <!-- sample put_files_id#add_shared_link -->
 
@@ -133,7 +133,7 @@ Updates a shared link on a file.
 This operation is performed by calling function `update_shared_link_on_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-update-shared-link/).
+[API Reference](https://developer.box.com/reference/put-files-id--update-shared-link/).
 
 <!-- sample put_files_id#update_shared_link -->
 
@@ -172,7 +172,7 @@ Removes a shared link from a file.
 This operation is performed by calling function `remove_shared_link_from_file`.
 
 See the endpoint docs at
-[API Reference](https://developer.box.com/reference/put-files-id-remove-shared-link/).
+[API Reference](https://developer.box.com/reference/put-files-id--remove-shared-link/).
 
 _Currently we don't have an example for calling `remove_shared_link_from_file` in integration tests_
 
