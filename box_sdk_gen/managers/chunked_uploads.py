@@ -16,8 +16,6 @@ from box_sdk_gen.internal.utils import Buffer
 
 from box_sdk_gen.internal.utils import HashName
 
-from box_sdk_gen.schemas.file_full import FileFull
-
 from box_sdk_gen.internal.utils import Iterator
 
 from box_sdk_gen.schemas.upload_session import UploadSession
@@ -65,6 +63,8 @@ from box_sdk_gen.internal.utils import reduce_iterator
 from box_sdk_gen.internal.utils import Hash
 
 from box_sdk_gen.internal.utils import buffer_length
+
+from box_sdk_gen.schemas.file_full import FileFull
 
 
 class _PartAccumulator:
