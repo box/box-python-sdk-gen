@@ -115,9 +115,11 @@ class DownloadsManager:
                 follow_redirects=False,
             )
         )
-        if response.headers.get('location') == None:
-            raise BoxSDKError(message='No location header in response')
-        return response.headers.get('location')
+        if 'location' in response.headers:
+            return response.headers.get('location')
+        if 'Location' in response.headers:
+            return response.headers.get('Location')
+        raise BoxSDKError(message='No location header in response')
 
     def download_file(
         self,
