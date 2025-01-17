@@ -82,9 +82,9 @@ def testCreateGetCancelAndListSignRequest():
     assert created_sign_request.external_id == '123'
     assert created_sign_request.external_system_name == 'BoxSignIntegration'
     assert created_sign_request.is_document_preparation_needed == False
-    assert created_sign_request.name == 'Sign Request'
+    assert created_sign_request.name == 'Sign Request.pdf'
     assert created_sign_request.redirect_url == 'https://www.box.com'
-    assert created_sign_request.sign_files.files[0].name == file_to_sign.name
+    assert created_sign_request.sign_files.files[0].name == created_sign_request.name
     assert created_sign_request.signers[1].email == signer_email
     assert created_sign_request.signers[1].suppress_notifications == True
     assert (
@@ -101,7 +101,7 @@ def testCreateGetCancelAndListSignRequest():
     new_sign_request: SignRequest = client.sign_requests.get_sign_request_by_id(
         created_sign_request.id
     )
-    assert new_sign_request.sign_files.files[0].name == file_to_sign.name
+    assert new_sign_request.sign_files.files[0].name == created_sign_request.name
     assert new_sign_request.signers[1].email == signer_email
     assert new_sign_request.parent_folder.id == destination_folder.id
     cancelled_sign_request: SignRequest = client.sign_requests.cancel_sign_request(
