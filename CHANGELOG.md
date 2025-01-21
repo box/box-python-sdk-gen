@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/box/box-python-sdk-gen/compare/v1.9.0...v1.10.0) (2025-01-21)
+
+
+### Bug Fixes
+
+* Add missing token scope (box/box-openapi[#490](https://github.com/box/box-python-sdk-gen/issues/490)) ([#420](https://github.com/box/box-python-sdk-gen/issues/420)) ([41afe8b](https://github.com/box/box-python-sdk-gen/commit/41afe8bcbfc20e3ff22d34a273dcb416afb455da))
+* Fix invalid variant config for Integration mapping Slack (box/box-openapi[#492](https://github.com/box/box-python-sdk-gen/issues/492)) ([#423](https://github.com/box/box-python-sdk-gen/issues/423)) ([d03ccd4](https://github.com/box/box-python-sdk-gen/commit/d03ccd46b88c71450c1c67ecef439e25b97cbad7))
+* order of fields in the `IntegrationMapping` schema (box/box-openapi[#497](https://github.com/box/box-python-sdk-gen/issues/497)) ([#438](https://github.com/box/box-python-sdk-gen/issues/438)) ([13dea88](https://github.com/box/box-python-sdk-gen/commit/13dea88c4e43748eed600f55a638c14ef0a1a60a))
+
+
+### New Features and Enhancements
+
+* Support Box Doc Gen API (box/box-codegen[#644](https://github.com/box/box-python-sdk-gen/issues/644)) ([#446](https://github.com/box/box-python-sdk-gen/issues/446)) ([41fa63c](https://github.com/box/box-python-sdk-gen/commit/41fa63c0a3c957a34b03163dfeaa44a03a5873ff))
+
 ## [1.9.0](https://github.com/box/box-python-sdk-gen/compare/v1.8.0...v1.9.0) (2024-12-30)
 
 
