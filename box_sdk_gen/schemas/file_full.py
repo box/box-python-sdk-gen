@@ -266,8 +266,8 @@ class FileFullRepresentationsEntriesPropertiesField(BaseObject):
         self,
         *,
         dimensions: Optional[str] = None,
-        paged: Optional[bool] = None,
-        thumb: Optional[bool] = None,
+        paged: Optional[str] = None,
+        thumb: Optional[str] = None,
         **kwargs
     ):
         """
@@ -275,10 +275,10 @@ class FileFullRepresentationsEntriesPropertiesField(BaseObject):
                 :type dimensions: Optional[str], optional
                 :param paged: Indicates if the representation is build up out of multiple
         pages., defaults to None
-                :type paged: Optional[bool], optional
+                :type paged: Optional[str], optional
                 :param thumb: Indicates if the representation can be used as a thumbnail of
         the file., defaults to None
-                :type thumb: Optional[bool], optional
+                :type thumb: Optional[str], optional
         """
         super().__init__(**kwargs)
         self.dimensions = dimensions
