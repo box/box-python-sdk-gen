@@ -109,6 +109,10 @@ client.sign_requests.get_sign_requests()
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`
   - The maximum number of items to return per page.
+- senders `Optional[List[str]]`
+  - A list of sender emails to filter the signature requests by sender. If provided, `shared_requests` must be set to `true`.
+- shared_requests `Optional[bool]`
+  - If set to `true`, only includes requests that user is not an owner, but user is a collaborator. Collaborator access is determined by the user access level of the sign files of the request. Default is `false`. Must be set to `true` if `senders` are provided.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

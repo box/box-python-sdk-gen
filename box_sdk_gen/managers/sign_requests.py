@@ -185,6 +185,8 @@ class SignRequestsManager:
         *,
         marker: Optional[str] = None,
         limit: Optional[int] = None,
+        senders: Optional[List[str]] = None,
+        shared_requests: Optional[bool] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> SignRequests:
         """
@@ -199,13 +201,26 @@ class SignRequestsManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
+                :param senders: A list of sender emails to filter the signature requests by sender.
+        If provided, `shared_requests` must be set to `true`., defaults to None
+                :type senders: Optional[List[str]], optional
+                :param shared_requests: If set to `true`, only includes requests that user is not an owner,
+        but user is a collaborator. Collaborator access is determined by the
+        user access level of the sign files of the request.
+        Default is `false`. Must be set to `true` if `senders` are provided., defaults to None
+                :type shared_requests: Optional[bool], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
         query_params_map: Dict[str, str] = prepare_params(
-            {'marker': to_string(marker), 'limit': to_string(limit)}
+            {
+                'marker': to_string(marker),
+                'limit': to_string(limit),
+                'senders': to_string(senders),
+                'shared_requests': to_string(shared_requests),
+            }
         )
         headers_map: Dict[str, str] = prepare_params({**extra_headers})
         response: FetchResponse = self.network_session.network_client.fetch(

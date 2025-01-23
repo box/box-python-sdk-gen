@@ -78,6 +78,9 @@ class SignRequest(SignRequestBase):
         sign_files: Optional[SignRequestSignFilesField] = None,
         auto_expire_at: Optional[DateTime] = None,
         parent_folder: Optional[FolderMini] = None,
+        collaborator_level: Optional[str] = None,
+        sender_email: Optional[str] = None,
+        sender_id: Optional[int] = None,
         is_document_preparation_needed: Optional[bool] = None,
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
@@ -119,6 +122,12 @@ class SignRequest(SignRequestBase):
                 :type sign_files: Optional[SignRequestSignFilesField], optional
                 :param auto_expire_at: Uses `days_valid` to calculate the date and time, in GMT, the sign request will expire if unsigned., defaults to None
                 :type auto_expire_at: Optional[DateTime], optional
+                :param collaborator_level: The collaborator level of the user to the sign request. Values can include "owner", "editor", and "viewer", defaults to None
+                :type collaborator_level: Optional[str], optional
+                :param sender_email: The email address of the sender of the sign request., defaults to None
+                :type sender_email: Optional[str], optional
+                :param sender_id: The user ID of the sender of the sign request., defaults to None
+                :type sender_id: Optional[int], optional
                 :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI., defaults to None
                 :type is_document_preparation_needed: Optional[bool], optional
                 :param redirect_url: When specified, the signature request will be redirected to this url when a document is signed., defaults to None
@@ -173,3 +182,6 @@ class SignRequest(SignRequestBase):
         self.sign_files = sign_files
         self.auto_expire_at = auto_expire_at
         self.parent_folder = parent_folder
+        self.collaborator_level = collaborator_level
+        self.sender_email = sender_email
+        self.sender_id = sender_id
