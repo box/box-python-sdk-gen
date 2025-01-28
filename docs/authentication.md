@@ -3,6 +3,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Authentication](#authentication)
 - [Authentication methods](#authentication-methods)
   - [Developer Token](#developer-token)
   - [JWT Auth](#jwt-auth)
@@ -13,6 +14,8 @@
     - [Obtaining User token](#obtaining-user-token)
     - [Switching between Service Account and User](#switching-between-service-account-and-user)
   - [OAuth 2.0 Auth](#oauth-20-auth)
+- [Retrieve current access token](#retrieve-current-access-token)
+- [Refresh access token](#refresh-access-token)
 - [Revoke token](#revoke-token)
 - [Downscope token](#downscope-token)
 - [Token storage](#token-storage)
@@ -314,6 +317,28 @@ def callback():
 
 if __name__ == "__main__":
     app.run(port=4999)
+```
+
+# Retrieve current access token
+
+After initializing the authentication object, the SDK will able to retrieve the access token.
+To retrieve the current access token you can use the following code:
+
+<!-- sample post_oauth2_token -->
+
+```python
+auth.retrieve_token()
+```
+
+# Refresh access token
+
+Access tokens are short-lived and need to be refreshed periodically. The SDK will automatically refresh the token when needed.
+If you want to manually refresh the token, you can use the following code:
+
+<!-- sample post_oauth2_token refresh -->
+
+```python
+auth.refresh_token()
 ```
 
 # Revoke token
