@@ -240,6 +240,21 @@ def testAIExtractStructuredWithFields():
             GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language='en-US'
         )
     )
+    long_text_config_with_no_embeddings: AiAgentExtractStructured = (
+        AiAgentExtractStructured(
+            system_message=ai_extract_structured_agent_config.long_text.system_message,
+            prompt_template=ai_extract_structured_agent_config.long_text.prompt_template,
+            model=ai_extract_structured_agent_config.long_text.model,
+            num_tokens_for_completion=ai_extract_structured_agent_config.long_text.num_tokens_for_completion,
+            llm_endpoint_params=ai_extract_structured_agent_config.long_text.llm_endpoint_params,
+        )
+    )
+    agent_ignoring_overriding_embeddings_model: AiAgentExtractStructured = (
+        AiAgentExtractStructured(
+            basic_text=ai_extract_structured_agent_config.basic_text,
+            long_text=long_text_config_with_no_embeddings,
+        )
+    )
     uploaded_files: Files = client.uploads.upload_file(
         UploadFileAttributes(
             name=''.join([get_uuid(), '.txt']),
@@ -294,7 +309,7 @@ def testAIExtractStructuredWithFields():
                 ],
             ),
         ],
-        ai_agent=ai_extract_structured_agent_config,
+        ai_agent=agent_ignoring_overriding_embeddings_model,
     )
     assert to_string(get_value_from_object_raw_data(response, 'firstName')) == 'John'
     assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
