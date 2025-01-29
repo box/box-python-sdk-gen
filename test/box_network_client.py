@@ -850,7 +850,9 @@ def test_raising_api_error_with_valid_json_body(network_client):
             "type": "error",
             "code": "item_name_invalid",
             "context_info": {"message": "Something went wrong."},
-            "help_url": "https://developer.box.com/guides/api-calls/permissions-and-errors/common-errors/",
+            "help_url": (
+                "https://developer.box.com/guides/api-calls/permissions-and-errors/common-errors/"
+            ),
             "message": "Method Not Allowed",
             "request_id": "abcdef123456",
             "status": 400,

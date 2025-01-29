@@ -270,7 +270,10 @@ After a user logs in and grants your application access to their Box account,
 they will be redirected to your application's `redirect_uri` which will contain
 an auth code. This auth code can then be used along with your client ID and
 client secret to establish an API connection.
-You need to provide the auth code to the SDK to obtain an access token, then you can use the SDK as usual.
+You need to provide the auth code to the SDK to obtain an access token.
+Calling `auth.get_tokens_authorization_code_grant('YOUR_ACCESS_CODE')` will exchange the auth code for an access token
+and save it in the `BoxOAuth` token storage. The SDK will automatically refresh the token when needed.
+All you need to do is create a client object with the `BoxOAuth` object and start making API calls.
 
 <!-- sample post_oauth2_token --->
 
@@ -278,7 +281,7 @@ You need to provide the auth code to the SDK to obtain an access token, then you
 from box_sdk_gen import BoxClient
 
 auth.get_tokens_authorization_code_grant("YOUR_ACCESS_CODE")
-client = BoxClient(auth)
+client = BoxClient(auth=auth)
 ```
 
 Here you can find a Flask app example, which handles complete BoxOAuth workflow to authenticate and
@@ -307,7 +310,7 @@ def get_auth():
 @app.route("/oauth2callback")
 def callback():
     AUTH.get_tokens_authorization_code_grant(request.args.get("code"))
-    client = BoxClient(AUTH)
+    client = BoxClient(auth=AUTH)
 
     items_in_root_folder = [
         item.name for item in client.folders.get_folder_items(folder_id="0").entries
