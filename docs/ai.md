@@ -233,6 +233,6 @@ client.ai.create_ai_extract_structured(
 
 ### Returns
 
-This function returns a value of type `AiExtractResponse`.
+This function returns a value of type `AiExtractStructuredResponse`.
 
 A successful response including the answer from the LLM.

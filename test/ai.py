@@ -30,7 +30,9 @@ from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.ai_extract_response import AiExtractResponse
+from box_sdk_gen.schemas.ai_extract_structured_response import (
+    AiExtractStructuredResponse,
+)
 
 from box_sdk_gen.managers.ai import CreateAiExtractStructuredFields
 
@@ -266,7 +268,7 @@ def testAIExtractStructuredWithFields():
     )
     file: FileFull = uploaded_files.entries[0]
     delay_in_seconds(5)
-    response: AiExtractResponse = client.ai.create_ai_extract_structured(
+    response: AiExtractStructuredResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         fields=[
             CreateAiExtractStructuredFields(
@@ -378,7 +380,7 @@ def testAIExtractStructuredWithMetadataTemplate():
             ),
         ],
     )
-    response: AiExtractResponse = client.ai.create_ai_extract_structured(
+    response: AiExtractStructuredResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         metadata_template=CreateAiExtractStructuredMetadataTemplate(
             template_key=template_key, scope='enterprise'
