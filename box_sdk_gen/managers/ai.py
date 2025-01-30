@@ -42,7 +42,9 @@ from box_sdk_gen.schemas.ai_agent_extract_structured import AiAgentExtractStruct
 
 from box_sdk_gen.schemas.ai_extract import AiExtract
 
-from box_sdk_gen.schemas.ai_extract_response import AiExtractResponse
+from box_sdk_gen.schemas.ai_extract_structured_response import (
+    AiExtractStructuredResponse,
+)
 
 from box_sdk_gen.schemas.ai_extract_structured import AiExtractStructured
 
@@ -411,7 +413,7 @@ class AiManager:
         fields: Optional[List[CreateAiExtractStructuredFields]] = None,
         ai_agent: Optional[AiAgentExtractStructured] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> AiExtractResponse:
+    ) -> AiExtractStructuredResponse:
         """
                 Sends an AI request to supported Large Language Models (LLMs) and returns extracted metadata as a set of key-value pairs.
 
@@ -463,4 +465,4 @@ class AiManager:
                 network_session=self.network_session,
             )
         )
-        return deserialize(response.data, AiExtractResponse)
+        return deserialize(response.data, AiExtractStructuredResponse)

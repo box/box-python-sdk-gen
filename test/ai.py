@@ -30,7 +30,9 @@ from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
-from box_sdk_gen.schemas.ai_extract_response import AiExtractResponse
+from box_sdk_gen.schemas.ai_extract_structured_response import (
+    AiExtractStructuredResponse,
+)
 
 from box_sdk_gen.managers.ai import CreateAiExtractStructuredFields
 
@@ -266,7 +268,7 @@ def testAIExtractStructuredWithFields():
     )
     file: FileFull = uploaded_files.entries[0]
     delay_in_seconds(5)
-    response: AiExtractResponse = client.ai.create_ai_extract_structured(
+    response: AiExtractStructuredResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         fields=[
             CreateAiExtractStructuredFields(
@@ -311,16 +313,22 @@ def testAIExtractStructuredWithFields():
         ],
         ai_agent=agent_ignoring_overriding_embeddings_model,
     )
-    assert to_string(get_value_from_object_raw_data(response, 'firstName')) == 'John'
-    assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
+    assert to_string(
+        get_value_from_object_raw_data(response, 'answer.hobby')
+    ) == to_string(['guitar'])
     assert (
-        to_string(get_value_from_object_raw_data(response, 'dateOfBirth'))
+        to_string(get_value_from_object_raw_data(response, 'answer.firstName'))
+        == 'John'
+    )
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'answer.lastName')) == 'Doe'
+    )
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'answer.dateOfBirth'))
         == '1990-07-04'
     )
-    assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
-    assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
-        ['guitar']
-    )
+    assert to_string(get_value_from_object_raw_data(response, 'answer.age')) == '34'
+    assert response.completion_reason == 'done'
     client.files.delete_file_by_id(file.id)
 
 
@@ -378,22 +386,28 @@ def testAIExtractStructuredWithMetadataTemplate():
             ),
         ],
     )
-    response: AiExtractResponse = client.ai.create_ai_extract_structured(
+    response: AiExtractStructuredResponse = client.ai.create_ai_extract_structured(
         [AiItemBase(id=file.id)],
         metadata_template=CreateAiExtractStructuredMetadataTemplate(
             template_key=template_key, scope='enterprise'
         ),
     )
-    assert to_string(get_value_from_object_raw_data(response, 'firstName')) == 'John'
-    assert to_string(get_value_from_object_raw_data(response, 'lastName')) == 'Doe'
     assert (
-        to_string(get_value_from_object_raw_data(response, 'dateOfBirth'))
+        to_string(get_value_from_object_raw_data(response, 'answer.firstName'))
+        == 'John'
+    )
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'answer.lastName')) == 'Doe'
+    )
+    assert (
+        to_string(get_value_from_object_raw_data(response, 'answer.dateOfBirth'))
         == '1990-07-04T00:00:00Z'
     )
-    assert to_string(get_value_from_object_raw_data(response, 'age')) == '34'
-    assert to_string(get_value_from_object_raw_data(response, 'hobby')) == to_string(
-        ['guitar']
-    )
+    assert to_string(get_value_from_object_raw_data(response, 'answer.age')) == '34'
+    assert to_string(
+        get_value_from_object_raw_data(response, 'answer.hobby')
+    ) == to_string(['guitar'])
+    assert response.completion_reason == 'done'
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )

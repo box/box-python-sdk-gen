@@ -263,7 +263,11 @@ def get_epoch_time_in_seconds() -> int:
 
 
 def get_value_from_object_raw_data(obj: BaseObject, key: str) -> Any:
-    return obj.raw_data.get(key, None)
+    keys = key.split('.')
+    value: dict = obj.raw_data
+    for k in keys:
+        value = value.get(k, {})
+    return value
 
 
 class JwtAlgorithm(str, Enum):
