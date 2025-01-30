@@ -64,7 +64,13 @@ This operation is performed by calling function `preflight_file_upload_check`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/options-files-content/).
 
-_Currently we don't have an example for calling `preflight_file_upload_check` in integration tests_
+<!-- sample options_files_content -->
+
+```python
+client.uploads.preflight_file_upload_check(
+    name=new_file_name, size=1024 * 1024, parent=PreflightFileUploadCheckParent(id="0")
+)
+```
 
 ### Arguments
 

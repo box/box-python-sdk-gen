@@ -10,6 +10,10 @@ from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.managers.uploads import UploadFileVersionAttributes
 
+from box_sdk_gen.schemas.upload_url import UploadUrl
+
+from box_sdk_gen.managers.uploads import PreflightFileUploadCheckParent
+
 from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import generate_byte_stream
@@ -42,3 +46,13 @@ def testUploadFileAndFileVersion():
     new_file_version: FileFull = uploaded_files_version.entries[0]
     assert new_file_version.name == new_file_version_name
     client.files.delete_file_by_id(new_file_version.id)
+
+
+def testPreflightCheck():
+    new_file_name: str = get_uuid()
+    preflight_check_result: UploadUrl = client.uploads.preflight_file_upload_check(
+        name=new_file_name,
+        size=1024 * 1024,
+        parent=PreflightFileUploadCheckParent(id='0'),
+    )
+    assert not preflight_check_result.upload_url == ''
