@@ -14,6 +14,8 @@
     - [Obtaining User token](#obtaining-user-token)
     - [Switching between Service Account and User](#switching-between-service-account-and-user)
   - [OAuth 2.0 Auth](#oauth-20-auth)
+    - [Authentication with OAuth2](#authentication-with-oauth2)
+    - [Injecting existing token into BoxOAuth](#injecting-existing-token-into-boxoauth)
 - [Retrieve current access token](#retrieve-current-access-token)
 - [Refresh access token](#refresh-access-token)
 - [Revoke token](#revoke-token)
@@ -244,6 +246,8 @@ The new token will be automatically fetched with a next API call.
 
 ## OAuth 2.0 Auth
 
+### Authentication with OAuth2
+
 If your application needs to integrate with existing Box users who will provide
 their login credentials to grant your application access to their account, you
 will need to go through the standard OAuth2 login flow. A detailed guide for
@@ -322,9 +326,26 @@ if __name__ == "__main__":
     app.run(port=4999)
 ```
 
+### Injecting existing token into BoxOAuth
+
+If you already have an access token and refresh token, you can inject them into the `BoxOAuth` token storage
+to avoid repeating the authentication process. This can be useful when you want to reuse the token
+between runs of your application.
+
+```python
+from box_sdk_gen import BoxClient, AccessToken
+
+access_token = AccessToken(accessToken="<ACCESS_TOKEN>", refreshToken="<REFRESH_TOKEN>")
+auth.token_storage.store(access_token)
+client = BoxClient(auth=auth)
+```
+
+Alternatively, you can create a custom implementation of `TokenStorage` interface and pass it to the `BoxOAuth` object.
+See the [Custom storage](#custom-storage) section for more information.
+
 # Retrieve current access token
 
-After initializing the authentication object, the SDK will able to retrieve the access token.
+After initializing the authentication object, the SDK will be able to retrieve the access token.
 To retrieve the current access token you can use the following code:
 
 <!-- sample post_oauth2_token -->
@@ -452,7 +473,23 @@ You can also provide a custom token storage class. All you need to do is create 
 and implements all of its abstract methods. Then, pass an instance of your class to the AuthConfig constructor.
 
 ```python
-from box_sdk_gen import BoxOAuth, OAuthConfig
+from typing import Optional
+from box_sdk_gen import BoxOAuth, OAuthConfig, TokenStorage, AccessToken
+
+
+class MyCustomTokenStorage(TokenStorage):
+    def store(self, token: AccessToken) -> None:
+        # store token in your custom storage
+        pass
+
+    def get(self) -> Optional[AccessToken]:
+        # retrieve token from your custom storage
+        pass
+
+    def clear(self) -> None:
+        # clear token from your custom storage
+        pass
+
 
 auth = BoxOAuth(
     OAuthConfig(
