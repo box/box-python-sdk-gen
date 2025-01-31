@@ -50,6 +50,8 @@ from box_sdk_gen.internal.utils import generate_byte_stream
 
 from box_sdk_gen.internal.utils import date_time_from_string
 
+from box_sdk_gen.internal.utils import delay_in_seconds
+
 from test.commons import get_default_client
 
 from box_sdk_gen.schemas.metadata_field_filter_date_range import (
@@ -128,6 +130,7 @@ def testCreateMetaDataQueryExecuteRead():
     )
     assert metadata.template == template_key
     assert metadata.scope == template.scope
+    delay_in_seconds(5)
     search_from: str = ''.join([template.scope, '.', template.template_key])
     query: MetadataQueryResults = client.search.search_by_metadata_query(
         search_from,
