@@ -10,17 +10,19 @@ from typing import Dict
 
 from box_sdk_gen.serialization.json import serialize
 
-from box_sdk_gen.serialization.json import deserialize
-
 from box_sdk_gen.internal.utils import to_string
+
+from box_sdk_gen.serialization.json import deserialize
 
 from typing import Union
 
-from box_sdk_gen.schemas.ai_item_base import AiItemBase
+from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
 
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
+
+from box_sdk_gen.schemas.ai_item_base import AiItemBase
 
 from box_sdk_gen.schemas.ai_response_full import AiResponseFull
 
@@ -214,13 +216,13 @@ class AiManager:
         self,
         mode: CreateAiAskMode,
         prompt: str,
-        items: List[AiItemBase],
+        items: List[AiItemAsk],
         *,
         dialogue_history: Optional[List[AiDialogueHistory]] = None,
         include_citations: Optional[bool] = None,
         ai_agent: Optional[AiAgentAsk] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
-    ) -> AiResponseFull:
+    ) -> Optional[AiResponseFull]:
         """
                 Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
                 :param mode: The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
@@ -232,7 +234,7 @@ class AiManager:
         **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first.
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
         If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
-                :type items: List[AiItemBase]
+                :type items: List[AiItemAsk]
                 :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
                 :type dialogue_history: Optional[List[AiDialogueHistory]], optional
                 :param include_citations: A flag to indicate whether citations should be returned., defaults to None
@@ -263,6 +265,8 @@ class AiManager:
                 network_session=self.network_session,
             )
         )
+        if to_string(response.status) == '204':
+            return None
         return deserialize(response.data, AiResponseFull)
 
     def create_ai_text_gen(

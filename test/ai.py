@@ -1,3 +1,5 @@
+from typing import Optional
+
 from typing import Union
 
 from box_sdk_gen.internal.utils import to_string
@@ -12,9 +14,9 @@ from box_sdk_gen.schemas.ai_response_full import AiResponseFull
 
 from box_sdk_gen.managers.ai import CreateAiAskMode
 
-from box_sdk_gen.schemas.ai_item_base import AiItemBase
+from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
 
-from box_sdk_gen.schemas.ai_item_base import AiItemBaseTypeField
+from box_sdk_gen.schemas.ai_item_ask import AiItemAskTypeField
 
 from box_sdk_gen.schemas.ai_response import AiResponse
 
@@ -29,6 +31,8 @@ from box_sdk_gen.schemas.files import Files
 from box_sdk_gen.managers.uploads import UploadFileAttributes
 
 from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
+
+from box_sdk_gen.schemas.ai_item_base import AiItemBase
 
 from box_sdk_gen.schemas.ai_extract_structured_response import (
     AiExtractStructuredResponse,
@@ -88,13 +92,13 @@ def testAskAISingleItem():
         GetAiAgentDefaultConfigMode.ASK, language='en-US'
     )
     file_to_ask: FileFull = upload_new_file()
-    response: AiResponseFull = client.ai.create_ai_ask(
+    response: Optional[AiResponseFull] = client.ai.create_ai_ask(
         CreateAiAskMode.SINGLE_ITEM_QA,
         'which direction sun rises',
         [
-            AiItemBase(
+            AiItemAsk(
                 id=file_to_ask.id,
-                type=AiItemBaseTypeField.FILE,
+                type=AiItemAskTypeField.FILE,
                 content='Sun rises in the East',
             )
         ],
@@ -108,18 +112,18 @@ def testAskAISingleItem():
 def testAskAIMultipleItems():
     file_to_ask_1: FileFull = upload_new_file()
     file_to_ask_2: FileFull = upload_new_file()
-    response: AiResponseFull = client.ai.create_ai_ask(
+    response: Optional[AiResponseFull] = client.ai.create_ai_ask(
         CreateAiAskMode.MULTIPLE_ITEM_QA,
         'Which direction sun rises?',
         [
-            AiItemBase(
+            AiItemAsk(
                 id=file_to_ask_1.id,
-                type=AiItemBaseTypeField.FILE,
+                type=AiItemAskTypeField.FILE,
                 content='Earth goes around the sun',
             ),
-            AiItemBase(
+            AiItemAsk(
                 id=file_to_ask_2.id,
-                type=AiItemBaseTypeField.FILE,
+                type=AiItemAskTypeField.FILE,
                 content='Sun rises in the East in the morning',
             ),
         ],
