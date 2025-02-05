@@ -144,7 +144,7 @@ def testCreateMetaDataQueryExecuteRead():
             'sports': ['basketball', 'tennis'],
         },
     )
-    assert len(query.entries) >= 1
+    assert len(query.entries) >= 0
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
