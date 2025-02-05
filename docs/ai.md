@@ -22,14 +22,14 @@ client.ai.create_ai_ask(
     CreateAiAskMode.MULTIPLE_ITEM_QA,
     "Which direction sun rises?",
     [
-        AiItemBase(
+        AiItemAsk(
             id=file_to_ask_1.id,
-            type=AiItemBaseTypeField.FILE,
+            type=AiItemAskTypeField.FILE,
             content="Earth goes around the sun",
         ),
-        AiItemBase(
+        AiItemAsk(
             id=file_to_ask_2.id,
-            type=AiItemBaseTypeField.FILE,
+            type=AiItemAskTypeField.FILE,
             content="Sun rises in the East in the morning",
         ),
     ],
@@ -42,7 +42,7 @@ client.ai.create_ai_ask(
   - The mode specifies if this request is for a single or multiple items. If you select `single_item_qa` the `items` array can have one element only. Selecting `multiple_item_qa` allows you to provide up to 25 items.
 - prompt `str`
   - The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
-- items `List[AiItemBase]`
+- items `List[AiItemAsk]`
   - The items to be processed by the LLM, often files. **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first. If the file size exceeds 1MB, the first 1MB of text representation will be processed. If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
 - dialogue_history `Optional[List[AiDialogueHistory]]`
   - The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response.
@@ -55,9 +55,9 @@ client.ai.create_ai_ask(
 
 ### Returns
 
-This function returns a value of type `AiResponseFull`.
+This function returns a value of type `Optional[AiResponseFull]`.
 
-A successful response including the answer from the LLM.
+A successful response including the answer from the LLM.No content is available to answer the question. This is returned when the request item is a hub, but content in the hubs is not indexed. To ensure content in the hub is indexed, make sure Box AI for Hubs in the Admin Console was enabled before hub creation.
 
 ## Generate text
 

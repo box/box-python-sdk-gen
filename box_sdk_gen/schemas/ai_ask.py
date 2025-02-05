@@ -6,7 +6,7 @@ from typing import Optional
 
 from box_sdk_gen.internal.base_object import BaseObject
 
-from box_sdk_gen.schemas.ai_item_base import AiItemBase
+from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
 
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
@@ -25,7 +25,7 @@ class AiAsk(BaseObject):
         self,
         mode: AiAskModeField,
         prompt: str,
-        items: List[AiItemBase],
+        items: List[AiItemAsk],
         *,
         dialogue_history: Optional[List[AiDialogueHistory]] = None,
         include_citations: Optional[bool] = None,
@@ -42,7 +42,7 @@ class AiAsk(BaseObject):
         **Note**: Box AI handles documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first.
         If the file size exceeds 1MB, the first 1MB of text representation will be processed.
         If you set `mode` parameter to `single_item_qa`, the `items` array can have one element only.
-                :type items: List[AiItemBase]
+                :type items: List[AiItemAsk]
                 :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
                 :type dialogue_history: Optional[List[AiDialogueHistory]], optional
                 :param include_citations: A flag to indicate whether citations should be returned., defaults to None
