@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### New Features and Enhancements
 
 * Add Box Sign shared requests (box/box-openapi[#504](https://github.com/box/box-python-sdk-gen/issues/504)) ([#453](https://github.com/box/box-python-sdk-gen/issues/453)) ([3590918](https://github.com/box/box-python-sdk-gen/commit/359091873d26111b82f000e7837553cc799f2433))
-* Add hubs support to `/ai/ask` (box/box-openapi[#506](https://github.com/box/box-python-sdk-gen/issues/506)) ([#466](https://github.com/box/box-python-sdk-gen/issues/466)) ([29f0364](https://github.com/box/box-python-sdk-gen/commit/29f03649f3ec1471e859609d2b8bd77ad5d09106))
+* feat: Add hubs support to `/ai/ask`. Replace type of `items` parameter from `List[AiItemBase]` to `List[AiItemAsk]` in `create_ai_ask` method. (box/box-openapi[#506](https://github.com/box/box-python-sdk-gen/issues/506)) ([#466](https://github.com/box/box-python-sdk-gen/issues/466)) ([29f0364](https://github.com/box/box-python-sdk-gen/commit/29f03649f3ec1471e859609d2b8bd77ad5d09106))
 * Update `/ai/extract_structured` response schema (box/box-codegen[#641](https://github.com/box/box-python-sdk-gen/issues/641)) ([#459](https://github.com/box/box-python-sdk-gen/issues/459)) ([7c73cea](https://github.com/box/box-python-sdk-gen/commit/7c73ceaa8888332b23bca4d6b64ef4999f942940))
 
 ## [1.10.0](https://github.com/box/box-python-sdk-gen/compare/v1.9.0...v1.10.0) (2025-01-21)
