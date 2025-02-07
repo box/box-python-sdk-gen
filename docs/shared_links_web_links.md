@@ -29,7 +29,7 @@ user_client.shared_links_web_links.find_web_link_for_shared_link(
         [
             "shared_link=",
             web_link_from_api.shared_link.url,
-            "&shared_link_password=incorrectPassword",
+            "&shared_link_password=Secret123@",
         ]
     )
 )

@@ -96,16 +96,7 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.create_folder_metadata_by_id(
-    folder.id,
-    CreateFolderMetadataByIdScope.ENTERPRISE,
-    template_key,
-    {
-        "name": "John",
-        "age": 23,
-        "birthDate": "2001-01-03T02:20:50.520Z",
-        "countryCode": "US",
-        "sports": ["basketball", "tennis"],
-    },
+    folder.id, CreateFolderMetadataByIdScope.GLOBAL, "properties", {"abc": "xyz"}
 )
 ```
 
@@ -195,7 +186,7 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.delete_folder_metadata_by_id(
-    folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE, template_key
+    folder.id, DeleteFolderMetadataByIdScope.GLOBAL, "properties"
 )
 ```
 

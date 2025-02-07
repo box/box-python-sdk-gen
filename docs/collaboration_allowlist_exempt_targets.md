@@ -81,7 +81,7 @@ See the endpoint docs at
 
 ```python
 client.collaboration_allowlist_exempt_targets.get_collaboration_whitelist_exempt_target_by_id(
-    exempt_target.id
+    new_exempt_target.id
 )
 ```
 

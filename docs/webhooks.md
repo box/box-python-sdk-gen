@@ -179,7 +179,7 @@ This operation is performed by calling function `validate_message`.
 
 ```python
 WebhooksManager.validate_message(
-    body_with_japanese, headers_with_japanese, primary_key, secondary_key=secondary_key
+    body, headers_with_correct_datetime, primary_key, secondary_key=secondary_key
 )
 ```
 

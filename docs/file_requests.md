@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample get_file_requests_id -->
 
 ```python
-client.file_requests.get_file_request_by_id(updated_file_request.id)
+client.file_requests.get_file_request_by_id(file_request_id)
 ```
 
 ### Arguments

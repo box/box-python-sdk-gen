@@ -28,7 +28,7 @@ See the endpoint docs at
 <!-- sample get_folders_id -->
 
 ```python
-client.folders.get_folder_by_id(folder_id, fields=["is_associated_with_app_item"])
+client.folders.get_folder_by_id("0")
 ```
 
 ### Arguments
@@ -81,7 +81,9 @@ See the endpoint docs at
 <!-- sample put_folders_id -->
 
 ```python
-downscoped_client.folders.update_folder_by_id(folder.id, name=get_uuid())
+client.folders.update_folder_by_id(
+    folder_to_update.id, name=updated_name, description="Updated description"
+)
 ```
 
 ### Arguments
@@ -145,7 +147,7 @@ See the endpoint docs at
 <!-- sample delete_folders_id -->
 
 ```python
-parent_client.folders.delete_folder_by_id(folder.id)
+client.folders.delete_folder_by_id(new_folder.id)
 ```
 
 ### Arguments
@@ -226,7 +228,7 @@ See the endpoint docs at
 <!-- sample post_folders -->
 
 ```python
-parent_client.folders.create_folder(get_uuid(), CreateFolderParent(id="0"))
+client.folders.create_folder(new_folder_name, CreateFolderParent(id="0"))
 ```
 
 ### Arguments

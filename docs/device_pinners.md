@@ -75,9 +75,7 @@ See the endpoint docs at
 <!-- sample get_enterprises_id_device_pinners -->
 
 ```python
-client.device_pinners.get_enterprise_device_pinners(
-    enterprise_id, direction=GetEnterpriseDevicePinnersDirection.DESC
-)
+client.device_pinners.get_enterprise_device_pinners(enterprise_id)
 ```
 
 ### Arguments

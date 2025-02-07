@@ -19,9 +19,7 @@ See the endpoint docs at
 <!-- sample post_docgen_templates_v2025.0 -->
 
 ```python
-client.docgen_template.create_docgen_template_v2025_r0(
-    FileReferenceV2025R0(id=uploaded_file.id)
-)
+client.docgen_template.create_docgen_template_v2025_r0(FileReferenceV2025R0(id=file.id))
 ```
 
 ### Arguments

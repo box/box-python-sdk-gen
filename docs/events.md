@@ -82,12 +82,7 @@ See the endpoint docs at
 <!-- sample get_events -->
 
 ```python
-client.events.get_events(
-    stream_type=GetEventsStreamType.ADMIN_LOGS,
-    limit=1,
-    created_after=created_after_date,
-    created_before=created_before_date,
-)
+client.events.get_events()
 ```
 
 ### Arguments

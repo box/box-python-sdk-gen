@@ -19,20 +19,16 @@ See the endpoint docs at
 
 ```python
 client.ai.create_ai_ask(
-    CreateAiAskMode.MULTIPLE_ITEM_QA,
-    "Which direction sun rises?",
+    CreateAiAskMode.SINGLE_ITEM_QA,
+    "which direction sun rises",
     [
         AiItemAsk(
-            id=file_to_ask_1.id,
+            id=file_to_ask.id,
             type=AiItemAskTypeField.FILE,
-            content="Earth goes around the sun",
-        ),
-        AiItemAsk(
-            id=file_to_ask_2.id,
-            type=AiItemAskTypeField.FILE,
-            content="Sun rises in the East in the morning",
-        ),
+            content="Sun rises in the East",
+        )
     ],
+    ai_agent=ai_ask_agent_config,
 )
 ```
 
@@ -127,9 +123,7 @@ See the endpoint docs at
 <!-- sample get_ai_agent_default -->
 
 ```python
-client.ai.get_ai_agent_default_config(
-    GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language="en-US"
-)
+client.ai.get_ai_agent_default_config(GetAiAgentDefaultConfigMode.ASK, language="en-US")
 ```
 
 ### Arguments
@@ -212,9 +206,48 @@ See the endpoint docs at
 ```python
 client.ai.create_ai_extract_structured(
     [AiItemBase(id=file.id)],
-    metadata_template=CreateAiExtractStructuredMetadataTemplate(
-        template_key=template_key, scope="enterprise"
-    ),
+    fields=[
+        CreateAiExtractStructuredFields(
+            key="firstName",
+            display_name="First name",
+            description="Person first name",
+            prompt="What is the your first name?",
+            type="string",
+        ),
+        CreateAiExtractStructuredFields(
+            key="lastName",
+            display_name="Last name",
+            description="Person last name",
+            prompt="What is the your last name?",
+            type="string",
+        ),
+        CreateAiExtractStructuredFields(
+            key="dateOfBirth",
+            display_name="Birth date",
+            description="Person date of birth",
+            prompt="What is the date of your birth?",
+            type="date",
+        ),
+        CreateAiExtractStructuredFields(
+            key="age",
+            display_name="Age",
+            description="Person age",
+            prompt="How old are you?",
+            type="float",
+        ),
+        CreateAiExtractStructuredFields(
+            key="hobby",
+            display_name="Hobby",
+            description="Person hobby",
+            prompt="What is your hobby?",
+            type="multiSelect",
+            options=[
+                CreateAiExtractStructuredFieldsOptionsField(key="guitar"),
+                CreateAiExtractStructuredFieldsOptionsField(key="books"),
+            ],
+        ),
+    ],
+    ai_agent=agent_ignoring_overriding_embeddings_model,
 )
 ```
 

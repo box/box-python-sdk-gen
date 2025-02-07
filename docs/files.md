@@ -19,7 +19,9 @@ See the endpoint docs at
 <!-- sample get_files_id -->
 
 ```python
-client.files.get_file_by_id(file_id, fields=["is_associated_with_app_item"])
+client.files.get_file_by_id(
+    uploaded_file.id, fields=["is_externally_owned", "has_collaborations"]
+)
 ```
 
 ### Arguments
@@ -60,7 +62,9 @@ See the endpoint docs at
 <!-- sample put_files_id -->
 
 ```python
-downscoped_client.files.update_file_by_id(file.id, name=get_uuid())
+client.files.update_file_by_id(
+    file_to_update.id, name=updated_name, description="Updated description"
+)
 ```
 
 ### Arguments
@@ -118,7 +122,7 @@ See the endpoint docs at
 <!-- sample delete_files_id -->
 
 ```python
-parent_client.files.delete_file_by_id(file.id)
+client.files.delete_file_by_id(thumbnail_file.id)
 ```
 
 ### Arguments

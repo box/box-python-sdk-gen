@@ -137,11 +137,35 @@ See the endpoint docs at
 ```python
 client.sign_requests.create_sign_request(
     [
-        SignRequestCreateSigner(email=signer_1_email, signer_group_id="user"),
-        SignRequestCreateSigner(email=signer_2_email, signer_group_id="user"),
+        SignRequestCreateSigner(
+            email=signer_email,
+            suppress_notifications=True,
+            declined_redirect_url="https://www.box.com",
+            embed_url_external_user_id="123",
+            is_in_person=False,
+            login_required=False,
+            password="password",
+            role=SignRequestCreateSignerRoleField.SIGNER,
+        )
     ],
     source_files=[FileBase(id=file_to_sign.id)],
     parent_folder=FolderMini(id=destination_folder.id),
+    is_document_preparation_needed=False,
+    redirect_url="https://www.box.com",
+    declined_redirect_url="https://www.box.com",
+    are_text_signatures_enabled=True,
+    email_subject="Sign this document",
+    email_message="Please sign this document",
+    are_reminders_enabled=True,
+    name="Sign Request",
+    prefill_tags=[
+        SignRequestPrefillTag(
+            date_value=date_from_string("2035-01-01"), document_tag_id="0"
+        )
+    ],
+    days_valid=30,
+    external_id="123",
+    external_system_name="BoxSignIntegration",
 )
 ```
 

@@ -23,7 +23,9 @@ See the endpoint docs at
 
 ```python
 client.uploads.upload_file_version(
-    file.id, UploadFileVersionAttributes(name=file.name), generate_byte_stream(20)
+    uploaded_file.id,
+    UploadFileVersionAttributes(name=new_file_version_name),
+    new_file_content_stream,
 )
 ```
 
@@ -108,11 +110,11 @@ See the endpoint docs at
 <!-- sample post_files_content -->
 
 ```python
-parent_client.uploads.upload_file(
+client.uploads.upload_file(
     UploadFileAttributes(
-        name=get_uuid(), parent=UploadFileAttributesParentField(id="0")
+        name=new_file_name, parent=UploadFileAttributesParentField(id="0")
     ),
-    generate_byte_stream(1024 * 1024),
+    file_content_stream,
 )
 ```
 

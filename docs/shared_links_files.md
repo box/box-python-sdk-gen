@@ -32,7 +32,7 @@ user_client.shared_links_files.find_file_for_shared_link(
         [
             "shared_link=",
             file_from_api.shared_link.url,
-            "&shared_link_password=incorrectPassword",
+            "&shared_link_password=Secret123@",
         ]
     )
 )

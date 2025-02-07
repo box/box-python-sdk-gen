@@ -61,7 +61,7 @@ See the endpoint docs at
 client.retention_policy_assignments.create_retention_policy_assignment(
     retention_policy.id,
     CreateRetentionPolicyAssignmentAssignTo(
-        id=folder.id, type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER
+        type=CreateRetentionPolicyAssignmentAssignToTypeField.FOLDER, id=folder.id
     ),
 )
 ```
