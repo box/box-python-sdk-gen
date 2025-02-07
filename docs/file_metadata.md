@@ -91,16 +91,7 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.create_file_metadata_by_id(
-    file.id,
-    CreateFileMetadataByIdScope.ENTERPRISE,
-    template_key,
-    {
-        "name": "John",
-        "age": 23,
-        "birthDate": "2001-01-03T02:20:50.520Z",
-        "countryCode": "US",
-        "sports": ["basketball", "tennis"],
-    },
+    file.id, CreateFileMetadataByIdScope.GLOBAL, "properties", {"abc": "xyz"}
 )
 ```
 
@@ -190,7 +181,7 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.delete_file_metadata_by_id(
-    file.id, DeleteFileMetadataByIdScope.ENTERPRISE, template_key
+    file.id, DeleteFileMetadataByIdScope.GLOBAL, "properties"
 )
 ```
 

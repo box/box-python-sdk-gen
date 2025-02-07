@@ -82,7 +82,9 @@ See the endpoint docs at
 <!-- sample get_collaboration_whitelist_entries_id -->
 
 ```python
-client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(entry.id)
+client.collaboration_allowlist_entries.get_collaboration_whitelist_entry_by_id(
+    new_entry.id
+)
 ```
 
 ### Arguments

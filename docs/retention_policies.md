@@ -57,13 +57,14 @@ See the endpoint docs at
 
 ```python
 client.retention_policies.create_retention_policy(
-    get_uuid(),
+    retention_policy_name,
     CreateRetentionPolicyPolicyType.FINITE,
     CreateRetentionPolicyDispositionAction.REMOVE_RETENTION,
-    description=description,
+    description=retention_description,
     retention_length="1",
     retention_type=CreateRetentionPolicyRetentionType.MODIFIABLE,
-    can_owner_extend_retention=False,
+    can_owner_extend_retention=True,
+    are_owners_notified=True,
 )
 ```
 

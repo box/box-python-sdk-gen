@@ -275,39 +275,10 @@ client.metadata_templates.create_metadata_template(
     template_key=template_key,
     fields=[
         CreateMetadataTemplateFields(
-            key="firstName",
-            display_name="First name",
-            description="Person first name",
             type=CreateMetadataTemplateFieldsTypeField.STRING,
-        ),
-        CreateMetadataTemplateFields(
-            key="lastName",
-            display_name="Last name",
-            description="Person last name",
-            type=CreateMetadataTemplateFieldsTypeField.STRING,
-        ),
-        CreateMetadataTemplateFields(
-            key="dateOfBirth",
-            display_name="Birth date",
-            description="Person date of birth",
-            type=CreateMetadataTemplateFieldsTypeField.DATE,
-        ),
-        CreateMetadataTemplateFields(
-            key="age",
-            display_name="Age",
-            description="Person age",
-            type=CreateMetadataTemplateFieldsTypeField.FLOAT,
-        ),
-        CreateMetadataTemplateFields(
-            key="hobby",
-            display_name="Hobby",
-            description="Person hobby",
-            type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
-            options=[
-                CreateMetadataTemplateFieldsOptionsField(key="guitar"),
-                CreateMetadataTemplateFieldsOptionsField(key="books"),
-            ],
-        ),
+            key="testName",
+            display_name="testName",
+        )
     ],
 )
 ```

@@ -109,7 +109,7 @@ See the endpoint docs at
 
 ```python
 client.terms_of_services.update_terms_of_service_by_id(
-    tos.id, UpdateTermsOfServiceByIdStatus.DISABLED, "Updated TOS"
+    tos.id, UpdateTermsOfServiceByIdStatus.DISABLED, "TOS"
 )
 ```
 

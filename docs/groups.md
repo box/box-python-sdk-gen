@@ -97,7 +97,9 @@ See the endpoint docs at
 <!-- sample get_groups_id -->
 
 ```python
-client.groups.get_group_by_id(group.id)
+client.groups.get_group_by_id(
+    group.id, fields=["id", "name", "description", "group_type"]
+)
 ```
 
 ### Arguments

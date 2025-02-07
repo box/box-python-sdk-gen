@@ -57,11 +57,7 @@ See the endpoint docs at
 <!-- sample get_files_id_versions_id -->
 
 ```python
-client.file_versions.get_file_version_by_id(
-    file.id,
-    file_versions.entries[0].id,
-    fields=["trashed_at", "trashed_by", "restored_at", "restored_by"],
-)
+client.file_versions.get_file_version_by_id(file.id, file_versions.entries[0].id)
 ```
 
 ### Arguments

@@ -29,7 +29,7 @@ user_client.shared_links_folders.find_folder_for_shared_link(
         [
             "shared_link=",
             folder_from_api.shared_link.url,
-            "&shared_link_password=incorrectPassword",
+            "&shared_link_password=Secret123@",
         ]
     )
 )

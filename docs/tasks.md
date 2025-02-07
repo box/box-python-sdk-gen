@@ -55,7 +55,7 @@ client.tasks.create_task(
     CreateTaskItem(type=CreateTaskItemTypeField.FILE, id=file.id),
     action=CreateTaskAction.REVIEW,
     message="test message",
-    due_at=date,
+    due_at=date_time,
     completion_rule=CreateTaskCompletionRule.ALL_ASSIGNEES,
 )
 ```

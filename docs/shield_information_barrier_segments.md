@@ -50,7 +50,7 @@ See the endpoint docs at
 
 ```python
 client.shield_information_barrier_segments.delete_shield_information_barrier_segment_by_id(
-    segment.id
+    segment_id
 )
 ```
 
@@ -154,6 +154,7 @@ client.shield_information_barrier_segments.create_shield_information_barrier_seg
         type=ShieldInformationBarrierBaseTypeField.SHIELD_INFORMATION_BARRIER,
     ),
     segment_name,
+    description=segment_description,
 )
 ```
 

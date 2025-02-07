@@ -68,7 +68,7 @@ See the endpoint docs at
 <!-- sample post_users -->
 
 ```python
-client.users.create_user(user_name, is_platform_access_only=True)
+client.users.create_user(user_name, login=user_login, is_platform_access_only=True)
 ```
 
 ### Arguments
@@ -216,7 +216,7 @@ See the endpoint docs at
 <!-- sample put_users_id -->
 
 ```python
-client.users.update_user_by_id(user.id, notification_email=create_null())
+client.users.update_user_by_id(user.id, name=updated_user_name)
 ```
 
 ### Arguments
@@ -291,7 +291,7 @@ See the endpoint docs at
 <!-- sample delete_users_id -->
 
 ```python
-client.users.delete_user_by_id(created_user.id)
+client.users.delete_user_by_id(user.id)
 ```
 
 ### Arguments

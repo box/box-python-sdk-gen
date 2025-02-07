@@ -89,7 +89,7 @@ See the endpoint docs at
 <!-- sample delete_collaborations_id -->
 
 ```python
-client.user_collaborations.delete_collaboration_by_id(group_collaboration.id)
+client.user_collaborations.delete_collaboration_by_id(collaboration_id)
 ```
 
 ### Arguments
@@ -133,9 +133,9 @@ See the endpoint docs at
 
 ```python
 client.user_collaborations.create_collaboration(
-    CreateCollaborationItem(type=CreateCollaborationItemTypeField.FILE, id=file.id),
+    CreateCollaborationItem(type=CreateCollaborationItemTypeField.FOLDER, id=folder.id),
     CreateCollaborationAccessibleBy(
-        type=CreateCollaborationAccessibleByTypeField.USER, id=get_env_var("USER_ID")
+        type=CreateCollaborationAccessibleByTypeField.USER, id=user.id
     ),
     CreateCollaborationRole.EDITOR,
 )
