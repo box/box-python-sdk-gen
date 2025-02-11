@@ -167,7 +167,7 @@ See the endpoint docs at
 client.ai.create_ai_extract(
     "firstName, lastName, location, yearOfBirth, company",
     [AiItemBase(id=file.id)],
-    ai_agent=ai_extract_agent_config,
+    ai_agent=agent_ignoring_overriding_embeddings_model,
 )
 ```
 

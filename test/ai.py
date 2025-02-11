@@ -84,6 +84,8 @@ from box_sdk_gen.schemas.ai_agent_extract import AiAgentExtract
 
 from box_sdk_gen.schemas.ai_agent_extract_structured import AiAgentExtractStructured
 
+from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
+
 client: BoxClient = get_default_client()
 
 
@@ -216,6 +218,17 @@ def testAIExtract():
     ai_extract_agent_config: AiAgentExtract = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.EXTRACT, language='en-US'
     )
+    long_text_config_with_no_embeddings: AiAgentLongTextTool = AiAgentLongTextTool(
+        system_message=ai_extract_agent_config.long_text.system_message,
+        prompt_template=ai_extract_agent_config.long_text.prompt_template,
+        model=ai_extract_agent_config.long_text.model,
+        num_tokens_for_completion=ai_extract_agent_config.long_text.num_tokens_for_completion,
+        llm_endpoint_params=ai_extract_agent_config.long_text.llm_endpoint_params,
+    )
+    agent_ignoring_overriding_embeddings_model: AiAgentExtract = AiAgentExtract(
+        basic_text=ai_extract_agent_config.basic_text,
+        long_text=long_text_config_with_no_embeddings,
+    )
     uploaded_files: Files = client.uploads.upload_file(
         UploadFileAttributes(
             name=''.join([get_uuid(), '.txt']),
@@ -230,7 +243,7 @@ def testAIExtract():
     response: AiResponse = client.ai.create_ai_extract(
         'firstName, lastName, location, yearOfBirth, company',
         [AiItemBase(id=file.id)],
-        ai_agent=ai_extract_agent_config,
+        ai_agent=agent_ignoring_overriding_embeddings_model,
     )
     expected_response: str = (
         '{"firstName": "John", "lastName": "Doe", "location": "San Francisco", "yearOfBirth": "1990", "company": "Box"}'
@@ -246,14 +259,12 @@ def testAIExtractStructuredWithFields():
             GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language='en-US'
         )
     )
-    long_text_config_with_no_embeddings: AiAgentExtractStructured = (
-        AiAgentExtractStructured(
-            system_message=ai_extract_structured_agent_config.long_text.system_message,
-            prompt_template=ai_extract_structured_agent_config.long_text.prompt_template,
-            model=ai_extract_structured_agent_config.long_text.model,
-            num_tokens_for_completion=ai_extract_structured_agent_config.long_text.num_tokens_for_completion,
-            llm_endpoint_params=ai_extract_structured_agent_config.long_text.llm_endpoint_params,
-        )
+    long_text_config_with_no_embeddings: AiAgentLongTextTool = AiAgentLongTextTool(
+        system_message=ai_extract_structured_agent_config.long_text.system_message,
+        prompt_template=ai_extract_structured_agent_config.long_text.prompt_template,
+        model=ai_extract_structured_agent_config.long_text.model,
+        num_tokens_for_completion=ai_extract_structured_agent_config.long_text.num_tokens_for_completion,
+        llm_endpoint_params=ai_extract_structured_agent_config.long_text.llm_endpoint_params,
     )
     agent_ignoring_overriding_embeddings_model: AiAgentExtractStructured = (
         AiAgentExtractStructured(
