@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/box/box-python-sdk-gen/compare/v1.11.0...v1.11.1) (2025-02-12)
+
+
+### Bug Fixes
+
+* Fix proxy usage (box/box-codegen[#662](https://github.com/box/box-python-sdk-gen/issues/662)) ([#476](https://github.com/box/box-python-sdk-gen/issues/476)) ([e1d62ac](https://github.com/box/box-python-sdk-gen/commit/e1d62ac5a8063bf37244329329100752c3a069af))
+
 ## [1.11.0](https://github.com/box/box-python-sdk-gen/compare/v1.10.0...v1.11.0) (2025-02-06)
 
 
