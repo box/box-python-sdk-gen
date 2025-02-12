@@ -1,4 +1,3 @@
-import requests
 from typing import Dict
 
 from .network_client import NetworkClient
@@ -26,15 +25,20 @@ class NetworkSession:
             retry_strategy = BoxRetryStrategy()
         if network_client is None:
             network_client = BoxNetworkClient()
-        self.requests_session = requests.Session()
+        if (
+            proxy_url
+            and hasattr(network_client, 'requests_session')
+            and network_client.requests_session
+        ):
+            network_client.requests_session.proxies = {
+                'http': proxy_url,
+                'https': proxy_url,
+            }
         self.additional_headers = additional_headers
         self.base_urls = base_urls
         self.proxy_url = proxy_url
         self.network_client = network_client
         self.retry_strategy = retry_strategy
-
-        proxies = {'http': proxy_url, 'https': proxy_url} if proxy_url else {}
-        self.requests_session.proxies = proxies
 
     def with_additional_headers(
         self, additional_headers: Dict[str, str] = None
@@ -80,11 +84,11 @@ class NetworkSession:
 
         proxy_host = config.url.split("//")[1]
         proxy_auth = (
-            f'{config.username}:{config.password}@'
+            f"{config.username}:{config.password}@"
             if config.username and config.password
-            else ''
+            else ""
         )
-        proxy_url = f'http://{proxy_auth}{proxy_host}'
+        proxy_url = f"http://{proxy_auth}{proxy_host}"
         return NetworkSession(
             network_client=self.network_client,
             additional_headers=self.additional_headers,
@@ -112,7 +116,7 @@ class NetworkSession:
         """
         Generate a fresh network session by duplicating the existing configuration and network parameters,
         while also including a new retry options to be used for each API call.
-        :param retry_options: RetryOptions object, which contains the retry logic
+        :param retry_strategy: RetryStrategy object, which contains the retry logic
         :return: a new instance of NetworkSession
         """
         return NetworkSession(

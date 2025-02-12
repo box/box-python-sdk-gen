@@ -955,7 +955,7 @@ def test_proxy_config():
         ProxyConfig(url="http://127.0.0.1:3128/", username="user", password="pass")
     )
     assert client.network_session.proxy_url == "http://user:pass@127.0.0.1:3128/"
-    requests_session = client.network_session.requests_session
+    requests_session = client.network_session.network_client.requests_session
     assert requests_session.proxies["http"] == "http://user:pass@127.0.0.1:3128/"
     assert requests_session.proxies["https"] == "http://user:pass@127.0.0.1:3128/"
 
