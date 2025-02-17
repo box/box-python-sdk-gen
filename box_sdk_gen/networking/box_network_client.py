@@ -57,9 +57,10 @@ class APIResponse:
 
 
 class BoxNetworkClient(NetworkClient):
-    def __init__(self, requests_session: Optional[Session] = None):
+    def __init__(self, requests_session: Optional[Session] = None, timeout: Optional[float] = None):
         super().__init__()
         self.requests_session = requests_session or requests.Session()
+        self.timeout = timeout
 
     def fetch(self, options: 'FetchOptions') -> FetchResponse:
         retry_strategy = (
@@ -230,6 +231,7 @@ class BoxNetworkClient(NetworkClient):
                 params=request.params,
                 allow_redirects=request.allow_redirects,
                 stream=True,
+                timeout=self.timeout,
             )
         except RequestException as request_exc:
             raised_exception = request_exc

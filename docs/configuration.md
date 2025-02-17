@@ -5,6 +5,7 @@
 
 - [Max retry attempts](#max-retry-attempts)
 - [Custom retry strategy](#custom-retry-strategy)
+- [Network Timeout](#network-timeout)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -62,5 +63,23 @@ class CustomRetryStrategy(RetryStrategy):
 
 auth = BoxDeveloperTokenAuth(token="DEVELOPER_TOKEN_GOES_HERE")
 network_session = NetworkSession(retry_strategy=CustomRetryStrategy())
+client = BoxClient(auth=auth, network_session=network_session)
+```
+
+## Network Timeout
+
+The default timeout of an API call is infinite.
+To change this timeout you should initialize `BoxNetworkClient` with the new value and pass it to `NetworkSession`.
+
+```python
+from box_sdk_gen import (
+    BoxClient,
+    BoxDeveloperTokenAuth,
+    NetworkSession,
+    BoxNetworkClient,
+)
+
+auth = BoxDeveloperTokenAuth(token="DEVELOPER_TOKEN_GOES_HERE")
+network_session = NetworkSession(network_client=BoxNetworkClient(timeout=10))
 client = BoxClient(auth=auth, network_session=network_session)
 ```
