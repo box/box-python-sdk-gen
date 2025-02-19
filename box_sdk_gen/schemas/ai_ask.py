@@ -4,6 +4,8 @@ from typing import List
 
 from typing import Optional
 
+from typing import Union
+
 from box_sdk_gen.internal.base_object import BaseObject
 
 from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
@@ -11,6 +13,8 @@ from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
 
 from box_sdk_gen.schemas.ai_agent_ask import AiAgentAsk
+
+from box_sdk_gen.schemas.ai_agent_reference import AiAgentReference
 
 from box_sdk_gen.box.errors import BoxSDKError
 
@@ -29,7 +33,7 @@ class AiAsk(BaseObject):
         *,
         dialogue_history: Optional[List[AiDialogueHistory]] = None,
         include_citations: Optional[bool] = None,
-        ai_agent: Optional[AiAgentAsk] = None,
+        ai_agent: Optional[Union[AiAgentAsk, AiAgentReference]] = None,
         **kwargs
     ):
         """

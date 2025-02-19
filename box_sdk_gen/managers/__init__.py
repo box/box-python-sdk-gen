@@ -138,6 +138,8 @@ from box_sdk_gen.managers.integration_mappings import *
 
 from box_sdk_gen.managers.ai import *
 
+from box_sdk_gen.managers.ai_studio import *
+
 from box_sdk_gen.managers.docgen_template import *
 
 from box_sdk_gen.managers.docgen import *
