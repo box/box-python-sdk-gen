@@ -8,17 +8,19 @@ from typing import List
 
 from typing import Dict
 
+from typing import Union
+
 from box_sdk_gen.serialization.json import serialize
 
 from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json import deserialize
 
-from typing import Union
-
 from box_sdk_gen.schemas.ai_item_ask import AiItemAsk
 
 from box_sdk_gen.schemas.ai_dialogue_history import AiDialogueHistory
+
+from box_sdk_gen.schemas.ai_agent_reference import AiAgentReference
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
@@ -220,7 +222,7 @@ class AiManager:
         *,
         dialogue_history: Optional[List[AiDialogueHistory]] = None,
         include_citations: Optional[bool] = None,
-        ai_agent: Optional[AiAgentAsk] = None,
+        ai_agent: Optional[Union[AiAgentAsk, AiAgentReference]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Optional[AiResponseFull]:
         """
@@ -275,7 +277,7 @@ class AiManager:
         items: List[CreateAiTextGenItems],
         *,
         dialogue_history: Optional[List[AiDialogueHistory]] = None,
-        ai_agent: Optional[AiAgentTextGen] = None,
+        ai_agent: Optional[Union[AiAgentReference, AiAgentTextGen]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
@@ -371,7 +373,7 @@ class AiManager:
         prompt: str,
         items: List[AiItemBase],
         *,
-        ai_agent: Optional[AiAgentExtract] = None,
+        ai_agent: Optional[Union[AiAgentReference, AiAgentExtract]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiResponse:
         """
@@ -415,7 +417,7 @@ class AiManager:
         *,
         metadata_template: Optional[CreateAiExtractStructuredMetadataTemplate] = None,
         fields: Optional[List[CreateAiExtractStructuredFields]] = None,
-        ai_agent: Optional[AiAgentExtractStructured] = None,
+        ai_agent: Optional[Union[AiAgentReference, AiAgentExtractStructured]] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AiExtractStructuredResponse:
         """

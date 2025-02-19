@@ -2,6 +2,8 @@ from box_sdk_gen.schemas.ai_agent_info import *
 
 from box_sdk_gen.schemas.ai_response import *
 
+from box_sdk_gen.schemas.ai_agent_reference import *
+
 from box_sdk_gen.schemas.ai_citation import *
 
 from box_sdk_gen.schemas.ai_response_full import *
@@ -30,13 +32,25 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool_text_gen import *
 
 from box_sdk_gen.schemas.ai_agent_basic_gen_tool import *
 
+from box_sdk_gen.schemas.ai_studio_agent_basic_gen_tool import *
+
+from box_sdk_gen.schemas.ai_studio_agent_text_gen import *
+
 from box_sdk_gen.schemas.ai_agent_text_gen import *
 
 from box_sdk_gen.schemas.ai_text_gen import *
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import *
 
+from box_sdk_gen.schemas.ai_studio_agent_basic_text_tool import *
+
 from box_sdk_gen.schemas.ai_agent_long_text_tool import *
+
+from box_sdk_gen.schemas.ai_studio_agent_long_text_tool import *
+
+from box_sdk_gen.schemas.ai_studio_agent_extract import *
+
+from box_sdk_gen.schemas.ai_studio_agent_ask import *
 
 from box_sdk_gen.schemas.ai_agent_extract_structured import *
 
@@ -381,6 +395,16 @@ from box_sdk_gen.schemas.shield_information_barriers import *
 from box_sdk_gen.schemas.folder_lock import *
 
 from box_sdk_gen.schemas.folder_locks import *
+
+from box_sdk_gen.schemas.ai_agent_allowed_entity import *
+
+from box_sdk_gen.schemas.create_ai_agent import *
+
+from box_sdk_gen.schemas.ai_single_agent_response import *
+
+from box_sdk_gen.schemas.ai_single_agent_response_full import *
+
+from box_sdk_gen.schemas.ai_multiple_agent_response import *
 
 from box_sdk_gen.schemas.user_avatar import *
 
