@@ -15,7 +15,11 @@ This operation is performed by calling function `get_ai_agents`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-ai-agents/).
 
-_Currently we don't have an example for calling `get_ai_agents` in integration tests_
+<!-- sample get_ai_agents -->
+
+```python
+client.ai_studio.get_ai_agents()
+```
 
 ### Arguments
 
@@ -49,7 +53,15 @@ This operation is performed by calling function `create_ai_agent`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-ai-agents/).
 
-_Currently we don't have an example for calling `create_ai_agent` in integration tests_
+<!-- sample post_ai_agents -->
+
+```python
+client.ai_studio.create_ai_agent(
+    agent_name,
+    "enabled",
+    ask=AiStudioAgentAsk(access_state="enabled", description="desc1"),
+)
+```
 
 ### Arguments
 
@@ -87,7 +99,16 @@ This operation is performed by calling function `update_ai_agent_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-ai-agents-id/).
 
-_Currently we don't have an example for calling `update_ai_agent_by_id` in integration tests_
+<!-- sample put_ai_agents_id -->
+
+```python
+client.ai_studio.update_ai_agent_by_id(
+    created_agent.id,
+    agent_name,
+    "enabled",
+    ask=AiStudioAgentAsk(access_state="disabled", description="desc2"),
+)
+```
 
 ### Arguments
 
@@ -127,7 +148,11 @@ This operation is performed by calling function `get_ai_agent_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-ai-agents-id/).
 
-_Currently we don't have an example for calling `get_ai_agent_by_id` in integration tests_
+<!-- sample get_ai_agents_id -->
+
+```python
+client.ai_studio.get_ai_agent_by_id(created_agent.id, fields=["ask"])
+```
 
 ### Arguments
 
@@ -153,7 +178,11 @@ This operation is performed by calling function `delete_ai_agent_by_id`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-ai-agents-id/).
 
-_Currently we don't have an example for calling `delete_ai_agent_by_id` in integration tests_
+<!-- sample delete_ai_agents_id -->
+
+```python
+client.ai_studio.delete_ai_agent_by_id(created_agent.id)
+```
 
 ### Arguments
 
