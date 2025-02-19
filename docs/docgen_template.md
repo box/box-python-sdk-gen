@@ -1,13 +1,13 @@
 # DocgenTemplateManager
 
-- [Create a Box Doc Gen template](#create-a-box-doc-gen-template)
+- [Create Box Doc Gen template](#create-box-doc-gen-template)
 - [List Box Doc Gen templates](#list-box-doc-gen-templates)
 - [Delete Box Doc Gen template](#delete-box-doc-gen-template)
 - [Get Box Doc Gen template by ID](#get-box-doc-gen-template-by-id)
 - [List all Box Doc Gen template tags in template](#list-all-box-doc-gen-template-tags-in-template)
 - [Get list of all Box Doc Gen jobs for template](#get-list-of-all-box-doc-gen-jobs-for-template)
 
-## Create a Box Doc Gen template
+## Create Box Doc Gen template
 
 Marks a file as a Box Doc Gen template.
 

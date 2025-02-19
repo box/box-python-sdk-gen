@@ -2,8 +2,8 @@
 
 - [Get Box Doc Gen job by ID](#get-box-doc-gen-job-by-id)
 - [List all Box Doc Gen jobs](#list-all-box-doc-gen-jobs)
-- [Get Box Doc Gen jobs in a batch with a specific ID](#get-box-doc-gen-jobs-in-a-batch-with-a-specific-id)
-- [Generate document using a Box Doc Gen template](#generate-document-using-a-box-doc-gen-template)
+- [Get Box Doc Gen jobs by batch ID](#get-box-doc-gen-jobs-by-batch-id)
+- [Generate document using Box Doc Gen template](#generate-document-using-box-doc-gen-template)
 
 ## Get Box Doc Gen job by ID
 
@@ -67,7 +67,7 @@ This function returns a value of type `DocGenJobsFullV2025R0`.
 
 A list of Box Doc Gen jobs.
 
-## Get Box Doc Gen jobs in a batch with a specific ID
+## Get Box Doc Gen jobs by batch ID
 
 Lists Box Doc Gen jobs in a batch
 
@@ -101,7 +101,7 @@ This function returns a value of type `DocGenJobsV2025R0`.
 
 Returns a list of Box Doc Gen jobs in a Box Doc Gen batch.
 
-## Generate document using a Box Doc Gen template
+## Generate document using Box Doc Gen template
 
 Generates a document using a Box Doc Gen template.
 
