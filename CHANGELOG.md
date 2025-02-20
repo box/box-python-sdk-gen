@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/box/box-python-sdk-gen/compare/v1.11.1...v1.12.0) (2025-02-20)
+
+
+### Bug Fixes
+
+* Fix handling responses with invalid JSON (box/box-codegen[#667](https://github.com/box/box-python-sdk-gen/issues/667)) ([#485](https://github.com/box/box-python-sdk-gen/issues/485)) ([46399d8](https://github.com/box/box-python-sdk-gen/commit/46399d8d91d9a22c75e03e870b091cac6d81237f)), closes [#470](https://github.com/box/box-python-sdk-gen/issues/470)
+
+
+### New Features and Enhancements
+
+* Support AI Studio API (box/box-codegen[#626](https://github.com/box/box-python-sdk-gen/issues/626)) ([#483](https://github.com/box/box-python-sdk-gen/issues/483)) ([bd7fefa](https://github.com/box/box-python-sdk-gen/commit/bd7fefad8f2d941676732ea66c5b0d75bae9e703))
+
 ### [1.11.1](https://github.com/box/box-python-sdk-gen/compare/v1.11.0...v1.11.1) (2025-02-12)
 
 
