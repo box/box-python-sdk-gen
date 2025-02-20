@@ -12,6 +12,7 @@ from box_sdk_gen import (
     Authentication,
     BoxSDKError,
     BoxClient,
+    ResponseFormat,
 )
 from box_sdk_gen.networking.box_network_client import (
     BoxNetworkClient,
@@ -467,7 +468,7 @@ def test_fetch_get_json_format_response_success(
             method="get",
             url="https://example.com",
             network_session=network_session_mock,
-            response_format="json",
+            response_format=ResponseFormat.JSON,
         )
     )
 
@@ -488,7 +489,7 @@ def test_fetch_get_binary_format_response_success(
             method="get",
             url="https://example.com",
             network_session=network_session_mock,
-            response_format="binary",
+            response_format=ResponseFormat.BINARY,
         )
     )
 
@@ -526,6 +527,37 @@ def test_retryable_status_codes(
     assert mock_requests_session.request.call_count == 3
 
 
+@pytest.mark.parametrize("retryable_status_code", [429, 500, 503])
+def test_retryable_status_codes_with_invalid__response_body(
+    network_client,
+    mock_requests_session,
+    network_session_mock,
+    response_200,
+    retryable_status_code,
+    response_failure_no_status,
+):
+    response_failure_no_status.status_code = retryable_status_code
+    response_failure_no_status.text = 'Invalid JSON'
+    response_200.text = '{"id": "123456"}'
+    mock_requests_session.request.side_effect = [
+        response_failure_no_status,
+        response_failure_no_status,
+        response_200,
+    ]
+
+    fetch_response = network_client.fetch(
+        FetchOptions(
+            method="get",
+            url="https://example.com",
+            network_session=network_session_mock,
+            response_format=ResponseFormat.JSON,
+        )
+    )
+    assert fetch_response.status == 200
+    assert fetch_response.data == {"id": "123456"}
+    assert mock_requests_session.request.call_count == 3
+
+
 def test_status_code_202_with_no_retry_after_header(
     network_client, mock_requests_session, network_session_mock, response_202
 ):
@@ -539,7 +571,7 @@ def test_status_code_202_with_no_retry_after_header(
         )
     )
     assert fetch_response.status == 202
-    assert fetch_response.data == None
+    assert fetch_response.data == {}
 
 
 def test_retryable_status_code_202(
@@ -590,7 +622,7 @@ def test_202_should_be_returned_if_retry_limit_is_reached(
         )
 
     assert fetch_response.status == 202
-    assert fetch_response.data == None
+    assert fetch_response.data == {}
 
 
 @pytest.mark.parametrize("not_retryable_status_code", [404, 403, 400])
@@ -871,15 +903,13 @@ def test_raising_api_error_with_valid_json_body(network_client):
         assert e.name == "BoxAPIError"
 
 
-def test_raising_api_error_without_valid_json_body(network_client):
+@pytest.mark.parametrize('response_body', ['', 'Invalid json', 123])
+def test_raising_api_error_without_valid_json_body(network_client, response_body):
     client_error_response = Mock(Response)
     client_error_response.status_code = 400
     client_error_response.ok = False
     client_error_response.headers = {}
-    client_error_response.text = ""
-    client_error_response.json.side_effect = json.JSONDecodeError(
-        "Expecting value: line 1 column 1 (char 0)", "", 0
-    )
+    client_error_response.text = response_body
 
     request = APIRequest(
         method="POST",
@@ -958,6 +988,19 @@ def test_proxy_config():
     requests_session = client.network_session.network_client.requests_session
     assert requests_session.proxies["http"] == "http://user:pass@127.0.0.1:3128/"
     assert requests_session.proxies["https"] == "http://user:pass@127.0.0.1:3128/"
+
+
+@pytest.mark.parametrize(
+    "response_body, expected_json",
+    [
+        ('', {}),
+        ('Invalid json', {}),
+        (123, {}),
+        ('{"name": "John"}', {'name': 'John'}),
+    ],
+)
+def test_read_json_body(response_body, expected_json):
+    assert BoxNetworkClient._read_json_body(response_body) == expected_json
 
 
 def test_get_options_stream_position(network_client, mock_byte_stream):
