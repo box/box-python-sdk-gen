@@ -101,11 +101,7 @@ class BoxNetworkClient(NetworkClient):
                         url=network_response.url,
                         status=network_response.status_code,
                         headers=dict(response.network_response.headers),
-                        data=(
-                            json_to_serialized_data(network_response.text)
-                            if network_response.text
-                            else None
-                        ),
+                        data=(self._read_json_body(network_response.text)),
                         content=io.BytesIO(network_response.content),
                     )
 
@@ -254,11 +250,7 @@ class BoxNetworkClient(NetworkClient):
             )
 
         network_response = response.network_response
-
-        try:
-            response_json = network_response.json()
-        except ValueError:
-            response_json = {}
+        response_json = BoxNetworkClient._read_json_body(network_response.text)
 
         raise BoxAPIError(
             message=f'{network_response.status_code} {response_json.get("message", "")}; Request ID: {response_json.get("request_id", "")}',
@@ -306,6 +298,15 @@ class BoxNetworkClient(NetworkClient):
                 message='Request with non-seekable stream cannot be retried',
                 error=raised_exception,
             )
+
+    @staticmethod
+    def _read_json_body(response_body: str) -> dict:
+        if not response_body:
+            return {}
+        try:
+            return json_to_serialized_data(response_body)
+        except (ValueError, TypeError):
+            return {}
 
     def _reset_stream(
         self,
