@@ -75,9 +75,23 @@ See the endpoint docs at
 
 ```python
 client.search.search_for_content(
-    query=keyword,
     ancestor_folder_ids=["0"],
-    trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
+    mdfilters=[
+        MetadataFilter(
+            filters={
+                "stringField": "stringValue",
+                "dateField": MetadataFieldFilterDateRange(
+                    lt=date_time_from_string("2035-01-01T00:00:00Z"),
+                    gt=date_time_from_string("2035-01-03T00:00:00Z"),
+                ),
+                "floatField": MetadataFieldFilterFloatRange(lt=9.5, gt=10.5),
+                "enumField": "enumValue2",
+                "multiSelectField": ["multiSelectValue1", "multiSelectValue2"],
+            },
+            scope=MetadataFilterScopeField.ENTERPRISE,
+            template_key=template_key,
+        )
+    ],
 )
 ```
 
