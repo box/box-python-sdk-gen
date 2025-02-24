@@ -38,11 +38,11 @@ from box_sdk_gen.schemas.search_results_with_shared_links import (
     SearchResultsWithSharedLinks,
 )
 
-from box_sdk_gen.managers.search import SearchForContentTrashContent
-
 from box_sdk_gen.schemas.metadata_filter import MetadataFilter
 
 from box_sdk_gen.schemas.metadata_filter import MetadataFilterScopeField
+
+from box_sdk_gen.managers.search import SearchForContentTrashContent
 
 from box_sdk_gen.internal.utils import get_uuid
 
@@ -151,29 +151,6 @@ def testCreateMetaDataQueryExecuteRead():
     client.files.delete_file_by_id(file.id)
 
 
-def testGetSearch():
-    keyword: str = 'test'
-    search: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.search_for_content(
-            query=keyword,
-            ancestor_folder_ids=['0'],
-            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
-        )
-    )
-    assert len(search.entries) >= 0
-    assert to_string(search.type) == 'search_results_items'
-    search_with_shared_link: Union[SearchResults, SearchResultsWithSharedLinks] = (
-        client.search.search_for_content(
-            query=keyword,
-            ancestor_folder_ids=['0'],
-            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
-            include_recent_shared_links=True,
-        )
-    )
-    assert len(search_with_shared_link.entries) >= 0
-    assert to_string(search_with_shared_link.type) == 'search_results_with_shared_links'
-
-
 def testMetadataFilters():
     template_key: str = ''.join(['key', get_uuid()])
     template: MetadataTemplate = client.metadata_templates.create_metadata_template(
@@ -261,3 +238,26 @@ def testMetadataFilters():
         DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
     client.files.delete_file_by_id(file.id)
+
+
+def testGetSearch():
+    keyword: str = 'test'
+    search: Union[SearchResults, SearchResultsWithSharedLinks] = (
+        client.search.search_for_content(
+            query=keyword,
+            ancestor_folder_ids=['0'],
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
+        )
+    )
+    assert len(search.entries) >= 0
+    assert to_string(search.type) == 'search_results_items'
+    search_with_shared_link: Union[SearchResults, SearchResultsWithSharedLinks] = (
+        client.search.search_for_content(
+            query=keyword,
+            ancestor_folder_ids=['0'],
+            trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
+            include_recent_shared_links=True,
+        )
+    )
+    assert len(search_with_shared_link.entries) >= 0
+    assert to_string(search_with_shared_link.type) == 'search_results_with_shared_links'
