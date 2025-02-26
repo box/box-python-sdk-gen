@@ -278,7 +278,36 @@ client.metadata_templates.create_metadata_template(
             type=CreateMetadataTemplateFieldsTypeField.STRING,
             key="testName",
             display_name="testName",
-        )
+        ),
+        CreateMetadataTemplateFields(
+            type=CreateMetadataTemplateFieldsTypeField.FLOAT,
+            key="age",
+            display_name="age",
+        ),
+        CreateMetadataTemplateFields(
+            type=CreateMetadataTemplateFieldsTypeField.DATE,
+            key="birthDate",
+            display_name="birthDate",
+        ),
+        CreateMetadataTemplateFields(
+            type=CreateMetadataTemplateFieldsTypeField.ENUM,
+            key="countryCode",
+            display_name="countryCode",
+            options=[
+                CreateMetadataTemplateFieldsOptionsField(key="US"),
+                CreateMetadataTemplateFieldsOptionsField(key="CA"),
+            ],
+        ),
+        CreateMetadataTemplateFields(
+            type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
+            key="sports",
+            display_name="sports",
+            options=[
+                CreateMetadataTemplateFieldsOptionsField(key="basketball"),
+                CreateMetadataTemplateFieldsOptionsField(key="football"),
+                CreateMetadataTemplateFieldsOptionsField(key="tennis"),
+            ],
+        ),
     ],
 )
 ```
