@@ -1,3 +1,5 @@
+from box_sdk_gen.internal.utils import to_string
+
 import pytest
 
 from box_sdk_gen.client import BoxClient
@@ -8,6 +10,10 @@ from box_sdk_gen.managers.metadata_templates import CreateMetadataTemplateFields
 
 from box_sdk_gen.managers.metadata_templates import (
     CreateMetadataTemplateFieldsTypeField,
+)
+
+from box_sdk_gen.managers.metadata_templates import (
+    CreateMetadataTemplateFieldsOptionsField,
 )
 
 from box_sdk_gen.managers.metadata_templates import UpdateMetadataTemplateScope
@@ -52,14 +58,56 @@ def testMetadataTemplates():
                 type=CreateMetadataTemplateFieldsTypeField.STRING,
                 key='testName',
                 display_name='testName',
-            )
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.FLOAT,
+                key='age',
+                display_name='age',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.DATE,
+                key='birthDate',
+                display_name='birthDate',
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.ENUM,
+                key='countryCode',
+                display_name='countryCode',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='US'),
+                    CreateMetadataTemplateFieldsOptionsField(key='CA'),
+                ],
+            ),
+            CreateMetadataTemplateFields(
+                type=CreateMetadataTemplateFieldsTypeField.MULTISELECT,
+                key='sports',
+                display_name='sports',
+                options=[
+                    CreateMetadataTemplateFieldsOptionsField(key='basketball'),
+                    CreateMetadataTemplateFieldsOptionsField(key='football'),
+                    CreateMetadataTemplateFieldsOptionsField(key='tennis'),
+                ],
+            ),
         ],
     )
     assert template.template_key == template_key
     assert template.display_name == template_key
-    assert len(template.fields) == 1
+    assert len(template.fields) == 5
     assert template.fields[0].key == 'testName'
     assert template.fields[0].display_name == 'testName'
+    assert to_string(template.fields[0].type) == 'string'
+    assert template.fields[1].key == 'age'
+    assert template.fields[1].display_name == 'age'
+    assert to_string(template.fields[1].type) == 'float'
+    assert template.fields[2].key == 'birthDate'
+    assert template.fields[2].display_name == 'birthDate'
+    assert to_string(template.fields[2].type) == 'date'
+    assert template.fields[3].key == 'countryCode'
+    assert template.fields[3].display_name == 'countryCode'
+    assert to_string(template.fields[3].type) == 'enum'
+    assert template.fields[4].key == 'sports'
+    assert template.fields[4].display_name == 'sports'
+    assert to_string(template.fields[4].type) == 'multiSelect'
     updated_template: MetadataTemplate = (
         client.metadata_templates.update_metadata_template(
             UpdateMetadataTemplateScope.ENTERPRISE,
@@ -73,9 +121,9 @@ def testMetadataTemplates():
             ],
         )
     )
-    assert len(updated_template.fields) == 2
-    assert updated_template.fields[1].key == 'newfieldname'
-    assert updated_template.fields[1].display_name == 'newFieldName'
+    assert len(updated_template.fields) == 6
+    assert updated_template.fields[5].key == 'newfieldname'
+    assert updated_template.fields[5].display_name == 'newFieldName'
     get_metadata_template: MetadataTemplate = (
         client.metadata_templates.get_metadata_template_by_id(template.id)
     )
