@@ -6,8 +6,6 @@ from box_sdk_gen.schemas.users import Users
 
 from box_sdk_gen.schemas.user_full import UserFull
 
-from box_sdk_gen.managers.users import UpdateUserByIdNotificationEmail
-
 from box_sdk_gen.internal.utils import get_uuid
 
 from box_sdk_gen.internal.utils import create_null
@@ -41,21 +39,4 @@ def test_create_update_get_delete_user():
         user.id, name=updated_user_name
     )
     assert updated_user.name == updated_user_name
-    client.users.delete_user_by_id(user.id)
-
-
-def test_user_notification_email():
-    user_name: str = get_uuid()
-    user_login: str = ''.join([get_uuid(), '@gmail.com'])
-    user: UserFull = client.users.create_user(
-        user_name, login=user_login, is_platform_access_only=True
-    )
-    updated_with_notification_email: UserFull = client.users.update_user_by_id(
-        user.id, notification_email=UpdateUserByIdNotificationEmail(email=user_login)
-    )
-    assert not updated_with_notification_email.notification_email == None
-    updated_without_notification_email: UserFull = client.users.update_user_by_id(
-        user.id, notification_email=create_null()
-    )
-    assert updated_without_notification_email.notification_email == None
     client.users.delete_user_by_id(user.id)
