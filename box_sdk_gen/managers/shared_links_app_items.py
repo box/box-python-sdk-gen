@@ -45,7 +45,7 @@ class SharedLinksAppItemsManager:
         self.auth = auth
         self.network_session = network_session
 
-    def get_shared_item_app_items(
+    def find_app_item_for_shared_link(
         self, boxapi: str, *, extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> AppItem:
         """
