@@ -66,6 +66,8 @@ from box_sdk_gen.managers.trashed_web_links import *
 
 from box_sdk_gen.managers.shared_links_web_links import *
 
+from box_sdk_gen.managers.shared_links_app_items import *
+
 from box_sdk_gen.managers.users import *
 
 from box_sdk_gen.managers.session_termination import *

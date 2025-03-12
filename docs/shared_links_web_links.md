@@ -50,7 +50,7 @@ user_client.shared_links_web_links.find_web_link_for_shared_link(
 
 This function returns a value of type `WebLink`.
 
-Returns a full file resource if the shared link is valid and
+Returns a full web link resource if the shared link is valid and
 the user has access to it.
 
 ## Get shared link for web link
