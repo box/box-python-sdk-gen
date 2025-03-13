@@ -66,6 +66,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         redirect_url: Optional[str] = None,
         declined_redirect_url: Optional[str] = None,
         login_required: Optional[bool] = None,
+        verification_phone_number: Optional[str] = None,
         password: Optional[str] = None,
         signer_group_id: Optional[str] = None,
         suppress_notifications: Optional[bool] = None,
@@ -118,6 +119,10 @@ class SignRequestSigner(SignRequestCreateSigner):
         an existing account, they will have the option to create
         a free Box account., defaults to None
                 :type login_required: Optional[bool], optional
+                :param verification_phone_number: If set, this phone number will be used to verify the signer
+        via two-factor authentication before they are able to sign the document.
+        Cannot be selected in combination with `login_required`., defaults to None
+                :type verification_phone_number: Optional[str], optional
                 :param password: If set, the signer is required to enter the password before they are able
         to sign a document. This field is write only., defaults to None
                 :type password: Optional[str], optional
@@ -141,6 +146,7 @@ class SignRequestSigner(SignRequestCreateSigner):
             redirect_url=redirect_url,
             declined_redirect_url=declined_redirect_url,
             login_required=login_required,
+            verification_phone_number=verification_phone_number,
             password=password,
             signer_group_id=signer_group_id,
             suppress_notifications=suppress_notifications,
