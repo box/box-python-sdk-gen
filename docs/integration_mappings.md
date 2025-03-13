@@ -305,3 +305,119 @@ user_client.integration_mappings.delete_teams_integration_mapping_by_id(
 This function returns a value of type `None`.
 
 Empty body in response
+
+## List Teams integration mappings
+
+Lists [Teams integration mappings](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams) in a users' enterprise.
+You need Admin or Co-Admin role to
+use this endpoint.
+
+This operation is performed by calling function `get_integration_mapping_teams`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/get-integration-mappings-teams/).
+
+_Currently we don't have an example for calling `get_integration_mapping_teams` in integration tests_
+
+### Arguments
+
+- partner_item_type `Optional[GetIntegrationMappingTeamsPartnerItemType]`
+  - Mapped item type, for which the mapping should be returned
+- partner_item_id `Optional[str]`
+  - ID of the mapped item, for which the mapping should be returned
+- box_item_id `Optional[str]`
+  - Box item ID, for which the mappings should be returned
+- box_item_type `Optional[GetIntegrationMappingTeamsBoxItemType]`
+  - Box item type, for which the mappings should be returned
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `IntegrationMappingsTeams`.
+
+Returns a collection of integration mappings
+
+## Create Teams integration mapping
+
+Creates a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams)
+by mapping a Teams channel to a Box item.
+You need Admin or Co-Admin role to
+use this endpoint.
+
+This operation is performed by calling function `create_integration_mapping_teams`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/post-integration-mappings-teams/).
+
+_Currently we don't have an example for calling `create_integration_mapping_teams` in integration tests_
+
+### Arguments
+
+- partner_item `IntegrationMappingPartnerItemTeamsCreateRequest`
+  -
+- box_item `FolderReference`
+  -
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `IntegrationMappingTeams`.
+
+Returns the created integration mapping.
+
+## Update Teams integration mapping
+
+Updates a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams).
+Supports updating the Box folder ID and options.
+You need Admin or Co-Admin role to
+use this endpoint.
+
+This operation is performed by calling function `update_integration_mapping_teams_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/put-integration-mappings-teams-id/).
+
+_Currently we don't have an example for calling `update_integration_mapping_teams_by_id` in integration tests_
+
+### Arguments
+
+- integration_mapping_id `str`
+  - An ID of an integration mapping Example: "11235432"
+- box_item `Optional[FolderReference]`
+  -
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `IntegrationMappingTeams`.
+
+Returns the updated integration mapping object.
+
+## Delete Teams integration mapping
+
+Deletes a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams).
+You need Admin or Co-Admin role to
+use this endpoint.
+
+This operation is performed by calling function `delete_integration_mapping_teams_by_id`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/delete-integration-mappings-teams-id/).
+
+_Currently we don't have an example for calling `delete_integration_mapping_teams_by_id` in integration tests_
+
+### Arguments
+
+- integration_mapping_id `str`
+  - An ID of an integration mapping Example: "11235432"
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `None`.
+
+Empty body in response
