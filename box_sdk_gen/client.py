@@ -70,6 +70,8 @@ from box_sdk_gen.managers.trashed_web_links import TrashedWebLinksManager
 
 from box_sdk_gen.managers.shared_links_web_links import SharedLinksWebLinksManager
 
+from box_sdk_gen.managers.shared_links_app_items import SharedLinksAppItemsManager
+
 from box_sdk_gen.managers.users import UsersManager
 
 from box_sdk_gen.managers.session_termination import SessionTerminationManager
@@ -287,6 +289,9 @@ class BoxClient:
             auth=self.auth, network_session=self.network_session
         )
         self.shared_links_web_links = SharedLinksWebLinksManager(
+            auth=self.auth, network_session=self.network_session
+        )
+        self.shared_links_app_items = SharedLinksAppItemsManager(
             auth=self.auth, network_session=self.network_session
         )
         self.users = UsersManager(auth=self.auth, network_session=self.network_session)
