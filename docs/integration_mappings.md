@@ -104,7 +104,13 @@ This operation is performed by calling function `update_slack_integration_mappin
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-integration-mappings-slack-id/).
 
-_Currently we don't have an example for calling `update_slack_integration_mapping_by_id` in integration tests_
+<!-- sample put_integration_mappings_slack_id -->
+
+```python
+user_client.integration_mappings.update_slack_integration_mapping_by_id(
+    integration_mapping_id, box_item=IntegrationMappingBoxItemSlack(id="1234567")
+)
+```
 
 ### Arguments
 
@@ -135,7 +141,13 @@ This operation is performed by calling function `delete_slack_integration_mappin
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-integration-mappings-slack-id/).
 
-_Currently we don't have an example for calling `delete_slack_integration_mapping_by_id` in integration tests_
+<!-- sample delete_integration_mappings_slack_id -->
+
+```python
+user_client.integration_mappings.delete_slack_integration_mapping_by_id(
+    integration_mapping_id
+)
+```
 
 ### Arguments
 
@@ -156,22 +168,26 @@ Lists [Teams integration mappings](https://support.box.com/hc/en-us/articles/360
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `get_integration_mapping_teams`.
+This operation is performed by calling function `get_teams_integration_mapping`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/get-integration-mappings-teams/).
 
-_Currently we don't have an example for calling `get_integration_mapping_teams` in integration tests_
+<!-- sample get_integration_mappings_teams -->
+
+```python
+user_client.integration_mappings.get_teams_integration_mapping()
+```
 
 ### Arguments
 
-- partner_item_type `Optional[GetIntegrationMappingTeamsPartnerItemType]`
+- partner_item_type `Optional[GetTeamsIntegrationMappingPartnerItemType]`
   - Mapped item type, for which the mapping should be returned
 - partner_item_id `Optional[str]`
   - ID of the mapped item, for which the mapping should be returned
 - box_item_id `Optional[str]`
   - Box item ID, for which the mappings should be returned
-- box_item_type `Optional[GetIntegrationMappingTeamsBoxItemType]`
+- box_item_type `Optional[GetTeamsIntegrationMappingBoxItemType]`
   - Box item type, for which the mappings should be returned
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
@@ -189,12 +205,24 @@ by mapping a Teams channel to a Box item.
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `create_integration_mapping_teams`.
+This operation is performed by calling function `create_teams_integration_mapping`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/post-integration-mappings-teams/).
 
-_Currently we don't have an example for calling `create_integration_mapping_teams` in integration tests_
+<!-- sample post_integration_mappings_teams -->
+
+```python
+user_client.integration_mappings.create_teams_integration_mapping(
+    IntegrationMappingPartnerItemTeamsCreateRequest(
+        type=IntegrationMappingPartnerItemTeamsCreateRequestTypeField.CHANNEL,
+        id=partner_item_id,
+        tenant_id=tenant_id,
+        team_id=team_id,
+    ),
+    FolderReference(id=folder.id),
+)
+```
 
 ### Arguments
 
@@ -218,12 +246,18 @@ Supports updating the Box folder ID and options.
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `update_integration_mapping_teams_by_id`.
+This operation is performed by calling function `update_teams_integration_mapping_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-integration-mappings-teams-id/).
 
-_Currently we don't have an example for calling `update_integration_mapping_teams_by_id` in integration tests_
+<!-- sample put_integration_mappings_teams_id -->
+
+```python
+user_client.integration_mappings.update_teams_integration_mapping_by_id(
+    integration_mapping_id, box_item=FolderReference(id="1234567")
+)
+```
 
 ### Arguments
 
@@ -246,12 +280,18 @@ Deletes a [Teams integration mapping](https://support.box.com/hc/en-us/articles/
 You need Admin or Co-Admin role to
 use this endpoint.
 
-This operation is performed by calling function `delete_integration_mapping_teams_by_id`.
+This operation is performed by calling function `delete_teams_integration_mapping_by_id`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/delete-integration-mappings-teams-id/).
 
-_Currently we don't have an example for calling `delete_integration_mapping_teams_by_id` in integration tests_
+<!-- sample delete_integration_mappings_teams_id -->
+
+```python
+user_client.integration_mappings.delete_teams_integration_mapping_by_id(
+    integration_mapping_id
+)
+```
 
 ### Arguments
 
