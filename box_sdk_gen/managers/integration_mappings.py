@@ -77,12 +77,12 @@ class GetSlackIntegrationMappingBoxItemType(str, Enum):
     FOLDER = 'folder'
 
 
-class GetIntegrationMappingTeamsPartnerItemType(str, Enum):
+class GetTeamsIntegrationMappingPartnerItemType(str, Enum):
     CHANNEL = 'channel'
     TEAM = 'team'
 
 
-class GetIntegrationMappingTeamsBoxItemType(str, Enum):
+class GetTeamsIntegrationMappingBoxItemType(str, Enum):
     FOLDER = 'folder'
 
 
@@ -309,13 +309,13 @@ class IntegrationMappingsManager:
         )
         return None
 
-    def get_integration_mapping_teams(
+    def get_teams_integration_mapping(
         self,
         *,
-        partner_item_type: Optional[GetIntegrationMappingTeamsPartnerItemType] = None,
+        partner_item_type: Optional[GetTeamsIntegrationMappingPartnerItemType] = None,
         partner_item_id: Optional[str] = None,
         box_item_id: Optional[str] = None,
-        box_item_type: Optional[GetIntegrationMappingTeamsBoxItemType] = None,
+        box_item_type: Optional[GetTeamsIntegrationMappingBoxItemType] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMappingsTeams:
         """
@@ -327,13 +327,13 @@ class IntegrationMappingsManager:
         use this endpoint.
 
         :param partner_item_type: Mapped item type, for which the mapping should be returned, defaults to None
-        :type partner_item_type: Optional[GetIntegrationMappingTeamsPartnerItemType], optional
+        :type partner_item_type: Optional[GetTeamsIntegrationMappingPartnerItemType], optional
         :param partner_item_id: ID of the mapped item, for which the mapping should be returned, defaults to None
         :type partner_item_id: Optional[str], optional
         :param box_item_id: Box item ID, for which the mappings should be returned, defaults to None
         :type box_item_id: Optional[str], optional
         :param box_item_type: Box item type, for which the mappings should be returned, defaults to None
-        :type box_item_type: Optional[GetIntegrationMappingTeamsBoxItemType], optional
+        :type box_item_type: Optional[GetTeamsIntegrationMappingBoxItemType], optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
@@ -366,7 +366,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMappingsTeams)
 
-    def create_integration_mapping_teams(
+    def create_teams_integration_mapping(
         self,
         partner_item: IntegrationMappingPartnerItemTeamsCreateRequest,
         box_item: FolderReference,
@@ -410,7 +410,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMappingTeams)
 
-    def update_integration_mapping_teams_by_id(
+    def update_teams_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
         *,
@@ -458,7 +458,7 @@ class IntegrationMappingsManager:
         )
         return deserialize(response.data, IntegrationMappingTeams)
 
-    def delete_integration_mapping_teams_by_id(
+    def delete_teams_integration_mapping_by_id(
         self,
         integration_mapping_id: str,
         *,
