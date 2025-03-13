@@ -120,6 +120,8 @@ from box_sdk_gen.schemas.file_or_folder_scope import *
 
 from box_sdk_gen.schemas.access_token import *
 
+from box_sdk_gen.schemas.folder_reference import *
+
 from box_sdk_gen.schemas.generic_source import *
 
 from box_sdk_gen.schemas.group_base import *
@@ -137,6 +139,16 @@ from box_sdk_gen.schemas.integration_mapping_base import *
 from box_sdk_gen.schemas.integration_mapping_box_item_slack import *
 
 from box_sdk_gen.schemas.integration_mapping_partner_item_slack import *
+
+from box_sdk_gen.schemas.integration_mapping_partner_item_teams import *
+
+from box_sdk_gen.schemas.integration_mapping_teams import *
+
+from box_sdk_gen.schemas.integration_mappings_teams import *
+
+from box_sdk_gen.schemas.integration_mapping_partner_item_teams_create_request import *
+
+from box_sdk_gen.schemas.integration_mapping_teams_create_request import *
 
 from box_sdk_gen.schemas.integration_mapping_slack_options import *
 

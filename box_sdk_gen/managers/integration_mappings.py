@@ -16,6 +16,10 @@ from box_sdk_gen.schemas.integration_mapping_partner_item_slack import (
     IntegrationMappingPartnerItemSlack,
 )
 
+from box_sdk_gen.schemas.integration_mapping_partner_item_teams_create_request import (
+    IntegrationMappingPartnerItemTeamsCreateRequest,
+)
+
 from box_sdk_gen.schemas.integration_mappings import IntegrationMappings
 
 from box_sdk_gen.schemas.client_error import ClientError
@@ -33,6 +37,16 @@ from box_sdk_gen.schemas.integration_mapping_box_item_slack import (
 from box_sdk_gen.schemas.integration_mapping_slack_options import (
     IntegrationMappingSlackOptions,
 )
+
+from box_sdk_gen.schemas.integration_mappings_teams import IntegrationMappingsTeams
+
+from box_sdk_gen.schemas.integration_mapping_teams import IntegrationMappingTeams
+
+from box_sdk_gen.schemas.integration_mapping_teams_create_request import (
+    IntegrationMappingTeamsCreateRequest,
+)
+
+from box_sdk_gen.schemas.folder_reference import FolderReference
 
 from box_sdk_gen.box.errors import BoxSDKError
 
@@ -60,6 +74,15 @@ class GetSlackIntegrationMappingPartnerItemType(str, Enum):
 
 
 class GetSlackIntegrationMappingBoxItemType(str, Enum):
+    FOLDER = 'folder'
+
+
+class GetIntegrationMappingTeamsPartnerItemType(str, Enum):
+    CHANNEL = 'channel'
+    TEAM = 'team'
+
+
+class GetIntegrationMappingTeamsBoxItemType(str, Enum):
     FOLDER = 'folder'
 
 
@@ -274,6 +297,196 @@ class IntegrationMappingsManager:
                     [
                         self.network_session.base_urls.base_url,
                         '/2.0/integration_mappings/slack/',
+                        to_string(integration_mapping_id),
+                    ]
+                ),
+                method='DELETE',
+                headers=headers_map,
+                response_format=ResponseFormat.NO_CONTENT,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return None
+
+    def get_integration_mapping_teams(
+        self,
+        *,
+        partner_item_type: Optional[GetIntegrationMappingTeamsPartnerItemType] = None,
+        partner_item_id: Optional[str] = None,
+        box_item_id: Optional[str] = None,
+        box_item_type: Optional[GetIntegrationMappingTeamsBoxItemType] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> IntegrationMappingsTeams:
+        """
+        Lists [Teams integration mappings](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams) in a users' enterprise.
+
+        You need Admin or Co-Admin role to
+
+
+        use this endpoint.
+
+        :param partner_item_type: Mapped item type, for which the mapping should be returned, defaults to None
+        :type partner_item_type: Optional[GetIntegrationMappingTeamsPartnerItemType], optional
+        :param partner_item_id: ID of the mapped item, for which the mapping should be returned, defaults to None
+        :type partner_item_id: Optional[str], optional
+        :param box_item_id: Box item ID, for which the mappings should be returned, defaults to None
+        :type box_item_id: Optional[str], optional
+        :param box_item_type: Box item type, for which the mappings should be returned, defaults to None
+        :type box_item_type: Optional[GetIntegrationMappingTeamsBoxItemType], optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        query_params_map: Dict[str, str] = prepare_params(
+            {
+                'partner_item_type': to_string(partner_item_type),
+                'partner_item_id': to_string(partner_item_id),
+                'box_item_id': to_string(box_item_id),
+                'box_item_type': to_string(box_item_type),
+            }
+        )
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/integration_mappings/teams',
+                    ]
+                ),
+                method='GET',
+                params=query_params_map,
+                headers=headers_map,
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, IntegrationMappingsTeams)
+
+    def create_integration_mapping_teams(
+        self,
+        partner_item: IntegrationMappingPartnerItemTeamsCreateRequest,
+        box_item: FolderReference,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> IntegrationMappingTeams:
+        """
+        Creates a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams)
+
+        by mapping a Teams channel to a Box item.
+
+
+        You need Admin or Co-Admin role to
+
+
+        use this endpoint.
+
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'partner_item': partner_item, 'box_item': box_item}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/integration_mappings/teams',
+                    ]
+                ),
+                method='POST',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, IntegrationMappingTeams)
+
+    def update_integration_mapping_teams_by_id(
+        self,
+        integration_mapping_id: str,
+        *,
+        box_item: Optional[FolderReference] = None,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> IntegrationMappingTeams:
+        """
+                Updates a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams).
+
+                Supports updating the Box folder ID and options.
+
+
+                You need Admin or Co-Admin role to
+
+
+                use this endpoint.
+
+                :param integration_mapping_id: An ID of an integration mapping
+        Example: "11235432"
+                :type integration_mapping_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'box_item': box_item}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/integration_mappings/teams/',
+                        to_string(integration_mapping_id),
+                    ]
+                ),
+                method='PUT',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, IntegrationMappingTeams)
+
+    def delete_integration_mapping_teams_by_id(
+        self,
+        integration_mapping_id: str,
+        *,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> None:
+        """
+                Deletes a [Teams integration mapping](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams).
+
+                You need Admin or Co-Admin role to
+
+
+                use this endpoint.
+
+                :param integration_mapping_id: An ID of an integration mapping
+        Example: "11235432"
+                :type integration_mapping_id: str
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        headers_map: Dict[str, str] = prepare_params({**extra_headers})
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/integration_mappings/teams/',
                         to_string(integration_mapping_id),
                     ]
                 ),
