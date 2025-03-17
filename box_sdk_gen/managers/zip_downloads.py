@@ -311,9 +311,7 @@ class ZipDownloadsManager:
             extra_headers = {}
         request_body: Dict = {'items': items, 'download_file_name': download_file_name}
         zip_download_session: ZipDownload = self.create_zip_download(
-            request_body.get('items'),
-            download_file_name=request_body.get('download_file_name'),
-            extra_headers=extra_headers,
+            items, download_file_name=download_file_name, extra_headers=extra_headers
         )
         return self.get_zip_download_content(
             zip_download_session.download_url, extra_headers=extra_headers
