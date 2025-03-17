@@ -42,6 +42,7 @@ jobs:
           APP_ITEM_ASSOCIATION_FILE_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FILE_ID }}
           APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}
           WORKFLOW_FOLDER_ID: ${{ secrets.WORKFLOW_FOLDER_ID }}
+          APP_ITEM_SHARED_LINK: ${{ secrets.APP_ITEM_SHARED_LINK }}
         run: |
           tox
 
@@ -77,3 +78,4 @@ jobs:
           WORKFLOW_FOLDER_ID: ${{ secrets.WORKFLOW_FOLDER_ID }}
           APP_ITEM_ASSOCIATION_FILE_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FILE_ID }}
           APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}
+          APP_ITEM_SHARED_LINK: ${{ secrets.APP_ITEM_SHARED_LINK }}
