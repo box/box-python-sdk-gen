@@ -124,9 +124,9 @@ class AvatarsManager:
                 multipart_data=[
                     MultipartItem(
                         part_name='pic',
-                        file_stream=request_body.get('pic'),
-                        file_name=request_body.get('pic_file_name'),
-                        content_type=request_body.get('pic_content_type'),
+                        file_stream=pic,
+                        file_name=pic_file_name,
+                        content_type=pic_content_type,
                     )
                 ],
                 content_type='multipart/form-data',
