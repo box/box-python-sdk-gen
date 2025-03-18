@@ -7,13 +7,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* add `verification_phone_number` property to create sign request (box/box-openapi[#515](https://github.com/box/box-python-sdk-gen/issues/515)) ([#503](https://github.com/box/box-python-sdk-gen/issues/503)) ([6d19d19](https://github.com/box/box-python-sdk-gen/commit/6d19d197481a578d7d5ad8d632ac6f5c06bd3dce))
+* Add `verification_phone_number` property to create sign request (box/box-openapi[#515](https://github.com/box/box-python-sdk-gen/issues/515)) ([#503](https://github.com/box/box-python-sdk-gen/issues/503)) ([6d19d19](https://github.com/box/box-python-sdk-gen/commit/6d19d197481a578d7d5ad8d632ac6f5c06bd3dce))
 
 
 ### New Features and Enhancements
 
-* add find app item for shared link endpoint (box/box-openapi[#514](https://github.com/box/box-python-sdk-gen/issues/514)) ([#502](https://github.com/box/box-python-sdk-gen/issues/502)) ([fd6c693](https://github.com/box/box-python-sdk-gen/commit/fd6c6933f0fb518830e9ac810fd511a0cf60b429))
-* add Integration Mappings Teams API (box/box-openapi[#517](https://github.com/box/box-python-sdk-gen/issues/517)) ([#505](https://github.com/box/box-python-sdk-gen/issues/505)) ([d1aa250](https://github.com/box/box-python-sdk-gen/commit/d1aa250fb01fbf742daf266d4458ba2eab2c5669))
+* Add find app item for shared link endpoint (box/box-openapi[#514](https://github.com/box/box-python-sdk-gen/issues/514)) ([#502](https://github.com/box/box-python-sdk-gen/issues/502)) ([fd6c693](https://github.com/box/box-python-sdk-gen/commit/fd6c6933f0fb518830e9ac810fd511a0cf60b429))
+* Add Integration Mappings Teams API (box/box-openapi[#517](https://github.com/box/box-python-sdk-gen/issues/517)) ([#505](https://github.com/box/box-python-sdk-gen/issues/505)) ([d1aa250](https://github.com/box/box-python-sdk-gen/commit/d1aa250fb01fbf742daf266d4458ba2eab2c5669))
 * Support upload with preflight check (box/box-codegen[#676](https://github.com/box/box-python-sdk-gen/issues/676)) ([#515](https://github.com/box/box-python-sdk-gen/issues/515)) ([bb4597e](https://github.com/box/box-python-sdk-gen/commit/bb4597e40d49e20eca44c4414e406b1352af1a2b))
 
 ## [1.12.0](https://github.com/box/box-python-sdk-gen/compare/v1.11.1...v1.12.0) (2025-02-20)
