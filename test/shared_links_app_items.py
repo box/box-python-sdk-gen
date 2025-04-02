@@ -11,7 +11,7 @@ from test.commons import get_default_client
 client: BoxClient = get_default_client()
 
 
-def testSharedLinksFiles():
+def testSharedLinksAppItems():
     app_item_shared_link: str = get_env_var('APP_ITEM_SHARED_LINK')
     app_item: AppItem = client.shared_links_app_items.find_app_item_for_shared_link(
         ''.join(['shared_link=', app_item_shared_link])
