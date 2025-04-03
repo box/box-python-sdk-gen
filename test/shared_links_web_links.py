@@ -34,6 +34,8 @@ from test.commons import get_default_client
 
 from test.commons import get_default_client_with_user_subject
 
+from box_sdk_gen.internal.utils import create_null
+
 client: BoxClient = get_default_client()
 
 
@@ -94,4 +96,13 @@ def testSharedLinksWebLinks():
         )
     )
     assert to_string(updated_web_link.shared_link.access) == 'collaborators'
+    client.shared_links_web_links.remove_shared_link_from_web_link(
+        web_link_id, 'shared_link', shared_link=create_null()
+    )
+    web_link_from_api_after_remove: WebLink = (
+        client.shared_links_web_links.get_shared_link_for_web_link(
+            web_link_id, 'shared_link'
+        )
+    )
+    assert web_link_from_api_after_remove.shared_link == None
     client.web_links.delete_web_link_by_id(web_link_id)
