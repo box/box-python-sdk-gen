@@ -171,7 +171,13 @@ This operation is performed by calling function `remove_shared_link_from_folder`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-folders-id--remove-shared-link/).
 
-_Currently we don't have an example for calling `remove_shared_link_from_folder` in integration tests_
+<!-- sample put_folders_id#remove_shared_link -->
+
+```python
+client.shared_links_folders.remove_shared_link_from_folder(
+    folder.id, "shared_link", shared_link=create_null()
+)
+```
 
 ### Arguments
 

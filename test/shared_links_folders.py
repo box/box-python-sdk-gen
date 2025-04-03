@@ -30,6 +30,8 @@ from test.commons import get_default_client
 
 from test.commons import get_default_client_with_user_subject
 
+from box_sdk_gen.internal.utils import create_null
+
 client: BoxClient = get_default_client()
 
 
@@ -82,4 +84,11 @@ def testSharedLinksFolders():
         )
     )
     assert to_string(updated_folder.shared_link.access) == 'collaborators'
+    client.shared_links_folders.remove_shared_link_from_folder(
+        folder.id, 'shared_link', shared_link=create_null()
+    )
+    folder_from_api_after_remove: FolderFull = (
+        client.shared_links_folders.get_shared_link_for_folder(folder.id, 'shared_link')
+    )
+    assert folder_from_api_after_remove.shared_link == None
     client.folders.delete_folder_by_id(folder.id)
