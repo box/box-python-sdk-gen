@@ -1,5 +1,6 @@
 from typing import Dict
 
+from ..internal.logging import DataSanitizer
 from .network_client import NetworkClient
 from .box_network_client import BoxNetworkClient
 from .proxy_config import ProxyConfig
@@ -16,6 +17,7 @@ class NetworkSession:
         additional_headers: Dict[str, str] = None,
         base_urls: BaseUrls = None,
         proxy_url: str = None,
+        data_sanitizer: DataSanitizer = None,
     ):
         if additional_headers is None:
             additional_headers = {}
@@ -34,11 +36,14 @@ class NetworkSession:
                 'http': proxy_url,
                 'https': proxy_url,
             }
+        if data_sanitizer is None:
+            data_sanitizer = DataSanitizer()
         self.additional_headers = additional_headers
         self.base_urls = base_urls
         self.proxy_url = proxy_url
         self.network_client = network_client
         self.retry_strategy = retry_strategy
+        self.data_sanitizer = data_sanitizer
 
     def with_additional_headers(
         self, additional_headers: Dict[str, str] = None
@@ -55,6 +60,7 @@ class NetworkSession:
             base_urls=self.base_urls,
             proxy_url=self.proxy_url,
             retry_strategy=self.retry_strategy,
+            data_sanitizer=self.data_sanitizer,
         )
 
     def with_custom_base_urls(self, base_urls: BaseUrls) -> 'NetworkSession':
@@ -70,6 +76,7 @@ class NetworkSession:
             base_urls=base_urls,
             proxy_url=self.proxy_url,
             retry_strategy=self.retry_strategy,
+            data_sanitizer=self.data_sanitizer,
         )
 
     def with_proxy(self, config: ProxyConfig) -> 'NetworkSession':
@@ -95,6 +102,7 @@ class NetworkSession:
             base_urls=self.base_urls,
             proxy_url=proxy_url,
             retry_strategy=self.retry_strategy,
+            data_sanitizer=self.data_sanitizer,
         )
 
     def with_network_client(self, network_client: NetworkClient) -> 'NetworkSession':
@@ -110,6 +118,7 @@ class NetworkSession:
             base_urls=self.base_urls,
             proxy_url=self.proxy_url,
             retry_strategy=self.retry_strategy,
+            data_sanitizer=self.data_sanitizer,
         )
 
     def with_retry_strategy(self, retry_strategy: RetryStrategy) -> 'NetworkSession':
@@ -125,4 +134,21 @@ class NetworkSession:
             base_urls=self.base_urls,
             proxy_url=self.proxy_url,
             retry_strategy=retry_strategy,
+            data_sanitizer=self.data_sanitizer,
+        )
+
+    def with_data_sanitizer(self, data_sanitizer: DataSanitizer) -> 'NetworkSession':
+        """
+        Generate a fresh network session by duplicating the existing configuration and network parameters,
+        while also applying data sanitizer to sanitize sensitive data for logging.
+        :param data_sanitizer:
+        :return:
+        """
+        return NetworkSession(
+            network_client=self.network_client,
+            additional_headers=self.additional_headers,
+            base_urls=self.base_urls,
+            proxy_url=self.proxy_url,
+            retry_strategy=self.retry_strategy,
+            data_sanitizer=data_sanitizer,
         )

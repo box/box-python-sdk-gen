@@ -10,6 +10,7 @@ import requests
 from requests import RequestException, Session, Response
 from requests_toolbelt import MultipartEncoder
 
+from ..internal.logging import DataSanitizer
 from .retries import BoxRetryStrategy
 from ..networking.fetch_options import FetchOptions
 from ..networking.fetch_response import FetchResponse
@@ -66,6 +67,11 @@ class BoxNetworkClient(NetworkClient):
             options.network_session.retry_strategy
             if options.network_session
             else BoxRetryStrategy()
+        )
+        data_sanitizer = (
+            options.network_session.data_sanitizer
+            if options.network_session
+            else DataSanitizer()
         )
 
         attempt_nr = 1
@@ -125,7 +131,9 @@ class BoxNetworkClient(NetworkClient):
                 if 200 <= fetch_response.status < 400:
                     return fetch_response
 
-                self._raise_on_unsuccessful_request(request=request, response=response)
+                self._raise_on_unsuccessful_request(
+                    request=request, response=response, data_sanitizer=data_sanitizer
+                )
 
             self._reset_options_stream(
                 options, options_stream_position, response.raised_exception
@@ -136,7 +144,9 @@ class BoxNetworkClient(NetworkClient):
 
             attempt_nr += 1
 
-        self._raise_on_unsuccessful_request(request=request, response=response)
+        self._raise_on_unsuccessful_request(
+            request=request, response=response, data_sanitizer=data_sanitizer
+        )
 
     def _prepare_request(
         self, options: 'FetchOptions', reauthenticate: bool = False
@@ -242,7 +252,7 @@ class BoxNetworkClient(NetworkClient):
 
     @staticmethod
     def _raise_on_unsuccessful_request(
-        request: APIRequest, response: APIResponse
+        request: APIRequest, response: APIResponse, data_sanitizer: DataSanitizer
     ) -> None:
         if response.raised_exception:
             raise BoxSDKError(
@@ -271,6 +281,7 @@ class BoxNetworkClient(NetworkClient):
                 request_id=response_json.get("request_id", None),
                 help_url=response_json.get("help_url", None),
             ),
+            data_sanitizer=data_sanitizer,
         )
 
     @staticmethod
