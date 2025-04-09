@@ -20,7 +20,7 @@ except ImportError:
     jwt, default_backend, serialization = None, None, None
 
 from .base_object import BaseObject
-from ..serialization.json import sd_to_json
+from ..serialization.json import sd_to_json, sanitized_value
 from ..serialization.json import serialize
 from .null_value import null
 
@@ -449,3 +449,12 @@ def compute_webhook_signature(
 
 def random(min: float, max: float) -> float:
     return uniform(min, max)
+
+
+def sanitize_map(
+    dictionary: Dict[str, str], keys_to_sanitize: Dict[str, str]
+) -> Dict[str, str]:
+    return {
+        k: sanitized_value() if k.lower() in keys_to_sanitize else v
+        for k, v in dictionary.items()
+    }

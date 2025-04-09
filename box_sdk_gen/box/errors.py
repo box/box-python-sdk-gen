@@ -2,6 +2,7 @@ import pprint
 from datetime import datetime
 from typing import Any, Dict, Optional
 
+from ..internal.logging import DataSanitizer
 from ..internal.errors import GeneratedCodeError
 
 
@@ -44,13 +45,13 @@ class RequestInfo:
         self.headers = headers
         self.body = body
 
-    def __str__(self):
+    def print(self, data_sanitizer: DataSanitizer):
         return ''.join(
             (
                 f'\n\tMethod: {self.method}',
                 f'\n\tURL: {self.url}',
                 f'\n\tQuery params: \n{pprint.pformat(self.query_params, indent=8)}',
-                f'\n\tHeaders: \n{pprint.pformat(self.headers, indent=8)}',
+                f'\n\tHeaders: \n{pprint.pformat(data_sanitizer.sanitize_headers(self.headers), indent=8)}',
                 ''.join(
                     [
                         '\n\tBody: ',
@@ -83,11 +84,11 @@ class ResponseInfo:
         self.request_id = request_id
         self.help_url = help_url
 
-    def __str__(self):
+    def print(self, data_sanitizer: DataSanitizer):
         return ''.join(
             (
                 f'\n\tStatus code: {self.status_code}',
-                f'\n\tHeaders: \n{pprint.pformat(self.headers, indent=8)}',
+                f'\n\tHeaders: \n{pprint.pformat(data_sanitizer.sanitize_headers(self.headers), indent=8)}',
                 f'\n\tCode: {self.code}',
                 f'\n\tContext Info: \n{pprint.pformat(self.context_info, indent=8)}',
                 f'\n\tRequest Id: {self.request_id}',
@@ -96,10 +97,11 @@ class ResponseInfo:
                     [
                         '\n\tBody: ',
                         '\n' if self.body else '',
-                        pprint.pformat(self.body, indent=8),
+                        pprint.pformat(
+                            data_sanitizer.sanitize_body(self.body), indent=8
+                        ),
                     ]
                 ),
-                f'\n\tRaw body: {self.raw_body}',
             )
         )
 
@@ -112,18 +114,23 @@ class BoxAPIError(BoxSDKError):
         message: str,
         timestamp: Optional[datetime] = None,
         error: Optional[str] = None,
+        *,
+        data_sanitizer: DataSanitizer = None,
         **kwargs,
     ):
         super().__init__(message=message, timestamp=timestamp, error=error, **kwargs)
+        if data_sanitizer is None:
+            data_sanitizer = DataSanitizer()
         self.name = 'BoxAPIError'
         self.request_info = request_info
         self.response_info = response_info
+        self.data_sanitizer = data_sanitizer
 
     def __str__(self):
         return ''.join(
             [
                 f'\t{super(BoxAPIError, self).__str__()}',
-                f'\nRequest: {self.request_info}',
-                f'\nResponse: {self.response_info}',
+                f'\nRequest: {self.request_info.print(self.data_sanitizer)}',
+                f'\nResponse: {self.response_info.print(self.data_sanitizer)}',
             ]
         )

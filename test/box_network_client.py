@@ -13,6 +13,7 @@ from box_sdk_gen import (
     BoxSDKError,
     BoxClient,
     ResponseFormat,
+    DataSanitizer,
 )
 from box_sdk_gen.networking.box_network_client import (
     BoxNetworkClient,
@@ -177,6 +178,11 @@ def network_session_mock():
 @pytest.fixture
 def network_client(mock_requests_session):
     return BoxNetworkClient(mock_requests_session)
+
+
+@pytest.fixture
+def data_sanitizer():
+    return DataSanitizer()
 
 
 def reauthenticate_mock(auth, token):
@@ -831,7 +837,7 @@ def test_pass_retry_after_header_to_get_retry_after_time_method(
         sleep_mock.assert_called_once_with(123)
 
 
-def test_raising_api_error_with_valid_json_body(network_client):
+def test_raising_api_error_with_valid_json_body(network_client, data_sanitizer):
     client_error_response = Mock(Response)
     client_error_response.status_code = 400
     client_error_response.ok = False
@@ -868,7 +874,7 @@ def test_raising_api_error_with_valid_json_body(network_client):
         raised_exception=None,
     )
     try:
-        network_client._raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response, data_sanitizer)
     except BoxAPIError as e:
         assert e.request_info.method == request.method
         assert e.request_info.url == request.url
@@ -903,8 +909,56 @@ def test_raising_api_error_with_valid_json_body(network_client):
         assert e.name == "BoxAPIError"
 
 
+def test_sensitive_data_are_sanitized_from_box_api_error(
+    network_client, data_sanitizer
+):
+    client_error_response = Mock(Response)
+    client_error_response.status_code = 400
+    client_error_response.ok = False
+    client_error_response.headers = {'token': 'my_token'}
+    client_error_response.text = """{
+      "client_secret": "secret",
+      "password": "change-me",
+      "message": "Method Not Allowed",
+      "request_id": "abcdef123456",
+      "status": 400
+    }"""
+    client_error_response.json.return_value = json.loads(client_error_response.text)
+
+    request = APIRequest(
+        method="POST",
+        url="https://example.com",
+        headers={
+            "header": "test",
+            "User-Agent": USER_AGENT_HEADER,
+            "X-Box-UA": X_BOX_UA_HEADER,
+            "Content-Type": "application/json",
+            "Authorization": "Bearer acbdef123456",
+        },
+        params={"param": "value"},
+        data='{"key": "value"}',
+    )
+
+    response = APIResponse(
+        network_response=client_error_response,
+        reauthentication_needed=False,
+        raised_exception=None,
+    )
+    try:
+        network_client._raise_on_unsuccessful_request(request, response, data_sanitizer)
+    except BoxAPIError as e:
+        exception_message = str(e)
+        assert "Authorization': '---[redacted]---'" in exception_message
+        assert "client_secret': '---[redacted]---'" in exception_message
+        assert "password': '---[redacted]---'" in exception_message
+        assert "token': '---[redacted]---'" in exception_message
+        assert "message': 'Method Not Allowed'" in exception_message
+
+
 @pytest.mark.parametrize('response_body', ['', 'Invalid json', 123])
-def test_raising_api_error_without_valid_json_body(network_client, response_body):
+def test_raising_api_error_without_valid_json_body(
+    network_client, response_body, data_sanitizer
+):
     client_error_response = Mock(Response)
     client_error_response.status_code = 400
     client_error_response.ok = False
@@ -930,7 +984,7 @@ def test_raising_api_error_without_valid_json_body(network_client, response_body
         raised_exception=None,
     )
     try:
-        network_client._raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response, data_sanitizer)
     except BoxAPIError as e:
         assert e.request_info.method == request.method
         assert e.request_info.url == request.url
@@ -951,7 +1005,7 @@ def test_raising_api_error_without_valid_json_body(network_client, response_body
         assert e.name == "BoxAPIError"
 
 
-def test_raising_exception_raised_by_network_layer(network_client):
+def test_raising_exception_raised_by_network_layer(network_client, data_sanitizer):
     requests_exception = RequestException("Something went wrong")
     request = APIRequest(
         method="POST",
@@ -973,7 +1027,7 @@ def test_raising_exception_raised_by_network_layer(network_client):
     )
 
     try:
-        network_client._raise_on_unsuccessful_request(request, response)
+        network_client._raise_on_unsuccessful_request(request, response, data_sanitizer)
     except BoxSDKError as e:
         assert e.message == "Something went wrong"
         assert e.error == requests_exception
