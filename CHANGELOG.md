@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/box/box-python-sdk-gen/compare/v1.13.0...v1.14.0) (2025-04-09)
+
+
+### New Features and Enhancements
+
+* Support sensitive data sanitization in errors (box/box-codegen[#695](https://github.com/box/box-python-sdk-gen/issues/695)) ([#533](https://github.com/box/box-python-sdk-gen/issues/533)) ([abb7b1d](https://github.com/box/box-python-sdk-gen/commit/abb7b1d16a192edd99ff1fc4fb7c4caf79ee5f10))
+
 ## [1.13.0](https://github.com/box/box-python-sdk-gen/compare/v1.12.0...v1.13.0) (2025-03-18)
 
 
