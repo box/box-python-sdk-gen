@@ -330,6 +330,10 @@ def get_rsa_private_key(
     private_key: str,
     passphrase: str,
 ) -> Any:
+    if default_backend is None or serialization is None:
+        raise ImportError(
+            'Missing `cryptography` dependency. `cryptography` library is required to create JWT assertion.'
+        )
     encoded_private_key = encode_str_ascii_or_raise(private_key)
     encoded_passphrase = encode_str_ascii_or_raise(passphrase)
 
@@ -341,6 +345,10 @@ def get_rsa_private_key(
 
 
 def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> str:
+    if jwt is None:
+        raise ImportError(
+            'Missing `PyJWT` dependency. `PyJWT` library is required to create JWT assertion.'
+        )
     return jwt.encode(
         {
             'iss': options.issuer,
