@@ -44,6 +44,9 @@ jobs:
           APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}
           WORKFLOW_FOLDER_ID: ${{ secrets.WORKFLOW_FOLDER_ID }}
           APP_ITEM_SHARED_LINK: ${{ secrets.APP_ITEM_SHARED_LINK }}
+          SLACK_AUTOMATION_USER_ID: ${{ secrets.SLACK_AUTOMATION_USER_ID }}
+          SLACK_ORG_ID: ${{ secrets.SLACK_ORG_ID }}
+          SLACK_PARTNER_ITEM_ID: ${{ secrets.SLACK_PARTNER_ITEM_ID }}
         run: |
           tox
 
@@ -80,3 +83,6 @@ jobs:
           APP_ITEM_ASSOCIATION_FILE_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FILE_ID }}
           APP_ITEM_ASSOCIATION_FOLDER_ID: ${{ secrets.APP_ITEM_ASSOCIATION_FOLDER_ID }}
           APP_ITEM_SHARED_LINK: ${{ secrets.APP_ITEM_SHARED_LINK }}
+          SLACK_AUTOMATION_USER_ID: ${{ secrets.SLACK_AUTOMATION_USER_ID }}
+          SLACK_ORG_ID: ${{ secrets.SLACK_ORG_ID }}
+          SLACK_PARTNER_ITEM_ID: ${{ secrets.SLACK_PARTNER_ITEM_ID }}
