@@ -29,6 +29,9 @@ class TemplateSigner(BaseObject):
         signer_group_id: Optional[str] = None,
         label: Optional[str] = None,
         public_id: Optional[str] = None,
+        is_password_required: Optional[bool] = None,
+        is_phone_number_required: Optional[bool] = None,
+        login_required: Optional[bool] = None,
         **kwargs
     ):
         """
@@ -54,6 +57,14 @@ class TemplateSigner(BaseObject):
                 :type label: Optional[str], optional
                 :param public_id: An identifier for the signer. This can be used to identify a signer within the template., defaults to None
                 :type public_id: Optional[str], optional
+                :param is_password_required: If true for signers with a defined email, the password provided when the template was created is used by default.
+        If true for signers without a specified / defined email, the creator needs to provide a password when using the template., defaults to None
+                :type is_password_required: Optional[bool], optional
+                :param is_phone_number_required: If true for signers with a defined email, the phone number provided when the template was created is used by default.
+        If true for signers without a specified / defined email, the template creator needs to provide a phone number when creating a request., defaults to None
+                :type is_phone_number_required: Optional[bool], optional
+                :param login_required: If true, the signer is required to login to access the document., defaults to None
+                :type login_required: Optional[bool], optional
         """
         super().__init__(**kwargs)
         self.inputs = inputs
@@ -64,3 +75,6 @@ class TemplateSigner(BaseObject):
         self.signer_group_id = signer_group_id
         self.label = label
         self.public_id = public_id
+        self.is_password_required = is_password_required
+        self.is_phone_number_required = is_phone_number_required
+        self.login_required = login_required

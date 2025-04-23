@@ -171,7 +171,13 @@ This operation is performed by calling function `remove_shared_link_from_web_lin
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/put-web-links-id--remove-shared-link/).
 
-_Currently we don't have an example for calling `remove_shared_link_from_web_link` in integration tests_
+<!-- sample put_web_links_id#remove_shared_link -->
+
+```python
+client.shared_links_web_links.remove_shared_link_from_web_link(
+    web_link_id, "shared_link", shared_link=create_null()
+)
+```
 
 ### Arguments
 

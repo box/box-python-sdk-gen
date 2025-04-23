@@ -42,3 +42,25 @@ def deserialize(value: SerializedData, type: Type[BaseObject]):
     obj = type.from_dict(value)
     obj._raw_data = value
     return obj
+
+
+def sanitized_value() -> str:
+    return '---[redacted]---'
+
+
+def sanitize_serialized_data(
+    sd: SerializedData, keys_to_sanitize: Dict[str, str]
+) -> SerializedData:
+    if not isinstance(sd, Dict):
+        return sd
+    sanitized_dictionary = {}
+    for key, value in sd.items():
+        if key.lower() in keys_to_sanitize and isinstance(value, str):
+            sanitized_dictionary[key] = sanitized_value()
+        elif isinstance(value, Dict):
+            sanitized_dictionary[key] = sanitize_serialized_data(
+                value, keys_to_sanitize
+            )
+        else:
+            sanitized_dictionary[key] = value
+    return sanitized_dictionary

@@ -14,6 +14,8 @@ from box_sdk_gen.managers.uploads import UploadFileAttributesParentField
 
 from box_sdk_gen.managers.files import GetFileThumbnailUrlExtension
 
+from box_sdk_gen.internal.utils import Buffer
+
 from box_sdk_gen.managers.files import GetFileThumbnailByIdExtension
 
 from box_sdk_gen.schemas.trash_file import TrashFile
@@ -29,6 +31,10 @@ from box_sdk_gen.internal.utils import get_uuid
 from box_sdk_gen.internal.utils import generate_byte_stream
 
 from box_sdk_gen.internal.utils import read_byte_stream
+
+from box_sdk_gen.internal.utils import generate_byte_stream_from_buffer
+
+from box_sdk_gen.internal.utils import generate_byte_buffer
 
 from box_sdk_gen.internal.utils import buffer_equals
 
@@ -69,19 +75,17 @@ def testGetFileThumbnailUrl():
 
 def testGetFileThumbnail():
     thumbnail_file_name: str = get_uuid()
-    thumbnail_content_stream: ByteStream = generate_byte_stream(1024 * 1024)
+    thumbnail_buffer: Buffer = generate_byte_buffer(1024 * 1024)
+    thumbnail_content_stream: ByteStream = generate_byte_stream_from_buffer(
+        thumbnail_buffer
+    )
     thumbnail_file: FileFull = upload_file(
         thumbnail_file_name, thumbnail_content_stream
     )
     thumbnail: Optional[ByteStream] = client.files.get_file_thumbnail_by_id(
         thumbnail_file.id, GetFileThumbnailByIdExtension.PNG
     )
-    assert (
-        not buffer_equals(
-            read_byte_stream(thumbnail), read_byte_stream(thumbnail_content_stream)
-        )
-        == True
-    )
+    assert not buffer_equals(read_byte_stream(thumbnail), thumbnail_buffer) == True
     client.files.delete_file_by_id(thumbnail_file.id)
 
 

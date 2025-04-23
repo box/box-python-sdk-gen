@@ -60,6 +60,25 @@ from box_sdk_gen.schemas.file_full import FileFull
 
 from box_sdk_gen.schemas.terms_of_service import TermsOfService
 
+from box_sdk_gen.networking.auth import Authentication
+
+from box_sdk_gen.box.ccg_auth import BoxCCGAuth
+
+from box_sdk_gen.box.ccg_auth import CCGConfig
+
+from box_sdk_gen.internal.utils import is_browser
+
+
+def get_ccg_auth() -> BoxCCGAuth:
+    ccg_config: CCGConfig = CCGConfig(
+        client_id=get_env_var('CLIENT_ID'),
+        client_secret=get_env_var('CLIENT_SECRET'),
+        enterprise_id=get_env_var('ENTERPRISE_ID'),
+    )
+    auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
+    return auth
+
+
 from box_sdk_gen.box.jwt_auth import BoxJWTAuth
 
 from box_sdk_gen.box.jwt_auth import JWTConfig
@@ -74,13 +93,19 @@ def get_jwt_auth() -> BoxJWTAuth:
 
 
 def get_default_client_with_user_subject(user_id: str) -> BoxClient:
+    if is_browser():
+        ccg_auth: BoxCCGAuth = get_ccg_auth()
+        ccg_auth_user: BoxCCGAuth = ccg_auth.with_user_subject(user_id)
+        return BoxClient(auth=ccg_auth_user)
     auth: BoxJWTAuth = get_jwt_auth()
     auth_user: BoxJWTAuth = auth.with_user_subject(user_id)
     return BoxClient(auth=auth_user)
 
 
 def get_default_client() -> BoxClient:
-    client: BoxClient = BoxClient(auth=get_jwt_auth())
+    client: BoxClient = BoxClient(
+        auth=get_ccg_auth() if is_browser() else get_jwt_auth()
+    )
     return client
 
 
