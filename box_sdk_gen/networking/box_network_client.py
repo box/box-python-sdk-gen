@@ -227,6 +227,7 @@ class BoxNetworkClient(NetworkClient):
     def _make_request(self, request: APIRequest) -> APIResponse:
         raised_exception = None
         reauthentication_needed = False
+        default_timeout = (5, 60)  # connect, read timeout
         try:
             network_response = self.requests_session.request(
                 method=request.method,
@@ -236,6 +237,7 @@ class BoxNetworkClient(NetworkClient):
                 params=request.params,
                 allow_redirects=request.allow_redirects,
                 stream=True,
+                timeout=default_timeout,
             )
         except RequestException as request_exc:
             raised_exception = request_exc
