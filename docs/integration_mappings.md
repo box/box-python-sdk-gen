@@ -69,7 +69,9 @@ See the endpoint docs at
 
 ```python
 user_client.integration_mappings.create_slack_integration_mapping(
-    IntegrationMappingPartnerItemSlack(id=partner_item_id, slack_org_id=slack_org_id),
+    IntegrationMappingPartnerItemSlack(
+        id=slack_partner_item_id, slack_org_id=slack_org_id
+    ),
     IntegrationMappingBoxItemSlack(id=folder.id),
 )
 ```
@@ -108,7 +110,7 @@ See the endpoint docs at
 
 ```python
 user_client.integration_mappings.update_slack_integration_mapping_by_id(
-    integration_mapping_id, box_item=IntegrationMappingBoxItemSlack(id="1234567")
+    slack_integration_mapping.id, box_item=IntegrationMappingBoxItemSlack(id=folder.id)
 )
 ```
 
@@ -145,7 +147,7 @@ See the endpoint docs at
 
 ```python
 user_client.integration_mappings.delete_slack_integration_mapping_by_id(
-    integration_mapping_id
+    slack_integration_mapping.id
 )
 ```
 
