@@ -378,7 +378,9 @@ def test_make_request(network_client, mock_requests_session, response_200):
         raised_exception=None,
     )
     assert mock_requests_session.request.call_count == 1
-    mock_requests_session.request.assert_called_once_with(**request_params, stream=True)
+    mock_requests_session.request.assert_called_once_with(
+        **request_params, stream=True, timeout=(5, 60)
+    )
 
 
 def test_make_request_unauthorised(network_client, mock_requests_session, response_401):
@@ -698,6 +700,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
                 data=None,
                 stream=True,
                 allow_redirects=True,
+                timeout=(5, 60),
             ),
             mock.call(
                 method="GET",
@@ -712,6 +715,7 @@ def test_retrying_401_response_with_new_token_and_auth_provided(
                 data=None,
                 stream=True,
                 allow_redirects=True,
+                timeout=(5, 60),
             ),
         ],
     )
@@ -751,6 +755,7 @@ def test_not_retrying_401_when_auth_not_provided(
         data=None,
         stream=True,
         allow_redirects=True,
+        timeout=(5, 60),
     )
 
 
@@ -1212,4 +1217,5 @@ def test_disable_follow_redirects(
         data=None,
         stream=True,
         allow_redirects=False,
+        timeout=(5, 60),
     )
