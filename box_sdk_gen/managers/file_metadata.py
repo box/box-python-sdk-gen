@@ -22,6 +22,8 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.metadata_full import MetadataFull
 
+from box_sdk_gen.schemas.metadata_instance_value import MetadataInstanceValue
+
 from box_sdk_gen.box.errors import BoxSDKError
 
 from box_sdk_gen.networking.auth import Authentication
@@ -82,7 +84,7 @@ class UpdateFileMetadataByIdRequestBody(BaseObject):
         *,
         op: Optional[UpdateFileMetadataByIdRequestBodyOpField] = None,
         path: Optional[str] = None,
-        value: Optional[str] = None,
+        value: Optional[MetadataInstanceValue] = None,
         from_: Optional[str] = None,
         **kwargs
     ):
@@ -98,16 +100,6 @@ class UpdateFileMetadataByIdRequestBody(BaseObject):
         of the template. The characters `~` and `/` are reserved
         characters and must be escaped in the key., defaults to None
                 :type path: Optional[str], optional
-                :param value: The value to be set or tested.
-
-        Required for `add`, `replace`, and `test` operations. For `add`,
-        if the value exists already the previous value will be overwritten
-        by the new value. For `replace`, the value must exist before
-        replacing.
-
-        For `test`, the existing value at the `path` location must match
-        the specified value., defaults to None
-                :type value: Optional[str], optional
                 :param from_: The location in the metadata JSON object to move or copy a value
         from. Required for `move` or `copy` operations and must be in the
         format of a [JSON-Pointer](https://tools.ietf.org/html/rfc6901)., defaults to None

@@ -12,11 +12,15 @@ from box_sdk_gen.schemas.ai_agent_allowed_entity import AiAgentAllowedEntity
 
 from box_sdk_gen.schemas.ai_single_agent_response import AiSingleAgentResponse
 
-from box_sdk_gen.schemas.ai_studio_agent_ask import AiStudioAgentAsk
+from box_sdk_gen.schemas.ai_studio_agent_ask_response import AiStudioAgentAskResponse
 
-from box_sdk_gen.schemas.ai_studio_agent_text_gen import AiStudioAgentTextGen
+from box_sdk_gen.schemas.ai_studio_agent_text_gen_response import (
+    AiStudioAgentTextGenResponse,
+)
 
-from box_sdk_gen.schemas.ai_studio_agent_extract import AiStudioAgentExtract
+from box_sdk_gen.schemas.ai_studio_agent_extract_response import (
+    AiStudioAgentExtractResponse,
+)
 
 from box_sdk_gen.box.errors import BoxSDKError
 
@@ -29,9 +33,9 @@ class AiSingleAgentResponseFull(AiSingleAgentResponse):
         name: str,
         access_state: str,
         *,
-        ask: Optional[AiStudioAgentAsk] = None,
-        text_gen: Optional[AiStudioAgentTextGen] = None,
-        extract: Optional[AiStudioAgentExtract] = None,
+        ask: Optional[AiStudioAgentAskResponse] = None,
+        text_gen: Optional[AiStudioAgentTextGenResponse] = None,
+        extract: Optional[AiStudioAgentExtractResponse] = None,
         type: Optional[AiSingleAgentResponseTypeField] = None,
         created_by: Optional[UserBase] = None,
         created_at: Optional[DateTime] = None,
