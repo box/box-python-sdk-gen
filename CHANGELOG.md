@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/box/box-python-sdk-gen/compare/v1.13.0...v1.14.0) (2025-05-02)
+
+
+### Bug Fixes
+
+* set default timeouts for requests (box/box-codegen[#707](https://github.com/box/box-python-sdk-gen/issues/707)) ([#552](https://github.com/box/box-python-sdk-gen/issues/552)) ([66b87c8](https://github.com/box/box-python-sdk-gen/commit/66b87c8986ce2f5fdb3a9eac995ef8a9643bcd76))
+
+
+### New Features and Enhancements
+
+* Add security settings properties on sign template schema (box/box-openapi[#518](https://github.com/box/box-python-sdk-gen/issues/518)) ([#543](https://github.com/box/box-python-sdk-gen/issues/543)) ([0a45d21](https://github.com/box/box-python-sdk-gen/commit/0a45d218d1aa3fa62da7b5c8c01506fb657c0b36))
+* Support sensitive data sanitization in errors (box/box-codegen[#695](https://github.com/box/box-python-sdk-gen/issues/695)) ([#533](https://github.com/box/box-python-sdk-gen/issues/533)) ([abb7b1d](https://github.com/box/box-python-sdk-gen/commit/abb7b1d16a192edd99ff1fc4fb7c4caf79ee5f10))
+
 ## [1.13.0](https://github.com/box/box-python-sdk-gen/compare/v1.12.0...v1.13.0) (2025-03-18)
 
 
