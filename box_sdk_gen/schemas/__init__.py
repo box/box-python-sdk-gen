@@ -22,7 +22,11 @@ from box_sdk_gen.schemas.ai_llm_endpoint_params_aws import *
 
 from box_sdk_gen.schemas.ai_llm_endpoint_params_google import *
 
+from box_sdk_gen.schemas.ai_llm_endpoint_params_ibm import *
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import *
+
+from box_sdk_gen.schemas.ai_llm_endpoint_params import *
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_base import *
 
