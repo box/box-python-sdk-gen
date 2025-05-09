@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import List
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params import AiLlmEndpointParams
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_base import AiAgentBasicTextToolBase
@@ -12,13 +14,16 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool import (
 
 from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
 
+from box_sdk_gen.schemas.ai_studio_agent_long_text_tool import AiStudioAgentLongTextTool
+
 from box_sdk_gen.box.errors import BoxSDKError
 
 
-class AiStudioAgentLongTextTool(AiAgentLongTextTool):
+class AiStudioAgentLongTextToolResponse(AiStudioAgentLongTextTool):
     def __init__(
         self,
         *,
+        warnings: Optional[List[str]] = None,
         is_custom_instructions_included: Optional[bool] = None,
         embeddings: Optional[AiAgentLongTextToolEmbeddingsField] = None,
         system_message: Optional[str] = None,
@@ -29,6 +34,8 @@ class AiStudioAgentLongTextTool(AiAgentLongTextTool):
         **kwargs
     ):
         """
+                :param warnings: Warnings concerning tool, defaults to None
+                :type warnings: Optional[List[str]], optional
                 :param is_custom_instructions_included: True if system message contains custom instructions placeholder, false otherwise, defaults to None
                 :type is_custom_instructions_included: Optional[bool], optional
                 :param system_message: System messages try to help the LLM "understand" its role and what it is supposed to do., defaults to None
@@ -43,6 +50,7 @@ class AiStudioAgentLongTextTool(AiAgentLongTextTool):
                 :type num_tokens_for_completion: Optional[int], optional
         """
         super().__init__(
+            is_custom_instructions_included=is_custom_instructions_included,
             embeddings=embeddings,
             system_message=system_message,
             prompt_template=prompt_template,
@@ -51,4 +59,4 @@ class AiStudioAgentLongTextTool(AiAgentLongTextTool):
             llm_endpoint_params=llm_endpoint_params,
             **kwargs
         )
-        self.is_custom_instructions_included = is_custom_instructions_included
+        self.warnings = warnings
