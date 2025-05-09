@@ -17,8 +17,9 @@ during the operation. Please note that while collaborations at the individual
 file-level are transferred during the operation, the collaborations are
 deleted when the original user is deleted.
 
-This call will be performed synchronously which might lead to a slow response
-when the source user has a large number of items in all of its folders.
+If the user has a large number of items across all folders, the call will
+be run asynchronously. If the operation is not completed within 10 minutes,
+the user will receive a 200 OK response, and the operation will continue running.
 
 If the destination path has a metadata cascade policy attached to any of
 the parent folders, a metadata cascade operation will be kicked off
