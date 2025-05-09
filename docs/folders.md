@@ -129,10 +129,10 @@ Not all available fields are returned by default. Use the
 [fields](#param-fields) query parameter to explicitly request
 any specific fields.
 
-This call will return synchronously. This holds true even when
-moving folders with a large a large number of items in all of its
-descendants. For very large folders, this means the call could
-take minutes or hours to return.
+If the user is moving folders with a large number of items in all of
+their descendants, the call will be run asynchronously. If the
+operation is not completed within 10 minutes, the user will receive
+a 200 OK response, and the operation will continue running.
 
 ## Delete folder
 
