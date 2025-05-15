@@ -96,7 +96,16 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.create_folder_metadata_by_id(
-    folder.id, CreateFolderMetadataByIdScope.GLOBAL, "properties", {"abc": "xyz"}
+    folder.id,
+    CreateFolderMetadataByIdScope.ENTERPRISE,
+    template_key,
+    {
+        "name": "John",
+        "age": 23,
+        "birthDate": "2001-01-03T02:20:50.520Z",
+        "countryCode": "US",
+        "sports": ["basketball", "tennis"],
+    },
 )
 ```
 
@@ -141,14 +150,32 @@ See the endpoint docs at
 ```python
 client.folder_metadata.update_folder_metadata_by_id(
     folder.id,
-    UpdateFolderMetadataByIdScope.GLOBAL,
-    "properties",
+    UpdateFolderMetadataByIdScope.ENTERPRISE,
+    template_key,
     [
         UpdateFolderMetadataByIdRequestBody(
             op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
-            path="/abc",
-            value=new_value,
-        )
+            path="/name",
+            value="Jack",
+        ),
+        UpdateFolderMetadataByIdRequestBody(
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE, path="/age", value=24
+        ),
+        UpdateFolderMetadataByIdRequestBody(
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
+            path="/birthDate",
+            value="2000-01-03T02:20:50.520Z",
+        ),
+        UpdateFolderMetadataByIdRequestBody(
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
+            path="/countryCode",
+            value="CA",
+        ),
+        UpdateFolderMetadataByIdRequestBody(
+            op=UpdateFolderMetadataByIdRequestBodyOpField.REPLACE,
+            path="/sports",
+            value=["football"],
+        ),
     ],
 )
 ```
@@ -186,7 +213,7 @@ See the endpoint docs at
 
 ```python
 client.folder_metadata.delete_folder_metadata_by_id(
-    folder.id, DeleteFolderMetadataByIdScope.GLOBAL, "properties"
+    folder.id, DeleteFolderMetadataByIdScope.ENTERPRISE, template_key
 )
 ```
 
