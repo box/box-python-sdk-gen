@@ -91,7 +91,16 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.create_file_metadata_by_id(
-    file.id, CreateFileMetadataByIdScope.GLOBAL, "properties", {"abc": "xyz"}
+    file.id,
+    CreateFileMetadataByIdScope.ENTERPRISE,
+    template_key,
+    {
+        "name": "John",
+        "age": 23,
+        "birthDate": "2001-01-03T02:20:50.520Z",
+        "countryCode": "US",
+        "sports": ["basketball", "tennis"],
+    },
 )
 ```
 
@@ -136,14 +145,32 @@ See the endpoint docs at
 ```python
 client.file_metadata.update_file_metadata_by_id(
     file.id,
-    UpdateFileMetadataByIdScope.GLOBAL,
-    "properties",
+    UpdateFileMetadataByIdScope.ENTERPRISE,
+    template_key,
     [
         UpdateFileMetadataByIdRequestBody(
             op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
-            path="/abc",
-            value=new_value,
-        )
+            path="/name",
+            value="Jack",
+        ),
+        UpdateFileMetadataByIdRequestBody(
+            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE, path="/age", value=24
+        ),
+        UpdateFileMetadataByIdRequestBody(
+            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
+            path="/birthDate",
+            value="2000-01-03T02:20:50.520Z",
+        ),
+        UpdateFileMetadataByIdRequestBody(
+            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
+            path="/countryCode",
+            value="CA",
+        ),
+        UpdateFileMetadataByIdRequestBody(
+            op=UpdateFileMetadataByIdRequestBodyOpField.REPLACE,
+            path="/sports",
+            value=["football"],
+        ),
     ],
 )
 ```
@@ -181,7 +208,7 @@ See the endpoint docs at
 
 ```python
 client.file_metadata.delete_file_metadata_by_id(
-    file.id, DeleteFileMetadataByIdScope.GLOBAL, "properties"
+    file.id, DeleteFileMetadataByIdScope.ENTERPRISE, template_key
 )
 ```
 
