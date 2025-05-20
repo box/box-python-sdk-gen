@@ -28,6 +28,8 @@ from box_sdk_gen.schemas.v2025_r0.doc_gen_jobs_full_v2025_r0 import (
     DocGenJobsFullV2025R0,
 )
 
+from box_sdk_gen.schemas.v2025_r0.doc_gen_job_full_v2025_r0 import DocGenJobFullV2025R0
+
 from box_sdk_gen.schemas.v2025_r0.doc_gen_job_v2025_r0 import DocGenJobV2025R0
 
 from test.commons import get_default_client
@@ -70,7 +72,9 @@ def testDocgenBatchAndJobs():
     assert not to_string(docgen_batch_jobs.entries[0].status) == ''
     assert docgen_batch_jobs.entries[0].template_file.id == uploaded_file.id
     assert docgen_batch_jobs.entries[0].batch.id == docgen_batch.id
-    docgen_jobs: DocGenJobsFullV2025R0 = client.docgen.get_docgen_jobs_v2025_r0()
+    docgen_jobs: DocGenJobsFullV2025R0 = client.docgen.get_docgen_jobs_v2025_r0(
+        limit=500
+    )
     assert len(docgen_jobs.entries) >= 1
     assert not docgen_jobs.entries[0].batch.id == ''
     assert not docgen_jobs.entries[0].created_by.id == ''
@@ -86,8 +90,10 @@ def testDocgenBatchAndJobs():
     )
     assert not docgen_jobs.entries[0].template_file_version.id == ''
     assert to_string(docgen_jobs.entries[0].type) == 'docgen_job'
+    index_of_item: int = 0
+    docgen_job_item_from_list: DocGenJobFullV2025R0 = docgen_jobs.entries[index_of_item]
     docgen_job: DocGenJobV2025R0 = client.docgen.get_docgen_job_by_id_v2025_r0(
-        docgen_jobs.entries[0].id
+        docgen_job_item_from_list.id
     )
     assert not docgen_job.batch.id == ''
     assert not docgen_job.id == ''
