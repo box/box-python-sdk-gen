@@ -415,7 +415,9 @@ class BoxJWTAuth(Authentication):
         :param network_session: An object to keep network session state, defaults to None
         :type network_session: Optional[NetworkSession], optional
         """
-        token: Optional[AccessToken] = self.token_storage.get()
+        token: Optional[AccessToken] = self.retrieve_token(
+            network_session=network_session
+        )
         if token == None:
             raise BoxSDKError(
                 message='No access token is available. Make an API call to retrieve a token before calling this method.'

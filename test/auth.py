@@ -99,6 +99,25 @@ def test_jwt_auth_downscope():
     parent_client.files.delete_file_by_id(file.id)
 
 
+def test_jwt_downscope_token_succeeds_if_no_token_available():
+    jwt_config: JWTConfig = JWTConfig.from_config_json_string(
+        decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
+    )
+    auth: BoxJWTAuth = BoxJWTAuth(config=jwt_config)
+    downscoped_token: AccessToken = auth.downscope_token(['root_readonly'])
+    assert not downscoped_token.access_token == None
+    downscoped_client: BoxClient = BoxClient(
+        auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
+    )
+    with pytest.raises(Exception):
+        downscoped_client.uploads.upload_file(
+            UploadFileAttributes(
+                name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
+            ),
+            generate_byte_stream(1024 * 1024),
+        )
+
+
 def test_jwt_auth_revoke():
     jwt_config: JWTConfig = JWTConfig.from_config_json_string(
         decode_base_64(get_env_var('JWT_CONFIG_BASE_64'))
@@ -126,6 +145,16 @@ def test_oauth_auth_authorizeUrl():
         or auth_url
         == 'https://account.box.com/api/oauth2/authorize?response_type=code&client_id=OAUTH_CLIENT_ID'
     )
+
+
+def test_oauth_downscope_token_succeeds_if_no_token_available():
+    config: OAuthConfig = OAuthConfig(
+        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
+    )
+    auth: BoxOAuth = BoxOAuth(config=config)
+    resource_path: str = ''.join(['https://api.box.com/2.0/files/12345'])
+    with pytest.raises(Exception):
+        auth.downscope_token(['item_rename', 'item_preview'], resource=resource_path)
 
 
 def test_ccg_auth():
@@ -175,6 +204,27 @@ def test_ccg_auth_downscope():
     parent_client.folders.delete_folder_by_id(folder.id)
 
 
+def test_ccg_downscope_token_succeeds_if_no_token_available():
+    ccg_config: CCGConfig = CCGConfig(
+        client_id=get_env_var('CLIENT_ID'),
+        client_secret=get_env_var('CLIENT_SECRET'),
+        user_id=get_env_var('USER_ID'),
+    )
+    auth: BoxCCGAuth = BoxCCGAuth(config=ccg_config)
+    downscoped_token: AccessToken = auth.downscope_token(['root_readonly'])
+    assert not downscoped_token.access_token == None
+    downscoped_client: BoxClient = BoxClient(
+        auth=BoxDeveloperTokenAuth(token=downscoped_token.access_token)
+    )
+    with pytest.raises(Exception):
+        downscoped_client.uploads.upload_file(
+            UploadFileAttributes(
+                name=get_uuid(), parent=UploadFileAttributesParentField(id='0')
+            ),
+            generate_byte_stream(1024 * 1024),
+        )
+
+
 def test_ccg_auth_revoke():
     ccg_config: CCGConfig = CCGConfig(
         client_id=get_env_var('CLIENT_ID'),
@@ -190,6 +240,18 @@ def test_ccg_auth_revoke():
         not token_from_storage_before_revoke.access_token
         == token_from_storage_after_revoke.access_token
     )
+
+
+def test_developer_downscope_token_succeeds_if_no_token_available():
+    developer_token_config: DeveloperTokenConfig = DeveloperTokenConfig(
+        client_id=get_env_var('CLIENT_ID'), client_secret=get_env_var('CLIENT_SECRET')
+    )
+    auth: BoxDeveloperTokenAuth = BoxDeveloperTokenAuth(
+        token='', config=developer_token_config
+    )
+    resource_path: str = ''.join(['https://api.box.com/2.0/folders/12345'])
+    with pytest.raises(Exception):
+        auth.downscope_token(['item_rename', 'item_preview'], resource=resource_path)
 
 
 def get_access_token() -> AccessToken:
