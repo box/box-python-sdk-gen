@@ -24,6 +24,7 @@ class AiAgentExtractStructured(BaseObject):
         type: AiAgentExtractStructuredTypeField = AiAgentExtractStructuredTypeField.AI_AGENT_EXTRACT_STRUCTURED,
         long_text: Optional[AiAgentLongTextTool] = None,
         basic_text: Optional[AiAgentBasicTextTool] = None,
+        basic_image: Optional[AiAgentBasicTextTool] = None,
         **kwargs
     ):
         """
@@ -34,3 +35,4 @@ class AiAgentExtractStructured(BaseObject):
         self.type = type
         self.long_text = long_text
         self.basic_text = basic_text
+        self.basic_image = basic_image
