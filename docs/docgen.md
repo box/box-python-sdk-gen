@@ -17,7 +17,7 @@ See the endpoint docs at
 <!-- sample get_docgen_jobs_id_v2025.0 -->
 
 ```python
-client.docgen.get_docgen_job_by_id_v2025_r0(docgen_jobs.entries[0].id)
+client.docgen.get_docgen_job_by_id_v2025_r0(docgen_job_item_from_list.id)
 ```
 
 ### Arguments
@@ -47,7 +47,7 @@ See the endpoint docs at
 <!-- sample get_docgen_jobs_v2025.0 -->
 
 ```python
-client.docgen.get_docgen_jobs_v2025_r0()
+client.docgen.get_docgen_jobs_v2025_r0(limit=500)
 ```
 
 ### Arguments
