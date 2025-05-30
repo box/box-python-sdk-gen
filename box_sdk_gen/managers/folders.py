@@ -464,7 +464,7 @@ class FoldersManager:
         if_match: Optional[str] = None,
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> FolderFull:
-        """
+        r"""
                 Updates a folder. This can be also be used to move the folder,
 
                 create shared links, update collaborations, and more.
@@ -481,7 +481,16 @@ class FoldersManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param name: The optional new name for this folder., defaults to None
+                :param name: The optional new name for this folder.
+
+        The following restrictions to folder names apply: names containing
+        non-printable ASCII characters, forward and backward slashes
+        (`/`, `\`), names with trailing spaces, and names `.` and `..` are
+        not allowed.
+
+        Folder names must be unique within their parent folder. The name check is case-insensitive,
+        so a folder named `New Folder` cannot be created in a parent folder that already contains
+        a folder named `new folder`., defaults to None
                 :type name: Optional[str], optional
                 :param description: The optional description of this folder, defaults to None
                 :type description: Optional[str], optional
@@ -826,13 +835,14 @@ class FoldersManager:
                 Creates a new empty folder within the specified parent folder.
                 :param name: The name for the new folder.
 
-        There are some restrictions to the file name. Names containing
+        The following restrictions to folder names apply: names containing
         non-printable ASCII characters, forward and backward slashes
-        (`/`, `\`), as well as names with trailing spaces are
-        prohibited.
+        (`/`, `\`), names with trailing spaces, and names `.` and `..` are
+        not allowed.
 
-        Additionally, the names `.` and `..` are
-        not allowed either.
+        Folder names must be unique within their parent folder. The name check is case-insensitive,
+        so a folder named `New Folder` cannot be created in a parent folder that already contains
+        a folder named `new folder`.
                 :type name: str
                 :param parent: The parent folder to create the new folder within.
                 :type parent: CreateFolderParent

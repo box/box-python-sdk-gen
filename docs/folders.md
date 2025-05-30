@@ -91,7 +91,7 @@ client.folders.update_folder_by_id(
 - folder_id `str`
   - The unique identifier that represent a folder. The ID for any folder can be determined by visiting this folder in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/folder/123` the `folder_id` is `123`. The root folder of a Box account is always represented by the ID `0`. Example: "12345"
 - name `Optional[str]`
-  - The optional new name for this folder.
+  - The optional new name for this folder. The following restrictions to folder names apply: names containing non-printable ASCII characters, forward and backward slashes (`/`, `\`), names with trailing spaces, and names `.` and `..` are not allowed. Folder names must be unique within their parent folder. The name check is case-insensitive, so a folder named `New Folder` cannot be created in a parent folder that already contains a folder named `new folder`.
 - description `Optional[str]`
   - The optional description of this folder
 - sync_state `Optional[UpdateFolderByIdSyncState]`
@@ -234,7 +234,7 @@ client.folders.create_folder(new_folder_name, CreateFolderParent(id="0"))
 ### Arguments
 
 - name `str`
-  - The name for the new folder. There are some restrictions to the file name. Names containing non-printable ASCII characters, forward and backward slashes (`/`, `\`), as well as names with trailing spaces are prohibited. Additionally, the names `.` and `..` are not allowed either.
+  - The name for the new folder. The following restrictions to folder names apply: names containing non-printable ASCII characters, forward and backward slashes (`/`, `\`), names with trailing spaces, and names `.` and `..` are not allowed. Folder names must be unique within their parent folder. The name check is case-insensitive, so a folder named `New Folder` cannot be created in a parent folder that already contains a folder named `new folder`.
 - parent `CreateFolderParent`
   - The parent folder to create the new folder within.
 - folder_upload_email `Optional[CreateFolderFolderUploadEmail]`

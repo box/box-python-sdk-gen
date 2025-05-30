@@ -371,7 +371,10 @@ class FilesManager:
         Example: "12345"
                 :type file_id: str
                 :param name: An optional different name for the file. This can be used to
-        rename the file., defaults to None
+        rename the file.
+
+        File names must be unique within their parent folder. The name check is case-insensitive, so a file
+        named `New File` cannot be created in a parent folder that already contains a folder named `new file`., defaults to None
                 :type name: Optional[str], optional
                 :param description: The description for a file. This can be seen in the right-hand sidebar panel
         when viewing a file in the Box web app. Additionally, this index is used in
