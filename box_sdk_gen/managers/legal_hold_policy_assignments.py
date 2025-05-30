@@ -50,6 +50,8 @@ class GetLegalHoldPolicyAssignmentsAssignToType(str, Enum):
     FILE_VERSION = 'file_version'
     FOLDER = 'folder'
     USER = 'user'
+    OWNERSHIP = 'ownership'
+    INTERACTIONS = 'interactions'
 
 
 class CreateLegalHoldPolicyAssignmentAssignToTypeField(str, Enum):
@@ -57,10 +59,19 @@ class CreateLegalHoldPolicyAssignmentAssignToTypeField(str, Enum):
     FILE_VERSION = 'file_version'
     FOLDER = 'folder'
     USER = 'user'
+    OWNERSHIP = 'ownership'
+    INTERACTION = 'interaction'
 
 
 class CreateLegalHoldPolicyAssignmentAssignTo(BaseObject):
-    _discriminator = 'type', {'file', 'file_version', 'folder', 'user'}
+    _discriminator = 'type', {
+        'file',
+        'file_version',
+        'folder',
+        'user',
+        'ownership',
+        'interaction',
+    }
 
     def __init__(
         self, type: CreateLegalHoldPolicyAssignmentAssignToTypeField, id: str, **kwargs

@@ -26,6 +26,8 @@ class AiAgentAsk(BaseObject):
         basic_text: Optional[AiAgentBasicTextTool] = None,
         long_text_multi: Optional[AiAgentLongTextTool] = None,
         basic_text_multi: Optional[AiAgentBasicTextTool] = None,
+        basic_image: Optional[AiAgentBasicTextTool] = None,
+        basic_image_multi: Optional[AiAgentBasicTextTool] = None,
         **kwargs
     ):
         """
@@ -38,3 +40,5 @@ class AiAgentAsk(BaseObject):
         self.basic_text = basic_text
         self.long_text_multi = long_text_multi
         self.basic_text_multi = basic_text_multi
+        self.basic_image = basic_image
+        self.basic_image_multi = basic_image_multi
