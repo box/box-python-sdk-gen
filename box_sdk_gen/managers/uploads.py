@@ -97,7 +97,10 @@ class UploadFileAttributes(BaseObject):
         **kwargs
     ):
         """
-                :param name: The name of the file
+                :param name: The name of the file.
+
+        File names must be unique within their parent folder. The name check is case-insensitive, so a file
+        named `New File` cannot be created in a parent folder that already contains a folder named `new file`.
                 :type name: str
                 :param parent: The parent folder to upload the file to
                 :type parent: UploadFileAttributesParentField
@@ -140,7 +143,10 @@ class UploadWithPreflightCheckAttributes(BaseObject):
         **kwargs
     ):
         """
-                :param name: The name of the file
+                :param name: The name of the file.
+
+        File names must be unique within their parent folder. The name check is case-insensitive, so a file
+        named `New File` cannot be created in a parent folder that already contains a folder named `new file`.
                 :type name: str
                 :param parent: The parent folder to upload the file to
                 :type parent: UploadWithPreflightCheckAttributesParentField

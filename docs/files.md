@@ -72,7 +72,7 @@ client.files.update_file_by_id(
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - name `Optional[str]`
-  - An optional different name for the file. This can be used to rename the file.
+  - An optional different name for the file. This can be used to rename the file. File names must be unique within their parent folder. The name check is case-insensitive, so a file named `New File` cannot be created in a parent folder that already contains a folder named `new file`.
 - description `Optional[str]`
   - The description for a file. This can be seen in the right-hand sidebar panel when viewing a file in the Box web app. Additionally, this index is used in the search index of the file, allowing users to find the file by the content in the description.
 - parent `Optional[UpdateFileByIdParent]`
