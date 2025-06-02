@@ -83,6 +83,12 @@ def testWebhookValidation():
     body_with_carriage_return: str = (
         '{"webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"test \r"}}'
     )
+    body_with_forward_slash: str = (
+        '{"webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"\/"}}'
+    )
+    body_with_back_slash: str = (
+        '{"webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"\\"}}'
+    )
     headers: Dict[str, str] = {
         'box-delivery-id': 'f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f',
         'box-delivery-timestamp': '2020-01-01T00:00:00-07:00',
@@ -102,6 +108,14 @@ def testWebhookValidation():
     headers_with_carriage_return: Dict = {
         **headers,
         'box-signature-primary': 'SVkbKgy3dEEf2PbbzpNu2lDZS7zZ/aboU7HOZgBGrJk=',
+    }
+    headers_with_forward_slash: Dict = {
+        **headers,
+        'box-signature-primary': 't41PWT5ZB6OcysnD6SDy9Ud+p9hdXxIdXqcdweyZv/Q=',
+    }
+    headers_with_back_slash: Dict = {
+        **headers,
+        'box-signature-primary': 'ERpMZwUQsGDTfj82ehdX6VvDZfvOhK5ULNfVmwVAGe0=',
     }
     current_datetime: str = date_time_to_string(
         epoch_seconds_to_date_time(get_epoch_time_in_seconds())
@@ -182,6 +196,12 @@ def testWebhookValidation():
     assert compute_webhook_signature(
         body_with_carriage_return, headers_with_carriage_return, primary_key
     ) == headers_with_carriage_return.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body_with_forward_slash, headers_with_forward_slash, primary_key
+    ) == headers_with_forward_slash.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body_with_back_slash, headers_with_back_slash, primary_key
+    ) == headers_with_back_slash.get('box-signature-primary')
     assert WebhooksManager.validate_message(
         body, headers_with_correct_datetime, primary_key, secondary_key=secondary_key
     )

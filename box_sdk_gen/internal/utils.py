@@ -410,8 +410,6 @@ def escape_unicode(value: str) -> str:
             return '\\r'
         elif char == '\t':
             return '\\t'
-        elif char == '\\':
-            return '\\\\'
         elif code_point <= 0xFFFF:  # Basic Multilingual Plane (BMP)
             return f"\\u{code_point:04x}"
         else:  # Supplementary Plane (Surrogate Pair)
@@ -420,8 +418,11 @@ def escape_unicode(value: str) -> str:
             low_surrogate = 0xDC00 + (code_point & 0x3FF)
             return f"\\u{high_surrogate:04x}\\u{low_surrogate:04x}"
 
-    # Match special characters, non-ASCII characters, and backslashes
-    return re.sub(r'[^\x20-\x7e]|[\n\r\t\\]', replace_char, value)
+    # Replace any backslashes that are NOT part of a \/ with double backslash
+    temp = re.sub(r'\\(?!/)', r'\\\\', value)
+
+    # Match special characters, non-ASCII characters
+    return re.sub(r'[^\x20-\x7e]|[\n\r\t]', replace_char, temp)
 
 
 def compute_webhook_signature(
