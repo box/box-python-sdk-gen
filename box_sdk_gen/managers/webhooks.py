@@ -449,11 +449,19 @@ class WebhooksManager:
         ):
             return False
         if primary_key and compute_webhook_signature(
-            body, headers, primary_key
+            body, headers, primary_key, escape_body=False
+        ) == headers.get('box-signature-primary'):
+            return True
+        if primary_key and compute_webhook_signature(
+            body, headers, primary_key, escape_body=True
         ) == headers.get('box-signature-primary'):
             return True
         if secondary_key and compute_webhook_signature(
-            body, headers, secondary_key
+            body, headers, secondary_key, escape_body=False
+        ) == headers.get('box-signature-secondary'):
+            return True
+        if secondary_key and compute_webhook_signature(
+            body, headers, secondary_key, escape_body=True
         ) == headers.get('box-signature-secondary'):
             return True
         return False
