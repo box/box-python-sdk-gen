@@ -145,3 +145,5 @@ from box_sdk_gen.managers.ai_studio import *
 from box_sdk_gen.managers.docgen_template import *
 
 from box_sdk_gen.managers.docgen import *
+
+from box_sdk_gen.managers.shield_lists import *

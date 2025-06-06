@@ -172,6 +172,8 @@ from box_sdk_gen.managers.docgen_template import DocgenTemplateManager
 
 from box_sdk_gen.managers.docgen import DocgenManager
 
+from box_sdk_gen.managers.shield_lists import ShieldListsManager
+
 from box_sdk_gen.networking.auth import Authentication
 
 from box_sdk_gen.networking.network import NetworkSession
@@ -415,6 +417,9 @@ class BoxClient:
             auth=self.auth, network_session=self.network_session
         )
         self.docgen = DocgenManager(
+            auth=self.auth, network_session=self.network_session
+        )
+        self.shield_lists = ShieldListsManager(
             auth=self.auth, network_session=self.network_session
         )
 
