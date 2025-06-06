@@ -130,10 +130,16 @@ def testWebhookValidation():
         **headers,
         'box-delivery-timestamp': current_datetime,
         'box-signature-primary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': current_datetime}, primary_key
+            body,
+            {**headers, 'box-delivery-timestamp': current_datetime},
+            primary_key,
+            escape_body=True,
         ),
         'box-signature-secondary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': current_datetime}, secondary_key
+            body,
+            {**headers, 'box-delivery-timestamp': current_datetime},
+            secondary_key,
+            escape_body=True,
         ),
     }
     headers_with_japanese_with_correct_datetime: Dict = {
@@ -143,31 +149,45 @@ def testWebhookValidation():
             body_with_japanese,
             {**headers_with_japanese, 'box-delivery-timestamp': current_datetime},
             primary_key,
+            escape_body=True,
         ),
         'box-signature-secondary': compute_webhook_signature(
             body_with_japanese,
             {**headers_with_japanese, 'box-delivery-timestamp': current_datetime},
             secondary_key,
+            escape_body=True,
         ),
     }
     headers_with_future_datetime: Dict = {
         **headers,
         'box-delivery-timestamp': future_datetime,
         'box-signature-primary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': future_datetime}, primary_key
+            body,
+            {**headers, 'box-delivery-timestamp': future_datetime},
+            primary_key,
+            escape_body=True,
         ),
         'box-signature-secondary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': future_datetime}, secondary_key
+            body,
+            {**headers, 'box-delivery-timestamp': future_datetime},
+            secondary_key,
+            escape_body=True,
         ),
     }
     headers_with_past_datetime: Dict = {
         **headers,
         'box-delivery-timestamp': past_datetime,
         'box-signature-primary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': past_datetime}, primary_key
+            body,
+            {**headers, 'box-delivery-timestamp': past_datetime},
+            primary_key,
+            escape_body=True,
         ),
         'box-signature-secondary': compute_webhook_signature(
-            body, {**headers, 'box-delivery-timestamp': past_datetime}, secondary_key
+            body,
+            {**headers, 'box-delivery-timestamp': past_datetime},
+            secondary_key,
+            escape_body=True,
         ),
     }
     headers_with_wrong_signature_version: Dict = {
@@ -178,29 +198,35 @@ def testWebhookValidation():
         **headers,
         'box-signature-algorithm': 'HmacSHA1',
     }
-    assert compute_webhook_signature(body, headers, primary_key) == headers.get(
-        'box-signature-primary'
-    )
-    assert compute_webhook_signature(body, headers, secondary_key) == headers.get(
-        'box-signature-secondary'
-    )
-    assert not compute_webhook_signature(body, headers, incorrect_key) == headers.get(
-        'box-signature-primary'
-    )
     assert compute_webhook_signature(
-        body_with_japanese, headers_with_japanese, primary_key
+        body, headers, primary_key, escape_body=True
+    ) == headers.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body, headers, secondary_key, escape_body=True
+    ) == headers.get('box-signature-secondary')
+    assert not compute_webhook_signature(
+        body, headers, incorrect_key, escape_body=True
+    ) == headers.get('box-signature-primary')
+    assert compute_webhook_signature(
+        body_with_japanese, headers_with_japanese, primary_key, escape_body=True
     ) == headers_with_japanese.get('box-signature-primary')
     assert compute_webhook_signature(
-        body_with_emoji, headers_with_emoji, primary_key
+        body_with_emoji, headers_with_emoji, primary_key, escape_body=True
     ) == headers_with_emoji.get('box-signature-primary')
     assert compute_webhook_signature(
-        body_with_carriage_return, headers_with_carriage_return, primary_key
+        body_with_carriage_return,
+        headers_with_carriage_return,
+        primary_key,
+        escape_body=True,
     ) == headers_with_carriage_return.get('box-signature-primary')
     assert compute_webhook_signature(
-        body_with_forward_slash, headers_with_forward_slash, primary_key
+        body_with_forward_slash,
+        headers_with_forward_slash,
+        primary_key,
+        escape_body=True,
     ) == headers_with_forward_slash.get('box-signature-primary')
     assert compute_webhook_signature(
-        body_with_back_slash, headers_with_back_slash, primary_key
+        body_with_back_slash, headers_with_back_slash, primary_key, escape_body=True
     ) == headers_with_back_slash.get('box-signature-primary')
     assert WebhooksManager.validate_message(
         body, headers_with_correct_datetime, primary_key, secondary_key=secondary_key

@@ -426,7 +426,10 @@ def escape_unicode(value: str) -> str:
 
 
 def compute_webhook_signature(
-    body: str, headers: Dict[str, str], signature_key: str
+    body: str,
+    headers: Dict[str, str],
+    signature_key: str,
+    escape_body: Optional[bool] = False,
 ) -> str:
     """
     Computes the Hmac for the webhook notification given one signature key.
@@ -437,6 +440,8 @@ def compute_webhook_signature(
         The headers for the `Webhook` notification.
     :param signature_key:
         The `Webhook` signature key for this application.
+    :param escape_body:
+        Indicates if payload should be escaped or left as is.
     :return:
         An Hmac signature.
     """
@@ -446,7 +451,8 @@ def compute_webhook_signature(
         return None
     if headers.get('box-signature-algorithm') != 'HmacSHA256':
         return None
-    encoded_body = escape_unicode(body).encode('utf-8')
+
+    encoded_body = (escape_unicode(body) if escape_body else body).encode('utf-8')
     encoded_signature_key = signature_key.encode('utf-8')
     encoded_delivery_time_stamp = headers.get('box-delivery-timestamp').encode('utf-8')
     new_hmac = hmac.new(encoded_signature_key, digestmod=hashlib.sha256)
