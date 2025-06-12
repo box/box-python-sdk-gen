@@ -30,6 +30,8 @@ from box_sdk_gen.internal.utils import get_epoch_time_in_seconds
 
 from box_sdk_gen.internal.utils import compute_webhook_signature
 
+from box_sdk_gen.internal.utils import compare_signatures
+
 from box_sdk_gen.managers.webhooks import WebhooksManager
 
 from test.commons import get_default_client
@@ -198,36 +200,60 @@ def testWebhookValidation():
         **headers,
         'box-signature-algorithm': 'HmacSHA1',
     }
-    assert compute_webhook_signature(
-        body, headers, primary_key, escape_body=True
-    ) == headers.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body, headers, secondary_key, escape_body=True
-    ) == headers.get('box-signature-secondary')
-    assert not compute_webhook_signature(
-        body, headers, incorrect_key, escape_body=True
-    ) == headers.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body_with_japanese, headers_with_japanese, primary_key, escape_body=True
-    ) == headers_with_japanese.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body_with_emoji, headers_with_emoji, primary_key, escape_body=True
-    ) == headers_with_emoji.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body_with_carriage_return,
-        headers_with_carriage_return,
-        primary_key,
-        escape_body=True,
-    ) == headers_with_carriage_return.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body_with_forward_slash,
-        headers_with_forward_slash,
-        primary_key,
-        escape_body=True,
-    ) == headers_with_forward_slash.get('box-signature-primary')
-    assert compute_webhook_signature(
-        body_with_back_slash, headers_with_back_slash, primary_key, escape_body=True
-    ) == headers_with_back_slash.get('box-signature-primary')
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body, headers, primary_key, escape_body=True
+        ),
+        received_signature=headers.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body, headers, secondary_key, escape_body=True
+        ),
+        received_signature=headers.get('box-signature-secondary'),
+    )
+    assert not compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body, headers, incorrect_key, escape_body=True
+        ),
+        received_signature=headers.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body_with_japanese, headers_with_japanese, primary_key, escape_body=True
+        ),
+        received_signature=headers_with_japanese.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body_with_emoji, headers_with_emoji, primary_key, escape_body=True
+        ),
+        received_signature=headers_with_emoji.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body_with_carriage_return,
+            headers_with_carriage_return,
+            primary_key,
+            escape_body=True,
+        ),
+        received_signature=headers_with_carriage_return.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body_with_forward_slash,
+            headers_with_forward_slash,
+            primary_key,
+            escape_body=True,
+        ),
+        received_signature=headers_with_forward_slash.get('box-signature-primary'),
+    )
+    assert compare_signatures(
+        expected_signature=compute_webhook_signature(
+            body_with_back_slash, headers_with_back_slash, primary_key, escape_body=True
+        ),
+        received_signature=headers_with_back_slash.get('box-signature-primary'),
+    )
     assert WebhooksManager.validate_message(
         body, headers_with_correct_datetime, primary_key, secondary_key=secondary_key
     )
@@ -237,44 +263,26 @@ def testWebhookValidation():
     assert WebhooksManager.validate_message(
         body, headers_with_correct_datetime, incorrect_key, secondary_key=secondary_key
     )
-    assert (
-        WebhooksManager.validate_message(
-            body,
-            headers_with_correct_datetime,
-            incorrect_key,
-            secondary_key=incorrect_key,
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body, headers_with_correct_datetime, incorrect_key, secondary_key=incorrect_key
     )
-    assert (
-        WebhooksManager.validate_message(
-            body, headers_with_future_datetime, primary_key, secondary_key=secondary_key
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body, headers_with_future_datetime, primary_key, secondary_key=secondary_key
     )
-    assert (
-        WebhooksManager.validate_message(
-            body, headers_with_past_datetime, primary_key, secondary_key=secondary_key
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body, headers_with_past_datetime, primary_key, secondary_key=secondary_key
     )
-    assert (
-        WebhooksManager.validate_message(
-            body,
-            headers_with_wrong_signature_version,
-            primary_key,
-            secondary_key=secondary_key,
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body,
+        headers_with_wrong_signature_version,
+        primary_key,
+        secondary_key=secondary_key,
     )
-    assert (
-        WebhooksManager.validate_message(
-            body,
-            headers_with_wrong_signature_algorithm,
-            primary_key,
-            secondary_key=secondary_key,
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body,
+        headers_with_wrong_signature_algorithm,
+        primary_key,
+        secondary_key=secondary_key,
     )
     assert WebhooksManager.validate_message(
         body_with_japanese,
@@ -294,12 +302,9 @@ def testWebhookValidation():
         incorrect_key,
         secondary_key=secondary_key,
     )
-    assert (
-        WebhooksManager.validate_message(
-            body_with_japanese,
-            headers_with_japanese,
-            primary_key,
-            secondary_key=secondary_key,
-        )
-        == False
+    assert not WebhooksManager.validate_message(
+        body_with_japanese,
+        headers_with_japanese,
+        primary_key,
+        secondary_key=secondary_key,
     )

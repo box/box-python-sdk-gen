@@ -46,6 +46,8 @@ from box_sdk_gen.serialization.json import SerializedData
 
 from box_sdk_gen.internal.utils import compute_webhook_signature
 
+from box_sdk_gen.internal.utils import compare_signatures
+
 from box_sdk_gen.internal.utils import date_time_from_string
 
 from box_sdk_gen.internal.utils import get_epoch_time_in_seconds
@@ -448,20 +450,32 @@ class WebhooksManager:
             or date_time_to_epoch_seconds(delivery_timestamp) > current_epoch
         ):
             return False
-        if primary_key and compute_webhook_signature(
-            body, headers, primary_key, escape_body=False
-        ) == headers.get('box-signature-primary'):
+        if primary_key and compare_signatures(
+            expected_signature=compute_webhook_signature(
+                body, headers, primary_key, escape_body=False
+            ),
+            received_signature=headers.get('box-signature-primary'),
+        ):
             return True
-        if primary_key and compute_webhook_signature(
-            body, headers, primary_key, escape_body=True
-        ) == headers.get('box-signature-primary'):
+        if primary_key and compare_signatures(
+            expected_signature=compute_webhook_signature(
+                body, headers, primary_key, escape_body=True
+            ),
+            received_signature=headers.get('box-signature-primary'),
+        ):
             return True
-        if secondary_key and compute_webhook_signature(
-            body, headers, secondary_key, escape_body=False
-        ) == headers.get('box-signature-secondary'):
+        if secondary_key and compare_signatures(
+            expected_signature=compute_webhook_signature(
+                body, headers, secondary_key, escape_body=False
+            ),
+            received_signature=headers.get('box-signature-secondary'),
+        ):
             return True
-        if secondary_key and compute_webhook_signature(
-            body, headers, secondary_key, escape_body=True
-        ) == headers.get('box-signature-secondary'):
+        if secondary_key and compare_signatures(
+            expected_signature=compute_webhook_signature(
+                body, headers, secondary_key, escape_body=True
+            ),
+            received_signature=headers.get('box-signature-secondary'),
+        ):
             return True
         return False
