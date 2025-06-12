@@ -15,7 +15,11 @@ This operation is performed by calling function `get_shield_lists_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-shield-lists/).
 
-_Currently we don't have an example for calling `get_shield_lists_v2025_r0` in integration tests_
+<!-- sample get_shield_lists_v2025.0 -->
+
+```python
+client.shield_lists.get_shield_lists_v2025_r0()
+```
 
 ### Arguments
 
@@ -39,7 +43,18 @@ This operation is performed by calling function `create_shield_list_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-shield-lists/).
 
-_Currently we don't have an example for calling `create_shield_list_v2025_r0` in integration tests_
+<!-- sample post_shield_lists_v2025.0 -->
+
+```python
+client.shield_lists.create_shield_list_v2025_r0(
+    shield_list_country_name,
+    ShieldListContentCountryV2025R0(
+        type=ShieldListContentCountryV2025R0TypeField.COUNTRY,
+        country_codes=["US", "PL"],
+    ),
+    description="A list of things that are shielded",
+)
+```
 
 ### Arguments
 
@@ -69,7 +84,11 @@ This operation is performed by calling function `get_shield_list_by_id_v2025_r0`
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-shield-lists-id/).
 
-_Currently we don't have an example for calling `get_shield_list_by_id_v2025_r0` in integration tests_
+<!-- sample get_shield_lists_id_v2025.0 -->
+
+```python
+client.shield_lists.get_shield_list_by_id_v2025_r0(shield_list_country.id)
+```
 
 ### Arguments
 
@@ -95,7 +114,11 @@ This operation is performed by calling function `delete_shield_list_by_id_v2025_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/delete-shield-lists-id/).
 
-_Currently we don't have an example for calling `delete_shield_list_by_id_v2025_r0` in integration tests_
+<!-- sample delete_shield_lists_id_v2025.0 -->
+
+```python
+client.shield_lists.delete_shield_list_by_id_v2025_r0(shield_list_country.id)
+```
 
 ### Arguments
 
@@ -121,7 +144,18 @@ This operation is performed by calling function `update_shield_list_by_id_v2025_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/put-shield-lists-id/).
 
-_Currently we don't have an example for calling `update_shield_list_by_id_v2025_r0` in integration tests_
+<!-- sample put_shield_lists_id_v2025.0 -->
+
+```python
+client.shield_lists.update_shield_list_by_id_v2025_r0(
+    shield_list_country.id,
+    shield_list_country_name,
+    ShieldListContentCountryV2025R0(
+        type=ShieldListContentCountryV2025R0TypeField.COUNTRY, country_codes=["US"]
+    ),
+    description="Updated description",
+)
+```
 
 ### Arguments
 
