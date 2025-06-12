@@ -28,6 +28,10 @@ from box_sdk_gen.schemas.user import User
 
 from box_sdk_gen.internal.utils import date_time_from_string
 
+from box_sdk_gen.internal.utils import get_epoch_time_in_seconds
+
+from box_sdk_gen.internal.utils import epoch_seconds_to_date_time
+
 client: BoxClient = get_default_client()
 
 
@@ -88,8 +92,16 @@ def testGetEventsWithLongPolling():
 
 
 def testGetEventsWithDateFilters():
-    created_after_date: DateTime = date_time_from_string('2024-06-09T00:00:00Z')
-    created_before_date: DateTime = date_time_from_string('2025-06-09T00:00:00Z')
+    current_epoch_time_in_seconds: int = get_epoch_time_in_seconds()
+    epoch_time_in_seconds_a_week_ago: int = current_epoch_time_in_seconds - (
+        ((7 * 24) * 60) * 60
+    )
+    created_after_date: DateTime = epoch_seconds_to_date_time(
+        epoch_time_in_seconds_a_week_ago
+    )
+    created_before_date: DateTime = epoch_seconds_to_date_time(
+        current_epoch_time_in_seconds
+    )
     servers: Events = client.events.get_events(
         stream_type=GetEventsStreamType.ADMIN_LOGS,
         limit=1,
