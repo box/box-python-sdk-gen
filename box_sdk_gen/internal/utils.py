@@ -430,7 +430,7 @@ def compute_webhook_signature(
     headers: Dict[str, str],
     signature_key: str,
     escape_body: Optional[bool] = False,
-) -> str:
+) -> Optional[str]:
     """
     Computes the Hmac for the webhook notification given one signature key.
 
@@ -460,6 +460,16 @@ def compute_webhook_signature(
     new_hmac.update(encoded_delivery_time_stamp)
     signature = base64.b64encode(new_hmac.digest()).decode()
     return signature
+
+
+def compare_signatures(
+    expected_signature: Optional[str], received_signature: Optional[str]
+) -> bool:
+    if not expected_signature or not received_signature:
+        return False
+    if len(expected_signature) != len(received_signature):
+        return False
+    return hmac.compare_digest(expected_signature, received_signature)
 
 
 def random(min: float, max: float) -> float:
