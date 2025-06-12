@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/box/box-python-sdk-gen/compare/v1.14.0...v1.15.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* compute webhook signature with and without escaping the body (box/box-codegen[#737](https://github.com/box/box-python-sdk-gen/issues/737)) ([#607](https://github.com/box/box-python-sdk-gen/issues/607)) ([e5118b8](https://github.com/box/box-python-sdk-gen/commit/e5118b8a257a042510374d91bd62a1f98c662fef))
+* Fix downscope token to use `retrieveToken` method for token retrieval (box/box-codegen[#731](https://github.com/box/box-python-sdk-gen/issues/731)) ([#598](https://github.com/box/box-python-sdk-gen/issues/598)) ([e492685](https://github.com/box/box-python-sdk-gen/commit/e4926851edccd4ee7e66157050cedd0d01cec5ea))
+* fix slash escaping when calculating webhook signature (box/box-codegen[#736](https://github.com/box/box-python-sdk-gen/issues/736)) ([#603](https://github.com/box/box-python-sdk-gen/issues/603)) ([430b175](https://github.com/box/box-python-sdk-gen/commit/430b1754ec840582e28a277c6c8d369cbe7ebdf5))
+* Use constant-time comparison for HMAC signatures (box/box-codegen[#739](https://github.com/box/box-python-sdk-gen/issues/739)) ([#610](https://github.com/box/box-python-sdk-gen/issues/610)) ([6f6660c](https://github.com/box/box-python-sdk-gen/commit/6f6660c8f3aa2b7b75b0fcd4ed015d8d761cd77f))
+
+
+### New Features and Enhancements
+
+* add AI agents warnings; allow for more types of metadata value (box/box-openapi[#520](https://github.com/box/box-python-sdk-gen/issues/520)) ([#567](https://github.com/box/box-python-sdk-gen/issues/567)) ([86aa1cc](https://github.com/box/box-python-sdk-gen/commit/86aa1ccadac9acead7bceeafb50e45f38eb2d9cc))
+* add Shield Lists APIs (box/box-openapi[#528](https://github.com/box/box-python-sdk-gen/issues/528)) ([#601](https://github.com/box/box-python-sdk-gen/issues/601)) ([f980f65](https://github.com/box/box-python-sdk-gen/commit/f980f6544a58a5c64ab0b3ec13b2771b81ea25ed))
+* Add support of IBM models to AI API (box/box-openapi[#522](https://github.com/box/box-python-sdk-gen/issues/522)) ([#568](https://github.com/box/box-python-sdk-gen/issues/568)) ([767547a](https://github.com/box/box-python-sdk-gen/commit/767547ae070909852800c447e65cbcc95b97c5a3))
+* Update legal holds and AI models (box/box-openapi[#526](https://github.com/box/box-python-sdk-gen/issues/526)) ([#599](https://github.com/box/box-python-sdk-gen/issues/599)) ([d56228d](https://github.com/box/box-python-sdk-gen/commit/d56228d81bd9777af5431ccc9d05233e13a0c2ed))
+
 ## [1.14.0](https://github.com/box/box-python-sdk-gen/compare/v1.13.0...v1.14.0) (2025-05-02)
 
 
