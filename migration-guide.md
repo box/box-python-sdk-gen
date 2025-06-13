@@ -28,6 +28,9 @@
 - [Configuration](#configuration)
   - [As-User header](#as-user-header)
   - [Custom Base URLs](#custom-base-urls)
+- [Convenience methods](#convenience-methods)
+  - [Webhook validation](#webhook-validation)
+  - [Chunked upload of big files](#chunked-upload-of-big-files)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -651,4 +654,85 @@ new_client: BoxClient = client.with_custom_base_urls(base_urls=BaseUrls(
   upload_url='https://my-company-upload-url.com',
   oauth_2_url='https://my-company.com/oauth2',
 ))
+```
+
+## Convenience methods
+
+### Webhook validation
+
+Webhook validation is used to validate a webhook message by verifying the signature and the delivery timestamp.
+
+**Old (`boxsdk`)**
+
+In the old SDK, you could pass the `body` as `bytes`, and it would return a `boolean` value indicating whether the message was valid.
+
+```python
+body = b'{"webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"Test.txt"}}'
+headers = {
+    'box-delivery-id': 'f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f',
+    'box-delivery-timestamp': '2020-01-01T00:00:00-07:00',
+    'box-signature-algorithm': 'HmacSHA256',
+    'box-signature-primary': '4KvFa5/unRL8aaqOlnbInTwkOmieZkn1ZVzsAJuRipE=',
+    'box-signature-secondary': 'yxxwBNk7tFyQSy95/VNKAf1o+j8WMPJuo/KcFc7OS0Q=',
+    'box-signature-version': '1',
+}
+is_validated = Webhook.validate_message(body, headers, primary_key, secondary_key)
+print(f'The webhook message is validated to: {is_validated}')
+```
+
+**New (`box-sdk-gen`)**
+
+In the new SDK, the `WebhooksManager.validate_message()` method requires the `body` to be of type `string` and
+the rest of the code remains the same
+
+```python
+from box_sdk_gen import WebhooksManager
+
+body = '{"webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"Test.txt"}}'
+headers = {
+  'box-delivery-id': 'f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f',
+  'box-delivery-timestamp': '2020-01-01T00:00:00-07:00',
+  'box-signature-algorithm': 'HmacSHA256',
+  'box-signature-primary': '4KvFa5/unRL8aaqOlnbInTwkOmieZkn1ZVzsAJuRipE=',
+  'box-signature-secondary': 'yxxwBNk7tFyQSy95/VNKAf1o+j8WMPJuo/KcFc7OS0Q=',
+  'box-signature-version': '1',
+}
+WebhooksManager.validate_message(
+        body=body, headers=headers, primary_key=primary_key, secondary_key=secondary_key
+)
+```
+
+### Chunked upload of big files
+
+For large files or in cases where the network connection is less reliable, you may want to upload the file in parts.
+This allows a single part to fail without aborting the entire upload, and failed parts are being retried automatically.
+
+**Old (`boxsdk`)**
+
+In the old SDK, you could use the `get_chunked_uploader()` method to create a chunked uploader object.
+Then, you would call the `start()` method to begin the upload process.
+The `get_chunked_uploader()` method requires the `file_path` and `file_name` parameters.
+
+```python
+chunked_uploader = client.folder('0').get_chunked_uploader(file_path='/path/to/file.txt', file_name='new_name.txt')
+uploaded_file = chunked_uploader.start()
+print(f'File "{uploaded_file.name}" uploaded to Box with file ID {uploaded_file.id}')
+```
+
+**New (`box-sdk-gen`)**
+
+In the new SDK, the equivalent method is `chunked_uploads.upload_big_file()`. It accepts a file-like object
+as the `file` parameter, and the `file_name` and `file_size` parameters are now passed as arguments.
+The `parent_folder_id` parameter is also required to specify the folder where the file will be uploaded.
+
+```python
+import os
+
+with open('/path/to/file.txt', 'rb') as file_byte_stream:
+    file_name = 'new_name.txt'
+    file_size = os.path.getsize('/path/to/file.txt')
+    parent_folder_id = '0'  # ID of the folder where the file will be uploaded
+    uploaded_file = client.chunked_uploads.upload_big_file(
+        file=file_byte_stream, file_name=file_name, file_size=file_size, parent_folder_id=parent_folder_id
+    )
 ```
