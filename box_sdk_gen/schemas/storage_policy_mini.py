@@ -20,9 +20,9 @@ class StoragePolicyMini(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this storage policy
+        :param id: The unique identifier for this storage policy.
         :type id: str
-        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
+        :param type: The value will always be `storage_policy`., defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
         :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)

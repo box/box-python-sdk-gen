@@ -32,9 +32,9 @@ client.invites.create_invite(
 ### Arguments
 
 - enterprise `CreateInviteEnterprise`
-  - The enterprise to invite the user to
+  - The enterprise to invite the user to.
 - actionable_by `CreateInviteActionableBy`
-  - The user to invite
+  - The user to invite.
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -74,4 +74,4 @@ client.invites.get_invite_by_id(invitation.id)
 
 This function returns a value of type `Invite`.
 
-Returns an invite object
+Returns an invite object.

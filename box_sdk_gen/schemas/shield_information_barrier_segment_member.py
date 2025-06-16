@@ -51,7 +51,7 @@ class ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentField(
                 :param id: The ID reference of the requesting
         shield information barrier segment., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier segment, defaults to None
+                :param type: The type of the shield information barrier segment., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentMemberShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
@@ -87,9 +87,9 @@ class ShieldInformationBarrierSegmentMember(ShieldInformationBarrierSegmentMembe
         shield information barrier segment Member was updated., defaults to None
                 :type updated_at: Optional[DateTime], optional
                 :param id: The unique identifier for the
-        shield information barrier segment member, defaults to None
+        shield information barrier segment member., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier segment member, defaults to None
+                :param type: The type of the shield information barrier segment member., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField], optional
         """
         super().__init__(user=user, id=id, type=type, **kwargs)

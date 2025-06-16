@@ -25,7 +25,7 @@ class IntegrationMappings(BaseObject):
                 :type limit: Optional[int], optional
                 :param next_marker: The marker for the start of the next page of results., defaults to None
                 :type next_marker: Optional[str], optional
-                :param entries: A list of integration mappings, defaults to None
+                :param entries: A list of integration mappings., defaults to None
                 :type entries: Optional[List[IntegrationMapping]], optional
         """
         super().__init__(**kwargs)

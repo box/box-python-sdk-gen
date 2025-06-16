@@ -97,7 +97,7 @@ class SignRequest(SignRequestBase):
         **kwargs
     ):
         """
-                :param type: object type, defaults to None
+                :param type: The value will always be `sign-request`., defaults to None
                 :type type: Optional[SignRequestTypeField], optional
                 :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file., defaults to None
                 :type source_files: Optional[List[FileBase]], optional
@@ -122,7 +122,7 @@ class SignRequest(SignRequestBase):
                 :type sign_files: Optional[SignRequestSignFilesField], optional
                 :param auto_expire_at: Uses `days_valid` to calculate the date and time, in GMT, the sign request will expire if unsigned., defaults to None
                 :type auto_expire_at: Optional[DateTime], optional
-                :param collaborator_level: The collaborator level of the user to the sign request. Values can include "owner", "editor", and "viewer", defaults to None
+                :param collaborator_level: The collaborator level of the user to the sign request. Values can include "owner", "editor", and "viewer"., defaults to None
                 :type collaborator_level: Optional[str], optional
                 :param sender_email: The email address of the sender of the sign request., defaults to None
                 :type sender_email: Optional[str], optional

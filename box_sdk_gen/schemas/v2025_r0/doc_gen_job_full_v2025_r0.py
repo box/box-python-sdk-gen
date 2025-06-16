@@ -61,7 +61,7 @@ class DocGenJobFullV2025R0(DocGenJobV2025R0):
         :type id: str
         :param created_at: Time of job creation., defaults to None
         :type created_at: Optional[str], optional
-        :param type: `docgen_job`, defaults to DocGenJobBaseV2025R0TypeField.DOCGEN_JOB
+        :param type: The value will always be `docgen_job`., defaults to DocGenJobBaseV2025R0TypeField.DOCGEN_JOB
         :type type: DocGenJobBaseV2025R0TypeField, optional
         """
         super().__init__(

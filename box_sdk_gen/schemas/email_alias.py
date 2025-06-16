@@ -24,13 +24,13 @@ class EmailAlias(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this object, defaults to None
+        :param id: The unique identifier for this object., defaults to None
         :type id: Optional[str], optional
-        :param type: `email_alias`, defaults to None
+        :param type: The value will always be `email_alias`., defaults to None
         :type type: Optional[EmailAliasTypeField], optional
-        :param email: The email address, defaults to None
+        :param email: The email address., defaults to None
         :type email: Optional[str], optional
-        :param is_confirmed: Whether the email address has been confirmed, defaults to None
+        :param is_confirmed: Whether the email address has been confirmed., defaults to None
         :type is_confirmed: Optional[bool], optional
         """
         super().__init__(**kwargs)

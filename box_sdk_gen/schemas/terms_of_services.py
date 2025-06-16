@@ -20,7 +20,7 @@ class TermsOfServices(BaseObject):
         """
         :param total_count: The total number of objects., defaults to None
         :type total_count: Optional[int], optional
-        :param entries: A list of terms of service objects, defaults to None
+        :param entries: A list of terms of service objects., defaults to None
         :type entries: Optional[List[TermsOfService]], optional
         """
         super().__init__(**kwargs)

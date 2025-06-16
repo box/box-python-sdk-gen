@@ -244,9 +244,9 @@ class ShieldInformationBarrierSegmentsManager:
     ) -> ShieldInformationBarrierSegment:
         """
         Creates a shield information barrier segment.
-        :param name: Name of the shield information barrier segment
+        :param name: Name of the shield information barrier segment.
         :type name: str
-        :param description: Description of the shield information barrier segment, defaults to None
+        :param description: Description of the shield information barrier segment., defaults to None
         :type description: Optional[str], optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional

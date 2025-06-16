@@ -129,7 +129,7 @@ class FileWatermarksManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param watermark: The watermark to imprint on the file
+                :param watermark: The watermark to imprint on the file.
                 :type watermark: UpdateFileWatermarkWatermark
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

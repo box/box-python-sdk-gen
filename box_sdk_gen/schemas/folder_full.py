@@ -123,7 +123,7 @@ class FolderFullClassificationField(BaseObject):
         **kwargs
     ):
         """
-                :param name: The name of the classification, defaults to None
+                :param name: The name of the classification., defaults to None
                 :type name: Optional[str], optional
                 :param definition: An explanation of the meaning of this classification., defaults to None
                 :type definition: Optional[str], optional
@@ -253,7 +253,7 @@ class FolderFull(Folder):
 
           * The **Allow uploads to this folder via email** setting is enabled for a folder in the Admin Console, and the **Only allow email uploads from collaborators in this folder** setting is deactivated (unchecked).
 
-        If the conditions are not met, the parameter will have the following value: `folder_upload_email: null`, defaults to None
+        If the conditions are not met, the parameter will have the following value: `folder_upload_email: null`., defaults to None
                 :type folder_upload_email: Optional[FolderFolderUploadEmailField], optional
                 :param item_status: Defines if this item has been deleted or not.
 
@@ -267,7 +267,7 @@ class FolderFull(Folder):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER
+                :param type: The value will always be `folder`., defaults to FolderBaseTypeField.FOLDER
                 :type type: FolderBaseTypeField, optional
         """
         super().__init__(

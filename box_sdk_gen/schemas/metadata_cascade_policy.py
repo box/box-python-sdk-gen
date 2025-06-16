@@ -28,7 +28,7 @@ class MetadataCascadePolicyOwnerEnterpriseField(BaseObject):
         **kwargs
     ):
         """
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[MetadataCascadePolicyOwnerEnterpriseTypeField], optional
         :param id: The ID of the enterprise that owns the policy., defaults to None
         :type id: Optional[str], optional
@@ -53,7 +53,7 @@ class MetadataCascadePolicyParentField(BaseObject):
         **kwargs
     ):
         """
-        :param type: `folder`, defaults to None
+        :param type: The value will always be `folder`., defaults to None
         :type type: Optional[MetadataCascadePolicyParentTypeField], optional
         :param id: The ID of the folder the policy is applied to., defaults to None
         :type id: Optional[str], optional
@@ -86,9 +86,9 @@ class MetadataCascadePolicy(BaseObject):
         **kwargs
     ):
         """
-                :param id: The ID of the metadata cascade policy object
+                :param id: The ID of the metadata cascade policy object.
                 :type id: str
-                :param type: `metadata_cascade_policy`, defaults to MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY
+                :param type: The value will always be `metadata_cascade_policy`., defaults to MetadataCascadePolicyTypeField.METADATA_CASCADE_POLICY
                 :type type: MetadataCascadePolicyTypeField, optional
                 :param owner_enterprise: The enterprise that owns this policy., defaults to None
                 :type owner_enterprise: Optional[MetadataCascadePolicyOwnerEnterpriseField], optional

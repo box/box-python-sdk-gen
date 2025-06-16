@@ -52,9 +52,9 @@ class StartWorkflowFlow(BaseObject):
         self, *, type: Optional[str] = None, id: Optional[str] = None, **kwargs
     ):
         """
-        :param type: The type of the flow object, defaults to None
+        :param type: The type of the flow object., defaults to None
         :type type: Optional[str], optional
-        :param id: The id of the flow, defaults to None
+        :param id: The id of the flow., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -77,9 +77,9 @@ class StartWorkflowFiles(BaseObject):
         **kwargs
     ):
         """
-        :param type: The type of the file object, defaults to None
+        :param type: The type of the file object., defaults to None
         :type type: Optional[StartWorkflowFilesTypeField], optional
-        :param id: The id of the file, defaults to None
+        :param id: The id of the file., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -102,9 +102,9 @@ class StartWorkflowFolder(BaseObject):
         **kwargs
     ):
         """
-        :param type: The type of the folder object, defaults to None
+        :param type: The type of the folder object., defaults to None
         :type type: Optional[StartWorkflowFolderTypeField], optional
-        :param id: The id of the folder, defaults to None
+        :param id: The id of the folder., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -215,14 +215,14 @@ class WorkflowsManager:
                 :param workflow_id: The ID of the workflow.
         Example: "12345"
                 :type workflow_id: str
-                :param flow: The flow that will be triggered
+                :param flow: The flow that will be triggered.
                 :type flow: StartWorkflowFlow
                 :param files: The array of files for which the workflow should start. All files
         must be in the workflow's configured folder.
                 :type files: List[StartWorkflowFiles]
                 :param folder: The folder object for which the workflow is configured.
                 :type folder: StartWorkflowFolder
-                :param type: The type of the parameters object, defaults to None
+                :param type: The type of the parameters object., defaults to None
                 :type type: Optional[StartWorkflowType], optional
                 :param outcomes: A configurable outcome the workflow should complete., defaults to None
                 :type outcomes: Optional[List[Outcome]], optional

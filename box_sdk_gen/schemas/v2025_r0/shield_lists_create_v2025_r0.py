@@ -23,7 +23,7 @@ class ShieldListsCreateV2025R0(BaseObject):
         """
         :param name: The name of the shield list.
         :type name: str
-        :param description: Description of Shield List: Optional., defaults to None
+        :param description: Optional description of Shield List., defaults to None
         :type description: Optional[str], optional
         """
         super().__init__(**kwargs)

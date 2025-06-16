@@ -44,13 +44,13 @@ class ShieldInformationBarrier(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for the shield information barrier, defaults to None
+                :param id: The unique identifier for the shield information barrier., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier, defaults to None
+                :param type: The type of the shield information barrier., defaults to None
                 :type type: Optional[ShieldInformationBarrierTypeField], optional
                 :param enterprise: The `type` and `id` of enterprise this barrier is under., defaults to None
                 :type enterprise: Optional[EnterpriseBase], optional
-                :param status: Status of the shield information barrier, defaults to None
+                :param status: Status of the shield information barrier., defaults to None
                 :type status: Optional[ShieldInformationBarrierStatusField], optional
                 :param created_at: ISO date time string when this
         shield information barrier object was created., defaults to None

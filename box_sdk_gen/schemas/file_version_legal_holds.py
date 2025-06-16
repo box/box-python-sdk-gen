@@ -28,7 +28,7 @@ class FileVersionLegalHolds(BaseObject):
                 :type next_marker: Optional[str], optional
                 :param prev_marker: The marker for the start of the previous page of results., defaults to None
                 :type prev_marker: Optional[str], optional
-                :param entries: A list of file version legal holds, defaults to None
+                :param entries: A list of file version legal holds., defaults to None
                 :type entries: Optional[List[FileVersionLegalHold]], optional
         """
         super().__init__(**kwargs)

@@ -20,9 +20,9 @@ class LegalHoldPolicyMini(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this legal hold policy
+        :param id: The unique identifier for this legal hold policy.
         :type id: str
-        :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
+        :param type: The value will always be `legal_hold_policy`., defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
         :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(**kwargs)

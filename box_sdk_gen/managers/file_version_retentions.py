@@ -159,7 +159,7 @@ class FileVersionRetentionsManager:
 
                 see [files under retention](e://get-retention-policy-assignments-id-files-under-retention) or [file versions under retention](e://get-retention-policy-assignments-id-file-versions-under-retention) endpoints.
 
-                :param file_version_retention_id: The ID of the file version retention
+                :param file_version_retention_id: The ID of the file version retention.
         Example: "3424234"
                 :type file_version_retention_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

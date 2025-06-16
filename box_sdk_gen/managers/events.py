@@ -348,7 +348,7 @@ class EventsManager:
         the latest stream position for initialization.
         * `0` or `null` will return all events., defaults to None
                 :type stream_position: Optional[str], optional
-                :param limit: Limits the number of events returned
+                :param limit: Limits the number of events returned.
 
         Note: Sometimes, the events less than the limit requested can be returned
         even when there may be more events remaining. This is primarily done in

@@ -125,15 +125,17 @@ class IntegrationMappingsManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param partner_item_type: Mapped item type, for which the mapping should be returned, defaults to None
+                :param partner_item_type: Mapped item type, for which the mapping should be returned., defaults to None
                 :type partner_item_type: Optional[GetSlackIntegrationMappingPartnerItemType], optional
-                :param partner_item_id: ID of the mapped item, for which the mapping should be returned, defaults to None
+                :param partner_item_id: ID of the mapped item,
+        for which the mapping should be returned., defaults to None
                 :type partner_item_id: Optional[str], optional
-                :param box_item_id: Box item ID, for which the mappings should be returned, defaults to None
+                :param box_item_id: Box item ID, for which the mappings should be returned., defaults to None
                 :type box_item_id: Optional[str], optional
-                :param box_item_type: Box item type, for which the mappings should be returned, defaults to None
+                :param box_item_type: Box item type, for
+        which the mappings should be returned., defaults to None
                 :type box_item_type: Optional[GetSlackIntegrationMappingBoxItemType], optional
-                :param is_manually_created: Whether the mapping has been manually created, defaults to None
+                :param is_manually_created: Whether the mapping has been manually created., defaults to None
                 :type is_manually_created: Optional[bool], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -238,7 +240,7 @@ class IntegrationMappingsManager:
 
                 use this endpoint.
 
-                :param integration_mapping_id: An ID of an integration mapping
+                :param integration_mapping_id: An ID of an integration mapping.
         Example: "11235432"
                 :type integration_mapping_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -282,7 +284,7 @@ class IntegrationMappingsManager:
 
                 use this endpoint.
 
-                :param integration_mapping_id: An ID of an integration mapping
+                :param integration_mapping_id: An ID of an integration mapping.
         Example: "11235432"
                 :type integration_mapping_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -319,23 +321,25 @@ class IntegrationMappingsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> IntegrationMappingsTeams:
         """
-        Lists [Teams integration mappings](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams) in a users' enterprise.
+                Lists [Teams integration mappings](https://support.box.com/hc/en-us/articles/360044681474-Using-Box-for-Teams) in a users' enterprise.
 
-        You need Admin or Co-Admin role to
+                You need Admin or Co-Admin role to
 
 
-        use this endpoint.
+                use this endpoint.
 
-        :param partner_item_type: Mapped item type, for which the mapping should be returned, defaults to None
-        :type partner_item_type: Optional[GetTeamsIntegrationMappingPartnerItemType], optional
-        :param partner_item_id: ID of the mapped item, for which the mapping should be returned, defaults to None
-        :type partner_item_id: Optional[str], optional
-        :param box_item_id: Box item ID, for which the mappings should be returned, defaults to None
-        :type box_item_id: Optional[str], optional
-        :param box_item_type: Box item type, for which the mappings should be returned, defaults to None
-        :type box_item_type: Optional[GetTeamsIntegrationMappingBoxItemType], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                :param partner_item_type: Mapped item type, for which the mapping should be returned., defaults to None
+                :type partner_item_type: Optional[GetTeamsIntegrationMappingPartnerItemType], optional
+                :param partner_item_id: ID of the mapped item,
+        for which the mapping should be returned., defaults to None
+                :type partner_item_id: Optional[str], optional
+                :param box_item_id: Box item ID, for which the mappings should be returned., defaults to None
+                :type box_item_id: Optional[str], optional
+                :param box_item_type: Box item type, for
+        which the mappings should be returned., defaults to None
+                :type box_item_type: Optional[GetTeamsIntegrationMappingBoxItemType], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -428,7 +432,7 @@ class IntegrationMappingsManager:
 
                 use this endpoint.
 
-                :param integration_mapping_id: An ID of an integration mapping
+                :param integration_mapping_id: An ID of an integration mapping.
         Example: "11235432"
                 :type integration_mapping_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -472,7 +476,7 @@ class IntegrationMappingsManager:
 
                 use this endpoint.
 
-                :param integration_mapping_id: An ID of an integration mapping
+                :param integration_mapping_id: An ID of an integration mapping.
         Example: "11235432"
                 :type integration_mapping_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

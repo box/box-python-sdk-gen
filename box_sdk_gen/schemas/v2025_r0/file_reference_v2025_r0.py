@@ -20,9 +20,9 @@ class FileReferenceV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param id: ID of the object
+        :param id: ID of the object.
         :type id: str
-        :param type: `file`, defaults to FileReferenceV2025R0TypeField.FILE
+        :param type: The value will always be `file`., defaults to FileReferenceV2025R0TypeField.FILE
         :type type: FileReferenceV2025R0TypeField, optional
         """
         super().__init__(**kwargs)

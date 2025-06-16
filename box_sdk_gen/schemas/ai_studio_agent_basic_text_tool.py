@@ -22,7 +22,7 @@ class AiStudioAgentBasicTextTool(AiAgentBasicTextTool):
         **kwargs
     ):
         """
-                :param is_custom_instructions_included: True if system message contains custom instructions placeholder, false otherwise, defaults to None
+                :param is_custom_instructions_included: True if system message contains custom instructions placeholder, false otherwise., defaults to None
                 :type is_custom_instructions_included: Optional[bool], optional
                 :param system_message: System messages try to help the LLM "understand" its role and what it is supposed to do., defaults to None
                 :type system_message: Optional[str], optional

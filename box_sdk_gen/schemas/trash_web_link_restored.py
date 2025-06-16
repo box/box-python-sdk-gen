@@ -24,7 +24,7 @@ class TrashWebLinkRestoredPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: The parent folders for this item
+        :param entries: The parent folders for this item.
         :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
@@ -65,16 +65,16 @@ class TrashWebLinkRestored(BaseObject):
         **kwargs
     ):
         """
-                :param type: `web_link`, defaults to None
+                :param type: The value will always be `web_link`., defaults to None
                 :type type: Optional[TrashWebLinkRestoredTypeField], optional
-                :param id: The unique identifier for this web link, defaults to None
+                :param id: The unique identifier for this web link., defaults to None
                 :type id: Optional[str], optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None
                 :type etag: Optional[str], optional
-                :param name: The name of the web link, defaults to None
+                :param name: The name of the web link., defaults to None
                 :type name: Optional[str], optional
-                :param url: The URL this web link points to, defaults to None
+                :param url: The URL this web link points to., defaults to None
                 :type url: Optional[str], optional
                 :param description: The description accompanying the web link. This is
         visible within the Box web application., defaults to None
@@ -96,7 +96,7 @@ class TrashWebLinkRestored(BaseObject):
                 :type shared_link: Optional[str], optional
                 :param item_status: Whether this item is deleted or not. Values include `active`,
         `trashed` if the file has been moved to the trash, and `deleted` if
-        the file has been permanently deleted, defaults to None
+        the file has been permanently deleted., defaults to None
                 :type item_status: Optional[TrashWebLinkRestoredItemStatusField], optional
         """
         super().__init__(**kwargs)

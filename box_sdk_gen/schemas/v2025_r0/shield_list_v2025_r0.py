@@ -42,7 +42,7 @@ class ShieldListV2025R0(BaseObject):
         :type created_at: DateTime
         :param updated_at: ISO date time string when this shield list object was updated.
         :type updated_at: DateTime
-        :param description: Description of Shield List, defaults to None
+        :param description: Description of Shield List., defaults to None
         :type description: Optional[str], optional
         """
         super().__init__(**kwargs)

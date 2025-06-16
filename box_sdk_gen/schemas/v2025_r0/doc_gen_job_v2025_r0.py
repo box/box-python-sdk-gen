@@ -51,7 +51,7 @@ class DocGenJobV2025R0(DocGenJobBaseV2025R0):
         :type output_type: str
         :param id: The unique identifier that represent a Box Doc Gen job.
         :type id: str
-        :param type: `docgen_job`, defaults to DocGenJobBaseV2025R0TypeField.DOCGEN_JOB
+        :param type: The value will always be `docgen_job`., defaults to DocGenJobBaseV2025R0TypeField.DOCGEN_JOB
         :type type: DocGenJobBaseV2025R0TypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

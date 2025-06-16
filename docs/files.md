@@ -35,7 +35,7 @@ client.files.get_file_by_id(
 - boxapi `Optional[str]`
   - The URL, and optional password, for the shared link of this item. This header can be used to access items that have not been explicitly shared with a user. Use the format `shared_link=[link]` or if a password is required then use `shared_link=[link]&shared_link_password=[password]`. This header can be used on the file or folder shared, as well as on any files or folders nested within the item.
 - x_rep_hints `Optional[str]`
-  - A header required to request specific `representations` of a file. Use this in combination with the `fields` query parameter to request a specific file representation. The general format for these representations is `X-Rep-Hints: [...]` where `[...]` is one or many hints in the format `[fileType?query]`. For example, to request a `png` representation in `32x32` as well as `64x64` pixel dimensions provide the following hints. `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]` Additionally, a `text` representation is available for all document file types in Box using the `[extracted_text]` representation. `x-rep-hints: [extracted_text]`
+  - A header required to request specific `representations` of a file. Use this in combination with the `fields` query parameter to request a specific file representation. The general format for these representations is `X-Rep-Hints: [...]` where `[...]` is one or many hints in the format `[fileType?query]`. For example, to request a `png` representation in `32x32` as well as `64x64` pixel dimensions provide the following hints. `x-rep-hints: [jpg?dimensions=32x32][jpg?dimensions=64x64]` Additionally, a `text` representation is available for all document file types in Box using the `[extracted_text]` representation. `x-rep-hints: [extracted_text]`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -201,15 +201,15 @@ client.files.get_file_thumbnail_url(thumbnail_file.id, GetFileThumbnailUrlExtens
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - extension `GetFileThumbnailUrlExtension`
-  - The file format for the thumbnail Example: "png"
+  - The file format for the thumbnail. Example: "png"
 - min_height `Optional[int]`
-  - The minimum height of the thumbnail
+  - The minimum height of the thumbnail.
 - min_width `Optional[int]`
-  - The minimum width of the thumbnail
+  - The minimum width of the thumbnail.
 - max_height `Optional[int]`
-  - The maximum height of the thumbnail
+  - The maximum height of the thumbnail.
 - max_width `Optional[int]`
-  - The maximum width of the thumbnail
+  - The maximum width of the thumbnail.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -258,15 +258,15 @@ client.files.get_file_thumbnail_by_id(
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - extension `GetFileThumbnailByIdExtension`
-  - The file format for the thumbnail Example: "png"
+  - The file format for the thumbnail. Example: "png"
 - min_height `Optional[int]`
-  - The minimum height of the thumbnail
+  - The minimum height of the thumbnail.
 - min_width `Optional[int]`
-  - The minimum width of the thumbnail
+  - The minimum width of the thumbnail.
 - max_height `Optional[int]`
-  - The maximum height of the thumbnail
+  - The maximum height of the thumbnail.
 - max_width `Optional[int]`
-  - The maximum width of the thumbnail
+  - The maximum width of the thumbnail.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

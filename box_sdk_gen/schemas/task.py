@@ -49,20 +49,20 @@ class Task(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this task, defaults to None
+                :param id: The unique identifier for this task., defaults to None
                 :type id: Optional[str], optional
-                :param type: `task`, defaults to None
+                :param type: The value will always be `task`., defaults to None
                 :type type: Optional[TaskTypeField], optional
-                :param due_at: When the task is due, defaults to None
+                :param due_at: When the task is due., defaults to None
                 :type due_at: Optional[DateTime], optional
                 :param action: The type of task the task assignee will be prompted to
         perform., defaults to None
                 :type action: Optional[TaskActionField], optional
-                :param message: A message that will be included with the task, defaults to None
+                :param message: A message that will be included with the task., defaults to None
                 :type message: Optional[str], optional
-                :param is_completed: Whether the task has been completed, defaults to None
+                :param is_completed: Whether the task has been completed., defaults to None
                 :type is_completed: Optional[bool], optional
-                :param created_at: When the task object was created, defaults to None
+                :param created_at: When the task object was created., defaults to None
                 :type created_at: Optional[DateTime], optional
                 :param completion_rule: Defines which assignees need to complete this task before the task
         is considered completed.

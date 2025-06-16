@@ -57,7 +57,7 @@ class Classification(BaseObject):
         has been attached to. This combines the `type` and the `id`
         of the parent in the form `{type}_{id}`., defaults to None
                 :type parent: Optional[str], optional
-                :param template: `securityClassification-6VMVochwUWo`, defaults to None
+                :param template: The value will always be `securityClassification-6VMVochwUWo`., defaults to None
                 :type template: Optional[ClassificationTemplateField], optional
                 :param scope: The scope of the enterprise that this classification has been
         applied for.

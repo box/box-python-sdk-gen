@@ -119,7 +119,7 @@ class SignTemplateCustomBrandingField(BaseObject):
         **kwargs
     ):
         """
-        :param company_name: Name of the company, defaults to None
+        :param company_name: Name of the company., defaults to None
         :type company_name: Optional[str], optional
         :param logo_uri: Custom branding logo URI in the form of a base64 image., defaults to None
         :type logo_uri: Optional[str], optional
@@ -161,29 +161,50 @@ class SignTemplate(BaseObject):
         **kwargs
     ):
         """
-                :param type: object type, defaults to None
+                :param type: The value will always be `sign-template`., defaults to None
                 :type type: Optional[SignTemplateTypeField], optional
                 :param id: Template identifier., defaults to None
                 :type id: Optional[str], optional
                 :param name: The name of the template., defaults to None
                 :type name: Optional[str], optional
-                :param email_subject: Subject of signature request email. This is cleaned by sign request. If this field is not passed, a default subject will be used., defaults to None
+                :param email_subject: Subject of signature request email. This is cleaned by sign
+        request. If this field is not passed, a default subject will be used., defaults to None
                 :type email_subject: Optional[str], optional
-                :param email_message: Message to include in signature request email. The field is cleaned through sanitization of specific characters. However, some html tags are allowed. Links included in the message are also converted to hyperlinks in the email. The message may contain the following html tags including `a`, `abbr`, `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and `strong`. Be aware that when the text to html ratio is too high, the email may end up in spam filters. Custom styles on these tags are not allowed. If this field is not passed, a default message will be used., defaults to None
+                :param email_message: Message to include in signature request email. The field
+        is cleaned through sanitization of specific characters. However,
+        some html tags are allowed. Links included in the
+        message are also converted to hyperlinks in the email. The
+        message may contain the following html tags including `a`, `abbr`,
+        `acronym`, `b`, `blockquote`, `code`, `em`, `i`, `ul`, `li`, `ol`, and
+        `strong`. Be aware that when the text
+        to html ratio is too high, the email
+        may end up in spam filters. Custom styles on
+        these tags are not allowed.
+        If this field is not passed, a default message will be used., defaults to None
                 :type email_message: Optional[str], optional
-                :param days_valid: Set the number of days after which the created signature request will automatically expire if not completed. By default, we do not apply any expiration date on signature requests, and the signature request does not expire., defaults to None
+                :param days_valid: Set the number of days after which the
+        created signature request will automatically
+        expire if not completed. By default, we do
+        not apply any expiration date on signature
+        requests, and the signature request does not expire., defaults to None
                 :type days_valid: Optional[int], optional
-                :param source_files: List of files to create a signing document from. Only the ID and type fields are required for each file., defaults to None
+                :param source_files: List of files to create a signing document from.
+        Only the ID and type fields are required
+        for each file., defaults to None
                 :type source_files: Optional[List[FileMini]], optional
-                :param are_fields_locked: Indicates if the template input fields are editable or not., defaults to None
+                :param are_fields_locked: Indicates if the template input
+        fields are editable or not., defaults to None
                 :type are_fields_locked: Optional[bool], optional
-                :param are_options_locked: Indicates if the template document options are editable or not, for example renaming the document., defaults to None
+                :param are_options_locked: Indicates if the template document options
+        are editable or not,
+        for example renaming the document., defaults to None
                 :type are_options_locked: Optional[bool], optional
                 :param are_recipients_locked: Indicates if the template signers are editable or not., defaults to None
                 :type are_recipients_locked: Optional[bool], optional
                 :param are_email_settings_locked: Indicates if the template email settings are editable or not., defaults to None
                 :type are_email_settings_locked: Optional[bool], optional
-                :param are_files_locked: Indicates if the template files are editable or not. This includes deleting or renaming template files., defaults to None
+                :param are_files_locked: Indicates if the template files are editable or not.
+        This includes deleting or renaming template files., defaults to None
                 :type are_files_locked: Optional[bool], optional
                 :param signers: Array of signers for the template.
 
@@ -193,9 +214,18 @@ class SignTemplate(BaseObject):
 
         Read more about [segments and ethical walls](https://support.box.com/hc/en-us/articles/9920431507603-Understanding-Information-Barriers#h_01GFVJEHQA06N7XEZ4GCZ9GFAQ)., defaults to None
                 :type signers: Optional[List[TemplateSigner]], optional
-                :param additional_info: Additional information on which fields are required and which fields are not editable., defaults to None
+                :param additional_info: Additional information on which fields are
+        required and which fields are not editable., defaults to None
                 :type additional_info: Optional[SignTemplateAdditionalInfoField], optional
-                :param ready_sign_link: Box's ready-sign link feature enables you to create a link to a signature request that you've created from a template. Use this link when you want to post a signature request on a public form — such as an email, social media post, or web page — without knowing who the signers will be. Note: The ready-sign link feature is limited to Enterprise Plus customers and not available to Box Verified Enterprises., defaults to None
+                :param ready_sign_link: Box's ready-sign link feature enables you to create a
+        link to a signature request that
+        you've created from a template. Use this link
+        when you want to post a signature request
+        on a public form — such as an email, social media post,
+        or web page — without knowing who the signers will be.
+        Note: The ready-sign link feature is
+        limited to Enterprise Plus customers and not
+        available to Box Verified Enterprises., defaults to None
                 :type ready_sign_link: Optional[SignTemplateReadySignLinkField], optional
                 :param custom_branding: Custom branding applied to notifications
         and signature requests., defaults to None

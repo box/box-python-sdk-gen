@@ -73,11 +73,11 @@ class SignRequestSigner(SignRequestCreateSigner):
         **kwargs
     ):
         """
-                :param has_viewed_document: Set to `true` if the signer views the document, defaults to None
+                :param has_viewed_document: Set to `true` if the signer views the document., defaults to None
                 :type has_viewed_document: Optional[bool], optional
                 :param signer_decision: Final decision made by the signer., defaults to None
                 :type signer_decision: Optional[SignRequestSignerSignerDecisionField], optional
-                :param embed_url: URL to direct a signer to for signing, defaults to None
+                :param embed_url: URL to direct a signer to for signing., defaults to None
                 :type embed_url: Optional[str], optional
                 :param iframeable_embed_url: This URL is specifically designed for
         signing documents within an HTML `iframe` tag.
@@ -97,7 +97,7 @@ class SignRequestSigner(SignRequestCreateSigner):
                 :param is_in_person: Used in combination with an embed URL for a sender. After the
         sender signs, they are redirected to the next `in_person` signer., defaults to None
                 :type is_in_person: Optional[bool], optional
-                :param order: Order of the signer, defaults to None
+                :param order: Order of the signer., defaults to None
                 :type order: Optional[int], optional
                 :param embed_url_external_user_id: User ID for the signer in an external application responsible
         for authentication when accessing the embed URL., defaults to None
@@ -134,7 +134,7 @@ class SignRequestSigner(SignRequestCreateSigner):
         determine which signers belongs to same group. A successful response will provide a generated UUID value
         instead for signers in the same signer group., defaults to None
                 :type signer_group_id: Optional[str], optional
-                :param suppress_notifications: If true, no emails about the sign request will be sent, defaults to None
+                :param suppress_notifications: If true, no emails about the sign request will be sent., defaults to None
                 :type suppress_notifications: Optional[bool], optional
         """
         super().__init__(

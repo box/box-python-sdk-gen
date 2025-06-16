@@ -24,7 +24,7 @@ client.file_version_legal_holds.get_file_version_legal_hold_by_id(
 ### Arguments
 
 - file_version_legal_hold_id `str`
-  - The ID of the file version legal hold Example: "2348213"
+  - The ID of the file version legal hold. Example: "2348213"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

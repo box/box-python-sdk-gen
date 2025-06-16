@@ -149,7 +149,7 @@ class RetentionPolicy(RetentionPolicyMini):
         allowing it to be deleted by users,
         once the retention policy has expired., defaults to None
                 :type disposition_action: Optional[RetentionPolicyMiniDispositionActionField], optional
-                :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
+                :param type: The value will always be `retention_policy`., defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
                 :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(

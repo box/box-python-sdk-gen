@@ -17,7 +17,7 @@ class UploadUrl(BaseObject):
                 :param upload_url: A URL for an upload session that can be used to upload
         the file., defaults to None
                 :type upload_url: Optional[str], optional
-                :param upload_token: An optional access token to use to upload the file, defaults to None
+                :param upload_token: An optional access token to use to upload the file., defaults to None
                 :type upload_token: Optional[str], optional
         """
         super().__init__(**kwargs)

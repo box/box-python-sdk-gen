@@ -22,9 +22,9 @@ class EnterpriseReferenceV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this enterprise, defaults to None
+        :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[EnterpriseReferenceV2025R0TypeField], optional
         """
         super().__init__(**kwargs)

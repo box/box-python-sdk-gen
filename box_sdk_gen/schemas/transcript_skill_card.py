@@ -50,7 +50,7 @@ class TranscriptSkillCardSkillField(BaseObject):
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to TranscriptSkillCardSkillTypeField.SERVICE
+                :param type: The value will always be `service`., defaults to TranscriptSkillCardSkillTypeField.SERVICE
                 :type type: TranscriptSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -79,7 +79,7 @@ class TranscriptSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION
+                :param type: The value will always be `skill_invocation`., defaults to TranscriptSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: TranscriptSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -146,9 +146,9 @@ class TranscriptSkillCard(BaseObject):
                 :type entries: List[TranscriptSkillCardEntriesField]
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to TranscriptSkillCardTypeField.SKILL_CARD
+                :param type: The value will always be `skill_card`., defaults to TranscriptSkillCardTypeField.SKILL_CARD
                 :type type: TranscriptSkillCardTypeField, optional
-                :param skill_card_type: `transcript`, defaults to TranscriptSkillCardSkillCardTypeField.TRANSCRIPT
+                :param skill_card_type: The value will always be `transcript`., defaults to TranscriptSkillCardSkillCardTypeField.TRANSCRIPT
                 :type skill_card_type: TranscriptSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[TranscriptSkillCardSkillCardTitleField], optional

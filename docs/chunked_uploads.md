@@ -38,9 +38,9 @@ client.chunked_uploads.create_file_upload_session(
 - folder_id `str`
   - The ID of the folder to upload the new file to.
 - file_size `int`
-  - The total number of bytes of the file to be uploaded
+  - The total number of bytes of the file to be uploaded.
 - file_name `str`
-  - The name of new file
+  - The name of new file.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -66,9 +66,9 @@ _Currently we don't have an example for calling `create_file_upload_session_for_
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_size `int`
-  - The total number of bytes of the file to be uploaded
+  - The total number of bytes of the file to be uploaded.
 - file_name `Optional[str]`
-  - The optional new name of new file
+  - The optional new name of new file.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -168,7 +168,7 @@ client.chunked_uploads.upload_file_part_by_url(
 - request_body `ByteStream`
   - Request body of uploadFilePart method
 - digest `str`
-  - The [RFC3230][1] message digest of the chunk uploaded. Only SHA1 is supported. The SHA1 digest must be base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. To get the value for the `SHA` digest, use the openSSL command to encode the file part: `openssl sha1 -binary <FILE_PART_NAME> | base64` [1]: https://tools.ietf.org/html/rfc3230
+  - The [RFC3230][1] message digest of the chunk uploaded. Only SHA1 is supported. The SHA1 digest must be base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. To get the value for the `SHA` digest, use the openSSL command to encode the file part: `openssl sha1 -binary <FILE_PART_NAME> | base64`. [1]: https://tools.ietf.org/html/rfc3230
 - content_range `str`
   - The byte range of the chunk. Must not overlap with the range of a part already uploaded this session. Each part’s size must be exactly equal in size to the part size specified in the upload session that you created. One exception is the last part of the file, as this can be smaller. When providing the value for `content-range`, remember that: _ The lower bound of each part's byte range must be a multiple of the part size. _ The higher bound must be a multiple of the part size - 1.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -210,7 +210,7 @@ client.chunked_uploads.upload_file_part(
 - request_body `ByteStream`
   - Request body of uploadFilePart method
 - digest `str`
-  - The [RFC3230][1] message digest of the chunk uploaded. Only SHA1 is supported. The SHA1 digest must be base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. To get the value for the `SHA` digest, use the openSSL command to encode the file part: `openssl sha1 -binary <FILE_PART_NAME> | base64` [1]: https://tools.ietf.org/html/rfc3230
+  - The [RFC3230][1] message digest of the chunk uploaded. Only SHA1 is supported. The SHA1 digest must be base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. To get the value for the `SHA` digest, use the openSSL command to encode the file part: `openssl sha1 -binary <FILE_PART_NAME> | base64`. [1]: https://tools.ietf.org/html/rfc3230
 - content_range `str`
   - The byte range of the chunk. Must not overlap with the range of a part already uploaded this session. Each part’s size must be exactly equal in size to the part size specified in the upload session that you created. One exception is the last part of the file, as this can be smaller. When providing the value for `content-range`, remember that: _ The lower bound of each part's byte range must be a multiple of the part size. _ The higher bound must be a multiple of the part size - 1.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -385,7 +385,7 @@ client.chunked_uploads.create_file_upload_session_commit_by_url(
 - url `str`
   - URL of createFileUploadSessionCommit method
 - parts `List[UploadPart]`
-  - The list details for the uploaded parts
+  - The list details for the uploaded parts.
 - digest `str`
   - The [RFC3230][1] message digest of the whole file. Only SHA1 is supported. The SHA1 digest must be Base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. [1]: https://tools.ietf.org/html/rfc3230
 - if_match `Optional[str]`
@@ -430,7 +430,7 @@ client.chunked_uploads.create_file_upload_session_commit(
 - upload_session_id `str`
   - The ID of the upload session. Example: "D5E3F7A"
 - parts `List[UploadPart]`
-  - The list details for the uploaded parts
+  - The list details for the uploaded parts.
 - digest `str`
   - The [RFC3230][1] message digest of the whole file. Only SHA1 is supported. The SHA1 digest must be Base64 encoded. The format of this header is as `sha=BASE64_ENCODED_DIGEST`. [1]: https://tools.ietf.org/html/rfc3230
 - if_match `Optional[str]`

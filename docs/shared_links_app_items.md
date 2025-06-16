@@ -24,7 +24,7 @@ client.shared_links_app_items.find_app_item_for_shared_link(
 ### Arguments
 
 - boxapi `str`
-  - A header containing the shared link and optional password for the shared link. The format for this header is `shared_link=[link]&shared_link_password=[password]`
+  - A header containing the shared link and optional password for the shared link. The format for this header is `shared_link=[link]&shared_link_password=[password]`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

@@ -51,21 +51,21 @@ class SignRequestSignerInput(SignRequestPrefillTag):
         **kwargs
     ):
         """
-        :param page_index: Index of page that the input is on
+        :param page_index: Index of page that the input is on.
         :type page_index: int
-        :param type: Type of input, defaults to None
+        :param type: Type of input., defaults to None
         :type type: Optional[SignRequestSignerInputTypeField], optional
-        :param content_type: Content type of input, defaults to None
+        :param content_type: Content type of input., defaults to None
         :type content_type: Optional[SignRequestSignerInputContentTypeField], optional
-        :param read_only: Whether this input was defined as read-only(immutable by signers) or not, defaults to None
+        :param read_only: Whether this input was defined as read-only(immutable by signers) or not., defaults to None
         :type read_only: Optional[bool], optional
         :param document_tag_id: This references the ID of a specific tag contained in a file of the signature request., defaults to None
         :type document_tag_id: Optional[str], optional
-        :param text_value: Text prefill value, defaults to None
+        :param text_value: Text prefill value., defaults to None
         :type text_value: Optional[str], optional
-        :param checkbox_value: Checkbox prefill value, defaults to None
+        :param checkbox_value: Checkbox prefill value., defaults to None
         :type checkbox_value: Optional[bool], optional
-        :param date_value: Date prefill value, defaults to None
+        :param date_value: Date prefill value., defaults to None
         :type date_value: Optional[Date], optional
         """
         super().__init__(

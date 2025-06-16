@@ -163,7 +163,7 @@ class RetentionPoliciesManager:
     ) -> RetentionPolicy:
         """
                 Creates a retention policy.
-                :param policy_name: The name for the retention policy
+                :param policy_name: The name for the retention policy.
                 :type policy_name: str
                 :param policy_type: The type of the retention policy. A retention
         policy type can either be `finite`, where a
@@ -315,7 +315,7 @@ class RetentionPoliciesManager:
                 :param retention_policy_id: The ID of the retention policy.
         Example: "982312"
                 :type retention_policy_id: str
-                :param policy_name: The name for the retention policy, defaults to None
+                :param policy_name: The name for the retention policy., defaults to None
                 :type policy_name: Union[Optional[str], NullValue], optional
                 :param description: The additional text description of the retention policy., defaults to None
                 :type description: Union[Optional[str], NullValue], optional

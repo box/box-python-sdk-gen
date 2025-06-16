@@ -36,9 +36,9 @@ class TermsOfServiceEnterpriseField(BaseObject):
         """
         :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[TermsOfServiceEnterpriseTypeField], optional
-        :param name: The name of the enterprise, defaults to None
+        :param name: The name of the enterprise., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -69,18 +69,18 @@ class TermsOfService(TermsOfServiceBase):
         """
                 :param id: The unique identifier for this terms of service.
                 :type id: str
-                :param status: Whether these terms are enabled or not, defaults to None
+                :param status: Whether these terms are enabled or not., defaults to None
                 :type status: Optional[TermsOfServiceStatusField], optional
-                :param tos_type: Whether to apply these terms to managed users or external users, defaults to None
+                :param tos_type: Whether to apply these terms to managed users or external users., defaults to None
                 :type tos_type: Optional[TermsOfServiceTosTypeField], optional
                 :param text: The text for your terms and conditions. This text could be
         empty if the `status` is set to `disabled`., defaults to None
                 :type text: Optional[str], optional
-                :param created_at: When the legal item was created, defaults to None
+                :param created_at: When the legal item was created., defaults to None
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal item was modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
+                :param type: The value will always be `terms_of_service`., defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
                 :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

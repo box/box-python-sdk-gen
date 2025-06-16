@@ -38,13 +38,13 @@ class SkillInvocationSkillField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this skill, defaults to None
+        :param id: The unique identifier for this skill., defaults to None
         :type id: Optional[str], optional
-        :param type: `skill`, defaults to None
+        :param type: The value will always be `skill`., defaults to None
         :type type: Optional[SkillInvocationSkillTypeField], optional
-        :param name: The name of the skill, defaults to None
+        :param name: The name of the skill., defaults to None
         :type name: Optional[str], optional
-        :param api_key: The client ID of the application, defaults to None
+        :param api_key: The client ID of the application., defaults to None
         :type api_key: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -129,9 +129,9 @@ class SkillInvocationTokenField(BaseObject):
         **kwargs
     ):
         """
-        :param read: The basics of an access token, defaults to None
+        :param read: The basics of an access token., defaults to None
         :type read: Optional[SkillInvocationTokenReadField], optional
-        :param write: The basics of an access token, defaults to None
+        :param write: The basics of an access token., defaults to None
         :type write: Optional[SkillInvocationTokenWriteField], optional
         """
         super().__init__(**kwargs)
@@ -169,7 +169,7 @@ class SkillInvocationStatusField(BaseObject):
         * `permanent_failure` -  Encountered a permanent issue and
           retry would not help., defaults to None
                 :type state: Optional[SkillInvocationStatusStateField], optional
-                :param message: Status information, defaults to None
+                :param message: Status information., defaults to None
                 :type message: Optional[str], optional
                 :param error_code: Error code information, if error occurred., defaults to None
                 :type error_code: Optional[str], optional
@@ -201,9 +201,9 @@ class SkillInvocationEnterpriseField(BaseObject):
         """
         :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[SkillInvocationEnterpriseTypeField], optional
-        :param name: The name of the enterprise, defaults to None
+        :param name: The name of the enterprise., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -231,17 +231,17 @@ class SkillInvocation(BaseObject):
         **kwargs
     ):
         """
-        :param type: `skill_invocation`, defaults to None
+        :param type: The value will always be `skill_invocation`., defaults to None
         :type type: Optional[SkillInvocationTypeField], optional
         :param id: Unique identifier for the invocation request., defaults to None
         :type id: Optional[str], optional
-        :param token: The read-only and read-write access tokens for this item, defaults to None
+        :param token: The read-only and read-write access tokens for this item., defaults to None
         :type token: Optional[SkillInvocationTokenField], optional
         :param status: The details status of this event., defaults to None
         :type status: Optional[SkillInvocationStatusField], optional
         :param created_at: The time this invocation was created., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param trigger: Action that triggered the invocation, defaults to None
+        :param trigger: Action that triggered the invocation., defaults to None
         :type trigger: Optional[str], optional
         """
         super().__init__(**kwargs)

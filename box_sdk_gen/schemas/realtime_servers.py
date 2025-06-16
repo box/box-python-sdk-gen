@@ -20,7 +20,7 @@ class RealtimeServers(BaseObject):
         """
         :param chunk_size: The number of items in this response., defaults to None
         :type chunk_size: Optional[int], optional
-        :param entries: A list of real-time servers, defaults to None
+        :param entries: A list of real-time servers., defaults to None
         :type entries: Optional[List[RealtimeServer]], optional
         """
         super().__init__(**kwargs)

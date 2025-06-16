@@ -36,9 +36,9 @@ class FileVersionLegalHold(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this file version legal hold, defaults to None
+                :param id: The unique identifier for this file version legal hold., defaults to None
                 :type id: Optional[str], optional
-                :param type: `file_version_legal_hold`, defaults to None
+                :param type: The value will always be `file_version_legal_hold`., defaults to None
                 :type type: Optional[FileVersionLegalHoldTypeField], optional
                 :param legal_hold_policy_assignments: List of assignments contributing to this Hold., defaults to None
                 :type legal_hold_policy_assignments: Optional[List[LegalHoldPolicyAssignment]], optional

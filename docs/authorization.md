@@ -88,7 +88,7 @@ _Currently we don't have an example for calling `request_access_token` in integr
 - actor_token_type `Optional[RequestAccessTokenActorTokenType]`
   - The type of `actor_token` passed in. Used in combination with `urn:ietf:params:oauth:grant-type:token-exchange` as the `grant_type`.
 - scope `Optional[str]`
-  - The space-delimited list of scopes that you want apply to the new access token. The `subject_token` will need to have all of these scopes or the call will error with **401 Unauthorized**.
+  - The space-delimited list of scopes that you want apply to the new access token. The `subject_token` will need to have all of these scopes or the call will error with **401 Unauthorized**..
 - resource `Optional[str]`
   - Full URL for the file that the token should be generated for.
 - box_subject_type `Optional[RequestAccessTokenBoxSubjectType]`

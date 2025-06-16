@@ -31,7 +31,7 @@ client.app_item_associations.get_file_app_item_associations(file_id)
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - application_type `Optional[str]`
-  - If given, only return app items for this application type
+  - If given, only return app items for this application type.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -71,7 +71,7 @@ client.app_item_associations.get_folder_app_item_associations(folder_id)
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - application_type `Optional[str]`
-  - If given, returns only app items for this application type
+  - If given, returns only app items for this application type.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

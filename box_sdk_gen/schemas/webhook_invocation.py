@@ -82,9 +82,9 @@ class WebhookInvocation(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this webhook invocation, defaults to None
+                :param id: The unique identifier for this webhook invocation., defaults to None
                 :type id: Optional[str], optional
-                :param type: `webhook_event`, defaults to None
+                :param type: The value will always be `webhook_event`., defaults to None
                 :type type: Optional[WebhookInvocationTypeField], optional
                 :param created_at: A timestamp identifying the time that
         the webhook event was triggered., defaults to None

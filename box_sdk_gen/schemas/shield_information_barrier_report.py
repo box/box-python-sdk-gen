@@ -47,7 +47,7 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
         **kwargs
     ):
         """
-                :param status: Status of the shield information report, defaults to None
+                :param status: Status of the shield information report., defaults to None
                 :type status: Optional[ShieldInformationBarrierReportStatusField], optional
                 :param created_at: ISO date time string when this
         shield information barrier report object was created., defaults to None
@@ -55,9 +55,9 @@ class ShieldInformationBarrierReport(ShieldInformationBarrierReportBase):
                 :param updated_at: ISO date time string when this
         shield information barrier report was updated., defaults to None
                 :type updated_at: Optional[DateTime], optional
-                :param id: The unique identifier for the shield information barrier report, defaults to None
+                :param id: The unique identifier for the shield information barrier report., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier report, defaults to None
+                :param type: The type of the shield information barrier report., defaults to None
                 :type type: Optional[ShieldInformationBarrierReportBaseTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)

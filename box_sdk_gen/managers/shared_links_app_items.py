@@ -56,7 +56,7 @@ class SharedLinksAppItemsManager:
                 :param boxapi: A header containing the shared link and optional password for the
         shared link.
 
-        The format for this header is `shared_link=[link]&shared_link_password=[password]`
+        The format for this header is `shared_link=[link]&shared_link_password=[password]`.
                 :type boxapi: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

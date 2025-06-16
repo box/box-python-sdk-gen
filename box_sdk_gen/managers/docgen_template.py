@@ -82,7 +82,7 @@ class DocgenTemplateManager:
     ) -> DocGenTemplateBaseV2025R0:
         """
         Marks a file as a Box Doc Gen template.
-        :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+        :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
         :type box_version: BoxVersionHeaderV2025R0, optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -126,7 +126,7 @@ class DocgenTemplateManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -162,11 +162,11 @@ class DocgenTemplateManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> None:
         """
-                Unmarks file as Box Doc Gen template
+                Unmarks file as Box Doc Gen template.
                 :param template_id: ID of the file which will no longer be marked as a Box Doc Gen template.
         Example: "123"
                 :type template_id: str
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -206,7 +206,7 @@ class DocgenTemplateManager:
                 :param template_id: The ID of a Box Doc Gen template.
         Example: 123
                 :type template_id: str
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -258,7 +258,7 @@ class DocgenTemplateManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -316,7 +316,7 @@ class DocgenTemplateManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

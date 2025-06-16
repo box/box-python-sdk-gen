@@ -43,7 +43,7 @@ class TransferOwnedFolderOwnedBy(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
                 :param id: The ID of the user who the folder will be
-        transferred to
+        transferred to.
                 :type id: str
         """
         super().__init__(**kwargs)
@@ -145,7 +145,7 @@ class TransferManager:
                 :param user_id: The ID of the user.
         Example: "12345"
                 :type user_id: str
-                :param owned_by: The user who the folder will be transferred to
+                :param owned_by: The user who the folder will be transferred to.
                 :type owned_by: TransferOwnedFolderOwnedBy
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

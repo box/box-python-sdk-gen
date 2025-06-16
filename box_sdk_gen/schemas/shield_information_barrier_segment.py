@@ -37,13 +37,13 @@ class ShieldInformationBarrierSegment(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for the shield information barrier segment, defaults to None
+                :param id: The unique identifier for the shield information barrier segment., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier segment, defaults to None
+                :param type: The type of the shield information barrier segment., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentTypeField], optional
-                :param name: Name of the shield information barrier segment, defaults to None
+                :param name: Name of the shield information barrier segment., defaults to None
                 :type name: Optional[str], optional
-                :param description: Description of the shield information barrier segment, defaults to None
+                :param description: Description of the shield information barrier segment., defaults to None
                 :type description: Optional[str], optional
                 :param created_at: ISO date time string when this shield information
         barrier object was created., defaults to None

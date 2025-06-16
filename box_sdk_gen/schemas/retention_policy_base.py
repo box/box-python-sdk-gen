@@ -22,7 +22,7 @@ class RetentionPolicyBase(BaseObject):
         """
         :param id: The unique identifier that represents a retention policy.
         :type id: str
-        :param type: `retention_policy`, defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
+        :param type: The value will always be `retention_policy`., defaults to RetentionPolicyBaseTypeField.RETENTION_POLICY
         :type type: RetentionPolicyBaseTypeField, optional
         """
         super().__init__(**kwargs)

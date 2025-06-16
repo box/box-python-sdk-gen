@@ -70,7 +70,7 @@ client.terms_of_services.create_terms_of_service(
 
 This function returns a value of type `TermsOfService`.
 
-Returns a new task object
+Returns a new task object.
 
 ## Get terms of service
 

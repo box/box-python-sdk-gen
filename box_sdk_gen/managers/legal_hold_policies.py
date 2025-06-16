@@ -208,7 +208,7 @@ class LegalHoldPoliciesManager:
     ) -> LegalHoldPolicy:
         """
                 Retrieve a legal hold policy.
-                :param legal_hold_policy_id: The ID of the legal hold policy
+                :param legal_hold_policy_id: The ID of the legal hold policy.
         Example: "324432"
                 :type legal_hold_policy_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -246,7 +246,7 @@ class LegalHoldPoliciesManager:
     ) -> LegalHoldPolicy:
         """
                 Update legal hold policy.
-                :param legal_hold_policy_id: The ID of the legal hold policy
+                :param legal_hold_policy_id: The ID of the legal hold policy.
         Example: "324432"
                 :type legal_hold_policy_id: str
                 :param policy_name: The name of the policy., defaults to None
@@ -300,7 +300,7 @@ class LegalHoldPoliciesManager:
 
                 fully deleted yet when the response returns.
 
-                :param legal_hold_policy_id: The ID of the legal hold policy
+                :param legal_hold_policy_id: The ID of the legal hold policy.
         Example: "324432"
                 :type legal_hold_policy_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

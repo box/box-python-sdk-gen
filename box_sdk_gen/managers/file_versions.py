@@ -160,7 +160,7 @@ class FileVersionsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param file_version_id: The ID of the file version
+                :param file_version_id: The ID of the file version.
         Example: "1234"
                 :type file_version_id: str
                 :param fields: A comma-separated list of attributes to include in the
@@ -223,7 +223,7 @@ class FileVersionsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param file_version_id: The ID of the file version
+                :param file_version_id: The ID of the file version.
         Example: "1234"
                 :type file_version_id: str
                 :param if_match: Ensures this item hasn't recently changed before
@@ -290,7 +290,7 @@ class FileVersionsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param file_version_id: The ID of the file version
+                :param file_version_id: The ID of the file version.
         Example: "1234"
                 :type file_version_id: str
                 :param trashed_at: Set this to `null` to clear
@@ -378,9 +378,9 @@ class FileVersionsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param id: The file version ID, defaults to None
+                :param id: The file version ID., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type to promote, defaults to None
+                :param type: The type to promote., defaults to None
                 :type type: Optional[PromoteFileVersionType], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

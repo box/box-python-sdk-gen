@@ -36,11 +36,11 @@ class ShieldListMiniV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param id: Unique global identifier for this list
+        :param id: Unique global identifier for this list.
         :type id: str
-        :param name: Name of Shield List
+        :param name: Name of Shield List.
         :type name: str
-        :param type: The type of object, defaults to ShieldListMiniV2025R0TypeField.SHIELD_LIST
+        :param type: The type of object., defaults to ShieldListMiniV2025R0TypeField.SHIELD_LIST
         :type type: ShieldListMiniV2025R0TypeField, optional
         """
         super().__init__(**kwargs)

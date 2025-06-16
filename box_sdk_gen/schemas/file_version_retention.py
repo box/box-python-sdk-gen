@@ -37,13 +37,13 @@ class FileVersionRetention(BaseObject):
         """
                 :param id: The unique identifier for this file version retention., defaults to None
                 :type id: Optional[str], optional
-                :param type: `file_version_retention`, defaults to None
+                :param type: The value will always be `file_version_retention`., defaults to None
                 :type type: Optional[FileVersionRetentionTypeField], optional
                 :param applied_at: When this file version retention object was
-        created, defaults to None
+        created., defaults to None
                 :type applied_at: Optional[DateTime], optional
                 :param disposition_at: When the retention expires on this file
-        version retention, defaults to None
+        version retention., defaults to None
                 :type disposition_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)

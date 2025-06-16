@@ -75,7 +75,7 @@ client.file_version_retentions.get_file_version_retention_by_id(
 ### Arguments
 
 - file_version_retention_id `str`
-  - The ID of the file version retention Example: "3424234"
+  - The ID of the file version retention. Example: "3424234"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

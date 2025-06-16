@@ -263,9 +263,9 @@ class SharedLinksWebLinksManager:
                 :param boxapi: A header containing the shared link and optional password for the
         shared link.
 
-        The format for this header is as follows.
+        The format for this header is as follows:
 
-        `shared_link=[link]&shared_link_password=[password]`
+        `shared_link=[link]&shared_link_password=[password]`.
                 :type boxapi: str
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

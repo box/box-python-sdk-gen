@@ -28,7 +28,7 @@ class ShieldInformationBarrierSegmentRestrictions(BaseObject):
                 :param next_marker: The marker for the start of the next page of results., defaults to None
                 :type next_marker: Optional[str], optional
                 :param entries: A list of shield information barrier
-        segment restriction objects, defaults to None
+        segment restriction objects., defaults to None
                 :type entries: Optional[List[ShieldInformationBarrierSegmentRestriction]], optional
         """
         super().__init__(**kwargs)

@@ -52,7 +52,7 @@ class FileRequest(BaseObject):
                 :type created_at: DateTime
                 :param updated_at: The date and time when the file request was last updated.
                 :type updated_at: DateTime
-                :param type: `file_request`, defaults to FileRequestTypeField.FILE_REQUEST
+                :param type: The value will always be `file_request`., defaults to FileRequestTypeField.FILE_REQUEST
                 :type type: FileRequestTypeField, optional
                 :param title: The title of file request. This is shown
         in the Box UI to users uploading files.

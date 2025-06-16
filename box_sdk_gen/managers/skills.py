@@ -72,7 +72,7 @@ class UpdateBoxSkillCardsOnFileRequestBody(BaseObject):
         **kwargs
     ):
         """
-                :param op: `replace`, defaults to None
+                :param op: The value will always be `replace`., defaults to None
                 :type op: Optional[UpdateBoxSkillCardsOnFileRequestBodyOpField], optional
                 :param path: The JSON Path that represents the card to replace. In most cases
         this will be in the format `/cards/{index}` where `index` is the
@@ -132,9 +132,9 @@ class UpdateAllSkillCardsOnFileFile(BaseObject):
         **kwargs
     ):
         """
-        :param type: `file`, defaults to None
+        :param type: The value will always be `file`., defaults to None
         :type type: Optional[UpdateAllSkillCardsOnFileFileTypeField], optional
-        :param id: The ID of the file, defaults to None
+        :param id: The ID of the file., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -157,9 +157,9 @@ class UpdateAllSkillCardsOnFileFileVersion(BaseObject):
         **kwargs
     ):
         """
-        :param type: `file_version`, defaults to None
+        :param type: The value will always be `file_version`., defaults to None
         :type type: Optional[UpdateAllSkillCardsOnFileFileVersionTypeField], optional
-        :param id: The ID of the file version, defaults to None
+        :param id: The ID of the file version., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -172,9 +172,9 @@ class UpdateAllSkillCardsOnFileUsage(BaseObject):
         self, *, unit: Optional[str] = None, value: Optional[float] = None, **kwargs
     ):
         """
-        :param unit: `file`, defaults to None
+        :param unit: The value will always be `file`., defaults to None
         :type unit: Optional[str], optional
-        :param value: `1`, defaults to None
+        :param value: Number of resources affected., defaults to None
         :type value: Optional[float], optional
         """
         super().__init__(**kwargs)

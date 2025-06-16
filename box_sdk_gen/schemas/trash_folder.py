@@ -37,13 +37,13 @@ class TrashFolderPathCollectionEntriesField(BaseObject):
         **kwargs
     ):
         """
-        :param type: `folder`, defaults to None
+        :param type: The value will always be `folder`., defaults to None
         :type type: Optional[TrashFolderPathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder., defaults to None
         :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder, defaults to None
+        :param sequence_id: This field is null for the Trash folder., defaults to None
         :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder, defaults to None
+        :param etag: This field is null for the Trash folder., defaults to None
         :type etag: Optional[str], optional
         :param name: The name of the Trash folder., defaults to None
         :type name: Optional[str], optional
@@ -66,7 +66,7 @@ class TrashFolderPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: Array of folders for this item's path collection
+        :param entries: Array of folders for this item's path collection.
         :type entries: List[TrashFolderPathCollectionEntriesField]
         """
         super().__init__(**kwargs)
@@ -135,7 +135,7 @@ class TrashFolder(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to TrashFolderTypeField.FOLDER
+                :param type: The value will always be `folder`., defaults to TrashFolderTypeField.FOLDER
                 :type type: TrashFolderTypeField, optional
                 :param created_at: The date and time when the folder was created. This value may
         be `null` for some folders such as the root folder or the trash

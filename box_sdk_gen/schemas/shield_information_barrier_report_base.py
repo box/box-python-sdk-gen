@@ -22,9 +22,9 @@ class ShieldInformationBarrierReportBase(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for the shield information barrier report, defaults to None
+        :param id: The unique identifier for the shield information barrier report., defaults to None
         :type id: Optional[str], optional
-        :param type: The type of the shield information barrier report, defaults to None
+        :param type: The type of the shield information barrier report., defaults to None
         :type type: Optional[ShieldInformationBarrierReportBaseTypeField], optional
         """
         super().__init__(**kwargs)

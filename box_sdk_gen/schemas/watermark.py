@@ -16,9 +16,9 @@ class WatermarkWatermarkField(BaseObject):
         **kwargs
     ):
         """
-        :param created_at: When this watermark was created, defaults to None
+        :param created_at: When this watermark was created., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param modified_at: When this task was modified, defaults to None
+        :param modified_at: When this task was modified., defaults to None
         :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)

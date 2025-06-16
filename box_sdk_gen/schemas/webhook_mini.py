@@ -27,9 +27,9 @@ class WebhookMiniTargetField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The ID of the item to trigger a webhook, defaults to None
+        :param id: The ID of the item to trigger a webhook., defaults to None
         :type id: Optional[str], optional
-        :param type: The type of item to trigger a webhook, defaults to None
+        :param type: The type of item to trigger a webhook., defaults to None
         :type type: Optional[WebhookMiniTargetTypeField], optional
         """
         super().__init__(**kwargs)
@@ -51,9 +51,9 @@ class WebhookMini(BaseObject):
         """
         :param id: The unique identifier for this webhook., defaults to None
         :type id: Optional[str], optional
-        :param type: `webhook`, defaults to None
+        :param type: The value will always be `webhook`., defaults to None
         :type type: Optional[WebhookMiniTypeField], optional
-        :param target: The item that will trigger the webhook, defaults to None
+        :param target: The item that will trigger the webhook., defaults to None
         :type target: Optional[WebhookMiniTargetField], optional
         """
         super().__init__(**kwargs)

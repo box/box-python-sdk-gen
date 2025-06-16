@@ -37,7 +37,7 @@ client.collections.get_collections()
 
 This function returns a value of type `Collections`.
 
-Returns all collections for the given user
+Returns all collections for the given user.
 
 ## List collection items
 

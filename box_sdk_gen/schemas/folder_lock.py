@@ -46,8 +46,7 @@ class FolderLock(BaseObject):
                 :type created_at: Optional[DateTime], optional
                 :param locked_operations: The operations that have been locked. Currently the `move`
         and `delete` operations cannot be locked separately, and both need to be
-        set to `true`.
-        , defaults to None
+        set to `true`., defaults to None
                 :type locked_operations: Optional[FolderLockLockedOperationsField], optional
                 :param lock_type: The lock type, always `freeze`., defaults to None
                 :type lock_type: Optional[str], optional

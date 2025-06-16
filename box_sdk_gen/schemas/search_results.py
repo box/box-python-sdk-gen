@@ -46,7 +46,7 @@ class SearchResults(BaseObject):
                 :param offset: The 0-based offset of the first entry in this set. This will be the same
         as the `offset` query parameter used., defaults to None
                 :type offset: Optional[int], optional
-                :param type: Specifies the response as search result items without shared links, defaults to SearchResultsTypeField.SEARCH_RESULTS_ITEMS
+                :param type: Specifies the response as search result items without shared links., defaults to SearchResultsTypeField.SEARCH_RESULTS_ITEMS
                 :type type: SearchResultsTypeField, optional
                 :param entries: The search results for the query provided., defaults to None
                 :type entries: Optional[List[Union[FileFull, FolderFull, WebLink]]], optional

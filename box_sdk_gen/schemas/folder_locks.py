@@ -19,7 +19,7 @@ class FolderLocks(BaseObject):
         **kwargs
     ):
         """
-                :param entries: A list of folder locks, defaults to None
+                :param entries: A list of folder locks., defaults to None
                 :type entries: Optional[List[FolderLock]], optional
                 :param limit: The limit that was used for these entries. This will be the same as the
         `limit` query parameter unless that value exceeded the maximum value

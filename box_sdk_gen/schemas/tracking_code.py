@@ -23,12 +23,12 @@ class TrackingCode(BaseObject):
         **kwargs
     ):
         """
-                :param type: `tracking_code`, defaults to None
+                :param type: The value will always be `tracking_code`., defaults to None
                 :type type: Optional[TrackingCodeTypeField], optional
                 :param name: The name of the tracking code, which must be preconfigured in
-        the Admin Console, defaults to None
+        the Admin Console., defaults to None
                 :type name: Optional[str], optional
-                :param value: The value of the tracking code, defaults to None
+                :param value: The value of the tracking code., defaults to None
                 :type value: Optional[str], optional
         """
         super().__init__(**kwargs)

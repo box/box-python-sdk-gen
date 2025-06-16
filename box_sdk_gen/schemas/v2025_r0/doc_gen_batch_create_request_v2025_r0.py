@@ -34,9 +34,9 @@ class DocGenBatchCreateRequestV2025R0DestinationFolderField(BaseObject):
         **kwargs
     ):
         """
-        :param id: ID of the folder
+        :param id: ID of the folder.
         :type id: str
-        :param type: `folder`, defaults to DocGenBatchCreateRequestV2025R0DestinationFolderTypeField.FOLDER
+        :param type: The value will always be `folder`., defaults to DocGenBatchCreateRequestV2025R0DestinationFolderTypeField.FOLDER
         :type type: DocGenBatchCreateRequestV2025R0DestinationFolderTypeField, optional
         """
         super().__init__(**kwargs)

@@ -20,11 +20,11 @@ class SignRequestPrefillTag(BaseObject):
         """
         :param document_tag_id: This references the ID of a specific tag contained in a file of the signature request., defaults to None
         :type document_tag_id: Optional[str], optional
-        :param text_value: Text prefill value, defaults to None
+        :param text_value: Text prefill value., defaults to None
         :type text_value: Optional[str], optional
-        :param checkbox_value: Checkbox prefill value, defaults to None
+        :param checkbox_value: Checkbox prefill value., defaults to None
         :type checkbox_value: Optional[bool], optional
-        :param date_value: Date prefill value, defaults to None
+        :param date_value: Date prefill value., defaults to None
         :type date_value: Optional[Date], optional
         """
         super().__init__(**kwargs)

@@ -71,7 +71,7 @@ client.retention_policies.create_retention_policy(
 ### Arguments
 
 - policy_name `str`
-  - The name for the retention policy
+  - The name for the retention policy.
 - description `Optional[str]`
   - The additional text description of the retention policy.
 - policy_type `CreateRetentionPolicyPolicyType`
@@ -149,7 +149,7 @@ client.retention_policies.update_retention_policy_by_id(
 - retention_policy_id `str`
   - The ID of the retention policy. Example: "982312"
 - policy_name `Optional[str]`
-  - The name for the retention policy
+  - The name for the retention policy.
 - description `Optional[str]`
   - The additional text description of the retention policy.
 - disposition_action `Optional[str]`

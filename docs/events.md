@@ -92,7 +92,7 @@ client.events.get_events()
 - stream_position `Optional[str]`
   - The location in the event stream to start receiving events from. _ `now` will return an empty list events and the latest stream position for initialization. _ `0` or `null` will return all events.
 - limit `Optional[int]`
-  - Limits the number of events returned Note: Sometimes, the events less than the limit requested can be returned even when there may be more events remaining. This is primarily done in the case where a number of events have already been retrieved and these retrieved events are returned rather than delaying for an unknown amount of time to see if there are any more results.
+  - Limits the number of events returned. Note: Sometimes, the events less than the limit requested can be returned even when there may be more events remaining. This is primarily done in the case where a number of events have already been retrieved and these retrieved events are returned rather than delaying for an unknown amount of time to see if there are any more results.
 - event_type `Optional[List[GetEventsEventType]]`
   - A comma-separated list of events to filter by. This can only be used when requesting the events with a `stream_type` of `admin_logs` or `adming_logs_streaming`. For any other `stream_type` this value will be ignored.
 - created_after `Optional[DateTime]`

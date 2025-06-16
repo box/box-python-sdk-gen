@@ -210,13 +210,13 @@ class Event(BaseObject):
         **kwargs
     ):
         """
-                :param type: `event`, defaults to None
+                :param type: The value will always be `event`., defaults to None
                 :type type: Optional[str], optional
-                :param created_at: When the event object was created, defaults to None
+                :param created_at: When the event object was created., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param recorded_at: When the event object was recorded in database, defaults to None
+                :param recorded_at: When the event object was recorded in database., defaults to None
                 :type recorded_at: Optional[DateTime], optional
-                :param event_id: The ID of the event object. You can use this to detect duplicate events, defaults to None
+                :param event_id: The ID of the event object. You can use this to detect duplicate events., defaults to None
                 :type event_id: Optional[str], optional
                 :param session_id: The session of the user that performed the action. Not all events will
         populate this attribute., defaults to None

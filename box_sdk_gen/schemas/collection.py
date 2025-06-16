@@ -34,7 +34,7 @@ class Collection(BaseObject):
         """
                 :param id: The unique identifier for this collection., defaults to None
                 :type id: Optional[str], optional
-                :param type: `collection`, defaults to None
+                :param type: The value will always be `collection`., defaults to None
                 :type type: Optional[CollectionTypeField], optional
                 :param name: The name of the collection., defaults to None
                 :type name: Optional[CollectionNameField], optional

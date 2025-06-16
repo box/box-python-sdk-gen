@@ -34,15 +34,15 @@ user_client.integration_mappings.get_slack_integration_mapping()
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - partner_item_type `Optional[GetSlackIntegrationMappingPartnerItemType]`
-  - Mapped item type, for which the mapping should be returned
+  - Mapped item type, for which the mapping should be returned.
 - partner_item_id `Optional[str]`
-  - ID of the mapped item, for which the mapping should be returned
+  - ID of the mapped item, for which the mapping should be returned.
 - box_item_id `Optional[str]`
-  - Box item ID, for which the mappings should be returned
+  - Box item ID, for which the mappings should be returned.
 - box_item_type `Optional[GetSlackIntegrationMappingBoxItemType]`
-  - Box item type, for which the mappings should be returned
+  - Box item type, for which the mappings should be returned.
 - is_manually_created `Optional[bool]`
-  - Whether the mapping has been manually created
+  - Whether the mapping has been manually created.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -50,7 +50,7 @@ user_client.integration_mappings.get_slack_integration_mapping()
 
 This function returns a value of type `IntegrationMappings`.
 
-Returns a collection of integration mappings
+Returns a collection of integration mappings.
 
 ## Create Slack integration mapping
 
@@ -117,7 +117,7 @@ user_client.integration_mappings.update_slack_integration_mapping_by_id(
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping Example: "11235432"
+  - An ID of an integration mapping. Example: "11235432"
 - box_item `Optional[IntegrationMappingBoxItemSlack]`
   -
 - options `Optional[IntegrationMappingSlackOptions]`
@@ -154,7 +154,7 @@ user_client.integration_mappings.delete_slack_integration_mapping_by_id(
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping Example: "11235432"
+  - An ID of an integration mapping. Example: "11235432"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -162,7 +162,7 @@ user_client.integration_mappings.delete_slack_integration_mapping_by_id(
 
 This function returns a value of type `None`.
 
-Empty body in response
+Empty body in response.
 
 ## List Teams integration mappings
 
@@ -184,13 +184,13 @@ user_client.integration_mappings.get_teams_integration_mapping()
 ### Arguments
 
 - partner_item_type `Optional[GetTeamsIntegrationMappingPartnerItemType]`
-  - Mapped item type, for which the mapping should be returned
+  - Mapped item type, for which the mapping should be returned.
 - partner_item_id `Optional[str]`
-  - ID of the mapped item, for which the mapping should be returned
+  - ID of the mapped item, for which the mapping should be returned.
 - box_item_id `Optional[str]`
-  - Box item ID, for which the mappings should be returned
+  - Box item ID, for which the mappings should be returned.
 - box_item_type `Optional[GetTeamsIntegrationMappingBoxItemType]`
-  - Box item type, for which the mappings should be returned
+  - Box item type, for which the mappings should be returned.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -198,7 +198,7 @@ user_client.integration_mappings.get_teams_integration_mapping()
 
 This function returns a value of type `IntegrationMappingsTeams`.
 
-Returns a collection of integration mappings
+Returns a collection of integration mappings.
 
 ## Create Teams integration mapping
 
@@ -264,7 +264,7 @@ user_client.integration_mappings.update_teams_integration_mapping_by_id(
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping Example: "11235432"
+  - An ID of an integration mapping. Example: "11235432"
 - box_item `Optional[FolderReference]`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -298,7 +298,7 @@ user_client.integration_mappings.delete_teams_integration_mapping_by_id(
 ### Arguments
 
 - integration_mapping_id `str`
-  - An ID of an integration mapping Example: "11235432"
+  - An ID of an integration mapping. Example: "11235432"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -306,4 +306,4 @@ user_client.integration_mappings.delete_teams_integration_mapping_by_id(
 
 This function returns a value of type `None`.
 
-Empty body in response
+Empty body in response.

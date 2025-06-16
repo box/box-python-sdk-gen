@@ -68,9 +68,9 @@ client.metadata_templates.get_metadata_template(
 ### Arguments
 
 - scope `GetMetadataTemplateScope`
-  - The scope of the metadata template Example: "global"
+  - The scope of the metadata template. Example: "global"
 - template_key `str`
-  - The name of the metadata template Example: "properties"
+  - The name of the metadata template. Example: "properties"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -115,9 +115,9 @@ client.metadata_templates.update_metadata_template(
 ### Arguments
 
 - scope `UpdateMetadataTemplateScope`
-  - The scope of the metadata template Example: "global"
+  - The scope of the metadata template. Example: "global"
 - template_key `str`
-  - The name of the metadata template Example: "properties"
+  - The name of the metadata template. Example: "properties"
 - request_body `List[UpdateMetadataTemplateRequestBody]`
   - Request body of updateMetadataTemplate method
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -151,9 +151,9 @@ client.metadata_templates.delete_metadata_template(
 ### Arguments
 
 - scope `DeleteMetadataTemplateScope`
-  - The scope of the metadata template Example: "global"
+  - The scope of the metadata template. Example: "global"
 - template_key `str`
-  - The name of the metadata template Example: "properties"
+  - The name of the metadata template. Example: "properties"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -182,7 +182,7 @@ client.metadata_templates.get_metadata_template_by_id(template.id)
 ### Arguments
 
 - template_id `str`
-  - The ID of the template Example: "f7a9891f"
+  - The ID of the template. Example: "f7a9891f"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -227,7 +227,7 @@ and their corresponding schema.
 ## List all metadata templates for enterprise
 
 Used to retrieve all metadata templates created to be used specifically within
-the user's enterprise
+the user's enterprise.
 
 This operation is performed by calling function `get_enterprise_metadata_templates`.
 

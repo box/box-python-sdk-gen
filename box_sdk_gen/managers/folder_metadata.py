@@ -202,10 +202,10 @@ class FolderMetadataManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: GetFolderMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -277,10 +277,10 @@ class FolderMetadataManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: CreateFolderMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of createFolderMetadataById method
@@ -353,10 +353,10 @@ class FolderMetadataManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: UpdateFolderMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of updateFolderMetadataById method
@@ -413,10 +413,10 @@ class FolderMetadataManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: DeleteFolderMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

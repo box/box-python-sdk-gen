@@ -58,9 +58,9 @@ class CreateTaskItem(BaseObject):
         **kwargs
     ):
         """
-        :param id: The ID of the file, defaults to None
+        :param id: The ID of the file., defaults to None
         :type id: Optional[str], optional
-        :param type: `file`, defaults to None
+        :param type: The value will always be `file`., defaults to None
         :type type: Optional[CreateTaskItemTypeField], optional
         """
         super().__init__(**kwargs)
@@ -161,9 +161,9 @@ class TasksManager:
                 :type item: CreateTaskItem
                 :param action: The action the task assignee will be prompted to do. Must be
 
-        * `review` defines an approval task that can be approved or
+        * `review` defines an approval task that can be approved or,
         rejected
-        * `complete` defines a general task which can be completed, defaults to None
+        * `complete` defines a general task which can be completed., defaults to None
                 :type action: Optional[CreateTaskAction], optional
                 :param message: An optional message to include with the task., defaults to None
                 :type message: Optional[str], optional
@@ -258,8 +258,8 @@ class TasksManager:
                 :param action: The action the task assignee will be prompted to do. Must be
 
         * `review` defines an approval task that can be approved or
-        rejected
-        * `complete` defines a general task which can be completed, defaults to None
+        rejected,
+        * `complete` defines a general task which can be completed., defaults to None
                 :type action: Optional[UpdateTaskByIdAction], optional
                 :param message: The message included with the task., defaults to None
                 :type message: Optional[str], optional

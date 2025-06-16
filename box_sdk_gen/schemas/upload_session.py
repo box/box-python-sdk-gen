@@ -26,9 +26,9 @@ class UploadSessionSessionEndpointsField(BaseObject):
         **kwargs
     ):
         """
-        :param upload_part: The URL to upload parts to, defaults to None
+        :param upload_part: The URL to upload parts to., defaults to None
         :type upload_part: Optional[str], optional
-        :param commit: The URL used to commit the file, defaults to None
+        :param commit: The URL used to commit the file., defaults to None
         :type commit: Optional[str], optional
         :param abort: The URL for used to abort the session., defaults to None
         :type abort: Optional[str], optional
@@ -64,9 +64,9 @@ class UploadSession(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this session, defaults to None
+                :param id: The unique identifier for this session., defaults to None
                 :type id: Optional[str], optional
-                :param type: `upload_session`, defaults to None
+                :param type: The value will always be `upload_session`., defaults to None
                 :type type: Optional[UploadSessionTypeField], optional
                 :param session_expires_at: The date and time when this session expires., defaults to None
                 :type session_expires_at: Optional[DateTime], optional

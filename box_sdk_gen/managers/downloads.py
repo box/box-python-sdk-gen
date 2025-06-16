@@ -64,7 +64,7 @@ class DownloadsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param version: The file version to download, defaults to None
+                :param version: The file version to download., defaults to None
                 :type version: Optional[str], optional
                 :param access_token: An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication.
         When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders., defaults to None
@@ -142,7 +142,7 @@ class DownloadsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param version: The file version to download, defaults to None
+                :param version: The file version to download., defaults to None
                 :type version: Optional[str], optional
                 :param access_token: An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication.
         When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders., defaults to None
@@ -219,7 +219,7 @@ class DownloadsManager:
                 :type file_id: str
                 :param output_stream: Download file to a given output stream
                 :type output_stream: OutputStream
-                :param version: The file version to download, defaults to None
+                :param version: The file version to download., defaults to None
                 :type version: Optional[str], optional
                 :param access_token: An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication.
         When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders., defaults to None

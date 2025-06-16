@@ -22,7 +22,7 @@ class TermsOfServiceBase(BaseObject):
         """
         :param id: The unique identifier for this terms of service.
         :type id: str
-        :param type: `terms_of_service`, defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
+        :param type: The value will always be `terms_of_service`., defaults to TermsOfServiceBaseTypeField.TERMS_OF_SERVICE
         :type type: TermsOfServiceBaseTypeField, optional
         """
         super().__init__(**kwargs)

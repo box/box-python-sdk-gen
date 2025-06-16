@@ -18,9 +18,9 @@ class StoragePolicyAssignmentAssignedToField(BaseObject):
         self, *, id: Optional[str] = None, type: Optional[str] = None, **kwargs
     ):
         """
-        :param id: The unique identifier for this object, defaults to None
+        :param id: The unique identifier for this object., defaults to None
         :type id: Optional[str], optional
-        :param type: The type for this object, defaults to None
+        :param type: The type for this object., defaults to None
         :type type: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -43,7 +43,7 @@ class StoragePolicyAssignment(BaseObject):
         """
         :param id: The unique identifier for a storage policy assignment.
         :type id: str
-        :param type: `storage_policy_assignment`, defaults to StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT
+        :param type: The value will always be `storage_policy_assignment`., defaults to StoragePolicyAssignmentTypeField.STORAGE_POLICY_ASSIGNMENT
         :type type: StoragePolicyAssignmentTypeField, optional
         """
         super().__init__(**kwargs)

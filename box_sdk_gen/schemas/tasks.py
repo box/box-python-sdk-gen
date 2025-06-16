@@ -22,7 +22,7 @@ class Tasks(BaseObject):
         The total number of entries in the collection may be less than
         `total_count`., defaults to None
                 :type total_count: Optional[int], optional
-                :param entries: A list of tasks, defaults to None
+                :param entries: A list of tasks., defaults to None
                 :type entries: Optional[List[Task]], optional
         """
         super().__init__(**kwargs)

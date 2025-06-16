@@ -66,7 +66,7 @@ class UpdateClassificationOnFolderRequestBody(BaseObject):
         [classification template](e://get_metadata_templates_enterprise_securityClassification-6VMVochwUWo_schema)
         which lists all available classification keys.
                 :type value: str
-                :param op: `replace`, defaults to UpdateClassificationOnFolderRequestBodyOpField.REPLACE
+                :param op: The value will always be `replace`., defaults to UpdateClassificationOnFolderRequestBodyOpField.REPLACE
                 :type op: UpdateClassificationOnFolderRequestBodyOpField, optional
                 :param path: Defines classifications
         available in the enterprise., defaults to UpdateClassificationOnFolderRequestBodyPathField._BOX__SECURITY__CLASSIFICATION__KEY

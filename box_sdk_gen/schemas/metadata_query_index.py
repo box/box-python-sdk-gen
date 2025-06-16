@@ -50,9 +50,9 @@ class MetadataQueryIndex(BaseObject):
         **kwargs
     ):
         """
-        :param type: Value is always `metadata_query_index`
+        :param type: Value is always `metadata_query_index`.
         :type type: str
-        :param status: The status of the metadata query index
+        :param status: The status of the metadata query index.
         :type status: MetadataQueryIndexStatusField
         :param id: The ID of the metadata query index., defaults to None
         :type id: Optional[str], optional

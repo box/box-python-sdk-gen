@@ -72,9 +72,9 @@ admin_client.workflows.start_workflow(
 - workflow_id `str`
   - The ID of the workflow. Example: "12345"
 - type `Optional[StartWorkflowType]`
-  - The type of the parameters object
+  - The type of the parameters object.
 - flow `StartWorkflowFlow`
-  - The flow that will be triggered
+  - The flow that will be triggered.
 - files `List[StartWorkflowFiles]`
   - The array of files for which the workflow should start. All files must be in the workflow's configured folder.
 - folder `StartWorkflowFolder`

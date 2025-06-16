@@ -77,9 +77,9 @@ class CreateCollaborationItem(BaseObject):
     ):
         """
                 :param type: The type of the item that this collaboration will be
-        granted access to, defaults to None
+        granted access to., defaults to None
                 :type type: Optional[CreateCollaborationItemTypeField], optional
-                :param id: The ID of the item that will be granted access to, defaults to None
+                :param id: The ID of the item that will be granted access to., defaults to None
                 :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -153,7 +153,7 @@ class UserCollaborationsManager:
     ) -> Collaboration:
         """
                 Retrieves a single collaboration.
-                :param collaboration_id: The ID of the collaboration
+                :param collaboration_id: The ID of the collaboration.
         Example: "1234"
                 :type collaboration_id: str
                 :param fields: A comma-separated list of attributes to include in the
@@ -210,13 +210,12 @@ class UserCollaborationsManager:
 
                 accept collaboration invites.
 
-                :param collaboration_id: The ID of the collaboration
+                :param collaboration_id: The ID of the collaboration.
         Example: "1234"
                 :type collaboration_id: str
                 :param role: The level of access granted.
                 :type role: UpdateCollaborationByIdRole
-                :param status: <!--alex ignore reject-->
-        Set the status of a `pending` collaboration invitation,
+                :param status: Set the status of a `pending` collaboration invitation,
         effectively accepting, or rejecting the invite., defaults to None
                 :type status: Optional[UpdateCollaborationByIdStatus], optional
                 :param expires_at: Update the expiration date for the collaboration. At this date,
@@ -289,7 +288,7 @@ class UserCollaborationsManager:
     ) -> None:
         """
                 Deletes a single collaboration.
-                :param collaboration_id: The ID of the collaboration
+                :param collaboration_id: The ID of the collaboration.
         Example: "1234"
                 :type collaboration_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

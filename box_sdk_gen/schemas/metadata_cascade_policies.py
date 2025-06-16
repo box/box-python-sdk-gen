@@ -28,7 +28,7 @@ class MetadataCascadePolicies(BaseObject):
                 :type next_marker: Optional[str], optional
                 :param prev_marker: The marker for the start of the previous page of results., defaults to None
                 :type prev_marker: Optional[str], optional
-                :param entries: A list of metadata cascade policies, defaults to None
+                :param entries: A list of metadata cascade policies., defaults to None
                 :type entries: Optional[List[MetadataCascadePolicy]], optional
         """
         super().__init__(**kwargs)

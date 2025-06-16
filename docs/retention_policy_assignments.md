@@ -69,9 +69,9 @@ client.retention_policy_assignments.create_retention_policy_assignment(
 ### Arguments
 
 - policy_id `str`
-  - The ID of the retention policy to assign
+  - The ID of the retention policy to assign.
 - assign_to `CreateRetentionPolicyAssignmentAssignTo`
-  - The item to assign the policy to
+  - The item to assign the policy to.
 - filter_fields `Optional[List[CreateRetentionPolicyAssignmentFilterFields]]`
   - If the `assign_to` type is `metadata_template`, then optionally add the `filter_fields` parameter which will require an array of objects with a field entry and a value entry. Currently only one object of `field` and `value` is supported.
 - start_date_field `Optional[str]`
@@ -87,7 +87,7 @@ Returns a new retention policy assignment object.
 
 ## Get retention policy assignment
 
-Retrieves a retention policy assignment
+Retrieves a retention policy assignment.
 
 This operation is performed by calling function `get_retention_policy_assignment_by_id`.
 

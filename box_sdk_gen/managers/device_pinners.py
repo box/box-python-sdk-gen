@@ -62,7 +62,7 @@ class DevicePinnersManager:
     ) -> DevicePinner:
         """
                 Retrieves information about an individual device pin.
-                :param device_pinner_id: The ID of the device pin
+                :param device_pinner_id: The ID of the device pin.
         Example: "2324234"
                 :type device_pinner_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -97,7 +97,7 @@ class DevicePinnersManager:
     ) -> None:
         """
                 Deletes an individual device pin.
-                :param device_pinner_id: The ID of the device pin
+                :param device_pinner_id: The ID of the device pin.
         Example: "2324234"
                 :type device_pinner_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -141,7 +141,7 @@ class DevicePinnersManager:
 
                 needs the "manage enterprise" scope to make this call.
 
-                :param enterprise_id: The ID of the enterprise
+                :param enterprise_id: The ID of the enterprise.
         Example: "3442311"
                 :type enterprise_id: str
                 :param marker: Defines the position marker at which to begin returning results. This is

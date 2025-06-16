@@ -42,7 +42,7 @@ from box_sdk_gen.serialization.json import SerializedData
 class CreateInviteEnterprise(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of the enterprise
+        :param id: The ID of the enterprise.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -52,7 +52,7 @@ class CreateInviteEnterprise(BaseObject):
 class CreateInviteActionableBy(BaseObject):
     def __init__(self, *, login: Optional[str] = None, **kwargs):
         """
-        :param login: The login of the invited user, defaults to None
+        :param login: The login of the invited user., defaults to None
         :type login: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -99,9 +99,9 @@ class InvitesManager:
 
                 the application, which can be enabled within the developer console.
 
-                :param enterprise: The enterprise to invite the user to
+                :param enterprise: The enterprise to invite the user to.
                 :type enterprise: CreateInviteEnterprise
-                :param actionable_by: The user to invite
+                :param actionable_by: The user to invite.
                 :type actionable_by: CreateInviteActionableBy
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

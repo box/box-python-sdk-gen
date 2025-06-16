@@ -33,9 +33,9 @@ class InviteInvitedToField(BaseObject):
         """
         :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[InviteInvitedToTypeField], optional
-        :param name: The name of the enterprise, defaults to None
+        :param name: The name of the enterprise., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -61,15 +61,15 @@ class Invite(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this invite
+        :param id: The unique identifier for this invite.
         :type id: str
-        :param type: `invite`, defaults to InviteTypeField.INVITE
+        :param type: The value will always be `invite`., defaults to InviteTypeField.INVITE
         :type type: InviteTypeField, optional
-        :param invited_to: A representation of a Box enterprise, defaults to None
+        :param invited_to: A representation of a Box enterprise., defaults to None
         :type invited_to: Optional[InviteInvitedToField], optional
-        :param status: The status of the invite, defaults to None
+        :param status: The status of the invite., defaults to None
         :type status: Optional[str], optional
-        :param created_at: When the invite was created, defaults to None
+        :param created_at: When the invite was created., defaults to None
         :type created_at: Optional[DateTime], optional
         :param modified_at: When the invite was modified., defaults to None
         :type modified_at: Optional[DateTime], optional

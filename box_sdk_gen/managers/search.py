@@ -417,10 +417,10 @@ class SearchManager:
         parameter only takes one value. By default the API returns
         items that match any of these types.
 
-        * `file` - Limits the search results to files
-        * `folder` - Limits the search results to folders
+        * `file` - Limits the search results to files,
+        * `folder` - Limits the search results to folders,
         * `web_link` - Limits the search results to web links, also known
-           as bookmarks, defaults to None
+           as bookmarks., defaults to None
                 :type type: Optional[SearchForContentType], optional
                 :param trash_content: Determines if the search should look in the trash for items.
 
@@ -462,7 +462,7 @@ class SearchManager:
         When this parameter has been set to true,
         the format of the response of this API changes to return
         a list of [Search Results with
-        Shared Links](r://search_results_with_shared_links), defaults to None
+        Shared Links](r://search_results_with_shared_links)., defaults to None
                 :type include_recent_shared_links: Optional[bool], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

@@ -113,7 +113,7 @@ A successful response including the answer from the LLM.
 
 ## Get AI agent default configuration
 
-Get the AI agent default config
+Get the AI agent default config.
 
 This operation is performed by calling function `get_ai_agent_default_config`.
 

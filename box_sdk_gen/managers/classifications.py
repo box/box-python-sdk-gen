@@ -74,14 +74,14 @@ class AddClassificationRequestBodyDataStaticConfigClassificationField(BaseObject
         without notice. Currently, the color mappings are as
         follows.
 
-        * `0`: Yellow
-        * `1`: Orange
-        * `2`: Watermelon red
-        * `3`: Purple rain
-        * `4`: Light blue
-        * `5`: Dark blue
-        * `6`: Light green
-        * `7`: Gray, defaults to None
+        * `0`: Yellow.
+        * `1`: Orange.
+        * `2`: Watermelon red.
+        * `3`: Purple rain.
+        * `4`: Light blue.
+        * `5`: Dark blue.
+        * `6`: Light green.
+        * `7`: Gray., defaults to None
                 :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
@@ -209,14 +209,14 @@ class UpdateClassificationRequestBodyDataStaticConfigClassificationField(BaseObj
         without notice. Currently, the color mappings are as
         follows.
 
-        * `0`: Yellow
-        * `1`: Orange
-        * `2`: Watermelon red
-        * `3`: Purple rain
-        * `4`: Light blue
-        * `5`: Dark blue
-        * `6`: Light green
-        * `7`: Gray, defaults to None
+        * `0`: Yellow.
+        * `1`: Orange.
+        * `2`: Watermelon red.
+        * `3`: Purple rain.
+        * `4`: Light blue.
+        * `5`: Dark blue.
+        * `6`: Light green.
+        * `7`: Gray., defaults to None
                 :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
@@ -367,14 +367,14 @@ class CreateClassificationTemplateFieldsOptionsStaticConfigClassificationField(
         change without notice. Currently, the color
         mappings are as follows.
 
-        * `0`: Yellow
-        * `1`: Orange
-        * `2`: Watermelon red
-        * `3`: Purple rain
-        * `4`: Light blue
-        * `5`: Dark blue
-        * `6`: Light green
-        * `7`: Gray, defaults to None
+        * `0`: Yellow.
+        * `1`: Orange.
+        * `2`: Watermelon red.
+        * `3`: Purple rain.
+        * `4`: Light blue.
+        * `5`: Dark blue.
+        * `6`: Light green.
+        * `7`: Gray., defaults to None
                 :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)

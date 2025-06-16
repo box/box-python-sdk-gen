@@ -22,7 +22,7 @@ client.device_pinners.get_device_pinner_by_id(device_pinner_id)
 ### Arguments
 
 - device_pinner_id `str`
-  - The ID of the device pin Example: "2324234"
+  - The ID of the device pin. Example: "2324234"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -50,7 +50,7 @@ client.device_pinners.delete_device_pinner_by_id(device_pinner_id)
 ### Arguments
 
 - device_pinner_id `str`
-  - The ID of the device pin Example: "2324234"
+  - The ID of the device pin. Example: "2324234"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -81,7 +81,7 @@ client.device_pinners.get_enterprise_device_pinners(enterprise_id)
 ### Arguments
 
 - enterprise_id `str`
-  - The ID of the enterprise Example: "3442311"
+  - The ID of the enterprise. Example: "3442311"
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`

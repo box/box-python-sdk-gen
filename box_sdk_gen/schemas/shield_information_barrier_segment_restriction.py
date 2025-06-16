@@ -63,7 +63,7 @@ class ShieldInformationBarrierSegmentRestriction(
         shield information barrier segment
         Restriction was updated., defaults to None
                 :type updated_at: Optional[DateTime], optional
-                :param type: Shield information barrier segment restriction, defaults to None
+                :param type: Shield information barrier segment restriction., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField], optional
                 :param id: The unique identifier for the
         shield information barrier segment restriction., defaults to None

@@ -41,13 +41,13 @@ class TrashFilePathCollectionEntriesField(BaseObject):
         **kwargs
     ):
         """
-        :param type: `folder`, defaults to None
+        :param type: The value will always be `folder`., defaults to None
         :type type: Optional[TrashFilePathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder., defaults to None
         :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder, defaults to None
+        :param sequence_id: This field is null for the Trash folder., defaults to None
         :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder, defaults to None
+        :param etag: This field is null for the Trash folder., defaults to None
         :type etag: Optional[str], optional
         :param name: The name of the Trash folder., defaults to None
         :type name: Optional[str], optional
@@ -70,7 +70,7 @@ class TrashFilePathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: Array of folders for this item's path collection
+        :param entries: Array of folders for this item's path collection.
         :type entries: List[TrashFilePathCollectionEntriesField]
         """
         super().__init__(**kwargs)
@@ -134,7 +134,7 @@ class TrashFile(BaseObject):
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file.
                 :type sha_1: str
-                :param description: The optional description of this file
+                :param description: The optional description of this file.
                 :type description: str
                 :param size: The file size in bytes. Be careful parsing this integer as it can
         get very large and cause an integer overflow.
@@ -153,9 +153,9 @@ class TrashFile(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to TrashFileTypeField.FILE
+                :param type: The value will always be `file`., defaults to TrashFileTypeField.FILE
                 :type type: TrashFileTypeField, optional
-                :param name: The name of the file, defaults to None
+                :param name: The name of the file., defaults to None
                 :type name: Optional[str], optional
                 :param trashed_at: The time at which this file was put in the trash., defaults to None
                 :type trashed_at: Optional[DateTime], optional

@@ -20,13 +20,13 @@ class WebLinkMini(WebLinkBase):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this web link
+                :param id: The unique identifier for this web link.
                 :type id: str
-                :param url: The URL this web link points to, defaults to None
+                :param url: The URL this web link points to., defaults to None
                 :type url: Optional[str], optional
-                :param name: The name of the web link, defaults to None
+                :param name: The name of the web link., defaults to None
                 :type name: Optional[str], optional
-                :param type: `web_link`, defaults to WebLinkBaseTypeField.WEB_LINK
+                :param type: The value will always be `web_link`., defaults to WebLinkBaseTypeField.WEB_LINK
                 :type type: WebLinkBaseTypeField, optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None

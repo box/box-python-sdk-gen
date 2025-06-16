@@ -26,17 +26,17 @@ class Group(GroupMini):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this object
+        :param id: The unique identifier for this object.
         :type id: str
-        :param created_at: When the group object was created, defaults to None
+        :param created_at: When the group object was created., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param modified_at: When the group object was last modified, defaults to None
+        :param modified_at: When the group object was last modified., defaults to None
         :type modified_at: Optional[DateTime], optional
-        :param name: The name of the group, defaults to None
+        :param name: The name of the group., defaults to None
         :type name: Optional[str], optional
         :param group_type: The type of the group., defaults to None
         :type group_type: Optional[GroupMiniGroupTypeField], optional
-        :param type: `group`, defaults to GroupBaseTypeField.GROUP
+        :param type: The value will always be `group`., defaults to GroupBaseTypeField.GROUP
         :type type: GroupBaseTypeField, optional
         """
         super().__init__(id=id, name=name, group_type=group_type, type=type, **kwargs)

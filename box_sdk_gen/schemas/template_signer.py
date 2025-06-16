@@ -35,7 +35,7 @@ class TemplateSigner(BaseObject):
         **kwargs
     ):
         """
-                :param email: Email address of the signer, defaults to None
+                :param email: Email address of the signer., defaults to None
                 :type email: Optional[str], optional
                 :param role: Defines the role of the signer in the signature request. A role of
         `signer` needs to sign the document, a role `approver`
@@ -47,7 +47,7 @@ class TemplateSigner(BaseObject):
         After the sender signs, they will be
         redirected to the next `in_person` signer., defaults to None
                 :type is_in_person: Optional[bool], optional
-                :param order: Order of the signer, defaults to None
+                :param order: Order of the signer., defaults to None
                 :type order: Optional[int], optional
                 :param signer_group_id: If provided, this value points signers that are assigned the same inputs and belongs to same signer group.
         A signer group is not a Box Group. It is an entity that belongs to the template itself and can only be used

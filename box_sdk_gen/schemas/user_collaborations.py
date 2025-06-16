@@ -19,7 +19,7 @@ class UserCollaborations(UserBase):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this user
+        :param id: The unique identifier for this user.
         :type id: str
         :param name: The display name of this user. If the collaboration status is `pending`, an empty string is returned., defaults to None
         :type name: Optional[str], optional
@@ -27,7 +27,7 @@ class UserCollaborations(UserBase):
         :type login: Optional[str], optional
         :param is_active: If set to `false`, the user is either deactivated or deleted., defaults to None
         :type is_active: Optional[bool], optional
-        :param type: `user`, defaults to UserBaseTypeField.USER
+        :param type: The value will always be `user`., defaults to UserBaseTypeField.USER
         :type type: UserBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

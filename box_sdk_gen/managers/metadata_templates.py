@@ -295,10 +295,10 @@ class MetadataTemplatesManager:
 
                 an enterprise or globally, or list all templates applied to a file or folder.
 
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: GetMetadataTemplateScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -350,10 +350,10 @@ class MetadataTemplatesManager:
 
                 application of the operations, the metadata template will not be changed.
 
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: UpdateMetadataTemplateScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of updateMetadataTemplate method
@@ -399,10 +399,10 @@ class MetadataTemplatesManager:
 
                 This deletion is permanent and can not be reversed.
 
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: DeleteMetadataTemplateScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -440,7 +440,7 @@ class MetadataTemplatesManager:
     ) -> MetadataTemplate:
         """
                 Retrieves a metadata template by its ID.
-                :param template_id: The ID of the template
+                :param template_id: The ID of the template.
         Example: "f7a9891f"
                 :type template_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -523,7 +523,7 @@ class MetadataTemplatesManager:
         """
                 Used to retrieve all metadata templates created to be used specifically within
 
-                the user's enterprise
+                the user's enterprise.
 
                 :param marker: Defines the position marker at which to begin returning results. This is
         used when paginating using marker-based pagination.

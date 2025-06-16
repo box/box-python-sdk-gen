@@ -24,7 +24,7 @@ class AiAgentReference(BaseObject):
         """
         :param type: The type of AI agent used to handle queries., defaults to AiAgentReferenceTypeField.AI_AGENT_ID
         :type type: AiAgentReferenceTypeField, optional
-        :param id: The ID of an Agent, defaults to None
+        :param id: The ID of an Agent., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)

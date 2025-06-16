@@ -42,7 +42,7 @@ user_client.shared_links_web_links.find_web_link_for_shared_link(
 - if_none_match `Optional[str]`
   - Ensures an item is only returned if it has changed. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `304 Not Modified` if the item has not changed since.
 - boxapi `str`
-  - A header containing the shared link and optional password for the shared link. The format for this header is as follows. `shared_link=[link]&shared_link_password=[password]`
+  - A header containing the shared link and optional password for the shared link. The format for this header is as follows: `shared_link=[link]&shared_link_password=[password]`.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

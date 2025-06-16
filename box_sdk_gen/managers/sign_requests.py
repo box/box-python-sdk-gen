@@ -81,7 +81,7 @@ class SignRequestsManager:
     ) -> SignRequest:
         """
                 Cancels a sign request.
-                :param sign_request_id: The ID of the signature request
+                :param sign_request_id: The ID of the signature request.
         Example: "33243242"
                 :type sign_request_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -117,7 +117,7 @@ class SignRequestsManager:
     ) -> None:
         """
                 Resends a signature request email to all outstanding signers.
-                :param sign_request_id: The ID of the signature request
+                :param sign_request_id: The ID of the signature request.
         Example: "33243242"
                 :type sign_request_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -153,7 +153,7 @@ class SignRequestsManager:
     ) -> SignRequest:
         """
                 Gets a sign request by ID.
-                :param sign_request_id: The ID of the signature request
+                :param sign_request_id: The ID of the signature request.
         Example: "33243242"
                 :type sign_request_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -278,7 +278,7 @@ class SignRequestsManager:
                 :type signers: List[SignRequestCreateSigner]
                 :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file., defaults to None
                 :type source_files: Union[Optional[List[FileBase]], NullValue], optional
-                :param signature_color: Force a specific color for the signature (blue, black, or red), defaults to None
+                :param signature_color: Force a specific color for the signature (blue, black, or red)., defaults to None
                 :type signature_color: Union[Optional[CreateSignRequestSignatureColor], NullValue], optional
                 :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI., defaults to None
                 :type is_document_preparation_needed: Optional[bool], optional

@@ -25,9 +25,9 @@ class GroupsOrderField(BaseObject):
         **kwargs
     ):
         """
-        :param by: The field to order by, defaults to None
+        :param by: The field to order by., defaults to None
         :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending, defaults to None
+        :param direction: The direction to order by, either ascending or descending., defaults to None
         :type direction: Optional[GroupsOrderDirectionField], optional
         """
         super().__init__(**kwargs)
@@ -69,7 +69,7 @@ class Groups(BaseObject):
         This field is only returned for calls that use offset-based pagination.
         For marker-based paginated APIs, this field will be omitted., defaults to None
                 :type order: Optional[List[GroupsOrderField]], optional
-                :param entries: A list of groups, defaults to None
+                :param entries: A list of groups., defaults to None
                 :type entries: Optional[List[GroupFull]], optional
         """
         super().__init__(**kwargs)
