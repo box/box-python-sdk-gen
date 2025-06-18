@@ -36,6 +36,8 @@ the SDK are available by topic:
 - [Folder watermarks](folder_watermarks.md)
 - [Folders](folders.md)
 - [Groups](groups.md)
+- [Hub collaborations](hub_collaborations.md)
+- [Hubs](hubs.md)
 - [Integration mappings](integration_mappings.md)
 - [Invites](invites.md)
 - [Legal hold policies](legal_hold_policies.md)
