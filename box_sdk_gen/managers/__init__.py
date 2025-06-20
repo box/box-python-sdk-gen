@@ -146,4 +146,8 @@ from box_sdk_gen.managers.docgen_template import *
 
 from box_sdk_gen.managers.docgen import *
 
+from box_sdk_gen.managers.hubs import *
+
+from box_sdk_gen.managers.hub_collaborations import *
+
 from box_sdk_gen.managers.shield_lists import *
