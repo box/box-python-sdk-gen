@@ -65,7 +65,7 @@ client.file_versions.get_file_version_by_id(file.id, file_versions.entries[0].id
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
-  - The ID of the file version Example: "1234"
+  - The ID of the file version. Example: "1234"
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -103,7 +103,7 @@ client.file_versions.delete_file_version_by_id(file.id, file_version.id)
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
-  - The ID of the file version Example: "1234"
+  - The ID of the file version. Example: "1234"
 - if_match `Optional[str]`
   - Ensures this item hasn't recently changed before making changes. Pass in the item's last observed `etag` value into this header and the endpoint will fail with a `412 Precondition Failed` if it has changed since.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -141,7 +141,7 @@ client.file_versions.update_file_version_by_id(
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - file_version_id `str`
-  - The ID of the file version Example: "1234"
+  - The ID of the file version. Example: "1234"
 - trashed_at `Optional[str]`
   - Set this to `null` to clear the date and restore the file.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -190,9 +190,9 @@ client.file_versions.promote_file_version(
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - id `Optional[str]`
-  - The file version ID
+  - The file version ID.
 - type `Optional[PromoteFileVersionType]`
-  - The type to promote
+  - The type to promote.
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`

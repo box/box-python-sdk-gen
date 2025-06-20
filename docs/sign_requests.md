@@ -24,7 +24,7 @@ client.sign_requests.cancel_sign_request(created_sign_request.id)
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the signature request Example: "33243242"
+  - The ID of the signature request. Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -48,7 +48,7 @@ _Currently we don't have an example for calling `resend_sign_request` in integra
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the signature request Example: "33243242"
+  - The ID of the signature request. Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -77,7 +77,7 @@ client.sign_requests.get_sign_request_by_id(created_sign_request.id)
 ### Arguments
 
 - sign_request_id `str`
-  - The ID of the signature request Example: "33243242"
+  - The ID of the signature request. Example: "33243242"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -120,7 +120,7 @@ client.sign_requests.get_sign_requests()
 
 This function returns a value of type `SignRequests`.
 
-Returns a collection of sign requests
+Returns a collection of sign requests.
 
 ## Create Box Sign request
 
@@ -174,7 +174,7 @@ client.sign_requests.create_sign_request(
 - source_files `Optional[List[FileBase]]`
   - List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file.
 - signature_color `Optional[CreateSignRequestSignatureColor]`
-  - Force a specific color for the signature (blue, black, or red)
+  - Force a specific color for the signature (blue, black, or red).
 - signers `List[SignRequestCreateSigner]`
   - Array of signers for the signature request. 35 is the max number of signers permitted. **Note**: It may happen that some signers belong to conflicting [segments](r://shield-information-barrier-segment-member) (user groups). This means that due to the security policies, users are assigned to segments to prevent exchanges or communication that could lead to ethical conflicts. In such a case, an attempt to send the sign request will result in an error. Read more about [segments and ethical walls](https://support.box.com/hc/en-us/articles/9920431507603-Understanding-Information-Barriers#h_01GFVJEHQA06N7XEZ4GCZ9GFAQ).
 - parent_folder `Optional[FolderMini]`

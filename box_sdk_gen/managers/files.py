@@ -52,7 +52,7 @@ class UpdateFileByIdParent(BaseObject):
         self, *, id: Optional[str] = None, user_id: Optional[str] = None, **kwargs
     ):
         """
-        :param id: The ID of parent item, defaults to None
+        :param id: The ID of parent item., defaults to None
         :type id: Optional[str], optional
         :param user_id: The input for `user_id` is optional. Moving to non-root folder is not allowed when `user_id` is present. Parent folder id should be zero when `user_id` is provided., defaults to None
         :type user_id: Optional[str], optional
@@ -190,9 +190,9 @@ class UpdateFileByIdCollections(BaseObject):
         self, *, id: Optional[str] = None, type: Optional[str] = None, **kwargs
     ):
         """
-        :param id: The unique identifier for this object, defaults to None
+        :param id: The unique identifier for this object., defaults to None
         :type id: Optional[str], optional
-        :param type: The type for this object, defaults to None
+        :param type: The type for this object., defaults to None
         :type type: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -304,7 +304,7 @@ class FilesManager:
         document file types in Box using the `[extracted_text]`
         representation.
 
-        `x-rep-hints: [extracted_text]`, defaults to None
+        `x-rep-hints: [extracted_text]`., defaults to None
                 :type x_rep_hints: Optional[str], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -646,16 +646,16 @@ class FilesManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param extension: The file format for the thumbnail
+                :param extension: The file format for the thumbnail.
         Example: "png"
                 :type extension: GetFileThumbnailUrlExtension
-                :param min_height: The minimum height of the thumbnail, defaults to None
+                :param min_height: The minimum height of the thumbnail., defaults to None
                 :type min_height: Optional[int], optional
-                :param min_width: The minimum width of the thumbnail, defaults to None
+                :param min_width: The minimum width of the thumbnail., defaults to None
                 :type min_width: Optional[int], optional
-                :param max_height: The maximum height of the thumbnail, defaults to None
+                :param max_height: The maximum height of the thumbnail., defaults to None
                 :type max_height: Optional[int], optional
-                :param max_width: The maximum width of the thumbnail, defaults to None
+                :param max_width: The maximum width of the thumbnail., defaults to None
                 :type max_width: Optional[int], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -737,16 +737,16 @@ class FilesManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param extension: The file format for the thumbnail
+                :param extension: The file format for the thumbnail.
         Example: "png"
                 :type extension: GetFileThumbnailByIdExtension
-                :param min_height: The minimum height of the thumbnail, defaults to None
+                :param min_height: The minimum height of the thumbnail., defaults to None
                 :type min_height: Optional[int], optional
-                :param min_width: The minimum width of the thumbnail, defaults to None
+                :param min_width: The minimum width of the thumbnail., defaults to None
                 :type min_width: Optional[int], optional
-                :param max_height: The maximum height of the thumbnail, defaults to None
+                :param max_height: The maximum height of the thumbnail., defaults to None
                 :type max_height: Optional[int], optional
-                :param max_width: The maximum width of the thumbnail, defaults to None
+                :param max_width: The maximum width of the thumbnail., defaults to None
                 :type max_width: Optional[int], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

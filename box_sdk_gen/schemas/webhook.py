@@ -77,16 +77,16 @@ class Webhook(WebhookMini):
                 :param created_at: A timestamp identifying the time that
         the webhook was created., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param address: The URL that is notified by this webhook, defaults to None
+                :param address: The URL that is notified by this webhook., defaults to None
                 :type address: Optional[str], optional
                 :param triggers: An array of event names that this webhook is
-        to be triggered for, defaults to None
+        to be triggered for., defaults to None
                 :type triggers: Optional[List[WebhookTriggersField]], optional
                 :param id: The unique identifier for this webhook., defaults to None
                 :type id: Optional[str], optional
-                :param type: `webhook`, defaults to None
+                :param type: The value will always be `webhook`., defaults to None
                 :type type: Optional[WebhookMiniTypeField], optional
-                :param target: The item that will trigger the webhook, defaults to None
+                :param target: The item that will trigger the webhook., defaults to None
                 :type target: Optional[WebhookMiniTargetField], optional
         """
         super().__init__(id=id, type=type, target=target, **kwargs)

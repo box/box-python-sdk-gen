@@ -22,7 +22,7 @@ class FileVersionBase(BaseObject):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION
+        :param type: The value will always be `file_version`., defaults to FileVersionBaseTypeField.FILE_VERSION
         :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(**kwargs)

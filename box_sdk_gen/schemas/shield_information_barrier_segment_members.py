@@ -28,7 +28,7 @@ class ShieldInformationBarrierSegmentMembers(BaseObject):
                 :param next_marker: The marker for the start of the next page of results., defaults to None
                 :type next_marker: Optional[str], optional
                 :param entries: A list of shield information
-        barrier segment members, defaults to None
+        barrier segment members., defaults to None
                 :type entries: Optional[List[ShieldInformationBarrierSegmentMember]], optional
         """
         super().__init__(**kwargs)

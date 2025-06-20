@@ -17,11 +17,11 @@ class RealtimeServer(BaseObject):
         **kwargs
     ):
         """
-                :param type: `realtime_server`, defaults to None
+                :param type: The value will always be `realtime_server`., defaults to None
                 :type type: Optional[str], optional
                 :param url: The URL for the server., defaults to None
                 :type url: Optional[str], optional
-                :param ttl: The time in minutes for which this server is available, defaults to None
+                :param ttl: The time in minutes for which this server is available., defaults to None
                 :type ttl: Optional[str], optional
                 :param max_retries: The maximum number of retries this server will
         allow before a new long poll should be started by

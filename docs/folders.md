@@ -93,7 +93,7 @@ client.folders.update_folder_by_id(
 - name `Optional[str]`
   - The optional new name for this folder. The following restrictions to folder names apply: names containing non-printable ASCII characters, forward and backward slashes (`/`, `\`), names with trailing spaces, and names `.` and `..` are not allowed. Folder names must be unique within their parent folder. The name check is case-insensitive, so a folder named `New Folder` cannot be created in a parent folder that already contains a folder named `new folder`.
 - description `Optional[str]`
-  - The optional description of this folder
+  - The optional description of this folder.
 - sync_state `Optional[UpdateFolderByIdSyncState]`
   - Specifies whether a folder should be synced to a user's device or not. This is used by Box Sync (discontinued) and is not used by Box Drive.
 - can_non_owners_invite `Optional[bool]`

@@ -66,7 +66,7 @@ client.shield_information_barrier_segment_restrictions.delete_shield_information
 
 This function returns a value of type `None`.
 
-Empty body in response
+Empty body in response.
 
 ## List shield information barrier segment restrictions
 

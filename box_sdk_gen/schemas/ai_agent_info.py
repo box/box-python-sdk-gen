@@ -17,11 +17,11 @@ class AiAgentInfoModelsField(BaseObject):
         **kwargs
     ):
         """
-        :param name: The name of the model used for the request, defaults to None
+        :param name: The name of the model used for the request., defaults to None
         :type name: Optional[str], optional
-        :param provider: The provider that owns the model used for the request, defaults to None
+        :param provider: The provider that owns the model used for the request., defaults to None
         :type provider: Optional[str], optional
-        :param supported_purpose: The supported purpose utilized by the model used for the request, defaults to None
+        :param supported_purpose: The supported purpose utilized by the model used for the request., defaults to None
         :type supported_purpose: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -39,9 +39,9 @@ class AiAgentInfo(BaseObject):
         **kwargs
     ):
         """
-        :param models: The models used for the request, defaults to None
+        :param models: The models used for the request., defaults to None
         :type models: Optional[List[AiAgentInfoModelsField]], optional
-        :param processor: The processor used for the request, defaults to None
+        :param processor: The processor used for the request., defaults to None
         :type processor: Optional[str], optional
         """
         super().__init__(**kwargs)

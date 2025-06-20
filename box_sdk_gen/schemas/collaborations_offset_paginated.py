@@ -37,7 +37,7 @@ class CollaborationsOffsetPaginated(BaseObject):
         This field is only returned for calls that use offset-based pagination.
         For marker-based paginated APIs, this field will be omitted., defaults to None
                 :type offset: Optional[int], optional
-                :param entries: A list of collaborations, defaults to None
+                :param entries: A list of collaborations., defaults to None
                 :type entries: Optional[List[Collaboration]], optional
         """
         super().__init__(**kwargs)

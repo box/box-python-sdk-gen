@@ -14,7 +14,7 @@ class IntegrationMappingsTeams(BaseObject):
         self, *, entries: Optional[List[IntegrationMappingTeams]] = None, **kwargs
     ):
         """
-        :param entries: A list of integration mappings, defaults to None
+        :param entries: A list of integration mappings., defaults to None
         :type entries: Optional[List[IntegrationMappingTeams]], optional
         """
         super().__init__(**kwargs)

@@ -20,9 +20,9 @@ class FolderReference(BaseObject):
         **kwargs
     ):
         """
-        :param id: ID of the folder
+        :param id: ID of the folder.
         :type id: str
-        :param type: `folder`, defaults to FolderReferenceTypeField.FOLDER
+        :param type: The value will always be `folder`., defaults to FolderReferenceTypeField.FOLDER
         :type type: FolderReferenceTypeField, optional
         """
         super().__init__(**kwargs)

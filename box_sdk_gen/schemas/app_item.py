@@ -25,7 +25,7 @@ class AppItem(BaseObject):
         :type id: str
         :param application_type: The type of the app that owns this app item.
         :type application_type: str
-        :param type: `app_item`, defaults to AppItemTypeField.APP_ITEM
+        :param type: The value will always be `app_item`., defaults to AppItemTypeField.APP_ITEM
         :type type: AppItemTypeField, optional
         """
         super().__init__(**kwargs)

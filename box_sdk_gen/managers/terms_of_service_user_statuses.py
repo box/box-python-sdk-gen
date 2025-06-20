@@ -58,7 +58,7 @@ class CreateTermsOfServiceStatusForUserTos(BaseObject):
         **kwargs
     ):
         """
-        :param id: The ID of terms of service
+        :param id: The ID of terms of service.
         :type id: str
         :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserTosTypeField.TERMS_OF_SERVICE
         :type type: CreateTermsOfServiceStatusForUserTosTypeField, optional
@@ -83,7 +83,7 @@ class CreateTermsOfServiceStatusForUserUser(BaseObject):
         **kwargs
     ):
         """
-        :param id: The ID of user
+        :param id: The ID of user.
         :type id: str
         :param type: The type of object., defaults to CreateTermsOfServiceStatusForUserUserTypeField.USER
         :type type: CreateTermsOfServiceStatusForUserUserTypeField, optional

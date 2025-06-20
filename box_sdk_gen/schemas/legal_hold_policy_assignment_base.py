@@ -22,9 +22,9 @@ class LegalHoldPolicyAssignmentBase(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this legal hold assignment, defaults to None
+        :param id: The unique identifier for this legal hold assignment., defaults to None
         :type id: Optional[str], optional
-        :param type: `legal_hold_policy_assignment`, defaults to None
+        :param type: The value will always be `legal_hold_policy_assignment`., defaults to None
         :type type: Optional[LegalHoldPolicyAssignmentBaseTypeField], optional
         """
         super().__init__(**kwargs)

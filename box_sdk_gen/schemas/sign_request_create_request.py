@@ -58,7 +58,7 @@ class SignRequestCreateRequest(SignRequestBase):
                 :type signers: List[SignRequestCreateSigner]
                 :param source_files: List of files to create a signing document from. This is currently limited to ten files. Only the ID and type fields are required for each file., defaults to None
                 :type source_files: Optional[List[FileBase]], optional
-                :param signature_color: Force a specific color for the signature (blue, black, or red), defaults to None
+                :param signature_color: Force a specific color for the signature (blue, black, or red)., defaults to None
                 :type signature_color: Optional[SignRequestCreateRequestSignatureColorField], optional
                 :param is_document_preparation_needed: Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI., defaults to None
                 :type is_document_preparation_needed: Optional[bool], optional

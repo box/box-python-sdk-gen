@@ -38,9 +38,9 @@ class GroupMembership(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this group membership, defaults to None
+        :param id: The unique identifier for this group membership., defaults to None
         :type id: Optional[str], optional
-        :param type: `group_membership`, defaults to None
+        :param type: The value will always be `group_membership`., defaults to None
         :type type: Optional[GroupMembershipTypeField], optional
         :param role: The role of the user in the group., defaults to None
         :type role: Optional[GroupMembershipRoleField], optional

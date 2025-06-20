@@ -42,7 +42,7 @@ class FileMini(FileBase):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param name: The name of the file, defaults to None
+                :param name: The name of the file., defaults to None
                 :type name: Optional[str], optional
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file., defaults to None
@@ -51,7 +51,7 @@ class FileMini(FileBase):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to FileBaseTypeField.FILE
+                :param type: The value will always be `file`., defaults to FileBaseTypeField.FILE
                 :type type: FileBaseTypeField, optional
         """
         super().__init__(id=id, etag=etag, type=type, **kwargs)

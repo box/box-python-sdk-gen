@@ -39,7 +39,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegm
                 :param id: The ID reference of the
         requesting shield information barrier segment., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier segment, defaults to None
+                :param type: The type of the shield information barrier segment., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniShieldInformationBarrierSegmentTypeField], optional
         """
         super().__init__(**kwargs)
@@ -69,7 +69,7 @@ class ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField(BaseO
                 :param id: The ID reference of the
         restricted shield information barrier segment., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information segment, defaults to None
+                :param type: The type of the shield information segment., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentTypeField], optional
         """
         super().__init__(**kwargs)
@@ -96,7 +96,7 @@ class ShieldInformationBarrierSegmentRestrictionMini(
                 :param restricted_segment: The `type` and `id` of the
         restricted shield information barrier segment.
                 :type restricted_segment: ShieldInformationBarrierSegmentRestrictionMiniRestrictedSegmentField
-                :param type: Shield information barrier segment restriction, defaults to None
+                :param type: Shield information barrier segment restriction., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentRestrictionBaseTypeField], optional
                 :param id: The unique identifier for the
         shield information barrier segment restriction., defaults to None

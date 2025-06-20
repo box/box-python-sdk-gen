@@ -37,9 +37,9 @@ class CollaborationAllowlistEntryEnterpriseField(BaseObject):
         """
         :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[CollaborationAllowlistEntryEnterpriseTypeField], optional
-        :param name: The name of the enterprise, defaults to None
+        :param name: The name of the enterprise., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -63,15 +63,15 @@ class CollaborationAllowlistEntry(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this entry, defaults to None
+        :param id: The unique identifier for this entry., defaults to None
         :type id: Optional[str], optional
-        :param type: `collaboration_whitelist_entry`, defaults to None
+        :param type: The value will always be `collaboration_whitelist_entry`., defaults to None
         :type type: Optional[CollaborationAllowlistEntryTypeField], optional
-        :param domain: The whitelisted domain, defaults to None
+        :param domain: The whitelisted domain., defaults to None
         :type domain: Optional[str], optional
         :param direction: The direction of the collaborations to allow., defaults to None
         :type direction: Optional[CollaborationAllowlistEntryDirectionField], optional
-        :param created_at: The time the entry was created at, defaults to None
+        :param created_at: The time the entry was created at., defaults to None
         :type created_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)

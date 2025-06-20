@@ -226,19 +226,26 @@ class AiManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Optional[AiResponseFull]:
         """
-        Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
-        :param mode: Box AI handles text documents with text representations up to 1MB in size, or a maximum of 25 files, whichever comes first. If the text file size exceeds 1MB, the first 1MB of text representation will be processed. Box AI handles image documents with a resolution of 1024 x 1024 pixels, with a maximum of 5 images or 5 pages for multi-page images. If the number of image or image pages exceeds 5, the first 5 images or pages will be processed. If you set mode parameter to `single_item_qa`, the items array can have one element only. Currently Box AI does not support multi-modal requests. If both images and text are sent Box AI will only process the text.
-        :type mode: CreateAiAskMode
-        :param prompt: The prompt provided by the client to be answered by the LLM. The prompt's length is limited to 10000 characters.
-        :type prompt: str
-        :param items: The items to be processed by the LLM, often files.
-        :type items: List[AiItemAsk]
-        :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
-        :type dialogue_history: Optional[List[AiDialogueHistory]], optional
-        :param include_citations: A flag to indicate whether citations should be returned., defaults to None
-        :type include_citations: Optional[bool], optional
-        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
-        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+                Sends an AI request to supported LLMs and returns an answer specifically focused on the user's question given the provided context.
+                :param mode: Box AI handles text documents with text representations up to 1MB in size, or a maximum of 25 files,
+        whichever comes first. If the text file size exceeds 1MB, the first 1MB of text representation will be processed.
+        Box AI handles image documents with a resolution of 1024 x 1024 pixels, with a maximum of 5 images or 5 pages
+        for multi-page images. If the number of image or image pages exceeds 5, the first 5 images or pages will
+        be processed. If you set mode parameter to `single_item_qa`, the items array can have one element only.
+        Currently Box AI does not support multi-modal requests. If both images and text are sent Box AI will only
+        process the text.
+                :type mode: CreateAiAskMode
+                :param prompt: The prompt provided by the client to be answered by the LLM.
+        The prompt's length is limited to 10000 characters.
+                :type prompt: str
+                :param items: The items to be processed by the LLM, often files.
+                :type items: List[AiItemAsk]
+                :param dialogue_history: The history of prompts and answers previously passed to the LLM. This provides additional context to the LLM in generating the response., defaults to None
+                :type dialogue_history: Optional[List[AiDialogueHistory]], optional
+                :param include_citations: A flag to indicate whether citations should be returned., defaults to None
+                :type include_citations: Optional[bool], optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
         """
         if extra_headers is None:
             extra_headers = {}
@@ -325,7 +332,7 @@ class AiManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> Union[AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured]:
         """
-                Get the AI agent default config
+                Get the AI agent default config.
                 :param mode: The mode to filter the agent config to return.
                 :type mode: GetAiAgentDefaultConfigMode
                 :param language: The ISO language code to return the agent config for.

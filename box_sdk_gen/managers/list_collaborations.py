@@ -220,7 +220,7 @@ class ListCollaborationsManager:
     ) -> CollaborationsOffsetPaginated:
         """
                 Retrieves all pending collaboration invites for this user.
-                :param status: The status of the collaborations to retrieve
+                :param status: The status of the collaborations to retrieve.
                 :type status: GetCollaborationsStatus
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

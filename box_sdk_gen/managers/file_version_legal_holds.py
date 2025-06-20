@@ -58,7 +58,7 @@ class FileVersionLegalHoldsManager:
 
                 assigned to a file version.
 
-                :param file_version_legal_hold_id: The ID of the file version legal hold
+                :param file_version_legal_hold_id: The ID of the file version legal hold.
         Example: "2348213"
                 :type file_version_legal_hold_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

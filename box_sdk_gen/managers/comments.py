@@ -53,7 +53,7 @@ class CreateCommentItem(BaseObject):
 
     def __init__(self, id: str, type: CreateCommentItemTypeField, **kwargs):
         """
-        :param id: The ID of the item
+        :param id: The ID of the item.
         :type id: str
         :param type: The type of the item that this comment will be placed on.
         :type type: CreateCommentItemTypeField
@@ -210,7 +210,7 @@ class CommentsManager:
                 :param comment_id: The ID of the comment.
         Example: "12345"
                 :type comment_id: str
-                :param message: The text of the comment to update, defaults to None
+                :param message: The text of the comment to update., defaults to None
                 :type message: Optional[str], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

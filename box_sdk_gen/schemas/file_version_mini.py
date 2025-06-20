@@ -32,7 +32,7 @@ class FileVersionMini(FileVersionBase):
         :type id: str
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
-        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION
+        :param type: The value will always be `file_version`., defaults to FileVersionBaseTypeField.FILE_VERSION
         :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

@@ -65,7 +65,7 @@ client.tasks.create_task(
 - item `CreateTaskItem`
   - The file to attach the task to.
 - action `Optional[CreateTaskAction]`
-  - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
+  - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or, rejected _ `complete` defines a general task which can be completed.
 - message `Optional[str]`
   - An optional message to include with the task.
 - due_at `Optional[DateTime]`
@@ -130,7 +130,7 @@ client.tasks.update_task_by_id(task.id, message="updated message")
 - task_id `str`
   - The ID of the task. Example: "12345"
 - action `Optional[UpdateTaskByIdAction]`
-  - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected _ `complete` defines a general task which can be completed
+  - The action the task assignee will be prompted to do. Must be _ `review` defines an approval task that can be approved or rejected, _ `complete` defines a general task which can be completed.
 - message `Optional[str]`
   - The message included with the task.
 - due_at `Optional[DateTime]`
@@ -144,7 +144,7 @@ client.tasks.update_task_by_id(task.id, message="updated message")
 
 This function returns a value of type `Task`.
 
-Returns the updated task object
+Returns the updated task object.
 
 ## Remove task
 

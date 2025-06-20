@@ -40,7 +40,7 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
     ):
         """
                 :param assigned_at: When the legal hold policy assignment object was
-        created, defaults to None
+        created., defaults to None
                 :type assigned_at: Optional[DateTime], optional
                 :param deleted_at: When the assignment release request was sent.
         (Because it can take time for an assignment to fully
@@ -48,9 +48,9 @@ class LegalHoldPolicyAssignment(LegalHoldPolicyAssignmentBase):
         assignment is fully deleted). If null, Assignment
         was not deleted., defaults to None
                 :type deleted_at: Optional[DateTime], optional
-                :param id: The unique identifier for this legal hold assignment, defaults to None
+                :param id: The unique identifier for this legal hold assignment., defaults to None
                 :type id: Optional[str], optional
-                :param type: `legal_hold_policy_assignment`, defaults to None
+                :param type: The value will always be `legal_hold_policy_assignment`., defaults to None
                 :type type: Optional[LegalHoldPolicyAssignmentBaseTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)

@@ -50,7 +50,7 @@ from box_sdk_gen.serialization.json import SerializedData
 class CreateGroupMembershipUser(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of the user to add to the group
+        :param id: The ID of the user to add to the group.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -60,7 +60,7 @@ class CreateGroupMembershipUser(BaseObject):
 class CreateGroupMembershipGroup(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of the group to add the user to
+        :param id: The ID of the group to add the user to.
         :type id: str
         """
         super().__init__(**kwargs)

@@ -34,7 +34,7 @@ class ShieldListContentIntegrationV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param integrations: List of integration
+        :param integrations: List of integration.
         :type integrations: List[ShieldListContentIntegrationV2025R0IntegrationsField]
         :param type: The type of content in the shield list., defaults to ShieldListContentIntegrationV2025R0TypeField.INTEGRATION
         :type type: ShieldListContentIntegrationV2025R0TypeField, optional

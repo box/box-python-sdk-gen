@@ -67,16 +67,16 @@ class SkillCardsMetadata(BaseObject):
         **kwargs
     ):
         """
-                :param can_edit: Whether the user can edit this metadata, defaults to None
+                :param can_edit: Whether the user can edit this metadata., defaults to None
                 :type can_edit: Optional[bool], optional
-                :param id: A UUID to identify the metadata object, defaults to None
+                :param id: A UUID to identify the metadata object., defaults to None
                 :type id: Optional[str], optional
-                :param parent: An ID for the parent folder, defaults to None
+                :param parent: An ID for the parent folder., defaults to None
                 :type parent: Optional[str], optional
                 :param scope: An ID for the scope in which this template
-        has been applied, defaults to None
+        has been applied., defaults to None
                 :type scope: Optional[str], optional
-                :param template: The name of the template, defaults to None
+                :param template: The name of the template., defaults to None
                 :type template: Optional[str], optional
                 :param type: A unique identifier for the "type" of this instance. This is an internal
         system property and should not be used by a client application., defaults to None

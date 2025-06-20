@@ -84,9 +84,9 @@ class CreateDocgenBatchV2025R0DestinationFolder(BaseObject):
         **kwargs
     ):
         """
-        :param id: ID of the folder
+        :param id: ID of the folder.
         :type id: str
-        :param type: `folder`, defaults to CreateDocgenBatchV2025R0DestinationFolderTypeField.FOLDER
+        :param type: The value will always be `folder`., defaults to CreateDocgenBatchV2025R0DestinationFolderTypeField.FOLDER
         :type type: CreateDocgenBatchV2025R0DestinationFolderTypeField, optional
         """
         super().__init__(**kwargs)
@@ -118,7 +118,7 @@ class DocgenManager:
                 :param job_id: Box Doc Gen job ID.
         Example: 123
                 :type job_id: str
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -163,7 +163,7 @@ class DocgenManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -201,7 +201,7 @@ class DocgenManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> DocGenJobsV2025R0:
         """
-                Lists Box Doc Gen jobs in a batch
+                Lists Box Doc Gen jobs in a batch.
                 :param batch_id: Box Doc Gen batch ID.
         Example: 123
                 :type batch_id: str
@@ -212,7 +212,7 @@ class DocgenManager:
                 :type marker: Optional[str], optional
                 :param limit: The maximum number of items to return per page., defaults to None
                 :type limit: Optional[int], optional
-                :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
                 :type box_version: BoxVersionHeaderV2025R0, optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -262,7 +262,7 @@ class DocgenManager:
         :type input_source: str
         :param output_type: Type of the output file.
         :type output_type: str
-        :param box_version: Version header, defaults to BoxVersionHeaderV2025R0._2025_0
+        :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
         :type box_version: BoxVersionHeaderV2025R0, optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional

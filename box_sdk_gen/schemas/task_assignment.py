@@ -43,9 +43,9 @@ class TaskAssignment(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this task assignment, defaults to None
+                :param id: The unique identifier for this task assignment., defaults to None
                 :type id: Optional[str], optional
-                :param type: `task_assignment`, defaults to None
+                :param type: The value will always be `task_assignment`., defaults to None
                 :type type: Optional[TaskAssignmentTypeField], optional
                 :param message: A message that will is included with the task
         assignment. This is visible to the assigned user in the web and mobile

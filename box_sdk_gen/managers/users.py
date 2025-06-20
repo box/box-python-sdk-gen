@@ -250,7 +250,7 @@ class UsersManager:
 
                 admin permissions.
 
-                :param name: The name of the user
+                :param name: The name of the user.
                 :type name: str
                 :param login: The email address the user uses to log in
 
@@ -259,18 +259,18 @@ class UsersManager:
                 :type login: Optional[str], optional
                 :param is_platform_access_only: Specifies that the user is an app user., defaults to None
                 :type is_platform_access_only: Optional[bool], optional
-                :param role: The user’s enterprise role, defaults to None
+                :param role: The user’s enterprise role., defaults to None
                 :type role: Optional[CreateUserRole], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
-                :param is_sync_enabled: Whether the user can use Box Sync, defaults to None
+                :param is_sync_enabled: Whether the user can use Box Sync., defaults to None
                 :type is_sync_enabled: Optional[bool], optional
-                :param job_title: The user’s job title, defaults to None
+                :param job_title: The user’s job title., defaults to None
                 :type job_title: Optional[str], optional
-                :param phone: The user’s phone number, defaults to None
+                :param phone: The user’s phone number., defaults to None
                 :type phone: Optional[str], optional
-                :param address: The user’s address, defaults to None
+                :param address: The user’s address., defaults to None
                 :type address: Optional[str], optional
                 :param space_amount: The user’s total available space in bytes. Set this to `-1` to
         indicate unlimited storage., defaults to None
@@ -281,18 +281,18 @@ class UsersManager:
         can be used., defaults to None
                 :type tracking_codes: Optional[List[TrackingCode]], optional
                 :param can_see_managed_users: Whether the user can see other enterprise users in their
-        contact list, defaults to None
+        contact list., defaults to None
                 :type can_see_managed_users: Optional[bool], optional
-                :param timezone: The user's timezone, defaults to None
+                :param timezone: The user's timezone., defaults to None
                 :type timezone: Optional[str], optional
                 :param is_external_collab_restricted: Whether the user is allowed to collaborate with users outside
-        their enterprise, defaults to None
+        their enterprise., defaults to None
                 :type is_external_collab_restricted: Optional[bool], optional
-                :param is_exempt_from_device_limits: Whether to exempt the user from enterprise device limits, defaults to None
+                :param is_exempt_from_device_limits: Whether to exempt the user from enterprise device limits., defaults to None
                 :type is_exempt_from_device_limits: Optional[bool], optional
-                :param is_exempt_from_login_verification: Whether the user must use two-factor authentication, defaults to None
+                :param is_exempt_from_login_verification: Whether the user must use two-factor authentication., defaults to None
                 :type is_exempt_from_login_verification: Optional[bool], optional
-                :param status: The user's account status, defaults to None
+                :param status: The user's account status., defaults to None
                 :type status: Optional[CreateUserStatus], optional
                 :param external_app_user_id: An external identifier for an app user, which can be used to look
         up the user. This can be used to tie user IDs from external
@@ -520,30 +520,30 @@ class UsersManager:
         Example: "12345"
                 :type user_id: str
                 :param enterprise: Set this to `null` to roll the user out of the enterprise
-        and make them a free user, defaults to None
+        and make them a free user., defaults to None
                 :type enterprise: Union[Optional[str], NullValue], optional
                 :param notify: Whether the user should receive an email when they
-        are rolled out of an enterprise, defaults to None
+        are rolled out of an enterprise., defaults to None
                 :type notify: Optional[bool], optional
-                :param name: The name of the user, defaults to None
+                :param name: The name of the user., defaults to None
                 :type name: Optional[str], optional
                 :param login: The email address the user uses to log in
 
         Note: If the target user's email is not confirmed, then the
         primary login address cannot be changed., defaults to None
                 :type login: Optional[str], optional
-                :param role: The user’s enterprise role, defaults to None
+                :param role: The user’s enterprise role., defaults to None
                 :type role: Optional[UpdateUserByIdRole], optional
                 :param language: The language of the user, formatted in modified version of the
         [ISO 639-1](/guides/api-calls/language-codes) format., defaults to None
                 :type language: Optional[str], optional
-                :param is_sync_enabled: Whether the user can use Box Sync, defaults to None
+                :param is_sync_enabled: Whether the user can use Box Sync., defaults to None
                 :type is_sync_enabled: Optional[bool], optional
-                :param job_title: The user’s job title, defaults to None
+                :param job_title: The user’s job title., defaults to None
                 :type job_title: Optional[str], optional
-                :param phone: The user’s phone number, defaults to None
+                :param phone: The user’s phone number., defaults to None
                 :type phone: Optional[str], optional
-                :param address: The user’s address, defaults to None
+                :param address: The user’s address., defaults to None
                 :type address: Optional[str], optional
                 :param tracking_codes: Tracking codes allow an admin to generate reports from the
         admin console and assign an attribute to a specific group
@@ -551,20 +551,20 @@ class UsersManager:
         can be used., defaults to None
                 :type tracking_codes: Optional[List[TrackingCode]], optional
                 :param can_see_managed_users: Whether the user can see other enterprise users in their
-        contact list, defaults to None
+        contact list., defaults to None
                 :type can_see_managed_users: Optional[bool], optional
-                :param timezone: The user's timezone, defaults to None
+                :param timezone: The user's timezone., defaults to None
                 :type timezone: Optional[str], optional
                 :param is_external_collab_restricted: Whether the user is allowed to collaborate with users outside
-        their enterprise, defaults to None
+        their enterprise., defaults to None
                 :type is_external_collab_restricted: Optional[bool], optional
-                :param is_exempt_from_device_limits: Whether to exempt the user from enterprise device limits, defaults to None
+                :param is_exempt_from_device_limits: Whether to exempt the user from enterprise device limits., defaults to None
                 :type is_exempt_from_device_limits: Optional[bool], optional
-                :param is_exempt_from_login_verification: Whether the user must use two-factor authentication, defaults to None
+                :param is_exempt_from_login_verification: Whether the user must use two-factor authentication., defaults to None
                 :type is_exempt_from_login_verification: Optional[bool], optional
-                :param is_password_reset_required: Whether the user is required to reset their password, defaults to None
+                :param is_password_reset_required: Whether the user is required to reset their password., defaults to None
                 :type is_password_reset_required: Optional[bool], optional
-                :param status: The user's account status, defaults to None
+                :param status: The user's account status., defaults to None
                 :type status: Optional[UpdateUserByIdStatus], optional
                 :param space_amount: The user’s total available space in bytes. Set this to `-1` to
         indicate unlimited storage., defaults to None
@@ -667,10 +667,10 @@ class UsersManager:
         Example: "12345"
                 :type user_id: str
                 :param notify: Whether the user will receive email notification of
-        the deletion, defaults to None
+        the deletion., defaults to None
                 :type notify: Optional[bool], optional
                 :param force: Whether the user should be deleted even if this user
-        still own files, defaults to None
+        still own files., defaults to None
                 :type force: Optional[bool], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

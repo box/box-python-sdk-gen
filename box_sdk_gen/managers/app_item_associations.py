@@ -84,7 +84,7 @@ class AppItemAssociationsManager:
 
         This requires `usemarker` to be set to `true`., defaults to None
                 :type marker: Optional[str], optional
-                :param application_type: If given, only return app items for this application type, defaults to None
+                :param application_type: If given, only return app items for this application type., defaults to None
                 :type application_type: Optional[str], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -161,7 +161,7 @@ class AppItemAssociationsManager:
 
         This requires `usemarker` to be set to `true`., defaults to None
                 :type marker: Optional[str], optional
-                :param application_type: If given, returns only app items for this application type, defaults to None
+                :param application_type: If given, returns only app items for this application type., defaults to None
                 :type application_type: Optional[str], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

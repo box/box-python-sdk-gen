@@ -29,9 +29,9 @@ class DevicePinnersOrderField(BaseObject):
         **kwargs
     ):
         """
-        :param by: The field that is ordered by, defaults to None
+        :param by: The field that is ordered by., defaults to None
         :type by: Optional[DevicePinnersOrderByField], optional
-        :param direction: The direction to order by, either ascending or descending, defaults to None
+        :param direction: The direction to order by, either ascending or descending., defaults to None
         :type direction: Optional[DevicePinnersOrderDirectionField], optional
         """
         super().__init__(**kwargs)
@@ -50,7 +50,7 @@ class DevicePinners(BaseObject):
         **kwargs
     ):
         """
-                :param entries: A list of device pins, defaults to None
+                :param entries: A list of device pins., defaults to None
                 :type entries: Optional[List[DevicePinner]], optional
                 :param limit: The limit that was used for these entries. This will be the same as the
         `limit` query parameter unless that value exceeded the maximum value

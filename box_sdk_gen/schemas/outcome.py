@@ -24,7 +24,7 @@ class Outcome(BaseObject):
         **kwargs
     ):
         """
-        :param id: ID of a specific outcome
+        :param id: ID of a specific outcome.
         :type id: str
         """
         super().__init__(**kwargs)

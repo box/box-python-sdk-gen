@@ -26,9 +26,9 @@ client.session_termination.terminate_users_sessions(
 ### Arguments
 
 - user_ids `List[str]`
-  - A list of user IDs
+  - A list of user IDs.
 - user_logins `List[str]`
-  - A list of user logins
+  - A list of user logins.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -59,7 +59,7 @@ client.session_termination.terminate_groups_sessions([group.id])
 ### Arguments
 
 - group_ids `List[str]`
-  - A list of group IDs
+  - A list of group IDs.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

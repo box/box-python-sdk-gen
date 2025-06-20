@@ -26,7 +26,7 @@ class WebLinkPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: The parent folders for this item
+        :param entries: The parent folders for this item.
         :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
@@ -197,7 +197,7 @@ class WebLink(WebLinkMini):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this web link
+                :param id: The unique identifier for this web link.
                 :type id: str
                 :param description: The description accompanying the web link. This is
         visible within the Box web application., defaults to None
@@ -213,13 +213,13 @@ class WebLink(WebLinkMini):
                 :type purged_at: Optional[DateTime], optional
                 :param item_status: Whether this item is deleted or not. Values include `active`,
         `trashed` if the file has been moved to the trash, and `deleted` if
-        the file has been permanently deleted, defaults to None
+        the file has been permanently deleted., defaults to None
                 :type item_status: Optional[WebLinkItemStatusField], optional
-                :param url: The URL this web link points to, defaults to None
+                :param url: The URL this web link points to., defaults to None
                 :type url: Optional[str], optional
-                :param name: The name of the web link, defaults to None
+                :param name: The name of the web link., defaults to None
                 :type name: Optional[str], optional
-                :param type: `web_link`, defaults to WebLinkBaseTypeField.WEB_LINK
+                :param type: The value will always be `web_link`., defaults to WebLinkBaseTypeField.WEB_LINK
                 :type type: WebLinkBaseTypeField, optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None

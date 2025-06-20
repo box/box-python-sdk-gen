@@ -139,7 +139,7 @@ class MetadataTemplate(BaseObject):
         """
                 :param id: The ID of the metadata template.
                 :type id: str
-                :param type: `metadata_template`, defaults to MetadataTemplateTypeField.METADATA_TEMPLATE
+                :param type: The value will always be `metadata_template`., defaults to MetadataTemplateTypeField.METADATA_TEMPLATE
                 :type type: MetadataTemplateTypeField, optional
                 :param scope: The scope of the metadata template can either be `global` or
         `enterprise_*`. The `global` scope is used for templates that are

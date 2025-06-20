@@ -41,9 +41,9 @@ class AiStudioAgentBasicGenToolResponse(AiStudioAgentBasicGenTool):
         **kwargs
     ):
         """
-                :param warnings: Warnings concerning tool, defaults to None
+                :param warnings: Warnings concerning tool., defaults to None
                 :type warnings: Optional[List[str]], optional
-                :param is_custom_instructions_included: True if system message contains custom instructions placeholder, false otherwise, defaults to None
+                :param is_custom_instructions_included: True if system message contains custom instructions placeholder, false otherwise., defaults to None
                 :type is_custom_instructions_included: Optional[bool], optional
                 :param content_template: How the content should be included in a request to the LLM.
         Input for `{content}` is optional, depending on the use., defaults to None

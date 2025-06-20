@@ -49,11 +49,11 @@ class ClientError(BaseObject):
         **kwargs
     ):
         """
-                :param type: error, defaults to None
+                :param type: The value will always be `error`., defaults to None
                 :type type: Optional[ClientErrorTypeField], optional
                 :param status: The HTTP status of the response., defaults to None
                 :type status: Optional[int], optional
-                :param code: A Box-specific error code, defaults to None
+                :param code: A Box-specific error code., defaults to None
                 :type code: Optional[ClientErrorCodeField], optional
                 :param message: A short message describing the error., defaults to None
                 :type message: Optional[str], optional

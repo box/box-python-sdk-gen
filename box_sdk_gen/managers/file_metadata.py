@@ -190,10 +190,10 @@ class FileMetadataManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: GetFileMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -253,10 +253,10 @@ class FileMetadataManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: CreateFileMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of createFileMetadataById method
@@ -326,10 +326,10 @@ class FileMetadataManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: UpdateFileMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param request_body: Request body of updateFileMetadataById method
@@ -383,10 +383,10 @@ class FileMetadataManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param scope: The scope of the metadata template
+                :param scope: The scope of the metadata template.
         Example: "global"
                 :type scope: DeleteFileMetadataByIdScope
-                :param template_key: The name of the metadata template
+                :param template_key: The name of the metadata template.
         Example: "properties"
                 :type template_key: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None

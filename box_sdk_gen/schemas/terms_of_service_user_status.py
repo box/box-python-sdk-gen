@@ -33,13 +33,13 @@ class TermsOfServiceUserStatus(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this terms of service user status
+        :param id: The unique identifier for this terms of service user status.
         :type id: str
-        :param type: `terms_of_service_user_status`, defaults to TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS
+        :param type: The value will always be `terms_of_service_user_status`., defaults to TermsOfServiceUserStatusTypeField.TERMS_OF_SERVICE_USER_STATUS
         :type type: TermsOfServiceUserStatusTypeField, optional
-        :param is_accepted: If the user has accepted the terms of services, defaults to None
+        :param is_accepted: If the user has accepted the terms of services., defaults to None
         :type is_accepted: Optional[bool], optional
-        :param created_at: When the legal item was created, defaults to None
+        :param created_at: When the legal item was created., defaults to None
         :type created_at: Optional[DateTime], optional
         :param modified_at: When the legal item was modified., defaults to None
         :type modified_at: Optional[DateTime], optional

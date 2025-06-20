@@ -56,7 +56,7 @@ class CreateTaskAssignmentTask(BaseObject):
         **kwargs
     ):
         """
-        :param id: The ID of the task
+        :param id: The ID of the task.
         :type id: str
         :param type: The type of the item to assign., defaults to CreateTaskAssignmentTaskTypeField.TASK
         :type type: CreateTaskAssignmentTaskTypeField, optional

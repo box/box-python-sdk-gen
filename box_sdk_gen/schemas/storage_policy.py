@@ -17,11 +17,11 @@ class StoragePolicy(StoragePolicyMini):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this storage policy
+        :param id: The unique identifier for this storage policy.
         :type id: str
-        :param name: A descriptive name of the region, defaults to None
+        :param name: A descriptive name of the region., defaults to None
         :type name: Optional[str], optional
-        :param type: `storage_policy`, defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
+        :param type: The value will always be `storage_policy`., defaults to StoragePolicyMiniTypeField.STORAGE_POLICY
         :type type: StoragePolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

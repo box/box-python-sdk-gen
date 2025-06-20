@@ -26,7 +26,7 @@ client.legal_hold_policy_assignments.get_legal_hold_policy_assignments(
 ### Arguments
 
 - policy_id `str`
-  - The ID of the legal hold policy
+  - The ID of the legal hold policy.
 - assign_to_type `Optional[GetLegalHoldPolicyAssignmentsAssignToType]`
   - Filters the results by the type of item the policy was applied to.
 - assign_to_id `Optional[str]`
@@ -71,7 +71,7 @@ client.legal_hold_policy_assignments.create_legal_hold_policy_assignment(
 - policy_id `str`
   - The ID of the policy to assign.
 - assign_to `CreateLegalHoldPolicyAssignmentAssignTo`
-  - The item to assign the policy to
+  - The item to assign the policy to.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -101,7 +101,7 @@ client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_by_id(
 ### Arguments
 
 - legal_hold_policy_assignment_id `str`
-  - The ID of the legal hold policy assignment Example: "753465"
+  - The ID of the legal hold policy assignment. Example: "753465"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -134,7 +134,7 @@ client.legal_hold_policy_assignments.delete_legal_hold_policy_assignment_by_id(
 ### Arguments
 
 - legal_hold_policy_assignment_id `str`
-  - The ID of the legal hold policy assignment Example: "753465"
+  - The ID of the legal hold policy assignment. Example: "753465"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -183,7 +183,7 @@ client.legal_hold_policy_assignments.get_legal_hold_policy_assignment_file_on_ho
 ### Arguments
 
 - legal_hold_policy_assignment_id `str`
-  - The ID of the legal hold policy assignment Example: "753465"
+  - The ID of the legal hold policy assignment. Example: "753465"
 - marker `Optional[str]`
   - Defines the position marker at which to begin returning results. This is used when paginating using marker-based pagination. This requires `usemarker` to be set to `true`.
 - limit `Optional[int]`

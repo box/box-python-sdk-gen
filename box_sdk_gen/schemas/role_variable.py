@@ -35,12 +35,10 @@ class RoleVariable(BaseObject):
         **kwargs
     ):
         """
-                :param type: Role object type.
-        , defaults to RoleVariableTypeField.VARIABLE
+                :param type: Role object type., defaults to RoleVariableTypeField.VARIABLE
                 :type type: RoleVariableTypeField, optional
                 :param variable_type: The variable type used
-        by the object.
-        , defaults to RoleVariableVariableTypeField.COLLABORATOR_ROLE
+        by the object., defaults to RoleVariableVariableTypeField.COLLABORATOR_ROLE
                 :type variable_type: RoleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

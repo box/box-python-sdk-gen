@@ -37,7 +37,7 @@ class RecentItem(BaseObject):
         **kwargs
     ):
         """
-                :param type: `recent_item`, defaults to None
+                :param type: The value will always be `recent_item`., defaults to None
                 :type type: Optional[str], optional
                 :param interaction_type: The most recent type of access the user performed on
         the item., defaults to None

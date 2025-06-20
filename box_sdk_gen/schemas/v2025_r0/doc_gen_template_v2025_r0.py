@@ -18,7 +18,7 @@ class DocGenTemplateV2025R0(DocGenTemplateBaseV2025R0):
         **kwargs
     ):
         """
-        :param file_name: The name of the template, defaults to None
+        :param file_name: The name of the template., defaults to None
         :type file_name: Optional[str], optional
         """
         super().__init__(file=file, **kwargs)

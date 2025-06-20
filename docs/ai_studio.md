@@ -72,7 +72,7 @@ client.ai_studio.create_ai_agent(
 - access_state `str`
   - The state of the AI Agent. Possible values are: `enabled`, `disabled`, and `enabled_for_selected_users`.
 - icon_reference `Optional[str]`
-  - The icon reference of the AI Agent. It should have format of the URL `https://cdn01.boxcdn.net/app-assets/aistudio/avatars/<file_name>` where possible values of `file_name` are: `logo_boxAi.png`,`logo_stamp.png`,`logo_legal.png`,`logo_finance.png`,`logo_config.png`,`logo_handshake.png`,`logo_analytics.png`,`logo_classification.png`
+  - The icon reference of the AI Agent. It should have format of the URL `https://cdn01.boxcdn.net/app-assets/aistudio/avatars/<file_name>` where possible values of `file_name` are: `logo_boxAi.png`,`logo_stamp.png`,`logo_legal.png`,`logo_finance.png`,`logo_config.png`,`logo_handshake.png`,`logo_analytics.png`,`logo_classification.png`.
 - allowed_entities `Optional[List[AiAgentAllowedEntity]]`
   - List of allowed users or groups.
 - ask `Optional[AiStudioAgentAsk]`
@@ -121,7 +121,7 @@ client.ai_studio.update_ai_agent_by_id(
 - access_state `str`
   - The state of the AI Agent. Possible values are: `enabled`, `disabled`, and `enabled_for_selected_users`.
 - icon_reference `Optional[str]`
-  - The icon reference of the AI Agent. It should have format of the URL `https://cdn01.boxcdn.net/app-assets/aistudio/avatars/<file_name>` where possible values of `file_name` are: `logo_boxAi.png`,`logo_stamp.png`,`logo_legal.png`,`logo_finance.png`,`logo_config.png`,`logo_handshake.png`,`logo_analytics.png`,`logo_classification.png`
+  - The icon reference of the AI Agent. It should have format of the URL `https://cdn01.boxcdn.net/app-assets/aistudio/avatars/<file_name>` where possible values of `file_name` are: `logo_boxAi.png`,`logo_stamp.png`,`logo_legal.png`,`logo_finance.png`,`logo_config.png`,`logo_handshake.png`,`logo_analytics.png`,`logo_classification.png`.
 - allowed_entities `Optional[List[AiAgentAllowedEntity]]`
   - List of allowed users or groups.
 - ask `Optional[AiStudioAgentAsk]`

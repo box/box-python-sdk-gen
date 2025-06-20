@@ -48,9 +48,9 @@ class WorkflowFlowsTriggerScopeObjectField(BaseObject):
         **kwargs
     ):
         """
-        :param type: The type of the object, defaults to None
+        :param type: The type of the object., defaults to None
         :type type: Optional[WorkflowFlowsTriggerScopeObjectTypeField], optional
-        :param id: The id of the object, defaults to None
+        :param id: The id of the object., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -70,11 +70,11 @@ class WorkflowFlowsTriggerScopeField(BaseObject):
         **kwargs
     ):
         """
-        :param type: The trigger scope's resource type, defaults to None
+        :param type: The trigger scope's resource type., defaults to None
         :type type: Optional[WorkflowFlowsTriggerScopeTypeField], optional
-        :param ref: Indicates the path of the condition value to check, defaults to None
+        :param ref: Indicates the path of the condition value to check., defaults to None
         :type ref: Optional[str], optional
-        :param object: The object the `ref` points to, defaults to None
+        :param object: The object the `ref` points to., defaults to None
         :type object: Optional[WorkflowFlowsTriggerScopeObjectField], optional
         """
         super().__init__(**kwargs)
@@ -95,11 +95,11 @@ class WorkflowFlowsTriggerField(BaseObject):
         **kwargs
     ):
         """
-        :param type: The trigger's resource type, defaults to None
+        :param type: The trigger's resource type., defaults to None
         :type type: Optional[WorkflowFlowsTriggerTypeField], optional
-        :param trigger_type: The type of trigger selected for this flow, defaults to None
+        :param trigger_type: The type of trigger selected for this flow., defaults to None
         :type trigger_type: Optional[WorkflowFlowsTriggerTriggerTypeField], optional
-        :param scope: List of trigger scopes, defaults to None
+        :param scope: List of trigger scopes., defaults to None
         :type scope: Optional[List[WorkflowFlowsTriggerScopeField]], optional
         """
         super().__init__(**kwargs)
@@ -181,11 +181,11 @@ class WorkflowFlowsOutcomesIfRejectedField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The identifier of the outcome, defaults to None
+        :param id: The identifier of the outcome., defaults to None
         :type id: Optional[str], optional
-        :param type: The outcomes resource type, defaults to None
+        :param type: The outcomes resource type., defaults to None
         :type type: Optional[WorkflowFlowsOutcomesIfRejectedTypeField], optional
-        :param name: The name of the outcome, defaults to None
+        :param name: The name of the outcome., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -209,14 +209,14 @@ class WorkflowFlowsOutcomesField(BaseObject):
         **kwargs
     ):
         """
-                :param id: The identifier of the outcome, defaults to None
+                :param id: The identifier of the outcome., defaults to None
                 :type id: Optional[str], optional
-                :param type: The outcomes resource type, defaults to None
+                :param type: The outcomes resource type., defaults to None
                 :type type: Optional[WorkflowFlowsOutcomesTypeField], optional
-                :param name: The name of the outcome, defaults to None
+                :param name: The name of the outcome., defaults to None
                 :type name: Optional[str], optional
                 :param if_rejected: If `action_type` is `assign_task` and the task is rejected, returns a
-        list of outcomes to complete, defaults to None
+        list of outcomes to complete., defaults to None
                 :type if_rejected: Optional[List[WorkflowFlowsOutcomesIfRejectedField]], optional
         """
         super().__init__(**kwargs)
@@ -242,11 +242,11 @@ class WorkflowFlowsField(BaseObject):
         **kwargs
     ):
         """
-        :param id: The identifier of the flow, defaults to None
+        :param id: The identifier of the flow., defaults to None
         :type id: Optional[str], optional
-        :param type: The flow's resource type, defaults to None
+        :param type: The flow's resource type., defaults to None
         :type type: Optional[WorkflowFlowsTypeField], optional
-        :param created_at: When this flow was created, defaults to None
+        :param created_at: When this flow was created., defaults to None
         :type created_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)
@@ -273,15 +273,15 @@ class Workflow(WorkflowMini):
         """
         :param flows: A list of flows assigned to a workflow., defaults to None
         :type flows: Optional[List[WorkflowFlowsField]], optional
-        :param id: The unique identifier for the workflow, defaults to None
+        :param id: The unique identifier for the workflow., defaults to None
         :type id: Optional[str], optional
-        :param type: `workflow`, defaults to None
+        :param type: The value will always be `workflow`., defaults to None
         :type type: Optional[WorkflowMiniTypeField], optional
-        :param name: The name of the workflow, defaults to None
+        :param name: The name of the workflow., defaults to None
         :type name: Optional[str], optional
         :param description: The description for a workflow., defaults to None
         :type description: Optional[str], optional
-        :param is_enabled: Specifies if this workflow is enabled, defaults to None
+        :param is_enabled: Specifies if this workflow is enabled., defaults to None
         :type is_enabled: Optional[bool], optional
         """
         super().__init__(

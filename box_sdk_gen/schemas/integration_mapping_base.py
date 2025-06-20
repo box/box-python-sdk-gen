@@ -22,9 +22,9 @@ class IntegrationMappingBase(BaseObject):
         """
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
-        with `integration_type`)
+        with `integration_type`).
                 :type id: str
-                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
+                :param type: Mapping type., defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(**kwargs)

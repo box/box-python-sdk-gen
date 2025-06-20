@@ -31,9 +31,9 @@ class ItemsOrderField(BaseObject):
         **kwargs
     ):
         """
-        :param by: The field to order by, defaults to None
+        :param by: The field to order by., defaults to None
         :type by: Optional[str], optional
-        :param direction: The direction to order by, either ascending or descending, defaults to None
+        :param direction: The direction to order by, either ascending or descending., defaults to None
         :type direction: Optional[ItemsOrderDirectionField], optional
         """
         super().__init__(**kwargs)

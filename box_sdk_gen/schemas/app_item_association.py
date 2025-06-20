@@ -34,7 +34,7 @@ class AppItemAssociation(BaseObject):
         """
         :param id: The unique identifier for this app item association.
         :type id: str
-        :param type: `app_item_association`, defaults to AppItemAssociationTypeField.APP_ITEM_ASSOCIATION
+        :param type: The value will always be `app_item_association`., defaults to AppItemAssociationTypeField.APP_ITEM_ASSOCIATION
         :type type: AppItemAssociationTypeField, optional
         """
         super().__init__(**kwargs)

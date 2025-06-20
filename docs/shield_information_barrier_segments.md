@@ -65,7 +65,7 @@ client.shield_information_barrier_segments.delete_shield_information_barrier_seg
 
 This function returns a value of type `None`.
 
-Empty body in response
+Empty body in response.
 
 ## Update shield information barrier segment with specified ID
 
@@ -163,9 +163,9 @@ client.shield_information_barrier_segments.create_shield_information_barrier_seg
 - shield_information_barrier `ShieldInformationBarrierBase`
   -
 - name `str`
-  - Name of the shield information barrier segment
+  - Name of the shield information barrier segment.
 - description `Optional[str]`
-  - Description of the shield information barrier segment
+  - Description of the shield information barrier segment.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

@@ -20,7 +20,7 @@ class TaskAssignments(BaseObject):
         """
         :param total_count: The total number of items in this collection., defaults to None
         :type total_count: Optional[int], optional
-        :param entries: A list of task assignments, defaults to None
+        :param entries: A list of task assignments., defaults to None
         :type entries: Optional[List[TaskAssignment]], optional
         """
         super().__init__(**kwargs)

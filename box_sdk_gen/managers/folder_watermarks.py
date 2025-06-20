@@ -138,7 +138,7 @@ class FolderWatermarksManager:
         always represented by the ID `0`.
         Example: "12345"
                 :type folder_id: str
-                :param watermark: The watermark to imprint on the folder
+                :param watermark: The watermark to imprint on the folder.
                 :type watermark: UpdateFolderWatermarkWatermark
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

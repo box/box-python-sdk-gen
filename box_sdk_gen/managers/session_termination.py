@@ -63,9 +63,9 @@ class SessionTerminationManager:
 
         Returns the status for the POST request.
 
-        :param user_ids: A list of user IDs
+        :param user_ids: A list of user IDs.
         :type user_ids: List[str]
-        :param user_logins: A list of user logins
+        :param user_logins: A list of user logins.
         :type user_logins: List[str]
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -110,7 +110,7 @@ class SessionTerminationManager:
 
         Returns the status for the POST request.
 
-        :param group_ids: A list of group IDs
+        :param group_ids: A list of group IDs.
         :type group_ids: List[str]
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional

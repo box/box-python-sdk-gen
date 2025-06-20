@@ -22,7 +22,7 @@ class DocGenBatchBaseV2025R0(BaseObject):
         """
         :param id: The unique identifier that represents a Box Doc Gen batch.
         :type id: str
-        :param type: `docgen_batch`, defaults to DocGenBatchBaseV2025R0TypeField.DOCGEN_BATCH
+        :param type: The value will always be `docgen_batch`., defaults to DocGenBatchBaseV2025R0TypeField.DOCGEN_BATCH
         :type type: DocGenBatchBaseV2025R0TypeField, optional
         """
         super().__init__(**kwargs)

@@ -23,7 +23,7 @@ client.user_collaborations.get_collaboration_by_id(collaboration_id)
 ### Arguments
 
 - collaboration_id `str`
-  - The ID of the collaboration Example: "1234"
+  - The ID of the collaboration. Example: "1234"
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
@@ -57,11 +57,11 @@ client.user_collaborations.update_collaboration_by_id(
 ### Arguments
 
 - collaboration_id `str`
-  - The ID of the collaboration Example: "1234"
+  - The ID of the collaboration. Example: "1234"
 - role `UpdateCollaborationByIdRole`
   - The level of access granted.
 - status `Optional[UpdateCollaborationByIdStatus]`
-  - <!--alex ignore reject--> Set the status of a `pending` collaboration invitation, effectively accepting, or rejecting the invite.
+  - Set the status of a `pending` collaboration invitation, effectively accepting, or rejecting the invite.
 - expires_at `Optional[DateTime]`
   - Update the expiration date for the collaboration. At this date, the collaboration will be automatically removed from the item. This feature will only work if the **Automatically remove invited collaborators: Allow folder owners to extend the expiry date** setting has been enabled in the **Enterprise Settings** of the **Admin Console**. When the setting is not enabled, collaborations can not have an expiry date and a value for this field will be result in an error. Additionally, a collaboration can only be given an expiration if it was created after the **Automatically remove invited collaborator** setting was enabled.
 - can_view_path `Optional[bool]`
@@ -95,7 +95,7 @@ client.user_collaborations.delete_collaboration_by_id(collaboration_id)
 ### Arguments
 
 - collaboration_id `str`
-  - The ID of the collaboration Example: "1234"
+  - The ID of the collaboration. Example: "1234"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

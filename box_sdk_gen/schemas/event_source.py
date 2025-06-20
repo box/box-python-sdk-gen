@@ -19,7 +19,7 @@ class EventSourceItemTypeField(str, Enum):
 class EventSourceClassificationField(BaseObject):
     def __init__(self, *, name: Optional[str] = None, **kwargs):
         """
-        :param name: The classification's name, defaults to None
+        :param name: The classification's name., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -43,14 +43,11 @@ class EventSource(BaseObject):
         """
                 :param item_type: The type of the item that the event
         represents. Can be `file` or `folder`.
-
                 :type item_type: EventSourceItemTypeField
                 :param item_id: The unique identifier that represents the
         item.
-
                 :type item_id: str
                 :param item_name: The name of the item.
-
                 :type item_name: str
                 :param classification: The object containing classification information for the item that
         triggered the event. This field will not appear if the item does not

@@ -8,7 +8,7 @@ from box_sdk_gen.box.errors import BoxSDKError
 class ShieldInformationBarrierReportDetailsDetailsField(BaseObject):
     def __init__(self, *, folder_id: Optional[str] = None, **kwargs):
         """
-        :param folder_id: Folder ID for locating this report, defaults to None
+        :param folder_id: Folder ID for locating this report., defaults to None
         :type folder_id: Optional[str], optional
         """
         super().__init__(**kwargs)

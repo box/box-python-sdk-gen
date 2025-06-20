@@ -72,7 +72,7 @@ class UpdateFolderByIdParent(BaseObject):
         self, *, id: Optional[str] = None, user_id: Optional[str] = None, **kwargs
     ):
         """
-        :param id: The ID of parent item, defaults to None
+        :param id: The ID of parent item., defaults to None
         :type id: Optional[str], optional
         :param user_id: The input for `user_id` is optional. Moving to non-root folder is not allowed when `user_id` is present. Parent folder id should be zero when `user_id` is provided., defaults to None
         :type user_id: Optional[str], optional
@@ -188,9 +188,9 @@ class UpdateFolderByIdCollections(BaseObject):
         self, *, id: Optional[str] = None, type: Optional[str] = None, **kwargs
     ):
         """
-        :param id: The unique identifier for this object, defaults to None
+        :param id: The unique identifier for this object., defaults to None
         :type id: Optional[str], optional
-        :param type: The type for this object, defaults to None
+        :param type: The type for this object., defaults to None
         :type type: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -213,7 +213,7 @@ class GetFolderItemsDirection(str, Enum):
 class CreateFolderParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of parent folder
+        :param id: The ID of parent folder.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -261,7 +261,7 @@ class CreateFolderSyncState(str, Enum):
 class CopyFolderParent(BaseObject):
     def __init__(self, id: str, **kwargs):
         """
-        :param id: The ID of parent folder
+        :param id: The ID of parent folder.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -492,7 +492,7 @@ class FoldersManager:
         so a folder named `New Folder` cannot be created in a parent folder that already contains
         a folder named `new folder`., defaults to None
                 :type name: Optional[str], optional
-                :param description: The optional description of this folder, defaults to None
+                :param description: The optional description of this folder., defaults to None
                 :type description: Optional[str], optional
                 :param sync_state: Specifies whether a folder should be synced to a
         user's device or not. This is used by Box Sync

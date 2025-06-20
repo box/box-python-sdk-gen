@@ -39,7 +39,7 @@ class FileOrFolderScope(BaseObject):
         **kwargs
     ):
         """
-        :param scope: The scopes for the resource access, defaults to None
+        :param scope: The scopes for the resource access., defaults to None
         :type scope: Optional[FileOrFolderScopeScopeField], optional
         """
         super().__init__(**kwargs)

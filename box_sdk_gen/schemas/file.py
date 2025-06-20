@@ -28,7 +28,7 @@ class FilePathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: The parent folders for this item
+        :param entries: The parent folders for this item.
         :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
@@ -239,7 +239,7 @@ class File(FileMini):
         * `trashed` when the item has been moved to the trash but not deleted
         * `deleted` when the item has been permanently deleted., defaults to None
                 :type item_status: Optional[FileItemStatusField], optional
-                :param name: The name of the file, defaults to None
+                :param name: The name of the file., defaults to None
                 :type name: Optional[str], optional
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file., defaults to None
@@ -248,7 +248,7 @@ class File(FileMini):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to FileBaseTypeField.FILE
+                :param type: The value will always be `file`., defaults to FileBaseTypeField.FILE
                 :type type: FileBaseTypeField, optional
         """
         super().__init__(

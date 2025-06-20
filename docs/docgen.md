@@ -25,7 +25,7 @@ client.docgen.get_docgen_job_by_id_v2025_r0(docgen_job_item_from_list.id)
 - job_id `str`
   - Box Doc Gen job ID. Example: 123
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -57,7 +57,7 @@ client.docgen.get_docgen_jobs_v2025_r0(limit=500)
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -69,7 +69,7 @@ A list of Box Doc Gen jobs.
 
 ## Get Box Doc Gen jobs by batch ID
 
-Lists Box Doc Gen jobs in a batch
+Lists Box Doc Gen jobs in a batch.
 
 This operation is performed by calling function `get_docgen_batch_job_by_id_v2025_r0`.
 
@@ -91,7 +91,7 @@ client.docgen.get_docgen_batch_job_by_id_v2025_r0(docgen_batch.id)
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -141,7 +141,7 @@ client.docgen.create_docgen_batch_v2025_r0(
 - document_generation_data `List[DocGenDocumentGenerationDataV2025R0]`
   -
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

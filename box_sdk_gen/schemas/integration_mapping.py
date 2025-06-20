@@ -47,35 +47,35 @@ class IntegrationMapping(IntegrationMappingBase):
         **kwargs
     ):
         """
-                :param partner_item: Mapped item object for Slack
+                :param partner_item: Mapped item object for Slack.
                 :type partner_item: Union[IntegrationMappingPartnerItemSlack]
                 :param box_item: The Box folder, to which the object from the
-        partner app domain (referenced in `partner_item_id`) is mapped
+        partner app domain (referenced in `partner_item_id`) is mapped.
                 :type box_item: FolderMini
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
-        with `integration_type`)
+        with `integration_type`).
                 :type id: str
                 :param integration_type: Identifies the Box partner app,
         with which the mapping is associated.
         Currently only supports Slack.
-        (part of the composite key together with `id`), defaults to None
+        (part of the composite key together with `id`)., defaults to None
                 :type integration_type: Optional[IntegrationMappingIntegrationTypeField], optional
                 :param is_manually_created: Identifies whether the mapping has
         been manually set
-        (as opposed to being automatically created), defaults to None
+        (as opposed to being automatically created)., defaults to None
                 :type is_manually_created: Optional[bool], optional
                 :param created_by: An object representing the user who
-        created the integration mapping, defaults to None
+        created the integration mapping., defaults to None
                 :type created_by: Optional[UserIntegrationMappings], optional
                 :param modified_by: The user who
-        last modified the integration mapping, defaults to None
+        last modified the integration mapping., defaults to None
                 :type modified_by: Optional[UserIntegrationMappings], optional
-                :param created_at: When the integration mapping object was created, defaults to None
+                :param created_at: When the integration mapping object was created., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param modified_at: When the integration mapping object was last modified, defaults to None
+                :param modified_at: When the integration mapping object was last modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
+                :param type: Mapping type., defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

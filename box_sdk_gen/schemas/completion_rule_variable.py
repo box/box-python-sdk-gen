@@ -33,16 +33,13 @@ class CompletionRuleVariable(BaseObject):
                 :param variable_value: Variable
         values for a completion
         rule.
-
                 :type variable_value: CompletionRuleVariableVariableValueField
                 :param type: Completion
-        Rule object type.
-        , defaults to CompletionRuleVariableTypeField.VARIABLE
+        Rule object type., defaults to CompletionRuleVariableTypeField.VARIABLE
                 :type type: CompletionRuleVariableTypeField, optional
                 :param variable_type: Variable type
         for the Completion
-        Rule object.
-        , defaults to CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE
+        Rule object., defaults to CompletionRuleVariableVariableTypeField.TASK_COMPLETION_RULE
                 :type variable_type: CompletionRuleVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

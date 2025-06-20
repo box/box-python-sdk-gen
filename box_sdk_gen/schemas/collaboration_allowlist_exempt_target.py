@@ -33,9 +33,9 @@ class CollaborationAllowlistExemptTargetEnterpriseField(BaseObject):
         """
         :param id: The unique identifier for this enterprise., defaults to None
         :type id: Optional[str], optional
-        :param type: `enterprise`, defaults to None
+        :param type: The value will always be `enterprise`., defaults to None
         :type type: Optional[CollaborationAllowlistExemptTargetEnterpriseTypeField], optional
-        :param name: The name of the enterprise, defaults to None
+        :param name: The name of the enterprise., defaults to None
         :type name: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -59,13 +59,13 @@ class CollaborationAllowlistExemptTarget(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this exemption, defaults to None
+        :param id: The unique identifier for this exemption., defaults to None
         :type id: Optional[str], optional
-        :param type: `collaboration_whitelist_exempt_target`, defaults to None
+        :param type: The value will always be `collaboration_whitelist_exempt_target`., defaults to None
         :type type: Optional[CollaborationAllowlistExemptTargetTypeField], optional
-        :param created_at: The time the entry was created, defaults to None
+        :param created_at: The time the entry was created., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param modified_at: The time the entry was modified, defaults to None
+        :param modified_at: The time the entry was modified., defaults to None
         :type modified_at: Optional[DateTime], optional
         """
         super().__init__(**kwargs)

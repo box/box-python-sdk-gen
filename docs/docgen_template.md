@@ -27,7 +27,7 @@ client.docgen_template.create_docgen_template_v2025_r0(FileReferenceV2025R0(id=f
 - file `FileReferenceV2025R0`
   -
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -59,7 +59,7 @@ client.docgen_template.get_docgen_templates_v2025_r0()
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -71,7 +71,7 @@ Returns a collection of templates.
 
 ## Delete Box Doc Gen template
 
-Unmarks file as Box Doc Gen template
+Unmarks file as Box Doc Gen template.
 
 This operation is performed by calling function `delete_docgen_template_by_id_v2025_r0`.
 
@@ -91,7 +91,7 @@ client.docgen_template.delete_docgen_template_by_id_v2025_r0(
 - template_id `str`
   - ID of the file which will no longer be marked as a Box Doc Gen template. Example: "123"
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -123,7 +123,7 @@ client.docgen_template.get_docgen_template_by_id_v2025_r0(
 - template_id `str`
   - The ID of a Box Doc Gen template. Example: 123
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -161,7 +161,7 @@ client.docgen_template.get_docgen_template_tags_v2025_r0(
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -197,7 +197,7 @@ client.docgen_template.get_docgen_template_job_by_id_v2025_r0(
 - limit `Optional[int]`
   - The maximum number of items to return per page.
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

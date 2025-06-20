@@ -37,17 +37,17 @@ class CommentFull(Comment):
         their display name., defaults to None
                 :type tagged_message: Optional[str], optional
                 :param is_reply_comment: Whether or not this comment is a reply to another
-        comment, defaults to None
+        comment., defaults to None
                 :type is_reply_comment: Optional[bool], optional
-                :param message: The text of the comment, as provided by the user, defaults to None
+                :param message: The text of the comment, as provided by the user., defaults to None
                 :type message: Optional[str], optional
-                :param created_at: The time this comment was created, defaults to None
+                :param created_at: The time this comment was created., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param modified_at: The time this comment was last modified, defaults to None
+                :param modified_at: The time this comment was last modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
                 :param id: The unique identifier for this comment., defaults to None
                 :type id: Optional[str], optional
-                :param type: `comment`, defaults to None
+                :param type: The value will always be `comment`., defaults to None
                 :type type: Optional[CommentBaseTypeField], optional
         """
         super().__init__(

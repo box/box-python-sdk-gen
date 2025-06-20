@@ -288,7 +288,7 @@ class AuthorizationManager:
         new access token.
 
         The `subject_token` will need to have all of these scopes or
-        the call will error with **401 Unauthorized**., defaults to None
+        the call will error with **401 Unauthorized**.., defaults to None
                 :type scope: Optional[str], optional
                 :param resource: Full URL for the file that the token should be generated for., defaults to None
                 :type resource: Optional[str], optional

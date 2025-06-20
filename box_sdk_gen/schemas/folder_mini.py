@@ -33,7 +33,7 @@ class FolderMini(FolderBase):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to FolderBaseTypeField.FOLDER
+                :param type: The value will always be `folder`., defaults to FolderBaseTypeField.FOLDER
                 :type type: FolderBaseTypeField, optional
         """
         super().__init__(id=id, etag=etag, type=type, **kwargs)

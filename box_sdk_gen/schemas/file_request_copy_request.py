@@ -33,7 +33,7 @@ class FileRequestCopyRequestFolderField(BaseObject):
                 :param id: The ID of the folder to associate the new
         file request to.
                 :type id: str
-                :param type: `folder`, defaults to None
+                :param type: The value will always be `folder`., defaults to None
                 :type type: Optional[FileRequestCopyRequestFolderTypeField], optional
         """
         super().__init__(**kwargs)

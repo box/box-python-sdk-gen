@@ -26,9 +26,9 @@ class ShieldInformationBarrierSegmentMemberMini(
     ):
         """
                 :param id: The unique identifier for the
-        shield information barrier segment member, defaults to None
+        shield information barrier segment member., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of the shield information barrier segment member, defaults to None
+                :param type: The type of the shield information barrier segment member., defaults to None
                 :type type: Optional[ShieldInformationBarrierSegmentMemberBaseTypeField], optional
         """
         super().__init__(id=id, type=type, **kwargs)

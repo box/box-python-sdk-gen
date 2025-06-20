@@ -37,13 +37,13 @@ class TrashWebLinkPathCollectionEntriesField(BaseObject):
         **kwargs
     ):
         """
-        :param type: `folder`, defaults to None
+        :param type: The value will always be `folder`., defaults to None
         :type type: Optional[TrashWebLinkPathCollectionEntriesTypeField], optional
         :param id: The unique identifier that represent a folder., defaults to None
         :type id: Optional[str], optional
-        :param sequence_id: This field is null for the Trash folder, defaults to None
+        :param sequence_id: This field is null for the Trash folder., defaults to None
         :type sequence_id: Optional[str], optional
-        :param etag: This field is null for the Trash folder, defaults to None
+        :param etag: This field is null for the Trash folder., defaults to None
         :type etag: Optional[str], optional
         :param name: The name of the Trash folder., defaults to None
         :type name: Optional[str], optional
@@ -66,7 +66,7 @@ class TrashWebLinkPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: Array of folders for this item's path collection
+        :param entries: Array of folders for this item's path collection.
         :type entries: List[TrashWebLinkPathCollectionEntriesField]
         """
         super().__init__(**kwargs)
@@ -107,16 +107,16 @@ class TrashWebLink(BaseObject):
         **kwargs
     ):
         """
-                :param type: `web_link`, defaults to None
+                :param type: The value will always be `web_link`., defaults to None
                 :type type: Optional[TrashWebLinkTypeField], optional
-                :param id: The unique identifier for this web link, defaults to None
+                :param id: The unique identifier for this web link., defaults to None
                 :type id: Optional[str], optional
                 :param etag: The entity tag of this web link. Used with `If-Match`
         headers., defaults to None
                 :type etag: Optional[str], optional
-                :param name: The name of the web link, defaults to None
+                :param name: The name of the web link., defaults to None
                 :type name: Optional[str], optional
-                :param url: The URL this web link points to, defaults to None
+                :param url: The URL this web link points to., defaults to None
                 :type url: Optional[str], optional
                 :param description: The description accompanying the web link. This is
         visible within the Box web application., defaults to None
@@ -136,7 +136,7 @@ class TrashWebLink(BaseObject):
                 :type shared_link: Optional[str], optional
                 :param item_status: Whether this item is deleted or not. Values include `active`,
         `trashed` if the file has been moved to the trash, and `deleted` if
-        the file has been permanently deleted, defaults to None
+        the file has been permanently deleted., defaults to None
                 :type item_status: Optional[TrashWebLinkItemStatusField], optional
         """
         super().__init__(**kwargs)

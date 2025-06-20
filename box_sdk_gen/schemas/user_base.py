@@ -16,9 +16,9 @@ class UserBase(BaseObject):
         self, id: str, *, type: UserBaseTypeField = UserBaseTypeField.USER, **kwargs
     ):
         """
-        :param id: The unique identifier for this user
+        :param id: The unique identifier for this user.
         :type id: str
-        :param type: `user`, defaults to UserBaseTypeField.USER
+        :param type: The value will always be `user`., defaults to UserBaseTypeField.USER
         :type type: UserBaseTypeField, optional
         """
         super().__init__(**kwargs)

@@ -68,7 +68,7 @@ class UploadFileVersionAttributes(BaseObject):
 class PreflightFileUploadCheckParent(BaseObject):
     def __init__(self, *, id: Optional[str] = None, **kwargs):
         """
-        :param id: The ID of parent item, defaults to None
+        :param id: The ID of parent item., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)
@@ -102,7 +102,7 @@ class UploadFileAttributes(BaseObject):
         File names must be unique within their parent folder. The name check is case-insensitive, so a file
         named `New File` cannot be created in a parent folder that already contains a folder named `new file`.
                 :type name: str
-                :param parent: The parent folder to upload the file to
+                :param parent: The parent folder to upload the file to.
                 :type parent: UploadFileAttributesParentField
                 :param content_created_at: Defines the time the file was originally created at.
 
@@ -148,7 +148,7 @@ class UploadWithPreflightCheckAttributes(BaseObject):
         File names must be unique within their parent folder. The name check is case-insensitive, so a file
         named `New File` cannot be created in a parent folder that already contains a folder named `new file`.
                 :type name: str
-                :param parent: The parent folder to upload the file to
+                :param parent: The parent folder to upload the file to.
                 :type parent: UploadWithPreflightCheckAttributesParentField
                 :param size: The size of the file in bytes
                 :type size: int
@@ -327,9 +327,9 @@ class UploadsManager:
 
         before you upload the entire file.
 
-        :param name: The name for the file, defaults to None
+        :param name: The name for the file., defaults to None
         :type name: Optional[str], optional
-        :param size: The size of the file in bytes, defaults to None
+        :param size: The size of the file in bytes., defaults to None
         :type size: Optional[int], optional
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional

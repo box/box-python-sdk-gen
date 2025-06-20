@@ -55,13 +55,11 @@ class CollaboratorVariable(BaseObject):
                 :param variable_value: A list of user IDs.
                 :type variable_value: List[CollaboratorVariableVariableValueField]
                 :param type: Collaborator
-        object type.
-        , defaults to CollaboratorVariableTypeField.VARIABLE
+        object type., defaults to CollaboratorVariableTypeField.VARIABLE
                 :type type: CollaboratorVariableTypeField, optional
                 :param variable_type: Variable type
         for the Collaborator
-        object.
-        , defaults to CollaboratorVariableVariableTypeField.USER_LIST
+        object., defaults to CollaboratorVariableVariableTypeField.USER_LIST
                 :type variable_type: CollaboratorVariableVariableTypeField, optional
         """
         super().__init__(**kwargs)

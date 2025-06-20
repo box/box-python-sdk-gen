@@ -40,7 +40,7 @@ client.metadata_cascade_policies.get_metadata_cascade_policies(folder.id)
 
 This function returns a value of type `MetadataCascadePolicies`.
 
-Returns a list of metadata cascade policies
+Returns a list of metadata cascade policies.
 
 ## Create metadata cascade policy
 
@@ -79,7 +79,7 @@ client.metadata_cascade_policies.create_metadata_cascade_policy(
 
 This function returns a value of type `MetadataCascadePolicy`.
 
-Returns a new of metadata cascade policy
+Returns a new of metadata cascade policy.
 
 ## Get metadata cascade policy
 
@@ -107,7 +107,7 @@ client.metadata_cascade_policies.get_metadata_cascade_policy_by_id(cascade_polic
 
 This function returns a value of type `MetadataCascadePolicy`.
 
-Returns a metadata cascade policy
+Returns a metadata cascade policy.
 
 ## Remove metadata cascade policy
 

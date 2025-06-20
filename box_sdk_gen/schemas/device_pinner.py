@@ -28,9 +28,9 @@ class DevicePinner(BaseObject):
         """
         :param id: The unique identifier for this device pin., defaults to None
         :type id: Optional[str], optional
-        :param type: `device_pinner`, defaults to None
+        :param type: The value will always be `device_pinner`., defaults to None
         :type type: Optional[DevicePinnerTypeField], optional
-        :param product_name: The type of device being pinned, defaults to None
+        :param product_name: The type of device being pinned., defaults to None
         :type product_name: Optional[str], optional
         """
         super().__init__(**kwargs)

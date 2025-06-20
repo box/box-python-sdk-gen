@@ -24,7 +24,7 @@ class CommentBase(BaseObject):
         """
         :param id: The unique identifier for this comment., defaults to None
         :type id: Optional[str], optional
-        :param type: `comment`, defaults to None
+        :param type: The value will always be `comment`., defaults to None
         :type type: Optional[CommentBaseTypeField], optional
         """
         super().__init__(**kwargs)

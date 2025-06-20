@@ -175,7 +175,7 @@ class Collaboration(BaseObject):
         """
                 :param id: The unique identifier for this collaboration.
                 :type id: str
-                :param type: `collaboration`, defaults to CollaborationTypeField.COLLABORATION
+                :param type: The value will always be `collaboration`., defaults to CollaborationTypeField.COLLABORATION
                 :type type: CollaborationTypeField, optional
                 :param invite_email: The email address used to invite an unregistered collaborator, if
         they are not a registered user., defaults to None

@@ -128,7 +128,7 @@ client.shield_information_barrier_segment_members.create_shield_information_barr
 ### Arguments
 
 - type `Optional[CreateShieldInformationBarrierSegmentMemberType]`
-  - -| A type of the shield barrier segment member.
+  - A type of the shield barrier segment member.
 - shield_information_barrier `Optional[ShieldInformationBarrierBase]`
   -
 - shield_information_barrier_segment `CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment`

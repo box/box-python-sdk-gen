@@ -25,7 +25,7 @@ class ShieldInformationBarriers(BaseObject):
                 :type limit: Optional[int], optional
                 :param next_marker: The marker for the start of the next page of results., defaults to None
                 :type next_marker: Optional[str], optional
-                :param entries: A list of shield information barrier objects, defaults to None
+                :param entries: A list of shield information barrier objects., defaults to None
                 :type entries: Optional[List[ShieldInformationBarrier]], optional
         """
         super().__init__(**kwargs)

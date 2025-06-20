@@ -16,9 +16,9 @@ class GroupBase(BaseObject):
         self, id: str, *, type: GroupBaseTypeField = GroupBaseTypeField.GROUP, **kwargs
     ):
         """
-        :param id: The unique identifier for this object
+        :param id: The unique identifier for this object.
         :type id: str
-        :param type: `group`, defaults to GroupBaseTypeField.GROUP
+        :param type: The value will always be `group`., defaults to GroupBaseTypeField.GROUP
         :type type: GroupBaseTypeField, optional
         """
         super().__init__(**kwargs)

@@ -22,7 +22,7 @@ class ShieldListContentEmailV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param email_addresses: List of emails
+        :param email_addresses: List of emails.
         :type email_addresses: List[str]
         :param type: The type of content in the shield list., defaults to ShieldListContentEmailV2025R0TypeField.EMAIL
         :type type: ShieldListContentEmailV2025R0TypeField, optional

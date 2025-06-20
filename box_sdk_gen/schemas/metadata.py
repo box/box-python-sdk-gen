@@ -20,7 +20,7 @@ class Metadata(MetadataBase):
         has been attached to. This combines the `type` and the `id`
         of the parent in the form `{type}_{id}`., defaults to None
                 :type parent: Optional[str], optional
-                :param template: The name of the template, defaults to None
+                :param template: The name of the template., defaults to None
                 :type template: Optional[str], optional
                 :param scope: An ID for the scope in which this template
         has been applied. This will be `enterprise_{enterprise_id}` for templates

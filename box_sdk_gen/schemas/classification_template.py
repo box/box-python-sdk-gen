@@ -64,14 +64,14 @@ class ClassificationTemplateFieldsOptionsStaticConfigClassificationField(BaseObj
         without notice. Currently, the color mappings are as
         follows.
 
-        * `0`: Yellow
-        * `1`: Orange
-        * `2`: Watermelon red
-        * `3`: Purple rain
-        * `4`: Light blue
-        * `5`: Dark blue
-        * `6`: Light green
-        * `7`: Gray, defaults to None
+        * `0`: Yellow.
+        * `1`: Orange.
+        * `2`: Watermelon red.
+        * `3`: Purple rain.
+        * `4`: Light blue.
+        * `5`: Dark blue.
+        * `6`: Light green.
+        * `7`: Gray., defaults to None
                 :type color_id: Optional[int], optional
         """
         super().__init__(**kwargs)
@@ -168,7 +168,7 @@ class ClassificationTemplateFieldsField(BaseObject):
                 :param key: Defines classifications
         available in the enterprise., defaults to ClassificationTemplateFieldsKeyField.BOX__SECURITY__CLASSIFICATION__KEY
                 :type key: ClassificationTemplateFieldsKeyField, optional
-                :param display_name: `Classification`, defaults to ClassificationTemplateFieldsDisplayNameField.CLASSIFICATION
+                :param display_name: The value will always be `Classification`., defaults to ClassificationTemplateFieldsDisplayNameField.CLASSIFICATION
                 :type display_name: ClassificationTemplateFieldsDisplayNameField, optional
                 :param hidden: Classifications are always visible to web and mobile users., defaults to None
                 :type hidden: Optional[bool], optional
@@ -220,9 +220,9 @@ class ClassificationTemplate(BaseObject):
         only one field, the `Box__Security__Classification__Key`, which defines
         the different classifications available in this enterprise.
                 :type fields: List[ClassificationTemplateFieldsField]
-                :param type: `metadata_template`, defaults to ClassificationTemplateTypeField.METADATA_TEMPLATE
+                :param type: The value will always be `metadata_template`., defaults to ClassificationTemplateTypeField.METADATA_TEMPLATE
                 :type type: ClassificationTemplateTypeField, optional
-                :param template_key: `securityClassification-6VMVochwUWo`, defaults to ClassificationTemplateTemplateKeyField.SECURITYCLASSIFICATION_6VMVOCHWUWO
+                :param template_key: The value will always be `securityClassification-6VMVochwUWo`., defaults to ClassificationTemplateTemplateKeyField.SECURITYCLASSIFICATION_6VMVOCHWUWO
                 :type template_key: ClassificationTemplateTemplateKeyField, optional
                 :param display_name: The name of this template as shown in web and mobile interfaces., defaults to ClassificationTemplateDisplayNameField.CLASSIFICATION
                 :type display_name: ClassificationTemplateDisplayNameField, optional

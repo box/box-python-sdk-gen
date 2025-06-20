@@ -36,13 +36,13 @@ class FileVersion(FileVersionMini):
         """
         :param id: The unique identifier that represent a file version.
         :type id: str
-        :param name: The name of the file version, defaults to None
+        :param name: The name of the file version., defaults to None
         :type name: Optional[str], optional
-        :param size: Size of the file version in bytes, defaults to None
+        :param size: Size of the file version in bytes., defaults to None
         :type size: Optional[int], optional
-        :param created_at: When the file version object was created, defaults to None
+        :param created_at: When the file version object was created., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param modified_at: When the file version object was last updated, defaults to None
+        :param modified_at: When the file version object was last updated., defaults to None
         :type modified_at: Optional[DateTime], optional
         :param trashed_at: When the file version object was trashed., defaults to None
         :type trashed_at: Optional[DateTime], optional
@@ -52,7 +52,7 @@ class FileVersion(FileVersionMini):
         :type purged_at: Optional[DateTime], optional
         :param sha_1: The SHA1 hash of this version of the file., defaults to None
         :type sha_1: Optional[str], optional
-        :param type: `file_version`, defaults to FileVersionBaseTypeField.FILE_VERSION
+        :param type: The value will always be `file_version`., defaults to FileVersionBaseTypeField.FILE_VERSION
         :type type: FileVersionBaseTypeField, optional
         """
         super().__init__(id=id, sha_1=sha_1, type=type, **kwargs)

@@ -107,9 +107,9 @@ class ChunkedUploadsManager:
         Creates an upload session for a new file.
         :param folder_id: The ID of the folder to upload the new file to.
         :type folder_id: str
-        :param file_size: The total number of bytes of the file to be uploaded
+        :param file_size: The total number of bytes of the file to be uploaded.
         :type file_size: int
-        :param file_name: The name of new file
+        :param file_name: The name of new file.
         :type file_name: str
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -160,9 +160,9 @@ class ChunkedUploadsManager:
         the `file_id` is `123`.
         Example: "12345"
                 :type file_id: str
-                :param file_size: The total number of bytes of the file to be uploaded
+                :param file_size: The total number of bytes of the file to be uploaded.
                 :type file_size: int
-                :param file_name: The optional new name of new file, defaults to None
+                :param file_name: The optional new name of new file., defaults to None
                 :type file_name: Optional[str], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -299,7 +299,7 @@ class ChunkedUploadsManager:
 
         To get the value for the `SHA` digest, use the
         openSSL command to encode the file part:
-        `openssl sha1 -binary <FILE_PART_NAME> | base64`
+        `openssl sha1 -binary <FILE_PART_NAME> | base64`.
 
         [1]: https://tools.ietf.org/html/rfc3230
                 :type digest: str
@@ -373,7 +373,7 @@ class ChunkedUploadsManager:
 
         To get the value for the `SHA` digest, use the
         openSSL command to encode the file part:
-        `openssl sha1 -binary <FILE_PART_NAME> | base64`
+        `openssl sha1 -binary <FILE_PART_NAME> | base64`.
 
         [1]: https://tools.ietf.org/html/rfc3230
                 :type digest: str
@@ -643,7 +643,7 @@ class ChunkedUploadsManager:
 
                 :param url: URL of createFileUploadSessionCommit method
                 :type url: str
-                :param parts: The list details for the uploaded parts
+                :param parts: The list details for the uploaded parts.
                 :type parts: List[UploadPart]
                 :param digest: The [RFC3230][1] message digest of the whole file.
 
@@ -719,7 +719,7 @@ class ChunkedUploadsManager:
                 :param upload_session_id: The ID of the upload session.
         Example: "D5E3F7A"
                 :type upload_session_id: str
-                :param parts: The list details for the uploaded parts
+                :param parts: The list details for the uploaded parts.
                 :type parts: List[UploadPart]
                 :param digest: The [RFC3230][1] message digest of the whole file.
 

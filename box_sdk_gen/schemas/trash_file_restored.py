@@ -28,7 +28,7 @@ class TrashFileRestoredPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: The parent folders for this item
+        :param entries: The parent folders for this item.
         :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
@@ -92,7 +92,7 @@ class TrashFileRestored(BaseObject):
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file.
                 :type sha_1: str
-                :param description: The optional description of this file
+                :param description: The optional description of this file.
                 :type description: str
                 :param size: The file size in bytes. Be careful parsing this integer as it can
         get very large and cause an integer overflow.
@@ -111,9 +111,9 @@ class TrashFileRestored(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to TrashFileRestoredTypeField.FILE
+                :param type: The value will always be `file`., defaults to TrashFileRestoredTypeField.FILE
                 :type type: TrashFileRestoredTypeField, optional
-                :param name: The name of the file, defaults to None
+                :param name: The name of the file., defaults to None
                 :type name: Optional[str], optional
                 :param trashed_at: The time at which this file was put in the
         trash - becomes `null` after restore., defaults to None

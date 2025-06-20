@@ -20,9 +20,9 @@ class UserBaseV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param id: The unique identifier for this user
+        :param id: The unique identifier for this user.
         :type id: str
-        :param type: user, defaults to UserBaseV2025R0TypeField.USER
+        :param type: The value will always be `user`., defaults to UserBaseV2025R0TypeField.USER
         :type type: UserBaseV2025R0TypeField, optional
         """
         super().__init__(**kwargs)

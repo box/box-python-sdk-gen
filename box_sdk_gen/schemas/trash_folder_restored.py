@@ -24,7 +24,7 @@ class TrashFolderRestoredPathCollectionField(BaseObject):
         """
         :param total_count: The number of folders in this list.
         :type total_count: int
-        :param entries: The parent folders for this item
+        :param entries: The parent folders for this item.
         :type entries: List[FolderMini]
         """
         super().__init__(**kwargs)
@@ -80,7 +80,7 @@ class TrashFolderRestored(BaseObject):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the folder if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `folder`, defaults to None
+                :param type: The value will always be `folder`., defaults to None
                 :type type: Optional[TrashFolderRestoredTypeField], optional
                 :param name: The name of the folder., defaults to None
                 :type name: Optional[str], optional
@@ -118,8 +118,8 @@ class TrashFolderRestored(BaseObject):
                 :type folder_upload_email: Optional[str], optional
                 :param item_status: Defines if this item has been deleted or not.
 
-        * `active` when the item has is not in the trash
-        * `trashed` when the item has been moved to the trash but not deleted
+        * `active` when the item has is not in the trash,
+        * `trashed` when the item has been moved to the trash but not deleted,
         * `deleted` when the item has been permanently deleted., defaults to None
                 :type item_status: Optional[TrashFolderRestoredItemStatusField], optional
         """

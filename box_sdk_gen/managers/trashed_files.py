@@ -44,7 +44,7 @@ from box_sdk_gen.serialization.json import SerializedData
 class RestoreFileFromTrashParent(BaseObject):
     def __init__(self, *, id: Optional[str] = None, **kwargs):
         """
-        :param id: The ID of parent item, defaults to None
+        :param id: The ID of parent item., defaults to None
         :type id: Optional[str], optional
         """
         super().__init__(**kwargs)

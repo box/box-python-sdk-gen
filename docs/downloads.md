@@ -24,7 +24,7 @@ client.downloads.get_download_file_url(uploaded_file.id)
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - version `Optional[str]`
-  - The file version to download
+  - The file version to download.
 - access_token `Optional[str]`
   - An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication. When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders.
 - range `Optional[str]`
@@ -70,7 +70,7 @@ client.downloads.download_file(uploaded_file.id)
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - version `Optional[str]`
-  - The file version to download
+  - The file version to download.
 - access_token `Optional[str]`
   - An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication. When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders.
 - range `Optional[str]`
@@ -113,7 +113,7 @@ client.downloads.download_file_to_output_stream(uploaded_file.id, file_output_st
 - output_stream `OutputStream`
   - Download file to a given output stream
 - version `Optional[str]`
-  - The file version to download
+  - The file version to download.
 - access_token `Optional[str]`
   - An optional access token that can be used to pre-authenticate this request, which means that a download link can be shared with a browser or a third party service without them needing to know how to handle the authentication. When using this parameter, please make sure that the access token is sufficiently scoped down to only allow read access to that file and no other files or folders.
 - range `Optional[str]`

@@ -29,11 +29,11 @@ class ZipDownloadNameConflictsField(BaseObject):
         **kwargs
     ):
         """
-                :param id: The identifier of the item, defaults to None
+                :param id: The identifier of the item., defaults to None
                 :type id: Optional[str], optional
-                :param type: The type of this item, defaults to None
+                :param type: The type of this item., defaults to None
                 :type type: Optional[ZipDownloadNameConflictsTypeField], optional
-                :param original_name: The original name of this item, defaults to None
+                :param original_name: Box Developer Documentation., defaults to None
                 :type original_name: Optional[str], optional
                 :param download_name: The new name of this item as it will appear in the
         downloaded `zip` archive., defaults to None

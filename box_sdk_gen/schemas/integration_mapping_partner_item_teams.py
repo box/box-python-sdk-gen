@@ -21,9 +21,9 @@ class IntegrationMappingPartnerItemTeams(BaseObject):
         **kwargs
     ):
         """
-        :param type: Type of the mapped item referenced in `id`
+        :param type: Type of the mapped item referenced in `id`.
         :type type: IntegrationMappingPartnerItemTeamsTypeField
-        :param id: ID of the mapped item (of type referenced in `type`)
+        :param id: ID of the mapped item (of type referenced in `type`).
         :type id: str
         :param tenant_id: ID of the tenant that is registered with Microsoft Teams.
         :type tenant_id: str

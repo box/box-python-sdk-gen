@@ -73,9 +73,9 @@ client.avatars.create_user_avatar(
 
 This function returns a value of type `UserAvatar`.
 
-- `ok`: Returns the `pic_urls` object with URLs to existing
-  user avatars that were updated.\* `created`: Returns the `pic_urls` object with URLS to user avatars
-  uploaded to Box with the request.
+`ok`: Returns the `pic_urls` object with URLs to existing
+user avatars that were updated.`created`: Returns the `pic_urls` object with URLS to user avatars
+uploaded to Box with the request.
 
 ## Delete user avatar
 
@@ -104,4 +104,4 @@ client.avatars.delete_user_avatar(user.id)
 
 This function returns a value of type `None`.
 
-- `no_content`: Removes the avatar and returns an empty response.
+`no_content`: Removes the avatar and returns an empty response.

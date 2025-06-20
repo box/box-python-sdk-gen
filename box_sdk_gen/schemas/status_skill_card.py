@@ -79,7 +79,7 @@ class StatusSkillCardSkillField(BaseObject):
                 :param id: A custom identifier that represent the service that
         applied this metadata.
                 :type id: str
-                :param type: `service`, defaults to StatusSkillCardSkillTypeField.SERVICE
+                :param type: The value will always be `service`., defaults to StatusSkillCardSkillTypeField.SERVICE
                 :type type: StatusSkillCardSkillTypeField, optional
         """
         super().__init__(**kwargs)
@@ -108,7 +108,7 @@ class StatusSkillCardInvocationField(BaseObject):
         nodes, this field can be used to identify the ID of
         the node that was used to apply the metadata.
                 :type id: str
-                :param type: `skill_invocation`, defaults to StatusSkillCardInvocationTypeField.SKILL_INVOCATION
+                :param type: The value will always be `skill_invocation`., defaults to StatusSkillCardInvocationTypeField.SKILL_INVOCATION
                 :type type: StatusSkillCardInvocationTypeField, optional
         """
         super().__init__(**kwargs)
@@ -141,9 +141,9 @@ class StatusSkillCard(BaseObject):
                 :type invocation: StatusSkillCardInvocationField
                 :param created_at: The optional date and time this card was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param type: `skill_card`, defaults to StatusSkillCardTypeField.SKILL_CARD
+                :param type: The value will always be `skill_card`., defaults to StatusSkillCardTypeField.SKILL_CARD
                 :type type: StatusSkillCardTypeField, optional
-                :param skill_card_type: `status`, defaults to StatusSkillCardSkillCardTypeField.STATUS
+                :param skill_card_type: The value will always be `status`., defaults to StatusSkillCardSkillCardTypeField.STATUS
                 :type skill_card_type: StatusSkillCardSkillCardTypeField, optional
                 :param skill_card_title: The title of the card., defaults to None
                 :type skill_card_title: Optional[StatusSkillCardSkillCardTitleField], optional

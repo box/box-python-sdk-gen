@@ -24,7 +24,7 @@ client.shield_lists.get_shield_lists_v2025_r0()
 ### Arguments
 
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -61,11 +61,11 @@ client.shield_lists.create_shield_list_v2025_r0(
 - name `str`
   - The name of the shield list.
 - description `Optional[str]`
-  - Description of Shield List: Optional.
+  - Optional description of Shield List.
 - content `ShieldListContentRequestV2025R0`
   -
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -95,7 +95,7 @@ client.shield_lists.get_shield_list_by_id_v2025_r0(shield_list_country.id)
 - shield_list_id `str`
   - The unique identifier that represents a shield list. The ID for any Shield List can be determined by the response from the endpoint fetching all shield lists for the enterprise. Example: "90fb0e17-c332-40ed-b4f9-fa8908fbbb24 "
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -125,7 +125,7 @@ client.shield_lists.delete_shield_list_by_id_v2025_r0(shield_list_country.id)
 - shield_list_id `str`
   - The unique identifier that represents a shield list. The ID for any Shield List can be determined by the response from the endpoint fetching all shield lists for the enterprise. Example: "90fb0e17-c332-40ed-b4f9-fa8908fbbb24 "
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -164,11 +164,11 @@ client.shield_lists.update_shield_list_by_id_v2025_r0(
 - name `str`
   - The name of the shield list.
 - description `Optional[str]`
-  - Description of Shield List: Optional.
+  - Optional description of Shield List.
 - content `ShieldListContentRequestV2025R0`
   -
 - box_version `BoxVersionHeaderV2025R0`
-  - Version header
+  - Version header.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

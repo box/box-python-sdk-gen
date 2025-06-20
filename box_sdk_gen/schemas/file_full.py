@@ -77,10 +77,10 @@ class FileFullPermissionsField(BaseObject):
                 :type can_preview: bool
                 :param can_upload: Specifies if the user can upload a new version of this file.
                 :type can_upload: bool
-                :param can_view_annotations_all: Specifies if the user view all annotations placed on this file
+                :param can_view_annotations_all: Specifies if the user view all annotations placed on this file.
                 :type can_view_annotations_all: bool
                 :param can_view_annotations_self: Specifies if the user view annotations placed by themselves
-        on this file
+        on this file.
                 :type can_view_annotations_self: bool
         """
         super().__init__(**kwargs)
@@ -125,9 +125,9 @@ class FileFullLockField(BaseObject):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this lock, defaults to None
+                :param id: The unique identifier for this lock., defaults to None
                 :type id: Optional[str], optional
-                :param type: `lock`, defaults to None
+                :param type: The value will always be `lock`., defaults to None
                 :type type: Optional[FileFullLockTypeField], optional
                 :param created_at: The time this lock was created at., defaults to None
                 :type created_at: Optional[DateTime], optional
@@ -357,7 +357,7 @@ class FileFullRepresentationsField(BaseObject):
         **kwargs
     ):
         """
-        :param entries: A list of files, defaults to None
+        :param entries: A list of files., defaults to None
         :type entries: Optional[List[FileFullRepresentationsEntriesField]], optional
         """
         super().__init__(**kwargs)
@@ -374,7 +374,7 @@ class FileFullClassificationField(BaseObject):
         **kwargs
     ):
         """
-                :param name: The name of the classification, defaults to None
+                :param name: The name of the classification., defaults to None
                 :type name: Optional[str], optional
                 :param definition: An explanation of the meaning of this classification., defaults to None
                 :type definition: Optional[str], optional
@@ -455,9 +455,9 @@ class FileFull(File):
         for the URL `https://*.app.box.com/files/123`
         the `file_id` is `123`.
                 :type id: str
-                :param version_number: The version number of this file, defaults to None
+                :param version_number: The version number of this file., defaults to None
                 :type version_number: Optional[str], optional
-                :param comment_count: The number of comments on this file, defaults to None
+                :param comment_count: The number of comments on this file., defaults to None
                 :type comment_count: Optional[int], optional
                 :param extension: Indicates the (optional) file extension for this file. By default,
         this is set to an empty string., defaults to None
@@ -477,9 +477,9 @@ class FileFull(File):
                 :type is_externally_owned: Optional[bool], optional
                 :param has_collaborations: Specifies if this file has any other collaborators., defaults to None
                 :type has_collaborations: Optional[bool], optional
-                :param expires_at: When the file will automatically be deleted, defaults to None
+                :param expires_at: When the file will automatically be deleted., defaults to None
                 :type expires_at: Optional[DateTime], optional
-                :param disposition_at: The retention expiration timestamp for the given file, defaults to None
+                :param disposition_at: The retention expiration timestamp for the given file., defaults to None
                 :type disposition_at: Optional[DateTime], optional
                 :param shared_link_permission_options: A list of the types of roles that user can be invited at
         when sharing this file., defaults to None
@@ -517,7 +517,7 @@ class FileFull(File):
         * `trashed` when the item has been moved to the trash but not deleted
         * `deleted` when the item has been permanently deleted., defaults to None
                 :type item_status: Optional[FileItemStatusField], optional
-                :param name: The name of the file, defaults to None
+                :param name: The name of the file., defaults to None
                 :type name: Optional[str], optional
                 :param sha_1: The SHA1 hash of the file. This can be used to compare the contents
         of a file on Box with a local file., defaults to None
@@ -526,7 +526,7 @@ class FileFull(File):
         endpoints in the `If-Match` and `If-None-Match` headers to only
         perform changes on the file if (no) changes have happened., defaults to None
                 :type etag: Optional[str], optional
-                :param type: `file`, defaults to FileBaseTypeField.FILE
+                :param type: The value will always be `file`., defaults to FileBaseTypeField.FILE
                 :type type: FileBaseTypeField, optional
         """
         super().__init__(

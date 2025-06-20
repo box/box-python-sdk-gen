@@ -33,13 +33,13 @@ class LegalHoldPolicyAssignmentCountsField(BaseObject):
         **kwargs
     ):
         """
-        :param user: The number of users this policy is applied to, defaults to None
+        :param user: The number of users this policy is applied to., defaults to None
         :type user: Optional[int], optional
-        :param folder: The number of folders this policy is applied to, defaults to None
+        :param folder: The number of folders this policy is applied to., defaults to None
         :type folder: Optional[int], optional
-        :param file: The number of files this policy is applied to, defaults to None
+        :param file: The number of files this policy is applied to., defaults to None
         :type file: Optional[int], optional
-        :param file_version: The number of file versions this policy is applied to, defaults to None
+        :param file_version: The number of file versions this policy is applied to., defaults to None
         :type file_version: Optional[int], optional
         """
         super().__init__(**kwargs)
@@ -69,23 +69,24 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         **kwargs
     ):
         """
-                :param id: The unique identifier for this legal hold policy
+                :param id: The unique identifier for this legal hold policy.
                 :type id: str
                 :param policy_name: Name of the legal hold policy., defaults to None
                 :type policy_name: Optional[str], optional
                 :param description: Description of the legal hold policy. Optional
         property with a 500 character limit., defaults to None
                 :type description: Optional[str], optional
-                :param status: * 'active' - the policy is not in a transition state
+                :param status: Possible values:
+        * 'active' - the policy is not in a transition state.
         * 'applying' - that the policy is in the process of
-          being applied
+          being applied.
         * 'releasing' - that the process is in the process
-          of being released
-        * 'released' - the policy is no longer active, defaults to None
+          of being released.
+        * 'released' - the policy is no longer active., defaults to None
                 :type status: Optional[LegalHoldPolicyStatusField], optional
-                :param assignment_counts: Counts of assignments within this a legal hold policy by item type, defaults to None
+                :param assignment_counts: Counts of assignments within this a legal hold policy by item type., defaults to None
                 :type assignment_counts: Optional[LegalHoldPolicyAssignmentCountsField], optional
-                :param created_at: When the legal hold policy object was created, defaults to None
+                :param created_at: When the legal hold policy object was created., defaults to None
                 :type created_at: Optional[DateTime], optional
                 :param modified_at: When the legal hold policy object was modified.
         Does not update when assignments are added or removed., defaults to None
@@ -97,14 +98,14 @@ class LegalHoldPolicy(LegalHoldPolicyMini):
         If `null`, the policy was not deleted., defaults to None
                 :type deleted_at: Optional[DateTime], optional
                 :param filter_started_at: User-specified, optional date filter applies to
-        Custodian assignments only, defaults to None
+        Custodian assignments only., defaults to None
                 :type filter_started_at: Optional[DateTime], optional
                 :param filter_ended_at: User-specified, optional date filter applies to
-        Custodian assignments only, defaults to None
+        Custodian assignments only., defaults to None
                 :type filter_ended_at: Optional[DateTime], optional
                 :param release_notes: Optional notes about why the policy was created., defaults to None
                 :type release_notes: Optional[str], optional
-                :param type: `legal_hold_policy`, defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
+                :param type: The value will always be `legal_hold_policy`., defaults to LegalHoldPolicyMiniTypeField.LEGAL_HOLD_POLICY
                 :type type: LegalHoldPolicyMiniTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

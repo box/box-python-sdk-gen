@@ -64,11 +64,11 @@ client.webhooks.create_webhook(
 ### Arguments
 
 - target `CreateWebhookTarget`
-  - The item that will trigger the webhook
+  - The item that will trigger the webhook.
 - address `str`
-  - The URL that is notified by this webhook
+  - The URL that is notified by this webhook.
 - triggers `List[CreateWebhookTriggers]`
-  - An array of event names that this webhook is to be triggered for
+  - An array of event names that this webhook is to be triggered for.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -80,7 +80,7 @@ Returns the new webhook object.
 
 ## Get webhook
 
-Retrieves a specific webhook
+Retrieves a specific webhook.
 
 This operation is performed by calling function `get_webhook_by_id`.
 
@@ -104,7 +104,7 @@ client.webhooks.get_webhook_by_id(webhook.id)
 
 This function returns a value of type `Webhook`.
 
-Returns a webhook object
+Returns a webhook object.
 
 ## Update webhook
 
@@ -128,11 +128,11 @@ client.webhooks.update_webhook_by_id(
 - webhook_id `str`
   - The ID of the webhook. Example: "3321123"
 - target `Optional[UpdateWebhookByIdTarget]`
-  - The item that will trigger the webhook
+  - The item that will trigger the webhook.
 - address `Optional[str]`
-  - The URL that is notified by this webhook
+  - The URL that is notified by this webhook.
 - triggers `Optional[List[UpdateWebhookByIdTriggers]]`
-  - An array of event names that this webhook is to be triggered for
+  - An array of event names that this webhook is to be triggered for.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

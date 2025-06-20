@@ -22,7 +22,7 @@ class RetentionPolicyAssignmentBase(BaseObject):
         """
         :param id: The unique identifier that represents a file version.
         :type id: str
-        :param type: `retention_policy_assignment`, defaults to RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT
+        :param type: The value will always be `retention_policy_assignment`., defaults to RetentionPolicyAssignmentBaseTypeField.RETENTION_POLICY_ASSIGNMENT
         :type type: RetentionPolicyAssignmentBaseTypeField, optional
         """
         super().__init__(**kwargs)

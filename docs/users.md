@@ -74,39 +74,39 @@ client.users.create_user(user_name, login=user_login, is_platform_access_only=Tr
 ### Arguments
 
 - name `str`
-  - The name of the user
+  - The name of the user.
 - login `Optional[str]`
   - The email address the user uses to log in Required, unless `is_platform_access_only` is set to `true`.
 - is_platform_access_only `Optional[bool]`
   - Specifies that the user is an app user.
 - role `Optional[CreateUserRole]`
-  - The user’s enterprise role
+  - The user’s enterprise role.
 - language `Optional[str]`
   - The language of the user, formatted in modified version of the [ISO 639-1](/guides/api-calls/language-codes) format.
 - is_sync_enabled `Optional[bool]`
-  - Whether the user can use Box Sync
+  - Whether the user can use Box Sync.
 - job_title `Optional[str]`
-  - The user’s job title
+  - The user’s job title.
 - phone `Optional[str]`
-  - The user’s phone number
+  - The user’s phone number.
 - address `Optional[str]`
-  - The user’s address
+  - The user’s address.
 - space_amount `Optional[int]`
   - The user’s total available space in bytes. Set this to `-1` to indicate unlimited storage.
 - tracking_codes `Optional[List[TrackingCode]]`
   - Tracking codes allow an admin to generate reports from the admin console and assign an attribute to a specific group of users. This setting must be enabled for an enterprise before it can be used.
 - can_see_managed_users `Optional[bool]`
-  - Whether the user can see other enterprise users in their contact list
+  - Whether the user can see other enterprise users in their contact list.
 - timezone `Optional[str]`
-  - The user's timezone
+  - The user's timezone.
 - is_external_collab_restricted `Optional[bool]`
-  - Whether the user is allowed to collaborate with users outside their enterprise
+  - Whether the user is allowed to collaborate with users outside their enterprise.
 - is_exempt_from_device_limits `Optional[bool]`
-  - Whether to exempt the user from enterprise device limits
+  - Whether to exempt the user from enterprise device limits.
 - is_exempt_from_login_verification `Optional[bool]`
-  - Whether the user must use two-factor authentication
+  - Whether the user must use two-factor authentication.
 - status `Optional[CreateUserStatus]`
-  - The user's account status
+  - The user's account status.
 - external_app_user_id `Optional[str]`
   - An external identifier for an app user, which can be used to look up the user. This can be used to tie user IDs from external identity providers to Box users.
 - fields `Optional[List[str]]`
@@ -224,41 +224,41 @@ client.users.update_user_by_id(user.id, name=updated_user_name)
 - user_id `str`
   - The ID of the user. Example: "12345"
 - enterprise `Optional[str]`
-  - Set this to `null` to roll the user out of the enterprise and make them a free user
+  - Set this to `null` to roll the user out of the enterprise and make them a free user.
 - notify `Optional[bool]`
-  - Whether the user should receive an email when they are rolled out of an enterprise
+  - Whether the user should receive an email when they are rolled out of an enterprise.
 - name `Optional[str]`
-  - The name of the user
+  - The name of the user.
 - login `Optional[str]`
   - The email address the user uses to log in Note: If the target user's email is not confirmed, then the primary login address cannot be changed.
 - role `Optional[UpdateUserByIdRole]`
-  - The user’s enterprise role
+  - The user’s enterprise role.
 - language `Optional[str]`
   - The language of the user, formatted in modified version of the [ISO 639-1](/guides/api-calls/language-codes) format.
 - is_sync_enabled `Optional[bool]`
-  - Whether the user can use Box Sync
+  - Whether the user can use Box Sync.
 - job_title `Optional[str]`
-  - The user’s job title
+  - The user’s job title.
 - phone `Optional[str]`
-  - The user’s phone number
+  - The user’s phone number.
 - address `Optional[str]`
-  - The user’s address
+  - The user’s address.
 - tracking_codes `Optional[List[TrackingCode]]`
   - Tracking codes allow an admin to generate reports from the admin console and assign an attribute to a specific group of users. This setting must be enabled for an enterprise before it can be used.
 - can_see_managed_users `Optional[bool]`
-  - Whether the user can see other enterprise users in their contact list
+  - Whether the user can see other enterprise users in their contact list.
 - timezone `Optional[str]`
-  - The user's timezone
+  - The user's timezone.
 - is_external_collab_restricted `Optional[bool]`
-  - Whether the user is allowed to collaborate with users outside their enterprise
+  - Whether the user is allowed to collaborate with users outside their enterprise.
 - is_exempt_from_device_limits `Optional[bool]`
-  - Whether to exempt the user from enterprise device limits
+  - Whether to exempt the user from enterprise device limits.
 - is_exempt_from_login_verification `Optional[bool]`
-  - Whether the user must use two-factor authentication
+  - Whether the user must use two-factor authentication.
 - is_password_reset_required `Optional[bool]`
-  - Whether the user is required to reset their password
+  - Whether the user is required to reset their password.
 - status `Optional[UpdateUserByIdStatus]`
-  - The user's account status
+  - The user's account status.
 - space_amount `Optional[int]`
   - The user’s total available space in bytes. Set this to `-1` to indicate unlimited storage.
 - notification_email `Optional[UpdateUserByIdNotificationEmail]`
@@ -299,9 +299,9 @@ client.users.delete_user_by_id(user.id)
 - user_id `str`
   - The ID of the user. Example: "12345"
 - notify `Optional[bool]`
-  - Whether the user will receive email notification of the deletion
+  - Whether the user will receive email notification of the deletion.
 - force `Optional[bool]`
-  - Whether the user should be deleted even if this user still own files
+  - Whether the user should be deleted even if this user still own files.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

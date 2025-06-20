@@ -190,9 +190,9 @@ class RetentionPolicyAssignmentsManager:
     ) -> RetentionPolicyAssignment:
         """
                 Assigns a retention policy to an item.
-                :param policy_id: The ID of the retention policy to assign
+                :param policy_id: The ID of the retention policy to assign.
                 :type policy_id: str
-                :param assign_to: The item to assign the policy to
+                :param assign_to: The item to assign the policy to.
                 :type assign_to: CreateRetentionPolicyAssignmentAssignTo
                 :param filter_fields: If the `assign_to` type is `metadata_template`,
         then optionally add the `filter_fields` parameter which will
@@ -243,7 +243,7 @@ class RetentionPolicyAssignmentsManager:
         extra_headers: Optional[Dict[str, Optional[str]]] = None
     ) -> RetentionPolicyAssignment:
         """
-                Retrieves a retention policy assignment
+                Retrieves a retention policy assignment.
                 :param retention_policy_assignment_id: The ID of the retention policy assignment.
         Example: "1233123"
                 :type retention_policy_assignment_id: str

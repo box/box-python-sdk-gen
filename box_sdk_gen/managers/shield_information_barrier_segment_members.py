@@ -248,7 +248,7 @@ class ShieldInformationBarrierSegmentMembersManager:
                 :type shield_information_barrier_segment: CreateShieldInformationBarrierSegmentMemberShieldInformationBarrierSegment
                 :param user: User to which restriction will be applied.
                 :type user: UserBase
-                :param type: -| A type of the shield barrier segment member., defaults to None
+                :param type: A type of the shield barrier segment member., defaults to None
                 :type type: Optional[CreateShieldInformationBarrierSegmentMemberType], optional
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

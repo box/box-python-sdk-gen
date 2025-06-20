@@ -85,7 +85,7 @@ class CreateStoragePolicyAssignmentAssignedTo(BaseObject):
         """
         :param type: The type to assign the policy to.
         :type type: CreateStoragePolicyAssignmentAssignedToTypeField
-        :param id: The ID of the user or enterprise
+        :param id: The ID of the user or enterprise.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -140,9 +140,9 @@ class StoragePolicyAssignmentsManager:
     ) -> StoragePolicyAssignments:
         """
                 Fetches all the storage policy assignment for an enterprise or user.
-                :param resolved_for_type: The target type to return assignments for
+                :param resolved_for_type: The target type to return assignments for.
                 :type resolved_for_type: GetStoragePolicyAssignmentsResolvedForType
-                :param resolved_for_id: The ID of the user or enterprise to return assignments for
+                :param resolved_for_id: The ID of the user or enterprise to return assignments for.
                 :type resolved_for_id: str
                 :param marker: Defines the position marker at which to begin returning results. This is
         used when paginating using marker-based pagination.
@@ -190,7 +190,7 @@ class StoragePolicyAssignmentsManager:
         """
                 Creates a storage policy assignment for an enterprise or user.
                 :param storage_policy: The storage policy to assign to the user or
-        enterprise
+        enterprise.
                 :type storage_policy: CreateStoragePolicyAssignmentStoragePolicy
                 :param assigned_to: The user or enterprise to assign the storage
         policy to.
@@ -272,7 +272,7 @@ class StoragePolicyAssignmentsManager:
         Example: "932483"
                 :type storage_policy_assignment_id: str
                 :param storage_policy: The storage policy to assign to the user or
-        enterprise
+        enterprise.
                 :type storage_policy: UpdateStoragePolicyAssignmentByIdStoragePolicy
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
                 :type extra_headers: Optional[Dict[str, Optional[str]]], optional

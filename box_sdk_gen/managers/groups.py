@@ -197,10 +197,10 @@ class GroupsManager:
                 :param member_viewability_level: Specifies who can see the members of the group.
 
         * `admins_only` - the enterprise admin, co-admins, group's
-          group admin
-        * `admins_and_members` - all admins and group members
+          group admin.
+        * `admins_and_members` - all admins and group members.
         * `all_managed_users` - all managed users in the
-          enterprise, defaults to None
+          enterprise., defaults to None
                 :type member_viewability_level: Optional[CreateGroupMemberViewabilityLevel], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are
@@ -363,10 +363,10 @@ class GroupsManager:
                 :param member_viewability_level: Specifies who can see the members of the group.
 
         * `admins_only` - the enterprise admin, co-admins, group's
-          group admin
-        * `admins_and_members` - all admins and group members
+          group admin.
+        * `admins_and_members` - all admins and group members.
         * `all_managed_users` - all managed users in the
-          enterprise, defaults to None
+          enterprise., defaults to None
                 :type member_viewability_level: Optional[UpdateGroupByIdMemberViewabilityLevel], optional
                 :param fields: A comma-separated list of attributes to include in the
         response. This can be used to request fields that are

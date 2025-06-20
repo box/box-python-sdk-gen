@@ -34,21 +34,21 @@ class WorkflowFull(Workflow):
         **kwargs
     ):
         """
-        :param created_at: The date and time when the workflow was created on Box, defaults to None
+        :param created_at: The date and time when the workflow was created on Box., defaults to None
         :type created_at: Optional[DateTime], optional
-        :param modified_at: The date and time when the workflow was last updated on Box, defaults to None
+        :param modified_at: The date and time when the workflow was last updated on Box., defaults to None
         :type modified_at: Optional[DateTime], optional
         :param flows: A list of flows assigned to a workflow., defaults to None
         :type flows: Optional[List[WorkflowFlowsField]], optional
-        :param id: The unique identifier for the workflow, defaults to None
+        :param id: The unique identifier for the workflow., defaults to None
         :type id: Optional[str], optional
-        :param type: `workflow`, defaults to None
+        :param type: The value will always be `workflow`., defaults to None
         :type type: Optional[WorkflowMiniTypeField], optional
-        :param name: The name of the workflow, defaults to None
+        :param name: The name of the workflow., defaults to None
         :type name: Optional[str], optional
         :param description: The description for a workflow., defaults to None
         :type description: Optional[str], optional
-        :param is_enabled: Specifies if this workflow is enabled, defaults to None
+        :param is_enabled: Specifies if this workflow is enabled., defaults to None
         :type is_enabled: Optional[bool], optional
         """
         super().__init__(

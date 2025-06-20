@@ -101,7 +101,7 @@ client.legal_hold_policies.get_legal_hold_policy_by_id(legal_hold_policy_id)
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy Example: "324432"
+  - The ID of the legal hold policy. Example: "324432"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -131,7 +131,7 @@ client.legal_hold_policies.update_legal_hold_policy_by_id(
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy Example: "324432"
+  - The ID of the legal hold policy. Example: "324432"
 - policy_name `Optional[str]`
   - The name of the policy.
 - description `Optional[str]`
@@ -168,7 +168,7 @@ client.legal_hold_policies.delete_legal_hold_policy_by_id(legal_hold_policy.id)
 ### Arguments
 
 - legal_hold_policy_id `str`
-  - The ID of the legal hold policy Example: "324432"
+  - The ID of the legal hold policy. Example: "324432"
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

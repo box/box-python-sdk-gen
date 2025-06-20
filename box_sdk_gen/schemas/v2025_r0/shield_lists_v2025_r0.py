@@ -14,7 +14,7 @@ class ShieldListsV2025R0(BaseObject):
         self, *, entries: Optional[List[ShieldListMiniV2025R0]] = None, **kwargs
     ):
         """
-        :param entries: A list of shield list objects, defaults to None
+        :param entries: A list of shield list objects., defaults to None
         :type entries: Optional[List[ShieldListMiniV2025R0]], optional
         """
         super().__init__(**kwargs)

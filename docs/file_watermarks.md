@@ -58,7 +58,7 @@ client.file_watermarks.update_file_watermark(
 - file_id `str`
   - The unique identifier that represents a file. The ID for any file can be determined by visiting a file in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/files/123` the `file_id` is `123`. Example: "12345"
 - watermark `UpdateFileWatermarkWatermark`
-  - The watermark to imprint on the file
+  - The watermark to imprint on the file.
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

@@ -78,9 +78,9 @@ client.uploads.preflight_file_upload_check(
 ### Arguments
 
 - name `Optional[str]`
-  - The name for the file
+  - The name for the file.
 - size `Optional[int]`
-  - The size of the file in bytes
+  - The size of the file in bytes.
 - parent `Optional[PreflightFileUploadCheckParent]`
   -
 - extra_headers `Optional[Dict[str, Optional[str]]]`

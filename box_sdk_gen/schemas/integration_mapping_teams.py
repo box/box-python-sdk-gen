@@ -38,26 +38,26 @@ class IntegrationMappingTeams(IntegrationMappingBase):
         **kwargs
     ):
         """
-                :param partner_item: Mapped item object for Teams
+                :param partner_item: Mapped item object for Teams.
                 :type partner_item: Union[IntegrationMappingPartnerItemTeams]
                 :param id: A unique identifier of a folder mapping
         (part of a composite key together
-        with `integration_type`)
+        with `integration_type`).
                 :type id: str
                 :param integration_type: Identifies the Box partner app,
         with which the mapping is associated.
         Supports Slack and Teams.
-        (part of the composite key together with `id`), defaults to None
+        (part of the composite key together with `id`)., defaults to None
                 :type integration_type: Optional[IntegrationMappingTeamsIntegrationTypeField], optional
                 :param is_overridden_by_manual_mapping: Identifies whether the mapping has
         been manually set by the team owner from UI for channels
-        (as opposed to being automatically created), defaults to None
+        (as opposed to being automatically created)., defaults to None
                 :type is_overridden_by_manual_mapping: Optional[bool], optional
-                :param created_at: When the integration mapping object was created, defaults to None
+                :param created_at: When the integration mapping object was created., defaults to None
                 :type created_at: Optional[DateTime], optional
-                :param modified_at: When the integration mapping object was last modified, defaults to None
+                :param modified_at: When the integration mapping object was last modified., defaults to None
                 :type modified_at: Optional[DateTime], optional
-                :param type: Mapping type, defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
+                :param type: Mapping type., defaults to IntegrationMappingBaseTypeField.INTEGRATION_MAPPING
                 :type type: IntegrationMappingBaseTypeField, optional
         """
         super().__init__(id=id, type=type, **kwargs)

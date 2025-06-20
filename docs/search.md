@@ -118,7 +118,7 @@ client.search.search_for_content(
 - content_types `Optional[List[SearchForContentContentTypes]]`
   - Limits the search results to any items that match the search query for a specific part of the file, for example the file description. Content types are defined as a comma separated lists of Box recognized content types. The allowed content types are as follows. _ `name` - The name of the item, as defined by its `name` field. _ `description` - The description of the item, as defined by its `description` field. _ `file_content` - The actual content of the file. _ `comments` - The content of any of the comments on a file or folder. \* `tags` - Any tags that are applied to an item, as defined by its `tags` field.
 - type `Optional[SearchForContentType]`
-  - Limits the search results to any items of this type. This parameter only takes one value. By default the API returns items that match any of these types. _ `file` - Limits the search results to files _ `folder` - Limits the search results to folders \* `web_link` - Limits the search results to web links, also known as bookmarks
+  - Limits the search results to any items of this type. This parameter only takes one value. By default the API returns items that match any of these types. _ `file` - Limits the search results to files, _ `folder` - Limits the search results to folders, \* `web_link` - Limits the search results to web links, also known as bookmarks.
 - trash_content `Optional[SearchForContentTrashContent]`
   - Determines if the search should look in the trash for items. By default, this API only returns search results for items not currently in the trash (`non_trashed_only`). _ `trashed_only` - Only searches for items currently in the trash _ `non_trashed_only` - Only searches for items currently not in the trash \* `all_items` - Searches for both trashed and non-trashed items.
 - mdfilters `Optional[List[MetadataFilter]]`
@@ -130,7 +130,7 @@ client.search.search_for_content(
 - limit `Optional[int]`
   - Defines the maximum number of items to return as part of a page of results.
 - include_recent_shared_links `Optional[bool]`
-  - Defines whether the search results should include any items that the user recently accessed through a shared link. When this parameter has been set to true, the format of the response of this API changes to return a list of [Search Results with Shared Links](r://search_results_with_shared_links)
+  - Defines whether the search results should include any items that the user recently accessed through a shared link. When this parameter has been set to true, the format of the response of this API changes to return a list of [Search Results with Shared Links](r://search_results_with_shared_links).
 - fields `Optional[List[str]]`
   - A comma-separated list of attributes to include in the response. This can be used to request fields that are not normally returned in a standard response. Be aware that specifying this parameter will have the effect that none of the standard fields are returned in the response unless explicitly specified, instead only fields for the mini representation are returned, additional to the fields requested.
 - offset `Optional[int]`

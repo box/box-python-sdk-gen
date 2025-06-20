@@ -77,9 +77,9 @@ class CreateLegalHoldPolicyAssignmentAssignTo(BaseObject):
         self, type: CreateLegalHoldPolicyAssignmentAssignToTypeField, id: str, **kwargs
     ):
         """
-        :param type: The type of item to assign the policy to
+        :param type: The type of item to assign the policy to.
         :type type: CreateLegalHoldPolicyAssignmentAssignToTypeField
-        :param id: The ID of item to assign the policy to
+        :param id: The ID of item to assign the policy to.
         :type id: str
         """
         super().__init__(**kwargs)
@@ -112,7 +112,7 @@ class LegalHoldPolicyAssignmentsManager:
     ) -> LegalHoldPolicyAssignments:
         """
                 Retrieves a list of items a legal hold policy has been assigned to.
-                :param policy_id: The ID of the legal hold policy
+                :param policy_id: The ID of the legal hold policy.
                 :type policy_id: str
                 :param assign_to_type: Filters the results by the type of item the
         policy was applied to., defaults to None
@@ -182,7 +182,7 @@ class LegalHoldPolicyAssignmentsManager:
         Assign a legal hold to a file, file version, folder, or user.
         :param policy_id: The ID of the policy to assign.
         :type policy_id: str
-        :param assign_to: The item to assign the policy to
+        :param assign_to: The item to assign the policy to.
         :type assign_to: CreateLegalHoldPolicyAssignmentAssignTo
         :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
         :type extra_headers: Optional[Dict[str, Optional[str]]], optional
@@ -218,7 +218,7 @@ class LegalHoldPolicyAssignmentsManager:
     ) -> LegalHoldPolicyAssignment:
         """
                 Retrieve a legal hold policy assignment.
-                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment.
         Example: "753465"
                 :type legal_hold_policy_assignment_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -259,7 +259,7 @@ class LegalHoldPolicyAssignmentsManager:
 
                 fully removed yet when the response returns.
 
-                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment.
         Example: "753465"
                 :type legal_hold_policy_assignment_id: str
                 :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
@@ -339,7 +339,7 @@ class LegalHoldPolicyAssignmentsManager:
 
                 find a list of policy assignments for a given policy ID.
 
-                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment
+                :param legal_hold_policy_assignment_id: The ID of the legal hold policy assignment.
         Example: "753465"
                 :type legal_hold_policy_assignment_id: str
                 :param marker: Defines the position marker at which to begin returning results. This is
