@@ -14,7 +14,13 @@ This operation is performed by calling function `get_hubs_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-hubs/).
 
-_Currently we don't have an example for calling `get_hubs_v2025_r0` in integration tests_
+<!-- sample get_hubs_v2025.0 -->
+
+```python
+client.hubs.get_hubs_v2025_r0(
+    scope="all", sort="name", direction=GetHubsV2025R0Direction.ASC
+)
+```
 
 ### Arguments
 
@@ -53,7 +59,13 @@ This operation is performed by calling function `get_enterprise_hubs_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-enterprise-hubs/).
 
-_Currently we don't have an example for calling `get_enterprise_hubs_v2025_r0` in integration tests_
+<!-- sample get_enterprise_hubs_v2025.0 -->
+
+```python
+client.hubs.get_enterprise_hubs_v2025_r0(
+    sort="name", direction=GetEnterpriseHubsV2025R0Direction.ASC
+)
+```
 
 ### Arguments
 
@@ -87,7 +99,11 @@ This operation is performed by calling function `get_hub_by_id_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-hubs-id/).
 
-_Currently we don't have an example for calling `get_hub_by_id_v2025_r0` in integration tests_
+<!-- sample get_hubs_id_v2025.0 -->
+
+```python
+client.hubs.get_hub_by_id_v2025_r0(user_hub.id)
+```
 
 ### Arguments
 
@@ -113,7 +129,11 @@ This operation is performed by calling function `delete_hub_by_id_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/delete-hubs-id/).
 
-_Currently we don't have an example for calling `delete_hub_by_id_v2025_r0` in integration tests_
+<!-- sample delete_hubs_id_v2025.0 -->
+
+```python
+client.hubs.delete_hub_by_id_v2025_r0(hub.id)
+```
 
 ### Arguments
 
