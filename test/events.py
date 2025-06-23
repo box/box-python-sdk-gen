@@ -78,8 +78,9 @@ def testEventSourceFileOrFolder():
     first_event: Event = events.entries[0]
     source: File = first_event.source
     assert (
-        to_string(source.type) == 'file' or to_string(source.type) == 'folder'
-    ) or to_string(source.type) == 'collaboration'
+        (to_string(source.type) == 'file' or to_string(source.type) == 'folder')
+        or to_string(source.type) == 'collaboration'
+    ) or to_string(source.type) == 'lock'
     assert not source.id == ''
 
 
