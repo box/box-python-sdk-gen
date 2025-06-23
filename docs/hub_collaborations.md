@@ -15,7 +15,11 @@ This operation is performed by calling function `get_hub_collaborations_v2025_r0
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-hub-collaborations/).
 
-_Currently we don't have an example for calling `get_hub_collaborations_v2025_r0` in integration tests_
+<!-- sample get_hub_collaborations_v2025.0 -->
+
+```python
+client.hub_collaborations.get_hub_collaborations_v2025_r0(hub.id)
+```
 
 ### Arguments
 
@@ -47,7 +51,15 @@ This operation is performed by calling function `create_hub_collaboration_v2025_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-hub-collaborations/).
 
-_Currently we don't have an example for calling `create_hub_collaboration_v2025_r0` in integration tests_
+<!-- sample post_hub_collaborations_v2025.0 -->
+
+```python
+client.hub_collaborations.create_hub_collaboration_v2025_r0(
+    CreateHubCollaborationV2025R0Hub(id=hub.id),
+    CreateHubCollaborationV2025R0AccessibleBy(type="user", id=user.id),
+    "viewer",
+)
+```
 
 ### Arguments
 
@@ -77,7 +89,11 @@ This operation is performed by calling function `get_hub_collaboration_by_id_v20
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-hub-collaborations-id/).
 
-_Currently we don't have an example for calling `get_hub_collaboration_by_id_v2025_r0` in integration tests_
+<!-- sample get_hub_collaborations_id_v2025.0 -->
+
+```python
+client.hub_collaborations.get_hub_collaboration_by_id_v2025_r0(created_collaboration.id)
+```
 
 ### Arguments
 
@@ -104,7 +120,13 @@ This operation is performed by calling function `update_hub_collaboration_by_id_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/put-hub-collaborations-id/).
 
-_Currently we don't have an example for calling `update_hub_collaboration_by_id_v2025_r0` in integration tests_
+<!-- sample put_hub_collaborations_id_v2025.0 -->
+
+```python
+client.hub_collaborations.update_hub_collaboration_by_id_v2025_r0(
+    created_collaboration.id, role="editor"
+)
+```
 
 ### Arguments
 
@@ -132,7 +154,13 @@ This operation is performed by calling function `delete_hub_collaboration_by_id_
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/delete-hub-collaborations-id/).
 
-_Currently we don't have an example for calling `delete_hub_collaboration_by_id_v2025_r0` in integration tests_
+<!-- sample delete_hub_collaborations_id_v2025.0 -->
+
+```python
+client.hub_collaborations.delete_hub_collaboration_by_id_v2025_r0(
+    created_collaboration.id
+)
+```
 
 ### Arguments
 
