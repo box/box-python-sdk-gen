@@ -99,23 +99,23 @@ def testWebhookValidation():
         'box-signature-secondary': 'v+1CD1Jdo3muIcbpv5lxxgPglOqMfsNHPV899xWYydo=',
         'box-signature-version': '1',
     }
-    headers_with_japanese: Dict = {
+    headers_with_japanese: Dict[str, str] = {
         **headers,
         'box-signature-primary': 'LV2uCu+5NJtIHrCXDYgZ0v/PP5THGRuegw3RtdnEyuE=',
     }
-    headers_with_emoji: Dict = {
+    headers_with_emoji: Dict[str, str] = {
         **headers,
         'box-signature-primary': 'xF/SDZosX4le+v4A0Qn59sZhuD1RqY5KRUKzVMSbh0E=',
     }
-    headers_with_carriage_return: Dict = {
+    headers_with_carriage_return: Dict[str, str] = {
         **headers,
         'box-signature-primary': 'SVkbKgy3dEEf2PbbzpNu2lDZS7zZ/aboU7HOZgBGrJk=',
     }
-    headers_with_forward_slash: Dict = {
+    headers_with_forward_slash: Dict[str, str] = {
         **headers,
         'box-signature-primary': 't41PWT5ZB6OcysnD6SDy9Ud+p9hdXxIdXqcdweyZv/Q=',
     }
-    headers_with_back_slash: Dict = {
+    headers_with_back_slash: Dict[str, str] = {
         **headers,
         'box-signature-primary': 'ERpMZwUQsGDTfj82ehdX6VvDZfvOhK5ULNfVmwVAGe0=',
     }
@@ -128,7 +128,7 @@ def testWebhookValidation():
     past_datetime: str = date_time_to_string(
         epoch_seconds_to_date_time(get_epoch_time_in_seconds() - 1200)
     )
-    headers_with_correct_datetime: Dict = {
+    headers_with_correct_datetime: Dict[str, str] = {
         **headers,
         'box-delivery-timestamp': current_datetime,
         'box-signature-primary': compute_webhook_signature(
@@ -144,7 +144,7 @@ def testWebhookValidation():
             escape_body=True,
         ),
     }
-    headers_with_japanese_with_correct_datetime: Dict = {
+    headers_with_japanese_with_correct_datetime: Dict[str, str] = {
         **headers_with_japanese,
         'box-delivery-timestamp': current_datetime,
         'box-signature-primary': compute_webhook_signature(
@@ -160,7 +160,7 @@ def testWebhookValidation():
             escape_body=True,
         ),
     }
-    headers_with_future_datetime: Dict = {
+    headers_with_future_datetime: Dict[str, str] = {
         **headers,
         'box-delivery-timestamp': future_datetime,
         'box-signature-primary': compute_webhook_signature(
@@ -176,7 +176,7 @@ def testWebhookValidation():
             escape_body=True,
         ),
     }
-    headers_with_past_datetime: Dict = {
+    headers_with_past_datetime: Dict[str, str] = {
         **headers,
         'box-delivery-timestamp': past_datetime,
         'box-signature-primary': compute_webhook_signature(
@@ -192,11 +192,11 @@ def testWebhookValidation():
             escape_body=True,
         ),
     }
-    headers_with_wrong_signature_version: Dict = {
+    headers_with_wrong_signature_version: Dict[str, str] = {
         **headers,
         'box-signature-version': '2',
     }
-    headers_with_wrong_signature_algorithm: Dict = {
+    headers_with_wrong_signature_algorithm: Dict[str, str] = {
         **headers,
         'box-signature-algorithm': 'HmacSHA1',
     }
