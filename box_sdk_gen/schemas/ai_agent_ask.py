@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.ai_agent_long_text_tool import AiAgentLongTextTool
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool import AiAgentBasicTextTool
 
+from box_sdk_gen.schemas.ai_agent_spreadsheet_tool import AiAgentSpreadsheetTool
+
 from box_sdk_gen.box.errors import BoxSDKError
 
 
@@ -24,6 +26,7 @@ class AiAgentAsk(BaseObject):
         type: AiAgentAskTypeField = AiAgentAskTypeField.AI_AGENT_ASK,
         long_text: Optional[AiAgentLongTextTool] = None,
         basic_text: Optional[AiAgentBasicTextTool] = None,
+        spreadsheet: Optional[AiAgentSpreadsheetTool] = None,
         long_text_multi: Optional[AiAgentLongTextTool] = None,
         basic_text_multi: Optional[AiAgentBasicTextTool] = None,
         basic_image: Optional[AiAgentBasicTextTool] = None,
@@ -38,6 +41,7 @@ class AiAgentAsk(BaseObject):
         self.type = type
         self.long_text = long_text
         self.basic_text = basic_text
+        self.spreadsheet = spreadsheet
         self.long_text_multi = long_text_multi
         self.basic_text_multi = basic_text_multi
         self.basic_image = basic_image
