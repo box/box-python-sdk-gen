@@ -2,6 +2,8 @@ from typing import Optional
 
 from typing import List
 
+from box_sdk_gen.schemas.ai_llm_endpoint_params import AiLlmEndpointParams
+
 from box_sdk_gen.schemas.ai_agent_spreadsheet_tool import AiAgentSpreadsheetTool
 
 from box_sdk_gen.schemas.ai_studio_agent_spreadsheet_tool import (
