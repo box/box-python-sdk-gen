@@ -30,6 +30,10 @@ from box_sdk_gen.schemas.ai_llm_endpoint_params import *
 
 from box_sdk_gen.schemas.ai_agent_spreadsheet_tool import *
 
+from box_sdk_gen.schemas.ai_studio_agent_spreadsheet_tool import *
+
+from box_sdk_gen.schemas.ai_studio_agent_spreadsheet_tool_response import *
+
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_base import *
 
 from box_sdk_gen.schemas.ai_agent_basic_text_tool_text_gen import *
