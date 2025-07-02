@@ -46,6 +46,10 @@ from box_sdk_gen.internal.utils import JwtKey
 
 from box_sdk_gen.internal.utils import JwtAlgorithm
 
+from box_sdk_gen.internal.utils import PrivateKeyDecryptor
+
+from box_sdk_gen.internal.utils import DefaultPrivateKeyDecryptor
+
 from box_sdk_gen.managers.authorization import AuthorizationManager
 
 from box_sdk_gen.box.errors import BoxSDKError
@@ -161,7 +165,8 @@ class JWTConfig:
         enterprise_id: Optional[str] = None,
         user_id: Optional[str] = None,
         algorithm: Optional[JwtAlgorithm] = JwtAlgorithm.RS256,
-        token_storage: TokenStorage = None
+        token_storage: TokenStorage = None,
+        private_key_decryptor: PrivateKeyDecryptor = None
     ):
         """
         :param client_id: App client ID
@@ -181,6 +186,8 @@ class JWTConfig:
         """
         if token_storage is None:
             token_storage = InMemoryTokenStorage()
+        if private_key_decryptor is None:
+            private_key_decryptor = DefaultPrivateKeyDecryptor()
         self.client_id = client_id
         self.client_secret = client_secret
         self.jwt_key_id = jwt_key_id
@@ -190,10 +197,14 @@ class JWTConfig:
         self.user_id = user_id
         self.algorithm = algorithm
         self.token_storage = token_storage
+        self.private_key_decryptor = private_key_decryptor
 
     @staticmethod
     def from_config_json_string(
-        config_json_string: str, *, token_storage: Optional[TokenStorage] = None
+        config_json_string: str,
+        *,
+        token_storage: Optional[TokenStorage] = None,
+        private_key_decryptor: Optional[PrivateKeyDecryptor] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a string content of JSON file downloaded from the Box Developer Console.
@@ -202,39 +213,41 @@ class JWTConfig:
 
         :param config_json_string: String content of JSON file containing the configuration.
         :type config_json_string: str
-        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory.g, defaults to None
+        :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory, defaults to None
         :type token_storage: Optional[TokenStorage], optional
+        :param private_key_decryptor: Object responsible for decrypting private key for jwt auth. If no custom implementation provided, the DefaultPrivateKeyDecryptor will be used., defaults to None
+        :type private_key_decryptor: Optional[PrivateKeyDecryptor], optional
         """
         config_json: JwtConfigFile = deserialize(
             json_to_serialized_data(config_json_string), JwtConfigFile
         )
-        new_config: 'JWTConfig' = (
-            JWTConfig(
-                client_id=config_json.box_app_settings.client_id,
-                client_secret=config_json.box_app_settings.client_secret,
-                enterprise_id=config_json.enterprise_id,
-                user_id=config_json.user_id,
-                jwt_key_id=config_json.box_app_settings.app_auth.public_key_id,
-                private_key=config_json.box_app_settings.app_auth.private_key,
-                private_key_passphrase=config_json.box_app_settings.app_auth.passphrase,
-                token_storage=token_storage,
-            )
-            if not token_storage == None
-            else JWTConfig(
-                client_id=config_json.box_app_settings.client_id,
-                client_secret=config_json.box_app_settings.client_secret,
-                enterprise_id=config_json.enterprise_id,
-                user_id=config_json.user_id,
-                jwt_key_id=config_json.box_app_settings.app_auth.public_key_id,
-                private_key=config_json.box_app_settings.app_auth.private_key,
-                private_key_passphrase=config_json.box_app_settings.app_auth.passphrase,
-            )
+        token_storage_to_use: Optional[TokenStorage] = (
+            InMemoryTokenStorage() if token_storage == None else token_storage
+        )
+        private_key_decryptor_to_use: Optional[PrivateKeyDecryptor] = (
+            DefaultPrivateKeyDecryptor()
+            if private_key_decryptor == None
+            else private_key_decryptor
+        )
+        new_config: 'JWTConfig' = JWTConfig(
+            client_id=config_json.box_app_settings.client_id,
+            client_secret=config_json.box_app_settings.client_secret,
+            enterprise_id=config_json.enterprise_id,
+            user_id=config_json.user_id,
+            jwt_key_id=config_json.box_app_settings.app_auth.public_key_id,
+            private_key=config_json.box_app_settings.app_auth.private_key,
+            private_key_passphrase=config_json.box_app_settings.app_auth.passphrase,
+            token_storage=token_storage_to_use,
+            private_key_decryptor=private_key_decryptor_to_use,
         )
         return new_config
 
     @staticmethod
     def from_config_file(
-        config_file_path: str, *, token_storage: Optional[TokenStorage] = None
+        config_file_path: str,
+        *,
+        token_storage: Optional[TokenStorage] = None,
+        private_key_decryptor: Optional[PrivateKeyDecryptor] = None
     ) -> 'JWTConfig':
         """
         Create an auth instance as defined by a JSON file downloaded from the Box Developer Console.
@@ -245,10 +258,14 @@ class JWTConfig:
         :type config_file_path: str
         :param token_storage: Object responsible for storing token. If no custom implementation provided, the token will be stored in memory., defaults to None
         :type token_storage: Optional[TokenStorage], optional
+        :param private_key_decryptor: Object responsible for decrypting private key for jwt auth. If no custom implementation provided, the DefaultPrivateKeyDecryptor will be used., defaults to None
+        :type private_key_decryptor: Optional[PrivateKeyDecryptor], optional
         """
         config_json_string: str = read_text_from_file(config_file_path)
         return JWTConfig.from_config_json_string(
-            config_json_string, token_storage=token_storage
+            config_json_string,
+            token_storage=token_storage,
+            private_key_decryptor=private_key_decryptor,
         )
 
 
@@ -298,6 +315,7 @@ class BoxJWTAuth(Authentication):
             issuer=self.config.client_id,
             jwtid=get_uuid(),
             keyid=self.config.jwt_key_id,
+            private_key_decryptor=self.config.private_key_decryptor,
         )
         jwt_key: JwtKey = JwtKey(
             key=self.config.private_key, passphrase=self.config.private_key_passphrase

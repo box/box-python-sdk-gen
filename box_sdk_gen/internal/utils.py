@@ -12,6 +12,9 @@ from enum import Enum
 from io import SEEK_CUR, SEEK_END, SEEK_SET, BufferedIOBase, BytesIO
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar, BinaryIO
 
+from abc import abstractmethod
+from typing import Any
+
 try:
     import jwt
     from cryptography.hazmat.backends import default_backend
@@ -270,6 +273,31 @@ def get_value_from_object_raw_data(obj: BaseObject, key: str) -> Any:
     return value
 
 
+class PrivateKeyDecryptor:
+    """Class used for private key decryption in JWT auth."""
+
+    @abstractmethod
+    def decrypt_private_key(self, encryptedPrivateKey: str, passphrase: str) -> Any:
+        """Decrypts private key using a passphrase."""
+        pass
+
+
+class DefaultPrivateKeyDecryptor(PrivateKeyDecryptor):
+    def decrypt_private_key(self, encryptedPrivateKey: str, passphrase: str) -> Any:
+        if default_backend is None or serialization is None:
+            raise ImportError(
+                'Missing `cryptography` dependency. `cryptography` library is required to create JWT assertion.'
+            )
+        encoded_private_key = encode_str_ascii_or_raise(encryptedPrivateKey)
+        encoded_passphrase = encode_str_ascii_or_raise(passphrase)
+
+        return serialization.load_pem_private_key(
+            encoded_private_key,
+            password=encoded_passphrase,
+            backend=default_backend(),
+        )
+
+
 class JwtAlgorithm(str, Enum):
     HS256 = 'HS256'
     HS384 = 'HS384'
@@ -296,6 +324,7 @@ class JwtSignOptions(BaseObject):
         subject: Optional[str] = None,
         jwtid: Optional[str] = None,
         keyid: Optional[str] = None,
+        private_key_decryptor: Optional[PrivateKeyDecryptor] = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -308,6 +337,11 @@ class JwtSignOptions(BaseObject):
         self.subject = subject
         self.jwtid = jwtid
         self.keyid = keyid
+        self.private_key_decryptor = (
+            private_key_decryptor
+            if private_key_decryptor is not None
+            else DefaultPrivateKeyDecryptor()
+        )
 
 
 class JwtKey(BaseObject):
@@ -326,24 +360,6 @@ def encode_str_ascii_or_raise(passphrase: str) -> bytes:
         ) from unicode_error
 
 
-def get_rsa_private_key(
-    private_key: str,
-    passphrase: str,
-) -> Any:
-    if default_backend is None or serialization is None:
-        raise ImportError(
-            'Missing `cryptography` dependency. `cryptography` library is required to create JWT assertion.'
-        )
-    encoded_private_key = encode_str_ascii_or_raise(private_key)
-    encoded_passphrase = encode_str_ascii_or_raise(passphrase)
-
-    return serialization.load_pem_private_key(
-        encoded_private_key,
-        password=encoded_passphrase,
-        backend=default_backend(),
-    )
-
-
 def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> str:
     if jwt is None:
         raise ImportError(
@@ -358,7 +374,7 @@ def create_jwt_assertion(claims: dict, key: JwtKey, options: JwtSignOptions) -> 
             'jti': options.jwtid,
             'exp': claims['exp'],
         },
-        get_rsa_private_key(key.key, key.passphrase),
+        options.private_key_decryptor.decrypt_private_key(key.key, key.passphrase),
         algorithm=options.algorithm,
         headers={'kid': options.keyid},
     )
