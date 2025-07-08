@@ -14,14 +14,14 @@ client: BoxClient = get_default_client()
 
 
 def testTransferUserContent():
-    new_user_name: str = get_uuid()
-    new_user: UserFull = client.users.create_user(
-        new_user_name, is_platform_access_only=True
+    source_user_name: str = get_uuid()
+    source_user: UserFull = client.users.create_user(
+        source_user_name, is_platform_access_only=True
     )
-    current_user: UserFull = client.users.get_user_me()
-    transfered_folder: FolderFull = client.transfer.transfer_owned_folder(
-        new_user.id, TransferOwnedFolderOwnedBy(id=current_user.id), notify=False
+    target_user: UserFull = client.users.get_user_me()
+    transferred_folder: FolderFull = client.transfer.transfer_owned_folder(
+        source_user.id, TransferOwnedFolderOwnedBy(id=target_user.id), notify=False
     )
-    assert transfered_folder.owned_by.id == current_user.id
-    client.folders.delete_folder_by_id(transfered_folder.id, recursive=True)
-    client.users.delete_user_by_id(new_user.id, notify=False, force=True)
+    assert transferred_folder.owned_by.id == target_user.id
+    client.folders.delete_folder_by_id(transferred_folder.id, recursive=True)
+    client.users.delete_user_by_id(source_user.id, notify=False, force=True)
