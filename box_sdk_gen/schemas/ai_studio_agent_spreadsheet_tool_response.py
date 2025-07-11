@@ -2,6 +2,14 @@ from typing import Optional
 
 from typing import List
 
+from box_sdk_gen.schemas.ai_llm_endpoint_params_open_ai import AiLlmEndpointParamsOpenAi
+
+from box_sdk_gen.schemas.ai_llm_endpoint_params_google import AiLlmEndpointParamsGoogle
+
+from box_sdk_gen.schemas.ai_llm_endpoint_params_aws import AiLlmEndpointParamsAws
+
+from box_sdk_gen.schemas.ai_llm_endpoint_params_ibm import AiLlmEndpointParamsIbm
+
 from box_sdk_gen.schemas.ai_llm_endpoint_params import AiLlmEndpointParams
 
 from box_sdk_gen.schemas.ai_agent_spreadsheet_tool import AiAgentSpreadsheetTool

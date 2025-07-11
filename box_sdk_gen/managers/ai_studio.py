@@ -14,6 +14,10 @@ from box_sdk_gen.serialization.json import serialize
 
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
+from box_sdk_gen.schemas.user_base import UserBase
+
+from box_sdk_gen.schemas.group_base import GroupBase
+
 from box_sdk_gen.schemas.ai_agent_allowed_entity import AiAgentAllowedEntity
 
 from box_sdk_gen.schemas.ai_studio_agent_ask import AiStudioAgentAsk
