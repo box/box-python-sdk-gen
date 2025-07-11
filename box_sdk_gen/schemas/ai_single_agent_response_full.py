@@ -8,6 +8,8 @@ from box_sdk_gen.schemas.user_base import UserBase
 
 from box_sdk_gen.internal.utils import DateTime
 
+from box_sdk_gen.schemas.group_base import GroupBase
+
 from box_sdk_gen.schemas.ai_agent_allowed_entity import AiAgentAllowedEntity
 
 from box_sdk_gen.schemas.ai_single_agent_response import AiSingleAgentResponse

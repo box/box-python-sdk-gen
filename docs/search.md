@@ -78,16 +78,7 @@ client.search.search_for_content(
     ancestor_folder_ids=["0"],
     mdfilters=[
         MetadataFilter(
-            filters={
-                "stringField": "stringValue",
-                "dateField": MetadataFieldFilterDateRange(
-                    lt=date_time_from_string("2035-01-01T00:00:00Z"),
-                    gt=date_time_from_string("2035-01-03T00:00:00Z"),
-                ),
-                "floatField": MetadataFieldFilterFloatRange(lt=9.5, gt=10.5),
-                "enumField": "enumValue2",
-                "multiSelectField": ["multiSelectValue1", "multiSelectValue2"],
-            },
+            filters=search_filters,
             scope=MetadataFilterScopeField.ENTERPRISE,
             template_key=template_key,
         )

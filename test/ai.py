@@ -1,6 +1,6 @@
-from typing import Optional
-
 from typing import Union
+
+from typing import Optional
 
 from box_sdk_gen.internal.utils import to_string
 
@@ -90,9 +90,12 @@ client: BoxClient = get_default_client()
 
 
 def testAskAISingleItem():
-    ai_ask_agent_config: AiAgentAsk = client.ai.get_ai_agent_default_config(
+    ai_agent_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.ASK, language='en-US'
     )
+    ai_ask_agent_config: AiAgentAsk = ai_agent_config
     file_to_ask: FileFull = upload_new_file()
     response: Optional[AiResponseFull] = client.ai.create_ai_ask(
         CreateAiAskMode.SINGLE_ITEM_QA,
@@ -138,9 +141,12 @@ def testAskAIMultipleItems():
 
 def testAITextGenWithDialogueHistory():
     file_to_ask: FileFull = upload_new_file()
-    ai_text_gen_agent_config: AiAgentTextGen = client.ai.get_ai_agent_default_config(
+    ai_agent_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.TEXT_GEN, language='en-US'
     )
+    ai_text_gen_agent_config: AiAgentTextGen = ai_agent_config
     response: AiResponse = client.ai.create_ai_text_gen(
         'Parapharse the document.s',
         [
@@ -170,54 +176,59 @@ def testAITextGenWithDialogueHistory():
 
 
 def testGettingAIAskAgentConfig():
-    ai_ask_config: Union[
+    ai_agent_config: Union[
         AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
     ] = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.ASK, language='en-US'
     )
-    assert ai_ask_config.type == 'ai_agent_ask'
-    assert not ai_ask_config.basic_text.model == ''
-    assert not ai_ask_config.basic_text.prompt_template == ''
-    assert ai_ask_config.basic_text.num_tokens_for_completion > -1
-    assert not ai_ask_config.basic_text.llm_endpoint_params == None
-    assert not ai_ask_config.basic_text_multi.model == ''
-    assert not ai_ask_config.basic_text_multi.prompt_template == ''
-    assert ai_ask_config.basic_text_multi.num_tokens_for_completion > -1
-    assert not ai_ask_config.basic_text_multi.llm_endpoint_params == None
-    assert not ai_ask_config.long_text.model == ''
-    assert not ai_ask_config.long_text.prompt_template == ''
-    assert ai_ask_config.long_text.num_tokens_for_completion > -1
-    assert not ai_ask_config.long_text.embeddings.model == ''
-    assert not ai_ask_config.long_text.embeddings.strategy.id == ''
-    assert not ai_ask_config.long_text.llm_endpoint_params == None
-    assert not ai_ask_config.long_text_multi.model == ''
-    assert not ai_ask_config.long_text_multi.prompt_template == ''
-    assert ai_ask_config.long_text_multi.num_tokens_for_completion > -1
-    assert not ai_ask_config.long_text_multi.embeddings.model == ''
-    assert not ai_ask_config.long_text_multi.embeddings.strategy.id == ''
-    assert not ai_ask_config.long_text_multi.llm_endpoint_params == None
+    assert ai_agent_config.type == 'ai_agent_ask'
+    ai_agent_ask_config: AiAgentAsk = ai_agent_config
+    assert not ai_agent_ask_config.basic_text.model == ''
+    assert not ai_agent_ask_config.basic_text.prompt_template == ''
+    assert ai_agent_ask_config.basic_text.num_tokens_for_completion > -1
+    assert not ai_agent_ask_config.basic_text.llm_endpoint_params == None
+    assert not ai_agent_ask_config.basic_text_multi.model == ''
+    assert not ai_agent_ask_config.basic_text_multi.prompt_template == ''
+    assert ai_agent_ask_config.basic_text_multi.num_tokens_for_completion > -1
+    assert not ai_agent_ask_config.basic_text_multi.llm_endpoint_params == None
+    assert not ai_agent_ask_config.long_text.model == ''
+    assert not ai_agent_ask_config.long_text.prompt_template == ''
+    assert ai_agent_ask_config.long_text.num_tokens_for_completion > -1
+    assert not ai_agent_ask_config.long_text.embeddings.model == ''
+    assert not ai_agent_ask_config.long_text.embeddings.strategy.id == ''
+    assert not ai_agent_ask_config.long_text.llm_endpoint_params == None
+    assert not ai_agent_ask_config.long_text_multi.model == ''
+    assert not ai_agent_ask_config.long_text_multi.prompt_template == ''
+    assert ai_agent_ask_config.long_text_multi.num_tokens_for_completion > -1
+    assert not ai_agent_ask_config.long_text_multi.embeddings.model == ''
+    assert not ai_agent_ask_config.long_text_multi.embeddings.strategy.id == ''
+    assert not ai_agent_ask_config.long_text_multi.llm_endpoint_params == None
 
 
 def testGettingAITextGenAgentConfig():
-    ai_text_gen_config: Union[
+    ai_agent_config: Union[
         AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
     ] = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.TEXT_GEN, language='en-US'
     )
-    assert ai_text_gen_config.type == 'ai_agent_text_gen'
-    assert not ai_text_gen_config.basic_gen.llm_endpoint_params == None
-    assert not ai_text_gen_config.basic_gen.model == ''
-    assert not ai_text_gen_config.basic_gen.prompt_template == ''
-    assert ai_text_gen_config.basic_gen.num_tokens_for_completion > -1
-    assert not ai_text_gen_config.basic_gen.content_template == ''
-    assert not ai_text_gen_config.basic_gen.embeddings.model == ''
-    assert not ai_text_gen_config.basic_gen.embeddings.strategy.id == ''
+    assert ai_agent_config.type == 'ai_agent_text_gen'
+    ai_agent_text_gen_config: AiAgentTextGen = ai_agent_config
+    assert not ai_agent_text_gen_config.basic_gen.llm_endpoint_params == None
+    assert not ai_agent_text_gen_config.basic_gen.model == ''
+    assert not ai_agent_text_gen_config.basic_gen.prompt_template == ''
+    assert ai_agent_text_gen_config.basic_gen.num_tokens_for_completion > -1
+    assert not ai_agent_text_gen_config.basic_gen.content_template == ''
+    assert not ai_agent_text_gen_config.basic_gen.embeddings.model == ''
+    assert not ai_agent_text_gen_config.basic_gen.embeddings.strategy.id == ''
 
 
 def testAIExtract():
-    ai_extract_agent_config: AiAgentExtract = client.ai.get_ai_agent_default_config(
+    ai_agent_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
         GetAiAgentDefaultConfigMode.EXTRACT, language='en-US'
     )
+    ai_extract_agent_config: AiAgentExtract = ai_agent_config
     long_text_config_with_no_embeddings: AiAgentLongTextTool = AiAgentLongTextTool(
         system_message=ai_extract_agent_config.long_text.system_message,
         prompt_template=ai_extract_agent_config.long_text.prompt_template,
@@ -254,11 +265,12 @@ def testAIExtract():
 
 
 def testAIExtractStructuredWithFields():
-    ai_extract_structured_agent_config: AiAgentExtractStructured = (
-        client.ai.get_ai_agent_default_config(
-            GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language='en-US'
-        )
+    ai_agent_config: Union[
+        AiAgentAsk, AiAgentTextGen, AiAgentExtract, AiAgentExtractStructured
+    ] = client.ai.get_ai_agent_default_config(
+        GetAiAgentDefaultConfigMode.EXTRACT_STRUCTURED, language='en-US'
     )
+    ai_extract_structured_agent_config: AiAgentExtractStructured = ai_agent_config
     long_text_config_with_no_embeddings: AiAgentLongTextTool = AiAgentLongTextTool(
         system_message=ai_extract_structured_agent_config.long_text.system_message,
         prompt_template=ai_extract_structured_agent_config.long_text.prompt_template,

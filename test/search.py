@@ -1,3 +1,5 @@
+from typing import Dict
+
 from typing import Union
 
 from box_sdk_gen.internal.utils import to_string
@@ -32,12 +34,6 @@ from box_sdk_gen.schemas.metadata_query_results import MetadataQueryResults
 
 from box_sdk_gen.managers.metadata_templates import DeleteMetadataTemplateScope
 
-from box_sdk_gen.schemas.search_results import SearchResults
-
-from box_sdk_gen.schemas.search_results_with_shared_links import (
-    SearchResultsWithSharedLinks,
-)
-
 from box_sdk_gen.schemas.metadata_filter import MetadataFilter
 
 from box_sdk_gen.schemas.metadata_filter import MetadataFilterScopeField
@@ -60,6 +56,12 @@ from box_sdk_gen.schemas.metadata_field_filter_date_range import (
 
 from box_sdk_gen.schemas.metadata_field_filter_float_range import (
     MetadataFieldFilterFloatRange,
+)
+
+from box_sdk_gen.schemas.search_results import SearchResults
+
+from box_sdk_gen.schemas.search_results_with_shared_links import (
+    SearchResultsWithSharedLinks,
 )
 
 client: BoxClient = get_default_client()
@@ -212,28 +214,30 @@ def testMetadataFilters():
             'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
         },
     )
+    search_filters: Dict[str, str] = {
+        'stringField': 'stringValue',
+        'dateField': MetadataFieldFilterDateRange(
+            lt=date_time_from_string('2035-01-01T00:00:00Z'),
+            gt=date_time_from_string('2035-01-03T00:00:00Z'),
+        ),
+        'floatField': MetadataFieldFilterFloatRange(lt=9.5, gt=10.5),
+        'enumField': 'enumValue2',
+        'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
+    }
     query: Union[SearchResults, SearchResultsWithSharedLinks] = (
         client.search.search_for_content(
             ancestor_folder_ids=['0'],
             mdfilters=[
                 MetadataFilter(
-                    filters={
-                        'stringField': 'stringValue',
-                        'dateField': MetadataFieldFilterDateRange(
-                            lt=date_time_from_string('2035-01-01T00:00:00Z'),
-                            gt=date_time_from_string('2035-01-03T00:00:00Z'),
-                        ),
-                        'floatField': MetadataFieldFilterFloatRange(lt=9.5, gt=10.5),
-                        'enumField': 'enumValue2',
-                        'multiSelectField': ['multiSelectValue1', 'multiSelectValue2'],
-                    },
+                    filters=search_filters,
                     scope=MetadataFilterScopeField.ENTERPRISE,
                     template_key=template_key,
                 )
             ],
         )
     )
-    assert len(query.entries) >= 0
+    query_results: SearchResults = query
+    assert len(query_results.entries) >= 0
     client.metadata_templates.delete_metadata_template(
         DeleteMetadataTemplateScope.ENTERPRISE, template.template_key
     )
@@ -249,8 +253,9 @@ def testGetSearch():
             trash_content=SearchForContentTrashContent.NON_TRASHED_ONLY,
         )
     )
-    assert len(search.entries) >= 0
     assert to_string(search.type) == 'search_results_items'
+    search_results: SearchResults = search
+    assert len(search_results.entries) >= 0
     search_with_shared_link: Union[SearchResults, SearchResultsWithSharedLinks] = (
         client.search.search_for_content(
             query=keyword,
@@ -259,5 +264,8 @@ def testGetSearch():
             include_recent_shared_links=True,
         )
     )
-    assert len(search_with_shared_link.entries) >= 0
     assert to_string(search_with_shared_link.type) == 'search_results_with_shared_links'
+    search_results_with_shared_link: SearchResultsWithSharedLinks = (
+        search_with_shared_link
+    )
+    assert len(search_results_with_shared_link.entries) >= 0
