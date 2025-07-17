@@ -8,6 +8,8 @@ from box_sdk_gen.internal.utils import to_string
 
 from box_sdk_gen.serialization.json import deserialize
 
+from box_sdk_gen.serialization.json import serialize
+
 from box_sdk_gen.networking.fetch_options import ResponseFormat
 
 from box_sdk_gen.schemas.v2025_r0.hubs_v2025_r0 import HubsV2025R0
@@ -19,6 +21,16 @@ from box_sdk_gen.parameters.v2025_r0.box_version_header_v2025_r0 import (
 )
 
 from box_sdk_gen.schemas.v2025_r0.hub_v2025_r0 import HubV2025R0
+
+from box_sdk_gen.schemas.v2025_r0.hub_create_request_v2025_r0 import (
+    HubCreateRequestV2025R0,
+)
+
+from box_sdk_gen.schemas.v2025_r0.hub_update_request_v2025_r0 import (
+    HubUpdateRequestV2025R0,
+)
+
+from box_sdk_gen.schemas.v2025_r0.hub_copy_request_v2025_r0 import HubCopyRequestV2025R0
 
 from box_sdk_gen.box.errors import BoxSDKError
 
@@ -127,6 +139,45 @@ class HubsManager:
             )
         )
         return deserialize(response.data, HubsV2025R0)
+
+    def create_hub_v2025_r0(
+        self,
+        title: str,
+        *,
+        description: Optional[str] = None,
+        box_version: BoxVersionHeaderV2025R0 = BoxVersionHeaderV2025R0._2025_0,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> HubV2025R0:
+        """
+        Creates a new Hub.
+        :param title: Title of the Hub. It cannot be empty and should be less than 50 characters.
+        :type title: str
+        :param description: Description of the Hub., defaults to None
+        :type description: Optional[str], optional
+        :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
+        :type box_version: BoxVersionHeaderV2025R0, optional
+        :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+        :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'title': title, 'description': description}
+        headers_map: Dict[str, str] = prepare_params(
+            {'box-version': to_string(box_version), **extra_headers}
+        )
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join([self.network_session.base_urls.base_url, '/2.0/hubs']),
+                method='POST',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, HubV2025R0)
 
     def get_enterprise_hubs_v2025_r0(
         self,
@@ -242,6 +293,82 @@ class HubsManager:
         )
         return deserialize(response.data, HubV2025R0)
 
+    def update_hub_by_id_v2025_r0(
+        self,
+        hub_id: str,
+        *,
+        title: Optional[str] = None,
+        description: Optional[str] = None,
+        is_ai_enabled: Optional[bool] = None,
+        is_collaboration_restricted_to_enterprise: Optional[bool] = None,
+        can_non_owners_invite: Optional[bool] = None,
+        can_shared_link_be_created: Optional[bool] = None,
+        box_version: BoxVersionHeaderV2025R0 = BoxVersionHeaderV2025R0._2025_0,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> HubV2025R0:
+        """
+                Updates a Hub. Can be used to change title, description, or Hub settings.
+                :param hub_id: The unique identifier that represent a hub.
+
+        The ID for any hub can be determined
+        by visiting this hub in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/hubs/123`
+        the `hub_id` is `123`.
+        Example: "12345"
+                :type hub_id: str
+                :param title: Title of the Hub. It cannot be empty and should be less than 50 characters., defaults to None
+                :type title: Optional[str], optional
+                :param description: Description of the Hub., defaults to None
+                :type description: Optional[str], optional
+                :param is_ai_enabled: Indicates if AI features are enabled for the Hub., defaults to None
+                :type is_ai_enabled: Optional[bool], optional
+                :param is_collaboration_restricted_to_enterprise: Indicates if collaboration is restricted to the enterprise., defaults to None
+                :type is_collaboration_restricted_to_enterprise: Optional[bool], optional
+                :param can_non_owners_invite: Indicates if non-owners can invite others to the Hub., defaults to None
+                :type can_non_owners_invite: Optional[bool], optional
+                :param can_shared_link_be_created: Indicates if a shared link can be created for the Hub., defaults to None
+                :type can_shared_link_be_created: Optional[bool], optional
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
+                :type box_version: BoxVersionHeaderV2025R0, optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {
+            'title': title,
+            'description': description,
+            'is_ai_enabled': is_ai_enabled,
+            'is_collaboration_restricted_to_enterprise': (
+                is_collaboration_restricted_to_enterprise
+            ),
+            'can_non_owners_invite': can_non_owners_invite,
+            'can_shared_link_be_created': can_shared_link_be_created,
+        }
+        headers_map: Dict[str, str] = prepare_params(
+            {'box-version': to_string(box_version), **extra_headers}
+        )
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/hubs/',
+                        to_string(hub_id),
+                    ]
+                ),
+                method='PUT',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, HubV2025R0)
+
     def delete_hub_by_id_v2025_r0(
         self,
         hub_id: str,
@@ -287,3 +414,62 @@ class HubsManager:
             )
         )
         return None
+
+    def create_hub_copy_v2025_r0(
+        self,
+        hub_id: str,
+        *,
+        title: Optional[str] = None,
+        description: Optional[str] = None,
+        box_version: BoxVersionHeaderV2025R0 = BoxVersionHeaderV2025R0._2025_0,
+        extra_headers: Optional[Dict[str, Optional[str]]] = None
+    ) -> HubV2025R0:
+        """
+                Creates a copy of a Hub.
+
+                The original Hub will not be modified.
+
+                :param hub_id: The unique identifier that represent a hub.
+
+        The ID for any hub can be determined
+        by visiting this hub in the web application
+        and copying the ID from the URL. For example,
+        for the URL `https://*.app.box.com/hubs/123`
+        the `hub_id` is `123`.
+        Example: "12345"
+                :type hub_id: str
+                :param title: Title of the Hub. It cannot be empty and should be less than 50 characters., defaults to None
+                :type title: Optional[str], optional
+                :param description: Description of the Hub., defaults to None
+                :type description: Optional[str], optional
+                :param box_version: Version header., defaults to BoxVersionHeaderV2025R0._2025_0
+                :type box_version: BoxVersionHeaderV2025R0, optional
+                :param extra_headers: Extra headers that will be included in the HTTP request., defaults to None
+                :type extra_headers: Optional[Dict[str, Optional[str]]], optional
+        """
+        if extra_headers is None:
+            extra_headers = {}
+        request_body: Dict = {'title': title, 'description': description}
+        headers_map: Dict[str, str] = prepare_params(
+            {'box-version': to_string(box_version), **extra_headers}
+        )
+        response: FetchResponse = self.network_session.network_client.fetch(
+            FetchOptions(
+                url=''.join(
+                    [
+                        self.network_session.base_urls.base_url,
+                        '/2.0/hubs/',
+                        to_string(hub_id),
+                        '/copy',
+                    ]
+                ),
+                method='POST',
+                headers=headers_map,
+                data=serialize(request_body),
+                content_type='application/json',
+                response_format=ResponseFormat.JSON,
+                auth=self.auth,
+                network_session=self.network_session,
+            )
+        )
+        return deserialize(response.data, HubV2025R0)

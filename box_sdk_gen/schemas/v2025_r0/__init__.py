@@ -32,15 +32,29 @@ from box_sdk_gen.schemas.v2025_r0.doc_gen_jobs_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.doc_gen_batch_create_request_v2025_r0 import *
 
+from box_sdk_gen.schemas.v2025_r0.folder_reference_v2025_r0 import *
+
 from box_sdk_gen.schemas.v2025_r0.group_base_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.group_mini_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.hub_base_v2025_r0 import *
 
+from box_sdk_gen.schemas.v2025_r0.hub_action_v2025_r0 import *
+
 from box_sdk_gen.schemas.v2025_r0.hub_collaboration_create_request_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.hub_collaboration_update_request_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_copy_request_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_create_request_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_item_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_items_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_update_request_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.shield_list_mini_v2025_r0 import *
 
@@ -87,3 +101,15 @@ from box_sdk_gen.schemas.v2025_r0.hub_collaborations_v2025_r0 import *
 from box_sdk_gen.schemas.v2025_r0.doc_gen_job_full_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.doc_gen_jobs_full_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.weblink_reference_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_item_reference_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_item_operation_result_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_items_manage_response_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_item_operation_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.hub_items_manage_request_v2025_r0 import *

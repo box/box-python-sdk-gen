@@ -150,4 +150,6 @@ from box_sdk_gen.managers.hubs import *
 
 from box_sdk_gen.managers.hub_collaborations import *
 
+from box_sdk_gen.managers.hub_items import *
+
 from box_sdk_gen.managers.shield_lists import *

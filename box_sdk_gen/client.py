@@ -176,6 +176,8 @@ from box_sdk_gen.managers.hubs import HubsManager
 
 from box_sdk_gen.managers.hub_collaborations import HubCollaborationsManager
 
+from box_sdk_gen.managers.hub_items import HubItemsManager
+
 from box_sdk_gen.managers.shield_lists import ShieldListsManager
 
 from box_sdk_gen.networking.auth import Authentication
@@ -425,6 +427,9 @@ class BoxClient:
         )
         self.hubs = HubsManager(auth=self.auth, network_session=self.network_session)
         self.hub_collaborations = HubCollaborationsManager(
+            auth=self.auth, network_session=self.network_session
+        )
+        self.hub_items = HubItemsManager(
             auth=self.auth, network_session=self.network_session
         )
         self.shield_lists = ShieldListsManager(
