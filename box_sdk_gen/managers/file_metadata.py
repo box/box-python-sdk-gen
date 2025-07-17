@@ -22,6 +22,8 @@ from box_sdk_gen.schemas.client_error import ClientError
 
 from box_sdk_gen.schemas.metadata_full import MetadataFull
 
+from box_sdk_gen.schemas.metadata_error import MetadataError
+
 from box_sdk_gen.schemas.metadata_instance_value import MetadataInstanceValue
 
 from box_sdk_gen.box.errors import BoxSDKError

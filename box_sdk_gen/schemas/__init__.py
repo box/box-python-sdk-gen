@@ -194,6 +194,8 @@ from box_sdk_gen.schemas.metadata_cascade_policy import *
 
 from box_sdk_gen.schemas.metadata_cascade_policies import *
 
+from box_sdk_gen.schemas.metadata_error import *
+
 from box_sdk_gen.schemas.metadata_field_filter_date_range import *
 
 from box_sdk_gen.schemas.metadata_field_filter_float_range import *
