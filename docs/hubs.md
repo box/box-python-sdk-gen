@@ -59,7 +59,11 @@ This operation is performed by calling function `create_hub_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-hubs/).
 
-_Currently we don't have an example for calling `create_hub_v2025_r0` in integration tests_
+<!-- sample post_hubs_v2025.0 -->
+
+```python
+client.hubs.create_hub_v2025_r0(hub_title, description=hub_description)
+```
 
 ### Arguments
 
@@ -133,7 +137,7 @@ See the endpoint docs at
 <!-- sample get_hubs_id_v2025.0 -->
 
 ```python
-client.hubs.get_hub_by_id_v2025_r0(user_hub.id)
+client.hubs.get_hub_by_id_v2025_r0(hub_id)
 ```
 
 ### Arguments
@@ -160,7 +164,13 @@ This operation is performed by calling function `update_hub_by_id_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/put-hubs-id/).
 
-_Currently we don't have an example for calling `update_hub_by_id_v2025_r0` in integration tests_
+<!-- sample put_hubs_id_v2025.0 -->
+
+```python
+client.hubs.update_hub_by_id_v2025_r0(
+    hub_id, title=new_hub_title, description=new_hub_description
+)
+```
 
 ### Arguments
 
@@ -201,7 +211,7 @@ See the endpoint docs at
 <!-- sample delete_hubs_id_v2025.0 -->
 
 ```python
-client.hubs.delete_hub_by_id_v2025_r0(hub.id)
+client.hubs.delete_hub_by_id_v2025_r0(hub_id)
 ```
 
 ### Arguments
@@ -226,12 +236,18 @@ Creates a copy of a Hub.
 
 The original Hub will not be modified.
 
-This operation is performed by calling function `create_hub_copy_v2025_r0`.
+This operation is performed by calling function `copy_hub_v2025_r0`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-hubs-id-copy/).
 
-_Currently we don't have an example for calling `create_hub_copy_v2025_r0` in integration tests_
+<!-- sample post_hubs_id_copy_v2025.0 -->
+
+```python
+client.hubs.copy_hub_v2025_r0(
+    created_hub.id, title=copied_hub_title, description=copied_hub_description
+)
+```
 
 ### Arguments
 

@@ -123,7 +123,7 @@ class HubItemsManager:
         )
         return deserialize(response.data, HubItemsV2025R0)
 
-    def create_hub_manage_item_v2025_r0(
+    def manage_hub_items_v2025_r0(
         self,
         hub_id: str,
         *,
