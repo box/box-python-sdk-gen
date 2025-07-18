@@ -1,9 +1,12 @@
 # HubsManager
 
 - [List all hubs](#list-all-hubs)
+- [Create hub](#create-hub)
 - [List all hubs for requesting enterprise](#list-all-hubs-for-requesting-enterprise)
 - [Get hub information by ID](#get-hub-information-by-id)
+- [Update hub information by ID](#update-hub-information-by-id)
 - [Delete hub](#delete-hub)
+- [Copy hub](#copy-hub)
 
 ## List all hubs
 
@@ -46,6 +49,34 @@ client.hubs.get_hubs_v2025_r0(
 This function returns a value of type `HubsV2025R0`.
 
 Returns all hubs for the given user or enterprise.
+
+## Create hub
+
+Creates a new Hub.
+
+This operation is performed by calling function `create_hub_v2025_r0`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/v2025.0/post-hubs/).
+
+_Currently we don't have an example for calling `create_hub_v2025_r0` in integration tests_
+
+### Arguments
+
+- title `str`
+  - Title of the Hub. It cannot be empty and should be less than 50 characters.
+- description `Optional[str]`
+  - Description of the Hub.
+- box_version `BoxVersionHeaderV2025R0`
+  - Version header.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `HubV2025R0`.
+
+Returns a new Hub object.
 
 ## List all hubs for requesting enterprise
 
@@ -120,6 +151,44 @@ This function returns a value of type `HubV2025R0`.
 
 Returns a hub object.
 
+## Update hub information by ID
+
+Updates a Hub. Can be used to change title, description, or Hub settings.
+
+This operation is performed by calling function `update_hub_by_id_v2025_r0`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/v2025.0/put-hubs-id/).
+
+_Currently we don't have an example for calling `update_hub_by_id_v2025_r0` in integration tests_
+
+### Arguments
+
+- hub_id `str`
+  - The unique identifier that represent a hub. The ID for any hub can be determined by visiting this hub in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/hubs/123` the `hub_id` is `123`. Example: "12345"
+- title `Optional[str]`
+  - Title of the Hub. It cannot be empty and should be less than 50 characters.
+- description `Optional[str]`
+  - Description of the Hub.
+- is_ai_enabled `Optional[bool]`
+  - Indicates if AI features are enabled for the Hub.
+- is_collaboration_restricted_to_enterprise `Optional[bool]`
+  - Indicates if collaboration is restricted to the enterprise.
+- can_non_owners_invite `Optional[bool]`
+  - Indicates if non-owners can invite others to the Hub.
+- can_shared_link_be_created `Optional[bool]`
+  - Indicates if a shared link can be created for the Hub.
+- box_version `BoxVersionHeaderV2025R0`
+  - Version header.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `HubV2025R0`.
+
+Returns a Hub object.
+
 ## Delete hub
 
 Deletes a single hub.
@@ -150,3 +219,35 @@ This function returns a value of type `None`.
 
 A blank response is returned if the hub was
 successfully deleted.
+
+## Copy hub
+
+Creates a copy of a Hub.
+
+The original Hub will not be modified.
+
+This operation is performed by calling function `create_hub_copy_v2025_r0`.
+
+See the endpoint docs at
+[API Reference](https://developer.box.com/reference/v2025.0/post-hubs-id-copy/).
+
+_Currently we don't have an example for calling `create_hub_copy_v2025_r0` in integration tests_
+
+### Arguments
+
+- hub_id `str`
+  - The unique identifier that represent a hub. The ID for any hub can be determined by visiting this hub in the web application and copying the ID from the URL. For example, for the URL `https://*.app.box.com/hubs/123` the `hub_id` is `123`. Example: "12345"
+- title `Optional[str]`
+  - Title of the Hub. It cannot be empty and should be less than 50 characters.
+- description `Optional[str]`
+  - Description of the Hub.
+- box_version `BoxVersionHeaderV2025R0`
+  - Version header.
+- extra_headers `Optional[Dict[str, Optional[str]]]`
+  - Extra headers that will be included in the HTTP request.
+
+### Returns
+
+This function returns a value of type `HubV2025R0`.
+
+Returns a new Hub object.
