@@ -12,7 +12,11 @@ This operation is performed by calling function `get_hub_items_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-hub-items/).
 
-_Currently we don't have an example for calling `get_hub_items_v2025_r0` in integration tests_
+<!-- sample get_hub_items_v2025.0 -->
+
+```python
+client.hub_items.get_hub_items_v2025_r0(created_hub.id)
+```
 
 ### Arguments
 
@@ -37,12 +41,24 @@ Retrieves the items associated with the specified Hub.
 
 Adds and/or removes Hub items from a Hub.
 
-This operation is performed by calling function `create_hub_manage_item_v2025_r0`.
+This operation is performed by calling function `manage_hub_items_v2025_r0`.
 
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-hubs-id-manage-items/).
 
-_Currently we don't have an example for calling `create_hub_manage_item_v2025_r0` in integration tests_
+<!-- sample post_hubs_id_manage_items_v2025.0 -->
+
+```python
+client.hub_items.manage_hub_items_v2025_r0(
+    created_hub.id,
+    operations=[
+        HubItemOperationV2025R0(
+            action=HubItemOperationV2025R0ActionField.ADD,
+            item=FolderReferenceV2025R0(id=folder.id),
+        )
+    ],
+)
+```
 
 ### Arguments
 

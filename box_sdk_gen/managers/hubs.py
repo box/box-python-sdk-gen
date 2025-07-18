@@ -415,7 +415,7 @@ class HubsManager:
         )
         return None
 
-    def create_hub_copy_v2025_r0(
+    def copy_hub_v2025_r0(
         self,
         hub_id: str,
         *,
