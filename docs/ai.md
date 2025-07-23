@@ -45,7 +45,6 @@ client.ai.create_ai_ask(
 - include_citations `Optional[bool]`
   - A flag to indicate whether citations should be returned.
 - ai_agent `Optional[Union[AiAgentAsk, AiAgentReference]]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -101,7 +100,6 @@ client.ai.create_ai_text_gen(
 - dialogue_history `Optional[List[AiDialogueHistory]]`
   - The history of prompts and answers previously passed to the LLM. This parameter provides the additional context to the LLM when generating the response.
 - ai_agent `Optional[Union[AiAgentReference, AiAgentTextGen]]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -178,7 +176,6 @@ client.ai.create_ai_extract(
 - items `List[AiItemBase]`
   - The items that LLM will process. Currently, you can use files only.
 - ai_agent `Optional[Union[AiAgentReference, AiAgentExtract]]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -260,7 +257,6 @@ client.ai.create_ai_extract_structured(
 - fields `Optional[List[CreateAiExtractStructuredFields]]`
   - The fields to be extracted from the provided items. For your request to work, you must provide either `metadata_template` or `fields`, but not both.
 - ai_agent `Optional[Union[AiAgentReference, AiAgentExtractStructured]]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

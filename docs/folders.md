@@ -99,11 +99,8 @@ client.folders.update_folder_by_id(
 - can_non_owners_invite `Optional[bool]`
   - Specifies if users who are not the owner of the folder can invite new collaborators to the folder.
 - parent `Optional[UpdateFolderByIdParent]`
-  -
 - shared_link `Optional[UpdateFolderByIdSharedLink]`
-  -
 - folder_upload_email `Optional[UpdateFolderByIdFolderUploadEmail]`
-  -
 - tags `Optional[List[str]]`
   - The tags for this item. These tags are shown in the Box web app and mobile apps next to an item. To add or remove a tag, retrieve the item's current tags, modify them, and then update this field. There is a limit of 100 tags per item, and 10,000 unique tags per enterprise.
 - is_collaboration_restricted_to_enterprise `Optional[bool]`
@@ -238,7 +235,6 @@ client.folders.create_folder(new_folder_name, CreateFolderParent(id="0"))
 - parent `CreateFolderParent`
   - The parent folder to create the new folder within.
 - folder_upload_email `Optional[CreateFolderFolderUploadEmail]`
-  -
 - sync_state `Optional[CreateFolderSyncState]`
   - Specifies whether a folder should be synced to a user's device or not. This is used by Box Sync (discontinued) and is not used by Box Drive.
 - fields `Optional[List[str]]`

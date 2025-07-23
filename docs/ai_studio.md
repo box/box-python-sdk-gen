@@ -76,11 +76,8 @@ client.ai_studio.create_ai_agent(
 - allowed_entities `Optional[List[AiAgentAllowedEntity]]`
   - List of allowed users or groups.
 - ask `Optional[AiStudioAgentAsk]`
-  -
 - text_gen `Optional[AiStudioAgentTextGen]`
-  -
 - extract `Optional[AiStudioAgentExtract]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 
@@ -125,11 +122,8 @@ client.ai_studio.update_ai_agent_by_id(
 - allowed_entities `Optional[List[AiAgentAllowedEntity]]`
   - List of allowed users or groups.
 - ask `Optional[AiStudioAgentAsk]`
-  -
 - text_gen `Optional[AiStudioAgentTextGen]`
-  -
 - extract `Optional[AiStudioAgentExtract]`
-  -
 - extra_headers `Optional[Dict[str, Optional[str]]]`
   - Extra headers that will be included in the HTTP request.
 

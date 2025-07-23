@@ -178,7 +178,6 @@ client.sign_requests.create_sign_request(
 - signers `List[SignRequestCreateSigner]`
   - Array of signers for the signature request. 35 is the max number of signers permitted. **Note**: It may happen that some signers belong to conflicting [segments](r://shield-information-barrier-segment-member) (user groups). This means that due to the security policies, users are assigned to segments to prevent exchanges or communication that could lead to ethical conflicts. In such a case, an attempt to send the sign request will result in an error. Read more about [segments and ethical walls](https://support.box.com/hc/en-us/articles/9920431507603-Understanding-Information-Barriers#h_01GFVJEHQA06N7XEZ4GCZ9GFAQ).
 - parent_folder `Optional[FolderMini]`
-  -
 - is_document_preparation_needed `Optional[bool]`
   - Indicates if the sender should receive a `prepare_url` in the response to complete document preparation using the UI.
 - redirect_url `Optional[str]`
