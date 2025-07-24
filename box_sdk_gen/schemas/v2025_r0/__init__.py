@@ -1,3 +1,7 @@
+from box_sdk_gen.schemas.v2025_r0.archive_v2025_r0 import *
+
+from box_sdk_gen.schemas.v2025_r0.archives_v2025_r0 import *
+
 from box_sdk_gen.schemas.v2025_r0.client_error_v2025_r0 import *
 
 from box_sdk_gen.schemas.v2025_r0.doc_gen_batch_base_v2025_r0 import *
