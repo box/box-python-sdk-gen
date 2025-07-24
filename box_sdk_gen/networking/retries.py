@@ -37,12 +37,14 @@ class BoxRetryStrategy(RetryStrategy):
         max_attempts: int = 5,
         retry_randomization_factor: float = 0.5,
         retry_base_interval: float = 1,
+        max_retries_on_exception: int = 2,
         **kwargs
     ):
         super().__init__(**kwargs)
         self.max_attempts = max_attempts
         self.retry_randomization_factor = retry_randomization_factor
         self.retry_base_interval = retry_base_interval
+        self.max_retries_on_exception = max_retries_on_exception
 
     def should_retry(
         self,
@@ -50,6 +52,8 @@ class BoxRetryStrategy(RetryStrategy):
         fetch_response: FetchResponse,
         attempt_number: int,
     ) -> bool:
+        if fetch_response.status == 0:
+            return attempt_number <= self.max_retries_on_exception
         is_successful: bool = (
             fetch_response.status >= 200 and fetch_response.status < 400
         )
