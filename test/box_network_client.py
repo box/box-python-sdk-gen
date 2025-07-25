@@ -446,11 +446,16 @@ def test_fetch_successfully_retry_network_exception(
         assert response.status == 200
 
 
-def test_fetch_make_only_one_retry_for_network_exception(
+def test_fetch_retries_network_exception_max_attempts(
     network_client, mock_requests_session, network_session_mock
 ):
     requests_exception = RequestException("Connection cancelled")
-    mock_requests_session.request.side_effect = [requests_exception, requests_exception]
+    mock_requests_session.request.side_effect = [
+        requests_exception,
+        requests_exception,
+        requests_exception,
+    ]
+    network_session_mock.retry_strategy = BoxRetryStrategy(max_retries_on_exception=2)
 
     with patch("time.sleep"):
         with pytest.raises(BoxSDKError, match="Connection cancelled"):
@@ -462,7 +467,7 @@ def test_fetch_make_only_one_retry_for_network_exception(
                 )
             )
 
-    assert mock_requests_session.request.call_count == 2
+    assert mock_requests_session.request.call_count == 3
 
 
 def test_fetch_get_json_format_response_success(

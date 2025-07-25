@@ -75,6 +75,7 @@ class BoxNetworkClient(NetworkClient):
         )
 
         attempt_nr = 1
+        number_of_retries_on_exception = 0
         response = APIResponse()
 
         options_stream_position = self._get_options_stream_position(options)
@@ -85,12 +86,8 @@ class BoxNetworkClient(NetworkClient):
                 options=options, reauthenticate=response.reauthentication_needed
             )
             response: APIResponse = self._make_request(request=request)
-
-            # Retry network exception only once
-            if response.raised_exception and attempt_nr > 1:
-                break
-
             if response.network_response is not None:
+                attempt_for_retry = attempt_nr
                 network_response = response.network_response
 
                 if options.response_format == 'binary':
@@ -110,40 +107,37 @@ class BoxNetworkClient(NetworkClient):
                         data=(self._read_json_body(network_response.text)),
                         content=io.BytesIO(network_response.content),
                     )
-
-                should_retry = retry_strategy.should_retry(
-                    fetch_options=options,
-                    fetch_response=fetch_response,
-                    attempt_number=attempt_nr,
-                )
-
-                if should_retry:
-                    time.sleep(
-                        retry_strategy.retry_after(
-                            fetch_options=options,
-                            fetch_response=fetch_response,
-                            attempt_number=attempt_nr,
-                        )
-                    )
-                    attempt_nr += 1
-                    continue
-
-                if 200 <= fetch_response.status < 400:
-                    return fetch_response
-
-                self._raise_on_unsuccessful_request(
-                    request=request, response=response, data_sanitizer=data_sanitizer
-                )
-
-            self._reset_options_stream(
-                options, options_stream_position, response.raised_exception
-            )
-            self._reset_multipart_streams(
-                options, multipart_streams_positions, response.raised_exception
-            )
+            else:
+                number_of_retries_on_exception += 1
+                attempt_for_retry = number_of_retries_on_exception
+                fetch_response = FetchResponse(status=0, headers={})
 
             attempt_nr += 1
+            should_retry = retry_strategy.should_retry(
+                fetch_options=options,
+                fetch_response=fetch_response,
+                attempt_number=attempt_for_retry,
+            )
 
+            if should_retry:
+                self._reset_options_stream(
+                    options, options_stream_position, response.raised_exception
+                )
+                self._reset_multipart_streams(
+                    options, multipart_streams_positions, response.raised_exception
+                )
+                time.sleep(
+                    retry_strategy.retry_after(
+                        fetch_options=options,
+                        fetch_response=fetch_response,
+                        attempt_number=attempt_for_retry,
+                    )
+                )
+                continue
+
+            if 200 <= fetch_response.status < 400:
+                return fetch_response
+            break
         self._raise_on_unsuccessful_request(
             request=request, response=response, data_sanitizer=data_sanitizer
         )
