@@ -13,7 +13,11 @@ This operation is performed by calling function `get_archives_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/get-archives/).
 
-_Currently we don't have an example for calling `get_archives_v2025_r0` in integration tests_
+<!-- sample get_archives_v2025.0 -->
+
+```python
+client.archives.get_archives_v2025_r0(limit=100)
+```
 
 ### Arguments
 
@@ -41,7 +45,11 @@ This operation is performed by calling function `create_archive_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/post-archives/).
 
-_Currently we don't have an example for calling `create_archive_v2025_r0` in integration tests_
+<!-- sample post_archives_v2025.0 -->
+
+```python
+client.archives.create_archive_v2025_r0(archive_name)
+```
 
 ### Arguments
 
@@ -67,7 +75,11 @@ This operation is performed by calling function `delete_archive_by_id_v2025_r0`.
 See the endpoint docs at
 [API Reference](https://developer.box.com/reference/v2025.0/delete-archives-id/).
 
-_Currently we don't have an example for calling `delete_archive_by_id_v2025_r0` in integration tests_
+<!-- sample delete_archives_id_v2025.0 -->
+
+```python
+client.archives.delete_archive_by_id_v2025_r0(archive.id)
+```
 
 ### Arguments
 
