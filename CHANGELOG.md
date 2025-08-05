@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/box/box-python-sdk-gen/compare/v1.15.0...v1.16.0) (2025-08-05)
+
+
+### Bug Fixes
+
+* Specify events `next_stream_position` property type as `int` (box/box-openapi[#535](https://github.com/box/box-python-sdk-gen/issues/535)) ([#644](https://github.com/box/box-python-sdk-gen/issues/644)) ([64069db](https://github.com/box/box-python-sdk-gen/commit/64069db8da33988c173380defd6be065daa02496))
+
+
+### New Features and Enhancements
+
+* Add AI spreadsheet processor (box/box-openapi[#533](https://github.com/box/box-python-sdk-gen/issues/533)) ([#630](https://github.com/box/box-python-sdk-gen/issues/630)) ([6635757](https://github.com/box/box-python-sdk-gen/commit/66357578218913240bc923cb0dc771157ec95f54))
+* Add Archive Public API (box/box-openapi[#540](https://github.com/box/box-python-sdk-gen/issues/540)) ([#651](https://github.com/box/box-python-sdk-gen/issues/651)) ([c36d1db](https://github.com/box/box-python-sdk-gen/commit/c36d1dbff42c89876c037983c792c5c7282459cc))
+* Add new Hubs APIs and Hubs items API (box/box-openapi[#538](https://github.com/box/box-python-sdk-gen/issues/538)) ([#645](https://github.com/box/box-python-sdk-gen/issues/645)) ([1daa3e8](https://github.com/box/box-python-sdk-gen/commit/1daa3e8814403c78ed2a1d64187b8e4c379028fe))
+* Add new property for network exception retry strategy (box/box-codegen[#763](https://github.com/box/box-python-sdk-gen/issues/763)) ([#650](https://github.com/box/box-python-sdk-gen/issues/650)) ([13f9593](https://github.com/box/box-python-sdk-gen/commit/13f9593dbc4a45d094ee5709d602188ef341a1a5))
+* Add new schema for `Metadata Error` (box/box-openapi[#539](https://github.com/box/box-python-sdk-gen/issues/539)) ([#646](https://github.com/box/box-python-sdk-gen/issues/646)) ([49d7f34](https://github.com/box/box-python-sdk-gen/commit/49d7f349e1be4e23939ef10db1edfc6042b98175))
+* Allow injecting private key decryption mechanism for JWT (box/box-codegen[#754](https://github.com/box/box-python-sdk-gen/issues/754)) ([#636](https://github.com/box/box-python-sdk-gen/issues/636)) ([4ea0af5](https://github.com/box/box-python-sdk-gen/commit/4ea0af5f8f5b5516a7c23d7912c34690c017db29))
+* Improve webhook validation checks (box/box-codegen[#745](https://github.com/box/box-python-sdk-gen/issues/745)) ([#628](https://github.com/box/box-python-sdk-gen/issues/628)) ([f0ece63](https://github.com/box/box-python-sdk-gen/commit/f0ece639d761c765b3bc59fbe3ba8582af755178))
+* Support Hubs beta endpoints (box/box-openapi[#531](https://github.com/box/box-python-sdk-gen/issues/531)) ([#622](https://github.com/box/box-python-sdk-gen/issues/622)) ([b5e95fe](https://github.com/box/box-python-sdk-gen/commit/b5e95fe5b219d067028aa395170718eca0d62189))
+* Support new tools in AI Studio (box/box-openapi[#534](https://github.com/box/box-python-sdk-gen/issues/534))  ([#633](https://github.com/box/box-python-sdk-gen/issues/633)) ([ac76eb2](https://github.com/box/box-python-sdk-gen/commit/ac76eb2d7c5560b30c4cec171dd90b0a0ece4ab5))
+
 ## [1.15.0](https://github.com/box/box-python-sdk-gen/compare/v1.14.0...v1.15.0) (2025-06-12)
 
 
