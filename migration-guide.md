@@ -36,7 +36,7 @@
 
 ## Introduction
 
-The new `box-sdk-gen` SDK library, which helps Python developers to conveniently integrate with Box API.
+The new `box-sdk-gen` SDK library helps Python developers to conveniently integrate with Box API.
 In the contrary to the previous library (`boxsdk`), it is not manually maintained, but auto-generated
 based on Open API Specification. This means you can leverage the most up-to-date Box API features in your
 applications without delay. More information and benefits of using the new can be found in the
