@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/box/box-python-sdk-gen/compare/v1.16.0...v1.17.0) (2025-09-05)
+
+
+### New Features and Enhancements
+
+* Add missing webhook events (box/box-openapi[#554](https://github.com/box/box-python-sdk-gen/issues/554)) ([#708](https://github.com/box/box-python-sdk-gen/issues/708)) ([3d25542](https://github.com/box/box-python-sdk-gen/commit/3d2554239b0bede7a3158cf88913592643c3e22b))
+* Support event with long polling (box/box-codegen[#757](https://github.com/box/box-python-sdk-gen/issues/757)) ([#673](https://github.com/box/box-python-sdk-gen/issues/673)) ([481fbeb](https://github.com/box/box-python-sdk-gen/commit/481fbeb1412ecc137c0090dd4b37fe9ad75db6b0))
+
 ## [1.16.0](https://github.com/box/box-python-sdk-gen/compare/v1.15.0...v1.16.0) (2025-08-05)
 
 
