@@ -32,7 +32,7 @@ class HubItemOperationV2025R0(BaseObject):
         **kwargs
     ):
         """
-        :param action: The action to perform on a Hub item.
+        :param action: The action to perform on a Box Hub item.
         :type action: HubItemOperationV2025R0ActionField
         :param item: Reference to an item that can be added to a Hub.
         :type item: Union[FileReferenceV2025R0, FolderReferenceV2025R0, WeblinkReferenceV2025R0]
