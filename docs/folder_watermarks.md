@@ -1,5 +1,12 @@
 # FolderWatermarksManager
 
+<!-- box-python-sdk-gen deprecation banner -->
+> [!CAUTION]
+> **`box-python-sdk-gen` is deprecated and no longer maintained.** As of September 17, 2025, it receives no new features, bug fixes, or security patches. Do not use it for new projects.
+>
+> Use [`box-python-sdk`](https://github.com/box/box-python-sdk) v10+ instead: `pip install "boxsdk>=10"`.
+> The equivalent of this page is [box-python-sdk/docs/folder_watermarks.md](https://github.com/box/box-python-sdk/blob/main/docs/folder_watermarks.md). To migrate existing code, see the [migration guide](https://github.com/box/box-python-sdk/blob/main/migration-guides/from-box-python-sdk-gen-v1-to-box-python-sdk.md).
+
 - [Get watermark for folder](#get-watermark-for-folder)
 - [Apply watermark to folder](#apply-watermark-to-folder)
 - [Remove watermark from folder](#remove-watermark-from-folder)
