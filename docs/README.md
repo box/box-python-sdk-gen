@@ -9,6 +9,8 @@
 
 ## High-level Documentation
 
+For a single-page list of every manager and method, see [api.md](../api.md).
+
 General explanations of the available functionality and examples of how to use
 the SDK are available by topic:
 
