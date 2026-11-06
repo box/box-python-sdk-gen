@@ -4,6 +4,12 @@
 
 # Deprecation notice
 
+> [!CAUTION]
+> **`box-python-sdk-gen` is deprecated and no longer maintained. Do not use it for new projects.**
+>
+> Use [`box-python-sdk`](https://github.com/box/box-python-sdk) v10+ instead: `pip install "boxsdk>=10"`.
+> To migrate existing code, see the [migration guide](https://github.com/box/box-python-sdk/blob/main/migration-guides/from-box-python-sdk-gen-v1-to-box-python-sdk.md).
+
 As of September 17, 2025, Box Next Generation SDKs are no longer supported as separate artifacts. Your existing code will continue to work without changes, but you won't receive new features, updates, bug fixes, or security patches.
 
 In keeping with industry best practices, we are consolidating the Box Next Generation SDKs and Box core SDKs into a single package. This makes migration easier and allows you to seamlessly add new capabilities to existing applications. Two consolidated versions are available in [box-python-sdk](https://github.com/box/box-python-sdk):
@@ -22,17 +28,7 @@ For more details, see our [SDK versioning strategy document](https://developer.b
 ![Platform](https://img.shields.io/badge/python-3.8+-blue)
 [![Coverage](https://coveralls.io/repos/github/box/box-python-sdk-gen/badge.svg?branch=main)](https://coveralls.io/github/box/box-python-sdk-gen?branch=main)
 
-We are excited to introduce the stable release of the latest generation of Box Python SDK, designed to elevate the developer experience and streamline your integration with the Box Content Cloud.
-
-With this SDK, you’ll have access to:
-
-1. Full API Support: The new generation of Box SDKs empowers developers with complete coverage of the Box API ecosystem. You can now access all the latest features and functionalities offered by Box, allowing you to build even more sophisticated and feature-rich applications.
-2. Rapid API Updates: Say goodbye to waiting for new Box APIs to be incorporated into the SDK. With our new auto-generation development approach, we can now add new Box APIs to the SDK at a much faster pace (in a matter of days). This means you can leverage the most up-to-date features in your applications without delay.
-3. Embedded Documentation: We understand that easy access to information is crucial for developers. With our new approach, we have included comprehensive documentation for all objects and parameters directly in the source code of the SDK. This means you no longer need to look up this information on the developer portal, saving you time and streamlining your development process.
-4. Enhanced Convenience Methods: Our commitment to enhancing your development experience continues with the introduction of convenience methods. These methods cover various aspects such as chunk uploads, classification, and much more.
-5. Seamless Start: The new SDKs integrate essential functionalities like authentication, automatic retries with exponential backoff, exception handling, request cancellation, and type checking, enabling you to focus solely on your application's business logic.
-
-Embrace the new generation of Box SDKs and unlock the full potential of the Box Content Cloud.
+This library provides access to the [Box Platform API](https://developer.box.com/reference/) from Python.
 
 # Table of contents
 
@@ -57,6 +53,9 @@ Embrace the new generation of Box SDKs and unlock the full potential of the Box 
 
 # Installing
 
+> [!CAUTION]
+> This package is deprecated. For new projects, install [`box-python-sdk`](https://github.com/box/box-python-sdk) instead: `pip install "boxsdk>=10"`.
+
 ```console
 pip install box-sdk-gen
 ```
@@ -71,6 +70,8 @@ pip install "box-sdk-gen[jwt]"
 ```
 
 # Getting Started
+
+The full API of this library is listed in [api.md](api.md), with code samples for each manager in [docs/](docs/README.md).
 
 To get started with the SDK, get a Developer Token from the Configuration page of your app in the [Box Developer
 Console](https://app.box.com/developers/console). You can use this token to make test calls for your own Box account.
@@ -96,7 +97,11 @@ if __name__ == '__main__':
 
 # Documentation
 
-Browse the [docs](docs/README.md) or see [API Reference](https://developer.box.com/reference/) for more information.
+- [api.md](api.md): every manager and method on `BoxClient`, with signatures and return types.
+- [docs/](docs/README.md): code samples for each manager, plus guides for [authentication](docs/authentication.md), [configuration](docs/configuration.md), and [the client](docs/client.md).
+- [Box API Reference](https://developer.box.com/reference/): the underlying REST API.
+
+For `box-python-sdk`, the maintained replacement for this package, see its [README](https://github.com/box/box-python-sdk/blob/main/README.md) and [docs](https://github.com/box/box-python-sdk/blob/main/docs/README.md).
 
 # Upgrades
 

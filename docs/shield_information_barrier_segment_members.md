@@ -1,5 +1,12 @@
 # ShieldInformationBarrierSegmentMembersManager
 
+<!-- box-python-sdk-gen deprecation banner -->
+> [!CAUTION]
+> **`box-python-sdk-gen` is deprecated and no longer maintained.** As of September 17, 2025, it receives no new features, bug fixes, or security patches. Do not use it for new projects.
+>
+> Use [`box-python-sdk`](https://github.com/box/box-python-sdk) v10+ instead: `pip install "boxsdk>=10"`.
+> The equivalent of this page is [box-python-sdk/docs/shield_information_barrier_segment_members.md](https://github.com/box/box-python-sdk/blob/main/docs/shield_information_barrier_segment_members.md). To migrate existing code, see the [migration guide](https://github.com/box/box-python-sdk/blob/main/migration-guides/from-box-python-sdk-gen-v1-to-box-python-sdk.md).
+
 - [Get shield information barrier segment member by ID](#get-shield-information-barrier-segment-member-by-id)
 - [Delete shield information barrier segment member by ID](#delete-shield-information-barrier-segment-member-by-id)
 - [List shield information barrier segment members](#list-shield-information-barrier-segment-members)
